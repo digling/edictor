@@ -59,7 +59,7 @@ function csvToArrays(allText, separator, comment, keyval) {
         {
           tIdx = j;
         }
-        if (datum == 'GLOSS' || datum == 'CONCEPT' || datum == 'TRANSLATION')
+        if (datum == 'GLOSS' || datum == 'CONCEPT' )
         {
           cIdx = j;
         }
