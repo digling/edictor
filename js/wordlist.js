@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2014-07-07 13:27
+ * modified : 2014-07-18 09:50
  *
  */
 
@@ -913,7 +913,6 @@ function applyFilter()
           arows.push(idx);
         }
       }
-      $('#db').html(arows.length+' "'+val+'" "'+value+'"');
     }
     else
     {
