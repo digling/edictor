@@ -1302,8 +1302,21 @@ function sortTable(event,head)
         {
           var a = WLS[x][WLS.header.indexOf(head)];
           var b = WLS[y][WLS.header.indexOf(head)];
-          if(a < b){return 1;}
-          else{return 0;}
+          var c = parseInt(a);
+          var d = parseInt(b);
+
+          if(!isNaN(c) && !isNaN(d))
+          {
+            return c - d;
+          }
+          else
+          {
+            return b.localeCompare(a);
+
+            //if(a < b){return 1;}
+            //else if(a == b){return 0;}
+            //else{return -1;}
+          }
         }
         );
     CFG['sorted'] = 'th_'+head+'_0';
@@ -1317,8 +1330,21 @@ function sortTable(event,head)
         {
           var a = WLS[x][WLS.header.indexOf(head)];
           var b = WLS[y][WLS.header.indexOf(head)];
-          if(a < b){return 0;}
-          else{return 1;}
+          var c = parseInt(a);
+          var d = parseInt(b);
+
+          if(!isNaN(c) && !isNaN(d))
+          {
+            return d - c;
+          }
+          else
+          {
+            return a.localeCompare(b);
+
+            //if(a <= b){return -1;}
+            //else if(a == b){return 0);
+            //else{return 1;}
+          }
         }
         );
     CFG['sorted'] = 'th_'+head+'_1';
