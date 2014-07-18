@@ -26,7 +26,8 @@ var BASICS = [
   'TAXA',
   'PROTO',
   'PROTO_TOKENS',
-  'ALIGNMENT'
+  'ALIGNMENT',
+  'ETYMONID'
   ];
 
 var WLS = {};
