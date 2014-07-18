@@ -10,7 +10,7 @@
 function reset()
 {
  WLS = {};
- CFG = {'preview': 10,'nodi': false, 'sorting': false};
+ CFG = {'preview': 10,'nodi': false, 'sorted': false};
  STORE = '';
 }
 
@@ -217,7 +217,7 @@ function showWLS(start)
     if (WLS['columns'][head] > 0)
     {
       text += '<col id="' + head + '" />';
-      thtext += '<th title="Double-click for sorting along this column." id="th_'+head+'" ondblclick="sortTable(event,'+"'"+head+"'"+')">' + head + '</th>';
+      thtext += '<th title="Double-click for sorting along this column." id="HEAD_'+head+'" ondblclick="sortTable(event,'+"'"+head+"'"+')">' + head + '</th>';
     }
     else
     {
@@ -325,7 +325,7 @@ function showWLS(start)
   
   if(CFG['sorted'])
   {
-    document.getElementById(CFG['sorted']).style.backgroundColor = 'Crimson';
+    document.getElementById('HEAD_'+CFG['sorted'].split('_')[1]).style.backgroundColor = 'Crimson';
   }
   
   //document.location.hash = 'qlc';
@@ -1288,12 +1288,26 @@ function toggleDiv(divid)
 
 function sortTable(event,head)
 {
-  if(CFG['sorted'] == 'th_'+head)
+  if(CFG['sorted'] == 'th_'+head+'_0')
   {
     WLS['rows'].sort(function(x,y){return x-y});
     CFG['sorted'] = false;
   }
+  else if (CFG['sorted'] == 'th_'+head+'_1')
+  {
+    var rows = WLS.rows.slice();
 
+    WLS['rows'] = rows.sort(
+        function(x,y)
+        {
+          var a = WLS[x][WLS.header.indexOf(head)];
+          var b = WLS[y][WLS.header.indexOf(head)];
+          if(a < b){return 1;}
+          else{return 0;}
+        }
+        );
+    CFG['sorted'] = 'th_'+head+'_0';
+  }
   else
   {
     var rows = WLS.rows.slice();
@@ -1307,7 +1321,7 @@ function sortTable(event,head)
           else{return 1;}
         }
         );
-    CFG['sorted'] = 'th_'+head;
+    CFG['sorted'] = 'th_'+head+'_1';
   }
   showWLS(1);
 }
