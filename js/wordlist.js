@@ -7,6 +7,13 @@
  *
  */
 
+function reset()
+{
+ WLS = {};
+ CFG = {'preview': 10,'nodi': false, 'sorting': false};
+ STORE = '';
+}
+
 /* basic parameters */
 var BASICS = [
   'DOCULECT',
@@ -1081,13 +1088,15 @@ function handleFileSelect(evt)
 {
   var files = evt.target.files; /* FileList object */
   var file = files[0];
+  reset();
+  
   //var store = document.getElementById('store');
   CFG['filename'] = file.name;
   localStorage.filename = file.name;
+  STORE = '';
 
   /* create file reader instance */
   var reader = new FileReader({async: false});
-  //$.get('harry.msa', function(data){document.getElementById('store').innerText = data}, alert("loaded text"), 'text');
   reader.onload = function(e) {STORE = reader.result;};
   reader.readAsText(file);
 

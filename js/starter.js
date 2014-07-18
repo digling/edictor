@@ -202,12 +202,14 @@ function handleFileSelect2(evt)
 {  
   evt.stopPropagation();
   evt.preventDefault();
-
+  
+  reset();
   var files = evt.dataTransfer.files; /* FileList object */
   var file = files[0];
   //var store = document.getElementById('store');
   CFG['filename'] = file.name;
   localStorage.filename = file.name;
+  STORE = '';
 
   /* create file reader instance */
   var reader = new FileReader({async:false});
