@@ -675,68 +675,68 @@ function unmodifyEntry(idx, jdx, xvalue)
   highLight();
 }
 
-function filterWordlist(event,value)
-{
-  if(typeof WLS['_prows'] == 'undefined')
-  {
-    WLS['_prows'] = WLS['rows'];
-  }
-  else
-  {
-    WLS['rows'] = WLS['_prows'];
-  }
-  if(value == '')
-  {
-    WLS['rows'] = WLS['_prows'];
-    showWLS(1);
-    return;
-  }
-
-  if(event.keyCode == 13)
-  {
-    if(value.indexOf('==') != -1)
-    {
-      var mode = 'equal';
-      var vals = value.split(/\s*==\s*/);
-    }
-    else if(value.indexOf('=') != -1)
-    {
-      var mode = 'like';
-      var vals = value.split(/\s*=\s/);
-    }
-    else{return;}
-
-    //var vals = value.split(/\s*=\s*/);
-    var c = vals[0];
-    var v = vals[1].toLowerCase().replace(/\n/,'');
-    var new_rows = [];
-    var idx = WLS['header'].indexOf(c.toUpperCase());
-    if(typeof idx != 'undefined')
-    {
-      for(var i=0,r;r=WLS['rows'][i];i++)
-      {
-        var val = WLS[r][idx].toLowerCase();
-        if(val.indexOf(v) != -1 && mode == 'like')
-        {
-          new_rows.push(r);
-        }
-	      else if(val == v && mode == 'equal')
-	      {
-	      new_rows.push(r);
-	      }
-      }
-      if(new_rows.length > 0)
-      {
-	      WLS['rows'] = new_rows;
-	      showWLS(1);
-      }
-    }
-  }
-  else
-  {
-    return;
-  }
-}
+// function filterWordlist(event,value)
+// {
+//   if(typeof WLS['_prows'] == 'undefined')
+//   {
+//     WLS['_prows'] = WLS['rows'];
+//   }
+//   else
+//   {
+//     WLS['rows'] = WLS['_prows'];
+//   }
+//   if(value == '')
+//   {
+//     WLS['rows'] = WLS['_prows'];
+//     showWLS(1);
+//     return;
+//   }
+// 
+//   if(event.keyCode == 13)
+//   {
+//     if(value.indexOf('==') != -1)
+//     {
+//       var mode = 'equal';
+//       var vals = value.split(/\s*==\s*/);
+//     }
+//     else if(value.indexOf('=') != -1)
+//     {
+//       var mode = 'like';
+//       var vals = value.split(/\s*=\s/);
+//     }
+//     else{return;}
+// 
+//     //var vals = value.split(/\s*=\s*/);
+//     var c = vals[0];
+//     var v = vals[1].toLowerCase().replace(/\n/,'');
+//     var new_rows = [];
+//     var idx = WLS['header'].indexOf(c.toUpperCase());
+//     if(typeof idx != 'undefined')
+//     {
+//       for(var i=0,r;r=WLS['rows'][i];i++)
+//       {
+//         var val = WLS[r][idx].toLowerCase();
+//         if(val.indexOf(v) != -1 && mode == 'like')
+//         {
+//           new_rows.push(r);
+//         }
+// 	      else if(val == v && mode == 'equal')
+// 	      {
+// 	      new_rows.push(r);
+// 	      }
+//       }
+//       if(new_rows.length > 0)
+//       {
+// 	      WLS['rows'] = new_rows;
+// 	      showWLS(1);
+//       }
+//     }
+//   }
+//   else
+//   {
+//     return;
+//   }
+// }
 
 function filterWLS(event, type)
 {
@@ -893,8 +893,10 @@ function applyFilter()
     
     if(compare != 'error')
     {
-      for(var i,idx;idx = WLS._trows[i];i++)
+      for(var i=0; i < WLS._trows.length;i++)
       {
+        var idx = WLS._trows[i];
+        
         var value = WLS[idx][WLS.header.indexOf(key)];
         if(typeof value == 'undefined')
         {
@@ -911,6 +913,7 @@ function applyFilter()
           arows.push(idx);
         }
       }
+      $('#db').html(arows.length+' "'+val+'" "'+value+'"');
     }
     else
     {
@@ -1003,7 +1006,16 @@ function applyFilter()
   var rows = intersection_destructive(trows, crows);
   rows = intersection_destructive(rows, arows);
 
-  WLS['rows'] = rows.sort(function(x, y) {return x - y;});
+  if(rows.length < 1)
+  {
+    fakeAlert("No entries matching your filter criteria could be found. All filters will be reset.");
+    custom.value = '';
+    applyFilter();
+  }
+  else
+  {
+    WLS['rows'] = rows.sort(function(x, y) {return x - y;});
+  }
 }
 
 /* filter the columns in the data */
