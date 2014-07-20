@@ -10,7 +10,7 @@
 function reset()
 {
  WLS = {};
- CFG = {'preview': 10,'nodi': false, 'sorted': false};
+ CFG = {'preview': 10,'nodi': false, 'sorted': false, 'formatter':false};
  STORE = '';
 }
 
@@ -31,8 +31,22 @@ var BASICS = [
   ];
 
 var WLS = {};
-var CFG = {'preview': 10,'nodi': false, 'sorting': false};
+var CFG = {'preview': 10,'nodi': false, 'sorting': false, 'formatter': false};
 var STORE = ''; // global variable to store the text data in raw format
+
+
+/* function for resetting the formatter */
+function resetFormat(value)
+{
+  if(CFG['formatter'] != value)
+  {
+    CFG['formatter'] = value;
+  }
+  else
+  {
+    CFG['formatter'] = false;
+  }
+}
 
 /* load qlc-file */
 function csvToArrays(allText, separator, comment, keyval) {
@@ -180,7 +194,27 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS['_trows'] = selection.slice();
   WLS['columns'] = columns;
   WLS['filename'] = CFG['filename'];
-
+  
+  /* add formatting options for all "ID" headers to the data */
+  var formatter = document.getElementById('formatter');
+  var tmp_text = '<th>Formatter</th><td>';
+  var tmp_count = 0;
+  for(var col in WLS['columns'])
+  {
+    if(col.indexOf('ID') - col.length == -2 && tmp_count == 0)
+    {
+      tmp_text += '<input onchange="resetFormat(this.value)" type="checkbox" checked name="columns" value="'+col+'">'+col+' ';
+      resetFormat(col);
+      tmp_count += 1
+    }
+    else if(col.indexOf('ID') - col.length == -2)
+    {
+      tmp_text += '<input onchange="resetFormat(this.value)" type="checkbox" name="columns" value="'+col+'">'+col+' ';
+    }
+  }
+  formatter.innerHTML = tmp_text + '</td>';
+  
+  /* add settings for the column preview to the data */
   var all_columns = document.getElementById('columncb');
   var tmp_text = '<th>Columns</th><td>';
   for (col in WLS['columns'])
@@ -234,38 +268,98 @@ function showWLS(start)
 
   //for(idx in WLS)
   var count = 1;
-  for (i in WLS['rows']) //in WLS['rows'])
+  if(CFG['formatter'])
   {
-    var idx = WLS['rows'][i];
-    if (!isNaN(idx) && count >= start)
+    var previous_format = '';
+    var tmp_class = 'd0';
+    for (i in WLS['rows']) //in WLS['rows'])
     {
-      var rowidx = parseInt(i) + 1;
-      text += '<tr id="L_' + idx + '">';
-      text += '<td class="ID" title="LINE ' + rowidx + '">' + idx + '</td>';
-      for (j in WLS[idx])
+      var idx = WLS['rows'][i];
+      var current_format = WLS[idx][WLS['header'].indexOf(CFG['formatter'])];
+      if (!isNaN(idx) && count >= start)
       {
-        var jdx = parseInt(j) + 1;
+        var rowidx = parseInt(i) + 1;
+        if(current_format == 0)
+        {
+          tmp_class = 'd2';
+        }
+        else if(current_format != previous_format)
+        {
+          if(tmp_class == 'd0')
+          {
+            tmp_class = 'd1';
+          }
+          else
+          {
+            tmp_class = 'd0';
+          }
+          previous_format = current_format;
+        }
 
-        var head = WLS['header'][j];
-        if (WLS['columns'][head] > 0)
+        text += '<tr class="'+tmp_class+'" id="L_' + idx + '">';
+        text += '<td class="ID" title="LINE ' + rowidx + '">' + idx + '</td>';
+        for (j in WLS[idx])
         {
-          var cell_display = '';
+          var jdx = parseInt(j) + 1;
+
+          var head = WLS['header'][j];
+          if (WLS['columns'][head] > 0)
+          {
+            var cell_display = '';
+          }
+          else
+          {
+            var cell_display = ' style="display:none"'; // ff vs. chrome problem
+          }
+          text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
+          text += WLS[idx][j];
+          text += '</td>';
         }
-        else
-        {
-          var cell_display = ' style="display:none"'; // ff vs. chrome problem
-        }
-        text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
-        text += WLS[idx][j];
-        text += '</td>';
+        text += '</tr>';
+        count += 1;
       }
-      text += '</tr>';
-      count += 1;
+      else {count += 1;}
+      if (count >= start + CFG['preview'])
+      {
+        break;
+      }
     }
-    else {count += 1;}
-    if (count >= start + CFG['preview'])
+  }
+  else
+  {
+    for (i in WLS['rows']) //in WLS['rows'])
     {
-      break;
+      var idx = WLS['rows'][i];
+      if (!isNaN(idx) && count >= start)
+      {
+        var rowidx = parseInt(i) + 1;
+        text += '<tr id="L_' + idx + '">';
+        text += '<td class="ID" title="LINE ' + rowidx + '">' + idx + '</td>';
+        for (j in WLS[idx])
+        {
+          var jdx = parseInt(j) + 1;
+
+          var head = WLS['header'][j];
+          if (WLS['columns'][head] > 0)
+          {
+            var cell_display = '';
+          }
+          else
+          {
+            var cell_display = ' style="display:none"'; // ff vs. chrome problem
+          }
+          text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
+          text += WLS[idx][j];
+          text += '</td>';
+        }
+        text += '</tr>';
+        count += 1;
+      }
+      else {count += 1;}
+      if (count >= start + CFG['preview'])
+      {
+        break;
+      }
     }
   }
   text += '</table>';

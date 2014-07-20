@@ -54,7 +54,7 @@
   }
   #qlc_table td{
     text-align: left;
-    background-color: white;
+    //background-color: white;
     color: black;
     border: solid 1px #2e5ca8;
     max-width: 220px;
@@ -69,7 +69,7 @@
 
 #qlc_table td{
   text-align: left;
-  background-color: white;
+  //background-color: white;
   color: black;
   border: solid 1px #2e5ca8;
   max-width: 250px;
@@ -355,4 +355,18 @@ span.dolgo_GAP{background-color: #bbbbbb;}
 }
 #undoredo {
   margin-top: 5px;
+}
+
+.ALIGNMENT {
+  max-width: 600px !important;
+}
+
+tr.d0 td {
+  background-color:#e0e6f8;
+}
+tr.d1 td {
+  background-color: white;
+}
+tr.d2 td {
+  background-color: #f7f8e0;
 }
