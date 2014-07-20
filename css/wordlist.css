@@ -361,10 +361,10 @@ span.dolgo_GAP{background-color: #bbbbbb;}
   max-width: 600px !important;
 }
 
-tr.d0 td {
+tr.d1 td {
   background-color:#e0e6f8;
 }
-tr.d1 td {
+tr.d0 td {
   background-color: white;
 }
 tr.d2 td {
