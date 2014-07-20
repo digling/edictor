@@ -282,6 +282,12 @@ function showWLS(start)
         if(current_format == 0)
         {
           tmp_class = 'd2';
+          previous_format = current_format;
+        }
+        else if(previous_format == 0)
+        {
+          tmp_class = 'd0';
+          previous_format = current_format;
         }
         else if(current_format != previous_format)
         {
