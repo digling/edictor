@@ -1503,6 +1503,27 @@ function editGroup(event,idx)
     fakeAlert("This entry cannot be edited, since it is not related to any other entry.");
     return;
   }
+  if(WLS.header.indexOf('ALIGNMENT') != -1)
+  {
+    var this_idx = WLS.header.indexOf('ALIGNMENT');
+  }
+  else if(WLS.header.indexOf('TOKENS') != -1)
+  {
+    var this_idx = WLS.header.indexOf('TOKENS');
+  }
+  else if(WLS.header.indexOf('IPA') != -1)
+  {
+    var this_idx = WLS.header.indexOf('IPA');
+  }
+  else if(WLS.header.indexOf('WORD') != -1)
+  {
+    var this_idx = WLS.header.indexOf('WORD');
+  }
+  else
+  {
+    fakeAlert('No phonetic entries were specified in the data.');
+    return;
+  }
   var editmode = document.createElement('div');
   editmode.id = 'editmode';
   editmode.className = 'editmode';
@@ -1512,7 +1533,7 @@ function editGroup(event,idx)
   var langs = [];
   for(var i=0,r;r=rows[i];i++)
   {
-    var alm = plotWord(WLS[r][WLS.header.indexOf('ALIGNMENT')]);
+    var alm = plotWord(WLS[r][this_idx]);
     var lang = WLS[r][CFG['_tidx']];
     alms.push('<td><span class="alm_taxon">'+lang+'</span></td><td>'+alm+'</td>');
   }

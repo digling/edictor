@@ -383,6 +383,7 @@ tr.d2 td {
 	height: 100%;
 	float: left;
 	text-align:center;
+  overflow: auto;
 }
 
 .edit_links {
@@ -405,11 +406,13 @@ tr.d2 td {
   padding-left: 10px;
 }
 
-.edit_links div.alignments {
+div.alignments {
   font-weight: bold;
-  width: 100%;
   border-top: 2px dotted Crimson;
   background-color: white;
+  margin-bottom:5px;
+  margin-left: 5px;
+  margin-right:5px;
 }
 .alm_taxon {
   font-weight: bold;
