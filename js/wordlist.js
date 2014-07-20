@@ -38,14 +38,37 @@ var STORE = ''; // global variable to store the text data in raw format
 /* function for resetting the formatter */
 function resetFormat(value)
 {
+
   if(CFG['formatter'] != value)
   {
+    var size = 0;
     CFG['formatter'] = value;
+    var format_selection = {};
+    var format_idx = WLS.header.indexOf(value);
+    for(key in WLS)
+    {
+      if(!isNaN(key))
+      {
+        var tmp = WLS[key][format_idx];
+        if(tmp in format_selection)
+        {
+          format_selection[tmp].push(key);
+        }
+        else if(tmp != 0)
+        {
+          format_selection[tmp] = [key];
+        }
+        size++;
+      }
+    }
+    WLS['etyma'] = format_selection;
   }
   else
   {
     CFG['formatter'] = false;
+    WLS['etyma'] = [];
   }
+
 }
 
 /* load qlc-file */
@@ -57,6 +80,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   var concepts = {};
   var tIdx = -1;
   var cIdx = -1;
+  var cogid = -1;
   var selection = [];
   var columns = {};
   var count = 1;
@@ -317,9 +341,19 @@ function showWLS(start)
           {
             var cell_display = ' style="display:none"'; // ff vs. chrome problem
           }
-          text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
-          text += WLS[idx][j];
-          text += '</td>';
+          if(WLS.header[j] != CFG['formatter'])
+          {
+            text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
+            text += WLS[idx][j];
+            text += '</td>';
+          }
+          else
+          {
+            text += '<td oncontextmenu="editGroup(event,'+"'"+WLS[idx][j]+"')"+'" class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
+            text += WLS[idx][j];
+            text += '</td>';
+          }
+
         }
         text += '</tr>';
         count += 1;
@@ -1457,3 +1491,29 @@ function sortTable(event,head)
 window.onload = function() {
     undoManager = new UndoManager();
 };
+
+function editGroup(event,idx)
+{
+  event.preventDefault();
+  if(idx == 0)
+  {
+    fakeAlert("This entry cannot be edited, since it is not related to any other entry.");
+    return;
+  }
+  var rows = WLS['etyma'][idx];
+  var alms = [];
+  for(var i=0,r;r=rows[i];i++)
+  {
+    alms.push(WLS[r][WLS.header.indexOf('ALIGNMENT')]);
+  }
+  
+  var txt = '';
+  txt += "<p>Edit the following "+alms.length+" entries:</p>";
+  txt += '<div style="overflow:hidden;"><pre style="background-color:white;color:black;font-weight:bold;">';
+  for(var i=0;i<alms.length;i++)
+  {
+    var alm = alms[i];
+    txt += rows[i]+'\t'+alm.replace(' ','\t','g')+'\n';
+  }
+  fakeAlert(txt+'</pre></div>');
+}
