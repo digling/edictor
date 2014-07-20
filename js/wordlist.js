@@ -218,6 +218,9 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS['_trows'] = selection.slice();
   WLS['columns'] = columns;
   WLS['filename'] = CFG['filename'];
+  /* ! attention here, this may change if no ids are submitted! */
+  CFG['_tidx'] = tIdx-1;
+  CFG['_cidx'] = cIdx-1;
   
   /* add formatting options for all "ID" headers to the data */
   var formatter = document.getElementById('formatter');
@@ -1500,20 +1503,32 @@ function editGroup(event,idx)
     fakeAlert("This entry cannot be edited, since it is not related to any other entry.");
     return;
   }
+  var editmode = document.createElement('div');
+  editmode.id = 'editmode';
+  editmode.className = 'editmode';
+
   var rows = WLS['etyma'][idx];
   var alms = [];
+  var langs = [];
   for(var i=0,r;r=rows[i];i++)
   {
-    alms.push(WLS[r][WLS.header.indexOf('ALIGNMENT')]);
+    var alm = plotWord(WLS[r][WLS.header.indexOf('ALIGNMENT')]);
+    var lang = WLS[r][CFG['_tidx']];
+    alms.push('<td><span class="taxon">'+lang+'</span></td><td>'+alm+'</td>');
   }
-  
-  var txt = '';
-  txt += "<p>Edit the following "+alms.length+" entries:</p>";
-  txt += '<div style="overflow:hidden;"><pre style="background-color:white;color:black;font-weight:bold;">';
-  for(var i=0;i<alms.length;i++)
+
+  var text = '<div class="edit_links">';
+  text += '<p>This entry links to the following '+alms.length+' entries:</p>';
+  text += '<div class="alignments"><table>';
+  for(var i=0,alm;alm=alms[i];i++)
   {
-    var alm = alms[i];
-    txt += rows[i]+'\t'+alm.replace(' ','\t','g')+'\n';
+    text += '<tr>'+alm+'</tr>';
   }
-  fakeAlert(txt+'</pre></div>');
+  text += '</table></div></div>';
+  document.body.appendChild(editmode);
+  editmode.innerHTML = text;
+  document.onkeydown = function(event){$('#editmode').remove(); document.onkeydown = function(event){basickeydown(event);};};
+  document.onclick = function(event){$('#editmode').remove(); document.onkeydown = function(event){basickeydown(event);};};
 }
+
+

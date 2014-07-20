@@ -105,6 +105,13 @@ function basickeydown (event) {
     event.preventDefault();
     toggleDiv('settings');
   }
+  /* toggle filters F3*/
+  else if(event.keyCode == 114)
+  {
+    event.preventDefault();
+    toggleDiv('textfields');
+  }
+
   /* toggle help F1 */
   else if(event.keyCode == 112)
   {

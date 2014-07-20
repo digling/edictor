@@ -370,3 +370,53 @@ tr.d0 td {
 tr.d2 td {
   background-color: #f7f8e0;
 }
+
+.editmode {
+	position: fixed;
+	background-color: rgba(0,0,0,0.5);
+	z-index: 1;
+	top:0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	float: left;
+	text-align:center;
+}
+
+.edit_links {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  top:10%;
+  left:0;
+  right:0;
+  background-color: Crimson;
+  border: 2px dotted white;
+  text-align:center;
+  width:40%;
+  float: left;
+}
+.edit_links p {
+  color: white;
+  font-weight: bold;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.edit_links div.alignments {
+  font-weight: bold;
+  width: 100%;
+  border-top: 2px dotted Crimson;
+  background-color: white;
+}
+.taxon {
+  font-weight: bold;
+  display: table-cell;
+  max-width: 200px;
+  min-width: 100px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}

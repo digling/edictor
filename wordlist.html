@@ -26,9 +26,14 @@ modified : 2014-07-04 12:56
   <ul>
     <li>[F1] Toggle this help message.</li>
     <li>[F2] Toggle the settings.</li>
+    <li>[F3] Toggle the filters.</li>
     <li>[F4] Toggle all columns / basic columns.</li>
-    <li>[TAB] Go to first cell (insert mode).</li>
-    <li>[ESC] Exit insert mode.</li>
+    <li>[CTRL+I] Go to first cell (insert mode).</li>
+    <li>[CTRL+LEFT] Go to left cell (insert mode).</li>
+    <li>[CTRL+RIGHT] Got to right cell (insert mode).</li>
+    <li>[ESC] Exit insert mode without saving (insert mode).</li>
+    <li>[ENTER] Exit insert mode and save (insert mode).</li>
+    <li>[RIGHT MOUSE CLICK] Show related entries (works only, if the given entry is selected as the current format option).</li>
     <li>[PAGE UP] Go to previous rows.</li>
     <li>[PAGE DOWN] Go to following rows.</li>
   </ul>
@@ -38,9 +43,13 @@ modified : 2014-07-04 12:56
   <ul>
     <li>specific taxa,</li>
     <li>specific concepts, or</li>
-    <li>specific columns</li></ul>
+    <li>specific columns</li>
+    <li>specific entries</li>
+  </ul>
   are displayed. 
   For taxa and concepts, just type in the name of the taxon or concept you want to select and separate multiple taxa and concept by a comma. For the filtering of columns, you may also toggle between the display of the basic columns (default) and all columns by pressing [F4], or you may select the columns within the settings menu (press [F2] to show or close the settings).
+  In order to filter specific entries, type &quot;COLUMNNAME = entry&quot;, where COLUMNAME is the name of one of the columns in the data, and entry is one entry you want to search for. Using &quot;=&quot; will search for all entries which <em>contain</em> the given string. If you want to search for a direct match, use &quot;==&quot; instead.
+  
   <h4>Navigation</h4>
   Having entered the insert mode (just click on any of the cells of the table or press the tab key), you can navigate with key up and key down from cell to cell along the same column. If you want to navigate between columns within the same row, use the CTRL key and key left / key right.  
 </div>
