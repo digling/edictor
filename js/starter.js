@@ -292,7 +292,7 @@ $('#settings').draggable({cursor:"crosshair"});
 var server_side_files = [];
 $.ajax(
     {
-      async:false,
+      async:true,
       type: "GET",
       url: 'data/filelist.csv',
       dataType: "text",
