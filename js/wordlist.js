@@ -203,13 +203,13 @@ function csvToArrays(allText, separator, comment, keyval) {
   {
     if(col.indexOf('ID') - col.length == -2 && tmp_count == 0)
     {
-      tmp_text += '<input onchange="resetFormat(this.value)" type="checkbox" checked name="columns" value="'+col+'">'+col+' ';
+      tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+col+'">'+col+' ';
       resetFormat(col);
       tmp_count += 1
     }
     else if(col.indexOf('ID') - col.length == -2)
     {
-      tmp_text += '<input onchange="resetFormat(this.value)" type="checkbox" name="columns" value="'+col+'">'+col+' ';
+      tmp_text += '<input onchange="resetFormat(this.value)" type="radio" name="formatter" value="'+col+'">'+col+' ';
     }
   }
   formatter.innerHTML = tmp_text + '</td>';
