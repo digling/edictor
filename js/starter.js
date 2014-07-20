@@ -66,7 +66,22 @@ function basickeydown (event) {
     editEntry(idx,1,0,0);
     return;
   }
-
+  /* drag table left right when key is pressed */
+  else if(event.keyCode == 37)
+  {
+    $('#qlc_table').animate({
+      'marginLeft' : "-=100"
+    });
+    return;
+  }
+  /* drag table right when key is pressed */
+  else if(event.keyCode == 39)
+  {
+    $('#qlc_table').animate({
+      'marginLeft' : "+=100"
+    });
+    return;
+  }
   /* page down key code */
   else if(event.keyCode == 34)
   {
@@ -272,7 +287,7 @@ function handleDragOver(evt) {
 
 
 
-$('#qlc').draggable({axis:"x",cursor:"crosshair",grid:[50,20]});
+$('#qlc').draggable({axis:"x",cursor:"pointer"}); //,grid:[50,20]});
 $('#settings').draggable({cursor:"crosshair"});
 var server_side_files = [];
 $.ajax(
