@@ -1514,7 +1514,7 @@ function editGroup(event,idx)
   {
     var alm = plotWord(WLS[r][WLS.header.indexOf('ALIGNMENT')]);
     var lang = WLS[r][CFG['_tidx']];
-    alms.push('<td><span class="taxon">'+lang+'</span></td><td>'+alm+'</td>');
+    alms.push('<td><span class="alm_taxon">'+lang+'</span></td><td>'+alm+'</td>');
   }
 
   var text = '<div class="edit_links">';

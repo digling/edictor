@@ -411,7 +411,7 @@ tr.d2 td {
   border-top: 2px dotted Crimson;
   background-color: white;
 }
-.taxon {
+.alm_taxon {
   font-weight: bold;
   display: table-cell;
   max-width: 200px;
