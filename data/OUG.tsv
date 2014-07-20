@@ -1,0 +1,2167 @@
+# OUG
+ID	Taxon	Gloss	GlossID	IPA	Tokens	CogID
+# 
+1	North Mansi	all	1	pusən	p u s ə n	1
+2	Middle Lozva Mansi	all	1	puʃn	p u ʃ n	1
+3	Lower Lozva Mansi	all	1	ʃaq	ʃ a q	2
+4	Pelymka Mansi	all	1	ʃoq	ʃ o q	2
+5	Konda Mansi	all	1	soq	s o q	2
+6	Tavda Mansi	all	1	ʃɔχ	ʃ ɔ χ	2
+7	Vakh Khanty	all	1	ejnæːm	e j n æː m	3
+8	Verkhne-Kalymsk Khanty	all	1	ejnæːm	e j n æː m	3
+9	Vartovskoje Khanty	all	1	ejnæːm	e j n æː m	3
+10	Likrisovskoje Khanty	all	1	ejnæːm	e j n æː m	3
+11	Malyj Jugan Khanty	all	1	ejnæːm	e j n æː m	3
+12	Tremjugan Khanty	all	1	ejnæːm	e j n æː m	3
+13	Jugan Khanty	all	1	ejnæːm	e j n æː m	3
+14	Upper Demjanka Khanty	all	1	χarnaː	χ a r n aː	4
+15	Konda Khanty	all	1	pertæː	p e r t æː	5
+16	Nizjam Khanty	all	1	isaχaːt	i s a χ aː t	6
+17	Sherkaly Khanty	all	1	isaːt	i s aː t	6
+18	Kazym Khanty	all	1	isaː	i s aː	6
+19	Synja Khanty	all	1	isaː	i s aː	6
+# 
+20	North Mansi	ashes	2	χuʎəm	χ u ʎ ə m	8
+21	Middle Lozva Mansi	ashes	2	quʎəm	q u ʎ ə m	8
+22	Lower Lozva Mansi	ashes	2	quʎəm	q u ʎ ə m	8
+23	Konda Mansi	ashes	2	quʎəm	q u ʎ ə m	8
+24	Tavda Mansi	ashes	2	qoːʎəm	q oː ʎ ə m	8
+25	Vakh Khanty	ashes	2	pæːr	p æː r	9
+26	Vasjugan Khanty	ashes	2	pæːr	p æː r	9
+27	Tremjugan Khanty	ashes	2	næːjpæːr	n æː j p æː r	9
+28	Jugan Khanty	ashes	2	næːjpæːr	n æː j p æː r	9
+29	Upper Demjanka Khanty	ashes	2	χoːjəm	χ oː j ə m	8
+30	Konda Khanty	ashes	2	χoːjəm	χ oː j ə m	8
+31	Nizjam Khanty	ashes	2	χɔːjəm	χ ɔː j ə m	8
+32	Sherkaly Khanty	ashes	2	χɔːjəm	χ ɔː j ə m	8
+33	Kazym Khanty	ashes	2	raːtχiʃ	r aː t χ i ʃ	7
+34	Obdorsk Khanty	ashes	2	ræːtχis	r æː t χ i s	7
+# 
+35	North Mansi	bark	3	sul	s u l	-10
+36	Middle Lozva Mansi	bark	3	sul	s u l	-10
+37	Lower Lozva Mansi	bark	3	sul	s u l	-10
+38	Pelymka Mansi	bark	3	sul	s u l	-10
+39	Konda Mansi	bark	3	suːl	s uː l	-10
+40	Tavda Mansi	bark	3	su	s u	-10
+41	Vakh Khanty	bark	3	kæːr	k æː r	11
+42	Verkhne-Kalymsk Khanty	bark	3	kæːr	k æː r	11
+43	Vasjugan Khanty	bark	3	kæːr	k æː r	11
+44	Likrisovskoje Khanty	bark	3	kæːr	k æː r	11
+45	Malyj Jugan Khanty	bark	3	kæːr	k æː r	11
+46	Tremjugan Khanty	bark	3	kæːr	k æː r	11
+47	Jugan Khanty	bark	3	kæːr	k æː r	11
+48	Upper Demjanka Khanty	bark	3	kæːr	k æː r	11
+49	Konda Khanty	bark	3	kæːr	k æː r	11
+50	Nizjam Khanty	bark	3	kaːr	k aː r	11
+51	Kazym Khanty	bark	3	kaːr	k aː r	11
+52	Obdorsk Khanty	bark	3	kæːr	k æː r	11
+# 
+53	North Mansi	big	5	jænɨɣ	j æ n ɨ ɣ	15
+54	Middle Lozva Mansi	big	5	jæni	j æ n i	15
+55	Lower Lozva Mansi	big	5	jæni	j æ n i	15
+56	Pelymka Mansi	big	5	jæni	j æ n i	15
+57	Konda Mansi	big	5	jæni	j æ n i	15
+58	Tavda Mansi	big	5	jænu	j æ n u	15
+59	Vakh Khanty	big	5	eɭɭə	e ɭː ə	15
+60	Verkhne-Kalymsk Khanty	big	5	eɭə	e ɭ ə	15
+61	Vasjugan Khanty	big	5	eɭɭə	e ɭː ə	15
+62	Vartovskoje Khanty	big	5	eɭə	e ɭ ə	15
+63	Likrisovskoje Khanty	big	5	eɭə	e ɭ ə	15
+64	Malyj Jugan Khanty	big	5	enɬ	e n ɬ	15
+65	Tremjugan Khanty	big	5	enɬ	e n ɬ	15
+66	Jugan Khanty	big	5	entɬ	e n t ɬ	15
+67	Upper Demjanka Khanty	big	5	eːnə	eː n ə	15
+68	Konda Khanty	big	5	eːnə	eː n ə	15
+69	Nizjam Khanty	big	5	uːnə	uː n ə	16
+70	Sherkaly Khanty	big	5	uːnə	uː n ə	16
+71	Kazym Khanty	big	5	wɵːn	w ɵː n	16
+72	Synja Khanty	big	5	uːn	uː n	16
+# 
+73	North Mansi	belly	4	sorɨɣ	s o r ɨ ɣ	12
+74	Middle Lozva Mansi	belly	4	sɔr	s ɔ r	12
+75	Pelymka Mansi	belly	4	sori	s o r i	12
+76	Vakh Khanty	belly	4	koɳ	k o ɳ	13
+77	Verkhne-Kalymsk Khanty	belly	4	koɳ	k o ɳ	13
+78	Vasjugan Khanty	belly	4	koɳ	k o ɳ	13
+79	Vartovskoje Khanty	belly	4	koɳ	k o ɳ	13
+80	Likrisovskoje Khanty	belly	4	koɳ	k o ɳ	13
+81	Malyj Jugan Khanty	belly	4	kon	k o n	13
+82	Tremjugan Khanty	belly	4	koɳ	k o ɳ	13
+83	Jugan Khanty	belly	4	kon	k o n	13
+84	Upper Demjanka Khanty	belly	4	poːrəχ	p oː r ə χ	14
+85	Konda Khanty	belly	4	χon	χ o n	13
+86	Nizjam Khanty	belly	4	χon	χ o n	13
+87	Sherkaly Khanty	belly	4	χon	χ o n	13
+88	Kazym Khanty	belly	4	χoɳ	χ o ɳ	13
+89	Synja Khanty	belly	4	χoɳ	χ o ɳ	13
+90	Obdorsk Khanty	belly	4	χon	χ o n	13
+# 
+91	North Mansi	bird	6	tɔwləŋuj	t ɔ w l ə ŋ u j	17
+92	Middle Lozva Mansi	bird	6	tɔuləŋuj	t ɔu l ə ŋ u j	17
+93	Lower Lozva Mansi	bird	6	uj	u j	17
+94	Pelymka Mansi	bird	6	wuj	w u j	17
+95	Konda Mansi	bird	6	wuj	w u j	17
+96	Tavda Mansi	bird	6	sosqol	s o s q o l	18
+97	Vakh Khanty	bird	6	waːjəɣ	w aː j ə ɣ	17
+98	Vasjugan Khanty	bird	6	waːjəɣ	w aː j ə ɣ	17
+99	Tremjugan Khanty	bird	6	toɣɬəŋwɔːjəɣ	t o ɣ ɬ ə ŋ w ɔː j ə ɣ	17
+100	Upper Demjanka Khanty	bird	6	toχtəŋwoːjə	t o χ t ə ŋ w oː j ə	17
+101	Sherkaly Khanty	bird	6	wɔːj	w ɔː j	17
+102	Kazym Khanty	bird	6	toχɬəŋwɔːj	t o χ ɬ ə ŋ w ɔː j	17
+# 
+103	North Mansi	bite (V)	7	puri	p u r i	19
+104	Middle Lozva Mansi	bite (V)	7	puri	p u r i	19
+105	Lower Lozva Mansi	bite (V)	7	puri	p u r i	19
+106	Pelymka Mansi	bite (V)	7	puri	p u r i	19
+107	Konda Mansi	bite (V)	7	pori	p o r i	19
+108	Tavda Mansi	bite (V)	7	pur	p u r	19
+109	Vakh Khanty	bite (V)	7	por	p o r	19
+110	Verkhne-Kalymsk Khanty	bite (V)	7	por	p o r	19
+111	Vasjugan Khanty	bite (V)	7	por	p o r	19
+112	Likrisovskoje Khanty	bite (V)	7	por	p o r	19
+113	Malyj Jugan Khanty	bite (V)	7	por	p o r	19
+114	Tremjugan Khanty	bite (V)	7	por	p o r	19
+115	Jugan Khanty	bite (V)	7	por	p o r	19
+116	Upper Demjanka Khanty	bite (V)	7	par	p a r	19
+117	Konda Khanty	bite (V)	7	par	p a r	19
+118	Nizjam Khanty	bite (V)	7	por	p o r	19
+119	Sherkaly Khanty	bite (V)	7	por	p o r	19
+120	Kazym Khanty	bite (V)	7	por	p o r	19
+121	Synja Khanty	bite (V)	7	por	p o r	19
+122	Obdorsk Khanty	bite (V)	7	par	p a r	19
+# 
+123	North Mansi	black	8	seːməl	s eː m ə l	20
+124	Middle Lozva Mansi	black	8	ʃeːməl	ʃ eː m ə l	20
+125	Lower Lozva Mansi	black	8	ʃeːməl	ʃ eː m ə l	20
+126	Pelymka Mansi	black	8	ʃeːməl	ʃ eː m ə l	20
+127	Konda Mansi	black	8	seːməl	s eː m ə l	20
+128	Tavda Mansi	black	8	pæŋ	p æ ŋ	21
+129	Vakh Khanty	black	8	peɣtə	p e ɣ t ə	22
+130	Verkhne-Kalymsk Khanty	black	8	peɣtə	p e ɣ t ə	22
+131	Vasjugan Khanty	black	8	peɣtə	p e ɣ t ə	22
+132	Likrisovskoje Khanty	black	8	peɣtə	p e ɣ t ə	22
+133	Malyj Jugan Khanty	black	8	peɣtə	p e ɣ t ə	22
+134	Tremjugan Khanty	black	8	peɣtə	p e ɣ t ə	22
+135	Jugan Khanty	black	8	peɣtə	p e ɣ t ə	22
+136	Upper Demjanka Khanty	black	8	peɣtə	p e ɣ t ə	22
+137	Konda Khanty	black	8	peɣtə	p e ɣ t ə	22
+138	Nizjam Khanty	black	8	piɣtə	p i ɣ t ə	22
+139	Sherkaly Khanty	black	8	piɣtə	p i ɣ t ə	22
+140	Kazym Khanty	black	8	pitiː	p i t iː	22
+141	Synja Khanty	black	8	pitiː	p i t iː	22
+142	Obdorsk Khanty	black	8	puːtiː	p uː t iː	22
+# 
+143	North Mansi	blood	9	keːlp	k eː l p	23
+144	Middle Lozva Mansi	blood	9	wyir	w yi r	24
+145	Lower Lozva Mansi	blood	9	œːr	œː r	24
+146	Pelymka Mansi	blood	9	wyɨr	w yɨ r	24
+147	Konda Mansi	blood	9	wɨr	w ɨ r	24
+148	Tavda Mansi	blood	9	uːr	uː r	24
+149	Vakh Khanty	blood	9	wer	w e r	24
+150	Vasjugan Khanty	blood	9	wer	w e r	24
+151	Tremjugan Khanty	blood	9	wer	w e r	24
+152	Jugan Khanty	blood	9	wer	w e r	24
+153	Upper Demjanka Khanty	blood	9	wer	w e r	24
+154	Konda Khanty	blood	9	wer	w e r	24
+155	Nizjam Khanty	blood	9	katə	k a t ə	25
+156	Sherkaly Khanty	blood	9	katə	k a t ə	25
+157	Kazym Khanty	blood	9	kaɬiː	k a ɬ iː	25
+158	Synja Khanty	blood	9	wur	w u r	24
+159	Obdorsk Khanty	blood	9	wuːr	w uː r	24
+# 
+160	North Mansi	bone	10	lu	l u	26
+161	Middle Lozva Mansi	bone	10	lu	l u	26
+162	Lower Lozva Mansi	bone	10	luʃm	l u ʃ m	26
+163	Pelymka Mansi	bone	10	lu	l u	26
+164	Konda Mansi	bone	10	lo	l o	26
+165	Tavda Mansi	bone	10	loʃəm	l o ʃ ə m	26
+166	Vakh Khanty	bone	10	loɣ	l o ɣ	26
+167	Verkhne-Kalymsk Khanty	bone	10	loɣ	l o ɣ	26
+168	Vasjugan Khanty	bone	10	loɣ	l o ɣ	26
+169	Vartovskoje Khanty	bone	10	ɬoɣ	ɬ o ɣ	26
+170	Likrisovskoje Khanty	bone	10	θoɣ	θ o ɣ	26
+171	Malyj Jugan Khanty	bone	10	ɬoɣʷ	ɬ o ɣʷ	26
+172	Tremjugan Khanty	bone	10	ɬoɣʷ	ɬ o ɣʷ	26
+173	Jugan Khanty	bone	10	ɬow	ɬ o w	26
+174	Upper Demjanka Khanty	bone	10	tew	t e w	26
+175	Konda Khanty	bone	10	tow	t o w	26
+176	Nizjam Khanty	bone	10	tuw	t u w	26
+177	Sherkaly Khanty	bone	10	tuw	t u w	26
+178	Kazym Khanty	bone	10	ɬuw	ɬ u w	26
+179	Synja Khanty	bone	10	low	l o w	26
+180	Obdorsk Khanty	bone	10	law	l a w	26
+# 
+181	North Mansi	breast	11	maɣɨl	m a ɣ ɨ l	27
+182	Middle Lozva Mansi	breast	11	maɨl	m aɨ l	27
+183	Lower Lozva Mansi	breast	11	maɨl	m aɨ l	27
+184	Pelymka Mansi	breast	11	maɣɨl	m a ɣ ɨ l	27
+185	Konda Mansi	breast	11	mɔul	m ɔu l	27
+186	Tavda Mansi	breast	11	məul	m əu l	27
+187	Vakh Khanty	breast	11	mœːɣəl	m œː ɣ ə l	27
+188	Verkhne-Kalymsk Khanty	breast	11	mœːɣəl	m œː ɣ ə l	27
+189	Vasjugan Khanty	breast	11	mœːɣəl	m œː ɣ ə l	27
+190	Vartovskoje Khanty	breast	11	mœɣəɬ	m œ ɣ ə ɬ	27
+191	Likrisovskoje Khanty	breast	11	mæɣʷəθ	m æ ɣʷ ə θ	27
+192	Malyj Jugan Khanty	breast	11	mæɣʷəɬ	m æ ɣʷ ə ɬ	27
+193	Tremjugan Khanty	breast	11	mæɣʷəɬ	m æ ɣʷ ə ɬ	27
+194	Jugan Khanty	breast	11	mæwəɬ	m æ w ə ɬ	27
+195	Upper Demjanka Khanty	breast	11	meːɣət	m eː ɣ ə t	27
+196	Konda Khanty	breast	11	meːɣət	m eː ɣ ə t	27
+197	Nizjam Khanty	breast	11	meːwət	m eː w ə t	27
+198	Sherkaly Khanty	breast	11	meːɣət	m eː ɣ ə t	27
+199	Kazym Khanty	breast	11	meːwəɬ	m eː w ə ɬ	27
+200	Synja Khanty	breast	11	meːwəl	m eː w ə l	27
+201	Obdorsk Khanty	breast	11	meːwəl	m eː w ə l	27
+# 
+202	North Mansi	burn (V)	12	titti	t i tː i	28
+203	Middle Lozva Mansi	burn (V)	12	tiχti	t i χ t i	28
+204	Lower Lozva Mansi	burn (V)	12	tiχti	t i χ t i	28
+205	Pelymka Mansi	burn (V)	12	tiχti	t i χ t i	28
+206	Konda Mansi	burn (V)	12	təχti	t ə χ t i	28
+207	Tavda Mansi	burn (V)	12	tæitæl	t æi t æ l	28
+208	Jugan Khanty	burn (V)	12	ɬæːpət	ɬ æː p ə t	28
+209	Upper Demjanka Khanty	burn (V)	12	tæːpət	t æː p ə t	28
+210	Konda Khanty	burn (V)	12	tæːpət	t æː p ə t	28
+211	Kazym Khanty	burn (V)	12	ɬaːpət	ɬ aː p ə t	28
+212	Synja Khanty	burn (V)	12	laːpət	l aː p ə t	28
+# 
+213	North Mansi	claw	13	kʷons	kʷ o n s	29
+214	Middle Lozva Mansi	claw	13	kʷænʃ	kʷ æ n ʃ	29
+215	Lower Lozva Mansi	claw	13	kʷænʃ	kʷ æ n ʃ	29
+216	Pelymka Mansi	claw	13	kʷænʃ	kʷ æ n ʃ	29
+217	Konda Mansi	claw	13	kʷæns	kʷ æ n s	29
+218	Tavda Mansi	claw	13	kunʃ	k u n ʃ	29
+219	Vakh Khanty	claw	13	kœɳʧ	k œ ɳ ʧ	29
+220	Verkhne-Kalymsk Khanty	claw	13	kœɳʧ	k œ ɳ ʧ	29
+221	Vasjugan Khanty	claw	13	kœɳʧ	k œ ɳ ʧ	29
+222	Vartovskoje Khanty	claw	13	kœɳʧ	k œ ɳ ʧ	29
+223	Likrisovskoje Khanty	claw	13	kœɳʧ	k œ ɳ ʧ	29
+224	Malyj Jugan Khanty	claw	13	kœɳʧ	k œ ɳ ʧ	29
+225	Tremjugan Khanty	claw	13	kœɳʧ	k œ ɳ ʧ	29
+226	Jugan Khanty	claw	13	kœnʧ	k œ n ʧ	29
+227	Upper Demjanka Khanty	claw	13	konʧ	k o n ʧ	29
+228	Konda Khanty	claw	13	konʧ	k o n ʧ	29
+229	Nizjam Khanty	claw	13	kuʃ	k u ʃ	29
+230	Sherkaly Khanty	claw	13	kuʃ	k u ʃ	29
+231	Kazym Khanty	claw	13	kuʃ	k u ʃ	29
+232	Synja Khanty	claw	13	kuʃ	k u ʃ	29
+233	Obdorsk Khanty	claw	13	kuːs	k uː s	29
+# 
+234	North Mansi	cloud	14	tul	t u l	30
+235	Middle Lozva Mansi	cloud	14	tul	t u l	30
+236	Lower Lozva Mansi	cloud	14	tul	t u l	30
+237	Pelymka Mansi	cloud	14	tul	t u l	30
+238	Konda Mansi	cloud	14	tol	t o l	30
+239	Tavda Mansi	cloud	14	tul	t u l	30
+240	Vakh Khanty	cloud	14	peləŋ	p e l ə ŋ	31
+241	Verkhne-Kalymsk Khanty	cloud	14	peləŋ	p e l ə ŋ	31
+242	Vasjugan Khanty	cloud	14	peləŋ	p e l ə ŋ	31
+243	Vartovskoje Khanty	cloud	14	peɬəŋ	p e ɬ ə ŋ	31
+244	Likrisovskoje Khanty	cloud	14	peθəŋ	p e θ ə ŋ	31
+245	Malyj Jugan Khanty	cloud	14	peɬəŋ	p e ɬ ə ŋ	31
+246	Tremjugan Khanty	cloud	14	peɬəŋ	p e ɬ ə ŋ	31
+247	Jugan Khanty	cloud	14	peɬəŋ	p e ɬ ə ŋ	31
+248	Upper Demjanka Khanty	cloud	14	petəŋ	p e t ə ŋ	31
+249	Nizjam Khanty	cloud	14	patəŋ	p a t ə ŋ	31
+250	Sherkaly Khanty	cloud	14	patəŋ	p a t ə ŋ	31
+251	Kazym Khanty	cloud	14	paɬəŋ	p a ɬ ə ŋ	31
+252	Synja Khanty	cloud	14	paləŋ	p a l ə ŋ	31
+253	Obdorsk Khanty	cloud	14	pæləŋ	p æ l ə ŋ	31
+# 
+254	North Mansi	cold	15	asʲerəm	a sʲ e r ə m	35
+255	Middle Lozva Mansi	cold	15	æsʲerəm	æ sʲ e r ə m	35
+256	Lower Lozva Mansi	cold	15	æsʲerəm	æ sʲ e r ə m	35
+257	Pelymka Mansi	cold	15	æsʲərəm	æ sʲ ə r ə m	35
+258	Konda Mansi	cold	15	asʲərəm	a sʲ ə r ə m	35
+259	Tavda Mansi	cold	15	iʧirəm	i ʧ i r ə m	35
+260	Vakh Khanty	cold	15	etjəɣ	e t j ə ɣ	32
+261	Verkhne-Kalymsk Khanty	cold	15	etjəɣ	e t j ə ɣ	32
+262	Vasjugan Khanty	cold	15	etjəɣ	e t j ə ɣ	32
+263	Malyj Jugan Khanty	cold	15	ɬiːɬ	ɬ iː ɬ	33
+264	Tremjugan Khanty	cold	15	jæɣɬiː	j æ ɣ ɬ iː	34
+265	Jugan Khanty	cold	15	jæɣɬiː	j æ ɣ ɬ iː	34
+266	Upper Demjanka Khanty	cold	15	etjək	e t j ə k	32
+267	Konda Khanty	cold	15	etjək	e t j ə k	32
+268	Nizjam Khanty	cold	15	isjkə	i s j k ə	32
+269	Sherkaly Khanty	cold	15	isjkə	i s j k ə	32
+270	Kazym Khanty	cold	15	isjkiː	i s j k iː	32
+271	Synja Khanty	cold	15	isjkiː	i s j k iː	32
+272	Obdorsk Khanty	cold	15	isjkiː	i s j k iː	32
+# 
+273	North Mansi	come (V)	16	jiw	j i w	36
+274	Middle Lozva Mansi	come (V)	16	jiw	j i w	36
+275	Lower Lozva Mansi	come (V)	16	iːw	iː w	36
+276	Pelymka Mansi	come (V)	16	jiw	j i w	36
+277	Konda Mansi	come (V)	16	jiw	j i w	36
+278	Tavda Mansi	come (V)	16	jæːnt	j æː n t	36
+279	Vakh Khanty	come (V)	16	jœ	j œ	36
+280	Vasjugan Khanty	come (V)	16	jœ	j œ	36
+281	Likrisovskoje Khanty	come (V)	16	jœ	j œ	36
+282	Malyj Jugan Khanty	come (V)	16	jœ	j œ	36
+283	Tremjugan Khanty	come (V)	16	jœ	j œ	36
+284	Jugan Khanty	come (V)	16	jœ	j œ	36
+285	Upper Demjanka Khanty	come (V)	16	je	j e	36
+286	Konda Khanty	come (V)	16	je	j e	36
+287	Sherkaly Khanty	come (V)	16	ji	j i	36
+288	Kazym Khanty	come (V)	16	ji	j i	36
+289	Synja Khanty	come (V)	16	ji	j i	36
+290	Obdorsk Khanty	come (V)	16	jiː	j iː	36
+# 
+291	North Mansi	die (V)	17	χɔːli	χ ɔː l i	37
+292	Middle Lozva Mansi	die (V)	17	qɔli	q ɔ l i	37
+293	Lower Lozva Mansi	die (V)	17	qɔːli	q ɔː l i	37
+294	Pelymka Mansi	die (V)	17	qoːli	q oː l i	37
+295	Konda Mansi	die (V)	17	qoːli	q oː l i	37
+296	Tavda Mansi	die (V)	17	qɔlɔnt	q ɔ l ɔ n t	37
+297	Vakh Khanty	die (V)	17	suːr	s uː r	38
+298	Verkhne-Kalymsk Khanty	die (V)	17	suːr	s uː r	38
+299	Vasjugan Khanty	die (V)	17	teːwərsæːɣjentæː	t eː w ə r s æː ɣ j e n t æː	39
+300	Vartovskoje Khanty	die (V)	17	suːr	s uː r	38
+301	Likrisovskoje Khanty	die (V)	17	suːr	s uː r	38
+302	Malyj Jugan Khanty	die (V)	17	suːræːɬ	s uː r æː ɬ	38
+303	Tremjugan Khanty	die (V)	17	suːræːɬ	s uː r æː ɬ	38
+304	Jugan Khanty	die (V)	17	suːraːɬ	s uː r aː ɬ	38
+305	Upper Demjanka Khanty	die (V)	17	suːraːt	s uː r aː t	38
+306	Konda Khanty	die (V)	17	joːχaːt	j oː χ aː t	40
+307	Nizjam Khanty	die (V)	17	toχaːt	t o χ aː t	41
+308	Kazym Khanty	die (V)	17	pɔːsaːɬə	p ɔː s aː ɬ ə	-42
+309	Synja Khanty	die (V)	17	posaːlə	p o s aː l ə	-42
+310	Obdorsk Khanty	die (V)	17	paːsæːlə	p aː s æː l ə	-42
+# 
+311	North Mansi	dog	18	aːmp	aː m p	43
+312	Middle Lozva Mansi	dog	18	oɔmp	oɔ m p	43
+313	Lower Lozva Mansi	dog	18	ɔːmp	ɔː m p	43
+314	Pelymka Mansi	dog	18	oɔmp	oɔ m p	43
+315	Konda Mansi	dog	18	oɔmp	oɔ m p	43
+316	Tavda Mansi	dog	18	æːmp	æː m p	43
+317	Vakh Khanty	dog	18	æːmp	æː m p	43
+318	Vasjugan Khanty	dog	18	æːmp	æː m p	43
+319	Likrisovskoje Khanty	dog	18	æːmp	æː m p	43
+320	Malyj Jugan Khanty	dog	18	æːmp	æː m p	43
+321	Tremjugan Khanty	dog	18	æːmp	æː m p	43
+322	Jugan Khanty	dog	18	æːmp	æː m p	43
+323	Upper Demjanka Khanty	dog	18	æːmp	æː m p	43
+324	Konda Khanty	dog	18	æːmp	æː m p	43
+325	Nizjam Khanty	dog	18	aːmp	aː m p	43
+326	Kazym Khanty	dog	18	aːmp	aː m p	43
+327	Synja Khanty	dog	18	aːp	aː p	43
+328	Obdorsk Khanty	dog	18	æːmp	æː m p	43
+# 
+329	North Mansi	drink (V)	19	aji	a j i	44
+330	Middle Lozva Mansi	drink (V)	19	æji	æ j i	44
+331	Lower Lozva Mansi	drink (V)	19	æji	æ j i	44
+332	Pelymka Mansi	drink (V)	19	æji	æ j i	44
+333	Konda Mansi	drink (V)	19	æji	æ j i	44
+334	Tavda Mansi	drink (V)	19	æjænt	æ j æ n t	44
+335	Vakh Khanty	drink (V)	19	liː	l iː	45
+336	Verkhne-Kalymsk Khanty	drink (V)	19	jiː	j iː	45
+337	Vasjugan Khanty	drink (V)	19	iː	iː	45
+338	Vartovskoje Khanty	drink (V)	19	ɬiː	ɬ iː	45
+339	Likrisovskoje Khanty	drink (V)	19	θiː	θ iː	45
+340	Malyj Jugan Khanty	drink (V)	19	ɬiː	ɬ iː	45
+341	Tremjugan Khanty	drink (V)	19	jeːɲtj	j eː ɲ t j	46
+342	Upper Demjanka Khanty	drink (V)	19	jæːɲtj	j æː ɲ t j	46
+343	Konda Khanty	drink (V)	19	jæːɲtj	j æː ɲ t j	46
+344	Nizjam Khanty	drink (V)	19	jaːɲsj	j aː ɲ s j	46
+345	Sherkaly Khanty	drink (V)	19	jaːɲsj	j aː ɲ s j	46
+346	Kazym Khanty	drink (V)	19	jaːɲsj	j aː ɲ s j	46
+347	Synja Khanty	drink (V)	19	jiɲsj	j i ɲ s j	46
+348	Obdorsk Khanty	drink (V)	19	jeːɲsj	j eː ɲ s j	46
+# 
+349	North Mansi	dry	20	tɔːsəm	t ɔː s ə m	47
+350	Middle Lozva Mansi	dry	20	toːʃəm	t oː ʃ ə m	47
+351	Lower Lozva Mansi	dry	20	toːʃəm	t oː ʃ ə m	47
+352	Pelymka Mansi	dry	20	toːʃəm	t oː ʃ ə m	47
+353	Konda Mansi	dry	20	toːsəm	t oː s ə m	47
+354	Tavda Mansi	dry	20	tɔʃɔm	t ɔ ʃ ɔ m	47
+355	Vakh Khanty	dry	20	pæːntəm	p æː n t ə m	48
+356	Vasjugan Khanty	dry	20	pæːntəm	p æː n t ə m	48
+357	Tremjugan Khanty	dry	20	sɔːrəm	s ɔː r ə m	49
+358	Jugan Khanty	dry	20	sɔːrəm	s ɔː r ə m	49
+359	Upper Demjanka Khanty	dry	20	soːrəm	s oː r ə m	49
+360	Konda Khanty	dry	20	soːrəm	s oː r ə m	49
+361	Nizjam Khanty	dry	20	sɔːrəm	s ɔː r ə m	49
+362	Sherkaly Khanty	dry	20	sɔːrəm	s ɔː r ə m	49
+363	Kazym Khanty	dry	20	sɔːrəm	s ɔː r ə m	49
+364	Synja Khanty	dry	20	sɔːrəm	s ɔː r ə m	49
+365	Obdorsk Khanty	dry	20	saːrəm	s aː r ə m	49
+# 
+366	North Mansi	ear	21	paʎ	p a ʎ	50
+367	Middle Lozva Mansi	ear	21	pæʎ	p æ ʎ	50
+368	Lower Lozva Mansi	ear	21	pæʎ	p æ ʎ	50
+369	Pelymka Mansi	ear	21	pæʎ	p æ ʎ	50
+370	Konda Mansi	ear	21	pæʎ	p æ ʎ	50
+371	Tavda Mansi	ear	21	piʎ	p i ʎ	50
+372	Vakh Khanty	ear	21	pel	p e l	50
+373	Verkhne-Kalymsk Khanty	ear	21	pel	p e l	50
+374	Vasjugan Khanty	ear	21	pel	p e l	50
+375	Vartovskoje Khanty	ear	21	peɬ	p e ɬ	50
+376	Likrisovskoje Khanty	ear	21	peθ	p e θ	50
+377	Malyj Jugan Khanty	ear	21	peɬ	p e ɬ	50
+378	Tremjugan Khanty	ear	21	peɬ	p e ɬ	50
+379	Jugan Khanty	ear	21	peɬ	p e ɬ	50
+380	Upper Demjanka Khanty	ear	21	pet	p e t	50
+381	Konda Khanty	ear	21	pet	p e t	50
+382	Nizjam Khanty	ear	21	pat	p a t	50
+383	Sherkaly Khanty	ear	21	pat	p a t	50
+384	Kazym Khanty	ear	21	paɬ	p a ɬ	50
+385	Obdorsk Khanty	ear	21	pæl	p æ l	50
+# 
+386	North Mansi	earth	22	maː	m aː	51
+387	Middle Lozva Mansi	earth	22	məː	m əː	51
+388	Lower Lozva Mansi	earth	22	məː	m əː	51
+389	Pelymka Mansi	earth	22	məː	m əː	51
+390	Konda Mansi	earth	22	məː	m əː	51
+391	Tavda Mansi	earth	22	maː	m aː	51
+392	Vakh Khanty	earth	22	meɣ	m e ɣ	51
+393	Verkhne-Kalymsk Khanty	earth	22	meɣ	m e ɣ	51
+394	Vasjugan Khanty	earth	22	meɣ	m e ɣ	51
+395	Tremjugan Khanty	earth	22	meɣ	m e ɣ	51
+396	Jugan Khanty	earth	22	meɣ	m e ɣ	51
+397	Upper Demjanka Khanty	earth	22	meɣ	m e ɣ	51
+398	Konda Khanty	earth	22	meɣ	m e ɣ	51
+399	Nizjam Khanty	earth	22	miɣ	m i ɣ	51
+400	Sherkaly Khanty	earth	22	miɣ	m i ɣ	51
+401	Kazym Khanty	earth	22	muw	m u w	51
+402	Synja Khanty	earth	22	muw	m u w	51
+403	Obdorsk Khanty	earth	22	muːw	m uː w	51
+# 
+404	North Mansi	eat (V)	23	teːɨɣ	t eːɨ ɣ	52
+405	Middle Lozva Mansi	eat (V)	23	tij	t i j	52
+406	Lower Lozva Mansi	eat (V)	23	ti	t i	52
+407	Pelymka Mansi	eat (V)	23	teːi	t eːi	52
+408	Konda Mansi	eat (V)	23	təɨɣ	t əɨ ɣ	52
+409	Tavda Mansi	eat (V)	23	tæjænt	t æ j æ n t	52
+410	Vakh Khanty	eat (V)	23	liː	l iː	52
+411	Verkhne-Kalymsk Khanty	eat (V)	23	jiː	j iː	52
+412	Vasjugan Khanty	eat (V)	23	iː	iː	52
+413	Vartovskoje Khanty	eat (V)	23	ɬiː	ɬ iː	52
+414	Likrisovskoje Khanty	eat (V)	23	θiː	θ iː	52
+415	Malyj Jugan Khanty	eat (V)	23	ɬiː	ɬ iː	52
+416	Tremjugan Khanty	eat (V)	23	ɬiː	ɬ iː	52
+417	Jugan Khanty	eat (V)	23	ɬiː	ɬ iː	52
+418	Upper Demjanka Khanty	eat (V)	23	teː	t eː	52
+419	Konda Khanty	eat (V)	23	teː	t eː	52
+420	Nizjam Khanty	eat (V)	23	teː	t eː	52
+421	Sherkaly Khanty	eat (V)	23	teː	t eː	52
+422	Kazym Khanty	eat (V)	23	ɬɛː	ɬ ɛː	52
+423	Synja Khanty	eat (V)	23	leː	l eː	52
+424	Obdorsk Khanty	eat (V)	23	liː	l iː	52
+# 
+425	North Mansi	egg	24	muŋi	m u ŋ i	54
+426	Middle Lozva Mansi	egg	24	ɲæmrəχ	ɲ æ m r ə χ	-53
+427	Lower Lozva Mansi	egg	24	ɲamrəχ	ɲ a m r ə χ	-53
+428	Pelymka Mansi	egg	24	ɲɔmərtkə	ɲ ɔ m ə r t k ə	-53
+429	Konda Mansi	egg	24	moŋ	m o ŋ	54
+430	Tavda Mansi	egg	24	ɲamərtk	ɲ a m ə r t k	-53
+431	Vakh Khanty	egg	24	mɔːk	m ɔː k	55
+432	Verkhne-Kalymsk Khanty	egg	24	moːk	m oː k	55
+433	Vartovskoje Khanty	egg	24	moːk	m oː k	55
+434	Likrisovskoje Khanty	egg	24	maːkʷ	m aː kʷ	55
+435	Malyj Jugan Khanty	egg	24	moːk	m oː k	55
+436	Tremjugan Khanty	egg	24	moːk	m oː k	55
+437	Jugan Khanty	egg	24	moːk	m oː k	55
+438	Upper Demjanka Khanty	egg	24	kæːrəmoːχ	k æː r ə m oː χ	55
+439	Konda Khanty	egg	24	kærəmoːχ	k æ r ə m oː χ	55
+440	Nizjam Khanty	egg	24	poʃəχ	p o ʃ ə χ	56
+441	Sherkaly Khanty	egg	24	poʃəχ	p o ʃ ə χ	56
+442	Kazym Khanty	egg	24	poʃəχ	p o ʃ ə χ	56
+443	Obdorsk Khanty	egg	24	pasəχ	p a s ə χ	56
+# 
+444	North Mansi	eye	25	sam	s a m	57
+445	Middle Lozva Mansi	eye	25	ʃæm	ʃ æ m	57
+446	Lower Lozva Mansi	eye	25	ʃæm	ʃ æ m	57
+447	Pelymka Mansi	eye	25	ʃæm	ʃ æ m	57
+448	Konda Mansi	eye	25	sæm	s æ m	57
+449	Tavda Mansi	eye	25	ʃəm	ʃ ə m	57
+450	Vakh Khanty	eye	25	seːm	s eː m	57
+451	Verkhne-Kalymsk Khanty	eye	25	seːm	s eː m	57
+452	Vasjugan Khanty	eye	25	seːm	s eː m	57
+453	Vartovskoje Khanty	eye	25	sæm	s æ m	57
+454	Tremjugan Khanty	eye	25	sæm	s æ m	57
+455	Jugan Khanty	eye	25	sæm	s æ m	57
+456	Upper Demjanka Khanty	eye	25	seːm	s eː m	57
+457	Konda Khanty	eye	25	seːm	s eː m	57
+458	Nizjam Khanty	eye	25	seːm	s eː m	57
+459	Sherkaly Khanty	eye	25	seːm	s eː m	57
+460	Kazym Khanty	eye	25	sɛːm	s ɛː m	57
+461	Synja Khanty	eye	25	seːm	s eː m	57
+462	Obdorsk Khanty	eye	25	seːm	s eː m	57
+# 
+463	North Mansi	fat	26	woːj	w oː j	58
+464	Middle Lozva Mansi	fat	26	wuoj	w uo j	58
+465	Pelymka Mansi	fat	26	wuoj	w uo j	58
+466	Konda Mansi	fat	26	wuoj	w uo j	58
+467	Tavda Mansi	fat	26	wɔːj	w ɔː j	58
+468	Vakh Khanty	fat	26	woːj	w oː j	58
+469	Verkhne-Kalymsk Khanty	fat	26	woːj	w oː j	58
+470	Vasjugan Khanty	fat	26	woːj	w oː j	58
+471	Vartovskoje Khanty	fat	26	woːj	w oː j	58
+472	Likrisovskoje Khanty	fat	26	woːj	w oː j	58
+473	Malyj Jugan Khanty	fat	26	woj	w o j	58
+474	Tremjugan Khanty	fat	26	woj	w o j	58
+475	Jugan Khanty	fat	26	woj	w o j	58
+476	Upper Demjanka Khanty	fat	26	uːj	uː j	58
+477	Konda Khanty	fat	26	yːj	yː j	58
+478	Nizjam Khanty	fat	26	saχsə	s a χ s ə	59
+479	Sherkaly Khanty	fat	26	saχsə	s a χ s ə	59
+480	Kazym Khanty	fat	26	woj	w o j	58
+481	Synja Khanty	fat	26	woj	w o j	58
+482	Obdorsk Khanty	fat	26	waj	w a j	58
+# 
+483	North Mansi	feather	27	pun	p u n	60
+484	Middle Lozva Mansi	feather	27	pun	p u n	60
+485	Lower Lozva Mansi	feather	27	pun	p u n	60
+486	Pelymka Mansi	feather	27	pun	p u n	60
+487	Konda Mansi	feather	27	pon	p o n	60
+488	Tavda Mansi	feather	27	pon	p o n	60
+489	Vakh Khanty	feather	27	puːn	p uː n	60
+490	Verkhne-Kalymsk Khanty	feather	27	puːn	p uː n	60
+491	Vasjugan Khanty	feather	27	puːn	p uː n	60
+492	Likrisovskoje Khanty	feather	27	puːn	p uː n	60
+493	Malyj Jugan Khanty	feather	27	puːn	p uː n	60
+494	Tremjugan Khanty	feather	27	puːn	p uː n	60
+495	Upper Demjanka Khanty	feather	27	pyːn	p yː n	60
+496	Konda Khanty	feather	27	pyːn	p yː n	60
+497	Nizjam Khanty	feather	27	pun	p u n	60
+498	Sherkaly Khanty	feather	27	pun	p u n	60
+499	Kazym Khanty	feather	27	pun	p u n	60
+500	Synja Khanty	feather	27	pun	p u n	60
+501	Obdorsk Khanty	feather	27	puːn	p uː n	60
+# 
+502	North Mansi	fire	28	uʎæ	u ʎ æ	61
+503	Middle Lozva Mansi	fire	28	toɔt	t oɔ t	62
+504	Lower Lozva Mansi	fire	28	tɔːt	t ɔː t	62
+505	Pelymka Mansi	fire	28	oɔrəsʲ	oɔ r ə sʲ	63
+506	Konda Mansi	fire	28	tɔut	t ɔu t	62
+507	Tavda Mansi	fire	28	tæut	t æu t	62
+508	Vakh Khanty	fire	28	tœɣət	t œ ɣ ə t	62
+509	Verkhne-Kalymsk Khanty	fire	28	tœɣət	t œ ɣ ə t	62
+510	Vasjugan Khanty	fire	28	tœɣət	t œ ɣ ə t	62
+511	Vartovskoje Khanty	fire	28	tœɣət	t œ ɣ ə t	62
+512	Likrisovskoje Khanty	fire	28	teɣʷət	t e ɣʷ ə t	62
+513	Malyj Jugan Khanty	fire	28	teɣʷət	t e ɣʷ ə t	62
+514	Tremjugan Khanty	fire	28	teɣʷət	t e ɣʷ ə t	62
+515	Jugan Khanty	fire	28	tewət	t e w ə t	62
+516	Upper Demjanka Khanty	fire	28	tyːt	t yː t	62
+517	Konda Khanty	fire	28	tyːt	t yː t	62
+518	Nizjam Khanty	fire	28	tut	t u t	62
+519	Sherkaly Khanty	fire	28	tut	t u t	62
+520	Kazym Khanty	fire	28	tut	t u t	62
+521	Synja Khanty	fire	28	tut	t u t	62
+522	Obdorsk Khanty	fire	28	tuːt	t uː t	62
+# 
+523	North Mansi	fish	29	χul	χ u l	64
+524	Middle Lozva Mansi	fish	29	qul	q u l	64
+525	Lower Lozva Mansi	fish	29	qul	q u l	64
+526	Pelymka Mansi	fish	29	qul	q u l	64
+527	Konda Mansi	fish	29	qul	q u l	64
+528	Tavda Mansi	fish	29	qol	q o l	64
+529	Vakh Khanty	fish	29	kuːl	k uː l	64
+530	Verkhne-Kalymsk Khanty	fish	29	kuːl	k uː l	64
+531	Vasjugan Khanty	fish	29	kuːl	k uː l	64
+532	Vartovskoje Khanty	fish	29	kuːɬ	k uː ɬ	64
+533	Likrisovskoje Khanty	fish	29	kuːθ	k uː θ	64
+534	Malyj Jugan Khanty	fish	29	kuːɬ	k uː ɬ	64
+535	Tremjugan Khanty	fish	29	kuːɬ	k uː ɬ	64
+536	Jugan Khanty	fish	29	kuːɬ	k uː ɬ	64
+537	Upper Demjanka Khanty	fish	29	χuːtj	χ uː t j	64
+538	Konda Khanty	fish	29	χuːtj	χ uː t j	64
+539	Nizjam Khanty	fish	29	χut	χ u t	64
+540	Sherkaly Khanty	fish	29	χut	χ u t	64
+541	Kazym Khanty	fish	29	χuɬ	χ u ɬ	64
+542	Synja Khanty	fish	29	χul	χ u l	64
+543	Obdorsk Khanty	fish	29	χuːl	χ uː l	64
+# 
+544	North Mansi	fly (V)	30	tɨːli	t ɨː l i	65
+545	Middle Lozva Mansi	fly (V)	30	tɨːli	t ɨː l i	65
+546	Lower Lozva Mansi	fly (V)	30	tiːli	t iː l i	65
+547	Pelymka Mansi	fly (V)	30	təɨli	t əɨ l i	65
+548	Konda Mansi	fly (V)	30	təɨli	t əɨ l i	65
+549	Tavda Mansi	fly (V)	30	tæulænt	t æu l æ n t	65
+550	Vakh Khanty	fly (V)	30	leɣəl	l e ɣ ə l	65
+551	Tremjugan Khanty	fly (V)	30	ɬeɣəɬ	ɬ e ɣ ə ɬ	65
+552	Jugan Khanty	fly (V)	30	ɬeɣəɬ	ɬ e ɣ ə ɬ	65
+553	Upper Demjanka Khanty	fly (V)	30	teɣət	t e ɣ ə t	65
+554	Konda Khanty	fly (V)	30	teɣət	t e ɣ ə t	65
+555	Sherkaly Khanty	fly (V)	30	jaŋχ	j a ŋ χ	66
+556	Kazym Khanty	fly (V)	30	jaŋ	j a ŋ	66
+557	Synja Khanty	fly (V)	30	jaŋχ	j a ŋ χ	66
+# 
+558	North Mansi	foot	31	laɣɨl	l a ɣ ɨ l	68
+559	Middle Lozva Mansi	foot	31	ləl	l ə l	68
+560	Lower Lozva Mansi	foot	31	ləl	l ə l	68
+561	Pelymka Mansi	foot	31	ləl	l ə l	68
+562	Konda Mansi	foot	31	ləl	l ə l	68
+563	Tavda Mansi	foot	31	laəl	l aə l	68
+564	Vakh Khanty	foot	31	kœr	k œ r	67
+565	Verkhne-Kalymsk Khanty	foot	31	kœr	k œ r	67
+566	Vasjugan Khanty	foot	31	kœr	k œ r	67
+567	Tremjugan Khanty	foot	31	kœr	k œ r	67
+568	Jugan Khanty	foot	31	kœr	k œ r	67
+569	Upper Demjanka Khanty	foot	31	kor	k o r	67
+570	Konda Khanty	foot	31	kor	k o r	67
+571	Nizjam Khanty	foot	31	kur	k u r	67
+572	Sherkaly Khanty	foot	31	kur	k u r	67
+573	Kazym Khanty	foot	31	kur	k u r	67
+574	Synja Khanty	foot	31	kur	k u r	67
+575	Obdorsk Khanty	foot	31	kuːr	k uː r	67
+# 
+576	North Mansi	full	32	taɣɨl	t a ɣ ɨ l	69
+577	Middle Lozva Mansi	full	32	taɨl	t aɨ l	69
+578	Lower Lozva Mansi	full	32	taɨl	t aɨ l	69
+579	Pelymka Mansi	full	32	tæɣɨl	t æ ɣ ɨ l	69
+580	Konda Mansi	full	32	taɣɨl	t a ɣ ɨ l	69
+581	Tavda Mansi	full	32	tæul	t æu l	69
+582	Vakh Khanty	full	32	teːlɣæːl	t eː l ɣ æː l	69
+583	Verkhne-Kalymsk Khanty	full	32	teːl	t eː l	69
+584	Vasjugan Khanty	full	32	teːl	t eː l	69
+585	Likrisovskoje Khanty	full	32	tæθ	t æ θ	69
+586	Malyj Jugan Khanty	full	32	tæɬ	t æ ɬ	69
+587	Tremjugan Khanty	full	32	tæɬ	t æ ɬ	69
+588	Jugan Khanty	full	32	tæɬəɬ	t æ ɬ ə ɬ	69
+589	Upper Demjanka Khanty	full	32	teːt	t eː t	69
+590	Konda Khanty	full	32	teːt	t eː t	69
+591	Nizjam Khanty	full	32	teːt	t eː t	69
+592	Sherkaly Khanty	full	32	teːt	t eː t	69
+593	Kazym Khanty	full	32	tɛːɬ	t ɛː ɬ	69
+594	Synja Khanty	full	32	teːl	t eː l	69
+595	Obdorsk Khanty	full	32	teːl	t eː l	69
+# 
+596	North Mansi	give (V)	33	mɨːɣ	m ɨː ɣ	70
+597	Middle Lozva Mansi	give (V)	33	mij	m i j	70
+598	Lower Lozva Mansi	give (V)	33	miː	m iː	70
+599	Pelymka Mansi	give (V)	33	mæji	m æ j i	70
+600	Konda Mansi	give (V)	33	məɨɣ	m əɨ ɣ	70
+601	Tavda Mansi	give (V)	33	mæjænt	m æ j æ n t	70
+602	Vakh Khanty	give (V)	33	me	m e	70
+603	Vasjugan Khanty	give (V)	33	me	m e	70
+604	Tremjugan Khanty	give (V)	33	me	m e	70
+605	Jugan Khanty	give (V)	33	me	m e	70
+606	Upper Demjanka Khanty	give (V)	33	me	m e	70
+607	Konda Khanty	give (V)	33	me	m e	70
+608	Nizjam Khanty	give (V)	33	ma	m a	70
+609	Sherkaly Khanty	give (V)	33	ma	m a	70
+610	Kazym Khanty	give (V)	33	ma	m a	70
+611	Synja Khanty	give (V)	33	ma	m a	70
+612	Obdorsk Khanty	give (V)	33	mæ	m æ	70
+# 
+613	North Mansi	good	34	jɔməs	j ɔ m ə s	71
+614	Middle Lozva Mansi	good	34	jæməs	j æ m ə s	71
+615	Lower Lozva Mansi	good	34	jæməs	j æ m ə s	71
+616	Pelymka Mansi	good	34	jɔməs	j ɔ m ə s	71
+617	Konda Mansi	good	34	jɔməs	j ɔ m ə s	71
+618	Tavda Mansi	good	34	jumɔs	j u m ɔ s	71
+619	Vakh Khanty	good	34	jem	j e m	71
+620	Verkhne-Kalymsk Khanty	good	34	jem	j e m	71
+621	Vasjugan Khanty	good	34	jem	j e m	71
+622	Vartovskoje Khanty	good	34	jem	j e m	71
+623	Likrisovskoje Khanty	good	34	jem	j e m	71
+624	Malyj Jugan Khanty	good	34	jem	j e m	71
+625	Tremjugan Khanty	good	34	jem	j e m	71
+626	Jugan Khanty	good	34	jem	j e m	71
+627	Upper Demjanka Khanty	good	34	jem	j e m	71
+628	Konda Khanty	good	34	jem	j e m	71
+629	Nizjam Khanty	good	34	jam	j a m	71
+630	Sherkaly Khanty	good	34	jam	j a m	71
+631	Kazym Khanty	good	34	jam	j a m	71
+632	Synja Khanty	good	34	jam	j a m	71
+633	Obdorsk Khanty	good	34	jiːm	j iː m	71
+# 
+634	North Mansi	green	35	ɲaːrpum	ɲ aː r p u m	72
+635	Middle Lozva Mansi	green	35	ɲoɔrpum	ɲ oɔ r p u m	72
+636	Pelymka Mansi	green	35	ɲɔːrpum	ɲ ɔː r p u m	72
+637	Konda Mansi	green	35	ɲoɔrpom	ɲ oɔ r p o m	72
+638	Tavda Mansi	green	35	ɲærqɔr	ɲ æ r q ɔ r	72
+639	Tremjugan Khanty	green	35	wastə	w a s t ə	73
+640	Jugan Khanty	green	35	wastə	w a s t ə	73
+641	Upper Demjanka Khanty	green	35	wastə	w a s t ə	73
+642	Konda Khanty	green	35	wastə	w a s t ə	73
+643	Nizjam Khanty	green	35	wostə	w o s t ə	73
+644	Sherkaly Khanty	green	35	wostə	w o s t ə	73
+645	Kazym Khanty	green	35	wostiː	w o s t iː	73
+646	Synja Khanty	green	35	wostiː	w o s t iː	73
+647	Obdorsk Khanty	green	35	wastiː	w a s t iː	73
+# 
+648	North Mansi	hair	36	aːt	aː t	74
+649	Middle Lozva Mansi	hair	36	əːt	əː t	74
+650	Lower Lozva Mansi	hair	36	əːt	əː t	74
+651	Pelymka Mansi	hair	36	əːt	əː t	74
+652	Konda Mansi	hair	36	əːt	əː t	74
+653	Tavda Mansi	hair	36	æːt	æː t	74
+654	Vakh Khanty	hair	36	aːwət	aː w ə t	74
+655	Verkhne-Kalymsk Khanty	hair	36	aːwət	aː w ə t	74
+656	Vasjugan Khanty	hair	36	aːwət	aː w ə t	74
+657	Vartovskoje Khanty	hair	36	aːwət	aː w ə t	74
+658	Likrisovskoje Khanty	hair	36	oːpət	oː p ə t	74
+659	Malyj Jugan Khanty	hair	36	oːpət	oː p ə t	74
+660	Tremjugan Khanty	hair	36	oːpət	oː p ə t	74
+661	Jugan Khanty	hair	36	oːpət	oː p ə t	74
+662	Upper Demjanka Khanty	hair	36	uːpət	uː p ə t	74
+663	Konda Khanty	hair	36	uːpət	uː p ə t	74
+664	Nizjam Khanty	hair	36	uːpət	uː p ə t	74
+665	Sherkaly Khanty	hair	36	uːpət	uː p ə t	74
+666	Kazym Khanty	hair	36	ɵːpət	ɵː p ə t	74
+667	Synja Khanty	hair	36	uːpət	uː p ə t	74
+668	Obdorsk Khanty	hair	36	oːpət	oː p ə t	74
+# 
+669	North Mansi	hand	37	kaːt	k aː t	75
+670	Middle Lozva Mansi	hand	37	koɔt	k oɔ t	75
+671	Lower Lozva Mansi	hand	37	kɔːt	k ɔː t	75
+672	Pelymka Mansi	hand	37	koɔt	k oɔ t	75
+673	Konda Mansi	hand	37	koæt	k oæ t	75
+674	Tavda Mansi	hand	37	kæːt	k æː t	75
+675	Vakh Khanty	hand	37	kœːt	k œː t	75
+676	Verkhne-Kalymsk Khanty	hand	37	kœːt	k œː t	75
+677	Vasjugan Khanty	hand	37	kœːt	k œː t	75
+678	Vartovskoje Khanty	hand	37	kœt	k œ t	75
+679	Likrisovskoje Khanty	hand	37	kœt	k œ t	75
+680	Malyj Jugan Khanty	hand	37	kœt	k œ t	75
+681	Tremjugan Khanty	hand	37	kœt	k œ t	75
+682	Jugan Khanty	hand	37	kœt	k œ t	75
+683	Upper Demjanka Khanty	hand	37	keːt	k eː t	75
+684	Konda Khanty	hand	37	keːt	k eː t	75
+685	Nizjam Khanty	hand	37	jɔːʃ	j ɔː ʃ	76
+686	Sherkaly Khanty	hand	37	jɔːʃ	j ɔː ʃ	76
+687	Kazym Khanty	hand	37	jɔːʃ	j ɔː ʃ	76
+688	Synja Khanty	hand	37	jɔːʃ	j ɔː ʃ	76
+689	Obdorsk Khanty	hand	37	jaːs	j aː s	76
+# 
+690	North Mansi	head	38	puŋk	p u ŋ k	77
+691	Middle Lozva Mansi	head	38	pəŋk	p ə ŋ k	77
+692	Lower Lozva Mansi	head	38	pəŋk	p ə ŋ k	77
+693	Pelymka Mansi	head	38	pəŋk	p ə ŋ k	77
+694	Konda Mansi	head	38	pæŋk	p æ ŋ k	77
+695	Tavda Mansi	head	38	pəŋ	p ə ŋ	77
+696	Vakh Khanty	head	38	ɔːɣ	ɔː ɣ	78
+697	Verkhne-Kalymsk Khanty	head	38	oːɣ	oː ɣ	78
+698	Vasjugan Khanty	head	38	ɔːɣ	ɔː ɣ	78
+699	Vartovskoje Khanty	head	38	oːɣ	oː ɣ	78
+700	Malyj Jugan Khanty	head	38	oːɣʷ	oː ɣʷ	78
+701	Tremjugan Khanty	head	38	oːɣʷ	oː ɣʷ	78
+702	Jugan Khanty	head	38	oːw	oː w	78
+703	Upper Demjanka Khanty	head	38	uːχ	uː χ	78
+704	Konda Khanty	head	38	uːχ	uː χ	78
+705	Nizjam Khanty	head	38	uːχ	uː χ	78
+706	Sherkaly Khanty	head	38	uːχ	uː χ	78
+707	Kazym Khanty	head	38	oχ	o χ	78
+708	Synja Khanty	head	38	oχ	o χ	78
+709	Obdorsk Khanty	head	38	oχ	o χ	78
+# 
+710	North Mansi	hear	39	χɔːli	χ ɔː l i	79
+711	Middle Lozva Mansi	hear	39	qʷoli	qʷ o l i	79
+712	Lower Lozva Mansi	hear	39	qoːli	q oː l i	79
+713	Pelymka Mansi	hear	39	qoːli	q oː l i	79
+714	Konda Mansi	hear	39	qoːli	q oː l i	79
+715	Tavda Mansi	hear	39	qɔlɔnt	q ɔ l ɔ n t	79
+716	Vakh Khanty	hear	39	kɔːl	k ɔː l	79
+717	Verkhne-Kalymsk Khanty	hear	39	koːl	k oː l	79
+718	Vasjugan Khanty	hear	39	kɔːl	k ɔː l	79
+719	Vartovskoje Khanty	hear	39	koːɬ	k oː ɬ	79
+720	Likrisovskoje Khanty	hear	39	koːθ	k oː θ	79
+721	Malyj Jugan Khanty	hear	39	koːɬ	k oː ɬ	79
+722	Tremjugan Khanty	hear	39	koːɬ	k oː ɬ	79
+723	Jugan Khanty	hear	39	koːɬ	k oː ɬ	79
+724	Upper Demjanka Khanty	hear	39	χuːt	χ uː t	79
+725	Konda Khanty	hear	39	χuːt	χ uː t	79
+726	Nizjam Khanty	hear	39	χuːt	χ uː t	79
+727	Sherkaly Khanty	hear	39	χuːt	χ uː t	79
+728	Kazym Khanty	hear	39	χɵːɬ	χ ɵː ɬ	79
+729	Synja Khanty	hear	39	χuːl	χ uː l	79
+730	Obdorsk Khanty	hear	39	χoːl	χ oː l	79
+# 
+731	North Mansi	heart	40	sim	s i m	80
+732	Middle Lozva Mansi	heart	40	ʃim	ʃ i m	80
+733	Lower Lozva Mansi	heart	40	ʃim	ʃ i m	80
+734	Pelymka Mansi	heart	40	ʃim	ʃ i m	80
+735	Konda Mansi	heart	40	səm	s ə m	80
+736	Tavda Mansi	heart	40	ʃɔm	ʃ ɔ m	80
+737	Vakh Khanty	heart	40	sem	s e m	80
+738	Verkhne-Kalymsk Khanty	heart	40	sem	s e m	80
+739	Vasjugan Khanty	heart	40	sem	s e m	80
+740	Vartovskoje Khanty	heart	40	sem	s e m	80
+741	Likrisovskoje Khanty	heart	40	sem	s e m	80
+742	Malyj Jugan Khanty	heart	40	sem	s e m	80
+743	Tremjugan Khanty	heart	40	sem	s e m	80
+744	Jugan Khanty	heart	40	sem	s e m	80
+745	Upper Demjanka Khanty	heart	40	sem	s e m	80
+746	Konda Khanty	heart	40	sem	s e m	80
+747	Nizjam Khanty	heart	40	sam	s a m	80
+748	Sherkaly Khanty	heart	40	sam	s a m	80
+749	Kazym Khanty	heart	40	sam	s a m	80
+750	Synja Khanty	heart	40	sam	s a m	80
+751	Obdorsk Khanty	heart	40	sæm	s æ m	80
+# 
+752	North Mansi	horn	41	aːɲt	aː ɲ t	81
+753	Middle Lozva Mansi	horn	41	ɔɲt	ɔ ɲ t	81
+754	Lower Lozva Mansi	horn	41	aɲt	a ɲ t	81
+755	Pelymka Mansi	horn	41	ɔɲt	ɔ ɲ t	81
+756	Konda Mansi	horn	41	əːɲtʲ	əː ɲ tʲ	81
+757	Tavda Mansi	horn	41	æːnt	æː n t	81
+758	Vakh Khanty	horn	41	aŋət	a ŋ ə t	81
+759	Verkhne-Kalymsk Khanty	horn	41	aŋət	a ŋ ə t	81
+760	Vasjugan Khanty	horn	41	aŋət	a ŋ ə t	81
+761	Vartovskoje Khanty	horn	41	aŋət	a ŋ ə t	81
+762	Likrisovskoje Khanty	horn	41	aŋət	a ŋ ə t	81
+763	Malyj Jugan Khanty	horn	41	ɔːŋət	ɔː ŋ ə t	81
+764	Tremjugan Khanty	horn	41	ɔːŋət	ɔː ŋ ə t	81
+765	Jugan Khanty	horn	41	ɔːŋət	ɔː ŋ ə t	81
+766	Upper Demjanka Khanty	horn	41	oːŋət	oː ŋ ə t	81
+767	Konda Khanty	horn	41	oːŋət	oː ŋ ə t	81
+768	Nizjam Khanty	horn	41	ɔːŋət	ɔː ŋ ə t	81
+769	Sherkaly Khanty	horn	41	ɔːŋət	ɔː ŋ ə t	81
+770	Kazym Khanty	horn	41	ɔːŋət	ɔː ŋ ə t	81
+771	Synja Khanty	horn	41	ɔːŋət	ɔː ŋ ə t	81
+772	Obdorsk Khanty	horn	41	aːŋət	aː ŋ ə t	81
+# 
+773	North Mansi	I	42	am	a m	82
+774	Middle Lozva Mansi	I	42	æm	æ m	82
+775	Lower Lozva Mansi	I	42	am	a m	82
+776	Pelymka Mansi	I	42	ɔm	ɔ m	82
+777	Konda Mansi	I	42	ɔm	ɔ m	82
+778	Tavda Mansi	I	42	æm	æ m	82
+779	Vakh Khanty	I	42	mæː	m æː	82
+780	Vasjugan Khanty	I	42	mæː	m æː	82
+781	Tremjugan Khanty	I	42	mæː	m æː	82
+782	Jugan Khanty	I	42	mæː	m æː	82
+783	Upper Demjanka Khanty	I	42	mæːn	m æː n	82
+784	Konda Khanty	I	42	mæn	m æ n	82
+785	Nizjam Khanty	I	42	maː	m aː	82
+786	Sherkaly Khanty	I	42	maː	m aː	82
+787	Kazym Khanty	I	42	maː	m aː	82
+788	Synja Khanty	I	42	maː	m aː	82
+789	Obdorsk Khanty	I	42	mæː	m æː	82
+# 
+790	North Mansi	kill (V)	43	ali	a l i	83
+791	Middle Lozva Mansi	kill (V)	43	æli	æ l i	83
+792	Lower Lozva Mansi	kill (V)	43	æli	æ l i	83
+793	Pelymka Mansi	kill (V)	43	æli	æ l i	83
+794	Konda Mansi	kill (V)	43	æli	æ l i	83
+795	Tavda Mansi	kill (V)	43	ælænt	æ l æ n t	83
+796	Vakh Khanty	kill (V)	43	weːl	w eː l	83
+797	Vasjugan Khanty	kill (V)	43	weːl	w eː l	83
+798	Likrisovskoje Khanty	kill (V)	43	wæθ	w æ θ	83
+799	Malyj Jugan Khanty	kill (V)	43	wæɬ	w æ ɬ	83
+800	Tremjugan Khanty	kill (V)	43	wæɬ	w æ ɬ	83
+801	Jugan Khanty	kill (V)	43	wæɬ	w æ ɬ	83
+802	Upper Demjanka Khanty	kill (V)	43	weːt	w eː t	83
+803	Konda Khanty	kill (V)	43	weːt	w eː t	83
+804	Nizjam Khanty	kill (V)	43	weːt	w eː t	83
+805	Sherkaly Khanty	kill (V)	43	weːt	w eː t	83
+806	Kazym Khanty	kill (V)	43	weːɬ	w eː ɬ	83
+807	Synja Khanty	kill (V)	43	weːl	w eː l	83
+808	Obdorsk Khanty	kill (V)	43	weːl	w eː l	83
+# 
+809	North Mansi	knee	44	saːns	s aː n s	84
+810	Middle Lozva Mansi	knee	44	ʃanʃ	ʃ a n ʃ	84
+811	Lower Lozva Mansi	knee	44	ʃaːnʃ	ʃ aː n ʃ	84
+812	Pelymka Mansi	knee	44	ʃanʃ	ʃ a n ʃ	84
+813	Konda Mansi	knee	44	sɔnəs	s ɔ n ə s	84
+814	Tavda Mansi	knee	44	ʃɔnʃ	ʃ ɔ n ʃ	84
+815	Vakh Khanty	knee	44	ʧæːɳʧ	ʧ æː ɳ ʧ	84
+816	Verkhne-Kalymsk Khanty	knee	44	ʧæːɳʧ	ʧ æː ɳ ʧ	84
+817	Vasjugan Khanty	knee	44	ʧæːɳʧ	ʧ æː ɳ ʧ	84
+818	Vartovskoje Khanty	knee	44	ʧæːɳʧ	ʧ æː ɳ ʧ	84
+819	Likrisovskoje Khanty	knee	44	ʧæːɳʧ	ʧ æː ɳ ʧ	84
+820	Malyj Jugan Khanty	knee	44	ʧæːnʧ	ʧ æː n ʧ	84
+821	Tremjugan Khanty	knee	44	ʧæːɳʧ	ʧ æː ɳ ʧ	84
+822	Jugan Khanty	knee	44	ʧæːnʧ	ʧ æː n ʧ	84
+823	Upper Demjanka Khanty	knee	44	ʧæːnʧ	ʧ æː n ʧ	84
+824	Konda Khanty	knee	44	ʧæːnʧ	ʧ æː n ʧ	84
+825	Nizjam Khanty	knee	44	ʃaːʃ	ʃ aː ʃ	84
+826	Sherkaly Khanty	knee	44	ʃaːʃ	ʃ aː ʃ	84
+827	Kazym Khanty	knee	44	ʃaːʃ	ʃ aː ʃ	84
+828	Synja Khanty	knee	44	ʃaːʃ	ʃ aː ʃ	84
+829	Obdorsk Khanty	knee	44	sæːs	s æː s	84
+# 
+830	North Mansi	know (V)	45	waːɣ	w aː ɣ	85
+831	Middle Lozva Mansi	know (V)	45	qaɲsʲi	q a ɲ sʲ i	86
+832	Lower Lozva Mansi	know (V)	45	qanʃi	q a n ʃ i	86
+833	Pelymka Mansi	know (V)	45	qaɲʃi	q a ɲ ʃ i	86
+834	Konda Mansi	know (V)	45	qaɲsʲi	q a ɲ sʲ i	86
+835	Tavda Mansi	know (V)	45	qaɲʃant	q a ɲ ʃ a n t	86
+836	Vakh Khanty	know (V)	45	toŋəmt	t o ŋ ə m t	87
+837	Verkhne-Kalymsk Khanty	know (V)	45	toŋəmt	t o ŋ ə m t	87
+838	Vasjugan Khanty	know (V)	45	toŋəmt	t o ŋ ə m t	87
+839	Vartovskoje Khanty	know (V)	45	toŋəmt	t o ŋ ə m t	87
+840	Likrisovskoje Khanty	know (V)	45	toŋəmtə	t o ŋ ə m t ə	87
+841	Malyj Jugan Khanty	know (V)	45	toŋəmtə	t o ŋ ə m t ə	87
+842	Tremjugan Khanty	know (V)	45	wuː	w uː	85
+843	Jugan Khanty	know (V)	45	uː	uː	85
+844	Upper Demjanka Khanty	know (V)	45	woː	w oː	85
+845	Nizjam Khanty	know (V)	45	uː	uː	85
+846	Sherkaly Khanty	know (V)	45	uː	uː	85
+847	Kazym Khanty	know (V)	45	wɵː	w ɵː	85
+848	Synja Khanty	know (V)	45	uːjət	uː j ə t	85
+849	Obdorsk Khanty	know (V)	45	oːsj	oː s j	85
+# 
+850	North Mansi	leaf	46	luːptæ	l uː p t æ	88
+851	Middle Lozva Mansi	leaf	46	luoptæ	l uo p t æ	88
+852	Lower Lozva Mansi	leaf	46	lɔːpta	l ɔː p t a	88
+853	Pelymka Mansi	leaf	46	luptə	l u p t ə	88
+854	Konda Mansi	leaf	46	ləptə	l ə p t ə	88
+855	Tavda Mansi	leaf	46	lɔptɔ	l ɔ p t ɔ	88
+856	Vakh Khanty	leaf	46	ɭɨːwət	ɭ ɨː w ə t	88
+857	Verkhne-Kalymsk Khanty	leaf	46	ɭɨːwət	ɭ ɨː w ə t	88
+858	Vasjugan Khanty	leaf	46	ɭɨːwət	ɭ ɨː w ə t	88
+859	Vartovskoje Khanty	leaf	46	ɭɨːwət	ɭ ɨː w ə t	88
+860	Likrisovskoje Khanty	leaf	46	ɭɨːpət	ɭ ɨː p ə t	88
+861	Malyj Jugan Khanty	leaf	46	ɭɨːpət	ɭ ɨː p ə t	88
+862	Tremjugan Khanty	leaf	46	ɭɨːpət	ɭ ɨː p ə t	88
+863	Jugan Khanty	leaf	46	ɭɨːpət	ɭ ɨː p ə t	88
+864	Upper Demjanka Khanty	leaf	46	liːpət	l iː p ə t	88
+865	Konda Khanty	leaf	46	liːpət	l iː p ə t	88
+866	Nizjam Khanty	leaf	46	lipət	l i p ə t	88
+867	Sherkaly Khanty	leaf	46	lipət	l i p ə t	88
+868	Kazym Khanty	leaf	46	ɭipət	ɭ i p ə t	88
+869	Synja Khanty	leaf	46	ɭipət	ɭ i p ə t	88
+870	Obdorsk Khanty	leaf	46	liːpət	l iː p ə t	88
+# 
+871	North Mansi	lie (V)	47	χuji	χ u j i	90
+872	Middle Lozva Mansi	lie (V)	47	qujji	q u jː i	90
+873	Lower Lozva Mansi	lie (V)	47	quji	q u j i	90
+874	Pelymka Mansi	lie (V)	47	quji	q u j i	90
+875	Konda Mansi	lie (V)	47	qoji	q o j i	90
+876	Tavda Mansi	lie (V)	47	quj	q u j	90
+877	Vakh Khanty	lie (V)	47	alaː	a l aː	89
+878	Vasjugan Khanty	lie (V)	47	alaː	a l aː	89
+879	Tremjugan Khanty	lie (V)	47	aɬ	a ɬ	89
+880	Jugan Khanty	lie (V)	47	aɬ	a ɬ	89
+881	Upper Demjanka Khanty	lie (V)	47	at	a t	89
+882	Konda Khanty	lie (V)	47	at	a t	89
+883	Sherkaly Khanty	lie (V)	47	ot	o t	89
+884	Kazym Khanty	lie (V)	47	oɬ	o ɬ	89
+885	Synja Khanty	lie (V)	47	ol	o l	89
+886	Obdorsk Khanty	lie (V)	47	χoːj	χ oː j	90
+# 
+887	North Mansi	liver	48	majt	m a j t	91
+888	Middle Lozva Mansi	liver	48	məːt	m əː t	91
+889	Lower Lozva Mansi	liver	48	mət	m ə t	91
+890	Pelymka Mansi	liver	48	mət	m ə t	91
+891	Konda Mansi	liver	48	məːt	m əː t	91
+892	Tavda Mansi	liver	48	mait	m ai t	91
+893	Vakh Khanty	liver	48	muːɣəl	m uː ɣ ə l	91
+894	Verkhne-Kalymsk Khanty	liver	48	muːɣəl	m uː ɣ ə l	91
+895	Vasjugan Khanty	liver	48	muːɣəl	m uː ɣ ə l	91
+896	Likrisovskoje Khanty	liver	48	muːɣəθ	m uː ɣ ə θ	91
+897	Malyj Jugan Khanty	liver	48	muːɣəɬ	m uː ɣ ə ɬ	91
+898	Tremjugan Khanty	liver	48	muːɣəɬ	m uː ɣ ə ɬ	91
+899	Jugan Khanty	liver	48	muːwɬ	m uː w ɬ	91
+900	Upper Demjanka Khanty	liver	48	muːχət	m uː χ ə t	91
+901	Konda Khanty	liver	48	muːχət	m uː χ ə t	91
+902	Nizjam Khanty	liver	48	muːχət	m uː χ ə t	91
+903	Sherkaly Khanty	liver	48	muːχət	m uː χ ə t	91
+904	Kazym Khanty	liver	48	moχəɬ	m o χ ə ɬ	91
+905	Obdorsk Khanty	liver	48	maχəl	m a χ ə l	91
+# 
+906	North Mansi	long	49	χɔsæ	χ ɔ s æ	92
+907	Middle Lozva Mansi	long	49	qʷɔʃæ	qʷ ɔ ʃ æ	92
+908	Lower Lozva Mansi	long	49	qʷɔʃæ	qʷ ɔ ʃ æ	92
+909	Pelymka Mansi	long	49	qʷɔʃæ	qʷ ɔ ʃ æ	92
+910	Konda Mansi	long	49	qʷɔisʲə	qʷ ɔi sʲ ə	92
+911	Tavda Mansi	long	49	quʃo	q u ʃ o	92
+912	Vakh Khanty	long	49	koːɣ	k oː ɣ	93
+913	Verkhne-Kalymsk Khanty	long	49	koːɣ	k oː ɣ	93
+914	Vasjugan Khanty	long	49	koːɣ	k oː ɣ	93
+915	Vartovskoje Khanty	long	49	kɔɣ	k ɔ ɣ	93
+916	Likrisovskoje Khanty	long	49	kɔɣ	k ɔ ɣ	93
+917	Malyj Jugan Khanty	long	49	koɣʷ	k o ɣʷ	93
+918	Tremjugan Khanty	long	49	koɣʷ	k o ɣʷ	93
+919	Jugan Khanty	long	49	kow	k o w	93
+920	Upper Demjanka Khanty	long	49	χow	χ o w	93
+921	Konda Khanty	long	49	χow	χ o w	93
+922	Nizjam Khanty	long	49	χuw	χ u w	93
+923	Sherkaly Khanty	long	49	χuw	χ u w	93
+924	Kazym Khanty	long	49	χuw	χ u w	93
+925	Synja Khanty	long	49	χuw	χ u w	93
+926	Obdorsk Khanty	long	49	χow	χ o w	93
+# 
+927	North Mansi	louse	50	taːkəm	t aː k ə m	94
+928	Middle Lozva Mansi	louse	50	taːχəm	t aː χ ə m	94
+929	Lower Lozva Mansi	louse	50	taχəm	t a χ ə m	94
+930	Pelymka Mansi	louse	50	taχəm	t a χ ə m	94
+931	Konda Mansi	louse	50	tɔːχəm	t ɔː χ ə m	94
+932	Tavda Mansi	louse	50	tæχəm	t æ χ ə m	94
+933	Vakh Khanty	louse	50	tœːɣtəm	t œː ɣ t ə m	94
+934	Verkhne-Kalymsk Khanty	louse	50	tœːɣtəm	t œː ɣ t ə m	94
+935	Vasjugan Khanty	louse	50	tœːɣtəm	t œː ɣ t ə m	94
+936	Likrisovskoje Khanty	louse	50	teɣʷtəm	t e ɣʷ t ə m	94
+937	Malyj Jugan Khanty	louse	50	tæɣʷtəm	t æ ɣʷ t ə m	94
+938	Tremjugan Khanty	louse	50	tæɣʷtəm	t æ ɣʷ t ə m	94
+939	Jugan Khanty	louse	50	tæwtəm	t æ w t ə m	94
+940	Upper Demjanka Khanty	louse	50	teːwtəm	t eː w t ə m	94
+941	Konda Khanty	louse	50	teːwtəm	t eː w t ə m	94
+942	Nizjam Khanty	louse	50	teːwtəm	t eː w t ə m	94
+943	Sherkaly Khanty	louse	50	teːwtəm	t eː w t ə m	94
+944	Kazym Khanty	louse	50	teːwtəm	t eː w t ə m	94
+945	Synja Khanty	louse	50	teːwtəm	t eː w t ə m	94
+946	Obdorsk Khanty	louse	50	teːwtəm	t eː w t ə m	94
+# 
+947	North Mansi	man	51	χum	χ u m	95
+948	Middle Lozva Mansi	man	51	qum	q u m	95
+949	Lower Lozva Mansi	man	51	qum	q u m	95
+950	Pelymka Mansi	man	51	qum	q u m	95
+951	Konda Mansi	man	51	qom	q o m	95
+952	Tavda Mansi	man	51	qom	q o m	95
+953	Vakh Khanty	man	51	kuː	k uː	96
+954	Verkhne-Kalymsk Khanty	man	51	kuː	k uː	96
+955	Vasjugan Khanty	man	51	kuː	k uː	96
+956	Vartovskoje Khanty	man	51	kuː	k uː	96
+957	Likrisovskoje Khanty	man	51	kuː	k uː	96
+958	Malyj Jugan Khanty	man	51	koː	k oː	96
+959	Tremjugan Khanty	man	51	koː	k oː	96
+960	Jugan Khanty	man	51	koː	k oː	96
+961	Upper Demjanka Khanty	man	51	χoːj	χ oː j	96
+962	Konda Khanty	man	51	χuːj	χ uː j	96
+963	Nizjam Khanty	man	51	χuː	χ uː	96
+964	Sherkaly Khanty	man	51	χuː	χ uː	96
+965	Kazym Khanty	man	51	χɵː	χ ɵː	96
+966	Synja Khanty	man	51	χuː	χ uː	96
+967	Obdorsk Khanty	man	51	χoːj	χ oː j	96
+# 
+968	North Mansi	many	52	saw	s a w	97
+969	Middle Lozva Mansi	many	52	ʃoɔw	ʃ oɔ w	97
+970	Lower Lozva Mansi	many	52	ʃɔu	ʃ ɔu	97
+971	Pelymka Mansi	many	52	ʃɔu	ʃ ɔu	97
+972	Konda Mansi	many	52	sɔu	s ɔu	97
+973	Tavda Mansi	many	52	ʃɔu	ʃ ɔu	97
+974	Vakh Khanty	many	52	æːr	æː r	98
+975	Vasjugan Khanty	many	52	æːr	æː r	98
+976	Tremjugan Khanty	many	52	æːr	æː r	98
+977	Jugan Khanty	many	52	æːr	æː r	98
+978	Upper Demjanka Khanty	many	52	æːr	æː r	98
+979	Konda Khanty	many	52	æːr	æː r	98
+980	Nizjam Khanty	many	52	aːr	aː r	98
+981	Sherkaly Khanty	many	52	aːr	aː r	98
+982	Kazym Khanty	many	52	aːr	aː r	98
+983	Synja Khanty	many	52	aːr	aː r	98
+984	Obdorsk Khanty	many	52	æːr	æː r	98
+# 
+985	North Mansi	meat	53	ɲɔwəʎ	ɲ ɔ w ə ʎ	99
+986	Middle Lozva Mansi	meat	53	ɲoul	ɲ ou l	99
+987	Lower Lozva Mansi	meat	53	ɲɔul	ɲ ɔu l	99
+988	Pelymka Mansi	meat	53	ɲɔuʎ	ɲ ɔu ʎ	99
+989	Konda Mansi	meat	53	ɲoul	ɲ ou l	99
+990	Tavda Mansi	meat	53	ɲəːul	ɲ əːu l	99
+991	Vakh Khanty	meat	53	ɲoːɣɨː	ɲ oː ɣ ɨː	99
+992	Verkhne-Kalymsk Khanty	meat	53	ɲoːɣɨː	ɲ oː ɣ ɨː	99
+993	Vasjugan Khanty	meat	53	ɲoːɣɨː	ɲ oː ɣ ɨː	99
+994	Vartovskoje Khanty	meat	53	ɲoːɣɨː	ɲ oː ɣ ɨː	99
+995	Likrisovskoje Khanty	meat	53	ɲaɣʷɨː	ɲ a ɣʷ ɨː	99
+996	Malyj Jugan Khanty	meat	53	ɲaɣʷɨː	ɲ a ɣʷ ɨː	99
+997	Tremjugan Khanty	meat	53	ɲaɣʷɨː	ɲ a ɣʷ ɨː	99
+998	Jugan Khanty	meat	53	ɲawɨː	ɲ a w ɨː	99
+999	Upper Demjanka Khanty	meat	53	ɲoχə	ɲ o χ ə	99
+1000	Konda Khanty	meat	53	ɲoχə	ɲ o χ ə	99
+1001	Nizjam Khanty	meat	53	ɲoχə	ɲ o χ ə	99
+1002	Sherkaly Khanty	meat	53	ɲoχə	ɲ o χ ə	99
+1003	Kazym Khanty	meat	53	ɲoχiː	ɲ o χ iː	99
+1004	Synja Khanty	meat	53	ɲoχiː	ɲ o χ iː	99
+1005	Obdorsk Khanty	meat	53	ɲoχaː	ɲ o χ aː	99
+# 
+1006	North Mansi	moon	54	jɔːŋχəp	j ɔː ŋ χ ə p	100
+1007	Middle Lozva Mansi	moon	54	joɔŋqəp	j oɔ ŋ q ə p	100
+1008	Lower Lozva Mansi	moon	54	jɔːŋχəp	j ɔː ŋ χ ə p	100
+1009	Pelymka Mansi	moon	54	joːŋqəp	j oː ŋ q ə p	100
+1010	Konda Mansi	moon	54	joːŋqəp	j oː ŋ q ə p	100
+1011	Tavda Mansi	moon	54	jamp	j a m p	100
+1012	Vakh Khanty	moon	54	iːkiː	iː k iː	101
+1013	Vasjugan Khanty	moon	54	iːkiː	iː k iː	101
+1014	Tremjugan Khanty	moon	54	tɨːɬəs	t ɨː ɬ ə s	-102
+1015	Jugan Khanty	moon	54	tɨːləs	t ɨː l ə s	-102
+1016	Upper Demjanka Khanty	moon	54	tiːləʃ	t iː l ə ʃ	-102
+1017	Konda Khanty	moon	54	tiːləʃ	t iː l ə ʃ	-102
+1018	Nizjam Khanty	moon	54	tiləsj	t i l ə s j	-102
+1019	Sherkaly Khanty	moon	54	tiləsj	t i l ə s j	-102
+1020	Kazym Khanty	moon	54	tiɬəsj	t i ɬ ə s j	-102
+1021	Synja Khanty	moon	54	tiləsj	t i l ə s j	-102
+1022	Obdorsk Khanty	moon	54	tiːləsj	t iː l ə s j	-102
+# 
+1023	North Mansi	mountain	55	ur	u r	107
+1024	Middle Lozva Mansi	mountain	55	ur	u r	107
+1025	Lower Lozva Mansi	mountain	55	əχ	ə χ	103
+1026	Pelymka Mansi	mountain	55	əχ	ə χ	103
+1027	Konda Mansi	mountain	55	əχ	ə χ	103
+1028	Tavda Mansi	mountain	55	æχ	æ χ	103
+1029	Vakh Khanty	mountain	55	joɣ	j o ɣ	104
+1030	Verkhne-Kalymsk Khanty	mountain	55	reːw	r eː w	105
+1031	Vasjugan Khanty	mountain	55	reːw	r eː w	105
+1032	Vartovskoje Khanty	mountain	55	ræw	r æ w	105
+1033	Likrisovskoje Khanty	mountain	55	ræp	r æ p	105
+1034	Tremjugan Khanty	mountain	55	ræp	r æ p	105
+1035	Jugan Khanty	mountain	55	ræp	r æ p	105
+1036	Upper Demjanka Khanty	mountain	55	reːp	r eː p	105
+1037	Konda Khanty	mountain	55	reːp	r eː p	105
+1038	Nizjam Khanty	mountain	55	reːp	r eː p	105
+1039	Sherkaly Khanty	mountain	55	keːw	k eː w	106
+1040	Kazym Khanty	mountain	55	rɛːp	r ɛː p	105
+1041	Synja Khanty	mountain	55	reːp	r eː p	105
+1042	Obdorsk Khanty	mountain	55	reːp	r eː p	105
+# 
+1043	North Mansi	mouth	56	suːp	s uː p	108
+1044	Middle Lozva Mansi	mouth	56	tus	t u s	109
+1045	Lower Lozva Mansi	mouth	56	tus	t u s	109
+1046	Pelymka Mansi	mouth	56	tus	t u s	109
+1047	Konda Mansi	mouth	56	tus	t u s	109
+1048	Tavda Mansi	mouth	56	toːʃ	t oː ʃ	109
+1049	Vakh Khanty	mouth	56	luːl	l uː l	110
+1050	Verkhne-Kalymsk Khanty	mouth	56	juːl	j uː l	110
+1051	Vasjugan Khanty	mouth	56	juːl	j uː l	110
+1052	Vartovskoje Khanty	mouth	56	ɬuːɬ	ɬ uː ɬ	110
+1053	Likrisovskoje Khanty	mouth	56	θuːθ	θ uː θ	110
+1054	Malyj Jugan Khanty	mouth	56	ɬuːɬ	ɬ uː ɬ	110
+1055	Tremjugan Khanty	mouth	56	ɬuːɬ	ɬ uː ɬ	110
+1056	Jugan Khanty	mouth	56	ɬuːɬ	ɬ uː ɬ	110
+1057	Upper Demjanka Khanty	mouth	56	tuːt	t uː t	110
+1058	Konda Khanty	mouth	56	tuːt	t uː t	110
+1059	Nizjam Khanty	mouth	56	tuːt	t uː t	110
+1060	Sherkaly Khanty	mouth	56	tuːt	t uː t	110
+1061	Kazym Khanty	mouth	56	uŋəɬ	u ŋ ə ɬ	111
+1062	Synja Khanty	mouth	56	uŋəl	u ŋ ə l	111
+1063	Obdorsk Khanty	mouth	56	uːŋəl	uː ŋ ə l	111
+# 
+1064	North Mansi	name	57	nam	n a m	112
+1065	Middle Lozva Mansi	name	57	næm	n æ m	112
+1066	Pelymka Mansi	name	57	næm	n æ m	112
+1067	Konda Mansi	name	57	næm	n æ m	112
+1068	Tavda Mansi	name	57	næm	n æ m	112
+1069	Vakh Khanty	name	57	neːm	n eː m	112
+1070	Verkhne-Kalymsk Khanty	name	57	neːm	n eː m	112
+1071	Vasjugan Khanty	name	57	neːm	n eː m	112
+1072	Vartovskoje Khanty	name	57	næm	n æ m	112
+1073	Likrisovskoje Khanty	name	57	næm	n æ m	112
+1074	Malyj Jugan Khanty	name	57	næm	n æ m	112
+1075	Tremjugan Khanty	name	57	næm	n æ m	112
+1076	Jugan Khanty	name	57	næm	n æ m	112
+1077	Upper Demjanka Khanty	name	57	neːm	n eː m	112
+1078	Konda Khanty	name	57	neːm	n eː m	112
+1079	Nizjam Khanty	name	57	neːm	n eː m	112
+1080	Sherkaly Khanty	name	57	neːm	n eː m	112
+1081	Kazym Khanty	name	57	nɛːm	n ɛː m	112
+1082	Synja Khanty	name	57	neːm	n eː m	112
+1083	Obdorsk Khanty	name	57	neːm	n eː m	112
+# 
+1084	North Mansi	neck	58	siplu	s i p l u	113
+1085	Middle Lozva Mansi	neck	58	ʃiplu	ʃ i p l u	113
+1086	Pelymka Mansi	neck	58	ʃiplu	ʃ i p l u	113
+1087	Konda Mansi	neck	58	soplo	s o p l o	113
+1088	Vakh Khanty	neck	58	sæːwəl	s æː w ə l	113
+1089	Verkhne-Kalymsk Khanty	neck	58	sæːwəl	s æː w ə l	113
+1090	Vasjugan Khanty	neck	58	sæːwəl	s æː w ə l	113
+1091	Likrisovskoje Khanty	neck	58	sæːpəθ	s æː p ə θ	113
+1092	Malyj Jugan Khanty	neck	58	sæːpəɬ	s æː p ə ɬ	113
+1093	Tremjugan Khanty	neck	58	sæːpəɬ	s æː p ə ɬ	113
+1094	Jugan Khanty	neck	58	sæːpəɬ	s æː p ə ɬ	113
+1095	Upper Demjanka Khanty	neck	58	sæːpət	s æː p ə t	113
+1096	Nizjam Khanty	neck	58	saːpət	s aː p ə t	113
+1097	Sherkaly Khanty	neck	58	saːpət	s aː p ə t	113
+1098	Kazym Khanty	neck	58	saːpəɬ	s aː p ə ɬ	113
+1099	Synja Khanty	neck	58	saːpəl	s aː p ə l	113
+1100	Obdorsk Khanty	neck	58	sæːpəl	s æː p ə l	113
+# 
+1101	North Mansi	new	59	iʎp	i ʎ p	114
+1102	Middle Lozva Mansi	new	59	ʎæʎpəl	ʎ æ ʎ p ə l	114
+1103	Lower Lozva Mansi	new	59	ʎæʎpəl	ʎ æ ʎ p ə l	114
+1104	Pelymka Mansi	new	59	ʎæʎpəl	ʎ æ ʎ p ə l	114
+1105	Konda Mansi	new	59	jelpəl	j e l p ə l	114
+1106	Tavda Mansi	new	59	elpəʎ	e l p ə ʎ	114
+1107	Vakh Khanty	new	59	jeləw	j e l ə w	114
+1108	Verkhne-Kalymsk Khanty	new	59	jeləw	j e l ə w	114
+1109	Vasjugan Khanty	new	59	jeləw	j e l ə w	114
+1110	Vartovskoje Khanty	new	59	jeɬəw	j e ɬ ə w	114
+1111	Likrisovskoje Khanty	new	59	jeθəp	j e θ ə p	114
+1112	Malyj Jugan Khanty	new	59	jeɬəp	j e ɬ ə p	114
+1113	Tremjugan Khanty	new	59	jeɬəp	j e ɬ ə p	114
+1114	Jugan Khanty	new	59	jeɬəp	j e ɬ ə p	114
+1115	Upper Demjanka Khanty	new	59	jetəp	j e t ə p	114
+1116	Konda Khanty	new	59	jetəp	j e t ə p	114
+1117	Nizjam Khanty	new	59	jitəp	j i t ə p	114
+1118	Sherkaly Khanty	new	59	jatəp	j a t ə p	114
+1119	Kazym Khanty	new	59	jiɬəp	j i ɬ ə p	114
+1120	Synja Khanty	new	59	jaləp	j a l ə p	114
+1121	Obdorsk Khanty	new	59	jiːləp	j iː l ə p	114
+# 
+1122	North Mansi	night	60	eːt	eː t	115
+1123	Middle Lozva Mansi	night	60	jiː	j iː	116
+1124	Lower Lozva Mansi	night	60	i	i	116
+1125	Pelymka Mansi	night	60	jiː	j iː	116
+1126	Konda Mansi	night	60	jə	j ə	116
+1127	Tavda Mansi	night	60	jiː	j iː	116
+1128	Vakh Khanty	night	60	jej	j e j	116
+1129	Verkhne-Kalymsk Khanty	night	60	jej	j e j	116
+1130	Vasjugan Khanty	night	60	ej	e j	116
+1131	Vartovskoje Khanty	night	60	jej	j e j	116
+1132	Malyj Jugan Khanty	night	60	æːt	æː t	115
+1133	Tremjugan Khanty	night	60	æːt	æː t	115
+1134	Jugan Khanty	night	60	æːt	æː t	115
+1135	Upper Demjanka Khanty	night	60	æːt	æː t	115
+1136	Konda Khanty	night	60	æːt	æː t	115
+1137	Nizjam Khanty	night	60	aːt	aː t	115
+1138	Sherkaly Khanty	night	60	aːt	aː t	115
+1139	Kazym Khanty	night	60	aːt	aː t	115
+1140	Synja Khanty	night	60	aːt	aː t	115
+1141	Obdorsk Khanty	night	60	æːt	æː t	115
+# 
+1142	North Mansi	nose	61	ɲol	ɲ o l	117
+1143	Middle Lozva Mansi	nose	61	ɲal	ɲ a l	117
+1144	Lower Lozva Mansi	nose	61	ɲal	ɲ a l	117
+1145	Pelymka Mansi	nose	61	ɲal	ɲ a l	117
+1146	Konda Mansi	nose	61	ɲɔl	ɲ ɔ l	117
+1147	Tavda Mansi	nose	61	ɲɔl	ɲ ɔ l	117
+1148	Vakh Khanty	nose	61	ɲol	ɲ o l	117
+1149	Verkhne-Kalymsk Khanty	nose	61	ɲol	ɲ o l	117
+1150	Vasjugan Khanty	nose	61	ɲol	ɲ o l	117
+1151	Likrisovskoje Khanty	nose	61	ɲoθ	ɲ o θ	117
+1152	Malyj Jugan Khanty	nose	61	ɲoɬ	ɲ o ɬ	117
+1153	Tremjugan Khanty	nose	61	ɲoɬ	ɲ o ɬ	117
+1154	Jugan Khanty	nose	61	ɲoɬ	ɲ o ɬ	117
+1155	Upper Demjanka Khanty	nose	61	ɲat	ɲ a t	117
+1156	Konda Khanty	nose	61	ɲat	ɲ a t	117
+1157	Nizjam Khanty	nose	61	ɲot	ɲ o t	117
+1158	Sherkaly Khanty	nose	61	ɲot	ɲ o t	117
+1159	Kazym Khanty	nose	61	ɲoɬ	ɲ o ɬ	117
+1160	Synja Khanty	nose	61	ɲol	ɲ o l	117
+1161	Obdorsk Khanty	nose	61	ɲal	ɲ a l	117
+# 
+1162	North Mansi	not	62	at	a t	118
+1163	Middle Lozva Mansi	not	62	at	a t	118
+1164	Lower Lozva Mansi	not	62	at	a t	118
+1165	Pelymka Mansi	not	62	at	a t	118
+1166	Konda Mansi	not	62	oɔt	oɔ t	118
+1167	Tavda Mansi	not	62	æː	æː	119
+1168	Vakh Khanty	not	62	entə	e n t ə	120
+1169	Vasjugan Khanty	not	62	entə	e n t ə	120
+1170	Tremjugan Khanty	not	62	entə	e n t ə	120
+1171	Jugan Khanty	not	62	entə	e n t ə	120
+1172	Upper Demjanka Khanty	not	62	en	e n	120
+1173	Konda Khanty	not	62	en	e n	120
+1174	Nizjam Khanty	not	62	anta	a n t a	120
+1175	Sherkaly Khanty	not	62	ant	a n t	120
+1176	Kazym Khanty	not	62	an	a n	120
+1177	Synja Khanty	not	62	at	a t	120
+1178	Obdorsk Khanty	not	62	æn	æ n	120
+# 
+1179	North Mansi	one	63	akʷ	a kʷ	122
+1180	Middle Lozva Mansi	one	63	ækʷ	æ kʷ	122
+1181	Lower Lozva Mansi	one	63	æk	æ k	122
+1182	Pelymka Mansi	one	63	əkʷ	ə kʷ	122
+1183	Konda Mansi	one	63	ækʷ	æ kʷ	122
+1184	Tavda Mansi	one	63	uχ	u χ	122
+1185	Vakh Khanty	one	63	ej	e j	121
+1186	Verkhne-Kalymsk Khanty	one	63	ej	e j	121
+1187	Vasjugan Khanty	one	63	ej	e j	121
+1188	Tremjugan Khanty	one	63	ej	e j	121
+1189	Jugan Khanty	one	63	ej	e j	121
+1190	Upper Demjanka Khanty	one	63	ej	e j	121
+1191	Konda Khanty	one	63	ej	e j	121
+1192	Nizjam Khanty	one	63	ij	i j	121
+1193	Sherkaly Khanty	one	63	ij	i j	121
+1194	Kazym Khanty	one	63	i	i	121
+1195	Synja Khanty	one	63	i	i	121
+1196	Obdorsk Khanty	one	63	iːj	iː j	121
+# 
+1197	North Mansi	person	64	eːləmχɔːləs	eː l ə m χ ɔː l ə s	124
+1198	Middle Lozva Mansi	person	64	qɔls	q ɔ l s	124
+1199	Lower Lozva Mansi	person	64	qɔls	q ɔ l s	124
+1200	Pelymka Mansi	person	64	qɔləs	q ɔ l ə s	124
+1201	Konda Mansi	person	64	qoləs	q o l ə s	124
+1202	Tavda Mansi	person	64	qɔlɔs	q ɔ l ɔ s	124
+1203	Vakh Khanty	person	64	kasɨː	k a s ɨː	125
+1204	Vasjugan Khanty	person	64	kasɨː	k a s ɨː	125
+1205	Tremjugan Khanty	person	64	kantəkkoː	k a n t ə kː oː	126
+1206	Upper Demjanka Khanty	person	64	χajeːt	χ a j eː t	127
+1207	Konda Khanty	person	64	χajæːt	χ a j æː t	127
+1208	Nizjam Khanty	person	64	χojaːt	χ o j aː t	127
+1209	Sherkaly Khanty	person	64	χojaːt	χ o j aː t	127
+1210	Kazym Khanty	person	64	χojaːt	χ o j aː t	127
+1211	Synja Khanty	person	64	χojaːt	χ o j aː t	127
+1212	Obdorsk Khanty	person	64	neːŋχuːj	n eː ŋ χ uː j	123
+# 
+1213	North Mansi	rain	65	rakʷ	r a kʷ	128
+1214	Middle Lozva Mansi	rain	65	ræχʷ	r æ χʷ	128
+1215	Lower Lozva Mansi	rain	65	ræχʷ	r æ χʷ	128
+1216	Pelymka Mansi	rain	65	ræχʷ	r æ χʷ	128
+1217	Konda Mansi	rain	65	ræχʷ	r æ χʷ	128
+1218	Tavda Mansi	rain	65	ruχ	r u χ	128
+1219	Vakh Khanty	rain	65	ɭawətj	ɭ a w ə t j	129
+1220	Verkhne-Kalymsk Khanty	rain	65	ɭawətj	ɭ a w ə t j	129
+1221	Vasjugan Khanty	rain	65	ɭawətj	ɭ a w ə t j	129
+1222	Vartovskoje Khanty	rain	65	ɭɔwətj	ɭ ɔ w ə t j	129
+1223	Likrisovskoje Khanty	rain	65	ɭopətj	ɭ o p ə t j	129
+1224	Malyj Jugan Khanty	rain	65	jom	j o m	130
+1225	Tremjugan Khanty	rain	65	jom	j o m	130
+1226	Jugan Khanty	rain	65	jom	j o m	130
+1227	Upper Demjanka Khanty	rain	65	jeːrt	j eː r t	131
+1228	Konda Khanty	rain	65	jeːrt	j eː r t	131
+1229	Nizjam Khanty	rain	65	jeːrt	j eː r t	131
+1230	Sherkaly Khanty	rain	65	jeːr	j eː r	131
+1231	Kazym Khanty	rain	65	jɛːrt	j ɛː r t	131
+1232	Synja Khanty	rain	65	jeːr	j eː r	131
+1233	Obdorsk Khanty	rain	65	jeːrt	j eː r t	131
+# 
+1234	North Mansi	red	66	wɨɣɨr	w ɨ ɣ ɨ r	132
+1235	Middle Lozva Mansi	red	66	wyir	w yi r	132
+1236	Lower Lozva Mansi	red	66	œːr	œː r	132
+1237	Pelymka Mansi	red	66	wyɨr	w yɨ r	132
+1238	Konda Mansi	red	66	wɨr	w ɨ r	132
+1239	Tavda Mansi	red	66	uːrqɔr	uː r q ɔ r	132
+1240	Vakh Khanty	red	66	wertə	w e r t ə	132
+1241	Vasjugan Khanty	red	66	wertə	w e r t ə	132
+1242	Tremjugan Khanty	red	66	wertə	w e r t ə	132
+1243	Jugan Khanty	red	66	wertə	w e r t ə	132
+1244	Upper Demjanka Khanty	red	66	wertə	w e r t ə	132
+1245	Konda Khanty	red	66	wertə	w e r t ə	132
+1246	Nizjam Khanty	red	66	wurtə	w u r t ə	132
+1247	Sherkaly Khanty	red	66	wurtə	w u r t ə	132
+1248	Kazym Khanty	red	66	wurtiː	w u r t iː	132
+1249	Synja Khanty	red	66	wurtiː	w u r t iː	132
+# 
+1250	North Mansi	road	67	ʎɔːŋχ	ʎ ɔː ŋ χ	133
+1251	Middle Lozva Mansi	road	67	ʎoχ	ʎ o χ	133
+1252	Lower Lozva Mansi	road	67	ʎoχ	ʎ o χ	133
+1253	Pelymka Mansi	road	67	ʎoːŋq	ʎ oː ŋ q	133
+1254	Konda Mansi	road	67	ʎoːŋq	ʎ oː ŋ q	133
+1255	Tavda Mansi	road	67	ʎɔŋ	ʎ ɔ ŋ	133
+1256	Vakh Khanty	road	67	ɭœːk	ɭ œː k	134
+1257	Verkhne-Kalymsk Khanty	road	67	ɭœːk	ɭ œː k	134
+1258	Vasjugan Khanty	road	67	ɭœːk	ɭ œː k	134
+1259	Vartovskoje Khanty	road	67	ɭœːk	ɭ œː k	134
+1260	Likrisovskoje Khanty	road	67	ɭeːkʷ	ɭ eː kʷ	134
+1261	Malyj Jugan Khanty	road	67	ɭeːkʷ	ɭ eː kʷ	134
+1262	Tremjugan Khanty	road	67	ɭeːkʷ	ɭ eː kʷ	134
+1263	Jugan Khanty	road	67	ɭeːkʷ	ɭ eː kʷ	134
+1264	Upper Demjanka Khanty	road	67	pent	p e n t	135
+1265	Konda Khanty	road	67	pent	p e n t	135
+1266	Nizjam Khanty	road	67	pant	p a n t	135
+1267	Sherkaly Khanty	road	67	pant	p a n t	135
+1268	Kazym Khanty	road	67	pant	p a n t	135
+1269	Synja Khanty	road	67	juːʃ	j uː ʃ	136
+1270	Obdorsk Khanty	road	67	joːs	j oː s	136
+# 
+1271	North Mansi	root	68	taːr	t aː r	137
+1272	Middle Lozva Mansi	root	68	toɔr	t oɔ r	137
+1273	Lower Lozva Mansi	root	68	tɔːr	t ɔː r	137
+1274	Pelymka Mansi	root	68	tɔːr	t ɔː r	137
+1275	Konda Mansi	root	68	toɔr	t oɔ r	137
+1276	Tavda Mansi	root	68	tæːr	t æː r	137
+1277	Vakh Khanty	root	68	loːr	l oː r	138
+1278	Verkhne-Kalymsk Khanty	root	68	joːr	j oː r	138
+1279	Vasjugan Khanty	root	68	joːr	j oː r	138
+1280	Vartovskoje Khanty	root	68	ɬɔr	ɬ ɔ r	138
+1281	Likrisovskoje Khanty	root	68	θɔr	θ ɔ r	138
+1282	Malyj Jugan Khanty	root	68	ɬort	ɬ o r t	138
+1283	Tremjugan Khanty	root	68	ɬort	ɬ o r t	138
+1284	Jugan Khanty	root	68	ɬort	ɬ o r t	138
+1285	Konda Khanty	root	68	tuːrt	t uː r t	138
+# 
+1286	North Mansi	round	69	puːɣər	p uː ɣ ə r	141
+1287	Middle Lozva Mansi	round	69	pæːr	p æː r	141
+1288	Lower Lozva Mansi	round	69	pæːr	p æː r	141
+1289	Pelymka Mansi	round	69	pæwər	p æ w ə r	141
+1290	Konda Mansi	round	69	pæwər	p æ w ə r	141
+1291	Tavda Mansi	round	69	pəur	p əu r	141
+1292	Vakh Khanty	round	69	pœːŋɭək	p œː ŋ ɭ ə k	142
+1293	Vasjugan Khanty	round	69	pœːŋɭək	p œː ŋ ɭ ə k	142
+1294	Tremjugan Khanty	round	69	peŋrək	p e ŋ r ə k	141
+1295	Jugan Khanty	round	69	peŋrək	p e ŋ r ə k	141
+1296	Nizjam Khanty	round	69	ɲuːmrə	ɲ uː m r ə	143
+1297	Kazym Khanty	round	69	ɲɵːmər	ɲ ɵː m ə r	143
+1298	Synja Khanty	round	69	ɲuːmər	ɲ uː m ə r	143
+1299	North Mansi	round	69	marawi	m a r a w i	139
+1300	Middle Lozva Mansi	round	69	mæræu	m æ r æu	139
+1301	Pelymka Mansi	round	69	mæru	m æ r u	139
+1302	Konda Mansi	round	69	mærwə	m æ r w ə	139
+1303	Konda Khanty	round	69	jæŋtæː	j æ ŋ t æː	140
+1304	Nizjam Khanty	round	69	jeːŋtaː	j eː ŋ t aː	140
+1305	Kazym Khanty	round	69	jɛːŋtaː	j ɛː ŋ t aː	140
+1306	Synja Khanty	round	69	jeːŋtaː	j eː ŋ t aː	140
+1307	Obdorsk Khanty	round	69	jeːŋtæː	j eː ŋ t æː	140
+# 
+1308	North Mansi	sand	70	jeːm	j eː m	146
+1309	Middle Lozva Mansi	sand	70	jiːm	j iː m	146
+1310	Lower Lozva Mansi	sand	70	jeːm	j eː m	146
+1311	Pelymka Mansi	sand	70	jeːm	j eː m	146
+1312	Konda Mansi	sand	70	jəm	j ə m	146
+1313	Tavda Mansi	sand	70	iːm	iː m	146
+1314	Vakh Khanty	sand	70	saŋkɨː	s a ŋ k ɨː	144
+1315	Vasjugan Khanty	sand	70	saŋkɨː	s a ŋ k ɨː	144
+1316	Tremjugan Khanty	sand	70	saŋkɨː	s a ŋ k ɨː	144
+1317	Jugan Khanty	sand	70	saŋkɨː	s a ŋ k ɨː	144
+1318	Upper Demjanka Khanty	sand	70	saŋχə	s a ŋ χ ə	144
+1319	Konda Khanty	sand	70	saŋχə	s a ŋ χ ə	144
+1320	Nizjam Khanty	sand	70	seːj	s eː j	145
+1321	Kazym Khanty	sand	70	seːj	s eː j	145
+1322	Synja Khanty	sand	70	seːj	s eː j	145
+# 
+1323	North Mansi	see	72	waːɣ	w aː ɣ	151
+1324	Middle Lozva Mansi	see	72	uj	u j	151
+1325	Pelymka Mansi	see	72	wəi	w əi	151
+1326	Konda Mansi	see	72	woj	w o j	151
+1327	Tavda Mansi	see	72	wajant	w a j a n t	151
+1328	Vakh Khanty	see	72	wuː	w uː	151
+1329	Verkhne-Kalymsk Khanty	see	72	wuː	w uː	151
+1330	Vasjugan Khanty	see	72	uː	uː	151
+1331	Vartovskoje Khanty	see	72	wuː	w uː	151
+1332	Likrisovskoje Khanty	see	72	wuː	w uː	151
+1333	Malyj Jugan Khanty	see	72	wuː	w uː	151
+1334	Tremjugan Khanty	see	72	wuː	w uː	151
+1335	Jugan Khanty	see	72	uː	uː	151
+1336	Upper Demjanka Khanty	see	72	woː	w oː	151
+1337	Konda Khanty	see	72	uː	uː	151
+1338	Nizjam Khanty	see	72	uː	uː	151
+1339	Sherkaly Khanty	see	72	uː	uː	151
+1340	Kazym Khanty	see	72	waːnt	w aː n t	152
+1341	Synja Khanty	see	72	waːt	w aː t	152
+1342	Obdorsk Khanty	see	72	wæːnt	w æː n t	152
+# 
+1343	North Mansi	say	71	laːwi	l aː w i	147
+1344	Middle Lozva Mansi	say	71	loɔɣi	l oɔ ɣ i	147
+1345	Lower Lozva Mansi	say	71	lɔːi	l ɔːi	147
+1346	Pelymka Mansi	say	71	lɔːwi	l ɔː w i	147
+1347	Konda Mansi	say	71	lɔːwi	l ɔː w i	147
+1348	Tavda Mansi	say	71	læːnt	l æː n t	147
+1349	Vakh Khanty	say	71	toɭɣəlt	t o ɭ ɣ ə l t	148
+1350	Verkhne-Kalymsk Khanty	say	71	jæːsŋəl	j æː s ŋ ə l	149
+1351	Vasjugan Khanty	say	71	jæːsŋəl	j æː s ŋ ə l	149
+1352	Tremjugan Khanty	say	71	jæːstə	j æː s t ə	149
+1353	Jugan Khanty	say	71	jæːstə	j æː s t ə	149
+1354	Upper Demjanka Khanty	say	71	jæːstə	j æː s t ə	149
+1355	Konda Khanty	say	71	jæːstə	j æː s t ə	149
+1356	Nizjam Khanty	say	71	lop	l o p	150
+1357	Sherkaly Khanty	say	71	lop	l o p	150
+1358	Kazym Khanty	say	71	ɭop	ɭ o p	150
+1359	Synja Khanty	say	71	jaːstə	j aː s t ə	149
+1360	Obdorsk Khanty	say	71	læːw	l æː w	-150
+# 
+1361	North Mansi	seed	73	uːrlaχ	uː r l a χ	-154
+1362	Middle Lozva Mansi	seed	73	urləχ	u r l ə χ	-154
+1363	Pelymka Mansi	seed	73	tajim	t a j i m	155
+1364	Konda Mansi	seed	73	toɔjəm	t oɔ j ə m	155
+1365	Tavda Mansi	seed	73	tejim	t e j i m	155
+1366	Vakh Khanty	seed	73	læːseːm	l æː s eː m	156
+1367	Upper Demjanka Khanty	seed	73	jeːm	j eː m	-153
+1368	Konda Khanty	seed	73	jeːm	j eː m	-153
+1369	Nizjam Khanty	seed	73	sjeːmaː	s j eː m aː	-153
+# 
+1370	North Mansi	sit (V)	74	uːnli	uː n l i	157
+1371	Middle Lozva Mansi	sit (V)	74	unli	u n l i	157
+1372	Lower Lozva Mansi	sit (V)	74	unli	u n l i	157
+1373	Pelymka Mansi	sit (V)	74	wunli	w u n l i	157
+1374	Konda Mansi	sit (V)	74	wonli	w o n l i	157
+1375	Tavda Mansi	sit (V)	74	oːnɔnt	oː n ɔ n t	157
+1376	Vakh Khanty	sit (V)	74	aːməs	aː m ə s	158
+1377	Verkhne-Kalymsk Khanty	sit (V)	74	aːməs	aː m ə s	158
+1378	Vasjugan Khanty	sit (V)	74	aːməs	aː m ə s	158
+1379	Likrisovskoje Khanty	sit (V)	74	aːməs	aː m ə s	158
+1380	Malyj Jugan Khanty	sit (V)	74	aːməs	aː m ə s	158
+1381	Tremjugan Khanty	sit (V)	74	ɔːməs	ɔː m ə s	158
+1382	Jugan Khanty	sit (V)	74	ɔːməs	ɔː m ə s	158
+1383	Upper Demjanka Khanty	sit (V)	74	oːməs	oː m ə s	158
+1384	Konda Khanty	sit (V)	74	oːməs	oː m ə s	158
+1385	Nizjam Khanty	sit (V)	74	ɔːməs	ɔː m ə s	158
+1386	Sherkaly Khanty	sit (V)	74	ɔːməs	ɔː m ə s	158
+1387	Kazym Khanty	sit (V)	74	ɔːməs	ɔː m ə s	158
+1388	Synja Khanty	sit (V)	74	ɔːməs	ɔː m ə s	158
+1389	Obdorsk Khanty	sit (V)	74	aːməs	aː m ə s	158
+# 
+1390	North Mansi	skin	75	sɔw	s ɔ w	159
+1391	Middle Lozva Mansi	skin	75	sɔu	s ɔu	159
+1392	Pelymka Mansi	skin	75	sɔu	s ɔu	159
+1393	Konda Mansi	skin	75	sɔu	s ɔu	159
+1394	Vakh Khanty	skin	75	soɣ	s o ɣ	159
+1395	Verkhne-Kalymsk Khanty	skin	75	soɣ	s o ɣ	159
+1396	Vasjugan Khanty	skin	75	soɣ	s o ɣ	159
+1397	Vartovskoje Khanty	skin	75	soɣ	s o ɣ	159
+1398	Likrisovskoje Khanty	skin	75	soɣ	s o ɣ	159
+1399	Malyj Jugan Khanty	skin	75	soɣʷ	s o ɣʷ	159
+1400	Tremjugan Khanty	skin	75	soɣʷ	s o ɣʷ	159
+1401	Jugan Khanty	skin	75	sow	s o w	159
+1402	Upper Demjanka Khanty	skin	75	soχ	s o χ	159
+1403	Konda Khanty	skin	75	soχ	s o χ	159
+1404	Nizjam Khanty	skin	75	soχ	s o χ	159
+1405	Sherkaly Khanty	skin	75	soχ	s o χ	159
+1406	Kazym Khanty	skin	75	soχ	s o χ	159
+1407	Synja Khanty	skin	75	soχ	s o χ	159
+1408	Obdorsk Khanty	skin	75	soχ	s o χ	159
+# 
+1409	North Mansi	sleep (V)	76	χuji	χ u j i	160
+1410	Middle Lozva Mansi	sleep (V)	76	qujji	q u jː i	160
+1411	Lower Lozva Mansi	sleep (V)	76	quji	q u j i	160
+1412	Pelymka Mansi	sleep (V)	76	quji	q u j i	160
+1413	Konda Mansi	sleep (V)	76	qoji	q o j i	160
+1414	Tavda Mansi	sleep (V)	76	quj	q u j	160
+1415	Vakh Khanty	sleep (V)	76	alaː	a l aː	161
+1416	Vasjugan Khanty	sleep (V)	76	alaː	a l aː	161
+1417	Tremjugan Khanty	sleep (V)	76	aɬ	a ɬ	161
+1418	Jugan Khanty	sleep (V)	76	aɬ	a ɬ	161
+1419	Upper Demjanka Khanty	sleep (V)	76	at	a t	161
+1420	Konda Khanty	sleep (V)	76	at	a t	161
+1421	Sherkaly Khanty	sleep (V)	76	ot	o t	161
+1422	Kazym Khanty	sleep (V)	76	oɬ	o ɬ	161
+1423	Synja Khanty	sleep (V)	76	ol	o l	161
+1424	Obdorsk Khanty	sleep (V)	76	χoːj	χ oː j	160
+# 
+1425	North Mansi	small	77	maːɲ	m aː ɲ	162
+1426	Middle Lozva Mansi	small	77	wysʲ	w y sʲ	163
+1427	Lower Lozva Mansi	small	77	isʲ	i sʲ	163
+1428	Pelymka Mansi	small	77	isʲ	i sʲ	163
+1429	Konda Mansi	small	77	wisʲ	w i sʲ	163
+1430	Tavda Mansi	small	77	usʲ	u sʲ	163
+1431	Vakh Khanty	small	77	æːj	æː j	164
+1432	Verkhne-Kalymsk Khanty	small	77	æːj	æː j	164
+1433	Vasjugan Khanty	small	77	æːj	æː j	164
+1434	Vartovskoje Khanty	small	77	œkəm	œ k ə m	165
+1435	Likrisovskoje Khanty	small	77	æːj	æː j	164
+1436	Malyj Jugan Khanty	small	77	æːj	æː j	164
+1437	Tremjugan Khanty	small	77	æːj	æː j	164
+1438	Jugan Khanty	small	77	æːj	æː j	164
+1439	Upper Demjanka Khanty	small	77	æːj	æː j	164
+1440	Konda Khanty	small	77	æːj	æː j	164
+1441	Nizjam Khanty	small	77	aːj	aː j	164
+1442	Sherkaly Khanty	small	77	aːj	aː j	164
+1443	Kazym Khanty	small	77	aːj	aː j	164
+1444	Synja Khanty	small	77	aːj	aː j	164
+1445	Obdorsk Khanty	small	77	æːj	æː j	164
+# 
+1446	North Mansi	smoke	78	posim	p o s i m	169
+1447	Middle Lozva Mansi	smoke	78	pɔʃm	p ɔ ʃ m	169
+1448	Lower Lozva Mansi	smoke	78	paʃʃəm	p a ʃː ə m	169
+1449	Pelymka Mansi	smoke	78	pɔʃm	p ɔ ʃ m	169
+1450	Konda Mansi	smoke	78	pɔsəm	p ɔ s ə m	169
+1451	Tavda Mansi	smoke	78	poʃəm	p o ʃ ə m	169
+1452	Vakh Khanty	smoke	78	porkɨː	p o r k ɨː	166
+1453	Verkhne-Kalymsk Khanty	smoke	78	porkɨː	p o r k ɨː	166
+1454	Vasjugan Khanty	smoke	78	porkɨː	p o r k ɨː	166
+1455	Likrisovskoje Khanty	smoke	78	tœɣəθɨːpət	t œ ɣ ə θ ɨː p ə t	167
+1456	Malyj Jugan Khanty	smoke	78	ɬɨːpət	ɬ ɨː p ə t	167
+1457	Tremjugan Khanty	smoke	78	næːjɬɨːpət	n æː j ɬ ɨː p ə t	167
+1458	Jugan Khanty	smoke	78	næːjɬɨːpət	n æː j ɬ ɨː p ə t	167
+1459	Upper Demjanka Khanty	smoke	78	ʧaχeːm	ʧ a χ eː m	168
+1460	Konda Khanty	smoke	78	ʧaχiːm	ʧ a χ iː m	168
+1461	Nizjam Khanty	smoke	78	puːsəŋ	p uː s ə ŋ	169
+1462	Kazym Khanty	smoke	78	pɵːsəŋ	p ɵː s ə ŋ	169
+1463	Synja Khanty	smoke	78	puːsəŋ	p uː s ə ŋ	169
+1464	Obdorsk Khanty	smoke	78	poːsəŋ	p oː s ə ŋ	169
+# 
+1465	North Mansi	stand (V)	79	ʎuːʎi	ʎ uː ʎ i	-171
+1466	Middle Lozva Mansi	stand (V)	79	tuɲsʲi	t u ɲ sʲ i	170
+1467	Lower Lozva Mansi	stand (V)	79	toɲsʲi	t o ɲ sʲ i	170
+1468	Pelymka Mansi	stand (V)	79	tuɲsʲi	t u ɲ sʲ i	170
+1469	Konda Mansi	stand (V)	79	tuɲsʲi	t u ɲ sʲ i	170
+1470	Tavda Mansi	stand (V)	79	toɲsʲ	t o ɲ sʲ	170
+1471	Vakh Khanty	stand (V)	79	laːʎ	l aː ʎ	171
+1472	Verkhne-Kalymsk Khanty	stand (V)	79	jaːʎ	j aː ʎ	171
+1473	Vasjugan Khanty	stand (V)	79	jaːʎ	j aː ʎ	171
+1474	Likrisovskoje Khanty	stand (V)	79	θaːθ	θ aː θ	171
+1475	Malyj Jugan Khanty	stand (V)	79	ɬaːɬj	ɬ aː ɬ j	171
+1476	Tremjugan Khanty	stand (V)	79	ɬjɔːɬj	ɬ j ɔː ɬ j	171
+1477	Jugan Khanty	stand (V)	79	ɬjoːɬj	ɬ j oː ɬ j	171
+1478	Upper Demjanka Khanty	stand (V)	79	tjoːtj	t j oː t j	171
+1479	Konda Khanty	stand (V)	79	tjoːtj	t j oː t j	171
+1480	Nizjam Khanty	stand (V)	79	tɔːtj	t ɔː t j	171
+1481	Sherkaly Khanty	stand (V)	79	tɔːtj	t ɔː t j	171
+1482	Kazym Khanty	stand (V)	79	ɬɔːɬj	ɬ ɔː ɬ j	171
+1483	Synja Khanty	stand (V)	79	lɔːj	l ɔː j	172
+# 
+1484	North Mansi	star	80	sɔw	s ɔ w	173
+1485	Middle Lozva Mansi	star	80	sɔw	s ɔ w	173
+1486	Lower Lozva Mansi	star	80	sɔw	s ɔ w	173
+1487	Pelymka Mansi	star	80	sɔu	s ɔu	173
+1488	Konda Mansi	star	80	sɔu	s ɔu	173
+1489	Tavda Mansi	star	80	qoːɲsʲ	q oː ɲ sʲ	174
+1490	Vakh Khanty	star	80	kɔːs	k ɔː s	174
+1491	Verkhne-Kalymsk Khanty	star	80	koːs	k oː s	174
+1492	Vasjugan Khanty	star	80	kɔːs	k ɔː s	174
+1493	Vartovskoje Khanty	star	80	koːs	k oː s	174
+1494	Likrisovskoje Khanty	star	80	koːs	k oː s	174
+1495	Malyj Jugan Khanty	star	80	koːs	k oː s	174
+1496	Tremjugan Khanty	star	80	koːs	k oː s	174
+1497	Jugan Khanty	star	80	koːs	k oː s	174
+1498	Upper Demjanka Khanty	star	80	χuːs	χ uː s	174
+1499	Konda Khanty	star	80	χuːs	χ uː s	174
+1500	Nizjam Khanty	star	80	χuːs	χ uː s	174
+1501	Sherkaly Khanty	star	80	χuːs	χ uː s	174
+1502	Kazym Khanty	star	80	χɵːs	χ ɵː s	174
+1503	Synja Khanty	star	80	χuːs	χ uː s	174
+1504	Obdorsk Khanty	star	80	χoːs	χ oː s	174
+# 
+1505	North Mansi	stone	81	aːχʷtəs	aː χʷ t ə s	175
+1506	Middle Lozva Mansi	stone	81	əχʷtəʃ	ə χʷ t ə ʃ	175
+1507	Lower Lozva Mansi	stone	81	əːχtəʃ	əː χ t ə ʃ	175
+1508	Pelymka Mansi	stone	81	əχʷtəs	ə χʷ t ə s	175
+1509	Konda Mansi	stone	81	əχʷtəs	ə χʷ t ə s	175
+1510	Tavda Mansi	stone	81	kuː	k uː	176
+1511	Vakh Khanty	stone	81	kœːɣ	k œː ɣ	176
+1512	Verkhne-Kalymsk Khanty	stone	81	kœːɣ	k œː ɣ	176
+1513	Vasjugan Khanty	stone	81	kœːɣ	k œː ɣ	176
+1514	Vartovskoje Khanty	stone	81	kœɣ	k œ ɣ	176
+1515	Likrisovskoje Khanty	stone	81	kæɣʷ	k æ ɣʷ	176
+1516	Malyj Jugan Khanty	stone	81	kæɣʷ	k æ ɣʷ	176
+1517	Tremjugan Khanty	stone	81	kæɣʷ	k æ ɣʷ	176
+1518	Jugan Khanty	stone	81	kæw	k æ w	176
+1519	Upper Demjanka Khanty	stone	81	keːw	k eː w	176
+1520	Konda Khanty	stone	81	keːw	k eː w	176
+1521	Nizjam Khanty	stone	81	keːw	k eː w	176
+1522	Sherkaly Khanty	stone	81	keːw	k eː w	176
+1523	Kazym Khanty	stone	81	keːw	k eː w	176
+1524	Synja Khanty	stone	81	keːw	k eː w	176
+1525	Obdorsk Khanty	stone	81	keːw	k eː w	176
+# 
+1526	North Mansi	sun	82	χɔːtæl	χ ɔː t æ l	177
+1527	Middle Lozva Mansi	sun	82	qɔtəl	q ɔ t ə l	177
+1528	Lower Lozva Mansi	sun	82	qatəl	q a t ə l	177
+1529	Pelymka Mansi	sun	82	qɔtəl	q ɔ t ə l	177
+1530	Konda Mansi	sun	82	qotəl	q o t ə l	177
+1531	Tavda Mansi	sun	82	qɔtəl	q ɔ t ə l	177
+1532	Vakh Khanty	sun	82	syːŋk	s yː ŋ k	178
+1533	Verkhne-Kalymsk Khanty	sun	82	syːŋk	s yː ŋ k	178
+1534	Vasjugan Khanty	sun	82	syːŋk	s yː ŋ k	178
+1535	Likrisovskoje Khanty	sun	82	katθ	k a t θ	177
+1536	Malyj Jugan Khanty	sun	82	katɬ	k a t ɬ	177
+1537	Tremjugan Khanty	sun	82	katɬ	k a t ɬ	177
+1538	Jugan Khanty	sun	82	katɬ	k a t ɬ	177
+1539	Upper Demjanka Khanty	sun	82	χat	χ a t	177
+1540	Konda Khanty	sun	82	χat	χ a t	177
+1541	Nizjam Khanty	sun	82	χatəl	χ a t ə l	177
+1542	Sherkaly Khanty	sun	82	χatəl	χ a t ə l	177
+1543	Kazym Khanty	sun	82	χatɬ	χ a t ɬ	177
+1544	Synja Khanty	sun	82	χatəl	χ a t ə l	177
+1545	Obdorsk Khanty	sun	82	χatəl	χ a t ə l	177
+# 
+1546	North Mansi	swim (V)	83	uji	u j i	179
+1547	Middle Lozva Mansi	swim (V)	83	uji	u j i	179
+1548	Pelymka Mansi	swim (V)	83	wuji	w u j i	179
+1549	Konda Mansi	swim (V)	83	wuji	w u j i	179
+1550	Tavda Mansi	swim (V)	83	ujænt	u j æ n t	179
+1551	Vakh Khanty	swim (V)	83	ɔːtj	ɔː t j	179
+1552	Vasjugan Khanty	swim (V)	83	ɲoːrəɣ	ɲ oː r ə ɣ	180
+1553	Tremjugan Khanty	swim (V)	83	ɲarəɣ	ɲ a r ə ɣ	180
+1554	Upper Demjanka Khanty	swim (V)	83	uːtj	uː t j	179
+1555	Konda Khanty	swim (V)	83	uːtj	uː t j	179
+1556	Nizjam Khanty	swim (V)	83	uːsj	uː s j	179
+1557	Sherkaly Khanty	swim (V)	83	uːsj	uː s j	179
+1558	Kazym Khanty	swim (V)	83	wɵːsj	w ɵː s j	179
+1559	Synja Khanty	swim (V)	83	uːsj	uː s j	179
+1560	Obdorsk Khanty	swim (V)	83	oːsj	oː s j	179
+# 
+1561	North Mansi	tail	84	leːɨɣ	l eːɨ ɣ	181
+1562	Middle Lozva Mansi	tail	84	lɨː	l ɨː	181
+1563	Lower Lozva Mansi	tail	84	liː	l iː	181
+1564	Pelymka Mansi	tail	84	lɨː	l ɨː	181
+1565	Konda Mansi	tail	84	lɨː	l ɨː	181
+1566	Tavda Mansi	tail	84	poŋ	p o ŋ	182
+1567	Vakh Khanty	tail	84	leɣ	l e ɣ	181
+1568	Verkhne-Kalymsk Khanty	tail	84	leɣ	l e ɣ	181
+1569	Vasjugan Khanty	tail	84	leɣ	l e ɣ	181
+1570	Vartovskoje Khanty	tail	84	ɬeɣ	ɬ e ɣ	181
+1571	Likrisovskoje Khanty	tail	84	θeɣ	θ e ɣ	181
+1572	Malyj Jugan Khanty	tail	84	ɬeɣ	ɬ e ɣ	181
+1573	Tremjugan Khanty	tail	84	ɬeɣ	ɬ e ɣ	181
+1574	Jugan Khanty	tail	84	ɬeɣ	ɬ e ɣ	181
+1575	Konda Khanty	tail	84	teɣ	t e ɣ	181
+1576	Nizjam Khanty	tail	84	tiɣ	t i ɣ	181
+1577	Sherkaly Khanty	tail	84	tiɣ	t i ɣ	181
+1578	Kazym Khanty	tail	84	ɬiw	ɬ i w	181
+1579	Synja Khanty	tail	84	lij	l i j	181
+1580	Obdorsk Khanty	tail	84	poːsiː	p oː s iː	183
+# 
+1581	North Mansi	that	85	ta	t a	184
+1582	Middle Lozva Mansi	that	85	ta	t a	184
+1583	Lower Lozva Mansi	that	85	ta	t a	184
+1584	Pelymka Mansi	that	85	tæ	t æ	184
+1585	Konda Mansi	that	85	tɔt	t ɔ t	185
+1586	Tavda Mansi	that	85	ta	t a	184
+1587	Vakh Khanty	that	85	toːm	t oː m	185
+1588	Vasjugan Khanty	that	85	toːm	t oː m	185
+1589	Tremjugan Khanty	that	85	tom	t o m	185
+1590	Upper Demjanka Khanty	that	85	tom	t o m	185
+1591	Konda Khanty	that	85	tom	t o m	185
+1592	Nizjam Khanty	that	85	tom	t o m	185
+1593	Sherkaly Khanty	that	85	tom	t o m	185
+1594	Kazym Khanty	that	85	tom	t o m	185
+1595	Synja Khanty	that	85	tum	t u m	185
+1596	Obdorsk Khanty	that	85	tam	t a m	185
+# 
+1597	North Mansi	this	86	ti	t i	186
+1598	Middle Lozva Mansi	this	86	tʲə	tʲ ə	186
+1599	Lower Lozva Mansi	this	86	ti	t i	186
+1600	Pelymka Mansi	this	86	tʲi	tʲ i	186
+1601	Konda Mansi	this	86	tə	t ə	186
+1602	Tavda Mansi	this	86	ti	t i	186
+1603	Vakh Khanty	this	86	tiːm	t iː m	186
+1604	Tremjugan Khanty	this	86	teːm	t eː m	186
+1605	Jugan Khanty	this	86	teːm	t eː m	186
+1606	Upper Demjanka Khanty	this	86	tæm	t æ m	186
+1607	Konda Khanty	this	86	tæm	t æ m	186
+1608	Nizjam Khanty	this	86	tam	t a m	186
+1609	Sherkaly Khanty	this	86	tam	t a m	186
+1610	Kazym Khanty	this	86	tam	t a m	186
+1611	Synja Khanty	this	86	tam	t a m	186
+# 
+1612	North Mansi	thou	87	naŋ	n a ŋ	187
+1613	Middle Lozva Mansi	thou	87	næu	n æu	187
+1614	Lower Lozva Mansi	thou	87	næi	n æi	187
+1615	Pelymka Mansi	thou	87	næɨ	n æɨ	187
+1616	Konda Mansi	thou	87	næɨɣ	n æɨ ɣ	187
+1617	Tavda Mansi	thou	87	nəu	n əu	187
+1618	Vakh Khanty	thou	87	nœŋ	n œ ŋ	187
+1619	Vasjugan Khanty	thou	87	nœŋ	n œ ŋ	187
+1620	Tremjugan Khanty	thou	87	nœŋ	n œ ŋ	187
+1621	Jugan Khanty	thou	87	nœŋ	n œ ŋ	187
+1622	Upper Demjanka Khanty	thou	87	noŋ	n o ŋ	187
+1623	Konda Khanty	thou	87	noŋ	n o ŋ	187
+1624	Nizjam Khanty	thou	87	noŋ	n o ŋ	187
+1625	Sherkaly Khanty	thou	87	naŋ	n a ŋ	187
+1626	Kazym Khanty	thou	87	naŋ	n a ŋ	187
+1627	Synja Khanty	thou	87	naŋ	n a ŋ	187
+1628	Obdorsk Khanty	thou	87	næŋ	n æ ŋ	187
+# 
+1629	North Mansi	tongue	88	ɲelm	ɲ e l m	188
+1630	Middle Lozva Mansi	tongue	88	ɲilm	ɲ i l m	188
+1631	Lower Lozva Mansi	tongue	88	ɲilm	ɲ i l m	188
+1632	Pelymka Mansi	tongue	88	ɲiləm	ɲ i l ə m	188
+1633	Konda Mansi	tongue	88	ɲiləm	ɲ i l ə m	188
+1634	Tavda Mansi	tongue	88	ɲiʎəm	ɲ i ʎ ə m	188
+1635	Vakh Khanty	tongue	88	ɲæːləm	ɲ æː l ə m	188
+1636	Verkhne-Kalymsk Khanty	tongue	88	ɲæːləm	ɲ æː l ə m	188
+1637	Vasjugan Khanty	tongue	88	ɲæːləm	ɲ æː l ə m	188
+1638	Vartovskoje Khanty	tongue	88	ɲæːɬəm	ɲ æː ɬ ə m	188
+1639	Likrisovskoje Khanty	tongue	88	ɲæːθəm	ɲ æː θ ə m	188
+1640	Malyj Jugan Khanty	tongue	88	ɲæːɬəm	ɲ æː ɬ ə m	188
+1641	Tremjugan Khanty	tongue	88	ɲæːɬəm	ɲ æː ɬ ə m	188
+1642	Jugan Khanty	tongue	88	ɲæːɬəm	ɲ æː ɬ ə m	188
+1643	Upper Demjanka Khanty	tongue	88	ɲæːtəm	ɲ æː t ə m	188
+1644	Konda Khanty	tongue	88	ɲæːtəm	ɲ æː t ə m	188
+1645	Nizjam Khanty	tongue	88	ɲaːtəm	ɲ aː t ə m	188
+1646	Sherkaly Khanty	tongue	88	ɲaːtəm	ɲ aː t ə m	188
+1647	Kazym Khanty	tongue	88	ɲaːɬəm	ɲ aː ɬ ə m	188
+1648	Synja Khanty	tongue	88	ɲaːləm	ɲ aː l ə m	188
+1649	Obdorsk Khanty	tongue	88	ɲæːləm	ɲ æː l ə m	188
+# 
+1650	North Mansi	tooth	89	puŋk	p u ŋ k	189
+1651	Middle Lozva Mansi	tooth	89	pæŋk	p æ ŋ k	189
+1652	Lower Lozva Mansi	tooth	89	pæŋk	p æ ŋ k	189
+1653	Pelymka Mansi	tooth	89	pæŋk	p æ ŋ k	189
+1654	Konda Mansi	tooth	89	pæŋk	p æ ŋ k	189
+1655	Tavda Mansi	tooth	89	pəŋ	p ə ŋ	189
+1656	Vakh Khanty	tooth	89	pœːŋk	p œː ŋ k	189
+1657	Verkhne-Kalymsk Khanty	tooth	89	pœːŋk	p œː ŋ k	189
+1658	Vasjugan Khanty	tooth	89	pœːŋk	p œː ŋ k	189
+1659	Vartovskoje Khanty	tooth	89	pœːŋk	p œː ŋ k	189
+1660	Likrisovskoje Khanty	tooth	89	pæŋʷkʷ	p æ ŋʷ kʷ	189
+1661	Malyj Jugan Khanty	tooth	89	pæŋʷkʷ	p æ ŋʷ kʷ	189
+1662	Tremjugan Khanty	tooth	89	pæŋʷkʷ	p æ ŋʷ kʷ	189
+1663	Jugan Khanty	tooth	89	pæŋʷkʷ	p æ ŋʷ kʷ	189
+1664	Upper Demjanka Khanty	tooth	89	peːŋk	p eː ŋ k	189
+1665	Konda Khanty	tooth	89	peːŋk	p eː ŋ k	189
+1666	Nizjam Khanty	tooth	89	peːŋk	p eː ŋ k	189
+1667	Sherkaly Khanty	tooth	89	peːŋk	p eː ŋ k	189
+1668	Kazym Khanty	tooth	89	pɛːŋk	p ɛː ŋ k	189
+1669	Synja Khanty	tooth	89	peːk	p eː k	189
+1670	Obdorsk Khanty	tooth	89	peːŋk	p eː ŋ k	189
+# 
+1671	North Mansi	tree	90	jiw	j i w	190
+1672	Middle Lozva Mansi	tree	90	jiw	j i w	190
+1673	Lower Lozva Mansi	tree	90	iw	i w	190
+1674	Pelymka Mansi	tree	90	juː	j uː	190
+1675	Konda Mansi	tree	90	jiw	j i w	190
+1676	Tavda Mansi	tree	90	jiw	j i w	190
+1677	Vakh Khanty	tree	90	juːɣ	j uː ɣ	190
+1678	Verkhne-Kalymsk Khanty	tree	90	juːɣ	j uː ɣ	190
+1679	Vasjugan Khanty	tree	90	juːɣ	j uː ɣ	190
+1680	Vartovskoje Khanty	tree	90	juːɣ	j uː ɣ	190
+1681	Likrisovskoje Khanty	tree	90	juːɣ	j uː ɣ	190
+1682	Malyj Jugan Khanty	tree	90	juːɣ	j uː ɣ	190
+1683	Tremjugan Khanty	tree	90	juːɣ	j uː ɣ	190
+1684	Jugan Khanty	tree	90	juːw	j uː w	190
+1685	Upper Demjanka Khanty	tree	90	juːχ	j uː χ	190
+1686	Konda Khanty	tree	90	juːχ	j uː χ	190
+1687	Nizjam Khanty	tree	90	juːχ	j uː χ	190
+1688	Sherkaly Khanty	tree	90	juːχ	j uː χ	190
+1689	Kazym Khanty	tree	90	juχ	j u χ	190
+1690	Synja Khanty	tree	90	juχ	j u χ	190
+1691	Obdorsk Khanty	tree	90	juːχ	j uː χ	190
+# 
+1692	North Mansi	two	91	kit	k i t	191
+1693	Middle Lozva Mansi	two	91	kit	k i t	191
+1694	Lower Lozva Mansi	two	91	kit	k i t	191
+1695	Pelymka Mansi	two	91	kit	k i t	191
+1696	Konda Mansi	two	91	kit	k i t	191
+1697	Tavda Mansi	two	91	kit	k i t	191
+1698	Vakh Khanty	two	91	kæːt	k æː t	191
+1699	Vasjugan Khanty	two	91	kæːt	k æː t	191
+1700	Tremjugan Khanty	two	91	kæːt	k æː t	191
+1701	Jugan Khanty	two	91	kæːt	k æː t	191
+1702	Upper Demjanka Khanty	two	91	ket	k e t	191
+1703	Konda Khanty	two	91	kæt	k æ t	191
+1704	Nizjam Khanty	two	91	kat	k a t	191
+1705	Sherkaly Khanty	two	91	kat	k a t	191
+1706	Kazym Khanty	two	91	kat	k a t	191
+1707	Synja Khanty	two	91	kat	k a t	191
+1708	Obdorsk Khanty	two	91	kæːt	k æː t	191
+# 
+1709	North Mansi	walk (go)	92	mini	m i n i	192
+1710	Middle Lozva Mansi	walk (go)	92	mini	m i n i	192
+1711	Lower Lozva Mansi	walk (go)	92	mini	m i n i	192
+1712	Pelymka Mansi	walk (go)	92	mini	m i n i	192
+1713	Konda Mansi	walk (go)	92	məni	m ə n i	192
+1714	Tavda Mansi	walk (go)	92	miɲænt	m i ɲ æ n t	192
+1715	Vakh Khanty	walk (go)	92	men	m e n	192
+1716	Verkhne-Kalymsk Khanty	walk (go)	92	men	m e n	192
+1717	Vasjugan Khanty	walk (go)	92	men	m e n	192
+1718	Tremjugan Khanty	walk (go)	92	men	m e n	192
+1719	Jugan Khanty	walk (go)	92	men	m e n	192
+1720	Upper Demjanka Khanty	walk (go)	92	men	m e n	192
+1721	Konda Khanty	walk (go)	92	men	m e n	192
+1722	Nizjam Khanty	walk (go)	92	man	m a n	192
+1723	Sherkaly Khanty	walk (go)	92	man	m a n	192
+1724	Kazym Khanty	walk (go)	92	man	m a n	192
+1725	Synja Khanty	walk (go)	92	man	m a n	192
+1726	Obdorsk Khanty	walk (go)	92	mæn	m æ n	192
+# 
+1727	North Mansi	warm (hot)	93	isəm	i s ə m	193
+1728	Middle Lozva Mansi	warm (hot)	93	iʃəm	i ʃ ə m	193
+1729	Lower Lozva Mansi	warm (hot)	93	iʃəm	i ʃ ə m	193
+1730	Pelymka Mansi	warm (hot)	93	iʃəm	i ʃ ə m	193
+1731	Konda Mansi	warm (hot)	93	əsəm	ə s ə m	193
+1732	Tavda Mansi	warm (hot)	93	əʃəm	ə ʃ ə m	193
+1733	Vakh Khanty	warm (hot)	93	kœːɣrəm	k œː ɣ r ə m	194
+1734	Tremjugan Khanty	warm (hot)	93	keːɣʷrəm	k eː ɣʷ r ə m	194
+1735	Jugan Khanty	warm (hot)	93	keːwrəm	k eː w r ə m	194
+1736	Upper Demjanka Khanty	warm (hot)	93	kæːwrəm	k æː w r ə m	194
+1737	Konda Khanty	warm (hot)	93	kæːwrəm	k æː w r ə m	194
+1738	Nizjam Khanty	warm (hot)	93	kaːwrəm	k aː w r ə m	194
+1739	Sherkaly Khanty	warm (hot)	93	kaːwrəm	k aː w r ə m	194
+1740	Kazym Khanty	warm (hot)	93	kaːwrəm	k aː w r ə m	194
+1741	Synja Khanty	warm (hot)	93	kaːwrəm	k aː w r ə m	194
+1742	Obdorsk Khanty	warm (hot)	93	kæːwrəm	k æː w r ə m	194
+# 
+1743	North Mansi	water	94	wit	w i t	196
+1744	Middle Lozva Mansi	water	94	wytʲ	w y tʲ	196
+1745	Lower Lozva Mansi	water	94	ytʲ	y tʲ	196
+1746	Pelymka Mansi	water	94	wytʲ	w y tʲ	196
+1747	Konda Mansi	water	94	witʲ	w i tʲ	196
+1748	Tavda Mansi	water	94	utʲ	u tʲ	196
+1749	Vakh Khanty	water	94	jeŋk	j e ŋ k	195
+1750	Verkhne-Kalymsk Khanty	water	94	jeŋk	j e ŋ k	195
+1751	Vasjugan Khanty	water	94	jeŋk	j e ŋ k	195
+1752	Vartovskoje Khanty	water	94	jeŋk	j e ŋ k	195
+1753	Likrisovskoje Khanty	water	94	jeŋk	j e ŋ k	195
+1754	Malyj Jugan Khanty	water	94	jeŋk	j e ŋ k	195
+1755	Tremjugan Khanty	water	94	jeŋk	j e ŋ k	195
+1756	Jugan Khanty	water	94	jeŋk	j e ŋ k	195
+1757	Upper Demjanka Khanty	water	94	jeŋk	j e ŋ k	195
+1758	Konda Khanty	water	94	jeŋk	j e ŋ k	195
+1759	Nizjam Khanty	water	94	jiŋk	j i ŋ k	195
+1760	Sherkaly Khanty	water	94	jiŋk	j i ŋ k	195
+1761	Kazym Khanty	water	94	jiŋk	j i ŋ k	195
+1762	Synja Khanty	water	94	jik	j i k	195
+1763	Obdorsk Khanty	water	94	jiːŋk	j iː ŋ k	195
+# 
+1764	North Mansi	we	95	man	m a n	197
+1765	Middle Lozva Mansi	we	95	man	m a n	197
+1766	Lower Lozva Mansi	we	95	man	m a n	197
+1767	Pelymka Mansi	we	95	man	m a n	197
+1768	Konda Mansi	we	95	mɔn	m ɔ n	197
+1769	Tavda Mansi	we	95	mæŋ	m æ ŋ	197
+1770	Vakh Khanty	we	95	meŋ	m e ŋ	197
+1771	Vasjugan Khanty	we	95	meŋ	m e ŋ	197
+1772	Tremjugan Khanty	we	95	meŋ	m e ŋ	197
+1773	Jugan Khanty	we	95	meŋ	m e ŋ	197
+1774	Upper Demjanka Khanty	we	95	moŋ	m o ŋ	197
+1775	Konda Khanty	we	95	moŋ	m o ŋ	197
+1776	Nizjam Khanty	we	95	moŋ	m o ŋ	197
+1777	Sherkaly Khanty	we	95	moŋ	m o ŋ	197
+1778	Kazym Khanty	we	95	muŋ	m u ŋ	197
+1779	Synja Khanty	we	95	muŋ	m u ŋ	197
+1780	Obdorsk Khanty	we	95	muːŋ	m uː ŋ	197
+# 
+1781	North Mansi	what	96	manər	m a n ə r	198
+1782	Middle Lozva Mansi	what	96	mænər	m æ n ə r	198
+1783	Lower Lozva Mansi	what	96	mær	m æ r	198
+1784	Pelymka Mansi	what	96	mænər	m æ n ə r	198
+1785	Konda Mansi	what	96	nær	n æ r	199
+1786	Tavda Mansi	what	96	ɲær	ɲ æ r	199
+1787	Vakh Khanty	what	96	mœɣəʎiː	m œ ɣ ə ʎ iː	198
+1788	Vasjugan Khanty	what	96	mœɣəʎiː	m œ ɣ ə ʎ iː	198
+1789	Tremjugan Khanty	what	96	meɣʷəɬiː	m e ɣʷ ə ɬ iː	198
+1790	Jugan Khanty	what	96	mewəɬiː	m e w ə ɬ iː	198
+1791	Upper Demjanka Khanty	what	96	metoːjə	m e t oː j ə	198
+1792	Konda Khanty	what	96	metoːjə	m e t oː j ə	198
+1793	Nizjam Khanty	what	96	muj	m u j	198
+1794	Sherkaly Khanty	what	96	muj	m u j	198
+1795	Kazym Khanty	what	96	muj	m u j	198
+1796	Synja Khanty	what	96	muj	m u j	198
+1797	Obdorsk Khanty	what	96	malaː	m a l aː	198
+# 
+1798	North Mansi	white	97	jaːŋk	j aː ŋ k	201
+1799	Middle Lozva Mansi	white	97	sɔrɲəŋ	s ɔ r ɲ ə ŋ	-202
+1800	Lower Lozva Mansi	white	97	sarəɲ	s a r ə ɲ	-202
+1801	Pelymka Mansi	white	97	sairiŋ	s ai r i ŋ	202
+1802	Konda Mansi	white	97	sɔjrəŋ	s ɔ j r ə ŋ	202
+1803	Tavda Mansi	white	97	sajraŋ	s a j r a ŋ	202
+1804	Vakh Khanty	white	97	næːɣiː	n æː ɣ iː	200
+1805	Verkhne-Kalymsk Khanty	white	97	næːɣiː	n æː ɣ iː	200
+1806	Vasjugan Khanty	white	97	næːɣiː	n æː ɣ iː	200
+1807	Vartovskoje Khanty	white	97	næːɣiː	n æː ɣ iː	200
+1808	Likrisovskoje Khanty	white	97	næːɣiː	n æː ɣ iː	200
+1809	Malyj Jugan Khanty	white	97	neːɣʷiː	n eː ɣʷ iː	200
+1810	Tremjugan Khanty	white	97	neːɣʷiː	n eː ɣʷ iː	200
+1811	Jugan Khanty	white	97	neːwiː	n eː w iː	200
+1812	Upper Demjanka Khanty	white	97	nowə	n o w ə	200
+1813	Konda Khanty	white	97	nawə	n a w ə	200
+1814	Nizjam Khanty	white	97	nowə	n o w ə	200
+1815	Sherkaly Khanty	white	97	nowə	n o w ə	200
+1816	Kazym Khanty	white	97	nowiː	n o w iː	200
+1817	Synja Khanty	white	97	nowiː	n o w iː	200
+1818	Obdorsk Khanty	white	97	næːwiː	n æː w iː	200
+# 
+1819	North Mansi	who	98	χɔːŋχæ	χ ɔː ŋ χ æ	203
+1820	Middle Lozva Mansi	who	98	qaŋqæ	q a ŋ q æ	203
+1821	Lower Lozva Mansi	who	98	qanqa	q a n q a	203
+1822	Pelymka Mansi	who	98	qɔn	q ɔ n	203
+1823	Konda Mansi	who	98	qon	q o n	203
+1824	Tavda Mansi	who	98	qɔn	q ɔ n	203
+1825	Vakh Khanty	who	98	kɔːjɨː	k ɔː j ɨː	203
+1826	Vasjugan Khanty	who	98	kɔːjɨː	k ɔː j ɨː	203
+1827	Tremjugan Khanty	who	98	kojaːɣɨː	k o j aː ɣ ɨː	203
+1828	Jugan Khanty	who	98	kojaːɣə	k o j aː ɣ ə	203
+1829	Upper Demjanka Khanty	who	98	χojə	χ o j ə	203
+1830	Konda Khanty	who	98	χojə	χ o j ə	203
+1831	Nizjam Khanty	who	98	χoj	χ o j	203
+1832	Sherkaly Khanty	who	98	χoj	χ o j	203
+1833	Kazym Khanty	who	98	χoj	χ o j	203
+1834	Synja Khanty	who	98	χoj	χ o j	203
+1835	Obdorsk Khanty	who	98	χoj	χ o j	203
+# 
+1836	North Mansi	woman	99	neː	n eː	204
+1837	Middle Lozva Mansi	woman	99	neː	n eː	204
+1838	Pelymka Mansi	woman	99	neː	n eː	204
+1839	Konda Mansi	woman	99	neː	n eː	204
+1840	Tavda Mansi	woman	99	niː	n iː	204
+1841	Vakh Khanty	woman	99	niː	n iː	204
+1842	Verkhne-Kalymsk Khanty	woman	99	niː	n iː	204
+1843	Vasjugan Khanty	woman	99	niː	n iː	204
+1844	Vartovskoje Khanty	woman	99	niː	n iː	204
+1845	Likrisovskoje Khanty	woman	99	niː	n iː	204
+1846	Malyj Jugan Khanty	woman	99	neː	n eː	204
+1847	Tremjugan Khanty	woman	99	neː	n eː	204
+1848	Jugan Khanty	woman	99	neː	n eː	204
+1849	Upper Demjanka Khanty	woman	99	neːŋ	n eː ŋ	204
+1850	Konda Khanty	woman	99	neːŋ	n eː ŋ	204
+1851	Nizjam Khanty	woman	99	neː	n eː	204
+1852	Sherkaly Khanty	woman	99	neː	n eː	204
+1853	Kazym Khanty	woman	99	nɛː	n ɛː	204
+1854	Synja Khanty	woman	99	neː	n eː	204
+1855	Obdorsk Khanty	woman	99	niːŋ	n iː ŋ	204
+# 
+1856	North Mansi	yellow	100	kasm	k a s m	205
+1857	Middle Lozva Mansi	yellow	100	kæʃm	k æ ʃ m	205
+1858	Pelymka Mansi	yellow	100	kæʃm	k æ ʃ m	205
+1859	Konda Mansi	yellow	100	kæsəm	k æ s ə m	205
+1860	Tavda Mansi	yellow	100	kəʃəm	k ə ʃ ə m	205
+1861	Upper Demjanka Khanty	yellow	100	wastə	w a s t ə	206
+1862	Konda Khanty	yellow	100	χantəwastə	χ a n t ə w a s t ə	206
+# 
+1863	North Mansi	far	101	χɔsæt	χ ɔ s æ t	207
+1864	Middle Lozva Mansi	far	101	qɔsæt	q ɔ s æ t	207
+1865	Pelymka Mansi	far	101	qʷɔʃæt	qʷ ɔ ʃ æ t	207
+1866	Konda Mansi	far	101	qʷɔʃæt	qʷ ɔ ʃ æ t	207
+1867	Tavda Mansi	far	101	qoʃot	q o ʃ o t	207
+1868	Vakh Khanty	far	101	koːkkə	k oː kː ə	208
+1869	Vasjugan Khanty	far	101	koːkkə	k oː kː ə	208
+1870	Tremjugan Khanty	far	101	kokkə	k o kː ə	208
+1871	Upper Demjanka Khanty	far	101	χowaː	χ o w aː	208
+1872	Konda Khanty	far	101	χowaː	χ o w aː	208
+1873	Nizjam Khanty	far	101	χuwaː	χ u w aː	208
+1874	Kazym Khanty	far	101	χuwaː	χ u w aː	208
+1875	Obdorsk Khanty	far	101	χowiː	χ o w iː	208
+# 
+1876	North Mansi	heavy	102	taːrwitəŋ	t aː r w i t ə ŋ	210
+1877	Middle Lozva Mansi	heavy	102	taːrytʲəŋ	t aː r y tʲ ə ŋ	210
+1878	Pelymka Mansi	heavy	102	taːrwytʲiŋ	t aː r w y tʲ i ŋ	210
+1879	Konda Mansi	heavy	102	toɔrwitʲiŋ	t oɔ r w i tʲ i ŋ	210
+1880	Tavda Mansi	heavy	102	tærkutʲəŋ	t æ r k u tʲ ə ŋ	210
+1881	Vakh Khanty	heavy	102	læːɣərt	l æː ɣ ə r t	210
+1882	Verkhne-Kalymsk Khanty	heavy	102	jæːɣərt	j æː ɣ ə r t	210
+1883	Vasjugan Khanty	heavy	102	jæːɣərt	j æː ɣ ə r t	210
+1884	Vartovskoje Khanty	heavy	102	ɬæːɣərt	ɬ æː ɣ ə r t	210
+1885	Likrisovskoje Khanty	heavy	102	θæːɣərt	θ æː ɣ ə r t	210
+1886	Malyj Jugan Khanty	heavy	102	ɬæːɣərt	ɬ æː ɣ ə r t	210
+1887	Tremjugan Khanty	heavy	102	ɬæːɣərt	ɬ æː ɣ ə r t	210
+1888	Jugan Khanty	heavy	102	ɬæːɣərt	ɬ æː ɣ ə r t	210
+1889	Upper Demjanka Khanty	heavy	102	tæːɣərt	t æː ɣ ə r t	210
+1890	Konda Khanty	heavy	102	tæːɣərt	t æː ɣ ə r t	210
+1891	Nizjam Khanty	heavy	102	taːwərt	t aː w ə r t	210
+1892	Sherkaly Khanty	heavy	102	taːɣər	t aː ɣ ə r	210
+1893	Kazym Khanty	heavy	102	ɬaːwərt	ɬ aː w ə r t	210
+1894	Synja Khanty	heavy	102	laːwər	l aː w ə r	210
+1895	Obdorsk Khanty	heavy	102	sjoːkət	s j oː k ə t	209
+# 
+1896	North Mansi	near	103	ʎapæ	ʎ a p æ	211
+1897	Middle Lozva Mansi	near	103	ælæ	æ l æ	212
+1898	Pelymka Mansi	near	103	ælæɨ	æ l æɨ	212
+1899	Konda Mansi	near	103	æli	æ l i	212
+1900	Tavda Mansi	near	103	ælæu	æ l æu	212
+1901	Vakh Khanty	near	103	wæːɳɳə	w æː ɳː ə	213
+1902	Vasjugan Khanty	near	103	teŋtəɣ	t e ŋ t ə ɣ	214
+1903	Tremjugan Khanty	near	103	wæːɳɳə	w æː ɳː ə	213
+1904	Jugan Khanty	near	103	wæːnnə	w æː nː ə	213
+1905	Upper Demjanka Khanty	near	103	wæːnnə	w æː nː ə	213
+1906	Konda Khanty	near	103	wæːnnə	w æː nː ə	213
+1907	Nizjam Khanty	near	103	waːnnaː	w aː nː aː	213
+1908	Kazym Khanty	near	103	waːɳɳə	w aː ɳː ə	213
+1909	Obdorsk Khanty	near	103	wæːnnæː	w æː nː æː	213
+# 
+1910	North Mansi	salt	104	solwəl	s o l w ə l	-215
+1911	Middle Lozva Mansi	salt	104	sʲæχ	sʲ æ χ	216
+1912	Lower Lozva Mansi	salt	104	ʃæχ	ʃ æ χ	216
+1913	Pelymka Mansi	salt	104	sʲæχ	sʲ æ χ	216
+1914	Konda Mansi	salt	104	ʃæχ	ʃ æ χ	216
+1915	Tavda Mansi	salt	104	ʧiχ	ʧ i χ	216
+1916	Vakh Khanty	salt	104	salnə	s a l n ə	-217
+1917	Verkhne-Kalymsk Khanty	salt	104	salnaː	s a l n aː	-217
+1918	Vasjugan Khanty	salt	104	salnaː	s a l n aː	-217
+1919	Vartovskoje Khanty	salt	104	saɬnə	s a ɬ n ə	-217
+1920	Likrisovskoje Khanty	salt	104	saθnə	s a θ n ə	-217
+1921	Malyj Jugan Khanty	salt	104	saɬɬə	s a ɬː ə	-217
+1922	Tremjugan Khanty	salt	104	saɬɬə	s a ɬː ə	-217
+1923	Jugan Khanty	salt	104	saɬɬə	s a ɬː ə	-217
+1924	Upper Demjanka Khanty	salt	104	sat	s a t	-217
+1925	Konda Khanty	salt	104	sat	s a t	-217
+1926	Nizjam Khanty	salt	104	sotə	s o t ə	-217
+1927	Sherkaly Khanty	salt	104	sotə	s o t ə	-217
+1928	Kazym Khanty	salt	104	soɬ	s o ɬ	-217
+1929	Obdorsk Khanty	salt	104	sal	s a l	-217
+# 
+1930	North Mansi	short	105	waːtʲi	w aː tʲ i	219
+1931	Middle Lozva Mansi	short	105	uːŋkʷæ	uː ŋ kʷ æ	220
+1932	Lower Lozva Mansi	short	105	œːnkʷə	œː n kʷ ə	220
+1933	Pelymka Mansi	short	105	uːnək	uː n ə k	220
+1934	Konda Mansi	short	105	uːŋkʷə	uː ŋ kʷ ə	220
+1935	Tavda Mansi	short	105	oːn	oː n	220
+1936	Vakh Khanty	short	105	wæːɳ	w æː ɳ	218
+1937	Verkhne-Kalymsk Khanty	short	105	wæːɳ	w æː ɳ	218
+1938	Vasjugan Khanty	short	105	wæːɳ	w æː ɳ	218
+1939	Likrisovskoje Khanty	short	105	wæːɳ	w æː ɳ	218
+1940	Malyj Jugan Khanty	short	105	wæːn	w æː n	218
+1941	Tremjugan Khanty	short	105	wæːɳ	w æː ɳ	218
+1942	Jugan Khanty	short	105	wæːn	w æː n	218
+1943	Upper Demjanka Khanty	short	105	wæːn	w æː n	218
+1944	Konda Khanty	short	105	wæːn	w æː n	218
+1945	Nizjam Khanty	short	105	waːn	w aː n	218
+1946	Sherkaly Khanty	short	105	waːn	w aː n	218
+1947	Kazym Khanty	short	105	waːɳ	w aː ɳ	218
+1948	Synja Khanty	short	105	waːɳ	w aː ɳ	218
+1949	Obdorsk Khanty	short	105	wæːn	w æː n	218
+# 
+1950	North Mansi	snake	106	ɲɔːlɨɣ	ɲ ɔː l ɨ ɣ	221
+1951	Middle Lozva Mansi	snake	106	ɲoli	ɲ o l i	221
+1952	Lower Lozva Mansi	snake	106	ɲoli	ɲ o l i	221
+1953	Pelymka Mansi	snake	106	ɲoli	ɲ o l i	221
+1954	Konda Mansi	snake	106	ɲolɨ	ɲ o l ɨ	221
+1955	Tavda Mansi	snake	106	ɲɔlu	ɲ ɔ l u	221
+1956	Vakh Khanty	snake	106	mœːŋkæːm	m œː ŋ k æː m	222
+1957	Verkhne-Kalymsk Khanty	snake	106	mœːŋkæːm	m œː ŋ k æː m	222
+1958	Vasjugan Khanty	snake	106	mœːŋkæːm	m œː ŋ k æː m	222
+1959	Malyj Jugan Khanty	snake	106	sæɣʷərwaːjəɣ	s æ ɣʷ ə r w aː j ə ɣ	223
+1960	Jugan Khanty	snake	106	mekkarɨwɔːjəɣ	m e kː a r ɨ w ɔː j ə ɣ	224
+1961	Upper Demjanka Khanty	snake	106	meɣχarwoːjə	m e ɣ χ a r w oː j ə	224
+1962	Konda Khanty	snake	106	waχtəwoːjə	w a χ t ə w oː j ə	225
+1963	Kazym Khanty	snake	106	jɛːməŋwɔːj	j ɛː m ə ŋ w ɔː j	226
+1964	Obdorsk Khanty	snake	106	oχtiːwaːj	o χ t iː w aː j	225
+# 
+1965	North Mansi	thin	107	woutæ	w ou t æ	229
+1966	Middle Lozva Mansi	thin	107	wæɨtæ	w æɨ t æ	229
+1967	Pelymka Mansi	thin	107	wæɨtæ	w æɨ t æ	229
+1968	Konda Mansi	thin	107	wouti	w ou t i	229
+1969	Tavda Mansi	thin	107	aʃtɔ	a ʃ t ɔ	230
+1970	Vakh Khanty	thin	107	woːɣəʎ	w oː ɣ ə ʎ	229
+1971	Verkhne-Kalymsk Khanty	thin	107	woːɣəʎ	w oː ɣ ə ʎ	229
+1972	Vasjugan Khanty	thin	107	woːɣəʎ	w oː ɣ ə ʎ	229
+1973	Vartovskoje Khanty	thin	107	wɔɣəɬj	w ɔ ɣ ə ɬ j	229
+1974	Likrisovskoje Khanty	thin	107	waɣʷəθ	w a ɣʷ ə θ	229
+1975	Malyj Jugan Khanty	thin	107	woɣʷəɬ	w o ɣʷ ə ɬ	229
+1976	Tremjugan Khanty	thin	107	woɣʷəɬ	w o ɣʷ ə ɬ	229
+1977	Jugan Khanty	thin	107	woːɣəɬ	w oː ɣ ə ɬ	229
+1978	Upper Demjanka Khanty	thin	107	woːχət	w oː χ ə t	229
+1979	Konda Khanty	thin	107	woːχət	w oː χ ə t	229
+1980	Nizjam Khanty	thin	107	uːχət	uː χ ə t	229
+1981	Sherkaly Khanty	thin	107	uːχət	uː χ ə t	229
+1982	Kazym Khanty	thin	107	ɵːχəɬ	ɵː χ ə ɬ	229
+1983	Synja Khanty	thin	107	uːχəl	uː χ ə l	229
+1984	Obdorsk Khanty	thin	107	oːχəl	oː χ ə l	229
+1985	North Mansi	thin	107	osʲsʲæ	o sʲ sʲ æ	231
+1986	Middle Lozva Mansi	thin	107	ɲisʲsʲæ	ɲ i sʲ sʲ æ	232
+1987	Lower Lozva Mansi	thin	107	ɲiʃʃæ	ɲ i ʃː æ	232
+1988	Vakh Khanty	thin	107	wæːɲtj	w æː ɲ t j	227
+1989	Verkhne-Kalymsk Khanty	thin	107	wæːɲtj	w æː ɲ t j	227
+1990	Vasjugan Khanty	thin	107	wæːɲtj	w æː ɲ t j	227
+1991	Likrisovskoje Khanty	thin	107	wæːtj	w æː t j	227
+1992	Malyj Jugan Khanty	thin	107	wæːtj	w æː t j	227
+1993	Tremjugan Khanty	thin	107	wæːtj	w æː t j	227
+1994	Jugan Khanty	thin	107	wæːtj	w æː t j	227
+1995	Upper Demjanka Khanty	thin	107	wæːtj	w æː t j	227
+1996	Konda Khanty	thin	107	wæːtj	w æː t j	227
+1997	Nizjam Khanty	thin	107	waːsj	w aː s j	227
+1998	Sherkaly Khanty	thin	107	waːsj	w aː s j	227
+1999	Kazym Khanty	thin	107	waːsj	w aː s j	227
+2000	Synja Khanty	thin	107	waːsj	w aː s j	227
+2001	Obdorsk Khanty	thin	107	asæː	a s æː	-228
+# 
+2002	North Mansi	wind	108	woːt	w oː t	233
+2003	Middle Lozva Mansi	wind	108	wuot	w uo t	233
+2004	Pelymka Mansi	wind	108	woːt	w oː t	233
+2005	Konda Mansi	wind	108	wuot	w uo t	233
+2006	Tavda Mansi	wind	108	wɔːt	w ɔː t	233
+2007	Vakh Khanty	wind	108	waːt	w aː t	233
+2008	Verkhne-Kalymsk Khanty	wind	108	waːt	w aː t	233
+2009	Vasjugan Khanty	wind	108	waːt	w aː t	233
+2010	Vartovskoje Khanty	wind	108	waːt	w aː t	233
+2011	Likrisovskoje Khanty	wind	108	waːt	w aː t	233
+2012	Malyj Jugan Khanty	wind	108	waːt	w aː t	233
+2013	Tremjugan Khanty	wind	108	wɔːt	w ɔː t	233
+2014	Jugan Khanty	wind	108	wɔːt	w ɔː t	233
+2015	Upper Demjanka Khanty	wind	108	woːt	w oː t	233
+2016	Konda Khanty	wind	108	woːt	w oː t	233
+2017	Nizjam Khanty	wind	108	wɔːt	w ɔː t	233
+2018	Sherkaly Khanty	wind	108	wɔːt	w ɔː t	233
+2019	Kazym Khanty	wind	108	wɔːt	w ɔː t	233
+2020	Synja Khanty	wind	108	wɔːt	w ɔː t	233
+2021	Obdorsk Khanty	wind	108	waːt	w aː t	233
+# 
+2022	North Mansi	worm	109	peːrk	p eː r k	237
+2023	Middle Lozva Mansi	worm	109	peːrk	p eː r k	237
+2024	Lower Lozva Mansi	worm	109	peːrk	p eː r k	237
+2025	Pelymka Mansi	worm	109	wujaːsʲəχ	w u j aː sʲ ə χ	234
+2026	Konda Mansi	worm	109	qʷɔr	qʷ ɔ r	-236
+2027	Tavda Mansi	worm	109	qort	q o r t	-236
+2028	Vakh Khanty	worm	109	meɣleːr	m e ɣ l eː r	235
+2029	Vasjugan Khanty	worm	109	meɣjeːr	m e ɣ j eː r	235
+2030	Tremjugan Khanty	worm	109	meɣɬær	m e ɣ ɬ æ r	235
+2031	Jugan Khanty	worm	109	meɣɬær	m e ɣ ɬ æ r	235
+2032	Konda Khanty	worm	109	meɣteːr	m e ɣ t eː r	235
+2033	Kazym Khanty	worm	109	muwɬɛːr	m u w ɬ ɛː r	235
+2034	Synja Khanty	worm	109	muwleːr	m u w l eː r	235
+# 
+2035	North Mansi	year	110	taːl	t aː l	238
+2036	Middle Lozva Mansi	year	110	toɔl	t oɔ l	238
+2037	Lower Lozva Mansi	year	110	tɔːl	t ɔː l	238
+2038	Pelymka Mansi	year	110	tɔːl	t ɔː l	238
+2039	Konda Mansi	year	110	toɔl	t oɔ l	238
+2040	Tavda Mansi	year	110	teːl	t eː l	238
+2041	Vakh Khanty	year	110	aːl	aː l	239
+2042	Verkhne-Kalymsk Khanty	year	110	aːl	aː l	239
+2043	Vasjugan Khanty	year	110	aːl	aː l	239
+2044	Vartovskoje Khanty	year	110	aːɬ	aː ɬ	239
+2045	Likrisovskoje Khanty	year	110	aːθ	aː θ	239
+2046	Malyj Jugan Khanty	year	110	aːɬ	aː ɬ	239
+2047	Tremjugan Khanty	year	110	ɔːɬ	ɔː ɬ	239
+2048	Jugan Khanty	year	110	ɔːɬ	ɔː ɬ	239
+2049	Upper Demjanka Khanty	year	110	oːt	oː t	239
+2050	Konda Khanty	year	110	oːt	oː t	239
+2051	Nizjam Khanty	year	110	ɔːt	ɔː t	239
+2052	Sherkaly Khanty	year	110	tatə	t a t ə	238
+2053	Kazym Khanty	year	110	ɔːɬ	ɔː ɬ	239
+2054	Synja Khanty	year	110	tal	t a l	238
+2055	Obdorsk Khanty	year	110	tæl	t æ l	238

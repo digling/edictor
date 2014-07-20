@@ -53,6 +53,8 @@ modified : 2014-07-04 12:56
   <h4>Navigation</h4>
   Having entered the insert mode (just click on any of the cells of the table or press the tab key), you can navigate with key up and key down from cell to cell along the same column. If you want to navigate between columns within the same row, use the CTRL key and key left / key right.  
 </div>
+
+
 <div style="border:2px solid #2e5ca8;display:block;overflow:hidden;">
   <div style="float:left;display:inline;"><img style="margin-top:20px;margin-bottom:20px;margin-left:20px;" src="img/wordlists.png" alt="tsv" width="50px"></div>
   <div style="font-size:200%;font-weight:bold;margin:30px;color:#2e5ca8;float:left;display:inline;">Wordlist Editor <span id="filename"> </span></div>
@@ -64,6 +66,7 @@ modified : 2014-07-04 12:56
 <div style="display:block;overflow:hidden;border:2px dotted #2e5ca8;margin-top:20px;padding-bottom:30px;padding-left:20px;padding-right:20px;padding-top:10px;">
 <a name="settings" style="font-weight:bold;color:#2e5ca8">MENU</a><br><br>
 <input type="file" id="file" name="file" class="submit2 active" />
+<input type="text" class="textfield" onkeyup="handleAjax(event,this.value);" id="ajaxfile" placeholder="select remote file" />
 
 <input id="last" type="button"
 onclick="showWLS(1);$('#last').removeClass('active');$('#last').addClass('inactive');"

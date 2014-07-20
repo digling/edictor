@@ -220,7 +220,6 @@ function handleFileSelect2(evt)
 
   /* create file reader instance */
   var reader = new FileReader({async:false});
-  //$.get('harry.msa', function(data){document.getElementById('store').innerText = data}, alert("loaded text"), 'text');
   reader.onload = function(e){STORE = reader.result;}
   reader.readAsText(file);
 
@@ -235,6 +234,36 @@ function handleFileSelect2(evt)
 
 }
 
+function handleAjax(event,url)
+{
+  if(event.keyCode != 13)
+  {
+    return;
+  }
+  reset();
+  localStorage.filename = file.name;
+  STORE = '';
+  CFG['filename'] = url;
+  
+  $.ajax(
+      {
+        async: false,
+        type: "GET",
+        url: 'data/'+url,
+        dataType: "text",
+        success: function(data) {STORE = data;}
+      });
+
+  
+  document.getElementById('mainsettings').style.display = 'inline';
+  document.getElementById('view').style.display = 'block';
+  document.getElementById("qlc").innerHTML = '';
+  var fn = document.getElementById('filename');
+  fn.innerHTML = '&lt;'+CFG['filename']+'&gt;';
+  var dropZone = document.getElementById('drop_zone');
+  dropZone.style.display = "none";
+}
+
 function handleDragOver(evt) {
   evt.stopPropagation();
   evt.preventDefault();
@@ -243,7 +272,21 @@ function handleDragOver(evt) {
 
 
 
-$('#qlc').draggable({axis:"x"});
-$('#settings').draggable();
+$('#qlc').draggable({axis:"x",cursor:"crosshair",grid:[50,20]});
+$('#settings').draggable({cursor:"crosshair"});
+var server_side_files = [];
+$.ajax(
+    {
+      async:false,
+      type: "GET",
+      url: 'data/filelist.csv',
+      dataType: "text",
+      success: function(data) {server_side_files = data.split('\n');}
+    });
+$('#ajaxfile').autocomplete(
+    {
+      delay: 0,
+      source: server_side_files
+    });
 
 startWordlist();
