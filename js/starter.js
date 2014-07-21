@@ -298,7 +298,7 @@ $.ajax(
       async:true,
       type: "GET",
       url: 'data/filelist.csv',
-      crossDomain: true,
+      crossDomain: false,
       dataType: "text",
       success: function(data) {server_side_files = data.split('\n');},
       error: fakeAlert("could not load filelist.")
