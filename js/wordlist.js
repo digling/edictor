@@ -1566,8 +1566,8 @@ function editGroup(event,idx)
   {
     var alm = plotWord(WLS[r][this_idx]);
     var lang = WLS[r][CFG['_tidx']];
-    alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace('span','td','g'));
-    blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(' ','\t','g')+'\n';
+    alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace(new RexExp('span','gi'),'td'));
+    blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(new RegExp(' ','gi'),'\t')+'\n';
   }
   CFG['_alignment'] = blobtxt;
 
@@ -1586,10 +1586,5 @@ function editGroup(event,idx)
   document.body.appendChild(editmode);
   editmode.innerHTML = text;
   document.onkeydown = function(event){$('#editmode').remove(); document.onkeydown = function(event){basickeydown(event);};};
-  //document.onclick = function(event){$('#editmode').remove(); document.onkeydown = function(event){basickeydown(event);};};
 }
 
-//function closeWindow(event,divid)
-//{
-//  $(divid).remove(); document.onkeydown = function(event){basickeydown(event);};}
-//}
