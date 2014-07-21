@@ -67,16 +67,18 @@ function basickeydown (event) {
     return;
   }
   /* drag table left right when key is pressed */
-  else if(event.keyCode == 37)
+  else if(event.keyCode == 37 && event.altKey)
   {
+    event.preventDefault();
     $('#qlc_table').animate({
       'marginLeft' : "-=100"
     });
     return;
   }
   /* drag table right when key is pressed */
-  else if(event.keyCode == 39)
+  else if(event.keyCode == 39 && event.altKey)
   {
+    event.preventDefault();
     $('#qlc_table').animate({
       'marginLeft' : "+=100"
     });
