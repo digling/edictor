@@ -39,7 +39,12 @@ var STORE = ''; // global variable to store the text data in raw format
 function resetFormat(value)
 {
 
-  if(CFG['formatter'] != value)
+  if(!value)
+  {
+    CFG['formatter'] = false;
+    WLS['etyma'] = [];
+  }
+  else if(CFG['formatter'] != value)
   {
     var size = 0;
     CFG['formatter'] = value;
@@ -218,6 +223,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS['_trows'] = selection.slice();
   WLS['columns'] = columns;
   WLS['filename'] = CFG['filename'];
+  
   /* ! attention here, this may change if no ids are submitted! */
   CFG['_tidx'] = tIdx-1;
   CFG['_cidx'] = cIdx-1;
@@ -232,14 +238,24 @@ function csvToArrays(allText, separator, comment, keyval) {
     {
       tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+col+'">'+col+' ';
       resetFormat(col);
-      tmp_count += 1
+      tmp_count += 1;
     }
     else if(col.indexOf('ID') - col.length == -2)
     {
       tmp_text += '<input onchange="resetFormat(this.value)" type="radio" name="formatter" value="'+col+'">'+col+' ';
+      tmp_count += 1;
     }
   }
-  formatter.innerHTML = tmp_text + '</td>';
+  tmp_text += '<input onchange="resetFormat(false)" type="radio" name="formatter" value="">FALSE ';
+  if(tmp_count > 0)
+  {
+    formatter.innerHTML = tmp_text + '</td>';
+    formatter.style.display = "table-row";
+  }
+  else
+  {
+    formatter.style.display = "none";
+  }
   
   /* add settings for the column preview to the data */
   var all_columns = document.getElementById('columncb');

@@ -417,7 +417,7 @@ div.alignments {
 .alm_taxon {
   font-weight: bold;
   display: table-cell;
-  max-width: 200px;
+  max-width: 250px;
   min-width: 100px;
   text-overflow: ellipsis;
   white-space: nowrap;
