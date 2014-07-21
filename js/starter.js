@@ -295,11 +295,13 @@ $('#settings').draggable({cursor:"crosshair"});
 var server_side_files = [];
 $.ajax(
     {
-      async:false,
+      async:true,
       type: "GET",
       url: 'data/filelist.csv',
+      crossDomain: true,
       dataType: "text",
-      success: function(data) {server_side_files = data.split('\n');}
+      success: function(data) {server_side_files = data.split('\n');},
+      error: fakeAlert("could not load filelist.")
     });
 $('#ajaxfile').autocomplete(
     {
