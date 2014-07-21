@@ -192,6 +192,15 @@ span.residue {
   color: white;
   cursor: default;
 }
+td.residue{
+  display: table-cell;
+  width: 30px;
+  background-color: #f1f1f1;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  cursor: default;
+}
 
 td.dolgo_ERROR{background-color: white; color:red;}
 td.dolgo_V{background-color: #c86464;}
@@ -422,4 +431,19 @@ div.alignments {
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: left;
+}
+
+#previous {
+  background-image: url("../img/pfeilr.png");
+  background-repeat: no-repeat;
+  background-position:center;
+  //background-color: white !important;
+  font-size: 80%;
+}
+#next {
+  background-image: url("../img/pfeill.png");
+  background-repeat: no-repeat;
+  background-position:center;
+  //background-color: white !important;
+  font-size: 80%;
 }
