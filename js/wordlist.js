@@ -1566,7 +1566,7 @@ function editGroup(event,idx)
   {
     var alm = plotWord(WLS[r][this_idx]);
     var lang = WLS[r][CFG['_tidx']];
-    alms.push('<td><span class="alm_taxon">'+lang+'</span></td><td>'+alm+'</td>');
+    alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace('span','td','g'));
     blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(' ','\t','g')+'\n';
   }
   CFG['_alignment'] = blobtxt;
