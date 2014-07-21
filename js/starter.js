@@ -264,6 +264,7 @@ function handleAjax(event,url)
       {
         async: false,
         type: "GET",
+        contentType: "application/text; charset=utf-8",
         url: 'data/'+url,
         dataType: "text",
         success: function(data) {STORE = data;}

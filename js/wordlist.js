@@ -10,7 +10,7 @@
 function reset()
 {
  WLS = {};
- CFG = {'preview': 10,'nodi': false, 'sorted': false, 'formatter':false};
+ CFG = {'preview': 10,'nodi': false, 'sorted': false, 'formatter':false, '_alignment': false};
  STORE = '';
 }
 
@@ -31,7 +31,7 @@ var BASICS = [
   ];
 
 var WLS = {};
-var CFG = {'preview': 10,'nodi': false, 'sorting': false, 'formatter': false};
+var CFG = {'preview': 10,'nodi': false, 'sorting': false, 'formatter': false, '_alignment':false};
 var STORE = ''; // global variable to store the text data in raw format
 
 
@@ -1343,9 +1343,10 @@ function fakeAlert(text)
   document.onkeydown = function(event){$('#fake').remove(); document.onkeydown = function(event){basickeydown(event);};};
 
 }
+/* save file */
 function saveFile()
 {
-  /* disallow safing when document was not edited */
+  /* disallow saving when document was not edited */
   if (!WLS['edited'])
   {
     fakeAlert('You need to SAVE (press button or CTRL+S) the document before you can EXPORT it.');
@@ -1355,6 +1356,19 @@ function saveFile()
   //var store = document.getElementById('store');
   var blob = new Blob([STORE], {type: 'text/plain;charset=utf-8'});
   saveAs(blob, CFG['filename']);
+}
+
+/* save one alignment from the data into file */
+function saveAlignment(idx)
+{
+  /* check for valid alignment first */
+  if(!CFG['_alignment'])
+  {
+    fakeAlert("No valid alignment was specified.");
+    return;
+  }
+  var blob = new Blob([CFG['_alignment']],{type: 'text/plain;charset=utf-8'});
+  saveAs(blob, CFG['filename'].replace('.tsv','_'+idx+'_.msa'));
 }
 
 function getDate()
@@ -1547,12 +1561,15 @@ function editGroup(event,idx)
   var rows = WLS['etyma'][idx];
   var alms = [];
   var langs = [];
+  var blobtxt = '';
   for(var i=0,r;r=rows[i];i++)
   {
     var alm = plotWord(WLS[r][this_idx]);
     var lang = WLS[r][CFG['_tidx']];
     alms.push('<td><span class="alm_taxon">'+lang+'</span></td><td>'+alm+'</td>');
+    blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(' ','\t','g')+'\n';
   }
+  CFG['_alignment'] = blobtxt;
 
   var text = '<div class="edit_links">';
   text += '<p>This entry links to the following '+alms.length+' entries:</p>';
@@ -1561,11 +1578,18 @@ function editGroup(event,idx)
   {
     text += '<tr>'+alm+'</tr>';
   }
-  text += '</table></div></div>';
+  text += '</table></div>';
+  text += '<input class="submit" type="button" onclick="fakeAlert(\'This part is under construction.\')" value="EDIT" /> ';
+  text += '<input class="submit" type="button" onclick="saveAlignment('+idx+')" value="EXPORT" /> ';
+  text += '<input class="submit" type="button" onclick="$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /><br><br> ';
+  text += '</div> ';
   document.body.appendChild(editmode);
   editmode.innerHTML = text;
   document.onkeydown = function(event){$('#editmode').remove(); document.onkeydown = function(event){basickeydown(event);};};
-  document.onclick = function(event){$('#editmode').remove(); document.onkeydown = function(event){basickeydown(event);};};
+  //document.onclick = function(event){$('#editmode').remove(); document.onkeydown = function(event){basickeydown(event);};};
 }
 
-
+//function closeWindow(event,divid)
+//{
+//  $(divid).remove(); document.onkeydown = function(event){basickeydown(event);};}
+//}
