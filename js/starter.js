@@ -227,7 +227,9 @@ function handleFileSelect2(evt)
   evt.stopPropagation();
   evt.preventDefault();
   
+  /* reset if wordlist has been parsed already */
   reset();
+  
   var files = evt.dataTransfer.files; /* FileList object */
   var file = files[0];
   //var store = document.getElementById('store');
@@ -253,9 +255,12 @@ function handleFileSelect2(evt)
 
 function handleAjax(event,url)
 {
-  if(event.keyCode != 13)
+  if(typeof event != 'string')
   {
-    return;
+    if(event.keyCode != 13)
+    {
+      return;
+    }
   }
   reset();
   localStorage.filename = file.name;
@@ -308,4 +313,25 @@ $('#ajaxfile').autocomplete(
       source: server_side_files
     });
 
+if(document.URL.indexOf('=') != -1)
+{
+  var query = document.URL.split('?')[1];
+  var keyvals = query.split('&');
+  var params = {};
+  for(var i=0;i<keyvals.length;i++)
+  {
+    var keyval = keyvals[i].split('=');
+    params[keyval[0]] = keyval[1];
+  }
+  PARAMS = params;
+  reset();
+  
+  if(server_side_files.indexOf(params['file']) != -1)
+  {
+    handleAjax("event",params['file']);
+    showWLS(1);
+  }
+
+}
 startWordlist();
+

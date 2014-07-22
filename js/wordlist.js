@@ -9,31 +9,70 @@
 
 function reset()
 {
- WLS = {};
- CFG = {'preview': 10,'nodi': false, 'sorted': false, 'formatter':false, '_alignment': false};
- STORE = '';
+  WLS = {};
+  CFG = {
+  'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ALIGNMENT', 'ETYMONID'],
+  'preview': 10,
+  'noid': false, 
+  'sorting': false, 
+  'formatter': false, 
+  '_alignment':false,
+  'highlight': ['TOKENS','ALIGNMENT'],
+  'sampa' : ['TOKENS'],
+  'pinyin' : ['CHINESE']
+  };
+  
+  STORE = '';
+  var BL = ['file'];
+  
+  var db = '';
+  for(var param in PARAMS)
+  {
+    var value = PARAMS[param];
+
+    if(BL.indexOf(param) == -1)
+    {
+     if(!isNaN(parseInt(value)))
+     {
+       CFG[param] = parseInt(value);
+     }
+     else if(value.indexOf(',') != -1)
+     {
+       CFG[param] = [];
+       var values = value.split(',');
+       for(var i=0,val;val=values[i];i++)
+       {
+         if(val != '')
+         {
+          CFG[param].push(val);
+         }
+       }
+     }
+     else
+     {
+       CFG[param] = PARAMS[param];
+     }
+    }
+  }
 }
 
-/* basic parameters */
-var BASICS = [
-  'DOCULECT',
-  'GLOSS',
-  'CONCEPT',
-  'IPA',
-  'TOKENS',
-  'COGID',
-  'TAXON',
-  'TAXA',
-  'PROTO',
-  'PROTO_TOKENS',
-  'ALIGNMENT',
-  'ETYMONID'
-  ];
-
+/* the wordlist object */
 var WLS = {};
-var CFG = {'preview': 10,'nodi': false, 'sorting': false, 'formatter': false, '_alignment':false};
-var STORE = ''; // global variable to store the text data in raw format
 
+/* the basic configuration */
+var CFG = {
+  'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ALIGNMENT', 'ETYMONID'],
+  'preview': 10,
+  'noid': false, 
+  'sorting': false, 
+  'formatter': false, 
+  '_alignment':false,
+  'highlight': ['TOKENS','ALIGNMENT'],
+  'sampa' : ['TOKENS'],
+  'pinyin' : ['CHINESE']
+};
+var STORE = ''; // global variable to store the text data in raw format
+var PARAMS = {};
 
 /* function for resetting the formatter */
 function resetFormat(value)
@@ -68,11 +107,12 @@ function resetFormat(value)
     }
     WLS['etyma'] = format_selection;
   }
-  else
+  else if(CFG['formatter'] == value)
   {
     CFG['formatter'] = false;
     WLS['etyma'] = [];
   }
+  showWLS(getCurrent());
 
 }
 
@@ -114,7 +154,7 @@ function csvToArrays(allText, separator, comment, keyval) {
         {
           cIdx = j;
         }
-        if (BASICS.indexOf(datum) != -1)
+        if (CFG['basics'].indexOf(datum) != -1)
         {
           columns[datum] = j;
         }
@@ -133,8 +173,8 @@ function csvToArrays(allText, separator, comment, keyval) {
       /* append to basics */
       columns[data[tIdx].toUpperCase()] = Math.abs(columns[data[tIdx].toUpperCase()]);
       columns[data[cIdx].toUpperCase()] = Math.abs(columns[data[cIdx].toUpperCase()]);
-      BASICS.push(data[tIdx].toUpperCase());
-      BASICS.push(data[cIdx].toUpperCase());
+      CFG['basics'].push(data[tIdx].toUpperCase());
+      CFG['basics'].push(data[cIdx].toUpperCase());
 
     }
     /* handle cases where no ID has been submitted */
@@ -170,8 +210,8 @@ function csvToArrays(allText, separator, comment, keyval) {
       /* append to basics */
       columns[data[tIdx].toUpperCase()] = Math.abs(columns[data[tIdx].toUpperCase()]);
       columns[data[cIdx].toUpperCase()] = Math.abs(columns[data[cIdx].toUpperCase()]);
-      BASICS.push(data[tIdx].toUpperCase());
-      BASICS.push(data[cIdx].toUpperCase());
+      CFG['basics'].push(data[tIdx].toUpperCase());
+      CFG['basics'].push(data[cIdx].toUpperCase());
 
     }
     //else if (data[0].charAt(0) == comment || data[0] == '') {}
@@ -212,7 +252,6 @@ function csvToArrays(allText, separator, comment, keyval) {
     }
   }
   // check whether or not we need this sorting mode, maybe we can as well get rid of it
-  //selection.sort(function(x, y) {return x - y});
 
   WLS = qlc;
   WLS['header'] = header;
@@ -232,23 +271,33 @@ function csvToArrays(allText, separator, comment, keyval) {
   var formatter = document.getElementById('formatter');
   var tmp_text = '<th>Formatter</th><td>';
   var tmp_count = 0;
-  for(var col in WLS['columns'])
+  var this_key = false;
+  for(var key in WLS['columns'])
   {
-    if(col.indexOf('ID') - col.length == -2 && tmp_count == 0)
+    if(key.indexOf('ID') - key.length == -2 && tmp_count == 0 && key != CFG['formatter'])
     {
-      tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+col+'">'+col+' ';
-      resetFormat(col);
+      tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+key+'">'+key+' ';
+      this_key = key;
       tmp_count += 1;
     }
-    else if(col.indexOf('ID') - col.length == -2)
+    else if(key.indexOf('ID') - key.length == -2 && CFG['formatter'] != key)
     {
-      tmp_text += '<input onchange="resetFormat(this.value)" type="radio" name="formatter" value="'+col+'">'+col+' ';
+      tmp_text += '<input onchange="resetFormat(this.value)" type="radio" name="formatter" value="'+key+'">'+key+' ';
+      tmp_count += 1;
+    }
+    else if(key == CFG['formatter'])
+    {
+      tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+key+'">'+key+' ';
       tmp_count += 1;
     }
   }
   tmp_text += '<input onchange="resetFormat(false)" type="radio" name="formatter" value="">FALSE ';
   if(tmp_count > 0)
   {
+    if(!CFG['formatter'])
+    {
+      resetFormat(this_key);
+    }
     formatter.innerHTML = tmp_text + '</td>';
     formatter.style.display = "table-row";
   }
@@ -260,10 +309,10 @@ function csvToArrays(allText, separator, comment, keyval) {
   /* add settings for the column preview to the data */
   var all_columns = document.getElementById('columncb');
   var tmp_text = '<th>Columns</th><td>';
-  for (col in WLS['columns'])
+  for (var col in WLS['columns'])
   {
     tmp_text += '<input id="cb_' + col + '" onchange="filterColumns(this.value);" type="checkbox" ';
-    if (BASICS.indexOf(col) != -1)
+    if (CFG['basics'].indexOf(col) != -1)
     {
       tmp_text += 'checked ';
     }
@@ -573,9 +622,9 @@ function addColumn(event)
   }
   WLS['header'].push(name);
   WLS['columns'][name] = WLS.header.length - 1;
-  if (BASICS.indexOf(name) == -1)
+  if (CFG['basics'].indexOf(name) == -1)
   {
-    BASICS.push(name);
+    CFG['basics'].push(name);
   }
 
   col.value = '';
@@ -780,11 +829,10 @@ function modifyEntry(event, idx, jdx, xvalue)
   }
 
   /* change sampa to ipa if entries are ipa or tokens */
-  if (entry.className == 'IPA' || entry.className.indexOf('TOKENS') != -1 || entry.className == 'PROTO' || entry.className.indexOf('ALIGNMENT') != -1)
+  if (CFG['sampa'].indexOf(entry.className) != -1)
   {
     xvalue = sampa2ipa(xvalue); //modify.value);
   }
-  //WLS[idx][j] = xvalue; //modify.value;
 
   var prevalue = entry.dataset.value;
   entry.dataset.value = xvalue; //this.value; //modify.value;
@@ -1100,7 +1148,7 @@ function applyFilter()
       head = WLS['header'][i];
       WLS['columns'][head] = Math.abs(WLS['columns'][head]);
       document.getElementById('cb_' + head).checked = true;
-      if (BASICS.indexOf(head) == -1)
+      if (CFG['basics'].indexOf(head) == -1)
       {
         entries.value += head + ', ';
       }
@@ -1113,7 +1161,7 @@ function applyFilter()
       var head = WLS['header'][i];
       if (elist.indexOf(head) != -1)
       {
-        if (BASICS.indexOf(head) != -1)
+        if (CFG['basics'].indexOf(head) != -1)
         {
           WLS['columns'][head] = -Math.abs(WLS['columns'][head]);
           document.getElementById('cb_' + head).checked = false;
@@ -1126,7 +1174,7 @@ function applyFilter()
       }
       else
       {
-        if (BASICS.indexOf(head) == -1)
+        if (CFG['basics'].indexOf(head) == -1)
         {
           WLS['columns'][head] = -Math.abs(WLS['columns'][head]);
           document.getElementById('cb_' + head).checked = false;
@@ -1242,6 +1290,7 @@ function handleFileSelect(evt)
 {
   var files = evt.target.files; /* FileList object */
   var file = files[0];
+  
   reset();
   
   //var store = document.getElementById('store');
@@ -1397,7 +1446,7 @@ function highLight()
 {
   for(var i=0,head;head=WLS.header[i];i++)
   {
-    if(head.indexOf('TOKENS') != -1 || head.indexOf('ALIGNMENT') != -1)
+    if(CFG['highlight'].indexOf(head) != -1 )
     {
       var tokens = document.getElementsByClassName(head);
       for (var j = 0; j < tokens.length; j++)
@@ -1475,15 +1524,11 @@ function sortTable(event,head)
 
           if(!isNaN(c) && !isNaN(d))
           {
-            return c - d;
+            return d - c;
           }
           else
           {
             return b.localeCompare(a);
-
-            //if(a < b){return 1;}
-            //else if(a == b){return 0;}
-            //else{return -1;}
           }
         }
         );
@@ -1503,15 +1548,11 @@ function sortTable(event,head)
 
           if(!isNaN(c) && !isNaN(d))
           {
-            return d - c;
+            return c - d;
           }
           else
           {
             return a.localeCompare(b);
-
-            //if(a <= b){return -1;}
-            //else if(a == b){return 0);
-            //else{return 1;}
           }
         }
         );

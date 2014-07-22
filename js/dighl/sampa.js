@@ -2,6 +2,26 @@
 /* code forked from PhonVerter by */
 var myar = [
   ["`&#abc;","`"],
+  ["\\^1","¹"],
+  ["\\^2","²"],
+  ["\\^3","³"],
+  ["\\^4","⁴"],
+  ["\\^5","⁵"],
+  ["\\^6","⁶"],
+  ["\\^7","⁷"],
+  ["\\^8","⁸"],
+  ["\\^9","⁹"],
+  ["\\^0","⁰"],
+  ["_1","₁"],
+  ["_2","₂"],
+  ["_3","₃"],
+  ["_4","₄"],
+  ["_5","₅"],
+  ["_6","₆"],
+  ["_7","₇"],
+  ["_8","₈"],
+  ["_9","₉"],
+  ["_0","₀"],
   ["!","↓"],
   ["!&#abc;","ǃ"],
   ["4`","ʗ"],
@@ -296,9 +316,9 @@ myar = myar.sort(function(x,y){return y[0].length - x[0].length;});
 function sampa2ipa(ipa_string)
 {		
   var ipa = ipa_string;
-  ipa = ipa.replace(')','&#41;','g');
-  ipa = ipa.replace('(','&#40;','g');
-  ipa = ipa.replace(/\\/,'&#abc;','g');
+  ipa = ipa.replace(new RegExp('\\)','g'),'&#41;');
+  ipa = ipa.replace(new RegExp('\\(','g'),'&#40;');
+  ipa = ipa.replace(new RegExp('\\\\','g'),'&#abc;');
   var reg = '';
   	
   for(var i=0;i<myar.length;i++)
