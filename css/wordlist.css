@@ -397,16 +397,13 @@ tr.d2 td {
 
 .edit_links {
   position: absolute;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0px auto;
   top:10%;
   left:0;
   right:0;
   background-color: Crimson;
   border: 2px dotted white;
   text-align:center;
-  overflow: auto;
-  clear: both;
   display: table;
 }
 .edit_links p {
