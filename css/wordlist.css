@@ -405,8 +405,9 @@ tr.d2 td {
   background-color: Crimson;
   border: 2px dotted white;
   text-align:center;
-  width:40%;
-  float: left;
+  overflow: auto;
+  clear: both;
+  display: table;
 }
 .edit_links p {
   color: white;
@@ -422,6 +423,12 @@ div.alignments {
   margin-bottom:5px;
   margin-left: 5px;
   margin-right:5px;
+  float: left;
+  display: block;
+}
+.submitline {
+  display: block;
+  clear: both;
 }
 .alm_taxon {
   font-weight: bold;
