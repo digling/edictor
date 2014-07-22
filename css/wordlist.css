@@ -233,16 +233,16 @@ span.dolgo_1{background-color: #c86496;}
 span.dolgo_X{background-color: #bbbbbb;}
 span.dolgo_GAP{background-color: #bbbbbb;}
 
-
 .help {
   z-index: 1;
   display: none;
-  position: fixed;
-  color: white;
-  background-color: #2e5ca8;
-  border: 2px dotted white;
+  position: absolute;
+  color: #2e5ca8;
+  background-color: white;
+  border: 2px solid #2e5ca8;
   max-width: 800px;
   padding: 25px;
+  margin: 10px;
 }
 
 .cellinput {
