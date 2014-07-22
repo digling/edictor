@@ -396,18 +396,18 @@ tr.d2 td {
 }
 
 .edit_links {
-  position: absolute;
-  margin: 0px auto;
+  position: relative;
+  margin: 0 auto;
   top:10%;
   left:0;
   right:0;
-  background-color: Crimson;
-  border: 2px dotted white;
+  background-color: white;
+  border: 2px solid #2e5ca8;
   text-align:center;
   display: table;
 }
 .edit_links p {
-  color: white;
+  color: #2e5ca8;
   font-weight: bold;
   padding-right: 10px;
   padding-left: 10px;
@@ -415,7 +415,7 @@ tr.d2 td {
 
 div.alignments {
   font-weight: bold;
-  border-top: 2px dotted Crimson;
+  border: 2px solid #2e5ca8;
   background-color: white;
   margin-bottom:5px;
   margin-left: 5px;
@@ -435,6 +435,7 @@ div.alignments {
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: left;
+  color: #2e5ca8;
 }
 
 #previous {

@@ -1612,7 +1612,7 @@ function editGroup(event,idx)
   }
   CFG['_alignment'] = blobtxt;
 
-  var text = '<div class="edit_links">';
+  var text = '<div class="edit_links" id="editlinks">';
   text += '<p>This entry links to the following '+alms.length+' entries:</p>';
   text += '<div class="alignments"><table>';
   for(var i=0,alm;alm=alms[i];i++)
@@ -1628,5 +1628,6 @@ function editGroup(event,idx)
   document.body.appendChild(editmode);
   editmode.innerHTML = text;
   document.onkeydown = function(event){$('#editmode').remove(); document.onkeydown = function(event){basickeydown(event);};};
+  //$('#editlinks').draggable();
 }
 
