@@ -83,7 +83,7 @@ function resetFormat(value)
     CFG['formatter'] = false;
     WLS['etyma'] = [];
   }
-  else if(CFG['formatter'] != value)
+  else// if(CFG['formatter'] != value)
   {
     var size = 0;
     CFG['formatter'] = value;
@@ -107,11 +107,11 @@ function resetFormat(value)
     }
     WLS['etyma'] = format_selection;
   }
-  else if(CFG['formatter'] == value)
-  {
-    CFG['formatter'] = false;
-    WLS['etyma'] = [];
-  }
+  //else if(CFG['formatter'] == value)
+  //{
+  //  CFG['formatter'] = false;
+  //  WLS['etyma'] = [];
+  //}
   showWLS(getCurrent());
 
 }
@@ -289,15 +289,16 @@ function csvToArrays(allText, separator, comment, keyval) {
     {
       tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+key+'">'+key+' ';
       tmp_count += 1;
+      this_key = CFG['formatter'];
     }
   }
   tmp_text += '<input onchange="resetFormat(false)" type="radio" name="formatter" value="">FALSE ';
   if(tmp_count > 0)
   {
-    if(!CFG['formatter'])
-    {
+    //if(!CFG['formatter'])
+    //{
       resetFormat(this_key);
-    }
+    //}
     formatter.innerHTML = tmp_text + '</td>';
     formatter.style.display = "table-row";
   }
