@@ -1620,9 +1620,10 @@ function editGroup(event,idx)
     text += '<tr>'+alm+'</tr>';
   }
   text += '</table></div>';
+  text += '<div class="submitline">';
   text += '<input class="submit" type="button" onclick="fakeAlert(\'This part is under construction.\')" value="EDIT" /> ';
   text += '<input class="submit" type="button" onclick="saveAlignment('+idx+')" value="EXPORT" /> ';
-  text += '<input class="submit" type="button" onclick="$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /><br><br> ';
+  text += '<input class="submit" type="button" onclick="$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /></div><br><br> ';
   text += '</div> ';
   document.body.appendChild(editmode);
   editmode.innerHTML = text;
