@@ -142,7 +142,8 @@
   display: inline;
 }
 #textfields {
-  display: none;
+  display: block;
+  float: left;
 }
 
 
@@ -217,6 +218,7 @@ td.dolgo_W{background-color: #c864c8;}
 td.dolgo_1{background-color: #c86496;} 
 td.dolgo_X{background-color: #bbbbbb;}
 td.dolgo_GAP{background-color: #bbbbbb;}
+td.dolgo_PLUS{font-size: 40%; vertical-align:center; background-color:black; color:black; width: 10px !important}
 span.dolgo_ERROR{background-color: white; color:red;}
 span.dolgo_V{background-color: #c86464;}
 span.dolgo_K{background-color: #c89664;} 
@@ -232,6 +234,7 @@ span.dolgo_W{background-color: #c864c8;}
 span.dolgo_1{background-color: #c86496;} 
 span.dolgo_X{background-color: #bbbbbb;}
 span.dolgo_GAP{background-color: #bbbbbb;}
+span.dolgo_PLUS{font-size: 40%; vertical-align:center;background-color:black; color:black; width: 10px !important}
 
 .help {
   z-index: 1;
@@ -368,6 +371,8 @@ span.dolgo_GAP{background-color: #bbbbbb;}
 
 .ALIGNMENT {
   max-width: 600px !important;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 tr.d1 td {
@@ -445,6 +450,8 @@ div.alignments {
   background-position:center;
   //background-color: white !important;
   font-size: 80%;
+  border-radius: 10px;
+  //border-image: url("../img/borderl.png") 30 30 round;
 }
 #next {
   background-image: url("../img/pfeill.png");
@@ -452,4 +459,23 @@ div.alignments {
   background-position:center;
   //background-color: white !important;
   font-size: 80%;
+  border-radius: 10px;
 }
+#first {
+  background-image: url("../img/pfeilm.png");
+  background-repeat: no-repeat;
+  background-position:center;
+  //background-color: white !important;
+  font-size: 80%;
+  border-radius: 10px;
+}
+
+/* class needed to prevent tables with long alignment strings from overflowing */
+.lock_alignment {
+  max-width:600px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+

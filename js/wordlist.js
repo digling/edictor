@@ -19,7 +19,8 @@ function reset()
   '_alignment':false,
   'highlight': ['TOKENS','ALIGNMENT'],
   'sampa' : ['TOKENS'],
-  'pinyin' : ['CHINESE']
+  'pinyin' : ['CHINESE'],
+  'css': ["menu:hide","textfields:hide"]
   };
   
   STORE = '';
@@ -69,7 +70,8 @@ var CFG = {
   '_alignment':false,
   'highlight': ['TOKENS','ALIGNMENT'],
   'sampa' : ['TOKENS'],
-  'pinyin' : ['CHINESE']
+  'pinyin' : ['CHINESE'],
+  'css': ["menu:hide","textfields:hide"]
 };
 var STORE = ''; // global variable to store the text data in raw format
 var PARAMS = {};
@@ -1311,7 +1313,7 @@ function handleFileSelect(evt)
     tmp = document.getElementById(modify[i]);
     tmp.style.display = 'block';
   }
-  var modify = ['concepts', 'columns', 'taxa', 'add_column', 'previous', 'next', 'current',];
+  var modify = ['concepts', 'columns', 'taxa', 'first', 'add_column', 'previous', 'next', 'current',];
   for (i in modify)
   {
     $('#' + modify[i]).removeClass('active');
@@ -1455,7 +1457,7 @@ function highLight()
         if (tokens[j].innerHTML == tokens[j].dataset.value)
         {
           var word = plotWord(tokens[j].dataset.value);
-          tokens[j].innerHTML = word;
+          tokens[j].innerHTML = '<div class="lock_alignment">'+word+"</div>";
         }
       }
     }

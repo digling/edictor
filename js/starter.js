@@ -26,18 +26,29 @@ function startWordlist()
     else
     {
       STORE = localStorage.text;
-      $("#last").removeClass("inactive");
-      $("#last").addClass("active");
+      $("#last").show();
+      //$("#last").removeClass("inactive");
+      //$("#last").addClass("active");
       var last = document.getElementById('last');
       last.value = "VIEW "+"<"+localStorage.filename+">";
       document.getElementById('filename').innerHTML = '<'+localStorage.filename+'>';
       CFG['filename'] = localStorage.filename;
     }
     $('#eingang').remove();
+    if('css' in CFG)
+    {
+      for(var i=0,line;line=CFG['css'][i];i++)
+      {
+        var linesplit = line.split(':');
+        var mystring = '$('+"'#"+linesplit[0]+"')."+linesplit[1]+"()";
+        eval(mystring);
+      }
+    }
     return 1;
   }
   catch (e)
   {
+    fakeAlert(e);
     return 0;
   }
 }
@@ -120,20 +131,20 @@ function basickeydown (event) {
   else if(event.keyCode == 113)
   {
     event.preventDefault();
-    toggleDiv('settings');
+    $('#settings').toggle();
   }
   /* toggle filters F3*/
   else if(event.keyCode == 114)
   {
     event.preventDefault();
-    toggleDiv('textfields');
+    $('#textfields').toggle();
   }
 
   /* toggle help F1 */
   else if(event.keyCode == 112)
   {
     event.preventDefault();
-    toggleHelp();
+    $('#help').toggle();
   }
   /* ctrl z goes back */
   else if(event.keyCode == 90 && event.ctrlKey)
