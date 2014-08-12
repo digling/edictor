@@ -20,7 +20,7 @@ function reset()
   'highlight': ['TOKENS','ALIGNMENT'],
   'sampa' : ['TOKENS'],
   'pinyin' : ['CHINESE'],
-  'css': ["menu:hide","textfields:hide"]
+  'css': ["menu:show,textfields:hide"]
   };
   
   STORE = '';
@@ -71,7 +71,7 @@ var CFG = {
   'highlight': ['TOKENS','ALIGNMENT'],
   'sampa' : ['TOKENS'],
   'pinyin' : ['CHINESE'],
-  'css': ["menu:hide","textfields:hide"]
+  'css': ["menu:show","textfields:hide"]
 };
 var STORE = ''; // global variable to store the text data in raw format
 var PARAMS = {};
@@ -531,7 +531,7 @@ function showWLS(start)
   document.getElementById('mainsettings').style.display = 'inline';
   
   document.getElementById('filedisplay').style.display = 'block';
-  document.getElementById('drop_zone').style.display = 'none';
+  //document.getElementById('drop_zone').style.display = 'none';
   var fn = document.getElementById('filename');
   fn.innerHTML = '&lt;' + CFG['filename'] + '&gt;';
   highLight();
@@ -1330,8 +1330,8 @@ function handleFileSelect(evt)
 
   var fn = document.getElementById('filename');
   fn.innerHTML = '&lt;' + CFG['filename'] + '&gt;';
-  var dropZone = document.getElementById('drop_zone');
-  dropZone.style.display = 'none';
+  //var dropZone = document.getElementById('drop_zone');
+  //dropZone.style.display = 'none';
 }
 
 function refreshFile()

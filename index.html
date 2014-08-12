@@ -96,8 +96,11 @@ modified : 2014-07-22 10:49
 
 <div id="menu">
   <!--<a name="settings" style="font-weight:bold;color:#2e5ca8">MENU</a><br><br>-->
-<input type="file" id="file" name="file" class="submit2 active" />
+<div class="drop_zone" id="drop_zone">Drop your file here.</div>
+  <input type="file" id="file" name="file" class="submit2 active" />
 <input type="text" class="textfield" onkeyup="handleAjax(event,this.value);" id="ajaxfile" placeholder="select remote file" />
+
+
 
 <input id="last" type="button" onclick="showWLS(1);$('#last').removeClass('active');$('#last').addClass('inactive');" class="submit inactive" value="&nbsp;LAST&nbsp;" />
 <div id="mainsettings">
@@ -120,10 +123,12 @@ modified : 2014-07-22 10:49
   <input type="text" class="textfield" onkeyup="filterWLS(event,'custom')" id="filter_all"
   placeholder="filter by COLUMN = value" />
 </div>
+
+
+
 </div>
 
 <div class="drop_zone_start" id="eingang">Files are loading, please wait...</div>
-<div class="drop_zone" id="drop_zone">Drop your file here.</div>
 <div 
   id="view" 
   onclick="showWLS(1);" 

@@ -306,14 +306,25 @@ padding-top:10px;
     color: white;
     font-weight: bold;
     background-color: Crimson;
+    width: 50%;
+    position: relative;
+    margin-left:auto;
+    margin-right: auto;
+    display: inline;
+
   }
 #drop_zone {
-    margin-top: 10px;
-    border: 2px dotted white;
-    padding: 25px;
+    margin-top: 5px;
+    border: 1px dotted white;
+    padding: 5px;
     text-align: center;
     color: white;
     font-weight: bold;
+    width: 100px;
+    position: relative;
+    margin-left:auto;
+    margin-right: auto;
+    display: inline;
 }
 #view {
     margin-top: 10px;
@@ -326,6 +337,10 @@ padding-top:10px;
     background-color:#2e5ca8;
     background-color:Crimson;
     display:none;
+    position: relative;
+    margin-left:auto;
+    margin-right: auto;
+    width: 50%;
 }
 
 .ui-autocomplete {

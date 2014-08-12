@@ -253,6 +253,13 @@ function handleFileSelect2(evt)
   reader.onload = function(e){STORE = reader.result;}
   reader.readAsText(file);
 
+  var modify = ['concepts', 'columns', 'taxa', 'first', 'add_column', 'previous', 'next', 'current',];
+  for (i in modify)
+  {
+    $('#' + modify[i]).removeClass('active');
+    $('#' + modify[i]).addClass('inactive');
+  }
+
   document.getElementById('mainsettings').style.display = 'inline';
   document.getElementById('view').style.display = 'block';
   document.getElementById("qlc").innerHTML = '';
@@ -260,7 +267,7 @@ function handleFileSelect2(evt)
   var fn = document.getElementById('filename');
   fn.innerHTML = '&lt;'+CFG['filename']+'&gt;';
   var dropZone = document.getElementById('drop_zone');
-  dropZone.style.display = "none";
+  //dropZone.style.display = "none";
 
 }
 
@@ -287,15 +294,20 @@ function handleAjax(event,url)
         dataType: "text",
         success: function(data) {STORE = data;}
       });
-
+  var modify = ['concepts', 'columns', 'taxa', 'first', 'add_column', 'previous', 'next', 'current',];
+  for (i in modify)
+  {
+    $('#' + modify[i]).removeClass('active');
+    $('#' + modify[i]).addClass('inactive');
+  }
   
   document.getElementById('mainsettings').style.display = 'inline';
   document.getElementById('view').style.display = 'block';
   document.getElementById("qlc").innerHTML = '';
   var fn = document.getElementById('filename');
   fn.innerHTML = '&lt;'+CFG['filename']+'&gt;';
-  var dropZone = document.getElementById('drop_zone');
-  dropZone.style.display = "none";
+  //var dropZone = document.getElementById('drop_zone');
+  //dropZone.style.display = "none";
 }
 
 function handleDragOver(evt) {
