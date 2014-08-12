@@ -412,9 +412,16 @@ function showWLS(start)
           {
             var cell_display = ' style="display:none"'; // ff vs. chrome problem
           }
-          if(WLS.header[j] != CFG['formatter'])
+
+          if(WLS.header[j] != CFG['formatter'] && WLS.header[j].slice(0,1) != '_')
           {
             text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
+            text += WLS[idx][j];
+            text += '</td>';
+          }
+          else if(WLS.header[j].slice(0,1) == '_')
+          {
+            text += '<td class="'+WLS['header'][j]+'" title="ENTRY '+idx+'/'+jdx+'">';
             text += WLS[idx][j];
             text += '</td>';
           }

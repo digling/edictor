@@ -1,3 +1,8 @@
+#qlc_table {
+  border-collapse: separate;
+  border-spacing: 2px;
+  //border-bottom: 2px solid #2e5ca8;
+}
 #qlc_table th{
   text-align: left;
   background-color:#2e5ca8;
@@ -78,9 +83,6 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-#qlc_table table{
-  border: solid 2px black;
-}
 
 .inactive {
   display: none;
@@ -123,6 +125,7 @@
   padding-right: 3px;
   padding-left: 3px;
   background-color: #2e5ca8;
+  display: inline !important;
 }
 
 .info {
@@ -133,9 +136,14 @@
   padding-left: 5px;
   background-color: #2e5ca8;
   font-weight: bold;
-  border: 1px dotted white;
+  //border: 1px dotted white;
 }
 
+.container
+{
+  margin-right: auto;
+  margin-left: 10px;
+}
 .textfield {
   cursor: text;
   margin-top: 5px;
@@ -256,8 +264,42 @@ span.dolgo_PLUS{font-size: 40%; vertical-align:center;background-color:black; co
   width: 100%;
 }
 
+
+.navbar {
+  background-color: #2e5ca8;
+  color: white;
+}
+
+ul.nav
+{
+  color: white;
+  font-weight: bold;
+}
+.navbar-brand {
+  color: white !important;
+}
+.active > a
+{
+  background-color: #2e5ca8 !important;
+}
+.navbar-nav li a
+{
+  color: white !important;
+}
+
+#menu {
+display:block;
+overflow:hidden;
+//border-top:2px dotted #2e5ca8;
+border-bottom: 2px solid #2e5ca8;
+margin-top:20px;
+padding-bottom:30px;
+padding-left:20px;
+padding-right:20px;
+padding-top:10px;
+}
 .drop_zone_start {
-    margin-top: 10px;
+  margin-top: 10px;
     border: 2px dotted white;
     padding: 25px;
     text-align: center;
@@ -375,6 +417,14 @@ span.dolgo_PLUS{font-size: 40%; vertical-align:center;background-color:black; co
   overflow: hidden;
 }
 
+#filedisplay {
+  border-bottom:2px solid #2e5ca8;
+  padding-left:20px;
+  padding-right:20px;
+  padding-top:10px;
+  padding-bottom:10px;
+  overflow:hidden;display:none
+}
 tr.d1 td {
   background-color:#e0e6f8;
 }

@@ -1,6 +1,7 @@
 var requirements = [
   "jquery-1.10.2.js",
   "jquery-ui-1.10.4.custom.js",
+  "bootstrap.min.js",
   "FileSaver.js",
   "undomanager.js",
   "dighl/sampa.js",
