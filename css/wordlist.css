@@ -84,10 +84,10 @@
   text-overflow: ellipsis;
 }
 
-.inactive {
+.hidden {
   display: none;
 }
-.active {
+.unhidden {
   display: inline;
 }
 
@@ -159,7 +159,7 @@
 .settings{
   z-index: 1;
   overflow: hidden;
-  float:right;
+  float:left;
   background-color: #fefefe;
   padding: 10px;
 }
@@ -288,15 +288,16 @@ ul.nav
 }
 
 #menu {
-display:block;
-overflow:hidden;
-//border-top:2px dotted #2e5ca8;
-border-bottom: 2px solid #2e5ca8;
-margin-top:20px;
-padding-bottom:30px;
-padding-left:20px;
-padding-right:20px;
-padding-top:10px;
+  display:block;
+  overflow:hidden;
+  border: 2px dotted #2e5ca8;
+  margin-top: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-bottom:30px;
+  padding-left:20px;
+  padding-right:20px;
+  padding-top:10px;
 }
 .drop_zone_start {
   margin-top: 10px;
@@ -380,10 +381,13 @@ padding-top:10px;
   left:0;
   right:0;
   background-color: Crimson;
-  border: 2px dotted white;
+  border: 2px solid white;
   text-align:center;
-  width:40%;
+  min-width:200px;
+  max-width:50%;
+  width: auto;
   float: left;
+  border-radius:5px;
 }
 .message p {
   color: white;
@@ -394,10 +398,11 @@ padding-top:10px;
 .message div {
   color: white;
   font-weight: bold;
-  width: 100%;
-  padding-top:10px;
-  padding-bottom: 10px;
-  border-top: 2px dotted Crimson;
+  width: 80px;
+  margin: 5px;
+  //padding-top:10px;
+  //padding-bottom: 10px;
+  border-top: 2px solid Crimson;
   background-color: #2e5ca8;
   cursor: pointer;
 }
@@ -433,12 +438,15 @@ padding-top:10px;
 }
 
 #filedisplay {
-  border-bottom:2px solid #2e5ca8;
+  border: 2px dotted #2e5ca8;
+  margin: 5px;
   padding-left:20px;
   padding-right:20px;
   padding-top:10px;
   padding-bottom:10px;
-  overflow:hidden;display:none
+  overflow:hidden;
+  display:none;
+  float: left;
 }
 tr.d1 td {
   background-color:#e0e6f8;
@@ -543,4 +551,22 @@ div.alignments {
   white-space: nowrap;
 }
 
+#outerbox {
+  z-index: 500;
+  margin-top:60px;
+  margin-left: 2px;
+  margin-right:2px;
+  width: 100%;
+  height: 100%;
+}
 
+.shutdown {
+  padding-left: 5px;
+  padding-right: 5px;
+  border: 2px solid black;
+  float: right;
+  font-weight: bold;
+  cursor: default;
+  color:black;
+  margin-left:10px;
+}
