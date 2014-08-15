@@ -24,93 +24,226 @@ width: 5em;
 <title>TSV Editor</title>
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="">TSV Editor <span id="filename"></span></a>
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="">TSV Editor <span id="filename"></span></a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="">HOME</a></li>
+          <li><a href="" onclick="event.preventDefault();$('#menu').toggle();">MENU</a></li>
+          <li><a href="" onclick="event.preventDefault();fakeAlert('under construction');">ABOUT</a></li>
+          <li><a title="toggle help" onclick="event.preventDefault();$('#help').toggle();" href="">HELP</a></li>
+          <li><a title="refresh page" onclick="event.preventDefault();window.location.reload();" href="">REFRESH</a></li>
+          <li><a href="" onclick="event.preventDefault();$('#contact').toggle();">CONTACT</a></li>
+          <li><a href="" onclick="event.preventDefault();$('#customize').toggle();">CUSTOMIZE</a></li>
+
+        </ul>
+      </div><!--/.nav-collapse -->
     </div>
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li class="unhidden"><a href="">HOME</a></li>
-        <li><a href="" onclick="event.preventDefault();$('#menu').toggle();">MENU</a></li>
-        <li><a href="" onclick="event.preventDefault();fakeAlert('under construction');">ABOUT</a></li>
-        <li><a title="toggle help" onclick="event.preventDefault();$('#help').toggle();" href="">HELP</a></li>
-        <li><a title="refresh page" onclick="event.preventDefault();window.location.reload();" href="">REFRESH</a></li>
-        <li><a href="" onclick="event.preventDefault();$('#contact').toggle();">CONTACT</a></li>
-      </ul>
-    </div><!--/.nav-collapse -->
   </div>
-</div>
-<div id="outerbox">
+  <div id="outerbox">
+    <div id="customize" class="help">
+        <button type="button" onclick="$('#customize').toggle();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h3>Customize Your TSV Editor Sessions</h3>
+      <p>You can customize the appearance of the TSV Editor by generating specific URLs that store your desired layout. By bookmarking the generated URL, you can open the TSV Editor in your desired flavor. All you need to do is to check your desired parameters in the checkbox below.</p>
+      <div class="form-horizontal bg-info" role="form" style="padding:5px;border-radius:5px">
+        <p class="text-center" style="color:#2e5ca8;font-size:120%;font-weight:bold;">Basic Parameters</p>
+        <div class="form-group">
+          <label style="text-align:justify" class="col-sm-2 control-label">Show on Start</label>
+          <div class="checkbox">
+            <label style="text-align:justify">
+              <input type="checkbox" name="menu" id="showMenuX" checked > Menu
+            </label>
+              <label style="text-align:justify">
+                <input type="checkbox" name="filters" id="showFiltersX" /> Filters
+              </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specifify the basic fields which will be displayed when loading your TSV file.">Basic Fields</label>
+          <div class="form-sm-9">
+            <input type="text" class="form-control textfield" style="display:inline;width:70%" value="DOCULECT,GLOSS,CONCEPT,IPA,COGID,PROTO,ALIGNMENT" id="basic_fieldsX"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specify the formatting options for cognate sets by specifying the field containing cognate IDs.">Formatter</label>
+          <div class="form-sm-9">
+            <input id="formatterX" type="text" class="col-sm-3 form-control textfield titled" style="width:120px" placeholder="COGID" />
+          </div>
+        </div>
 
-<div id="contact" class="help">
-<button type="button" onclick="$('#contact').toggle();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-<table>
-<tr>
-<th>Address:</th>
-<td>Forschungszentrum Deutscher Sprachatlas</td>
-</tr>
-<tr>
-<td></td>
-<td>Deutschhausstr. 3</td></tr><tr><td></td>
-<td>35037 Marburg</td></tr>
-<tr><td></td><td> Germany </td></tr>
-<tr>
-<th>Email:</th><td> <a href="mailto:mattis.list@uni-marburg.de">mattis.list@uni-marburg.de</a> </td></tr>
-<tr><th>ORCID ID:</th><td><a target="_blank" href="http://orcid.org/0000-0003-2133-8919">0000-0003-2133-8919</a></td></tr>
-<tr>
-<th>Public Key: </th>
-<td><a target="blank" href="http://pgp.mit.edu/pks/lookup?search=0x6ECEB1F51E2E228E">1E2E228E</a></td>
-</tr>
-<tr>
-<th>Phone:</th><td> +49-6421-28-25075</td></tr>
+        <div class="form-group">
+          <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specify the number of items you want to see in the preview of the Wordlist.">Preview</label>
+          <div class="form-sm-9">
+            <input id="showPreviewX" type="number" class="form-control textfield" style="width:110px" value="10" />
+          </div>
+        </div>
+        <p class="text-center" style="color:#2e5ca8;font-size:120%;font-weight:bold;">Transformations</p>
+        <div class="form-group">
+          <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specify the fields which shall be transformed to Chinese characters upon input of Pīnyīn.">Pīnyīn</label>
+          <input type="text" class="col-sm-3 form-control textfield" style="width:120px" id="pinyinX" placeholder="Pīnyīn" />
+        </div>
+        <div class="form-group">
+          <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specify the columns in which SAMPA input will be automatically converted to IPA.">SAMPA</label>
+          <input type="text" class="col-sm-3 form-control textfield titled" style="width:120px" id="sampaX" placeholder="SAMPA" />
+        </div>
+        <div class="form-group">
+          <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specify the columns in which tokenized input of IPA characters will be automatically converted to highlighted colored output.">Highlight</label>
+          <input type="text" class="col-sm-3 form-control textfield titled" style="width:120px" id="highlightX" placeholder="HIGHLIGHT" />
+        </div>
+        <p class="text-center" style="color:#2e5ca8;font-size:120%;font-weight:bold;">Other Settings</p>
+        <div class="form-group">
+          <label style="text-align:justify" class="col-sm-2 control-label titled" title="Select a remote file that shall be loaded upon start.">Remote file</label>
+          <input type="text" class="col-sm-3 form-control pull-left textfield" style="width:150px" id="file_nameX" placeholder="select remote file" />
+        </div>
+        <div class="form-group">
+          <button id="customizeButton" onclick="makeMyURL();" style="right:20px;position:relative;" class="btn btn-primary submit3">Create URL</button>
+        </div>
+      </div>
+      <div id="generated_url"></div>
+      
+<script>
+function makeMyURL()
+{
+  var base_url = "http://tsv.lingpy.org?";
 
-</table>
-</div>
-<div id="help" class="help">
-<button type="button" onclick="$('#help').toggle();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  var menuX = document.getElementById("showMenuX");
+  var filtersX = document.getElementById("showFiltersX");
+  var previewX = document.getElementById("showPreviewX");
+  var basicsX = document.getElementById("basic_fieldsX");
+  var pinyinX = document.getElementById("pinyinX");
+  var sampaX = document.getElementById("sampaX");
+  var highlightX = document.getElementById("highlightX");
+  var file_nameX = document.getElementById("file_nameX");
+  var formatterX = document.getElementById("formatterX");
 
-  <h3>How to use the TSV-Editor </h3>
-  In order to use the wordlist editor, you will need a valid input file. This file should be structured as a TSV file with the first line indicating the names of all columns and the first column pointing to a unique ID for each row of the file.
-  <h4>Key Bindings</h4>
-  <ul>
-    <li>[F1] Toggle this help message.</li>
-    <li>[F2] Toggle the settings.</li>
-    <li>[F3] Toggle the filters.</li>
-    <li>[F4] Toggle all columns / basic columns.</li>
-    <li>[CTRL+I] Go to first cell (insert mode).</li>
-    <li>[CTRL+LEFT] Go to left cell (insert mode).</li>
-    <li>[CTRL+RIGHT] Got to right cell (insert mode).</li>
-    <li>[ESC] Exit insert mode without saving (insert mode).</li>
-    <li>[ENTER] Exit insert mode and save (insert mode).</li>
-    <li>[RIGHT MOUSE CLICK] Show related entries (works only, if the given entry is selected as the current format option).</li>
-    <li>[PAGE UP] Go to previous rows.</li>
-    <li>[PAGE DOWN] Go to following rows.</li>
-    <li>[LEFT+ALT] Move table to the left.</li>
-    <li>[RIGHT+ALT] Move table to the right.</li>
-  </ul>
-  <h4>Filtering</h4>
-  The TSV-Editor allows you to filter the entries in multiple ways. 
-  With help of the text fields, you can select that only
-  <ul>
-    <li>specific taxa,</li>
-    <li>specific concepts, or</li>
-    <li>specific columns</li>
-    <li>specific entries</li>
-  </ul>
-  are displayed. 
-  For taxa and concepts, just type in the name of the taxon or concept you want to select and separate multiple taxa and concept by a comma. For the filtering of columns, you may also toggle between the display of the basic columns (default) and all columns by pressing [F4], or you may select the columns within the settings menu (press [F2] to show or close the settings).
-  In order to filter specific entries, type &quot;COLUMNNAME = entry&quot;, where COLUMNAME is the name of one of the columns in the data, and entry is one entry you want to search for. Using &quot;=&quot; will search for all entries which <em>contain</em> the given string. If you want to search for a direct match, use &quot;==&quot; instead.
+
   
-  <h4>Navigation</h4>
-  Having entered the insert mode (just click on any of the cells of the table or press [CTRL+I]), you can navigate with key up and key down from cell to cell along the same column. If you want to navigate between columns within the same row, use [CTRL+LEFT] and [CTRL+RIGHT]. Having modified the content of a cell, you can submit the modification by navigating to the next neighboring cell or by pressing [ENTER]. The letter will also close the insert mode. In order to leave the insert mode without submitting any modifications, just press [ESC].  
-</div>
+  if(menuX.checked && filtersX.checked)
+  {
+    base_url += 'css=menu:show,textfields:show,';
+  }
+  else if(menuX.checked)
+  {
+    base_url += 'css=menu:show,textfields:hide,';
+  }
+  else if(filtersX.checked)
+  {
+    base_url += 'css=menu:hide,textfields:show,';
+  }
+  else
+  {
+    base_url += 'css=menu:hide,textfields:hide,';
+  }
+  
+  if(formatterX.value != '')
+  {
+    base_url += '&formatter='+formatterX.value;
+  }
+
+
+  if(previewX.value != '')
+  {
+    base_url += '&preview='+previewX.value;
+  }
+  if(basicsX.value != '')
+  {
+    base_url += '&basics='+basicsX.value;
+  }
+  if(pinyinX.value != '')
+  {
+    base_url += '&pinyin='+pinyinX.value;
+  }
+  if(sampaX.value != '')
+  {
+    base_url += '&sampa='+sampaX.value;
+  }
+  if(highlightX.value != '')
+  {
+    base_url += '&highlight='+highlightX.value;
+  }
+  if(file_nameX.value != '')
+  {
+    base_url += '&file='+file_nameX.value;
+  }
+  
+  var my_url = document.getElementById('generated_url');
+  my_url.innerHTML = '<br><strong>Copy your URL from the field below or open it directly via this <a style="color:Crimson;" target="_blank" href="'+base_url+'">this link:</a>';
+  my_url.innerHTML += '<br><br><pre><code>'+base_url+'</code></pre>';
+  return 1;
+}
+</script>
+    </div>
+      <div id="contact" class="help">
+        <button type="button" onclick="$('#contact').toggle();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <table>
+          <tr>
+            <th>Address:</th>
+            <td>Forschungszentrum Deutscher Sprachatlas</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>Deutschhausstr. 3</td></tr><tr><td></td>
+            <td>35037 Marburg</td></tr>
+          <tr><td></td><td> Germany </td></tr>
+          <tr>
+            <th>Email:</th><td> <a href="mailto:mattis.list@uni-marburg.de">mattis.list@uni-marburg.de</a> </td></tr>
+          <tr><th>ORCID ID:</th><td><a target="_blank" href="http://orcid.org/0000-0003-2133-8919">0000-0003-2133-8919</a></td></tr>
+          <tr>
+            <th>Public Key: </th>
+            <td><a target="blank" href="http://pgp.mit.edu/pks/lookup?search=0x6ECEB1F51E2E228E">1E2E228E</a></td>
+          </tr>
+          <tr>
+            <th>Phone:</th><td> +49-6421-28-25075</td></tr>
+
+        </table>
+      </div>
+      <div id="help" class="help">
+        <button type="button" onclick="$('#help').toggle();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+        <h3>How to use the TSV-Editor </h3>
+        In order to use the wordlist editor, you will need a valid input file. This file should be structured as a TSV file with the first line indicating the names of all columns and the first column pointing to a unique ID for each row of the file.
+        <h4>Key Bindings</h4>
+        <ul>
+          <li>[F1] Toggle this help message.</li>
+          <li>[F2] Toggle the settings.</li>
+          <li>[F3] Toggle the filters.</li>
+          <li>[F4] Toggle all columns / basic columns.</li>
+          <li>[CTRL+I] Go to first cell (insert mode).</li>
+          <li>[CTRL+LEFT] Go to left cell (insert mode).</li>
+          <li>[CTRL+RIGHT] Got to right cell (insert mode).</li>
+          <li>[ESC] Exit insert mode without saving (insert mode).</li>
+          <li>[ENTER] Exit insert mode and save (insert mode).</li>
+          <li>[RIGHT MOUSE CLICK] Show related entries (works only, if the given entry is selected as the current format option).</li>
+          <li>[PAGE UP] Go to previous rows.</li>
+          <li>[PAGE DOWN] Go to following rows.</li>
+          <li>[LEFT+ALT] Move table to the left.</li>
+          <li>[RIGHT+ALT] Move table to the right.</li>
+        </ul>
+        <h4>Filtering</h4>
+        The TSV-Editor allows you to filter the entries in multiple ways. 
+        With help of the text fields, you can select that only
+        <ul>
+          <li>specific taxa,</li>
+          <li>specific concepts, or</li>
+          <li>specific columns</li>
+          <li>specific entries</li>
+        </ul>
+        are displayed. 
+        For taxa and concepts, just type in the name of the taxon or concept you want to select and separate multiple taxa and concept by a comma. For the filtering of columns, you may also toggle between the display of the basic columns (default) and all columns by pressing [F4], or you may select the columns within the settings menu (press [F2] to show or close the settings).
+        In order to filter specific entries, type &quot;COLUMNNAME = entry&quot;, where COLUMNAME is the name of one of the columns in the data, and entry is one entry you want to search for. Using &quot;=&quot; will search for all entries which <em>contain</em> the given string. If you want to search for a direct match, use &quot;==&quot; instead.
+
+        <h4>Navigation</h4>
+        Having entered the insert mode (just click on any of the cells of the table or press [CTRL+I]), you can navigate with key up and key down from cell to cell along the same column. If you want to navigate between columns within the same row, use [CTRL+LEFT] and [CTRL+RIGHT]. Having modified the content of a cell, you can submit the modification by navigating to the next neighboring cell or by pressing [ENTER]. The letter will also close the insert mode. In order to leave the insert mode without submitting any modifications, just press [ESC].  
+      </div>
 
 <div id="menu">
 <button type="button" onclick="$('#menu').toggle();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>

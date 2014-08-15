@@ -342,6 +342,11 @@ $('#ajaxfile').autocomplete(
       delay: 0,
       source: server_side_files
     });
+$('#file_nameX').autocomplete(
+    {
+      delay: 0,
+      source: server_side_files
+    });
 
 if(document.URL.indexOf('=') != -1)
 {

@@ -245,6 +245,7 @@ span.dolgo_GAP{background-color: #bbbbbb;}
 span.dolgo_PLUS{font-size: 40%; vertical-align:center;background-color:black; color:black; width: 10px !important}
 
 .help {
+  border-radius: 5px;
   z-index: 1;
   display: none;
   //position: absolute;
@@ -254,6 +255,7 @@ span.dolgo_PLUS{font-size: 40%; vertical-align:center;background-color:black; co
   max-width: 800px;
   padding: 25px;
   margin: 10px;
+
 }
 
 .cellinput {
