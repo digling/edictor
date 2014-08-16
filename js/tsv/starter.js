@@ -323,8 +323,6 @@ function handleDragOver(evt) {
 
 
 
-$('#settings,#filedisplay,#menu').draggable({scroll:true,containment:"#outerbox"});
-
 var server_side_files = [];
 $.ajax(
     {
@@ -335,12 +333,8 @@ $.ajax(
       success: function(data) {server_side_files = data.split('\n');}
       //error: fakeAlert("could not load filelist.")
     });
+
 $('#ajaxfile').autocomplete(
-    {
-      delay: 0,
-      source: server_side_files
-    });
-$('#file_nameX').autocomplete(
     {
       delay: 0,
       source: server_side_files
@@ -348,7 +342,10 @@ $('#file_nameX').autocomplete(
 
 if(document.URL.indexOf('=') != -1)
 {
-  var query = document.URL.split('?')[1];
+  var tmp_url = document.URL.split('#');
+  var query = tmp_url[0].split('?')[1];
+
+  //var query = document.URL.split('?')[1];
   var keyvals = query.split('&');
   var params = {};
   for(var i=0;i<keyvals.length;i++)
@@ -373,6 +370,134 @@ if(document.URL.indexOf('=') != -1)
   }
 
 }
+
+var tmp_file_handler = '';
+var loaded_files = [];
+
+function loadAjax(where,what,classes)
+{
+  if(loaded_files.indexOf(what) != -1)
+  {
+    $('#'+what).toggle();
+    if(document.getElementById(what).style.display == 'none')
+    {
+      window.location.hash = '#top';
+    }
+    else
+    {
+      window.location.hash = '#'+what+'_anchor';
+    }
+    return;
+  }
+
+  loaded_files.push(what); 
+
+  $('#'+where).append('<li id="'+what+'" class="'+classes+'"></li>');
+  $.ajax(
+    {
+      async:false,
+      type: "GET",
+      url: what+'.html',
+      dataType: "text",
+      success: function(data) 
+      {
+        tmp_file_handler = data;
+      }
+    });
+
+
+  document.getElementById(what).innerHTML = '<a name="'+what+'_anchor" style="visibility:hidden;position:relative;top:-100px">alala</a>'+tmp_file_handler;
+  $('#'+what).toggle();
+  window.location.hash = '#'+what+'_anchor';
+
+  if(what == 'customize')
+  {
+    $('#file_nameX').autocomplete(
+        {
+          delay: 0,
+          source: server_side_files
+        });
+  }
+}
+      
+function makeMyURL()
+{
+  /* helper function for URL creation */
+
+  var base_url = "http://tsv.lingpy.org?";
+
+  var menuX = document.getElementById("showMenuX");
+  var filtersX = document.getElementById("showFiltersX");
+  var previewX = document.getElementById("showPreviewX");
+  var basicsX = document.getElementById("basic_fieldsX");
+  var pinyinX = document.getElementById("pinyinX");
+  var sampaX = document.getElementById("sampaX");
+  var highlightX = document.getElementById("highlightX");
+  var file_nameX = document.getElementById("file_nameX");
+  var formatterX = document.getElementById("formatterX");
+
+  if(menuX.checked && filtersX.checked)
+  {
+    base_url += 'css=menu:show,textfields:show,';
+  }
+  else if(menuX.checked)
+  {
+    base_url += 'css=menu:show,textfields:hide,';
+  }
+  else if(filtersX.checked)
+  {
+    base_url += 'css=menu:hide,textfields:show,';
+  }
+  else
+  {
+    base_url += 'css=menu:hide,textfields:hide,';
+  }
+  
+  if(formatterX.value != '')
+  {
+    base_url += '&formatter='+formatterX.value;
+  }
+
+
+  if(previewX.value != '')
+  {
+    base_url += '&preview='+previewX.value;
+  }
+  if(basicsX.value != '')
+  {
+    base_url += '&basics='+basicsX.value;
+  }
+  if(pinyinX.value != '')
+  {
+    base_url += '&pinyin='+pinyinX.value;
+  }
+  if(sampaX.value != '')
+  {
+    base_url += '&sampa='+sampaX.value;
+  }
+  if(highlightX.value != '')
+  {
+    base_url += '&highlight='+highlightX.value;
+  }
+  if(file_nameX.value != '')
+  {
+    base_url += '&file='+file_nameX.value;
+  }
+  
+  var my_url = document.getElementById('generated_url');
+  my_url.innerHTML = '<br><strong>Copy your URL from the field below or open it directly via this <a style="color:Crimson;" target="_blank" href="'+base_url+'">this link:</a>';
+  my_url.innerHTML += '<br><br><pre><code>'+base_url+'</code></pre>';
+  return 1;
+}
+
 startWordlist();
 
-
+$('#sortable').sortable(
+    {
+      //connectWith: ".colx",
+      //scroll: false,
+      placeholder: "portlet-placeholder ui-corner-all",
+      //distance: 7
+    }
+    );
+$('.colx').addClass('ui-helper-clearfix');

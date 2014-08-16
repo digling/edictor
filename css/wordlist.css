@@ -169,6 +169,7 @@
   margin-top: 5px;
 }
 .settings th{
+  width: auto;
   text-align:left;
   padding:5px;
   cursor: -webkit-grabbing; cursor: -moz-grabbing;
@@ -177,6 +178,7 @@
   border: 0px solid #2D6CA2;
   text-align:left;
   padding:5px;
+  min-width: 250px;
 }
 
 .visible {
@@ -248,14 +250,12 @@ span.dolgo_PLUS{font-size: 40%; vertical-align:center;background-color:black; co
   border-radius: 5px;
   z-index: 1;
   display: none;
-  //position: absolute;
   color: #2D6CA2;
   background-color: white;
   border: 2px solid #2D6CA2;
-  max-width: 800px;
+  max-width: 1000px;
   padding: 25px;
-  margin: 10px;
-
+  margin: 5px;
 }
 
 .cellinput {
@@ -578,4 +578,21 @@ div.alignments {
   cursor: default;
   color:black;
   margin-left:10px;
+}
+
+
+.portlet-placeholder {
+  border: 1px dotted black;
+  margin: 0 1em 1em 0;
+  background-color: Crimson;
+  opacity: 0.5;
+  height: 25px;
+  width: 25px;
+  border-radius: 20px;
+}
+
+#sortable {list-style-type:none;margin:0;padding:0;}
+#sortable li
+{
+  float: left;
 }

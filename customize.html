@@ -1,0 +1,61 @@
+<button type="button" onclick="$('#customize').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+<h3>Customize Your TSV Editor Sessions</h3>
+<p>You can customize the appearance of the TSV Editor by generating specific URLs that store your desired layout. By bookmarking the generated URL, you can open the TSV Editor in your desired flavor. All you need to do is to check your desired parameters in the checkbox below.</p>
+<div class="form-horizontal bg-info" role="form" style="padding:5px;border-radius:5px">
+  <p class="text-center" style="color:#2e5ca8;font-size:120%;font-weight:bold;">Basic Parameters</p>
+  <div class="form-group">
+    <label style="text-align:justify" class="col-sm-2 control-label">Show on Start</label>
+    <div class="checkbox">
+      <label style="text-align:justify">
+        <input type="checkbox" name="menu" id="showMenuX" checked > Menu
+      </label>
+        <label style="text-align:justify">
+          <input type="checkbox" name="filters" id="showFiltersX" /> Filters
+        </label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specifify the basic fields which will be displayed when loading your TSV file.">Basic Fields</label>
+    <div class="form-sm-9">
+      <input type="text" class="form-control textfield" style="display:inline;width:70%" value="DOCULECT,CONCEPT,IPA,COGID,ALIGNMENT" id="basic_fieldsX"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specify the formatting options for cognate sets by specifying the field containing cognate IDs.">Formatter</label>
+    <div class="form-sm-9">
+      <input id="formatterX" type="text" class="col-sm-3 form-control textfield titled" style="width:120px" placeholder="COGID" value="COGID" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specify the number of items you want to see in the preview of the Wordlist.">Preview</label>
+    <div class="form-sm-9">
+      <input id="showPreviewX" type="number" class="form-control textfield" style="width:110px" value="10" />
+    </div>
+  </div>
+  <p class="text-center" style="color:#2e5ca8;font-size:120%;font-weight:bold;">Transformations</p>
+  <div class="form-group">
+    <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specify the fields which shall be transformed to Chinese characters upon input of Pīnyīn.">Pīnyīn</label>
+    <input type="text" class="col-sm-3 form-control textfield" style="width:120px" id="pinyinX" placeholder="Pīnyīn" value="CHINESE" />
+  </div>
+  <div class="form-group">
+    <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specify the columns in which SAMPA input will be automatically converted to IPA.">SAMPA</label>
+    <input type="text" class="col-sm-3 form-control textfield titled" style="width:70%" id="sampaX" placeholder="SAMPA" value="IPA,TOKENS"/>
+  </div>
+  <div class="form-group">
+    <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specify the columns in which tokenized input of IPA characters will be automatically converted to highlighted colored output.">Highlight</label>
+    <input type="text" class="col-sm-3 form-control textfield titled" style="width:70%" id="highlightX" placeholder="HIGHLIGHT" value="TOKENS,ALIGNMENT"/>
+  </div>
+  <p class="text-center" style="color:#2e5ca8;font-size:120%;font-weight:bold;">Other Settings</p>
+  <div class="form-group">
+    <label style="text-align:justify" class="col-sm-2 control-label titled" title="Select a remote file that shall be loaded upon start.">Remote file</label>
+    <input type="text" class="col-sm-3 form-control pull-left textfield" style="width:70%" id="file_nameX" placeholder="select remote file" />
+  </div>
+  <div class="form-group">
+    <button id="customizeButton" onclick="makeMyURL();" style="right:20px;position:relative;" class="btn btn-primary submit3">Create URL</button>
+  </div>
+</div>
+<div id="generated_url"></div>
+
+
