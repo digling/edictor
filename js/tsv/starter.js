@@ -253,7 +253,7 @@ function handleFileSelect2(evt)
   reader.onload = function(e){STORE = reader.result;}
   reader.readAsText(file);
 
-  var modify = ['previous', 'next', 'first','current'];
+  var modify = ['previous', 'next', 'first','current', 'filename'];
   for (i in modify)
   {
     $('#' + modify[i]).removeClass('unhidden');
@@ -281,7 +281,7 @@ function handleAjax(event,url)
     }
   }
   reset();
-  localStorage.filename = file.name;
+  localStorage.filename = url;
   STORE = '';
   CFG['filename'] = url;
   
@@ -294,16 +294,20 @@ function handleAjax(event,url)
         dataType: "text",
         success: function(data) {STORE = data;}
       });
-  var modify = ['first','previous', 'next','current'];
+
+  var modify = ['first','previous', 'next','current','filename'];
   for (i in modify)
   {
     $('#' + modify[i]).removeClass('unhidden');
     $('#' + modify[i]).addClass('hidden');
   }
   
-  document.getElementById('mainsettings').style.display = 'inline';
-  document.getElementById('view').style.display = 'block';
-  document.getElementById("qlc").innerHTML = '';
+
+  $('#mainsettings').css('display','inline');
+  $('#view').css('display','block');
+  $('#qlc').html('');
+
+  //document.getElementById("qlc").innerHTML = '';
   var fn = document.getElementById('filename');
   fn.innerHTML = '&lt;'+CFG['filename']+'&gt;';
 
@@ -319,14 +323,8 @@ function handleDragOver(evt) {
 
 
 
-//$('#qlc').draggable({axis:"x",cursor:"pointer",grid:[80,80],snap:true,containment:"#outerbox"});
-$('#settings').draggable({cursor:"crosshair",scroll:true,containment: '#outerbox'});
-$('#filedisplay').draggable({cursor:"crosshair",scroll:true,containment: '#outerbox'});
-//$('#qlc').sortable({containment:"parent"});
-//$('#settings').sortable({containmeint:"parent"});
-//$('#filedisplay').sortable();
-//$('#menu').sortable();
-//$('#menu').draggable({cursor:"crosshair", scroll:true,containment: '#outerbox'});
+$('#settings,#filedisplay,#menu').draggable({scroll:true,containment:"#outerbox"});
+
 var server_side_files = [];
 $.ajax(
     {
@@ -364,11 +362,17 @@ if(document.URL.indexOf('=') != -1)
   if(server_side_files.indexOf(params['file']) != -1)
   {
     handleAjax("event",params['file']);
-    showWLS(1);
+    try
+    {
+      showWLS(1);
+    }
+    catch(e)
+    {
+      $('#view').css('display','block');
+    }
   }
 
 }
 startWordlist();
 
-$('.titled').tooltip();
 

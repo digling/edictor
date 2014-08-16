@@ -33,18 +33,18 @@ width: 5em;
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="">TSV Editor <span id="filename"></span></a>
+        <a class="navbar-brand" href="" onclick="event.preventDefault();window.location.reload();">TSV Editor </a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="">HOME</a></li>
-          <li><a href="" onclick="event.preventDefault();$('#menu').toggle();">MENU</a></li>
           <li><a href="" onclick="event.preventDefault();fakeAlert('under construction');">ABOUT</a></li>
-          <li><a title="toggle help" onclick="event.preventDefault();$('#help').toggle();" href="">HELP</a></li>
-          <li><a title="refresh page" onclick="event.preventDefault();window.location.reload();" href="">REFRESH</a></li>
           <li><a href="" onclick="event.preventDefault();$('#contact').toggle();">CONTACT</a></li>
+          <li><a href="" onclick="event.preventDefault();$('#help').toggle();" >HELP</a></li>
+          <li><a href="" onclick="event.preventDefault();$('#menu').toggle();">MENU</a></li>
+          <li><a href="" onclick="event.preventDefault();fakeAlert('under construction');">TEMPLATES</a></li>
           <li><a href="" onclick="event.preventDefault();$('#customize').toggle();">CUSTOMIZE</a></li>
-
+          <li></li>
+          <!--<li><a href="" onclick="event.preventDefault();window.location.reload();">REFRESH</a></li>-->
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -70,13 +70,13 @@ width: 5em;
         <div class="form-group">
           <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specifify the basic fields which will be displayed when loading your TSV file.">Basic Fields</label>
           <div class="form-sm-9">
-            <input type="text" class="form-control textfield" style="display:inline;width:70%" value="DOCULECT,GLOSS,CONCEPT,IPA,COGID,PROTO,ALIGNMENT" id="basic_fieldsX"/>
+            <input type="text" class="form-control textfield" style="display:inline;width:70%" value="DOCULECT,CONCEPT,IPA,COGID" id="basic_fieldsX"/>
           </div>
         </div>
         <div class="form-group">
           <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specify the formatting options for cognate sets by specifying the field containing cognate IDs.">Formatter</label>
           <div class="form-sm-9">
-            <input id="formatterX" type="text" class="col-sm-3 form-control textfield titled" style="width:120px" placeholder="COGID" />
+            <input id="formatterX" type="text" class="col-sm-3 form-control textfield titled" style="width:120px" placeholder="COGID" value="COGID" />
           </div>
         </div>
 
@@ -89,20 +89,20 @@ width: 5em;
         <p class="text-center" style="color:#2e5ca8;font-size:120%;font-weight:bold;">Transformations</p>
         <div class="form-group">
           <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specify the fields which shall be transformed to Chinese characters upon input of Pīnyīn.">Pīnyīn</label>
-          <input type="text" class="col-sm-3 form-control textfield" style="width:120px" id="pinyinX" placeholder="Pīnyīn" />
+          <input type="text" class="col-sm-3 form-control textfield" style="width:120px" id="pinyinX" placeholder="Pīnyīn" value="CHINESE" />
         </div>
         <div class="form-group">
           <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specify the columns in which SAMPA input will be automatically converted to IPA.">SAMPA</label>
-          <input type="text" class="col-sm-3 form-control textfield titled" style="width:120px" id="sampaX" placeholder="SAMPA" />
+          <input type="text" class="col-sm-3 form-control textfield titled" style="width:70%" id="sampaX" placeholder="SAMPA" value="IPA,TOKENS"/>
         </div>
         <div class="form-group">
           <label style="text-align:justify" class="col-sm-2 control-label titled" title="Specify the columns in which tokenized input of IPA characters will be automatically converted to highlighted colored output.">Highlight</label>
-          <input type="text" class="col-sm-3 form-control textfield titled" style="width:120px" id="highlightX" placeholder="HIGHLIGHT" />
+          <input type="text" class="col-sm-3 form-control textfield titled" style="width:70%" id="highlightX" placeholder="HIGHLIGHT" value="TOKENS,ALIGNMENT"/>
         </div>
         <p class="text-center" style="color:#2e5ca8;font-size:120%;font-weight:bold;">Other Settings</p>
         <div class="form-group">
           <label style="text-align:justify" class="col-sm-2 control-label titled" title="Select a remote file that shall be loaded upon start.">Remote file</label>
-          <input type="text" class="col-sm-3 form-control pull-left textfield" style="width:150px" id="file_nameX" placeholder="select remote file" />
+          <input type="text" class="col-sm-3 form-control pull-left textfield" style="width:70%" id="file_nameX" placeholder="select remote file" />
         </div>
         <div class="form-group">
           <button id="customizeButton" onclick="makeMyURL();" style="right:20px;position:relative;" class="btn btn-primary submit3">Create URL</button>
@@ -248,14 +248,15 @@ function makeMyURL()
 <div id="menu">
 <button type="button" onclick="$('#menu').toggle();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
   <!--<a name="settings" style="font-weight:bold;color:#2e5ca8">MENU</a><br><br>-->
-<div class="drop_zone pull-left btn-primary btn" style="min-width:150px;margin:3px" id="drop_zone">Drop your file here.</div>
-<input type="file" id="file" name="file" class="btn btn-primary pull-left submit2" style="margin:3px;" />
+<div class="drop_zone pull-left btn-primary btn" style="min-width:150px;margin:3px;padding:6px;" id="drop_zone">Drop your file here.</div>
+<input type="file" id="file" name="file" class="btn btn-primary pull-left submit3" style="margin:3px;" />
 <input type="text" class="form-control pull-left textfield" style="width:15%;display:inline;margin:3px" onkeyup="handleAjax(event,this.value);" id="ajaxfile" placeholder="select remote file" />
+  <button type="button" onclick="window.location.reload();" style="margin:3px;padding:10px;" class="pull-left btn-primary btn submit3"><span class="glyphicon glyphicon-refresh"></span></button>
 
 
 
 <input id="last" type="button" onclick="showWLS(1);$('#last').removeClass('unhidden');$('#last').addClass('hidden');" class="submit hidden" value="&nbsp;LAST&nbsp;" />
-<div id="mainsettings">
+<div id="mainsettings" style="display:none">
   <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [CTRL+S]" id="refresh" type="button" onclick="refreshFile();" value="&nbsp;SAVE&nbsp;" />
   <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [CTRL+E]" id="save" type="button" onclick="saveFile();" value="&nbsp;EXPORT&nbsp;" />
   <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [F2]" id="settingswitcher" type="button" onclick="$('#settings').toggle();" value="SETTINGS" />
@@ -285,6 +286,7 @@ function makeMyURL()
 </div>
 
 <div id="filedisplay">
+  <span class="info hidden" id="filename"></span>
   <span class="info hidden" id="current"></span>
   <input id="previous" type="button" class="btn btn-primary submit hidden" value="0-0"/>
   <input id="first" type="button"    class="btn btn-primary submit unhidden" value="START " onclick="showWLS(1)" />
@@ -296,11 +298,12 @@ function makeMyURL()
   <div id="store" style="display:none"></div>
 </div>
 <div id="settings" class="settings" style="display:none">
+<button type="button" onclick="$('#settings').toggle();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
   <table>
     <tr>
       <th colspan="2">
         Settings
-<button type="button" onclick="$('#settings').toggle();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
       </th>
     </tr>
     <tr>

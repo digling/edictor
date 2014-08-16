@@ -20,7 +20,7 @@ function reset()
   'highlight': ['TOKENS','ALIGNMENT'],
   'sampa' : ['TOKENS'],
   'pinyin' : ['CHINESE'],
-  'css': ["menu:show,textfields:hide"]
+  'css': ["menu:show","textfields:hide"]
   };
   
   STORE = '';
@@ -55,6 +55,8 @@ function reset()
      }
     }
   }
+  
+  $('#filedisplay').css('display','none');
 }
 
 /* the wordlist object */
@@ -109,13 +111,7 @@ function resetFormat(value)
     }
     WLS['etyma'] = format_selection;
   }
-  //else if(CFG['formatter'] == value)
-  //{
-  //  CFG['formatter'] = false;
-  //  WLS['etyma'] = [];
-  //}
   showWLS(getCurrent());
-
 }
 
 /* load qlc-file */
@@ -493,11 +489,12 @@ function showWLS(start)
     var prestart = start - CFG['preview'];
     var startbefore = start - 1;
     previous.value = prestart + '-' + startbefore;
-    previous.className = previous.className.replace(/hidden/, 'unhidden');
+
+    toggleClasses(['previous'],'hidden','unhidden');
   }
   else
   {
-    previous.className = previous.className.replace(/ unhidden/, ' hidden');
+    toggleClasses(['previous'],'unhidden','hidden');
   }
 
   var next = document.getElementById('next');
@@ -511,14 +508,14 @@ function showWLS(start)
     }
     next.onclick = function() {showWLS(poststart);};
     next.value = poststart + '-' + postpoststart;
-    next.className = next.className.replace(/hidden/, 'unhidden');
+
+    toggleClasses(['next'],'hidden','unhidden');
   }
   else
   {
-    next.className = next.className.replace(/ unhidden/, ' hidden');
+    toggleClasses(['next'],'unhidden','hidden');
   }
-  $('#first').removeClass('hidden');
-  $('#first').addClass('unhidden');
+  
 
   var current = document.getElementById('current');
   var following = start + CFG['preview'] - 1;
@@ -527,13 +524,12 @@ function showWLS(start)
     following = WLS['rows'].length;
   }
   current.innerHTML = 'Showing ' + start + ' - ' + following + ' of ' + parseInt(WLS['rows'].length) + ' entries';
-  current.className = current.className.replace(/hidden/, 'unhidden');
 
+  toggleClasses(['first','filename','current'],'hidden','unhidden');
+  
   document.getElementById('view').style.display = 'none';
   document.getElementById('mainsettings').style.display = 'inline';
-  
   document.getElementById('filedisplay').style.display = 'block';
-  //document.getElementById('drop_zone').style.display = 'none';
   var fn = document.getElementById('filename');
   fn.innerHTML = '&lt;' + CFG['filename'] + '&gt;';
   highLight();
@@ -1643,3 +1639,12 @@ function editGroup(event,idx)
   //$('#editlinks').draggable();
 }
 
+
+function toggleClasses(classes,from,to)
+{
+  for(var i=0,idf;idf=classes[i];i++)
+  {
+    $('#'+idf).removeClass(from);
+    $('#'+idf).addClass(to);
+  }
+}

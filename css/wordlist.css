@@ -1,13 +1,14 @@
 #qlc_table {
   border-collapse: separate;
   border-spacing: 2px;
-  //border-bottom: 2px solid #2e5ca8;
+  border-radius: 2px;
+  //border-bottom: 2px solid #2D6CA2; // #2e5ca8
 }
 #qlc_table th{
   text-align: left;
-  background-color:#2e5ca8;
+  background-color:#2D6CA2;
   color: white;
-  border: solid 1px #2e5ca8;
+  border: solid 1px #2D6CA2;
   max-width: 250px;
   overflow: auto;
   padding: 5px;
@@ -19,9 +20,9 @@
 @media screen and (max-width: 600px) {
   #qlc_table th{
     text-align: left;
-    background-color: #2e5ca8;
+    background-color: #2D6CA2;
     color: white;
-    border: solid 1px #2e5ca8;
+    border: solid 1px #2D6CA2;
     max-width: 200px;
     font-size: 50%;
     overflow: auto;
@@ -34,7 +35,7 @@
     text-align: left;
     background-color: white;
     color: black;
-    border: solid 1px #2e5ca8;
+    border: solid 1px #2D6CA2;
     max-width: 200px;
     overflow: auto;
     font-size: 50%;
@@ -46,9 +47,9 @@
 @media screen and (max-width: 1000px) and (min-width: 601px) {
   #qlc_table th{
     text-align: left;
-    background-color: #2e5ca8;
+    background-color: #2D6CA2;
     color: white;
-    border: solid 1px #2e5ca8;
+    border: solid 1px #2D6CA2;
     max-width: 220px;
     font-size: 80%;
     overflow: auto;
@@ -61,7 +62,7 @@
     text-align: left;
     //background-color: white;
     color: black;
-    border: solid 1px #2e5ca8;
+    border: solid 1px #2D6CA2;
     max-width: 220px;
     overflow: auto;
     font-size: 80%;
@@ -76,7 +77,7 @@
   text-align: left;
   //background-color: white;
   color: black;
-  border: solid 1px #2e5ca8;
+  border: solid 1px #2D6CA2;
   max-width: 250px;
   overflow: auto;
   padding: 5px;
@@ -100,7 +101,7 @@
   cursor: pointer;
   color:white;
   font-weight:bold;
-  background-color: #2e5ca8;
+  background-color: #2D6CA2;
   border: none;
   float: right;
   //display: inline;
@@ -113,7 +114,7 @@
   cursor: pointer;
   color:white;
   font-weight:bold;
-  background-color: #2e5ca8;
+  background-color: #2D6CA2;
   border: none;
 }
 .submit2 {
@@ -124,7 +125,7 @@
   padding-bottom: 4px;
   padding-right: 3px;
   padding-left: 3px;
-  background-color: #2e5ca8;
+  background-color: #2D6CA2;
   display: inline !important;
 }
 
@@ -134,7 +135,7 @@
   padding-bottom: 5px;
   padding-right: 5px;
   padding-left: 5px;
-  background-color: #2e5ca8;
+  background-color: #2D6CA2;
   font-weight: bold;
   //border: 1px dotted white;
 }
@@ -156,27 +157,26 @@
 
 
 #settings{display: none;}
-.settings{
+
+.settings {
   z-index: 1;
   overflow: hidden;
   float:left;
   background-color: #fefefe;
   padding: 10px;
+  border: 2px solid #2D6CA2;
+  border-radius: 5px;
+  margin-top: 5px;
 }
 .settings th{
-  border: 1px solid #2e5ca8;
   text-align:left;
   padding:5px;
   cursor: -webkit-grabbing; cursor: -moz-grabbing;
 }
 .settings td{
-  border: 1px solid #2e5ca8;
+  border: 0px solid #2D6CA2;
   text-align:left;
   padding:5px;
-}
-
-.settings table{
-  border: 1px solid #2e5ca8;
 }
 
 .visible {
@@ -249,9 +249,9 @@ span.dolgo_PLUS{font-size: 40%; vertical-align:center;background-color:black; co
   z-index: 1;
   display: none;
   //position: absolute;
-  color: #2e5ca8;
+  color: #2D6CA2;
   background-color: white;
-  border: 2px solid #2e5ca8;
+  border: 2px solid #2D6CA2;
   max-width: 800px;
   padding: 25px;
   margin: 10px;
@@ -261,14 +261,14 @@ span.dolgo_PLUS{font-size: 40%; vertical-align:center;background-color:black; co
 .cellinput {
   z-index: 1;
   color: white;
-  background-color: #2e5ca8;
+  background-color: #2D6CA2;
   font-size: 110%;
   width: 100%;
 }
 
 
 .navbar {
-  background-color: #2e5ca8;
+  background-color: #2D6CA2;
   color: white;
 }
 
@@ -282,17 +282,20 @@ ul.nav
 }
 .active > a
 {
-  background-color: #2e5ca8 !important;
+  background-color: #2D6CA2 !important;
 }
 .navbar-nav li a
 {
   color: white !important;
 }
-
+.navbar-nav li a:hover
+{
+  opacity: 0.5;
+}
 #menu {
   display:block;
   overflow:hidden;
-  border: 2px dotted #2e5ca8;
+  border: 2px solid #2D6CA2;
   margin-top: 20px;
   margin-left: 5px;
   margin-right: 5px;
@@ -300,6 +303,7 @@ ul.nav
   padding-left:20px;
   padding-right:20px;
   padding-top:10px;
+  border-radius:5px;
 }
 .drop_zone_start {
   margin-top: 10px;
@@ -314,7 +318,8 @@ ul.nav
     margin-left:auto;
     margin-right: auto;
     display: inline;
-
+    border-radius: 5px;
+    display: block;
   }
 #drop_zone {
     margin-top: 5px;
@@ -337,13 +342,13 @@ ul.nav
     color: white;
     font-weight: bold;
     cursor:pointer;
-    background-color:#2e5ca8;
     background-color:Crimson;
     display:none;
     position: relative;
     margin-left:auto;
     margin-right: auto;
     width: 50%;
+    border-radius: 5px;
 }
 
 .ui-autocomplete {
@@ -352,7 +357,7 @@ ul.nav
 	left: 0;
 	cursor: default;
   color:white;
-  background-color: #2e5ca8;
+  background-color: #2D6CA2;
   border: 1px dotted white;
 }
 
@@ -405,14 +410,14 @@ ul.nav
   //padding-top:10px;
   //padding-bottom: 10px;
   border-top: 2px solid Crimson;
-  background-color: #2e5ca8;
+  background-color: #2D6CA2;
   cursor: pointer;
 }
 
 .options {
   float:right;
   font-weight:bold;
-  background-color:#2e5ca8;
+  background-color:#2D6CA2;
   border: none;
   color:white;
   margin-top:10px;
@@ -440,7 +445,7 @@ ul.nav
 }
 
 #filedisplay {
-  border: 2px dotted #2e5ca8;
+  border: 2px solid #2D6CA2;
   margin: 5px;
   padding-left:20px;
   padding-right:20px;
@@ -449,6 +454,7 @@ ul.nav
   overflow:hidden;
   display:none;
   float: left;
+  border-radius: 5px;
 }
 tr.d1 td {
   background-color:#e0e6f8;
@@ -483,12 +489,12 @@ tr.d2 td {
   left:0;
   right:0;
   background-color: white;
-  border: 2px solid #2e5ca8;
+  border: 2px solid #2D6CA2;
   text-align:center;
   display: table;
 }
 .edit_links p {
-  color: #2e5ca8;
+  color: #2D6CA2;
   font-weight: bold;
   padding-right: 10px;
   padding-left: 10px;
@@ -496,7 +502,7 @@ tr.d2 td {
 
 div.alignments {
   font-weight: bold;
-  border: 2px solid #2e5ca8;
+  border: 2px solid #2D6CA2;
   background-color: white;
   margin-bottom:5px;
   margin-left: 5px;
@@ -516,11 +522,11 @@ div.alignments {
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: left;
-  color: #2e5ca8;
+  color: #2D6CA2;
 }
 
 #previous {
-  background-image: url("../img/pfeilr.png");
+  //background-image: url("../img/pfeilr.png");
   background-repeat: no-repeat;
   background-position:center;
   //background-color: white !important;
@@ -529,7 +535,7 @@ div.alignments {
   //border-image: url("../img/borderl.png") 30 30 round;
 }
 #next {
-  background-image: url("../img/pfeill.png");
+  //background-image: url("../img/pfeill.png");
   background-repeat: no-repeat;
   background-position:center;
   //background-color: white !important;
@@ -537,7 +543,7 @@ div.alignments {
   border-radius: 10px;
 }
 #first {
-  background-image: url("../img/pfeilm.png");
+  //background-image: url("../img/pfeilm.png");
   background-repeat: no-repeat;
   background-position:center;
   //background-color: white !important;
@@ -554,12 +560,13 @@ div.alignments {
 }
 
 #outerbox {
-  z-index: 500;
+  z-index: 1;
   margin-top:60px;
   margin-left: 2px;
   margin-right:2px;
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
 .shutdown {
