@@ -8,6 +8,7 @@ var requirements = [
   "js/tsv/wordlist.js", 
   "js/tsv/starter.js",
   "js/vendor/bootstrap.min.js",
+  "js/vendor/bootstrap-select.js"
   ];
 
 for(var i=0,req;req=requirements[i];i++)
@@ -18,11 +19,12 @@ for(var i=0,req;req=requirements[i];i++)
 
 var styles = [
   "css/bootstrap.min.css",
-  "css/bootstrap-theme.min.css",
+  "css/bootstrap-theme.css",
+  "css/bootstrap-select.css",
   //"css/jquery-ui-1.10.4.custom.css",
   "css/jquery-ui.css",
   "css/wordlist.css",
-  "css/jquery-ui-theme.css"
+  "css/jquery-ui.theme.css"
 ];
 
 for(var i=0,st;st=styles[i];i++)

@@ -1415,6 +1415,21 @@ function saveFile()
   saveAs(blob, CFG['filename']);
 }
 
+/* save file */
+function saveTemplate()
+{
+  /* disallow saving when document was not edited */
+  if (!CFG['template'])
+  {
+    fakeAlert('You need to create a template before you can download it.');
+    return;
+  }
+
+  //var store = document.getElementById('store');
+  var blob = new Blob([CFG['template']], {type: 'text/plain;charset=utf-8'});
+  saveAs(blob, 'template.tsv');
+}
+
 /* save one alignment from the data into file */
 function saveAlignment(idx)
 {

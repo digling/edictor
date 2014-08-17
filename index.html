@@ -1,6 +1,6 @@
 <!--
 
-TSV-Editor main page
+Wordlist-Editor main page
 
 author   : Johann-Mattis List
 email    : mattis.list@lingulist.de
@@ -21,7 +21,7 @@ width: 5em;
 </style>
 
 
-<title>TSV Editor</title>
+<title>Wordlist Editor</title>
 </head>
 <body>
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -33,7 +33,7 @@ width: 5em;
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="" onclick="event.preventDefault();window.location.reload();">TSV Editor </a>
+        <a class="navbar-brand" href="" onclick="event.preventDefault();window.location.reload();">Wordlist Editor </a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
@@ -41,7 +41,7 @@ width: 5em;
           <li><a href="" onclick="event.preventDefault();loadAjax('sortable','contact','help col-sm-5');">CONTACT</a></li>
           <li><a href="" onclick="event.preventDefault();loadAjax('sortable','help','help col-sm-8');" >HELP</a></li>
           <li><a href="" onclick="event.preventDefault();$('#menu').toggle();">MENU</a></li>
-          <li><a href="" onclick="event.preventDefault();fakeAlert('under construction');">TEMPLATES</a></li>
+          <li><a href="" onclick="event.preventDefault();loadAjax('sortable', 'templates', 'help col-sm-8');$('.selectpicker').selectpicker({style:'btn-info',size:4});">TEMPLATES</a></li>
           <li><a href="" onclick="event.preventDefault();loadAjax('sortable','customize', 'help col-sm-8');">CUSTOMIZE</a></li>
           <li></li>
         </ul>

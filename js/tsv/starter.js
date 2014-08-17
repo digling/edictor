@@ -490,14 +490,112 @@ function makeMyURL()
   return 1;
 }
 
+
+function makeMyTemplate()
+{
+  /* function creates customized templates for the user */
+  var cols = document.getElementById('template_columns');
+  var lngs = document.getElementById('template_languages');
+  var conc = document.getElementById('template_concepts');
+  var syns = document.getElementById('template_synonyms');
+  
+  var concept_lists = [];
+  for(var i=0,option;option=conc.options[i];i++)
+  {
+    if(option.selected)
+    {
+      concept_lists.push(option.value);
+    }
+  }
+
+  /* first get the concept list */
+  var tmp = '';
+  $.ajax(
+    {
+      async:false,
+      type: "GET",
+      url: 'data/conceptlists/'+concept_lists[0],
+      dataType: "text",
+      success: function(data) 
+      {
+        tmp = data;
+      }
+    });
+
+  var glosses = {};
+  var rows = tmp.split(/\n/);
+  var header = rows[0].split('\t');
+  var owIdx = header.indexOf('OMEGAWIKI');
+  var glIdx = header.indexOf('GLOSS');
+  var nrIdx = header.indexOf('NUMBER');
+  for(var i=1,row;row=rows[i];i++)
+  {
+    var cells = row.split('\t');
+    glosses[cells[owIdx]] = [cells[nrIdx],cells[glIdx]];
+  }
+
+  /* now we start creating the text */
+  var doculects = lngs.value.split(',');
+  var columns = cols.value.split(',');
+
+  var text = 'ID\t'+columns.join('\t')+'\n';
+  text = text.replace('CONCEPT','CONCEPT\tOMEGAWIKI');
+  text += '#\n';
+
+  var counter = 1;
+  for(gloss in glosses)
+  {
+    for(var i=0,doculect;doculect=doculects[i];i++)
+    {
+      for(var j=0;j<parseInt(syns.value);j++)
+      {
+        text += counter;
+        counter += 1;
+        for(var k=0,cell;cell=columns[k];k++)
+        {
+          var itm = cell.toUpperCase();
+          if(itm == 'DOCULECT')
+          {
+            text += '\t'+doculect;
+          }
+          else if(itm == 'CONCEPT')
+          {
+            text += '\t'+ glosses[gloss][1]+'\t'+gloss;
+          }
+          else
+          {
+            text += '\t-';
+          }
+        }
+        text += '\n';
+      }
+    }
+    text += '#\n';
+  }
+
+  CFG['template'] = text;
+
+  saveTemplate(); 
+}
+
 startWordlist();
 
-$('#sortable').sortable(
-    {
-      //connectWith: ".colx",
-      //scroll: false,
-      placeholder: "portlet-placeholder ui-corner-all",
-      //distance: 7
-    }
-    );
+/* make stuff sortable, based on http://stackoverflow.com/questions/18365768/jquery-ui-sortable-placeholder-clone-of-item-being-sorted */
+$(function() {
+    $("#sortable").sortable({
+        start: function( event, ui ) {
+            clone = $(ui.item[0].outerHTML).clone();
+        },
+        placeholder: {
+            element: function(clone, ui) {
+                return $('<li class="selected" style="opacity:0.2;">'+clone[0].innerHTML+'</li>');
+            },
+            update: function() {
+                return;
+            }
+        }
+
+    });
+});
+
 $('.colx').addClass('ui-helper-clearfix');
