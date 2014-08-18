@@ -11,14 +11,14 @@ function reset()
 {
   WLS = {};
   CFG = {
-  'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ALIGNMENT', 'ETYMONID'],
+  'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ALIGNMENT', 'ETYMONID', 'CHINESE'],
   'preview': 10,
   'noid': false, 
   'sorting': false, 
   'formatter': false, 
   '_alignment':false,
   'highlight': ['TOKENS','ALIGNMENT'],
-  'sampa' : ['TOKENS'],
+  'sampa' : ['IPA','TOKENS'],
   'pinyin' : ['CHINESE'],
   'css': ["menu:show","textfields:hide"]
   };
@@ -64,14 +64,14 @@ var WLS = {};
 
 /* the basic configuration */
 var CFG = {
-  'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ALIGNMENT', 'ETYMONID'],
+  'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ALIGNMENT', 'ETYMONID', 'CHINESE'],
   'preview': 10,
   'noid': false, 
   'sorting': false, 
   'formatter': false, 
   '_alignment':false,
   'highlight': ['TOKENS','ALIGNMENT'],
-  'sampa' : ['TOKENS'],
+  'sampa' : ['IPA','TOKENS'],
   'pinyin' : ['CHINESE'],
   'css': ["menu:show","textfields:hide"]
 };
@@ -753,12 +753,12 @@ function editEntry(idx, jdx, from_idx, from_jdx)
   ipt.setAttribute('onkeyup', 'modifyEntry(event,' + idx + ',' + jdx + ',this.value)');
   ipt.setAttribute('onblur', 'unmodifyEntry(' + idx + ',' + jdx + ',"' + value + '")');
 
+
   ipt.size = size;
   entry.innerHTML = '';
   entry.appendChild(ipt);
   ipt.focus();
 
-  //completeModify(idx,jdx);
 }
 
 function autoModifyEntry(idx, jdx, value, current)
@@ -788,6 +788,7 @@ function autoModifyEntry(idx, jdx, value, current)
 
 function modifyEntry(event, idx, jdx, xvalue)
 {
+
   var process = false;
 
   /* get current index in the current view */
@@ -797,6 +798,27 @@ function modifyEntry(event, idx, jdx, xvalue)
   var j = parseInt(jdx) - 1;
 
   var entry = document.getElementById('L_' + idx).cells[jdx];
+
+  if(CFG['pinyin'].indexOf(WLS['header'][(jdx-1)]) != -1)
+  {
+    var closed = false;
+    $('.cellinput').autocomplete({
+        source: function (request, response){
+        var responses = [];
+        for(var i=0,v;v=pinyin[xvalue][i];i++)
+        {
+          responses.push(v);
+        }
+        response(responses);
+        },
+      close: function(){closed=true;}
+    });
+
+    if((event.keyCode == 38 || event.keyCode == 40) && xvalue != entry.dataset.value)
+    {
+      return;
+    }
+  }
 
   /* move up and down */
   if (event.keyCode == 38)
@@ -833,6 +855,7 @@ function modifyEntry(event, idx, jdx, xvalue)
   /* modify on enter */
   else if (event.keyCode != 13)
   {
+    
     return;
   }
 
@@ -877,6 +900,7 @@ function modifyEntry(event, idx, jdx, xvalue)
     $('#undo').removeClass('unhidden');
     $('#undo').addClass('hidden');
   }
+
 }
 
 

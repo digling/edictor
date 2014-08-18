@@ -1,26 +1,3 @@
-/* define keywords for general MSA format */
-var keywords = {
-  "LOCAL": "", 
-  "MERGE": "", 
-  "SWAPS": "", 
-  "ID": "",
-  "IGNORE":"",
-  "COLUMNID":"",
-  "COMPLEX":"",
-  "STANDARD":""
-};
-
-var params = ["view", "edit", "save", "refresh", "undo_button", "redo_button"];
-
-var privates = [
-  "width",
-  "uniques",
-  "sequences",
-  "mode",
-  "taxlen",
-  "type"
-  ];
-
 /* define the converter object for the coloring of the cols */
 var DOLGO = {
   "t\u035c\u0255": "K", 
@@ -42,8 +19,7 @@ var DOLGO = {
   "\u03b2": "P", 
   "d\u035cz": "K", 
   "\u012b": "V", 
-  "\u028c": "V",
-  "ʮ":"V",
+  "\u028c": "V", 
   "u": "V", 
   "\u02a8": "K", 
   "\u0288": "T", 
@@ -243,7 +219,7 @@ var DOLGO = {
   "\u027e": "R", 
   "z": "S", 
   "v": "W", 
-  "+": "PLUS", 
+  "+": "+", 
   "a": "V", 
   "r": "R", 
   "\u00f3": "V", 
@@ -257,39 +233,5 @@ var DOLGO = {
   "\u025a": "V", 
   "\u0256": "T", 
   "\u0252": "V", 
-  "\u027b": "R",
-  "Ɂ": "H"
-};
-
-
-function plotWord(word)
-{
-	var phones = word.split(' ');
-	var text = '';
-	for(var i=0;i<phones.length;i++)// in phones)
-	{
-		var phon = phones[i];
-
-    /* now try to find the column */
-    var dolgo = "dolgo_ERROR";
-    
-		if (phon in DOLGO){dolgo = "dolgo_"+DOLGO[phon]}
-    else if (phon.slice(0,2) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(0,2)];}
-    else if (phon.slice(0,1) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(0,1)];}
-    else if (phon.slice(1,3) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(1,3)];}
-    else if (phon.slice(1,2) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(1,2)];}
-    else if (phon == "-"){dolgo = "dolgo_GAP";}
-    
-    if(phon != '-')
-    {            
-	    text += '<span class="residue '+dolgo+'">'+phon+'</span>';
-    }
-		else
-    {
-	    text += '<span class="residue '+dolgo+'">'+phon+'</span>';
-    }
-  }
-
-	return text;
+  "\u027b": "R"
 }
-

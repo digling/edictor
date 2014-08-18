@@ -5,10 +5,11 @@ var requirements = [
   "js/vendor/undomanager.js",
   "js/dighl/sampa.js",
   "js/dighl/highlight.js",
+  "js/dighl/pinyin.js",
   "js/tsv/wordlist.js", 
   "js/tsv/starter.js",
   "js/vendor/bootstrap.min.js",
-  "js/vendor/bootstrap-select.js"
+  "js/vendor/bootstrap-select.js",
   ];
 
 for(var i=0,req;req=requirements[i];i++)
