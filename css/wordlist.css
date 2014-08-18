@@ -156,8 +156,6 @@
 }
 
 
-#settings{display: none;}
-
 .settings {
   z-index: 1;
   overflow: hidden;
@@ -166,7 +164,7 @@
   padding: 10px;
   border: 2px solid #2D6CA2;
   border-radius: 5px;
-  margin-top: 5px;
+  margin: 5px;
 }
 .settings th{
   width: auto;
