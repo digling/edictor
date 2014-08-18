@@ -1401,13 +1401,13 @@ function refreshFile()
   WLS['edited'] = true;
   localStorage.text = text;
   localStorage.filename = CFG['filename'];
-
-  $('#undo').removeClass('unhidden');
-  $('#undo').addClass('hidden');
-  $('#redo').removeClass('unhidden');
-  $('#redo').addClass('hidden');
+  
+  toggleClasses(['undo','redo'],'unhidden','hidden');
+  
   undoManager.clear();
+  
   showWLS(getCurrent());
+  
   fakeAlert("Document was saved in local storage and can now be exported. Note that only those columns which are currently displayed will be written to file. If You want to select different columns for export, check out the current settings of column display by pressing F2, alter them accordingly, and SAVE the document again."); 
 }
 
@@ -1424,6 +1424,7 @@ function fakeAlert(text)
   document.onkeydown = function(event){$('#fake').remove(); document.onkeydown = function(event){basickeydown(event);};};
 
 }
+
 /* save file */
 function saveFile()
 {
@@ -1511,44 +1512,43 @@ function highLight()
   }
 }
 
-function toggleSettings()
-{
-  var settings = document.getElementById('settingswitcher');
-  if (settings.value == 'HIDE SETTINGS')
-  {
-    settings.value = 'SHOW SETTINGS';
-    $('#settings').removeClass('unhidden');
-    $('#settings').addClass('hidden');
-  }
-  else
-  {
-    settings.value = 'HIDE SETTINGS';
-    $('#settings').removeClass('hidden');
-    $('#settings').addClass('unhidden');
-  }
+//?function toggleSettings()
+//?{
+//?  var settings = document.getElementById('settingswitcher');
+//?  if (settings.value == 'HIDE SETTINGS')
+//?  {
+//?    settings.value = 'SHOW SETTINGS';
+//?    $('#settings').removeClass('unhidden');
+//?    $('#settings').addClass('hidden');
+//?  }
+//?  else
+//?  {
+//?    settings.value = 'HIDE SETTINGS';
+//?    $('#settings').removeClass('hidden');
+//?    $('#settings').addClass('unhidden');
+//?  }
+//?
+//?}
 
-}
+//function toggleHelp()
+//{
+//  var help = document.getElementById('help');
+//  $('#help').toggle('unhidden');
+//
+//}
 
-function toggleHelp()
-{
-  var help = document.getElementById('help');
-  $('#help').toggle('unhidden');
-
-}
-
-function toggleDiv(divid)
-{
-  var divo = document.getElementById(divid);
-  if(divo.style.display != 'none')
-  {
-    divo.style.display = 'none';
-  }
-  else
-  {
-    divo.style.display = 'block';
-  }
-}
-
+//function toggleDiv(divid)
+//{
+//  var divo = document.getElementById(divid);
+//  if(divo.style.display != 'none')
+//  {
+//    divo.style.display = 'none';
+//  }
+//  else
+//  {
+//    divo.style.display = 'block';
+//  }
+//}
 
 function sortTable(event,head)
 {
@@ -1608,14 +1608,13 @@ function sortTable(event,head)
   showWLS(1);
 }
 
-
-window.onload = function() {
-    undoManager = new UndoManager();
-};
-
 function editGroup(event,idx)
 {
+  /* functin handles the display of alignments */
+
   event.preventDefault();
+  
+  /* check for various data, consider using switch statement here */
   if(idx == 0)
   {
     fakeAlert("This entry cannot be edited, since it is not related to any other entry.");
@@ -1642,6 +1641,7 @@ function editGroup(event,idx)
     fakeAlert('No phonetic entries were specified in the data.');
     return;
   }
+
   var editmode = document.createElement('div');
   editmode.id = 'editmode';
   editmode.className = 'editmode';
@@ -1675,7 +1675,6 @@ function editGroup(event,idx)
   document.body.appendChild(editmode);
   editmode.innerHTML = text;
   document.onkeydown = function(event){$('#editmode').remove(); document.onkeydown = function(event){basickeydown(event);};};
-  //$('#editlinks').draggable();
 }
 
 
@@ -1687,3 +1686,10 @@ function toggleClasses(classes,from,to)
     $('#'+idf).addClass(to);
   }
 }
+
+/* window onload functions */
+window.onload = function() {
+    undoManager = new UndoManager();
+};
+
+

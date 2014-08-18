@@ -131,7 +131,7 @@ function basickeydown (event) {
   else if(event.keyCode == 113)
   {
     event.preventDefault();
-    $('#settings').toggle();
+    $('#settings').toggleClass("hidden unhidden");
   }
   /* toggle filters F3*/
   else if(event.keyCode == 114)

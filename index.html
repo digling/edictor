@@ -50,8 +50,9 @@ width: 5em;
   </div>
   <div id="outerbox" name="top">
     <ul id="sortable">
+
+    <!-- MENU -->
     <li class="colx" style="display:block;width:100%;">
-      <!-- menu -->
       <div id="menu">
         <button type="button" onclick="$('#menu').toggle();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <!--<a name="settings" style="font-weight:bold;color:#2e5ca8">MENU</a><br><br>-->
@@ -63,7 +64,7 @@ width: 5em;
         <div id="mainsettings" style="display:none">
           <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [CTRL+S]" id="refresh" type="button" onclick="refreshFile();" value="&nbsp;SAVE&nbsp;" />
           <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [CTRL+E]" id="save" type="button" onclick="saveFile();" value="&nbsp;EXPORT&nbsp;" />
-          <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [F2]" id="settingswitcher" type="button" onclick="$('#settings').toggle();" value="SETTINGS" />
+          <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [F2]" id="settingswitcher" type="button" onclick="$('#settings').toggleClass('hidden unhidden');" value="SETTINGS" />
           <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [F3]" id="textfieldsettings" type="button" onclick="$('#textfields').toggle();" value="FILTERS" />
         </div>
         <br><br>
@@ -81,29 +82,30 @@ width: 5em;
         </div>
       </div>
     </li>
+
+    <!-- MAIN TABLE -->
     <li class="colx">
-      <!-- main table -->
       <div id="filedisplay">
         <span class="info hidden" id="filename"></span>
         <span class="info hidden" id="current"></span>
         <input id="previous" type="button" class="btn btn-primary submit hidden" value="0-0"/>
         <input id="first" type="button"    class="btn btn-primary submit unhidden" value="START " onclick="showWLS(1)" />
         <input id="next" type="button"     class="btn btn-primary submit hidden" value="1-1" />
-
         <br><br>
         <div id="db"></div>
         <div name="qlc" style="overflow:visible;" id="qlc" ></div>
         <div id="store" style="display:none"></div>
       </div>
     </li>
-    <li style="min-width:50%">
-      <div id="settings" class="settings" style="display:none">
-        <button type="button" onclick="$('#settings').toggle();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+    <!-- SETTINGS -->
+    <li class="colx" style="display:inline;">
+      <div id="settings" class="settings hidden">
+        <button type="button" onclick="$('#settings').toggleClass('hidden unhidden');" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <table>
           <tr>
             <th colspan="2">
               Settings
-
             </th>
           </tr>
           <tr>
