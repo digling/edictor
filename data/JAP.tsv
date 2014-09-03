@@ -1,5 +1,5 @@
 # JAP
-ID	Taxon	Gloss	GlossID	IPA	alignment	CogID
+ID	Taxon	Concept	GlossID	IPA	Tokens	CogID
 # 
 1	Miyako	I	1	ban	b a n	1
 2	Tōkyō	I	1	watasi	w a t a s i	2

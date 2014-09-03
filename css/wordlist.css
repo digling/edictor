@@ -605,3 +605,29 @@ div.alignments {
   background-color: white;
   max-width:20%;
 }
+
+.data_table {
+  border-spacing: 2px;
+  border-collapse: separate;
+  overflow: hidden;
+  float:left;
+  background-color: #fefefe;
+  padding: 10px;
+  border: 2px solid #2D6CA2;
+  margin: 5px;
+}
+.data_table th{
+  width: auto;
+  text-align:left;
+  padding:5px;
+  border: 1px solid #2D6CA2;
+  background-color: #2D6CA2;
+  color: white;
+  cursor: -webkit-grabbing; cursor: -moz-grabbing;
+}
+.data_table td{
+  border: 1px solid #2D6CA2;
+  text-align:left;
+  padding:5px;
+
+}

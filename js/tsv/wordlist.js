@@ -7,6 +7,11 @@
  *
  */
 
+/* define alias system for frequently occurring terms */
+ALIAS = {
+  'doculect': ['TAXON', 'LANGUAGE', 'DOCULECT', 'DOCULECTS', 'TAXA', 'LANGUAGES']
+}
+
 function reset() {
   WLS = {};
   CFG = {
@@ -264,10 +269,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   }
   tmp_text += '<input onchange="resetFormat(false)" type="radio" name="formatter" value="">FALSE ';
   if (tmp_count > 0) {
-    //if (!CFG['formatter'])
-    //{
-      resetFormat(this_key);
-    //}
+    resetFormat(this_key);
     formatter.innerHTML = tmp_text + '</td>';
     formatter.style.display = "table-row";
   }
@@ -361,7 +363,7 @@ function showWLS(start)
           else {
             var cell_display = ' style="display:none"'; // ff vs. chrome problem
           }
-
+          
           if (WLS.header[j] != CFG['formatter'] && WLS.header[j].slice(0,1) != '_') {
             text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
             text += WLS[idx][j];
@@ -1458,7 +1460,76 @@ function dataSavedMessage() {
   msg.innerHTML = "Data has been last saved on " + getDate(true) +'.';
   document.body.appendChild(msg);
 }
+
+/* function shows the occurrences of phonemes in the data */
+function showPhonology (event, doculect) {
   
+  if (event.keyCode != 13) {
+    return;
+  }
+  
+  console.log(doculect);
+
+  /* create an object in which the data will be stored */
+  var occs = {};
+  var phonemes = [];
+
+  /* get all indices of the taxa */
+  var idxs = WLS['taxa'][doculect];
+
+  console.log(idxs);
+
+  /* get index of tokens */
+  var t = WLS.header.indexOf('TOKENS');
+  var c = WLS.header.indexOf('CONCEPT');
+
+  console.log(c,t,WLS.header);
+  
+  /* iterate over the data */
+  for (var i=0,idx; idx = idxs[i]; i++) {
+    var tokens = WLS[idx][t].split(' ');
+    for (var j=0,token; token=tokens[j]; j++) {
+      try {
+        occs[token].push(idx);
+      }
+      catch (e)
+      {
+        occs[token] = [idx];
+        phonemes.push(token);
+      }
+    }
+  }
+
+  /* create the text, first not really sorted */
+  phonemes.sort(
+      function (x,y) {
+        return occs[y].length - occs[x].length;
+      });
+  var text = '<table class="data_table"><tr><th>No.</th><th>Phoneme</th><th>Occurrences</th><th>Concepts</th></tr>';
+  for (var i=0,phoneme; phoneme=phonemes[i]; i++) {
+    var noc = occs[phoneme].length;
+    var keys = occs[phoneme];
+    
+    /* create concepts */
+    var concepts = [];
+    for (var j=0,idx; idx=keys[j]; j++) {
+      var concept = WLS[idx][c];
+      if (concepts.indexOf(concept) == -1) {
+       concepts.push(concept); 
+      }
+      concepts.sort();
+    }
+    text += '<tr>';
+    text += '<td>' + (i+1) + '</td>';
+    text += '<td>' + plotWord(phoneme, '<span>') + '</td>';
+    text += '<td>' + noc + '</td>';
+    text += '<td>' + concepts.join(', ') + '</td>';
+    text += '</tr>';
+  }
+  text += '</table>';
+
+  document.getElementById('phonemes').innerHTML = text;
+}
 
 /* window onload functions */
 window.onload = function() {

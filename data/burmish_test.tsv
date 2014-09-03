@@ -1,7 +1,7 @@
 # Wordlist
 
 # DATA
-ID	DOCULECT	ORIGINAL_TAXNAME	CONCEPT	CONCEPT_KEY	ORIGINAL_CONCEPT	ORIGINAL_ENTRY	CLEANED_ENTRY_A	IPA	AUTOMATIC_TOKENS	TOKENS	SCAID	PCOGSETS	_CLUSTERID	CLUSTERFORMAT	CLUSTERID	MORPHEMES	ALIGNMENT
+ID	DOCULECT	ORIGINAL_TAXNAME	CONCEPT	CONCEPT_KEY	ORIGINAL_CONCEPT	ORIGINAL_ENTRY	CLEANED_ENTRY_A	IPA	AUTOMATIC_TOKENS	TOKENS	SCAID	PCOGSETS	X_CLUSTERID	CLUSTERFORMAT	CLUSTERID	MORPHEMES	ALIGNMENT
 #
 1	Achang_Longchuan	Achang (Longchuan) TBL	all	1286	all 1	pʐa⁵⁵ pʐa⁵⁵  | 0962.28 | 0963.28	pʐa⁵⁵ pʐa⁵⁵	pʐa⁵⁵pʐa⁵⁵	pʐ a ⁵⁵ pʐ a ⁵⁵	pʐ a ⁵⁵ pʐ a ⁵⁵	2	1 1	3	1 1	3	pʐ a ⁵⁵ + pʐ a ⁵⁵	pʐ a ⁵⁵ + pʐ a ⁵⁵
 2	Achang_Longchuan	Achang (Longchuan) ZMYYC	all	1286	all 1	pʐa³¹ pʐa³¹  | 999.41	pʐa³¹ pʐa³¹	pʐa³¹pʐa³¹	pʐ a ³¹ pʐ a ³¹	pʐ a ³¹ pʐ a ³¹	2	1 1	3	1 1	3	pʐ a ³¹ + pʐ a ³¹	pʐ a ³¹ + pʐ a ³¹
