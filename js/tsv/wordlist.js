@@ -3,54 +3,49 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2014-07-18 13:30
+ * modified : 2014-09-03 13:28
  *
  */
 
-function reset()
-{
+function reset() {
   WLS = {};
   CFG = {
-  'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ALIGNMENT', 'ETYMONID', 'CHINESE'],
-  'preview': 10,
-  'noid': false, 
-  'sorting': false, 
-  'formatter': false, 
-  '_alignment':false,
-  'highlight': ['TOKENS','ALIGNMENT'],
-  'sampa' : ['IPA','TOKENS'],
-  'pinyin' : ['CHINESE'],
-  'css': ["menu:show","textfields:hide"]
+    'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ALIGNMENT', 'ETYMONID', 'CHINESE'],
+    'preview': 10,
+    'noid': false, 
+    'sorting': false, 
+    'formatter': false, 
+    '_alignment':false,
+    'highlight': ['TOKENS','ALIGNMENT'],
+    'sampa' : ['IPA','TOKENS'],
+    'pinyin' : ['CHINESE'],
+    'css': ["menu:show","textfields:hide","database:hide"],
+    'status' : {},
+    'server_side_files' : [],
+    'server_side_bases' : [],
+    'storable' : false
   };
   
   STORE = '';
   var BL = ['file'];
   
-  var db = '';
-  for(var param in PARAMS)
-  {
+  for (var param in PARAMS) {
     var value = PARAMS[param];
 
-    if(BL.indexOf(param) == -1)
-    {
-     if(!isNaN(parseInt(value)))
-     {
+    if (BL.indexOf(param) == -1) {
+     if (!isNaN(parseInt(value))) {
        CFG[param] = parseInt(value);
      }
-     else if(value.indexOf(',') != -1)
-     {
+     else if (value.indexOf(',') != -1) {
        CFG[param] = [];
        var values = value.split(',');
-       for(var i=0,val;val=values[i];i++)
-       {
-         if(val != '')
-         {
+       for (var i=0,val;val=values[i];i++) {
+         if (val != '') {
           CFG[param].push(val);
          }
        }
      }
-     else
-     {
+     else {
        CFG[param] = PARAMS[param];
      }
     }
@@ -64,46 +59,45 @@ var WLS = {};
 
 /* the basic configuration */
 var CFG = {
-  'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ALIGNMENT', 'ETYMONID', 'CHINESE'],
-  'preview': 10,
-  'noid': false, 
-  'sorting': false, 
-  'formatter': false, 
-  '_alignment':false,
-  'highlight': ['TOKENS','ALIGNMENT'],
-  'sampa' : ['IPA','TOKENS'],
-  'pinyin' : ['CHINESE'],
-  'css': ["menu:show","textfields:hide"]
+  'basics'            : [
+    'DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 
+    'PROTO_TOKENS', 'ALIGNMENT', 'ETYMONID', 'CHINESE'],
+  'preview'           : 10,
+  'noid'              : false,
+  'sorting'           : false,
+  'formatter'         : false,
+  '_alignment'        : false,
+  'highlight'         : ['TOKENS','ALIGNMENT'],
+  'sampa'             : ['IPA','TOKENS'],
+  'pinyin'            : ['CHINESE'],
+  'css'               : ["menu:show","textfields:hide","database:hide"],
+  'status'            : {},
+  'server_side_files' : [],
+  'server_side_bases' : [],
+  'storable' : false
 };
 var STORE = ''; // global variable to store the text data in raw format
 var PARAMS = {};
 
 /* function for resetting the formatter */
-function resetFormat(value)
-{
+function resetFormat(value) {
 
-  if(!value)
-  {
+  if (!value) {
     CFG['formatter'] = false;
     WLS['etyma'] = [];
   }
-  else// if(CFG['formatter'] != value)
-  {
+  else {
     var size = 0;
     CFG['formatter'] = value;
     var format_selection = {};
     var format_idx = WLS.header.indexOf(value);
-    for(key in WLS)
-    {
-      if(!isNaN(key))
-      {
+    for (key in WLS) {
+      if (!isNaN(key)) {
         var tmp = WLS[key][format_idx];
-        if(tmp in format_selection)
-        {
+        if (tmp in format_selection) {
           format_selection[tmp].push(key);
         }
-        else if(tmp != 0)
-        {
+        else if (tmp != 0) {
           format_selection[tmp] = [key];
         }
         size++;
@@ -130,34 +124,27 @@ function csvToArrays(allText, separator, comment, keyval) {
 
   var firstLineFound = false;
   var noid = false;
-  for (var i = 0; i < allTextLines.length; i++)
-  {
+  for (var i = 0; i < allTextLines.length; i++) {
     var data = allTextLines[i].split(separator);
     if (data[0].charAt(0) == comment || data[0].replace(/\s*/g,'') == '' || data[0].charAt(0) == keyval){}
-    else if (data[0] == 'ID')
-    {
+    else if (data[0] == 'ID') {
       firstLineFound = true;
 
       /* get the header */
       var header = [];
-      for (j = 1; j < data.length; j++)
-      {
+      for (j = 1; j < data.length; j++) {
         var datum = data[j].toUpperCase();
         header.push(datum);
-        if (['TAXA', 'TAXON', 'LANGUAGE', 'DOCULECT'].indexOf(datum) != -1)
-        {
+        if (['TAXA', 'TAXON', 'LANGUAGE', 'DOCULECT'].indexOf(datum) != -1) {
           tIdx = j;
         }
-        if (datum == 'GLOSS' || datum == 'CONCEPT' )
-        {
+        if (datum == 'GLOSS' || datum == 'CONCEPT' ) {
           cIdx = j;
         }
-        if (CFG['basics'].indexOf(datum) != -1)
-        {
+        if (CFG['basics'].indexOf(datum) != -1) {
           columns[datum] = j;
         }
-        else
-        {
+        else {
           columns[datum] = -j;
         }
       }
@@ -176,24 +163,20 @@ function csvToArrays(allText, separator, comment, keyval) {
 
     }
     /* handle cases where no ID has been submitted */
-    else if(firstLineFound == false)
-    {
+    else if (firstLineFound == false) {
       firstLineFound = true;
       noid = true;
       CFG['noid'] = true;
 
       /* get the header */
       var header = [];
-      for (j = 0; j < data.length; j++)
-      {
+      for (j = 0; j < data.length; j++) {
         var datum = data[j].toUpperCase();
         header.push(datum);
-        if (['TAXA', 'TAXON', 'LANGUAGE', 'DOCULECT'].indexOf(datum) != -1)
-        {
+        if (['TAXA', 'TAXON', 'LANGUAGE', 'DOCULECT'].indexOf(datum) != -1) {
           tIdx = j;
         }
-        if (datum == 'GLOSS' || datum == 'CONCEPT')
-        {
+        if (datum == 'GLOSS' || datum == 'CONCEPT') {
           cIdx = j;
         }
         columns[datum] = j+1;
@@ -213,15 +196,12 @@ function csvToArrays(allText, separator, comment, keyval) {
 
     }
     //else if (data[0].charAt(0) == comment || data[0] == '') {}
-    else if (firstLineFound)
-    {
-      if(!noid)
-      {
+    else if (firstLineFound) {
+      if (!noid) {
         var idx = parseInt(data[0]);
         qlc[idx] = data.slice(1, data.length);
       }
-      else
-      {
+      else {
         var idx = count;
         count += 1;
         qlc[idx] = data.slice(0,data.length);
@@ -230,20 +210,16 @@ function csvToArrays(allText, separator, comment, keyval) {
       /* check for header */
       var taxon = data[tIdx];
       var concept = data[cIdx];
-      if (taxon in taxa)
-      {
+      if (taxon in taxa) {
         taxa[taxon].push(idx);
       }
-      else
-      {
+      else {
         taxa[taxon] = [idx];
       }
-      if (concept in concepts)
-      {
+      if (concept in concepts) {
         concepts[concept].push(idx);
       }
-      else
-      {
+      else {
         concepts[concept] = [idx];
       }
       selection.push(idx);
@@ -270,49 +246,41 @@ function csvToArrays(allText, separator, comment, keyval) {
   var tmp_text = '<th>Formatter</th><td>';
   var tmp_count = 0;
   var this_key = false;
-  for(var key in WLS['columns'])
-  {
-    if(key.indexOf('ID') - key.length == -2 && tmp_count == 0 && key != CFG['formatter'])
-    {
+  for (var key in WLS['columns']) {
+    if (key.indexOf('ID') - key.length == -2 && tmp_count == 0 && key != CFG['formatter']) {
       tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+key+'">'+key+' ';
       this_key = key;
       tmp_count += 1;
     }
-    else if(key.indexOf('ID') - key.length == -2 && CFG['formatter'] != key)
-    {
+    else if (key.indexOf('ID') - key.length == -2 && CFG['formatter'] != key) {
       tmp_text += '<input onchange="resetFormat(this.value)" type="radio" name="formatter" value="'+key+'">'+key+' ';
       tmp_count += 1;
     }
-    else if(key == CFG['formatter'])
-    {
+    else if (key == CFG['formatter']) {
       tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+key+'">'+key+' ';
       tmp_count += 1;
       this_key = CFG['formatter'];
     }
   }
   tmp_text += '<input onchange="resetFormat(false)" type="radio" name="formatter" value="">FALSE ';
-  if(tmp_count > 0)
-  {
-    //if(!CFG['formatter'])
+  if (tmp_count > 0) {
+    //if (!CFG['formatter'])
     //{
       resetFormat(this_key);
     //}
     formatter.innerHTML = tmp_text + '</td>';
     formatter.style.display = "table-row";
   }
-  else
-  {
+  else {
     formatter.style.display = "none";
   }
   
   /* add settings for the column preview to the data */
   var all_columns = document.getElementById('columncb');
   var tmp_text = '<th>Columns</th><td>';
-  for (var col in WLS['columns'])
-  {
+  for (var col in WLS['columns']) {
     tmp_text += '<input id="cb_' + col + '" onchange="filterColumns(this.value);" type="checkbox" ';
-    if (CFG['basics'].indexOf(col) != -1)
-    {
+    if (CFG['basics'].indexOf(col) != -1) {
       tmp_text += 'checked ';
     }
     tmp_text += 'name="columns" value="';
@@ -325,8 +293,7 @@ function csvToArrays(allText, separator, comment, keyval) {
 
 function showWLS(start)
 {
-  if (!WLS['parsed'])
-  {
+  if (!WLS['parsed']) {
     //var store = document.getElementById('store');
 
     csvToArrays(STORE, '\t', '#', '@');
@@ -337,16 +304,13 @@ function showWLS(start)
   // add col-tags to the dable
   text += '<col id="ID" />';
   var thtext = ''; // ff vs. chrome problem
-  for (i in WLS['header'])
-  {
+  for (i in WLS['header']) {
     var head = WLS['header'][i];
-    if (WLS['columns'][head] > 0)
-    {
+    if (WLS['columns'][head] > 0) {
       text += '<col id="' + head + '" />';
       thtext += '<th class="titled" title="Double-click for sorting along this column." id="HEAD_'+head+'" ondblclick="sortTable(event,'+"'"+head+"'"+')">' + head + '</th>';
     }
-    else
-    {
+    else {
       text += '<col id="' + head + '" style="visibility:hidden;" />';
       thtext += '<th style="display:none">' + head + '</th>';
     }
@@ -357,37 +321,29 @@ function showWLS(start)
   text += thtext;
   text += '</tr>';
 
-  //for(idx in WLS)
+  //for (idx in WLS)
   var count = 1;
-  if(CFG['formatter'])
-  {
+  if (CFG['formatter']) {
     var previous_format = '';
     var tmp_class = 'd0';
-    for (i in WLS['rows']) //in WLS['rows'])
-    {
+    for (i in WLS['rows'])  {
       var idx = WLS['rows'][i];
       var current_format = WLS[idx][WLS['header'].indexOf(CFG['formatter'])];
-      if (!isNaN(idx) && count >= start)
-      {
+      if (!isNaN(idx) && count >= start) {
         var rowidx = parseInt(i) + 1;
-        if(current_format == 0)
-        {
+        if (current_format == 0) {
           tmp_class = 'd2';
           previous_format = current_format;
         }
-        else if(previous_format == 0)
-        {
+        else if (previous_format == 0) {
           tmp_class = 'd0';
           previous_format = current_format;
         }
-        else if(current_format != previous_format)
-        {
-          if(tmp_class == 'd0')
-          {
+        else if (current_format != previous_format) {
+          if (tmp_class == 'd0') {
             tmp_class = 'd1';
           }
-          else
-          {
+          else {
             tmp_class = 'd0';
           }
           previous_format = current_format;
@@ -395,34 +351,28 @@ function showWLS(start)
 
         text += '<tr class="'+tmp_class+'" id="L_' + idx + '">';
         text += '<td class="ID" title="LINE ' + rowidx + '">' + idx + '</td>';
-        for (j in WLS[idx])
-        {
+        for (j in WLS[idx]) {
           var jdx = parseInt(j) + 1;
 
           var head = WLS['header'][j];
-          if (WLS['columns'][head] > 0)
-          {
+          if (WLS['columns'][head] > 0) {
             var cell_display = '';
           }
-          else
-          {
+          else {
             var cell_display = ' style="display:none"'; // ff vs. chrome problem
           }
 
-          if(WLS.header[j] != CFG['formatter'] && WLS.header[j].slice(0,1) != '_')
-          {
+          if (WLS.header[j] != CFG['formatter'] && WLS.header[j].slice(0,1) != '_') {
             text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
             text += WLS[idx][j];
             text += '</td>';
           }
-          else if(WLS.header[j].slice(0,1) == '_')
-          {
+          else if (WLS.header[j].slice(0,1) == '_') {
             text += '<td class="'+WLS['header'][j]+'" title="ENTRY '+idx+'/'+jdx+'">';
             text += WLS[idx][j];
             text += '</td>';
           }
-          else
-          {
+          else {
             text += '<td ondblclick="editGroup(event,'+"'"+WLS[idx][j]+"'"+')" oncontextmenu="editGroup(event,'+"'"+WLS[idx][j]+"')"+'" class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
             text += WLS[idx][j];
             text += '</td>';
@@ -433,33 +383,26 @@ function showWLS(start)
         count += 1;
       }
       else {count += 1;}
-      if (count >= start + CFG['preview'])
-      {
+      if (count >= start + CFG['preview']) {
         break;
       }
     }
   }
-  else
-  {
-    for (i in WLS['rows']) //in WLS['rows'])
-    {
+  else {
+    for (i in WLS['rows'])  {
       var idx = WLS['rows'][i];
-      if (!isNaN(idx) && count >= start)
-      {
+      if (!isNaN(idx) && count >= start) {
         var rowidx = parseInt(i) + 1;
         text += '<tr id="L_' + idx + '">';
         text += '<td class="ID" title="LINE ' + rowidx + '">' + idx + '</td>';
-        for (j in WLS[idx])
-        {
+        for (j in WLS[idx]) {
           var jdx = parseInt(j) + 1;
 
           var head = WLS['header'][j];
-          if (WLS['columns'][head] > 0)
-          {
+          if (WLS['columns'][head] > 0) {
             var cell_display = '';
           }
-          else
-          {
+          else {
             var cell_display = ' style="display:none"'; // ff vs. chrome problem
           }
           text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
@@ -470,8 +413,7 @@ function showWLS(start)
         count += 1;
       }
       else {count += 1;}
-      if (count >= start + CFG['preview'])
-      {
+      if (count >= start + CFG['preview']) {
         break;
       }
     }
@@ -483,8 +425,7 @@ function showWLS(start)
 
   // modify previous and next
   var previous = document.getElementById('previous');
-  if (parseInt(start) - CFG['preview'] >= 0)
-  {
+  if (parseInt(start) - CFG['preview'] >= 0) {
     previous.onclick = function() {showWLS(start - CFG['preview']);};
     var prestart = start - CFG['preview'];
     var startbefore = start - 1;
@@ -492,18 +433,15 @@ function showWLS(start)
 
     toggleClasses(['previous'],'hidden','unhidden');
   }
-  else
-  {
+  else {
     toggleClasses(['previous'],'unhidden','hidden');
   }
 
   var next = document.getElementById('next');
-  if (WLS['rows'].length > start + CFG['preview'])
-  {
+  if (WLS['rows'].length > start + CFG['preview']) {
     var poststart = start + parseInt(CFG['preview']);
     var postpoststart = start + 2 * parseInt(CFG['preview']) - 1;
-    if (postpoststart >= WLS['rows'].length)
-    {
+    if (postpoststart >= WLS['rows'].length) {
       postpoststart = WLS['rows'].length;
     }
     next.onclick = function() {showWLS(poststart);};
@@ -511,16 +449,14 @@ function showWLS(start)
 
     toggleClasses(['next'],'hidden','unhidden');
   }
-  else
-  {
+  else {
     toggleClasses(['next'],'unhidden','hidden');
   }
   
 
   var current = document.getElementById('current');
   var following = start + CFG['preview'] - 1;
-  if (following >= WLS['rows'].length - 1)
-  {
+  if (following >= WLS['rows'].length - 1) {
     following = WLS['rows'].length;
   }
   current.innerHTML = 'Showing ' + start + ' - ' + following + ' of ' + parseInt(WLS['rows'].length) + ' entries';
@@ -534,8 +470,7 @@ function showWLS(start)
   fn.innerHTML = '&lt;' + CFG['filename'] + '&gt;';
   highLight();
   
-  if(CFG['sorted'])
-  {
+  if (CFG['sorted']) {
     document.getElementById('HEAD_'+CFG['sorted'].split('_')[1]).style.backgroundColor = 'Crimson';
   }
   
@@ -548,44 +483,36 @@ function addColumn(event)
 {
   var col = document.getElementById('add_column');
 
-  if (event.keyCode != 13)
-  {
+  if (event.keyCode != 13) {
     return;
   }
 
   var name = col.value.trim();
-  if (name == '')
-  {
+  if (name == '') {
     col.value = '';
     return;
   }
   var base = function(i) {return '?'};
 
-  if (name.indexOf('>>') != -1)
-  {
+  if (name.indexOf('>>') != -1) {
     var basename = name.split('>>');
     var basex = basename[0];
 
     var bases = basex.split(/\+/);
     var base = function(i) {
       var new_entry = '';
-      for (k in bases)
-      {
+      for (k in bases) {
         var tmp = bases[k];
-        if (tmp.charAt(0) == '$')
-        {
+        if (tmp.charAt(0) == '$') {
           var j = WLS['header'].indexOf(tmp.slice(1, tmp.length).toUpperCase());
-          if (j != -1)
-          {
+          if (j != -1) {
             new_entry += WLS[i][j];
           }
-          else
-          {
+          else {
             new_entry += tmp;
           }
         }
-        else if (tmp.charAt(0) == '!')
-        {
+        else if (tmp.charAt(0) == '!') {
           try
           {
             var str = 'var x = ' + tmp.slice(1, tmp.length) + '(' + '"' + new_entry + '"); return x;';
@@ -599,14 +526,12 @@ function addColumn(event)
             db.style.color = 'red';
           }
         }
-        else if (tmp.indexOf('(') != -1 && tmp.indexOf(')') != -1)
-        {
+        else if (tmp.indexOf('(') != -1 && tmp.indexOf(')') != -1) {
             var str = 'var x = "' + new_entry + '".' + tmp + '; return x;';
             var F = new Function(str);
             new_entry = F();
         }
-        else
-        {
+        else {
           new_entry += tmp;
         }
       }
@@ -615,23 +540,19 @@ function addColumn(event)
     var name = basename[1].toUpperCase();
   }
 
-  if (name in WLS['columns'])
-  {
+  if (name in WLS['columns']) {
     col.value = '';
     return;
   }
 
-  for (idx in WLS)
-  {
-    if (!isNaN(idx))
-    {
+  for (idx in WLS) {
+    if (!isNaN(idx)) {
       WLS[idx].push(base(idx));
     }
   }
   WLS['header'].push(name);
   WLS['columns'][name] = WLS.header.length - 1;
-  if (CFG['basics'].indexOf(name) == -1)
-  {
+  if (CFG['basics'].indexOf(name) == -1) {
     CFG['basics'].push(name);
   }
 
@@ -644,79 +565,65 @@ function editEntry(idx, jdx, from_idx, from_jdx)
   var line = document.getElementById('L_' + idx);
 
   /* if line is undefined, check for next view */
-  if (line === null || typeof line == 'undefined')
-  {
+  if (line === null || typeof line == 'undefined') {
     var ridx = WLS['rows'].indexOf(idx);
     var fidx = WLS['rows'].indexOf(from_idx);
     //fakeAlert(fidx+' '+ridx);
-    if(ridx == -1 && fidx == -1)
-    {
+    if (ridx == -1 && fidx == -1) {
       fakeAlert("Error with the IDs, cannot find the correct indices for "+ridx+" and "+fidx);
       return;
     }
-    else if (ridx == -1 && fidx == 0)
-    {
+    else if (ridx == -1 && fidx == 0) {
       var wlsidx = WLS['rows'].length - CFG['preview'] - 1;
       showWLS(wlsidx);
       editEntry(WLS['rows'][(WLS['rows'].length-1)],jdx,0,0);
       return;
     }
-    else if (ridx == -1 && fidx == WLS['rows'].length-1)
-    {
+    else if (ridx == -1 && fidx == WLS['rows'].length-1) {
       showWLS(1);
       editEntry(WLS['rows'][0],jdx,0,0);
       return;
     }
-    else if (ridx > fidx)
-    {
+    else if (ridx > fidx) {
       var next = document.getElementById('next');
-      if(typeof next != 'undefined')
-      {
+      if (typeof next != 'undefined') {
         var to_idx = parseInt(next.value.split('-')[0]);
         showWLS(to_idx);
         editEntry(idx, jdx, from_idx, from_jdx);
         return;
       }
-      else
-      {
+      else {
         fakeAlert("Error with following entry, it seems to be undefined.");
         return;
       }
     }
-    else if (ridx < fidx)
-    {
+    else if (ridx < fidx) {
       var previous = document.getElementById('previous');
-      if(typeof previous != 'undefined')
-      {
+      if (typeof previous != 'undefined') {
         var to_idx = parseInt(previous.value.split('-')[0]);
         showWLS(to_idx);
         editEntry(idx, jdx, from_idx, from_jdx);
         return;
       }
-      else
-      {
+      else {
         fakeAlert("Error with preceeding entry, it seems to be undefined.");
       }
     }
-    else
-    {
+    else {
       return;
     }
   }
 
   var entry = line.childNodes[jdx];
 
-  if (jdx < 1 || jdx - 1 == WLS['header'].length)
-  {
-    if (jdx < 1)
-    {
+  if (jdx < 1 || jdx - 1 == WLS['header'].length) {
+    if (jdx < 1) {
       jdx = WLS['header'].length;
       from_jdx = jdx + 1;
       editEntry(idx, jdx, from_idx, from_jdx);
       return;
     }
-    else if (jdx - 1 == WLS['header'].length)
-    {
+    else if (jdx - 1 == WLS['header'].length) {
       jdx = 1;
       from_jdx = 2;
       editEntry(idx, jdx, from_idx, from_jdx);
@@ -726,14 +633,11 @@ function editEntry(idx, jdx, from_idx, from_jdx)
 
   var col = document.getElementById(entry.className);
 
-  if (col.style.visibility == 'hidden')
-  {
-    if (from_jdx > jdx)
-    {
+  if (col.style.visibility == 'hidden') {
+    if (from_jdx > jdx) {
       editEntry(idx, jdx - 1, from_idx, from_jdx);
     }
-    else if (from_jdx < jdx)
-    {
+    else if (from_jdx < jdx) {
       editEntry(idx, jdx + 1, from_idx, from_jdx);
     }
     return;
@@ -761,19 +665,16 @@ function editEntry(idx, jdx, from_idx, from_jdx)
 
 }
 
-function autoModifyEntry(idx, jdx, value, current)
-{
+function autoModifyEntry(idx, jdx, value, current) {
 
   var tcurrent = parseInt(getCurrent());
   current = parseInt(current);
 
-  if (tcurrent != current)
-  {
+  if (tcurrent != current) {
     var tmp = showWLS(current);
   }
   var line = document.getElementById('L_' + idx);
-  if (line !== null)
-  {
+  if (line !== null) {
     var entry = line.childNodes[jdx];
     entry.dataset.value = value;
     entry.innerHTML = value;
@@ -781,13 +682,15 @@ function autoModifyEntry(idx, jdx, value, current)
   }
   var j = parseInt(jdx) - 1;
   WLS[idx][j] = value;
-
+  
+  /* store modification in case this is possible */
+  storeModification(idx,j,value);
+  
   highLight();
-
 }
 
-function modifyEntry(event, idx, jdx, xvalue)
-{
+/* function modifies a given entry */
+function modifyEntry(event, idx, jdx, xvalue) {
 
   var process = false;
 
@@ -799,14 +702,12 @@ function modifyEntry(event, idx, jdx, xvalue)
 
   var entry = document.getElementById('L_' + idx).cells[jdx];
 
-  if(CFG['pinyin'].indexOf(WLS['header'][(jdx-1)]) != -1)
-  {
+  if (CFG['pinyin'].indexOf(WLS['header'][(jdx-1)]) != -1) {
     var closed = false;
     $('.cellinput').autocomplete({
         source: function (request, response){
         var responses = [];
-        for(var i=0,v;v=pinyin[xvalue][i];i++)
-        {
+        for (var i=0,v;v=pinyin[xvalue][i];i++) {
           responses.push(v);
         }
         response(responses);
@@ -814,54 +715,46 @@ function modifyEntry(event, idx, jdx, xvalue)
       close: function(){closed=true;}
     });
 
-    if((event.keyCode == 38 || event.keyCode == 40) && xvalue != entry.dataset.value)
-    {
+    if ((event.keyCode == 38 || event.keyCode == 40) && xvalue != entry.dataset.value) {
       return;
     }
   }
 
   /* move up and down */
-  if (event.keyCode == 38)
-  {
+  if (event.keyCode == 38) {
     process = true;
     ni = bdx;
     nj = jdx;
   }
-  else if (event.keyCode == 40)
-  {
+  else if (event.keyCode == 40) {
     process = true;
     ni = ndx;
     nj = jdx;
   }
   /* move to left and right */
-  else if (event.keyCode == 37 && event.ctrlKey)
-  {
+  else if (event.keyCode == 37 && event.ctrlKey) {
     process = true;
     ni = idx;
     nj = jdx - 1;
   }
-  else if (event.keyCode == 39 && event.ctrlKey)
-  {
+  else if (event.keyCode == 39 && event.ctrlKey) {
     process = true;
     ni = idx;
     nj = jdx + 1;
   }
   /* unmodify on escape */
-  else if (event.keyCode == 27)
-  {
+  else if (event.keyCode == 27) {
     unmodifyEntry(idx, jdx, entry.dataset.value);
     return;
   }
   /* modify on enter */
-  else if (event.keyCode != 13)
-  {
+  else if (event.keyCode != 13) {
     
     return;
   }
 
   /* change sampa to ipa if entries are ipa or tokens */
-  if (CFG['sampa'].indexOf(entry.className) != -1)
-  {
+  if (CFG['sampa'].indexOf(entry.className) != -1) {
     xvalue = sampa2ipa(xvalue); //modify.value);
   }
 
@@ -873,37 +766,72 @@ function modifyEntry(event, idx, jdx, xvalue)
   entry.innerHTML = '';
   entry.innerHTML = xvalue; //modify.value;
 
-  if (process == true)
-  {
+  if (process == true) {
     editEntry(ni, nj, idx, jdx);
   }
   highLight();
 
   var current = getCurrent();
-
-  if (prevalue != xvalue)
-  {
+  
+  /* check whether the value has been modified, if so, change the underlying
+   * entry in the big WLS Object */
+  if (prevalue != xvalue) {
     undoManager.add({
       undo: function() {autoModifyEntry(idx, jdx, prevalue, current);},
-      redo: function() {autoModifyEntry(idx, jdx, xvalue, current);}
-      }
-    );
-    WLS[idx][jdx - 1] = xvalue;
+      redo: function() {autoModifyEntry(idx, jdx, xvalue, current);}  
+    });
+    WLS[idx][(jdx - 1)] = xvalue;
+    
+    /* trigger store modification in case this is possible for the current session */
+    storeModification(idx,(jdx-1),xvalue);
   }
-  if (undoManager.hasUndo() == true)
-  {
+
+  if (undoManager.hasUndo() == true) {
     $('#undo').removeClass('hidden');
     $('#undo').addClass('unhidden');
   }
-  else
-  {
+  else {
     $('#undo').removeClass('unhidden');
     $('#undo').addClass('hidden');
   }
-
 }
 
+/* function stores (if possible) a given modification in the project's triple store */
+function storeModification(idx,jdx,value) {
+  /* if storable is set to "true" and wer are working with a remote server, 
+   * make the modifying ajax-call to ensure that the data has been edited 
+   * and stored */
+  if (CFG['storable']) {
+    console.log('encountered storable stuff');
 
+    /* create url first */
+    var new_url = 'triples/triples.php?' + 
+      'file='+CFG['filename'] +
+      '&update' + 
+      '&ID='+idx +
+      '&COL='+WLS.header[jdx] +
+      '&VAL='+value;
+
+    $.ajax({
+      async: false,
+      type: "GET",
+      contentType: "application/text; charset=utf-8",
+      url: new_url,
+      dataType: "text",
+      success: function(data) {
+        dataSavedMessage();
+      },
+      error: function() {
+        fakeAlert('data could not be stored');
+      }
+    });
+  }
+  else {
+    console.log('storable failed somehow %o',CFG['storable']);
+  }
+}
+
+/* revert a given entry to its original value */
 function unmodifyEntry(idx, jdx, xvalue)
 {
   var entry = document.getElementById('L_' + idx).cells[jdx];
@@ -916,77 +844,13 @@ function unmodifyEntry(idx, jdx, xvalue)
   highLight();
 }
 
-// function filterWordlist(event,value)
-// {
-//   if(typeof WLS['_prows'] == 'undefined')
-//   {
-//     WLS['_prows'] = WLS['rows'];
-//   }
-//   else
-//   {
-//     WLS['rows'] = WLS['_prows'];
-//   }
-//   if(value == '')
-//   {
-//     WLS['rows'] = WLS['_prows'];
-//     showWLS(1);
-//     return;
-//   }
-// 
-//   if(event.keyCode == 13)
-//   {
-//     if(value.indexOf('==') != -1)
-//     {
-//       var mode = 'equal';
-//       var vals = value.split(/\s*==\s*/);
-//     }
-//     else if(value.indexOf('=') != -1)
-//     {
-//       var mode = 'like';
-//       var vals = value.split(/\s*=\s/);
-//     }
-//     else{return;}
-// 
-//     //var vals = value.split(/\s*=\s*/);
-//     var c = vals[0];
-//     var v = vals[1].toLowerCase().replace(/\n/,'');
-//     var new_rows = [];
-//     var idx = WLS['header'].indexOf(c.toUpperCase());
-//     if(typeof idx != 'undefined')
-//     {
-//       for(var i=0,r;r=WLS['rows'][i];i++)
-//       {
-//         var val = WLS[r][idx].toLowerCase();
-//         if(val.indexOf(v) != -1 && mode == 'like')
-//         {
-//           new_rows.push(r);
-//         }
-// 	      else if(val == v && mode == 'equal')
-// 	      {
-// 	      new_rows.push(r);
-// 	      }
-//       }
-//       if(new_rows.length > 0)
-//       {
-// 	      WLS['rows'] = new_rows;
-// 	      showWLS(1);
-//       }
-//     }
-//   }
-//   else
-//   {
-//     return;
-//   }
-// }
-
+/* filter the wordlist, that is, hide specific contents and show others */
 function filterWLS(event, type)
 {
-  if(type == 'custom' && event.keyCode != 13)
-  {
+  if (type == 'custom' && event.keyCode != 13) {
     return;
   }
-  else if(type == 'custom' && event.keyCode == 13)
-  {
+  else if (type == 'custom' && event.keyCode == 13) {
     applyFilter();
     showWLS(1);
     return;
@@ -1002,8 +866,7 @@ function filterWLS(event, type)
   }
   $('#' + type).bind('keydown', function(event ) 
       {
-        if (event.keyCode === $.ui.keyCode.TAB && $(this).data('ui-autocomplete').menu.unhidden)
-        {
+        if (event.keyCode === $.ui.keyCode.TAB && $(this).data('ui-autocomplete').menu.unhidden) {
           event.preventDefault();
         }
       }
@@ -1037,28 +900,23 @@ function filterWLS(event, type)
     }
   );
 
-  if (event.keyCode == 13)
-  {
+  if (event.keyCode == 13) {
     applyFilter();
 
     // determine the correct position at which we are at the moment
     var previous = document.getElementById('previous');
     var current_index = 1;
-    if (previous === null)
-    {
+    if (previous === null) {
       current_index = 1;
     }
-    else
-    {
+    else {
       current_index = parseInt(previous.value.split('-')[1]) + 1;
     }
 
-    if (isNaN(current_index))
-    {
+    if (isNaN(current_index)) {
       showWLS(1);
     }
-    else
-    {
+    else {
       showWLS(current_index);
     }
   }
@@ -1082,46 +940,36 @@ function applyFilter()
   var elist = entries.value.toUpperCase().split(/,\s*/);
   var alist = custom.value;
 
-  if (tlist[0] == '')
-  {
+  if (tlist[0] == '') {
     tlist = Object.keys(WLS['taxa']);
   }
-  if (clist[0] == '')
-  {
+  if (clist[0] == '') {
     clist = Object.keys(WLS['concepts']);
   }
-  if (elist[0] == '')
-  {
+  if (elist[0] == '') {
     elist = [];
   }
 
-  for (i in tlist)
-  {
-    if (tlist[i] != '')
-    {
+  for (i in tlist) {
+    if (tlist[i] != '') {
       trows.push.apply(trows, WLS['taxa'][tlist[i]]);
     }
   }
-  for (i in clist)
-  {
-    if (clist[i] != '')
-    {
+  for (i in clist) {
+    if (clist[i] != '') {
       crows.push.apply(crows, WLS['concepts'][clist[i]]);
     }
   }
 
   /* now it starts */
-  if(alist.replace(/\s*/,'') != '')
-  {
-    if(alist.indexOf('==') != -1)
-    {
+  if (alist.replace(/\s*/,'') != '') {
+    if (alist.indexOf('==') != -1) {
       var keyval = alist.split(/\s*==\s*/);
       var key = keyval[0].toUpperCase();
       var val = keyval[1];
       var compare = 'identical';
     }
-    else if(alist.indexOf('=') != -1)
-    {
+    else if (alist.indexOf('=') != -1) {
       var keyval = alist.split(/\s*=\s*/);
       var key = keyval[0].toUpperCase();
       var val = keyval[1];
@@ -1132,87 +980,68 @@ function applyFilter()
       var compare = 'error';
     }
     
-    if(compare != 'error')
-    {
-      for(var i=0; i < WLS._trows.length;i++)
-      {
+    if (compare != 'error') {
+      for (var i=0; i < WLS._trows.length;i++) {
         var idx = WLS._trows[i];
         
         var value = WLS[idx][WLS.header.indexOf(key)];
-        if(typeof value == 'undefined')
-        {
+        if (typeof value == 'undefined') {
           fakeAlert("The values specified in the custom filter are erroneous.");
           custom.value = '';
           break;
         }
-        if(compare == 'identical' && value == val)
-        {
+        if (compare == 'identical' && value == val) {
           arows.push(idx);
         }
-        else if(compare == 'similar' && value.indexOf(val) != -1)
-        {
+        else if (compare == 'similar' && value.indexOf(val) != -1) {
           arows.push(idx);
         }
       }
     }
-    else
-    {
+    else {
       fakeAlert("The values specified in the custom filter are erroneous.");
       custom.value = '';
     }
     
-    if(custom.value == '')
-    {
+    if (custom.value == '') {
       arows = WLS._trows.slice();
     }
   }
-  else
-  {
+  else {
     arows = WLS._trows.slice();
   }
 
   /* check for the filtering of columns now */
-  if (elist[0] == '*')
-  {
+  if (elist[0] == '*') {
     entries.value = '';
-    for (i in WLS['header'])
-    {
+    for (i in WLS['header']) {
       head = WLS['header'][i];
       WLS['columns'][head] = Math.abs(WLS['columns'][head]);
       document.getElementById('cb_' + head).checked = true;
-      if (CFG['basics'].indexOf(head) == -1)
-      {
+      if (CFG['basics'].indexOf(head) == -1) {
         entries.value += head + ', ';
       }
     }
   }
-  else
-  {
-    for (i in WLS['header'])
-    {
+  else {
+    for (i in WLS['header']) {
       var head = WLS['header'][i];
-      if (elist.indexOf(head) != -1)
-      {
-        if (CFG['basics'].indexOf(head) != -1)
-        {
+      if (elist.indexOf(head) != -1) {
+        if (CFG['basics'].indexOf(head) != -1) {
           WLS['columns'][head] = -Math.abs(WLS['columns'][head]);
           document.getElementById('cb_' + head).checked = false;
         }
-        else
-        {
+        else {
           WLS['columns'][head] = Math.abs(WLS['columns'][head]);
           document.getElementById('cb_' + head).checked = true;
         }
       }
-      else
-      {
-        if (CFG['basics'].indexOf(head) == -1)
-        {
+      else {
+        if (CFG['basics'].indexOf(head) == -1) {
           WLS['columns'][head] = -Math.abs(WLS['columns'][head]);
           document.getElementById('cb_' + head).checked = false;
         }
-        else
-        {
+        else {
           WLS['columns'][head] = Math.abs(WLS['columns'][head]);
           document.getElementById('cb_' + head).checked = true;
         }
@@ -1246,14 +1075,12 @@ function applyFilter()
   var rows = intersection_destructive(trows, crows);
   rows = intersection_destructive(rows, arows);
 
-  if(rows.length < 1)
-  {
+  if (rows.length < 1) {
     fakeAlert("No entries matching your filter criteria could be found. All filters will be reset.");
     custom.value = '';
     applyFilter();
   }
-  else
-  {
+  else {
     WLS['rows'] = rows.sort(function(x, y) {return x - y;});
   }
 }
@@ -1264,12 +1091,10 @@ function filterColumns(column)
 
   var columns = document.getElementById('columns');
 
-  if (columns.value.indexOf(column) != -1)
-  {
+  if (columns.value.indexOf(column) != -1) {
     columns.value = columns.value.replace(column + ', ', '');
   }
-  else
-  {
+  else {
     columns.value += column + ', ';
   }
 
@@ -1283,12 +1108,10 @@ function getCurrent()
 {
   var previous = document.getElementById('previous');
   var current_index = 1;
-  if (previous === null)
-  {
+  if (previous === null) {
     current_index = 1;
   }
-  else
-  {
+  else {
     current_index = parseInt(previous.value.split('-')[1]) + 1;
   }
   return current_index;
@@ -1298,21 +1121,17 @@ function showCurrent()
 {
   var previous = document.getElementById('previous');
   var current_index = 1;
-  if (previous === null)
-  {
+  if (previous === null) {
     current_index = 1;
   }
-  else
-  {
+  else {
     current_index = parseInt(previous.value.split('-')[1]) + 1;
   }
 
-  if (isNaN(current_index))
-  {
+  if (isNaN(current_index)) {
     showWLS(1);
   }
-  else
-  {
+  else {
     showWLS(current_index);
   }
 }
@@ -1337,14 +1156,12 @@ function handleFileSelect(evt)
 
   /* modify this part !!! */
   var modify = ['view'];
-  for (i in modify)
-  {
+  for (i in modify) {
     tmp = document.getElementById(modify[i]);
     tmp.style.display = 'block';
   }
   var modify = ['first', 'previous', 'next', 'current',];
-  for (i in modify)
-  {
+  for (i in modify) {
     $('#' + modify[i]).removeClass('unhidden');
     $('#' + modify[i]).addClass('hidden');
   }
@@ -1363,32 +1180,24 @@ function refreshFile()
   text += '@modified: ' + getDate() + '\n#\n';
   //text += 'ID\t' + WLS['header'].join('\t') + '\n';
   text += 'ID';
-  for(var i=0,head;head=WLS['header'][i];i++)
-  {
-    if(WLS['columns'][head] > 0)
-    {
+  for (var i=0,head;head=WLS['header'][i];i++) {
+    if (WLS['columns'][head] > 0) {
       text += '\t'+head;
     }
   }
   text += '\n';
-  for (concept in WLS['concepts'])
-  {
-    if(CFG['noid'] == false)
-    {
+  for (concept in WLS['concepts']) {
+    if (CFG['noid'] == false) {
       text += '#\n';
     }
-    for (i in WLS['concepts'][concept])
-    {
+    for (i in WLS['concepts'][concept]) {
       var idx = WLS['concepts'][concept][i];
 
-      if (!isNaN(idx))
-      {
+      if (!isNaN(idx)) {
         //text += idx + '\t' + WLS[idx].join('\t') + '\n';
 	text += idx;
-	for(var j=0,head;head=WLS['header'][j];j++)
-	{
-	  if(WLS['columns'][head] > 0)
-	  {
+	for (var j=0,head;head=WLS['header'][j];j++) {
+	  if (WLS['columns'][head] > 0) {
 	    text += '\t'+WLS[idx][j];
 	  }
 	}
@@ -1429,8 +1238,7 @@ function fakeAlert(text)
 function saveFile()
 {
   /* disallow saving when document was not edited */
-  if (!WLS['edited'])
-  {
+  if (!WLS['edited']) {
     fakeAlert('You need to SAVE (press button or CTRL+S) the document before you can EXPORT it.');
     return;
   }
@@ -1444,8 +1252,7 @@ function saveFile()
 function saveTemplate()
 {
   /* disallow saving when document was not edited */
-  if (!CFG['template'])
-  {
+  if (!CFG['template']) {
     fakeAlert('You need to create a template before you can download it.');
     return;
   }
@@ -1459,8 +1266,7 @@ function saveTemplate()
 function saveAlignment(idx)
 {
   /* check for valid alignment first */
-  if(!CFG['_alignment'])
-  {
+  if (!CFG['_alignment']) {
     fakeAlert("No valid alignment was specified.");
     return;
   }
@@ -1468,14 +1274,20 @@ function saveAlignment(idx)
   saveAs(blob, CFG['filename'].replace('.tsv','_'+idx+'_.msa'));
 }
 
-function getDate()
-{
+function getDate(with_seconds) {
+  if (typeof with_seconds == 'undefined') {
+    with_seconds = false;
+  }
+  
   var today = new Date();
   var dd = today.getDate();
   var mm = today.getMonth() + 1; //January is 0!
   var yyyy = today.getFullYear();
   var hh = today.getHours();
   var mins = today.getMinutes();
+  if (with_seconds) {
+    var secs = today.getSeconds();
+  }
 
   if (dd < 10) {
       dd = '0' + dd;
@@ -1486,79 +1298,38 @@ function getDate()
   }
 
   today = [yyyy, mm, dd].join('-') + ' ' + hh + ':' + mins;
+  if (with_seconds) {
+    today += '.'+secs;
+  }
   return today;
 }
 
-
+/* highlight all IPA entries which are specified as such */
 function highLight()
 {
-  for(var i=0,head;head=WLS.header[i];i++)
-  {
-    if(CFG['highlight'].indexOf(head) != -1 )
-    {
+  for (var i=0,head;head=WLS.header[i];i++) {
+    if (CFG['highlight'].indexOf(head) != -1 ) {
       var tokens = document.getElementsByClassName(head);
-      for (var j = 0; j < tokens.length; j++)
-      {
-        if (tokens[j].innerHTML == tokens[j].dataset.value)
-        {
+      for (var j = 0; j < tokens.length; j++) {
+        if (tokens[j].innerHTML == tokens[j].dataset.value) {
           var word = plotWord(tokens[j].dataset.value);
           tokens[j].innerHTML = '<div class="lock_alignment">'+word+"</div>";
         }
       }
     }
-    else
-    {
+    else {
     }
   }
 }
 
-//?function toggleSettings()
-//?{
-//?  var settings = document.getElementById('settingswitcher');
-//?  if (settings.value == 'HIDE SETTINGS')
-//?  {
-//?    settings.value = 'SHOW SETTINGS';
-//?    $('#settings').removeClass('unhidden');
-//?    $('#settings').addClass('hidden');
-//?  }
-//?  else
-//?  {
-//?    settings.value = 'HIDE SETTINGS';
-//?    $('#settings').removeClass('hidden');
-//?    $('#settings').addClass('unhidden');
-//?  }
-//?
-//?}
-
-//function toggleHelp()
-//{
-//  var help = document.getElementById('help');
-//  $('#help').toggle('unhidden');
-//
-//}
-
-//function toggleDiv(divid)
-//{
-//  var divo = document.getElementById(divid);
-//  if(divo.style.display != 'none')
-//  {
-//    divo.style.display = 'none';
-//  }
-//  else
-//  {
-//    divo.style.display = 'block';
-//  }
-//}
-
+/* sort the table according to specific criteria */
 function sortTable(event,head)
 {
-  if(CFG['sorted'] == 'th_'+head+'_0')
-  {
+  if (CFG['sorted'] == 'th_'+head+'_0') {
     WLS['rows'].sort(function(x,y){return x-y});
     CFG['sorted'] = false;
   }
-  else if (CFG['sorted'] == 'th_'+head+'_1')
-  {
+  else if (CFG['sorted'] == 'th_'+head+'_1') {
     var rows = WLS.rows.slice();
 
     WLS['rows'] = rows.sort(
@@ -1569,20 +1340,17 @@ function sortTable(event,head)
           var c = parseInt(a);
           var d = parseInt(b);
 
-          if(!isNaN(c) && !isNaN(d))
-          {
+          if (!isNaN(c) && !isNaN(d)) {
             return d - c;
           }
-          else
-          {
+          else {
             return b.localeCompare(a);
           }
         }
         );
     CFG['sorted'] = 'th_'+head+'_0';
   }
-  else
-  {
+  else {
     var rows = WLS.rows.slice();
 
     WLS['rows'] = rows.sort(
@@ -1593,12 +1361,10 @@ function sortTable(event,head)
           var c = parseInt(a);
           var d = parseInt(b);
 
-          if(!isNaN(c) && !isNaN(d))
-          {
+          if (!isNaN(c) && !isNaN(d)) {
             return c - d;
           }
-          else
-          {
+          else {
             return a.localeCompare(b);
           }
         }
@@ -1608,36 +1374,29 @@ function sortTable(event,head)
   showWLS(1);
 }
 
-function editGroup(event,idx)
-{
+function editGroup(event,idx) {
   /* functin handles the display of alignments */
 
   event.preventDefault();
   
   /* check for various data, consider using switch statement here */
-  if(idx == 0)
-  {
+  if (idx == 0) {
     fakeAlert("This entry cannot be edited, since it is not related to any other entry.");
     return;
   }
-  if(WLS.header.indexOf('ALIGNMENT') != -1)
-  {
+  if (WLS.header.indexOf('ALIGNMENT') != -1) {
     var this_idx = WLS.header.indexOf('ALIGNMENT');
   }
-  else if(WLS.header.indexOf('TOKENS') != -1)
-  {
+  else if (WLS.header.indexOf('TOKENS') != -1) {
     var this_idx = WLS.header.indexOf('TOKENS');
   }
-  else if(WLS.header.indexOf('IPA') != -1)
-  {
+  else if (WLS.header.indexOf('IPA') != -1) {
     var this_idx = WLS.header.indexOf('IPA');
   }
-  else if(WLS.header.indexOf('WORD') != -1)
-  {
+  else if (WLS.header.indexOf('WORD') != -1) {
     var this_idx = WLS.header.indexOf('WORD');
   }
-  else
-  {
+  else {
     fakeAlert('No phonetic entries were specified in the data.');
     return;
   }
@@ -1650,8 +1409,7 @@ function editGroup(event,idx)
   var alms = [];
   var langs = [];
   var blobtxt = '';
-  for(var i=0,r;r=rows[i];i++)
-  {
+  for (var i=0,r;r=rows[i];i++) {
     var alm = plotWord(WLS[r][this_idx]);
     var lang = WLS[r][CFG['_tidx']];
     alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace(new RegExp('span','gi'),'td'));
@@ -1662,8 +1420,7 @@ function editGroup(event,idx)
   var text = '<div class="edit_links" id="editlinks">';
   text += '<p>This entry links to the following '+alms.length+' entries:</p>';
   text += '<div class="alignments"><table>';
-  for(var i=0,alm;alm=alms[i];i++)
-  {
+  for (var i=0,alm;alm=alms[i];i++) {
     text += '<tr>'+alm+'</tr>';
   }
   text += '</table></div>';
@@ -1672,20 +1429,36 @@ function editGroup(event,idx)
   text += '<input class="submit" type="button" onclick="saveAlignment('+idx+')" value="EXPORT" /> ';
   text += '<input class="submit" type="button" onclick="$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /></div><br><br> ';
   text += '</div> ';
+
   document.body.appendChild(editmode);
   editmode.innerHTML = text;
-  document.onkeydown = function(event){$('#editmode').remove(); document.onkeydown = function(event){basickeydown(event);};};
+  document.onkeydown = function(event) {
+    $('#editmode').remove(); 
+    document.onkeydown = function(event) {
+      basickeydown(event);
+    };
+  };
 }
 
 
-function toggleClasses(classes,from,to)
-{
-  for(var i=0,idf;idf=classes[i];i++)
-  {
+function toggleClasses(classes,from,to) {
+  for (var i=0,idf;idf=classes[i];i++) {
     $('#'+idf).removeClass(from);
     $('#'+idf).addClass(to);
   }
 }
+
+function dataSavedMessage() {
+  /* remove previously issued messages */
+  $('#data_saved').remove();
+
+  /* add new message */
+  var msg = document.createElement('div');
+  msg.id = 'data_saved';
+  msg.innerHTML = "Data has been last saved on " + getDate(true) +'.';
+  document.body.appendChild(msg);
+}
+  
 
 /* window onload functions */
 window.onload = function() {

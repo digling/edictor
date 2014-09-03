@@ -594,3 +594,14 @@ div.alignments {
 {
   float: left;
 }
+
+#data_saved {
+  z-index: 100;
+  position: fixed;
+  bottom:10px;
+  right:10px;
+  color: red;
+  font-size: 12px;
+  background-color: white;
+  max-width:20%;
+}

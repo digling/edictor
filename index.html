@@ -5,7 +5,7 @@ Wordlist-Editor main page
 author   : Johann-Mattis List
 email    : mattis.list@lingulist.de
 created  : 2014-06-28 09:47
-modified : 2014-08-13 14:36
+modified : 2014-09-03 12:31
 
 -->
 <html>
@@ -50,25 +50,25 @@ width: 5em;
   </div>
   <div id="outerbox" name="top">
     <ul id="sortable">
-
-    <!-- MENU -->
-    <li class="colx" style="display:block;width:100%;">
-      <div id="menu">
-        <button type="button" onclick="$('#menu').toggle();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <!--<a name="settings" style="font-weight:bold;color:#2e5ca8">MENU</a><br><br>-->
-        <div class="drop_zone pull-left btn-primary btn" style="min-width:150px;margin:3px;padding:6px;" id="drop_zone">Drop your file here.</div>
-        <input type="file" id="file" name="file" class="btn btn-primary pull-left submit3" style="margin:3px;" />
-        <input type="text" class="form-control pull-left textfield" style="width:15%;display:inline;margin:3px" onkeyup="handleAjax(event,this.value);" id="ajaxfile" placeholder="select remote file" />
-        <button type="button" onclick="window.location.reload();" style="margin:3px;padding:10px;" class="pull-left btn-primary btn submit3"><span class="glyphicon glyphicon-refresh"></span></button>
-        <input id="last" type="button" onclick="showWLS(1);$('#last').removeClass('unhidden');$('#last').addClass('hidden');" class="submit hidden" value="&nbsp;LAST&nbsp;" />
-        <div id="mainsettings" style="display:none">
-          <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [CTRL+S]" id="refresh" type="button" onclick="refreshFile();" value="&nbsp;SAVE&nbsp;" />
-          <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [CTRL+E]" id="save" type="button" onclick="saveFile();" value="&nbsp;EXPORT&nbsp;" />
-          <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [F2]" id="settingswitcher" type="button" onclick="$('#settings').toggleClass('hidden unhidden');" value="SETTINGS" />
-          <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [F3]" id="textfieldsettings" type="button" onclick="$('#textfields').toggle();" value="FILTERS" />
-        </div>
-        <br><br>
-        <div id="undoredo">
+      
+      <!-- MENU -->
+      <li class="colx" style="display:block;width:100%;">
+        <div id="menu">
+          <button type="button" onclick="$('#menu').toggle();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <div class="drop_zone pull-left btn-primary btn" style="min-width:150px;margin:3px;padding:6px;" id="drop_zone">Drop your file here.</div>
+          <input type="file" id="file" name="file" class="btn btn-primary pull-left submit3" style="margin:3px;" />
+          <input type="text" class="form-control pull-left textfield" style="width:140px;display:inline;margin:3px;" onkeyup="handleAjax(event,this.value);" id="ajaxfile" placeholder="select remote file" />
+          <input type="text" class="form-control pull-left textfield" style="width:140px;display:inline;margin:3px;" onkeyup="handleAjax(event,this.value);" id="database" placeholder="select database" />
+          <button type="button" onclick="window.location.reload();" style="margin:3px;padding:10px;" class="pull-left btn-primary btn submit3"><span class="glyphicon glyphicon-refresh"></span></button>
+          <input id="last" type="button" onclick="showWLS(1);$('#last').removeClass('unhidden');$('#last').addClass('hidden');" class="submit hidden" value="&nbsp;LAST&nbsp;" />
+          <div id="mainsettings" style="display:none">
+            <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [CTRL+S]" id="refresh" type="button" onclick="refreshFile();" value="&nbsp;SAVE&nbsp;" />
+            <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [CTRL+E]" id="save" type="button" onclick="saveFile();" value="&nbsp;EXPORT&nbsp;" />
+            <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [F2]" id="settingswitcher" type="button" onclick="$('#settings').toggleClass('hidden unhidden');" value="SETTINGS" />
+            <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [F3]" id="textfieldsettings" type="button" onclick="$('#textfields').toggle();" value="FILTERS" />
+          </div>
+          <br><br>
+          <div id="undoredo">
           <input title="Shortcut [CTRL+Y]" id="undo" type="button" onclick="UnDo();" class="pull-right btn-primary btn titled hidden submit3" style="margin:3px" value="UNDO" />
           <input title="Shortcut [CTRL+Z]" id="redo" type="button" onclick="ReDo();" class="pull-right btn-primary btn titled hidden submit3" style="margin:3px" value="REDO" />
         </div>
@@ -131,11 +131,8 @@ width: 5em;
       Open the file.
     </div>
     </li>
-
     </ul>
-    
-
-
   </div>
+  <div id="#data_saved" style="color:white;font-size:12px">Data has not yet been saved.</div>
 </body>
 </html>
