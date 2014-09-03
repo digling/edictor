@@ -805,7 +805,7 @@ function storeModification(idx,jdx,value) {
     console.log('encountered storable stuff');
 
     /* create url first */
-    var new_url = 'triples/triples.php?' + 
+    var new_url = 'triples/update.php?' + 
       'file='+CFG['filename'] +
       '&update' + 
       '&ID='+idx +
