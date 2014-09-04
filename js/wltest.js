@@ -1,1 +1,0 @@
-$.getScript('js/wordlist.js');
