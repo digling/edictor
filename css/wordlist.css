@@ -2,7 +2,6 @@
   border-collapse: separate;
   border-spacing: 2px;
   border-radius: 2px;
-  //border-bottom: 2px solid #2D6CA2; // #2e5ca8
 }
 #qlc_table th{
   text-align: left;
@@ -104,7 +103,6 @@
   background-color: #2D6CA2;
   border: none;
   float: right;
-  //display: inline;
 }
 .submit {
   padding-top: 5px;
@@ -157,7 +155,7 @@
 
 
 .settings {
-  z-index: 1;
+  z-index: 100;
   overflow: hidden;
   float:left;
   background-color: #fefefe;
@@ -247,7 +245,7 @@ span.dolgo_PLUS{font-size: 40%; vertical-align:center;background-color:black; co
 .help {
   border-radius: 5px;
   z-index: 1;
-  display: none;
+  display: block;
   color: #2D6CA2;
   background-color: white;
   border: 2px solid #2D6CA2;
@@ -445,8 +443,8 @@ ul.nav
 #filedisplay {
   border: 2px solid #2D6CA2;
   margin: 5px;
-  padding-left:20px;
-  padding-right:20px;
+  padding-left:10px;
+  padding-right:10px;
   padding-top:10px;
   padding-bottom:10px;
   overflow:hidden;
@@ -524,27 +522,20 @@ div.alignments {
 }
 
 #previous {
-  //background-image: url("../img/pfeilr.png");
   background-repeat: no-repeat;
   background-position:center;
-  //background-color: white !important;
   font-size: 80%;
   border-radius: 10px;
-  //border-image: url("../img/borderl.png") 30 30 round;
 }
 #next {
-  //background-image: url("../img/pfeill.png");
   background-repeat: no-repeat;
   background-position:center;
-  //background-color: white !important;
   font-size: 80%;
   border-radius: 10px;
 }
 #first {
-  //background-image: url("../img/pfeilm.png");
   background-repeat: no-repeat;
   background-position:center;
-  //background-color: white !important;
   font-size: 80%;
   border-radius: 10px;
 }
@@ -602,8 +593,25 @@ div.alignments {
   right:10px;
   color: red;
   font-size: 12px;
-  background-color: white;
-  max-width:20%;
+  background-color: transparent;
+}
+
+.smallbox {
+  display: inline;
+  float: left;
+  max-width: 50%;
+  z-index: 100;
+  overflow: hidden;
+  background-color: #fefefe;
+  padding: 10px;
+  color: #2D6CA2;
+  border: 2px solid #2D6CA2;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.pointed {
+  cursor: pointer !important;
 }
 
 .data_table {
@@ -612,12 +620,10 @@ div.alignments {
   overflow: hidden;
   float:left;
   background-color: #fefefe;
-  padding: 10px;
-  border: 2px solid #2D6CA2;
-  margin: 5px;
+  margin-top: 5px;
+  max-width: 80%;
 }
 .data_table th{
-  width: auto;
   text-align:left;
   padding:5px;
   border: 1px solid #2D6CA2;
@@ -625,9 +631,17 @@ div.alignments {
   color: white;
   cursor: -webkit-grabbing; cursor: -moz-grabbing;
 }
+.data_table th.sorted {
+  background-color: Crimson;
+}
 .data_table td{
   border: 1px solid #2D6CA2;
   text-align:left;
   padding:5px;
-
+}
+.data_table td.concepts {
+  max-width: 250px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

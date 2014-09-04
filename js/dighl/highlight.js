@@ -1,3 +1,12 @@
+/* Highlight Module of DIGHL.js
+ *
+ * author   : Johann-Mattis List
+ * email    : mattis.list@lingulist.de
+ * created  : 2014-09-04 14:13
+ * modified : 2014-09-04 14:13
+ *
+ */
+
 /* define keywords for general MSA format */
 var keywords = {
   "LOCAL": "", 
@@ -243,7 +252,7 @@ var DOLGO = {
   "\u027e": "R", 
   "z": "S", 
   "v": "W", 
-  "+": "PLUS", 
+  "+": "+", 
   "a": "V", 
   "r": "R", 
   "\u00f3": "V", 
@@ -261,10 +270,38 @@ var DOLGO = {
   "Ɂ": "H"
 };
 
-
-function plotWord(word)
+/* simple helper function to retrieve sound classes */
+function getSoundClass(sound)
 {
-	var phones = word.split(' ');
+    
+		if (sound in DOLGO){dolgo = DOLGO[sound]}
+    else if (sound.slice(0,2) in DOLGO){dolgo = DOLGO[sound.slice(0,2)];}
+    else if (sound.slice(0,1) in DOLGO){dolgo = DOLGO[sound.slice(0,1)];}
+    else if (sound.slice(1,3) in DOLGO){dolgo = DOLGO[sound.slice(1,3)];}
+    else if (sound.slice(1,2) in DOLGO){dolgo = DOLGO[sound.slice(1,2)];}
+    else if (sound == "-"){dolgo = "-";}
+
+    return dolgo;
+}
+
+function plotWord(word, tag, classes) {
+  if (typeof tag == 'undefined') {
+    tag = 'span';
+  }
+  /* modify classes to be easily handled and inserted */
+  if (typeof classes == 'undefined') {
+    classes = ' ';
+  }
+  else {
+    classes = ' ' + classes + ' ';
+  }
+  try {
+	  var phones = word.split(' ');
+  }
+  catch(e) {
+    alert(word);
+    return '';
+  }
 	var text = '';
 	for(var i=0;i<phones.length;i++)// in phones)
 	{
@@ -280,16 +317,30 @@ function plotWord(word)
     else if (phon.slice(1,2) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(1,2)];}
     else if (phon == "-"){dolgo = "dolgo_GAP";}
     
-    if(phon != '-')
-    {            
-	    text += '<span class="residue '+dolgo+'">'+phon+'</span>';
+    if (phon != '-') {            
+	    text += '<'+tag+' class="residue'+classes+dolgo+'">'+phon+' </'+tag+'>';
     }
-		else
-    {
-	    text += '<span class="residue '+dolgo+'">'+phon+'</span>';
+		else  {
+	    text += '<'+tag+' class="residue '+classes+dolgo+'">'+phon+' </'+tag+'>';
     }
   }
 
 	return text;
 }
 
+function plotMorphemes(word, tag, sep)
+{
+  if(typeof sep == 'undefined')
+  {
+    sep = '\\+';
+  }
+  
+  var text_lines = [];
+  var morphemes = word.split(new RegExp('\\s'+'*'+sep+'\\s'+'*'));
+  for(var i=0,m;m=morphemes[i];i++)
+  {
+    var morpheme = '<span class="morpheme">'+plotWord(m,tag)+'</span>';
+    text_lines.push(morpheme);
+  }
+  return text_lines.join('<span class="boundary">.</span>');
+}

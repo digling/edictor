@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2014-09-03 13:28
+ * modified : 2014-09-04 14:28
  *
  */
 
@@ -1100,7 +1100,6 @@ function filterColumns(column)
     columns.value += column + ', ';
   }
 
-  //columns.value += column.value+', ';
   applyFilter();
   showCurrent();
 }
@@ -1442,7 +1441,6 @@ function editGroup(event,idx) {
   };
 }
 
-
 function toggleClasses(classes,from,to) {
   for (var i=0,idf;idf=classes[i];i++) {
     $('#'+idf).removeClass(from);
@@ -1450,22 +1448,55 @@ function toggleClasses(classes,from,to) {
   }
 }
 
+/* display a tiny little message that the data was saved */
 function dataSavedMessage() {
   /* remove previously issued messages */
   $('#data_saved').remove();
 
+  var mydate = new Date();
+  var mydatestring = mydate.toLocaleDateString() + ' ' + mydate.toLocaleTimeString();
+
   /* add new message */
   var msg = document.createElement('div');
   msg.id = 'data_saved';
-  msg.innerHTML = "Data has been last saved on " + getDate(true) +'.';
+  msg.innerHTML = "Data has been last saved on " + mydatestring +'.';
   document.body.appendChild(msg);
 }
 
+
+/* function redefines the filters for phonological data */
+function filterOccurrences(doculect, occurrences) {
+  var taxa = document.getElementById('taxa');
+  taxa.value = doculect;
+
+  var concepts = document.getElementById('concepts');
+  concepts.value = occurrences;
+
+  applyFilter();
+  showWLS(1);
+}
+
 /* function shows the occurrences of phonemes in the data */
-function showPhonology (event, doculect) {
+function showPhonology (event, doculect, sort, direction) {
   
-  if (event.keyCode != 13) {
-    return;
+  if (event) {
+    if (event.keyCode != 13) {
+      return;
+    }
+  }
+  
+  /* get current height of the window in order to determine maximal height of
+   * the div */
+  var cheight = document.getElementById('filedisplay').offsetHeight - 100;
+
+  document.getElementById('phonemes').style.maxHeight = cheight+'px';
+
+  if (typeof sort == 'undefined') {
+    sort = 'alphabetic';
+    direction = 1;
+  }
+  else if (typeof direction == 'undefined') {
+    direction = 1;
   }
   
   console.log(doculect);
@@ -1477,13 +1508,9 @@ function showPhonology (event, doculect) {
   /* get all indices of the taxa */
   var idxs = WLS['taxa'][doculect];
 
-  console.log(idxs);
-
-  /* get index of tokens */
+  /* get index of tokens and concepts*/
   var t = WLS.header.indexOf('TOKENS');
-  var c = WLS.header.indexOf('CONCEPT');
-
-  console.log(c,t,WLS.header);
+  var c = CFG['_cidx'];
   
   /* iterate over the data */
   for (var i=0,idx; idx = idxs[i]; i++) {
@@ -1500,12 +1527,64 @@ function showPhonology (event, doculect) {
     }
   }
 
+  /* go for the sorting stuff */
+  function get_sorter (sort, direction) {
+    if (sort == 'alphabetic') {
+      var sorter = function (x,y) {
+        return x.charCodeAt(0) - y.charCodeAt(0);
+      };
+    }
+    else if (sort == 'phoneme') {
+      var sorter = function (x,y) {
+          var a = getSoundClass(x).charCodeAt(0);
+          var b = getSoundClass(y).charCodeAt(0);
+          return a - b;  
+      };
+    }
+    else if (sort == 'occurrences') {
+      var sorter = function (x,y) { 
+        return occs[x].length - occs[y].length; 
+      };
+    }
+
+    if (direction == 1) {
+      return function (x,y) { return sorter(x,y) };
+    }
+    else {
+      return function (x,y) { return sorter(y,x) };
+    }
+  }
+
+  /* change selection for the current sorting scheme */
+  if (sort == 'phoneme') {
+    var p_dir = (direction == 1) ? 0 : 1;
+    var o_dir = 1;
+    var pclass = 'sorted';
+    var oclass = 'unsorted';
+  }
+  else if (sort == 'occurrences') {
+    var p_dir = 1;
+    var o_dir = (direction == 1) ? 0 : 1;
+    var pclass = 'unsorted';
+    var oclass = 'sorted';
+  }
+  else {
+    var p_dir = 1;
+    var o_dir = 1;
+    var pclass = 'unsorted';
+    var oclass = 'unsorted';
+  }
+
   /* create the text, first not really sorted */
-  phonemes.sort(
-      function (x,y) {
-        return occs[y].length - occs[x].length;
-      });
-  var text = '<table class="data_table"><tr><th>No.</th><th>Phoneme</th><th>Occurrences</th><th>Concepts</th></tr>';
+  phonemes.sort(get_sorter(sort, direction));
+  var text = '<table class="data_table"><tr>' + 
+    '<th title="double click to sort" ondblclick="showPhonology(false,\''+doculect+'\')">No.</th>' +
+    '<th title="double click to sort" class="'+ pclass + '" ' + 
+    'ondblclick="showPhonology(false,\''+doculect+'\',\'phoneme\',\''+p_dir+'\')">Phoneme</th>' + 
+    '<th title="double click to sort" class="'+ oclass + '" ' + 
+    'ondblclick="showPhonology(false,\''+doculect+'\',\'occurrences\',\''+o_dir+'\')">Occurrences</th>' + 
+    '<th>Concepts</th>' + 
+    '</tr>';
   for (var i=0,phoneme; phoneme=phonemes[i]; i++) {
     var noc = occs[phoneme].length;
     var keys = occs[phoneme];
@@ -1521,9 +1600,11 @@ function showPhonology (event, doculect) {
     }
     text += '<tr>';
     text += '<td>' + (i+1) + '</td>';
-    text += '<td>' + plotWord(phoneme, '<span>') + '</td>';
+    text += '<td class="pointed" title="click to filter the occurrences of this phoneme" ' +
+      'onclick="filterOccurrences(\''+doculect+'\',\''+concepts.join(',')+'\')">' + 
+      plotWord(phoneme, 'span', 'pointed') + '</td>';
     text += '<td>' + noc + '</td>';
-    text += '<td>' + concepts.join(', ') + '</td>';
+    text += '<td class="concepts" title="'+concepts.join(', ')+'">' + concepts.join(', ') + '</td>';
     text += '</tr>';
   }
   text += '</table>';

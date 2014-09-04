@@ -382,6 +382,7 @@ if (document.URL.indexOf('=') != -1) {
   else if('file' in params) {
     handleAjax("event", params['file']);
     try {
+      $('#toggle_filedisplay > span').toggle();
       showWLS(1);
     }
     catch (e) {
@@ -393,7 +394,10 @@ if (document.URL.indexOf('=') != -1) {
 /* handle the different resources which are loaded using ajax */
 var tmp_file_handler = '';
 var loaded_files = [];
-function loadAjax(where,what,classes) {
+function loadAjax(event, where, what, classes) {
+  
+  event.preventDefault();
+
   if (loaded_files.indexOf(what) != -1) {
     $('#'+what).toggle();
     if (document.getElementById(what).style.display == 'none') {
@@ -402,6 +406,8 @@ function loadAjax(where,what,classes) {
     else {
       window.location.hash = '#'+what+'_anchor';
     }
+
+    $('#toggle_'+what+' > span').toggle();
     return;
   }
 
@@ -421,7 +427,6 @@ function loadAjax(where,what,classes) {
   document.getElementById(what).innerHTML = '<a name="'+what+'_anchor" ' + 
     'style="visibility:hidden;position:relative;top:-100px">alala</a>' +
     tmp_file_handler;
-  $('#'+what).toggle();
   window.location.hash = '#'+what+'_anchor';
 
   if (what == 'customize') {
@@ -430,6 +435,14 @@ function loadAjax(where,what,classes) {
       source: CFG['server_side_files']
     });
   }
+  if (what == 'phonology') {
+    $('#input_phonology').autocomplete({
+      delay: 0,
+      source: Object.keys(WLS['taxa'])
+    });
+  }
+
+  $('#toggle_'+what+' > span').toggle();
 }
 
 /* helper function for URL creation */
@@ -573,6 +586,14 @@ function makeMyTemplate() {
   CFG['template'] = text;
 
   saveTemplate(); 
+}
+
+/* a simple helper function for those cases where no ajax load will create the elements
+ * in our file display */
+function toggleDisplay(event,elm_id) {
+  event.preventDefault();
+  $('#'+elm_id).toggle();
+  $('#toggle_'+elm_id+'>span').toggle();  
 }
 
 startWordlist();

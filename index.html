@@ -33,17 +33,99 @@ width: 5em;
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="" onclick="event.preventDefault();window.location.reload();">Wordlist Editor </a>
+        <img class="navbar-brand" style="margin-top:8px;padding:0px;margin-right:5px;width:30px;height:30px;" src="img/wordlists.png" alt="tsv" />
+        <a class="navbar-brand" onclick="event.preventDefault();window.location.reload();">WordlistEditor</a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><a href="" onclick="event.preventDefault();fakeAlert('under construction');">ABOUT</a></li>
-          <li><a href="" onclick="event.preventDefault();loadAjax('sortable','contact','help col-sm-5');">CONTACT</a></li>
-          <li><a href="" onclick="event.preventDefault();loadAjax('sortable','help','help col-sm-8');" >HELP</a></li>
-          <li><a href="" onclick="event.preventDefault();$('#menu').toggle();">MENU</a></li>
-          <li><a href="" onclick="event.preventDefault();loadAjax('sortable', 'templates', 'help col-sm-8');$('.selectpicker').selectpicker({style:'btn-info',size:4});">TEMPLATES</a></li>
-          <li><a href="" onclick="event.preventDefault();loadAjax('sortable','customize', 'help col-sm-8');">CUSTOMIZE</a></li>
-          <li><a href="" onclick="event.preventDefault();loadAjax('sortable', 'phonology', 'help col-sm-8');">PHONOLOGY</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              ABOUT 
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a onclick="event.preventDefault();fakeAlert('under construction');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  ABOUT
+                </a>
+              </li>
+              <li>
+                <a id="toggle_contact" onclick="loadAjax(event, 'sortable','contact','smallbox col-sm-5');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  CONTACT
+                </a>
+              </li>
+              <li>
+                <a id="toggle_help" onclick="loadAjax(event, 'sortable','help','help col-sm-8');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  HELP
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              DISPLAY
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a id="toggle_menu" onclick="toggleDisplay(event,'menu');">
+                  <span class="glyphicon glyphicon-ok"></span>
+                  <span class="glyphicon glyphicon-remove" style="display: none"></span>
+                  MENU
+                </a>
+              </li>
+              <li>
+                <a id="toggle_filedisplay" onclick="toggleDisplay(event,'filedisplay')">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  WORDLIST
+                </a>
+              </li>
+              <li>
+                <a id="toggle_phonology" onclick="loadAjax(event, 'sortable', 'phonology', 'smallbox col-sm-5');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  PHONOLOGY
+                </a>
+              </li>
+              <li>
+                <a id="toggle_correspondences" onclick="event.preventDefault();fakeAlert('under construction');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  Correspondences
+                </a>
+              </li>
+
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              CREATE
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a id="toggle_templates" onclick="loadAjax(event, 'sortable', 'templates', 'help col-sm-8');$('.selectpicker').selectpicker({style:'btn-info',size:4});">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  TEMPLATES
+                </a>
+              </li>
+              <li>
+                <a id="toggle_customize" onclick="loadAjax(event, 'sortable', 'customize', 'help col-sm-8');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  CUSTOMIZE
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -54,12 +136,19 @@ width: 5em;
       <!-- MENU -->
       <li class="colx" style="display:block;width:100%;">
         <div id="menu">
-          <button type="button" onclick="$('#menu').toggle();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <div class="drop_zone pull-left btn-primary btn" style="min-width:150px;margin:3px;padding:6px;" id="drop_zone">Drop your file here.</div>
+          <button type="button" onclick="$('#toggle_menu > span').toggle();$('#menu').toggle();" class="pull-right close" style="margin-left:5px">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <div class="drop_zone pull-left btn-primary btn" style="min-width:150px;margin:3px;padding:6px;" id="drop_zone">
+            Drop your file here.
+          </div>
           <input type="file" id="file" name="file" class="btn btn-primary pull-left submit3" style="margin:3px;" />
           <input type="text" class="form-control pull-left textfield" style="width:140px;display:inline;margin:3px;" onkeyup="handleAjax(event,this.value);" id="ajaxfile" placeholder="select remote file" />
           <input type="text" class="form-control pull-left textfield" style="width:140px;display:inline;margin:3px;" onkeyup="handleAjax(event,this.value);" id="database" placeholder="select database" />
-          <button type="button" onclick="window.location.reload();" style="margin:3px;padding:10px;" class="pull-left btn-primary btn submit3"><span class="glyphicon glyphicon-refresh"></span></button>
+          <button type="button" onclick="window.location.reload();" style="margin:3px;padding:10px;" class="pull-left btn-primary btn submit3">
+            <span class="glyphicon glyphicon-refresh"></span>
+          </button>
           <input id="last" type="button" onclick="showWLS(1);$('#last').removeClass('unhidden');$('#last').addClass('hidden');" class="submit hidden" value="&nbsp;LAST&nbsp;" />
           <div id="mainsettings" style="display:none">
             <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [CTRL+S]" id="refresh" type="button" onclick="refreshFile();" value="&nbsp;SAVE&nbsp;" />
@@ -86,6 +175,10 @@ width: 5em;
     <!-- MAIN TABLE -->
     <li class="colx">
       <div id="filedisplay">
+          <button type="button" onclick="$('#toggle_filedisplay > span').toggle();$('#filedisplay').toggle();" class="pull-right close" style="margin-left:5px">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
         <span class="info hidden" id="filename"></span>
         <span class="info hidden" id="current"></span>
         <input id="previous" type="button" class="btn btn-primary submit hidden" value="0-0"/>
@@ -127,7 +220,7 @@ width: 5em;
     <!-- drop zone and information handling -->
     <li class="colx" style="width:100%">
     <div class="drop_zone_start" id="eingang">Files are loading, please wait...</div>
-    <div id="view" onclick="showWLS(1);" class="view" style="display:none" value="&nbsp;VIEW&nbsp;">
+    <div id="view" onclick="$('#toggle_filedisplay > span').toggle(); showWLS(1);" class="view" style="display:none" value="&nbsp;VIEW&nbsp;">
       Open the file.
     </div>
     </li>
