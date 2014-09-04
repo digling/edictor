@@ -5,25 +5,17 @@ Wordlist-Editor main page
 author   : Johann-Mattis List
 email    : mattis.list@lingulist.de
 created  : 2014-06-28 09:47
-modified : 2014-09-03 12:31
+modified : 2014-09-04 16:48
 
 -->
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link rel="icon" href="img/wordlists.png" type="image/png" />
-<script src="js/main.js"></script>
-<style>
-label {
-display: inline-block;
-width: 5em;
-}
-</style>
-
-
 <title>Wordlist Editor</title>
 </head>
 <body>
+
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
       <div class="navbar-header">
@@ -227,5 +219,30 @@ width: 5em;
     </ul>
   </div>
   <div id="#data_saved" style="color:white;font-size:12px">Data has not yet been saved.</div>
+<script src="prison/main.js"></script>
+<script>
+PRISON.import(
+    'highlight',
+    'sampa',
+    'edit',
+    'pinyin',
+    'js/vendor/jquery-1.10.2',
+    'js/vendor/jquery-ui',
+    'js/vendor/FileSaver',
+    'js/vendor/undomanager',
+    'js/tsv/wordlist',
+    'js/tsv/starter',
+    'js/vendor/bootstrap.min'  
+  );
+PRISON.style(
+  "css/bootstrap",
+  "css/bootstrap-theme",
+  "css/bootstrap-select",
+  "css/jquery-ui",
+  "css/wordlist",
+  "css/jquery-ui.theme",
+  "css/bs-excerpt"  
+  );
+</script>
 </body>
 </html>
