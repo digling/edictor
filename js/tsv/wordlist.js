@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2014-09-04 14:28
+ * modified : 2014-09-04 18:58
  *
  */
 
@@ -1187,16 +1187,22 @@ function handleFileSelect(evt)
   //dropZone.style.display = 'none';
 }
 
+/* this function actually writes the whole wordlist to file, so it does 
+ * not refresh it but rather prepares it for writing...*/
 function refreshFile()
 {
   //var store = document.getElementById('store');
   var text = '# WORDLIST\n';
   text += '@modified: ' + getDate() + '\n#\n';
-  //text += 'ID\t' + WLS['header'].join('\t') + '\n';
   text += 'ID';
   for (var i=0,head;head=WLS['header'][i];i++) {
     if (WLS['columns'][head] > 0) {
-      text += '\t'+head;
+      if (WLS['uneditables'].indexOf(head) != -1) {
+        text += '\t_'+head;
+      }
+      else {
+        text += '\t'+head;
+      }
     }
   }
   text += '\n';
