@@ -9,7 +9,8 @@
 
 /* define alias system for frequently occurring terms */
 ALIAS = {
-  'doculect': ['TAXON', 'LANGUAGE', 'DOCULECT', 'DOCULECTS', 'TAXA', 'LANGUAGES']
+  'doculect': ['TAXON', 'LANGUAGE', 'DOCULECT', 'DOCULECTS', 'TAXA', 'LANGUAGES'],
+  'concept': ['CONCEPT', 'GLOSS']
 }
 
 function reset() {
@@ -126,6 +127,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   var selection = [];
   var columns = {};
   var count = 1;
+  var uneditables = [];
 
   var firstLineFound = false;
   var noid = false;
@@ -139,11 +141,18 @@ function csvToArrays(allText, separator, comment, keyval) {
       var header = [];
       for (j = 1; j < data.length; j++) {
         var datum = data[j].toUpperCase();
+        
+        /* check for prohibited columns */
+        if (datum.slice(0,1) == '_') {
+          datum = datum.slice(1,datum.length);
+          uneditables.push(datum);
+        }
+
         header.push(datum);
-        if (['TAXA', 'TAXON', 'LANGUAGE', 'DOCULECT'].indexOf(datum) != -1) {
+        if (ALIAS['doculect'].indexOf(datum) != -1) {
           tIdx = j;
         }
-        if (datum == 'GLOSS' || datum == 'CONCEPT' ) {
+        if (ALIAS['concept'].indexOf(datum) != -1) {
           cIdx = j;
         }
         if (CFG['basics'].indexOf(datum) != -1) {
@@ -178,7 +187,7 @@ function csvToArrays(allText, separator, comment, keyval) {
       for (j = 0; j < data.length; j++) {
         var datum = data[j].toUpperCase();
         header.push(datum);
-        if (['TAXA', 'TAXON', 'LANGUAGE', 'DOCULECT'].indexOf(datum) != -1) {
+        if (ALIAS['doculect'].indexOf(datum) != -1) {
           tIdx = j;
         }
         if (datum == 'GLOSS' || datum == 'CONCEPT') {
@@ -241,6 +250,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS['_trows'] = selection.slice();
   WLS['columns'] = columns;
   WLS['filename'] = CFG['filename'];
+  WLS['uneditables'] = uneditables;
   
   /* ! attention here, this may change if no ids are submitted! */
   CFG['_tidx'] = tIdx-1;
@@ -364,13 +374,13 @@ function showWLS(start)
             var cell_display = ' style="display:none"'; // ff vs. chrome problem
           }
           
-          if (WLS.header[j] != CFG['formatter'] && WLS.header[j].slice(0,1) != '_') {
+          if (WLS.header[j] != CFG['formatter'] && WLS.uneditables.indexOf(WLS.header[j]) == -1) {
             text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
             text += WLS[idx][j];
             text += '</td>';
           }
-          else if (WLS.header[j].slice(0,1) == '_') {
-            text += '<td class="'+WLS['header'][j]+'" title="ENTRY '+idx+'/'+jdx+'">';
+          else if (WLS.uneditables.indexOf(WLS.header[j]) != -1) {
+            text += '<td class="uneditable '+WLS['header'][j]+'" title="ENTRY '+idx+'/'+jdx+'">';
             text += WLS[idx][j];
             text += '</td>';
           }
@@ -473,7 +483,10 @@ function showWLS(start)
   highLight();
   
   if (CFG['sorted']) {
-    document.getElementById('HEAD_'+CFG['sorted'].split('_')[1]).style.backgroundColor = 'Crimson';
+    console.log(CFG['sorted']);
+    var tmp = CFG['sorted'].split('_');
+    document.getElementById('HEAD_'+tmp.slice(1,tmp.length-1).join('_')).style.backgroundColor = 'Crimson';
+    //document.getElementById('HEAD_'+CFG['sorted'].split('_').[1]).style.backgroundColor = 'Crimson';
   }
   
   //document.location.hash = 'qlc';
@@ -1487,9 +1500,11 @@ function showPhonology (event, doculect, sort, direction) {
   
   /* get current height of the window in order to determine maximal height of
    * the div */
-  var cheight = document.getElementById('filedisplay').offsetHeight - 100;
+  var heightA = document.getElementById('filedisplay').offsetHeight - 100;
+  var heightB = window.innerHeight - 350;
+  var cheight = (heightB-heightA > 300) ? heightB : heightA;
 
-  document.getElementById('phonemes').style.maxHeight = cheight+'px';
+  document.getElementById('phonemes').style.maxHeight =  cheight +'px';
 
   if (typeof sort == 'undefined') {
     sort = 'alphabetic';

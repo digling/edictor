@@ -2,6 +2,7 @@
   border-collapse: separate;
   border-spacing: 2px;
   border-radius: 2px;
+  empty-cells: show;
 }
 #qlc_table th{
   text-align: left;
@@ -644,4 +645,9 @@ div.alignments {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.uneditable {
+  opacity: 0.8;
+  cursor: crosshair;
 }
