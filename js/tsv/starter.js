@@ -264,7 +264,7 @@ function handleAjax (event, url) {
   reset();
 
   /* check for actual value of url */
-  if (url.indexOf('.tsv') == url.length - 4) {
+  if (url.indexOf('.tsv') == url.length - 4 && url.length -4 != -1) {
     var new_url = 'data/'+url;
     CFG['storable'] = false;
   }
@@ -272,6 +272,8 @@ function handleAjax (event, url) {
     var new_url = 'triples/triples.php?file='+url;
     CFG['storable'] = true;
   }
+
+  console.log(new_url);
 
   /* we set the filename as the same as the url */
   localStorage.filename = url;

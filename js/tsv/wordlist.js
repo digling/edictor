@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2014-09-04 18:58
+ * modified : 2014-09-05 22:08
  *
  */
 
@@ -29,7 +29,9 @@ function reset() {
     'status' : {},
     'server_side_files' : [],
     'server_side_bases' : [],
-    'storable' : false
+    'storable' : false,
+    'last_time' : false, 
+    'parsed' : false,
   };
   
   STORE = '';
@@ -80,7 +82,9 @@ var CFG = {
   'status'            : {},
   'server_side_files' : [],
   'server_side_bases' : [],
-  'storable' : false
+  'storable' : false,
+  'last_time' : false,
+  'parsed' : false
 };
 var STORE = ''; // global variable to store the text data in raw format
 var PARAMS = {};
@@ -128,6 +132,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   var columns = {};
   var count = 1;
   var uneditables = [];
+  var column_names = {};
 
   var firstLineFound = false;
   var noid = false;
@@ -145,7 +150,15 @@ function csvToArrays(allText, separator, comment, keyval) {
         /* check for prohibited columns */
         if (datum.slice(0,1) == '_') {
           datum = datum.slice(1,datum.length);
+          var tmp = datum.replace(/_/g,' ');
+          datum = datum.replace(/_/g,'');
+          column_names[datum] = tmp;
           uneditables.push(datum);
+        }
+        else {
+          var tmp = datum.replace(/_/g,' ');
+          datum = datum.replace(/_/g,'');
+          column_names[datum] = tmp;
         }
 
         header.push(datum);
@@ -245,17 +258,18 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS['header'] = header;
   WLS['taxa'] = taxa;
   WLS['concepts'] = concepts;
-  WLS['parsed'] = true;
   WLS['rows'] = selection;
   WLS['_trows'] = selection.slice();
   WLS['columns'] = columns;
   WLS['filename'] = CFG['filename'];
   WLS['uneditables'] = uneditables;
+  WLS['column_names'] = column_names;
   
   /* ! attention here, this may change if no ids are submitted! */
   CFG['_tidx'] = tIdx-1;
   CFG['_cidx'] = cIdx-1;
-  
+  CFG['parsed'] = true;
+
   /* add formatting options for all "ID" headers to the data */
   var formatter = document.getElementById('formatter');
   var tmp_text = '<th>Formatter</th><td>';
@@ -297,22 +311,83 @@ function csvToArrays(allText, separator, comment, keyval) {
     }
     tmp_text += 'name="columns" value="';
     tmp_text += col;
-    tmp_text += '"> ' + col + '<br>';
+    tmp_text += '"> ' + WLS.column_names[col] + '<br>';
   }
   all_columns.innerHTML = tmp_text + '</td>';
   all_columns.style.display = 'table-row';
 }
 
 function showWLS(start)
-{
-  if (!WLS['parsed']) {
-    //var store = document.getElementById('store');
-
+{ 
+  console.log(CFG['parsed']);
+  if (!CFG['parsed']) {
+    if (CFG['storable']) {
+      CFG['last_time'] = new Date();
+      console.log(CFG.last_time);
+    }
     csvToArrays(STORE, '\t', '#', '@');
+  }
+  else {
+    /* if we are dealing with a storable session, we now call ajax to tell us
+     * which files have most recently (within a ten minutes time frame) been updated
+     * we compare these with our own data and replace all cases where our own data 
+     * differs */
+    if (CFG['storable']) {
+      var now = new Date();
+      var passed_time = (now - CFG['last_time']) / 60000;
+      
+      if (passed_time >= 1) { /* reset TIME to other minutes later */
+
+        /* create the url */
+        var url = 'triples/triples.php?file=' + CFG['filename'] + 
+          '&date=' + CFG['last_time'].getTime();
+
+        var txt = '';
+
+        /* make the ajax call */ 
+        $.ajax({
+          async: false,
+          type: "GET",
+          contentType: "application/text; charset=utf-8",
+          url: url,
+          dataType: "text",
+          success: function(data) {
+            txt = data;
+          },
+          error: function() {
+            CFG['storable'] = false;
+            fakeAlert("Could not retrieve data from the database.");
+          }    
+        });
+
+        /* iterate over all lines and check for updates */
+        var lines = txt.split('\n');
+        for (var i=0,line; line=lines[i]; i++)
+        {
+          var cells = line.split('\t');
+          var idx = parseInt(cells[0]);
+          var col = cells[1].replace(/_/g,'');
+          var col_idx = WLS.header.indexOf(col);
+          /* check if column actually exists (it may just have been created
+           * and will thus not appear in the current application, which is 
+           * also not needed for now */
+          if (col_idx != -1) {
+            var val = cells[2];
+            if (WLS[idx][col_idx] != val) {
+              WLS[idx][col_idx] = val;
+            }
+          }
+        }
+        
+        /* set up new time frame */
+        CFG['passed_time'] = now;
+      }
+    }
   }
 
   var text = '<table id="qlc_table">';
-
+  
+  /* we create the header of the table first */
   // add col-tags to the dable
   text += '<col id="ID" />';
   var thtext = ''; // ff vs. chrome problem
@@ -320,11 +395,11 @@ function showWLS(start)
     var head = WLS['header'][i];
     if (WLS['columns'][head] > 0) {
       text += '<col id="' + head + '" />';
-      thtext += '<th class="titled" title="Double-click for sorting along this column." id="HEAD_'+head+'" ondblclick="sortTable(event,'+"'"+head+"'"+')">' + head + '</th>';
+      thtext += '<th class="titled" title="Double-click for sorting along this column." id="HEAD_'+head+'" ondblclick="sortTable(event,'+"'"+head+"'"+')">' + WLS.column_names[head] + '</th>';
     }
     else {
       text += '<col id="' + head + '" style="visibility:hidden;" />';
-      thtext += '<th style="display:none">' + head + '</th>';
+      thtext += '<th style="display:none">' + WLS.column_names[head] + '</th>';
     }
   }
 
@@ -333,11 +408,11 @@ function showWLS(start)
   text += thtext;
   text += '</tr>';
 
-  //for (idx in WLS)
   var count = 1;
   if (CFG['formatter']) {
     var previous_format = '';
     var tmp_class = 'd0';
+    console.log(WLS['rows']);
     for (i in WLS['rows'])  {
       var idx = WLS['rows'][i];
       var current_format = WLS[idx][WLS['header'].indexOf(CFG['formatter'])];
@@ -580,7 +655,7 @@ function editEntry(idx, jdx, from_idx, from_jdx)
   var line = document.getElementById('L_' + idx);
 
   /* if line is undefined, check for next view */
-  if (line === null || typeof line == 'undefined') {
+  if (line == null || typeof line == 'undefined') {
     var ridx = WLS['rows'].indexOf(idx);
     var fidx = WLS['rows'].indexOf(from_idx);
     //fakeAlert(fidx+' '+ridx);
@@ -824,7 +899,7 @@ function storeModification(idx,jdx,value) {
       'file='+CFG['filename'] +
       '&update' + 
       '&ID='+idx +
-      '&COL='+WLS.header[jdx] +
+      '&COL='+ WLS.column_names[WLS.header[jdx]].replace(/ /g,'_') +
       '&VAL='+value;
 
     $.ajax({
@@ -1114,40 +1189,25 @@ function filterColumns(column)
   }
 
   applyFilter();
-  showCurrent();
+  showWLS(getCurrent());
 }
 
-
+/* function returns the current index of the wordlist display, note 
+ * that this function is potentially dangerous, since it may return
+ * erroneous indices if the wordlist display has changed its size, so
+ * we probably should disable it for the moment and just show the very 
+ * first index whenever it is called */
 function getCurrent()
 {
   var previous = document.getElementById('previous');
   var current_index = 1;
-  if (previous === null) {
+  if (previous == null) {
     current_index = 1;
   }
   else {
     current_index = parseInt(previous.value.split('-')[1]) + 1;
   }
   return current_index;
-}
-
-function showCurrent()
-{
-  var previous = document.getElementById('previous');
-  var current_index = 1;
-  if (previous === null) {
-    current_index = 1;
-  }
-  else {
-    current_index = parseInt(previous.value.split('-')[1]) + 1;
-  }
-
-  if (isNaN(current_index)) {
-    showWLS(1);
-  }
-  else {
-    showWLS(current_index);
-  }
 }
 
 /* file-handler function from http://www.html5rocks.com/de/tutorials/file/dndfiles/ */
@@ -1183,8 +1243,6 @@ function handleFileSelect(evt)
 
   var fn = document.getElementById('filename');
   fn.innerHTML = '&lt;' + CFG['filename'] + '&gt;';
-  //var dropZone = document.getElementById('drop_zone');
-  //dropZone.style.display = 'none';
 }
 
 /* this function actually writes the whole wordlist to file, so it does 
@@ -1192,16 +1250,16 @@ function handleFileSelect(evt)
 function refreshFile()
 {
   //var store = document.getElementById('store');
-  var text = '# WORDLIST\n';
+  var text = '# EDICTOR\n';
   text += '@modified: ' + getDate() + '\n#\n';
   text += 'ID';
   for (var i=0,head;head=WLS['header'][i];i++) {
     if (WLS['columns'][head] > 0) {
       if (WLS['uneditables'].indexOf(head) != -1) {
-        text += '\t_'+head;
+        text += '\t_'+WLS.column_names[head].replace(/ /g,'_');
       }
       else {
-        text += '\t'+head;
+        text += '\t'+WLS.column_names[head].replace(/ /g,'_');
       }
     }
   }
@@ -1436,18 +1494,22 @@ function editGroup(event,idx) {
     blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(new RegExp(' ','gi'),'\t')+'\n';
   }
   CFG['_alignment'] = blobtxt;
-
+  
+  if (alms.length == 1) {
+    fakeAlert(CFG['formatter']+' &quot;'+idx+'&quot; links only one entry.');
+    return;
+  }
   var text = '<div class="edit_links" id="editlinks">';
-  text += '<p>This entry links to the following '+alms.length+' entries:</p>';
+  text += '<p>' + CFG['formatter'] + ' &quot;'+idx+'&quot; links the following '+alms.length+' entries:</p>';
   text += '<div class="alignments"><table>';
   for (var i=0,alm;alm=alms[i];i++) {
     text += '<tr>'+alm+'</tr>';
   }
   text += '</table></div>';
   text += '<div class="submitline">';
-  text += '<input class="submit" type="button" onclick="fakeAlert(\'This part is under construction.\')" value="EDIT" /> ';
-  text += '<input class="submit" type="button" onclick="saveAlignment('+idx+')" value="EXPORT" /> ';
-  text += '<input class="submit" type="button" onclick="$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /></div><br><br> ';
+  text += '<input class="btn btn-primary submit" type="button" onclick="fakeAlert(\'This part is under construction.\')" value="EDIT" /> ';
+  text += '<input class="btn btn-primary submit" type="button" onclick="saveAlignment('+idx+')" value="EXPORT" /> ';
+  text += '<input class="btn btn-primary submit" type="button" onclick="$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /></div><br><br> ';
   text += '</div> ';
 
   document.body.appendChild(editmode);
