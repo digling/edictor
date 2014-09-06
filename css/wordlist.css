@@ -136,7 +136,7 @@
   padding-left: 5px;
   background-color: #2D6CA2;
   font-weight: bold;
-  //border: 1px dotted white;
+  margin-left: 2px;
 }
 
 .container
@@ -146,12 +146,18 @@
 }
 .textfield {
   cursor: text;
-  margin-top: 5px;
   display: inline;
+  min-width:150px;
+  max-width:350px;
+  margin-left:3px;
+  margin-right: 3px;
+
 }
 #textfields {
   display: block;
   float: left;
+  max-width: 1000px;
+  width: 80%;
 }
 
 
@@ -164,6 +170,10 @@
   border: 2px solid #2D6CA2;
   border-radius: 5px;
   margin: 5px;
+  padding-left:25px;
+  padding-right:25px;
+  padding-top:10px;
+  padding-bottom:25px;
 }
 .settings th{
   width: auto;
@@ -251,8 +261,12 @@ span.dolgo_PLUS{font-size: 40%; vertical-align:center;background-color:black; co
   background-color: white;
   border: 2px solid #2D6CA2;
   max-width: 1000px;
-  padding: 25px;
+  padding-top: 10px;
+  padding-bottom: 25px;
+  padding-right:25px;
+  padding-left:25px;
   margin: 5px;
+
 }
 
 .cellinput {
@@ -296,9 +310,9 @@ ul.nav
   margin-top: 20px;
   margin-left: 5px;
   margin-right: 5px;
-  padding-bottom:30px;
-  padding-left:20px;
-  padding-right:20px;
+  padding-bottom:25px;
+  padding-left:25px;
+  padding-right:25px;
   padding-top:10px;
   border-radius:5px;
 }
@@ -318,19 +332,7 @@ ul.nav
     border-radius: 5px;
     display: block;
   }
-#drop_zone {
-    margin-top: 5px;
-    border: 1px dotted white;
-    padding: 5px;
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    width: 100px;
-    position: relative;
-    margin-left:auto;
-    margin-right: auto;
-    display: inline;
-}
+
 #view {
     margin-top: 10px;
     border: 2px dotted white;
@@ -444,10 +446,10 @@ ul.nav
 #filedisplay {
   border: 2px solid #2D6CA2;
   margin: 5px;
-  padding-left:10px;
-  padding-right:10px;
+  padding-left:25px;
+  padding-right:25px;
   padding-top:10px;
-  padding-bottom:10px;
+  padding-bottom:25px;
   overflow:hidden;
   display:none;
   float: left;
@@ -485,13 +487,17 @@ tr.d2 td {
   top:10%;
   left:0;
   right:0;
-  background-color: white;
-  border: 2px solid #2D6CA2;
+  background-color: Crimson;
+  //background-color: white;
+  //border: 2px solid #2D6CA2;
+  border: 2px solid white;
   text-align:center;
   display: table;
+  border-radius:5px;
 }
 .edit_links p {
-  color: #2D6CA2;
+  //color: #2D6CA2;
+  color: white;
   font-weight: bold;
   padding-right: 10px;
   padding-left: 10px;
@@ -500,10 +506,13 @@ tr.d2 td {
 div.alignments {
   font-weight: bold;
   border: 2px solid #2D6CA2;
+  //border: 2px solid white;
   background-color: white;
+  border-radius: 5px;
   margin-bottom:5px;
   margin-left: 5px;
   margin-right:5px;
+  padding:5px;
   float: left;
   display: block;
 }
@@ -582,7 +591,7 @@ div.alignments {
 }
 
 #sortable {list-style-type:none;margin:0;padding:0;}
-#sortable li
+#sortable > li
 {
   float: left;
 }
@@ -604,7 +613,10 @@ div.alignments {
   z-index: 100;
   overflow: hidden;
   background-color: #fefefe;
-  padding: 10px;
+  padding-top: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-bottom: 25px;
   color: #2D6CA2;
   border: 2px solid #2D6CA2;
   border-radius: 5px;

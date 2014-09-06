@@ -3,12 +3,11 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-09-03 13:40
- * modified : 2014-09-03 13:40
+ * modified : 2014-09-06 20:24
  *
  */
 
-reload = false;
-
+//reload = false;
 
 /* http://www.phpied.com/sleep-in-javascript/ */
 function sleep(milliseconds) {
@@ -24,10 +23,10 @@ function startWordlist() {
   try {
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
     // Setup the dnd listeners.
-    var dropZone = document.getElementById('drop_zone');
-    dropZone.addEventListener('dragover', handleDragOver, false);
-    dropZone.addEventListener('drop', handleFileSelect2, false);
-    dropZone.style.backgroundColor = "#2e5ca8";
+    //var dropZone = document.getElementById('drop_zone');
+    //dropZone.addEventListener('dragover', handleDragOver, false);
+    //dropZone.addEventListener('drop', handleFileSelect2, false);
+    //dropZone.style.backgroundColor = "#2e5ca8";
 
     if (typeof localStorage.text == 'undefined'){}
     else {
@@ -209,42 +208,6 @@ function ReDo() {
     $('#redo').removeClass('unhidden');
     $('#redo').addClass('hidden');
   }  
-}
-
-function handleFileSelect2(evt)  {  
-  evt.stopPropagation();
-  evt.preventDefault();
-  
-  /* reset if wordlist has been parsed already */
-  reset();
-  
-  var files = evt.dataTransfer.files; /* FileList object */
-  var file = files[0];
-  //var store = document.getElementById('store');
-  CFG['filename'] = file.name;
-  localStorage.filename = file.name;
-  STORE = '';
-
-  /* create file reader instance */
-  var reader = new FileReader({async:false});
-  reader.onload = function(e){STORE = reader.result;}
-  reader.readAsText(file);
-
-  var modify = ['previous', 'next', 'first','current', 'filename'];
-  for (i in modify) {
-    $('#' + modify[i]).removeClass('unhidden');
-    $('#' + modify[i]).addClass('hidden');
-  }
-
-  document.getElementById('mainsettings').style.display = 'inline';
-  document.getElementById('view').style.display = 'block';
-  document.getElementById("qlc").innerHTML = '';
-
-  var fn = document.getElementById('filename');
-  fn.innerHTML = '&lt;'+CFG['filename']+'&gt;';
-  var dropZone = document.getElementById('drop_zone');
-  //dropZone.style.display = "none";
-
 }
 
 /* function handles the cases of remotely stored tsv files
@@ -614,7 +577,8 @@ $(function() {
             update: function() {
                 return;
             }
-        }
+        },
+        handle: '.main_handle',
 
     });
 });

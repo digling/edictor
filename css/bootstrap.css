@@ -4609,7 +4609,7 @@ textarea.input-group-sm>.form-control,textarea.input-group-sm>.input-group-addon
 
 .navbar-inverse .navbar-nav>.open>a,.navbar-inverse .navbar-nav>.open>a:hover,.navbar-inverse .navbar-nav>.open>a:focus{
 	color:#fff;
-	background-color:red;
+	background-color:#080808
 }
 
 @media (max-width:767px){

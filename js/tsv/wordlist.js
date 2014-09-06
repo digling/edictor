@@ -300,21 +300,90 @@ function csvToArrays(allText, separator, comment, keyval) {
   else {
     formatter.style.display = "none";
   }
-  
-  /* add settings for the column preview to the data */
-  var all_columns = document.getElementById('columncb');
-  var tmp_text = '<th>Columns</th><td>';
-  for (var col in WLS['columns']) {
-    tmp_text += '<input id="cb_' + col + '" onchange="filterColumns(this.value);" type="checkbox" ';
-    if (CFG['basics'].indexOf(col) != -1) {
-      tmp_text += 'checked ';
-    }
-    tmp_text += 'name="columns" value="';
-    tmp_text += col;
-    tmp_text += '"> ' + WLS.column_names[col] + '<br>';
+
+  /* create selectors */
+  createSelectors();
+}
+
+/* create selectors for languages, concepts, and columns */
+function createSelectors() {
+
+  var did = document.getElementById('select_doculects');
+  var doculects = Object.keys(WLS.taxa);
+  doculects.sort();
+  var txt = '';
+  for (var i=0,doculect; doculect=doculects[i]; i++) {
+    txt += '<option value="'+doculect+'" selected>'+doculect+'</option>';
   }
-  all_columns.innerHTML = tmp_text + '</td>';
-  all_columns.style.display = 'table-row';
+  did.innerHTML = txt;
+
+  var cid = document.getElementById('select_concepts');
+  var concepts = Object.keys(WLS.concepts);
+  concepts.sort();
+  txt = ''
+
+  for (var i=0,concept; concept=concepts[i]; i++) {
+    txt += '<option value="'+concept+'" selected>'+concept+'</option>';
+  }
+  cid.innerHTML = txt;
+
+  var eid = document.getElementById('select_columns');
+  var columns = Object.keys(WLS.columns);
+  columns.sort();
+  txt = '';
+
+  for (var i=0,column; column=columns[i]; i++) {
+    if (WLS.columns[column] > 0) {
+      txt += '<option value="'+column+'" selected>'+WLS.column_names[column]+'</option>';
+    }
+    else {
+      txt += '<option value="'+column+'">'+WLS.column_names[column]+'</option>';
+    }
+  }
+  eid.innerHTML = txt;
+
+  $('#select_doculects').multiselect({
+    includeSelectAllOption : true,
+    enableFiltering: true,
+    maxHeight: window.innerHeight,
+    buttonClass : 'btn btn-primary submit',
+    enableCaseInsensitiveFiltering: true,
+    buttonContainer: '<div style="display:inline" />',
+    buttonText: function (options, select) {
+      return 'Select Doculects <b class="caret"></b>';
+    }
+  });
+
+  $('#select_concepts').multiselect({
+    includeSelectAllOption : true,
+    enableFiltering: true,
+    maxHeight: window.innerHeight,
+    buttonClass : 'btn btn-primary submit',
+    enableCaseInsensitiveFiltering: true,
+    buttonContainer: '<div style="display:inline" />',
+    buttonText: function (options, select) {
+      return 'Select Concepts <b class="caret"></b>';
+    }
+  });
+
+  $('#select_columns').multiselect({
+    includeSelectAllOption : true,
+    enableFiltering: true,
+    maxHeight: window.innerHeight,
+    buttonClass : 'btn btn-primary submit',
+    enableCaseInsensitiveFiltering: true,
+    buttonContainer: '<div style="display:inline" />',
+    buttonText: function (options, select) {
+      return 'Select Columns <b class="caret"></b>';
+    }
+  });
+
+
+  
+  $('#filters').toggle();
+
+  console.log('created selectors');
+
 }
 
 function showWLS(start)
@@ -336,7 +405,7 @@ function showWLS(start)
       var now = new Date();
       var passed_time = (now - CFG['last_time']) / 60000;
       
-      if (passed_time >= 1) { /* reset TIME to other minutes later */
+      if (passed_time >= 10) { /* reset TIME to other minutes later */
 
         /* create the url */
         var url = 'triples/triples.php?file=' + CFG['filename'] + 
@@ -378,7 +447,7 @@ function showWLS(start)
             }
           }
         }
-        
+        console.log("ShowWls, check updates:",txt);
         /* set up new time frame */
         CFG['passed_time'] = now;
       }
@@ -588,11 +657,15 @@ function addColumn(event)
     var basename = name.split('>>');
     var basex = basename[0];
 
+    console.log('basename',basename);
+
     var bases = basex.split(/\+/);
     var base = function(i) {
       var new_entry = '';
       for (k in bases) {
         var tmp = bases[k];
+        /* if $ipa>>tokens is given, for example, this code produces a new column
+         * called "tokens" in which all entries consist of former $ipa */
         if (tmp.charAt(0) == '$') {
           var j = WLS['header'].indexOf(tmp.slice(1, tmp.length).toUpperCase());
           if (j != -1) {
@@ -640,10 +713,15 @@ function addColumn(event)
       WLS[idx].push(base(idx));
     }
   }
-  WLS['header'].push(name);
-  WLS['columns'][name] = WLS.header.length - 1;
-  if (CFG['basics'].indexOf(name) == -1) {
-    CFG['basics'].push(name);
+
+  /* adjust name to new name */
+  var new_name = name.replace(/_/g,'');
+  var name_name = name.replace(/_/g, ' ');
+  WLS['header'].push(new_name);
+  WLS['column_names'][new_name] = name_name;
+  WLS['columns'][new_name] = WLS.header.length - 1;
+  if (CFG['basics'].indexOf(new_name) == -1) {
+    CFG['basics'].push(new_name);
   }
 
   col.value = '';
@@ -935,121 +1013,62 @@ function unmodifyEntry(idx, jdx, xvalue)
 }
 
 /* filter the wordlist, that is, hide specific contents and show others */
-function filterWLS(event, type)
-{
-  if (type == 'custom' && event.keyCode != 13) {
-    return;
-  }
-  else if (type == 'custom' && event.keyCode == 13) {
-    applyFilter();
-    showWLS(1);
-    return;
-  }
-  
-  var stuff = Object.keys(WLS[type]);
-
-  function split(val ) {
-    return val.split(/,\s*/);
-  }
-  function extractLast(term ) {
-    return split(term).pop();
-  }
-  $('#' + type).bind('keydown', function(event ) 
-      {
-        if (event.keyCode === $.ui.keyCode.TAB && $(this).data('ui-autocomplete').menu.unhidden) {
-          event.preventDefault();
-        }
-      }
-    ).autocomplete(
-    {
-      delay: 0,
-      minLength: 0,
-      source: function(request, response ) 
-      {
-        // delegate back to autocomplete, but extract the last term
-        response($.ui.autocomplete.filter(
-        stuff, extractLast(request.term)));
-      },
-      focus: function() 
-      {
-        // prevent value inserted on focus
-        return false;
-      },
-      select: function(event, ui ) 
-      {
-        var terms = split(this.value);
-        // remove the current input
-        terms.pop();
-        // add the selected item
-        terms.push(ui.item.value);
-        // add placeholder to get the comma-and-space at the end
-        terms.push('');
-        this.value = terms.join(', ');
-        return false;
-      }
-    }
-  );
-
-  if (event.keyCode == 13) {
-    applyFilter();
-
-    // determine the correct position at which we are at the moment
-    var previous = document.getElementById('previous');
-    var current_index = 1;
-    if (previous === null) {
-      current_index = 1;
-    }
-    else {
-      current_index = parseInt(previous.value.split('-')[1]) + 1;
-    }
-
-    if (isNaN(current_index)) {
-      showWLS(1);
-    }
-    else {
-      showWLS(current_index);
-    }
-  }
-}
+//function filterWLS(event, type)
+//{
+//  if (type == 'custom' && event.keyCode != 13) {
+//    return;
+//  }
+//  else if (type == 'custom' && event.keyCode == 13) {
+//    applyFilter();
+//    showWLS(1);
+//    return;
+//  }
+//  
+//  return;
+//}
 
 function applyFilter()
 {
-
-  var taxa = document.getElementById('taxa');
-  var concepts = document.getElementById('concepts');
-  var entries = document.getElementById('columns');
-  var custom = document.getElementById('filter_all');
-
+ 
+  /* get filters for taxa */
+  var tid = document.getElementById('select_doculects');
+  var tlist = [];
+  for (var i=0,option; option=tid.options[i]; i++) {
+    if (option.selected) {
+      tlist.push(option.value);
+    }
+  }
   var trows = [];
+  for (var i=0,taxon; taxon=tlist[i]; i++) {
+    trows.push.apply(trows, WLS['taxa'][taxon]);
+  }
+
+  /* get filters for concepts */
+  var cid = document.getElementById('select_concepts');
+  var clist = [];
+  for (var i=0,option; option=cid.options[i]; i++) {
+    if (option.selected) {
+      clist.push(option.value);
+    }
+  }
   var crows = [];
-  var erows = [];
+  for (var i=0,concept; concept=clist[i]; i++) {
+    crows.push.apply(crows, WLS['concepts'][concept]);
+  }
+
+  /* get filters for columns (fields) */
+  var fid = document.getElementById('select_columns');
+  var flist = [];
+  for (var i=0,option; option=fid.options[i]; i++) {
+    if (option.selected) {
+      flist.push(option.value);
+    }
+  }
+  
+  /* handle custom filters */
+  var custom = document.getElementById('filter_all');
   var arows = [];
-
-  var tlist = taxa.value.split(/,\s*/);
-  var clist = concepts.value.split(/,\s*/);
-  var elist = entries.value.toUpperCase().split(/,\s*/);
   var alist = custom.value;
-
-  if (tlist[0] == '') {
-    tlist = Object.keys(WLS['taxa']);
-  }
-  if (clist[0] == '') {
-    clist = Object.keys(WLS['concepts']);
-  }
-  if (elist[0] == '') {
-    elist = [];
-  }
-
-  for (i in tlist) {
-    if (tlist[i] != '') {
-      trows.push.apply(trows, WLS['taxa'][tlist[i]]);
-    }
-  }
-  for (i in clist) {
-    if (clist[i] != '') {
-      crows.push.apply(crows, WLS['concepts'][clist[i]]);
-    }
-  }
 
   /* now it starts */
   if (alist.replace(/\s*/,'') != '') {
@@ -1100,42 +1119,15 @@ function applyFilter()
   else {
     arows = WLS._trows.slice();
   }
-
-  /* check for the filtering of columns now */
-  if (elist[0] == '*') {
-    entries.value = '';
-    for (i in WLS['header']) {
-      head = WLS['header'][i];
+  
+  /* handle filtering of columns */
+  for (i in WLS['header']) {
+    var head = WLS['header'][i];
+    if (flist.indexOf(head) != -1) {
       WLS['columns'][head] = Math.abs(WLS['columns'][head]);
-      document.getElementById('cb_' + head).checked = true;
-      if (CFG['basics'].indexOf(head) == -1) {
-        entries.value += head + ', ';
-      }
     }
-  }
-  else {
-    for (i in WLS['header']) {
-      var head = WLS['header'][i];
-      if (elist.indexOf(head) != -1) {
-        if (CFG['basics'].indexOf(head) != -1) {
-          WLS['columns'][head] = -Math.abs(WLS['columns'][head]);
-          document.getElementById('cb_' + head).checked = false;
-        }
-        else {
-          WLS['columns'][head] = Math.abs(WLS['columns'][head]);
-          document.getElementById('cb_' + head).checked = true;
-        }
-      }
-      else {
-        if (CFG['basics'].indexOf(head) == -1) {
-          WLS['columns'][head] = -Math.abs(WLS['columns'][head]);
-          document.getElementById('cb_' + head).checked = false;
-        }
-        else {
-          WLS['columns'][head] = Math.abs(WLS['columns'][head]);
-          document.getElementById('cb_' + head).checked = true;
-        }
-      }
+    else {
+      WLS['columns'][head] = -Math.abs(WLS['columns'][head]);
     }
   }
 

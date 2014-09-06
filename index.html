@@ -5,7 +5,7 @@ EDICTOR main page
 author   : Johann-Mattis List
 email    : mattis.list@lingulist.de
 created  : 2014-06-28 09:47
-modified : 2014-09-05 12:23
+modified : 2014-09-06 20:21
 
 -->
 <html>
@@ -71,6 +71,13 @@ modified : 2014-09-05 12:23
                   <span class="glyphicon glyphicon-ok"></span>
                   <span class="glyphicon glyphicon-remove" style="display: none"></span>
                   MENU
+                </a>
+              </li>
+              <li>
+                <a id="toggle_settings" onclick="toggleDisplay(event,'settings');">
+                  <span class="glyphicon glyphicon-ok" style="display:none"></span>
+                  <span class="glyphicon glyphicon-remove"></span>
+                  SETTINGS
                 </a>
               </li>
               <li>
@@ -165,38 +172,54 @@ modified : 2014-09-05 12:23
       <!-- MENU -->
       <li class="colx" style="display:block;width:100%;">
         <div id="menu">
+          <span class="main_handle pull-left"></span>
           <button type="button" onclick="$('#toggle_menu > span').toggle();$('#menu').toggle();" class="pull-right close" style="margin-left:5px">
             <span aria-hidden="true">&times;</span>
             <span class="sr-only">Close</span>
           </button>
-          <div class="drop_zone pull-left btn-primary btn" style="min-width:150px;margin:3px;padding:6px;" id="drop_zone">
-            Drop your file here.
-          </div>
-          <input type="file" id="file" name="file" class="btn btn-primary pull-left submit3" style="margin:3px;" />
+          <br>
+          <input type="file" id="file" name="file" class="btn btn-primary pull-left submit3" style="margin-left:0px;margin-right:3px;padding:7px;" />
           <input type="text" class="form-control pull-left textfield" style="width:140px;display:inline;margin:3px;" onkeyup="handleAjax(event,this.value);" id="ajaxfile" placeholder="select remote file" />
           <input type="text" class="form-control pull-left textfield" style="width:140px;display:inline;margin:3px;" onkeyup="handleAjax(event,this.value);" id="database" placeholder="select database" />
-          <button type="button" onclick="resetFormat(CFG['formatter']);showWLS(getCurrent());" style="margin:3px;padding:10px;" class="pull-left btn-primary btn submit3">
+          <button type="button" onclick="resetFormat(CFG['formatter']);createSelection();showWLS(getCurrent());" style="margin:3px;padding:10px;" class="pull-left btn-primary btn submit3">
             <span class="glyphicon glyphicon-refresh"></span>
           </button>
           <input id="last" type="button" onclick="showWLS(1);$('#last').removeClass('unhidden');$('#last').addClass('hidden');" class="submit hidden" value="&nbsp;LAST&nbsp;" />
           <div id="mainsettings" style="display:none">
-            <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [CTRL+S]" id="refresh" type="button" onclick="refreshFile();" value="&nbsp;SAVE&nbsp;" />
-            <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [CTRL+E]" id="save" type="button" onclick="saveFile();" value="&nbsp;EXPORT&nbsp;" />
-            <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [F2]" id="settingswitcher" type="button" onclick="$('#settings').toggleClass('hidden unhidden');" value="SETTINGS" />
-            <input style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Shortcut [F3]" id="textfieldsettings" type="button" onclick="$('#textfields').toggle();" value="FILTERS" />
+            <button style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Download (shortcut [CTRL+E])" id="save" onclick="saveFile();">
+              <span class="glyphicon glyphicon-download-alt"></span>
+            </button>
+            <button style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Save (shortcut [CTRL+S])" id="refresh" onclick="refreshFile();">
+              <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>            
+            <button style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Filter data (shortcut [F3])" id="textfieldsettings" onclick="$('#textfields').toggle();">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
           </div>
           <br><br>
           <div id="undoredo">
-          <input title="Shortcut [CTRL+Y]" id="undo" type="button" onclick="UnDo();" class="pull-right btn-primary btn titled hidden submit3" style="margin:3px" value="UNDO" />
-          <input title="Shortcut [CTRL+Z]" id="redo" type="button" onclick="ReDo();" class="pull-right btn-primary btn titled hidden submit3" style="margin:3px" value="REDO" />
+          <button title="UNDO (shortcut [CTRL+Y])" id="undo" onclick="UnDo();" class="pull-right btn-primary btn titled hidden submit3" style="margin:3px">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+          </button>
+          <button title="REDO (shortcut [CTRL+Z])" id="redo" onclick="ReDo();" class="pull-right btn-primary btn titled hidden submit3" style="margin:3px">
+            <span class="glyphicon glyphicon-arrow-right"></span>
+          </button>
         </div>
         <br>
+        <!-- FILTERS -->
         <div id="textfields">
-          <input type="text" class="form-control pull-left textfield" style="width:15%;display:inline;margin:3px;" onkeyup="filterWLS(event,'taxa');" id="taxa" placeholder="filter languages" />
-          <input type="text" class="form-control pull-left textfield" style="width:15%;display:inline;margin:3px;" onkeyup="filterWLS(event,'concepts');" id="concepts" placeholder="filter concepts" />
-          <input type="text" class="form-control pull-left textfield" style="width:15%;display:inline;margin:3px;" onkeyup="filterWLS(event,'columns');" id="columns" placeholder="filter columns" />
-          <input type="text" class="form-control pull-left textfield" style="width:15%;display:inline;margin:3px;" onkeyup="addColumn(event);" id="add_column" placeholder="add column" />
-          <input type="text" class="form-control pull-left textfield" style="width:15%;display:inline;margin:3px;" onkeyup="filterWLS(event,'custom')" id="filter_all" placeholder="COLUMN = value" />
+          <select class="multiselect" multiple id="select_doculects" title="filter doculects"></select>
+          <select class="multiselect" multiple id="select_concepts" title="filter concepts"></select>
+          <select class="multiselect" multiple id="select_columns" title="filter columns"></select>
+          <button class="btn-primary btn titled submit" onclick="applyFilter();showWLS(getCurrent());">
+            OK
+          </button>
+
+          <input type="text" class="form-control textfield pull-right" style="width:25%;" onkeyup="addColumn(event);" id="add_column" placeholder="add column" />
+          <input type="text" class="form-control textfield pull-right" style="width:25%;" onkeyup="filterWLS(event,'custom')" id="filter_all" placeholder="COLUMN = value" />
+
         </div>
       </div>
     </li>
@@ -204,10 +227,12 @@ modified : 2014-09-05 12:23
     <!-- MAIN TABLE -->
     <li class="colx">
       <div id="filedisplay">
-          <button type="button" onclick="$('#toggle_filedisplay > span').toggle();$('#filedisplay').toggle();" class="pull-right close" style="margin-left:5px">
-            <span aria-hidden="true">&times;</span>
-            <span class="sr-only">Close</span>
-          </button>
+        <span class="main_handle pull-left"></span>
+        <button type="button" onclick="$('#toggle_filedisplay > span').toggle();$('#filedisplay').toggle();" class="pull-right close" style="margin-left:5px">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <br>
         <span class="info hidden" id="filename"></span>
         <span class="info hidden" id="current"></span>
         <input id="previous" type="button" class="btn btn-primary submit hidden" value="0-0"/>
@@ -222,7 +247,8 @@ modified : 2014-09-05 12:23
 
     <!-- SETTINGS -->
     <li class="colx" style="display:inline;">
-      <div id="settings" class="settings hidden">
+      <div id="settings" class="settings" style="display:none">
+        <span class="main_handle pull-left"></span>
         <button type="button" onclick="$('#settings').toggleClass('hidden unhidden');" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <table>
           <tr>
@@ -267,9 +293,10 @@ PRISON.import(
     'js/vendor/jquery-ui',
     'js/vendor/FileSaver',
     'js/vendor/undomanager',
+    'js/vendor/bootstrap.min',
+    'js/vendor/bootstrap-multiselect',
     'js/tsv/wordlist',
-    'js/tsv/starter',
-    'js/vendor/bootstrap.min'  
+    'js/tsv/starter'
   );
 </script>
 </body>
