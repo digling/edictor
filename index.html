@@ -178,8 +178,8 @@ modified : 2014-09-06 20:21
           </button>
           <br>
           <input type="file" id="file" name="file" class="btn btn-primary pull-left submit3" style="margin-left:0px;margin-right:3px;padding:7px;" />
-          <input type="text" class="form-control pull-left textfield" style="width:140px;display:inline;margin:3px;" onkeyup="handleAjax(event,this.value);" id="ajaxfile" placeholder="select remote file" />
-          <input type="text" class="form-control pull-left textfield" style="width:140px;display:inline;margin:3px;" onkeyup="handleAjax(event,this.value);" id="database" placeholder="select database" />
+          <input type="text" class="form-control pull-left mright textfield" style="width:140px;display:inline" onkeyup="showSpinner(function(){handleAjax(event,'url')});" id="ajaxfile" placeholder="select remote file" />
+          <input type="text" class="form-control pull-left mright textfield" style="width:140px;display:inline;" onkeyup="showSpinner(function(){handleAjax(event,'db')});" id="database" placeholder="select database" />
           <input id="last" type="button" onclick="showWLS(1);$('#last').removeClass('unhidden');$('#last').addClass('hidden');" class="submit hidden" value="&nbsp;LAST&nbsp;" />
 
           <div id="mainsettings" class="btn-group pull-right" style="display:none">
@@ -302,9 +302,11 @@ PRISON.import(
     'js/vendor/undomanager',
     'js/vendor/bootstrap.min',
     'js/vendor/bootstrap-multiselect',
+    'js/vendor/spin',
     'js/tsv/wordlist',
     'js/tsv/starter'
   );
 </script>
+<div id="popup_background" class="popup_background"></div>
 </body>
 </html>

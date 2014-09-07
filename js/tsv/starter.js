@@ -20,13 +20,13 @@ function sleep(milliseconds) {
 }
 
 function startWordlist() {
+
+  var pop = document.getElementById('popup_background');
+  var spinner = new Spinner().spin();
+  pop.appendChild(spinner.el);
+
   try {
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
-    // Setup the dnd listeners.
-    //var dropZone = document.getElementById('drop_zone');
-    //dropZone.addEventListener('dragover', handleDragOver, false);
-    //dropZone.addEventListener('drop', handleFileSelect2, false);
-    //dropZone.style.backgroundColor = "#2e5ca8";
 
     if (typeof localStorage.text == 'undefined'){}
     else {
@@ -214,6 +214,13 @@ function ReDo() {
  * which are loaded if the user selects them 
  */
 function handleAjax (event, url) {
+  
+  if (url == 'url') {
+    url = document.getElementById('ajaxfile').value;
+  }
+  else if (url == 'db') {
+    url = document.getElementById('database').value;
+  }
   
   /* handle keyup event */
   if (typeof event != 'string') {
@@ -553,6 +560,14 @@ function makeMyTemplate() {
   saveTemplate(); 
 }
 
+function showSpinner(code) {
+  $('#popup_background').toggle();
+  setTimeout(function(){
+    code();
+    $('#popup_background').toggle();
+  }, 10);
+}
+
 /* a simple helper function for those cases where no ajax load will create the elements
  * in our file display */
 function toggleDisplay(event,elm_id) {
@@ -584,3 +599,5 @@ $(function() {
 });
 
 $('.colx').addClass('ui-helper-clearfix');
+
+$(window).load(function(){$("#popup_background").fadeOut("slow");});
