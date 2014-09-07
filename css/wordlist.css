@@ -92,8 +92,13 @@
   display: inline;
 }
 
+.mleft {
+  margin-left: 3px!important;
+}
+.mright {
+  margin-right: 3px!important;
+}
 .submit3 {
-  margin-left: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-right: 5px;
@@ -103,7 +108,6 @@
   font-weight:bold;
   background-color: #2D6CA2;
   border: none;
-  float: right;
 }
 .submit {
   padding-top: 5px;
@@ -532,22 +536,22 @@ div.alignments {
 }
 
 #previous {
-  background-repeat: no-repeat;
-  background-position:center;
-  font-size: 80%;
-  border-radius: 10px;
+  //background-repeat: no-repeat;
+  //background-position:center;
+  //font-size: 80%;
+  //border-radius: 10px;
 }
 #next {
-  background-repeat: no-repeat;
-  background-position:center;
-  font-size: 80%;
-  border-radius: 10px;
+  //background-repeat: no-repeat;
+  //background-position:center;
+  //font-size: 80%;
+  //border-radius: 10px;
 }
 #first {
-  background-repeat: no-repeat;
-  background-position:center;
-  font-size: 80%;
-  border-radius: 10px;
+  //background-repeat: no-repeat;
+  //background-position:center;
+  //font-size: 80%;
+  //border-radius: 10px;
 }
 
 /* class needed to prevent tables with long alignment strings from overflowing */

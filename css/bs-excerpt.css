@@ -1,7 +1,7 @@
 .dropdown-menu{
 	position:absolute;
 	top:100%;
-	left:0;
+	left:inherit;
 	z-index:1000;
 	display:none;
 	float:left;
@@ -47,9 +47,10 @@
   padding: 15px;
   font-size: 12px;
   position:absolute;
-  top: inherit;
+  top: 100%;
   left: inherit;
   max-width:350px;
+  z-index: 1000;
 }
 .multisect {
   padding: 15px;
@@ -86,8 +87,9 @@
   background-color: white;
   border-radius: 20px;
   color: Crimson;
-  margin-left: -10px;
+  margin-left: -20px;
   margin-right: 10px;
+  margin-top: -5px;
   cursor: -moz-grab;
   cursor: -webkit-grab;
   font-weight:bold; 
@@ -107,7 +109,26 @@
 .submit3 .icon-bar+.icon-bar{
 	margin-top:4px
 } 
-  
-  
-  
-  
+
+.select_button {
+  float: left;
+}
+.select_button > button {
+  margin-right: 3px;
+}
+
+button.close{
+	-webkit-appearance:none;
+	padding-top:0;
+  padding-bottom:3px;
+  padding-left:0;
+  padding-right:0;
+	cursor:pointer;
+	background:0 0;
+  margin-right: -25px;
+  margin-top: -10px;
+  line-height: 15px;
+  height: 25px;
+  width: 25px;
+  border-radius: 10px;
+}

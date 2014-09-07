@@ -31,7 +31,7 @@ function reset() {
     'server_side_bases' : [],
     'storable' : false,
     'last_time' : false, 
-    'parsed' : false,
+    'parsed' : false
   };
   
   STORE = '';
@@ -114,8 +114,9 @@ function resetFormat(value) {
       }
     }
     WLS['etyma'] = format_selection;
+    console.log("Etyma:",WLS['etyma'])
   }
-  showWLS(getCurrent());
+  //showWLS(getCurrent());
 }
 
 /* load qlc-file */
@@ -253,6 +254,16 @@ function csvToArrays(allText, separator, comment, keyval) {
     }
   }
   // check whether or not we need this sorting mode, maybe we can as well get rid of it
+  
+  /* create a concept - id converter and vice versa for various purposes */
+  var c2i = {};
+  var count = 1;
+  for(c in concepts) {
+    c2i[count] = c;
+    c2i[c] = count;
+    count += 1;
+  }
+  
 
   WLS = qlc;
   WLS['header'] = header;
@@ -264,6 +275,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS['filename'] = CFG['filename'];
   WLS['uneditables'] = uneditables;
   WLS['column_names'] = column_names;
+  WLS['c2i'] = c2i;
   
   /* ! attention here, this may change if no ids are submitted! */
   CFG['_tidx'] = tIdx-1;
@@ -307,7 +319,8 @@ function csvToArrays(allText, separator, comment, keyval) {
 
 /* create selectors for languages, concepts, and columns */
 function createSelectors() {
-
+  
+  console.log('creating columns');
   var did = document.getElementById('select_doculects');
   var doculects = Object.keys(WLS.taxa);
   doculects.sort();
@@ -331,6 +344,7 @@ function createSelectors() {
   var columns = Object.keys(WLS.columns);
   columns.sort();
   txt = '';
+  console.log(columns);
 
   for (var i=0,column; column=columns[i]; i++) {
     if (WLS.columns[column] > 0) {
@@ -341,54 +355,54 @@ function createSelectors() {
     }
   }
   eid.innerHTML = txt;
-
+  
   $('#select_doculects').multiselect({
+    disableIfEmtpy: true,
     includeSelectAllOption : true,
     enableFiltering: true,
-    maxHeight: window.innerHeight,
-    buttonClass : 'btn btn-primary submit',
+    maxHeight: window.innerHeight-100,
+    buttonClass : 'btn btn-primary mright submit pull-left',
     enableCaseInsensitiveFiltering: true,
-    buttonContainer: '<div style="display:inline" />',
+    buttonContainer: '<div id="select_doculects_button" class="select_button" />',
     buttonText: function (options, select) {
       return 'Select Doculects <b class="caret"></b>';
     }
   });
-
+  
   $('#select_concepts').multiselect({
+    disableIfEmpty: true,
     includeSelectAllOption : true,
     enableFiltering: true,
-    maxHeight: window.innerHeight,
-    buttonClass : 'btn btn-primary submit',
+    maxHeight: window.innerHeight-100,
+    buttonClass : 'btn btn-primary mright submit pull-left',
     enableCaseInsensitiveFiltering: true,
-    buttonContainer: '<div style="display:inline" />',
+    buttonContainer: '<div id="select_concepts_button" class="select_button" />',
     buttonText: function (options, select) {
       return 'Select Concepts <b class="caret"></b>';
     }
   });
-
+  
+  $('#select_columns').multiselect('destroy');
   $('#select_columns').multiselect({
+    disableIfEmpty: true,
     includeSelectAllOption : true,
     enableFiltering: true,
-    maxHeight: window.innerHeight,
-    buttonClass : 'btn btn-primary submit',
+    maxHeight: window.innerHeight-100,
+    buttonClass : 'btn btn-primary mright submit pull-left',
     enableCaseInsensitiveFiltering: true,
-    buttonContainer: '<div style="display:inline" />',
+    buttonContainer: '<div id="select_columns_button" class="select_button" />',
     buttonText: function (options, select) {
       return 'Select Columns <b class="caret"></b>';
     }
   });
-
-
   
-  $('#filters').toggle();
-
-  console.log('created selectors');
+  $('#textfields').toggle();
 
 }
 
 function showWLS(start)
 { 
-  console.log(CFG['parsed']);
+
   if (!CFG['parsed']) {
     if (CFG['storable']) {
       CFG['last_time'] = new Date();
@@ -405,7 +419,7 @@ function showWLS(start)
       var now = new Date();
       var passed_time = (now - CFG['last_time']) / 60000;
       
-      if (passed_time >= 10) { /* reset TIME to other minutes later */
+      if (passed_time >= 1000) { /* reset TIME to other minutes later */
 
         /* create the url */
         var url = 'triples/triples.php?file=' + CFG['filename'] + 
@@ -415,7 +429,7 @@ function showWLS(start)
 
         /* make the ajax call */ 
         $.ajax({
-          async: false,
+          async: true,
           type: "GET",
           contentType: "application/text; charset=utf-8",
           url: url,
@@ -656,9 +670,6 @@ function addColumn(event)
   if (name.indexOf('>>') != -1) {
     var basename = name.split('>>');
     var basex = basename[0];
-
-    console.log('basename',basename);
-
     var bases = basex.split(/\+/);
     var base = function(i) {
       var new_entry = '';
@@ -708,9 +719,58 @@ function addColumn(event)
     return;
   }
 
+  var mods = {};
+
+  /* modify entries in wordlist */
   for (idx in WLS) {
     if (!isNaN(idx)) {
-      WLS[idx].push(base(idx));
+      var new_val = base(idx);
+      WLS[idx].push(new_val);
+      mods[idx] = new_val;
+    }
+  }
+  
+  /* get everything together for a big post request */
+  if (CFG['storable']) {
+    
+    // check out how posts have to be made 
+    var keys = Object.keys(mods);
+    
+    var count = 0;
+    var nmods = {};
+    nmods['column'] = name;
+    nmods['file'] = CFG['filename'];
+    for (var i=0,key; key=keys[i]; i++) {
+      count += 1;
+      if (mods[key] != '?' && mods[key] != '' && mods[key] != '-') {
+        nmods[key] = mods[key];
+      }
+      if (count >= 800 || i >= keys.length-1) {
+
+        var key_count = Object.keys(nmods).length - 2;
+        console.log(key_count);
+
+        $.ajax({
+          async: true,
+          data: nmods,
+          type: "POST",
+          url: 'triples/update.php',
+          success: function(data) {
+            console.log('submitted the data');
+            if (data.indexOf('COLUMN') != -1) {
+              dataSavedMessage('post', key_count) ;
+            }
+            else {
+              console.log(data);
+            }
+          },
+          error: function() {
+            fakeAlert('data could not be stored');
+          }
+        });
+        count = 0;
+        nmods = {'column':name,'file':CFG['filename']};
+      }
     }
   }
 
@@ -724,7 +784,9 @@ function addColumn(event)
     CFG['basics'].push(new_name);
   }
 
+
   col.value = '';
+  createSelectors();
   showWLS(1);
 }
 
@@ -923,23 +985,25 @@ function modifyEntry(event, idx, jdx, xvalue) {
 
   /* change sampa to ipa if entries are ipa or tokens */
   if (CFG['sampa'].indexOf(entry.className) != -1) {
-    xvalue = sampa2ipa(xvalue); //modify.value);
+    xvalue = sampa2ipa(xvalue); 
+  }
+
+  /* modify cogid to get unique id if no integer is chosen */
+  var reset_format = false;
+  if (CFG['formatter'] == entry.className) {
+    var nxvalue = cognateIdentifier(xvalue);
+    reset_format = true;
+    if (nxvalue != xvalue) {
+      xvalue = nxvalue;
+    }
+    resetFormat(CFG['formatter']);
   }
 
   var prevalue = entry.dataset.value;
-  entry.dataset.value = xvalue; //this.value; //modify.value;
+  entry.dataset.value = xvalue;
 
   entry.onclick = function() {editEntry(idx, jdx, 0, 0)};
-
-  entry.innerHTML = '';
-  entry.innerHTML = xvalue; //modify.value;
-
-  if (process == true) {
-    editEntry(ni, nj, idx, jdx);
-  }
-  highLight();
-
-  var current = getCurrent();
+  entry.innerHTML = xvalue; 
   
   /* check whether the value has been modified, if so, change the underlying
    * entry in the big WLS Object */
@@ -953,6 +1017,29 @@ function modifyEntry(event, idx, jdx, xvalue) {
     /* trigger store modification in case this is possible for the current session */
     storeModification(idx,(jdx-1),xvalue);
   }
+  
+  if (process == true) {
+    editEntry(ni, nj, idx, jdx);
+  }
+  highLight();
+  
+  if (reset_format) {
+    var start = '';
+    var cclass = 'd1';
+    var cogids = document.getElementsByClassName('COGID');
+    for (var i=0,cogid; cogid=cogids[i]; i++) {
+      if (cogid.dataset.value != start) {
+        start = cogid.dataset.value;
+        if (cclass == 'd1') {
+          cclass = 'd0';
+        }
+        else {
+          cclass = 'd1';
+        }
+      }      
+      cogid.parentNode.className = cclass;
+    }
+  }
 
   if (undoManager.hasUndo() == true) {
     $('#undo').removeClass('hidden');
@@ -965,7 +1052,11 @@ function modifyEntry(event, idx, jdx, xvalue) {
 }
 
 /* function stores (if possible) a given modification in the project's triple store */
-function storeModification(idx,jdx,value) {
+function storeModification(idx, jdx, value, async) {
+  if (typeof async == 'undefined') {
+    async = true;
+  }
+  
   /* if storable is set to "true" and wer are working with a remote server, 
    * make the modifying ajax-call to ensure that the data has been edited 
    * and stored */
@@ -981,13 +1072,18 @@ function storeModification(idx,jdx,value) {
       '&VAL='+value;
 
     $.ajax({
-      async: false,
+      async: async,
       type: "GET",
       contentType: "application/text; charset=utf-8",
       url: new_url,
       dataType: "text",
       success: function(data) {
-        dataSavedMessage();
+        if(data.indexOf("UPDATE") != -1) {
+          dataSavedMessage("update");
+        }
+        else if(data.indexOf("INSERTION") != -1) {
+          dataSavedMessage("insertion");
+        }
       },
       error: function() {
         fakeAlert('data could not be stored');
@@ -1012,24 +1108,16 @@ function unmodifyEntry(idx, jdx, xvalue)
   highLight();
 }
 
-/* filter the wordlist, that is, hide specific contents and show others */
-//function filterWLS(event, type)
-//{
-//  if (type == 'custom' && event.keyCode != 13) {
-//    return;
-//  }
-//  else if (type == 'custom' && event.keyCode == 13) {
-//    applyFilter();
-//    showWLS(1);
-//    return;
-//  }
-//  
-//  return;
-//}
+function filterColumnValue(event) {
+  if(event.keyCode != 13) {
+    return;
+  }
+  applyFilter();
+  showWLS(getCurrent());
+}
 
 function applyFilter()
 {
- 
   /* get filters for taxa */
   var tid = document.getElementById('select_doculects');
   var tlist = [];
@@ -1037,6 +1125,13 @@ function applyFilter()
     if (option.selected) {
       tlist.push(option.value);
     }
+  }
+
+  /* check for empty selection, we need to guarantee that at least
+   * one taxon has been selected */
+  if (tlist.length == 0) {
+    tlist = Object.keys(WLS['taxa']);
+    $('#select_doculects').multiselect('select',tlist);
   }
   var trows = [];
   for (var i=0,taxon; taxon=tlist[i]; i++) {
@@ -1051,6 +1146,13 @@ function applyFilter()
       clist.push(option.value);
     }
   }
+  
+  /* make sure list is not empty to avoid that nothing is selected */
+  if (clist.length == 0) {
+    clist = Object.keys(WLS.concepts);
+    $('#select_concepts').multiselect('select',clist);
+  }
+
   var crows = [];
   for (var i=0,concept; concept=clist[i]; i++) {
     crows.push.apply(crows, WLS['concepts'][concept]);
@@ -1063,6 +1165,18 @@ function applyFilter()
     if (option.selected) {
       flist.push(option.value);
     }
+  }
+
+  /* check for empty list of columns, if this is given, we
+   * select all columns in basics */
+  if (flist.length == 0) {
+    for (var i=0,basic; basic=CFG.basics[i]; i++) {
+      if (WLS.header.indexOf(basic) != -1) {
+        flist.push(basic);
+      }
+    }
+    $('#select_columns').multiselect('deselectAll',false);
+    $('#select_columns').multiselect('select',flist);
   }
   
   /* handle custom filters */
@@ -1156,6 +1270,8 @@ function applyFilter()
 
   var rows = intersection_destructive(trows, crows);
   rows = intersection_destructive(rows, arows);
+
+  console.log('applyFilter6:',rows);
 
   if (rows.length < 1) {
     fakeAlert("No entries matching your filter criteria could be found. All filters will be reset.");
@@ -1287,6 +1403,9 @@ function refreshFile()
   
   showWLS(getCurrent());
   
+  /* change disk symbol */
+  $('#refresh > span').removeClass('glyphicon-floppy-disk').addClass('glyphicon-floppy-saved');
+
   fakeAlert("Document was saved in local storage and can now be exported. Note that only those columns which are currently displayed will be written to file. If You want to select different columns for export, check out the current settings of column display by pressing F2, alter them accordingly, and SAVE the document again."); 
 }
 
@@ -1372,6 +1491,19 @@ function getDate(with_seconds) {
     today += '.'+secs;
   }
   return today;
+}
+
+/* function inserts unique ids for unassigned cognate sets */
+function cognateIdentifier(cogid) {
+  if (isNaN(parseInt(cogid))) {
+    var etym_len = Object.keys(WLS.etyma).length;
+    for (var i=1; i < etym_len+1; i++) {
+      if (!(i in WLS.etyma)) {
+        return i;
+      }
+    }
+  }
+  return cogid;
 }
 
 /* highlight all IPA entries which are specified as such */
@@ -1522,7 +1654,11 @@ function toggleClasses(classes,from,to) {
 }
 
 /* display a tiny little message that the data was saved */
-function dataSavedMessage() {
+function dataSavedMessage(what, howmuch) {
+  if (typeof howmuch == 'undefined') {
+    howmuch = 0;
+  }
+
   /* remove previously issued messages */
   $('#data_saved').remove();
 
@@ -1532,18 +1668,36 @@ function dataSavedMessage() {
   /* add new message */
   var msg = document.createElement('div');
   msg.id = 'data_saved';
-  msg.innerHTML = "Data has been last saved on " + mydatestring +'.';
+  if (what == 'update') {
+    msg.innerHTML = "Data has been last updated on " + mydatestring +'.';
+  }
+  else if (what == 'insertion') {
+    msg.innerHTML = "New entry has been inserted on " + mydatestring+'.';
+  }
+  else if (what == 'post') {
+    msg.innerHTML = "Posted "+howmuch+" new entries to the database on " + mydatestring+'.';
+  }
+  else if (what == 'finished') {
+    msg.innerHTML = "Finished the upload of data on " + mydatestring + '.';
+  }
   document.body.appendChild(msg);
 }
 
 
 /* function redefines the filters for phonological data */
 function filterOccurrences(doculect, occurrences) {
-  var taxa = document.getElementById('taxa');
-  taxa.value = doculect;
 
-  var concepts = document.getElementById('concepts');
-  concepts.value = occurrences;
+  $('#select_doculects').multiselect('deselectAll',false); //'deselect', Object.keys(WLS.taxa));
+  $('#select_doculects').multiselect('select',doculect);
+  
+  var concepts = [];
+  occurrences = occurrences.split(',');
+  for(var i=0,occ; occ=occurrences[i]; i++) {
+    concepts.push(WLS.c2i[parseInt(occ)]);
+  }
+  
+  $('#select_concepts').multiselect('deselectAll', false); 
+  $('#select_concepts').multiselect('select',concepts);
 
   applyFilter();
   showWLS(1);
@@ -1666,17 +1820,20 @@ function showPhonology (event, doculect, sort, direction) {
     
     /* create concepts */
     var concepts = [];
+    var cids = [];
+    console.log('c2i',WLS.c2i);
     for (var j=0,idx; idx=keys[j]; j++) {
       var concept = WLS[idx][c];
       if (concepts.indexOf(concept) == -1) {
-       concepts.push(concept); 
+       concepts.push(concept);
+       cids.push(WLS.c2i[concept]);
       }
       concepts.sort();
     }
     text += '<tr>';
     text += '<td>' + (i+1) + '</td>';
     text += '<td class="pointed" title="click to filter the occurrences of this phoneme" ' +
-      'onclick="filterOccurrences(\''+doculect+'\',\''+concepts.join(',')+'\')">' + 
+      'onclick="filterOccurrences(\''+doculect+'\',\''+cids.join(',')+'\')">' + 
       plotWord(phoneme, 'span', 'pointed') + '</td>';
     text += '<td>' + noc + '</td>';
     text += '<td class="concepts" title="'+concepts.join(', ')+'">' + concepts.join(', ') + '</td>';

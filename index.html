@@ -16,9 +16,8 @@ modified : 2014-09-06 20:21
 <title>EDICTOR</title>
 </head>
 <body>
-
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
+    <div class="container" style="width:100%">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="sr-only">Toggle navigation</span>
@@ -157,11 +156,11 @@ modified : 2014-09-06 20:21
           </li>
 
           <li>
-            <button title="reload the page" type="button" onclick="window.location.reload();" style="margin-top:8px;padding:10px;" class="pull-left btn-primary btn submit3">
-              <span class="glyphicon glyphicon-refresh"></span>
-            </button>
-
+            <a href="" onclick="event.preventDefault();window.location.reload();">RELOAD</a>
           </li>
+        </ul>
+        <ul style="float-right" class="nav navbar-nav navbar-right">
+          <li><a href="http://github.com/dighl/edictor/">GitHub</a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -181,48 +180,52 @@ modified : 2014-09-06 20:21
           <input type="file" id="file" name="file" class="btn btn-primary pull-left submit3" style="margin-left:0px;margin-right:3px;padding:7px;" />
           <input type="text" class="form-control pull-left textfield" style="width:140px;display:inline;margin:3px;" onkeyup="handleAjax(event,this.value);" id="ajaxfile" placeholder="select remote file" />
           <input type="text" class="form-control pull-left textfield" style="width:140px;display:inline;margin:3px;" onkeyup="handleAjax(event,this.value);" id="database" placeholder="select database" />
-          <button type="button" onclick="resetFormat(CFG['formatter']);createSelection();showWLS(getCurrent());" style="margin:3px;padding:10px;" class="pull-left btn-primary btn submit3">
-            <span class="glyphicon glyphicon-refresh"></span>
-          </button>
           <input id="last" type="button" onclick="showWLS(1);$('#last').removeClass('unhidden');$('#last').addClass('hidden');" class="submit hidden" value="&nbsp;LAST&nbsp;" />
-          <div id="mainsettings" style="display:none">
-            <button style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Download (shortcut [CTRL+E])" id="save" onclick="saveFile();">
-              <span class="glyphicon glyphicon-download-alt"></span>
+
+          <div id="mainsettings" class="btn-group pull-right" style="display:none">
+            <button type="button" title="refresh current dataset" onclick="resetFormat(CFG['formatter']);createSelectors();applyFilter();showWLS(getCurrent());" class="btn-primary mleft btn submit3">
+              <span class="glyphicon glyphicon-refresh"></span>
             </button>
-            <button style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Save (shortcut [CTRL+S])" id="refresh" onclick="refreshFile();">
+            <button class="submit3 btn-primary mleft btn titled" title="Filter data (shortcut [F3])" id="textfieldsettings" onclick="$('#textfields').toggle();">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <button class="submit3 btn-primary mleft btn titled" title="Save (shortcut [CTRL+S])" id="refresh" onclick="refreshFile();">
               <span class="glyphicon glyphicon-floppy-disk"></span>
-            </button>            
-            <button style="margin:3px" class="pull-right submit3 btn-primary btn titled" title="Filter data (shortcut [F3])" id="textfieldsettings" onclick="$('#textfields').toggle();">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
+            </button> 
+            <button class="submit3 btn-primary mleft btn titled" title="Download (shortcut [CTRL+E])" id="save" onclick="saveFile();">
+              <span class="glyphicon glyphicon-download-alt"></span>
             </button>
           </div>
           <br><br>
-          <div id="undoredo">
-          <button title="UNDO (shortcut [CTRL+Y])" id="undo" onclick="UnDo();" class="pull-right btn-primary btn titled hidden submit3" style="margin:3px">
-            <span class="glyphicon glyphicon-arrow-left"></span>
-          </button>
-          <button title="REDO (shortcut [CTRL+Z])" id="redo" onclick="ReDo();" class="pull-right btn-primary btn titled hidden submit3" style="margin:3px">
-            <span class="glyphicon glyphicon-arrow-right"></span>
-          </button>
+          <div id="undoredo" class="btn-group pull-right">
+            <button title="UNDO (shortcut [CTRL+Y])" id="undo" onclick="UnDo();" class="mleft btn-primary btn titled hidden submit3" style="margin:3px">
+              <span class="glyphicon glyphicon-arrow-left"></span>
+            </button>
+            <button title="REDO (shortcut [CTRL+Z])" id="redo" onclick="ReDo();" class="mleft btn-primary btn titled hidden submit3" style="margin:3px">
+              <span class="glyphicon glyphicon-arrow-right"></span>
+            </button>
+          </div>
+          <br>
+          <!-- FILTERS -->
+          <div id="textfields" class="pull-left" style="display:none;position:absolute">
+            <div class="btn-group">
+              <select class="multiselect" multiple id="select_doculects" title="filter doculects"></select>
+              <select class="multiselect" multiple id="select_concepts" title="filter concepts"></select>
+              <select class="multiselect" multiple id="select_columns" title="filter columns"></select>
+              <button class="btn-primary btn mright titled submit3" onclick="applyFilter();showWLS(getCurrent());">
+                OK
+              </button>
+            </div>
+            <div class="btn-group pull-right">
+              <input type="text" class="form-control textfield mleft" style="width:25%;" onkeyup="addColumn(event);" id="add_column" placeholder="add column" />
+              <input type="text" class="form-control textfield mleft" style="width:25%;" onkeyup="filterColumnValue(event);" id="filter_all" placeholder="COLUMN = value" />
+            </div>
+          </div>
+          <br>
         </div>
-        <br>
-        <!-- FILTERS -->
-        <div id="textfields">
-          <select class="multiselect" multiple id="select_doculects" title="filter doculects"></select>
-          <select class="multiselect" multiple id="select_concepts" title="filter concepts"></select>
-          <select class="multiselect" multiple id="select_columns" title="filter columns"></select>
-          <button class="btn-primary btn titled submit" onclick="applyFilter();showWLS(getCurrent());">
-            OK
-          </button>
-
-          <input type="text" class="form-control textfield pull-right" style="width:25%;" onkeyup="addColumn(event);" id="add_column" placeholder="add column" />
-          <input type="text" class="form-control textfield pull-right" style="width:25%;" onkeyup="filterWLS(event,'custom')" id="filter_all" placeholder="COLUMN = value" />
-
-        </div>
-      </div>
-    </li>
+      </li>
 
     <!-- MAIN TABLE -->
     <li class="colx">
@@ -233,11 +236,13 @@ modified : 2014-09-06 20:21
           <span class="sr-only">Close</span>
         </button>
         <br>
-        <span class="info hidden" id="filename"></span>
-        <span class="info hidden" id="current"></span>
-        <input id="previous" type="button" class="btn btn-primary submit hidden" value="0-0"/>
-        <input id="first" type="button"    class="btn btn-primary submit unhidden" value="START " onclick="showWLS(1)" />
-        <input id="next" type="button"     class="btn btn-primary submit hidden" value="1-1" />
+        <div class="btn-group pull-left">
+          <button class="btn-primary btn submit3 mright hidden" id="filename"></button>
+          <button class="btn-primary btn submit3 mright hidden" id="current"></button>
+          <input id="previous" type="button" class="btn btn-primary mright submit3 hidden" value="0-0"/>
+          <input id="first" type="button"    class="btn btn-primary mright submit3 unhidden" value="START " onclick="showWLS(1)" />
+          <input id="next" type="button"     class="btn btn-primary mright submit3 hidden" value="1-1" />
+        </div>
         <br><br>
         <div id="db"></div>
         <div name="qlc" style="overflow:visible;" id="qlc" ></div>
@@ -259,12 +264,14 @@ modified : 2014-09-06 20:21
           <tr>
             <th>Preview</th>
             <td>
-              <input id="preview10"  type="button"  class="btn btn-primary submit"  onclick="CFG['preview'] =  10; showWLS(1);" value="&nbsp;10&nbsp;" />
-              <input id="preview20"  type="button"  class="btn btn-primary submit"  onclick="CFG['preview'] =  20; showWLS(1);" value="&nbsp;20&nbsp;" />
-              <input id="preview50"  type="button"  class="btn btn-primary submit"  onclick="CFG['preview'] =  50; showWLS(1);" value="&nbsp;50&nbsp;" />
-              <input id="preview100" type="button"  class="btn btn-primary submit"  onclick="CFG['preview'] = 100; showWLS(1);" value="&nbsp;100&nbsp;" />
-              <input id="preview100" type="button"  class="btn btn-primary submit"  onclick="CFG['preview'] = 200; showWLS(1);" value="&nbsp;200&nbsp;" />
-              <input id="preview100" type="button"  class="btn btn-primary submit"  onclick="CFG['preview'] = 500; showWLS(1);" value="&nbsp;500&nbsp;" />
+              <div class="btn-group">
+                <input id="preview10"  type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] =  10; showWLS(1);" value="&nbsp;10&nbsp;" />
+                <input id="preview20"  type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] =  20; showWLS(1);" value="&nbsp;20&nbsp;" />
+                <input id="preview50"  type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] =  50; showWLS(1);" value="&nbsp;50&nbsp;" />
+                <input id="preview100" type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] = 100; showWLS(1);" value="&nbsp;100&nbsp;" />
+                <input id="preview100" type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] = 200; showWLS(1);" value="&nbsp;200&nbsp;" />
+                <input id="preview100" type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] = 500; showWLS(1);" value="&nbsp;500&nbsp;" />
+              </div>
             </td>
           </tr>
           <tr id="formatter"></tr>
