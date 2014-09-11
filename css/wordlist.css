@@ -239,7 +239,12 @@ td.dolgo_W{background-color: #c864c8;}
 td.dolgo_1{background-color: #c86496;} 
 td.dolgo_X{background-color: #bbbbbb;}
 td.dolgo_GAP{background-color: #bbbbbb;}
-td.dolgo_PLUS{font-size: 40%; vertical-align:center; background-color:black; color:black; width: 10px !important}
+td.dolgo_NAS{
+  background: -moz-linear-gradient(left,#c86464,#64c8c8);
+  background: -webkit-linear-gradient(left,#c86464,#64c8c8);
+  background: linear-gradient(left,#c86464,#64c8c8);
+}
+td.dolgo_PLUS{vertical-align:center; font-weight: bold; background-color:white; color:black; width: 10px !important}
 span.dolgo_ERROR{background-color: white; color:red;}
 span.dolgo_V{background-color: #c86464;}
 span.dolgo_K{background-color: #c89664;} 
@@ -255,7 +260,13 @@ span.dolgo_W{background-color: #c864c8;}
 span.dolgo_1{background-color: #c86496;} 
 span.dolgo_X{background-color: #bbbbbb;}
 span.dolgo_GAP{background-color: #bbbbbb;}
-span.dolgo_PLUS{font-size: 40%; vertical-align:center;background-color:black; color:black; width: 10px !important}
+span.dolgo_NAS{
+  background: -moz-linear-gradient(left,#c86464,#64c8c8);
+  background: -webkit-linear-gradient(left,#c86464,#64c8c8);
+  background: linear-gradient(left,#c86464,#64c8c8);
+}
+
+span.dolgo_PLUS{vertical-align:center;font-weight: bold; background-color:white; color:black; width: 15px !important}
 
 .help {
   border-radius: 5px;
