@@ -1,0 +1,2572 @@
+# Wordlist
+
+# DATA
+ID	DOCULECT	CONCEPT	GLOSSID	WORDINSOURCE	COUNTERPART	IPA	COGID
+#
+899	Nidzh_Udi	I1	42	zu {зу}	зу	zu	182
+900	Vartashen_Udi	I1	42	zu {зу}	зу	zu	182
+901	Archi	I1	42	zo-n	zo-n	zo-n	182
+902	Kryts_proper	I1	42	zɨ-n	zɨ-n	zɨ-n	182
+903	Alyk_Kryts	I1	42	zi-n ~ zi	zi-n ~ zi	zi-n ~ zi	182
+904	Budukh	I1	42	zɨ-n {зын}	зын	zɨ-n	182
+905	Mishlesh_Tsakhur	I1	42	zɨ {зы}	зы	zɨ	182
+906	Mikik_Tsakhur	I1	42	zɨ	zɨ	zɨ	182
+907	Gelmets_Tsakhur	I1	42	zɨ	zɨ	zɨ	182
+908	Mukhad_Rutul	I1	42	zɨ {зы}	зы	zɨ	182
+909	Ixrek_Rutul	I1	42	zɨ {зы}	зы	zɨ	182
+910	Luchek_Rutul	I1	42	zɨ	zɨ	zɨ	182
+911	Koshan_Aghul	I1	42	zu-n	zu-n	zu-n	182
+912	Keren_Aghul	I1	42	zu-n	zu-n	zu-n	182
+913	Gequn_Aghul	I1	42	zu-n	zu-n	zu-n	182
+914	Fite_Aghul	I1	42	zu-n	zu-n	zu-n	182
+915	Aghul_proper	I1	42	zu-n	zu-n	zu-n	182
+916	Northern_Tabasaran	I1	42	izˈu	izˈu	izˈu	182
+917	Southern_Tabasaran	I1	42	uzˈu	uzˈu	uzˈu	182
+918	Gyune_Lezgi	I1	42	zu-n	zu-n	zu-n	182
+919	Outgroup_Chechen	I1	42	so {со}	со	so	182
+#
+920	Nidzh_Udi	I2	42	bezi ~ bez {бези ~ без}	бези ~ без	bezi ~ bez	183
+921	Vartashen_Udi	I2	42	bezi {бези}	бези	bezi	183
+922	Archi	I2	42	class=is	class=is	class=is	183
+923	Mishlesh_Tsakhur	I2	42	yiz-ɨn {йизын}	йизын	yiz-ɨn	183
+924	Mikik_Tsakhur	I2	42	yiz-ɨn	yiz-ɨn	yiz-ɨn	183
+925	Mukhad_Rutul	I2	42	yiz-dɨ	yiz-dɨ	yiz-dɨ	183
+926	Ixrek_Rutul	I2	42	yiz-dɨ	yiz-dɨ	yiz-dɨ	183
+927	Luchek_Rutul	I2	42	iz-dɨ	iz-dɨ	iz-dɨ	183
+928	Koshan_Aghul	I2	42	yaz	yaz	yaz	183
+929	Northern_Tabasaran	I2	42	yas	yas	yas	183
+930	Southern_Tabasaran	I2	42	yiz	yiz	yiz	183
+#
+1	Nidzh_Udi	all	1	bütün ~ bütüm	bütün ~ bütüm	bütün ~ bütüm	-487
+2	Vartashen_Udi	all	1	bütün ~ bitun	bütün ~ bitun	bütün ~ bitun	-488
+3	Archi	all	1	mˈarči	mˈarči	mˈarči	1
+4	Kryts_proper	all	1	vari	vari	vari	-489
+5	Alyk_Kryts	all	1	girt	girt	girt	-490
+6	Budukh	all	1	pitin {питин}	питин	pitin	-491
+7	Mishlesh_Tsakhur	all	1	gɨrgɨ-n {гыргын}	гыргын	gɨrgɨ-n	2
+8	Mikik_Tsakhur	all	1	gɨrgɨ-n	gɨrgɨ-n	gɨrgɨ-n	2
+9	Mukhad_Rutul	all	1	si-ʔin	si-ʔin	si-ʔin	3
+10	Ixrek_Rutul	all	1	si-ne-bɨr {синебыр}	синебыр	si-ne-bɨr	3
+11	Koshan_Aghul	all	1	wari	wari	wari	-492
+12	Keren_Aghul	all	1	wari	wari	wari	-493
+13	Gequn_Aghul	all	1	ǯalːa ~ žalːa	ǯalːa ~ žalːa	ǯalːa ~ žalːa	-494
+14	Fite_Aghul	all	1	ǯalːa	ǯalːa	ǯalːa	-495
+15	Aghul_proper	all	1	ǯalːa	ǯalːa	ǯalːa	-496
+16	Northern_Tabasaran	all	1	warˈi ~ warːˈi	warˈi ~ warːˈi	warˈi ~ warːˈi	-497
+17	Southern_Tabasaran	all	1	wˈari {вари}	вари	wˈari	-498
+18	Gyune_Lezgi	all	1	warˈi	warˈi	warˈi	-499
+19	Outgroup_Chechen	all	1	d=err-ig {дерриг}	дерриг	d=err-ig	4
+#
+20	Nidzh_Udi	ashes	2	žeqː {жекъ}	жекъ	žeqː	5
+21	Vartashen_Udi	ashes	2	iqː ~ yeqː {икъ ~ йекъ}	икъ ~ йекъ	iqː ~ yeqː	5
+22	Archi	ashes	2	diqʼːˤ-	diqʼːˤ-	diqʼːˤ-	5
+23	Kryts_proper	ashes	2	räq	räq	räq	5
+24	Alyk_Kryts	ashes	2	raq	raq	raq	5
+25	Budukh	ashes	2	req {рехъ}	рехъ	req	5
+26	Mishlesh_Tsakhur	ashes	2	yiqˤ- {йиIхъ, йыIхъ}	йиIхъ, йыIхъ	yiqˤ-	5
+27	Mikik_Tsakhur	ashes	2	yɨqːˤ-	yɨqːˤ-	yɨqːˤ-	5
+28	Gelmets_Tsakhur	ashes	2	yɨqːˤ-	yɨqːˤ-	yɨqːˤ-	5
+29	Mukhad_Rutul	ashes	2	rɨqˤ- {рыIхъ}	рыIхъ	rɨqˤ-	5
+30	Ixrek_Rutul	ashes	2	rɨqːˤ- {рыIхъ}	рыIхъ	rɨqːˤ-	5
+31	Luchek_Rutul	ashes	2	rɨqˤ	rɨqˤ	rɨqˤ	5
+32	Koshan_Aghul	ashes	2	ruqːˤ	ruqːˤ	ruqːˤ	5
+33	Keren_Aghul	ashes	2	ruqːˤ	ruqːˤ	ruqːˤ	5
+34	Gequn_Aghul	ashes	2	rüqːʸ	rüqːʸ	rüqːʸ	5
+35	Fite_Aghul	ashes	2	ruqːˤ	ruqːˤ	ruqːˤ	5
+36	Aghul_proper	ashes	2	rüqː	rüqː	rüqː	5
+37	Northern_Tabasaran	ashes	2	rˈuqːˤ-u	rˈuqːˤ-u	rˈuqːˤ-u	5
+38	Southern_Tabasaran	ashes	2	ruqːˤ	ruqːˤ	ruqːˤ	5
+39	Gyune_Lezgi	ashes	2	rüq	rüq	rüq	5
+40	Outgroup_Chechen	ashes	2	yuqʼ {юкъ}	юкъ	yuqʼ	6
+#
+41	Nidzh_Udi	bark	3	qˤol {хъоъл}	хъоъл	qˤol	7
+42	Vartashen_Udi	bark	3	qˤol {хъоъл}	хъоъл	qˤol	7
+43	Archi	bark	3	pˈaqʼut	pˈaqʼut	pˈaqʼut	8
+44	Kryts_proper	bark	3	qːabuχ ~ qːabuʁ	qːabuχ ~ qːabuʁ	qːabuχ ~ qːabuʁ	-500
+45	Alyk_Kryts	bark	3	qːabuʁ	qːabuʁ	qːabuʁ	-501
+46	Budukh	bark	3	qːabuʁ {къабугъ}	къабугъ	qːabuʁ	-502
+47	Mishlesh_Tsakhur	bark	3	qʼabɨχ {кьабых}	кьабых	qʼabɨχ	-503
+48	Mikik_Tsakhur	bark	3	qʼabɨχ	qʼabɨχ	qʼabɨχ	-504
+49	Gelmets_Tsakhur	bark	3	qʼabɨχ	qʼabɨχ	qʼabɨχ	-505
+50	Mukhad_Rutul	bark	3	ǯigal {джигал}	джигал	ǯigal	9
+51	Ixrek_Rutul	bark	3	ǯigal {джигал}	джигал	ǯigal	9
+52	Luchek_Rutul	bark	3	ǯugal	ǯugal	ǯugal	9
+53	Koshan_Aghul	bark	3	gal	gal	gal	7
+54	Keren_Aghul	bark	3	gužal	gužal	gužal	9
+55	Gequn_Aghul	bark	3	qːark	qːark	qːark	10
+56	Fite_Aghul	bark	3	qːark	qːark	qːark	10
+57	Aghul_proper	bark	3	qːark	qːark	qːark	10
+58	Northern_Tabasaran	bark	3	ɣal	ɣal	ɣal	7
+59	Southern_Tabasaran	bark	3	ɣal	ɣal	ɣal	7
+60	Gyune_Lezgi	bark	3	čikːal	čikːal	čikːal	9
+61	Outgroup_Chechen	bark	3	kewst-ig {кевстиг}	кевстиг	kewst-ig	11
+#
+62	Nidzh_Udi	belly	4	tapan {тапан}	тапан	tapan	12
+63	Vartashen_Udi	belly	4	bukun {букун}	букун	bukun	13
+64	Archi	belly	4	lˈagi	lˈagi	lˈagi	14
+65	Kryts_proper	belly	4	fän	fän	fän	15
+66	Alyk_Kryts	belly	4	fan	fan	fan	15
+67	Budukh	belly	4	təpən {тапан}	тапан	təpən	12
+68	Mishlesh_Tsakhur	belly	4	wuxun {вухьун}	вухьун	wuxun	15
+69	Mikik_Tsakhur	belly	4	wuxun ~ wuxɨn	wuxun ~ wuxɨn	wuxun ~ wuxɨn	15
+70	Gelmets_Tsakhur	belly	4	uxunʸ	uxunʸ	uxunʸ	15
+71	Mukhad_Rutul	belly	4	uxun {ухьун}	ухьун	uxun	15
+72	Ixrek_Rutul	belly	4	ämräz {аьмраьз}	аьмраьз	ämräz	-506
+73	Luchek_Rutul	belly	4	iči	iči	iči	-507
+74	Koshan_Aghul	belly	4	fun	fun	fun	15
+75	Keren_Aghul	belly	4	fun	fun	fun	15
+76	Gequn_Aghul	belly	4	fun	fun	fun	15
+77	Fite_Aghul	belly	4	fun	fun	fun	15
+78	Aghul_proper	belly	4	fun	fun	fun	15
+79	Northern_Tabasaran	belly	4	fun	fun	fun	15
+80	Southern_Tabasaran	belly	4	fun	fun	fun	15
+81	Gyune_Lezgi	belly	4	rufˈun	rufˈun	rufˈun	15
+82	Outgroup_Chechen	belly	4	gay ~ geː {гай ~ гē}	гай ~ гē	gay ~ geː	16
+#
+83	Nidzh_Udi	big	5	kala {кала}	кала	kala	-508
+84	Vartashen_Udi	big	5	kala {кала}	кала	kala	-509
+85	Archi	big	5	dˈoːˤz-u-class	dˈoːˤz-u-class	dˈoːˤz-u-class	17
+86	Kryts_proper	big	5	bu	bu	bu	18
+87	Alyk_Kryts	big	5	buʔu	buʔu	buʔu	18
+88	Budukh	big	5	boʕlu {богIлу}	богIлу	boʕlu	18
+89	Mishlesh_Tsakhur	big	5	χe-class-n {херна, хедын}	херна, хедын	χe-class-n	19
+90	Mikik_Tsakhur	big	5	χe-class-n	χe-class-n	χe-class-n	19
+91	Gelmets_Tsakhur	big	5	χˤa-class-nʸ	χˤa-class-nʸ	χˤa-class-nʸ	19
+92	Mukhad_Rutul	big	5	qʼux-dɨ ~ qʼux-du {кьухьду}	кьухьду	qʼux-dɨ ~ qʼux-du	20
+93	Ixrek_Rutul	big	5	qˤač-dɨ {хъаIчды}	хъаIчды	qˤač-dɨ	21
+94	Luchek_Rutul	big	5	qʼʷaxʸ-dɨ	qʼʷaxʸ-dɨ	qʼʷaxʸ-dɨ	20
+95	Koshan_Aghul	big	5	ʢaba-ni-r	ʢaba-ni-r	ʢaba-ni-r	18
+96	Keren_Aghul	big	5	baba-f	baba-f	baba-f	22
+97	Gequn_Aghul	big	5	aHa-f	aHa-f	aHa-f	19
+98	Fite_Aghul	big	5	aχˤa-t	aχˤa-t	aχˤa-t	19
+99	Aghul_proper	big	5	ʜa-f	ʜa-f	ʜa-f	19
+100	Northern_Tabasaran	big	5	aχːˤˈi	aχːˤˈi	aχːˤˈi	19
+101	Southern_Tabasaran	big	5	aχˤˈu	aχˤˈu	aχˤˈu	19
+102	Gyune_Lezgi	big	5	čʼiqˈi	čʼiqˈi	čʼiqˈi	23
+103	Outgroup_Chechen	big	5	d=oqqa {доккха}	доккха	d=oqqa	24
+#
+104	Nidzh_Udi	bird	6	qːuš {къуш}	къуш	qːuš	-510
+105	Vartashen_Udi	bird	6	qːuš {къуш}	къуш	qːuš	-511
+106	Archi	bird	6	nocʼ	nocʼ	nocʼ	25
+107	Kryts_proper	bird	6	qːuš	qːuš	qːuš	-512
+108	Alyk_Kryts	bird	6	qːuš	qːuš	qːuš	-513
+109	Budukh	bird	6	qːuš {къуш}	къуш	qːuš	-514
+110	Mishlesh_Tsakhur	bird	6	šitʼʸ {шитIʹ}	шитIʹ	šitʼʸ	26
+111	Mikik_Tsakhur	bird	6	qːuš	qːuš	qːuš	-515
+112	Gelmets_Tsakhur	bird	6	qːuš	qːuš	qːuš	-516
+113	Mukhad_Rutul	bird	6	naχčir {нахчир}	нахчир	naχčir	-517
+114	Ixrek_Rutul	bird	6	šey {шей}	шей	šey	-518
+115	Luchek_Rutul	bird	6	šey	šey	šey	-519
+116	Koshan_Aghul	bird	6	ǯaqʼʷ	ǯaqʼʷ	ǯaqʼʷ	27
+117	Gequn_Aghul	bird	6	naχšir	naχšir	naχšir	-520
+118	Aghul_proper	bird	6	qːuš	qːuš	qːuš	-521
+119	Gyune_Lezgi	bird	6	qːuš	qːuš	qːuš	-522
+120	Outgroup_Chechen	bird	6	olxazar {олхазар}	олхазар	olxazar	28
+#
+121	Nidzh_Udi	bite	7	kašˤ-p-sun {кашIпсун}	кашIпсун	kašˤ-p-sun	29
+122	Vartashen_Udi	bite	7	kašˤ-p-sun {кашIпсун}	кашIпсун	kašˤ-p-sun	29
+123	Archi	bite	7	=|eq"":a-	=|eq"":a-	=|eq"":a-	30
+124	Kryts_proper	bite	7	kʼɨs-	kʼɨs-	kʼɨs-	31
+125	Alyk_Kryts	bite	7	kʼis-	kʼis-	kʼis-	31
+126	Budukh	bite	7	kʼusu- {кIусу-}	кIусу-	kʼusu-	31
+127	Mishlesh_Tsakhur	bite	7	acʼ=akʼʷan- {ацIакIван-}	ацIакIван-	acʼ=akʼʷan-	33
+128	Mikik_Tsakhur	bite	7	acʼ=akʼʷan-	acʼ=akʼʷan-	acʼ=akʼʷan-	33
+129	Gelmets_Tsakhur	bite	7	acʼ=okʼon-	acʼ=okʼon-	acʼ=okʼon-	33
+130	Mukhad_Rutul	bite	7	sɨs aʔ- {сыс ваъас}	сыс ваъас	sɨs aʔ-	34
+131	Ixrek_Rutul	bite	7	sɨs haʔ- {сыс гьаькьын}	сыс гьаькьын	sɨs haʔ-	34
+132	Luchek_Rutul	bite	7	sɨs aʔ-	sɨs aʔ-	sɨs aʔ-	34
+133	Koshan_Aghul	bite	7	qʼacʼay-kʼi-	qʼacʼay-kʼi-	qʼacʼay-kʼi-	35
+134	Keren_Aghul	bite	7	qʼacʼi-kʼa-	qʼacʼi-kʼa-	qʼacʼi-kʼa-	35
+135	Aghul_proper	bite	7	qʼacʼi-kʼa-	qʼacʼi-kʼa-	qʼacʼi-kʼa-	35
+136	Northern_Tabasaran	bite	7	qʼacʼ-ˈar ˈax-	qʼacʼ-ˈar ˈax-	qʼacʼ-ˈar ˈax-	35
+137	Southern_Tabasaran	bite	7	qʼacʼ apʼ-	qʼacʼ apʼ-	qʼacʼ apʼ-	35
+138	Gyune_Lezgi	bite	7	kʼˈas-	kʼˈas-	kʼˈas-	31
+139	Outgroup_Chechen	bite	7	cerg-aš y=oxka {цергаш йохка}	цергаш йохка	cerg-aš y=oxka	36
+140	Kryts_proper	bite	7	kʼɨp-	kʼɨp-	kʼɨp-	32
+#
+141	Nidzh_Udi	black	8	maˤyi-n {маъйиън}	маъйиън	maˤyi-n	37
+142	Vartashen_Udi	black	8	maˤi-n {маъиън}	маъиън	maˤi-n	37
+143	Archi	black	8	beχːˤˈe-tːu-class	beχːˤˈe-tːu-class	beχːˤˈe-tːu-class	38
+144	Kryts_proper	black	8	läħä	läħä	läħä	38
+145	Alyk_Kryts	black	8	leha	leha	leha	38
+146	Budukh	black	8	laʕa {лагIа}	лагIа	laʕa	38
+147	Mishlesh_Tsakhur	black	8	kʼarɨ-n {кIарын}	кIарын	kʼarɨ-n	39
+148	Mikik_Tsakhur	black	8	kʼaːrɨ-n	kʼaːrɨ-n	kʼaːrɨ-n	39
+149	Gelmets_Tsakhur	black	8	kʼarɨ-nʸ	kʼarɨ-nʸ	kʼarɨ-nʸ	39
+150	Mukhad_Rutul	black	8	lɨχˤ-dɨ {лыIхды}	лыIхды	lɨχˤ-dɨ	38
+151	Ixrek_Rutul	black	8	lɨχˤ-dɨ {лыIхды}	лыIхды	lɨχˤ-dɨ	38
+152	Luchek_Rutul	black	8	lɨχˤ-dɨ	lɨχˤ-dɨ	lɨχˤ-dɨ	38
+153	Koshan_Aghul	black	8	kʼere-r	kʼere-r	kʼere-r	39
+154	Keren_Aghul	black	8	kʼare-f	kʼare-f	kʼare-f	39
+155	Gequn_Aghul	black	8	kʼare-f	kʼare-f	kʼare-f	39
+156	Fite_Aghul	black	8	kʼari-t	kʼari-t	kʼari-t	39
+157	Aghul_proper	black	8	kʼare-f	kʼare-f	kʼare-f	39
+158	Northern_Tabasaran	black	8	kʼarˈi	kʼarˈi	kʼarˈi	39
+159	Southern_Tabasaran	black	8	kʼarˈu	kʼarˈu	kʼarˈu	39
+160	Gyune_Lezgi	black	8	čʼulˈaw	čʼulˈaw	čʼulˈaw	40
+161	Outgroup_Chechen	black	8	ʕärž-a {Iаьржа}	Iаьржа	ʕärž-a	40
+#
+162	Nidzh_Udi	blood	9	pːi {пIи}	пIи	pːi	41
+163	Vartashen_Udi	blood	9	pːi {пIи}	пIи	pːi	41
+164	Archi	blood	9	bi	bi	bi	41
+165	Kryts_proper	blood	9	irä-ǯ	irä-ǯ	irä-ǯ	42
+166	Alyk_Kryts	blood	9	ira-ǯ	ira-ǯ	ira-ǯ	42
+167	Budukh	blood	9	ir-d {ирд}	ирд	ir-d	42
+168	Mishlesh_Tsakhur	blood	9	e-b {эб}	эб	e-b	43
+169	Mikik_Tsakhur	blood	9	e-b	e-b	e-b	43
+170	Gelmets_Tsakhur	blood	9	e-bi	e-bi	e-bi	43
+171	Mukhad_Rutul	blood	9	e-bir ~ ä-bir {эбир ~ аьбир}	эбир ~ аьбир	e-bir ~ ä-bir	43
+172	Ixrek_Rutul	blood	9	e-bɨr {эбыр}	эбыр	e-bɨr	43
+173	Luchek_Rutul	blood	9	e-bɨr	e-bɨr	e-bɨr	43
+174	Koshan_Aghul	blood	9	i	i	i	43
+175	Keren_Aghul	blood	9	iʔ	iʔ	iʔ	43
+176	Gequn_Aghul	blood	9	iʔ	iʔ	iʔ	43
+177	Fite_Aghul	blood	9	iʔ	iʔ	iʔ	43
+178	Aghul_proper	blood	9	iʔ	iʔ	iʔ	43
+179	Northern_Tabasaran	blood	9	i-wˈi	i-wˈi	i-wˈi	43
+180	Southern_Tabasaran	blood	9	i-fˈi	i-fˈi	i-fˈi	43
+181	Gyune_Lezgi	blood	9	i-wˈi	i-wˈi	i-wˈi	43
+182	Outgroup_Chechen	blood	9	cʼiy {цIий}	цIий	cʼiy	45
+183	Mishlesh_Tsakhur	blood	9	e=b	e=b	e=b	41
+184	Mikik_Tsakhur	blood	9	e=b	e=b	e=b	41
+185	Gelmets_Tsakhur	blood	9	e=bi	e=bi	e=bi	41
+186	Mukhad_Rutul	blood	9	e=bir	e=bir	e=bir	41
+187	Ixrek_Rutul	blood	9	e=bɨr	e=bɨr	e=bɨr	41
+188	Luchek_Rutul	blood	9	e=bɨr	e=bɨr	e=bɨr	41
+189	Northern_Tabasaran	blood	9	i=wˈi	i=wˈi	i=wˈi	44
+190	Southern_Tabasaran	blood	9	i=fˈi	i=fˈi	i=fˈi	44
+191	Gyune_Lezgi	blood	9	i=wˈi	i=wˈi	i=wˈi	44
+#
+192	Nidzh_Udi	bone	10	uqːˤen {уъкъеън}	уъкъеън	uqːˤen	46
+193	Vartashen_Udi	bone	10	uqːˤen {уъкъеън}	уъкъеън	uqːˤen	46
+194	Archi	bone	10	lˈekːi	lˈekːi	lˈekːi	47
+195	Kryts_proper	bone	10	kʼäräpʼ	kʼäräpʼ	kʼäräpʼ	48
+196	Alyk_Kryts	bone	10	kʼarapʼ	kʼarapʼ	kʼarapʼ	48
+197	Budukh	bone	10	kʼerepʼ {кIерепI}	кIерепI	kʼerepʼ	48
+198	Mishlesh_Tsakhur	bone	10	barkʼʷ {баркIв}	баркIв	barkʼʷ	49
+199	Mikik_Tsakhur	bone	10	barkʼʷ	barkʼʷ	barkʼʷ	49
+200	Gelmets_Tsakhur	bone	10	barkʼʷ	barkʼʷ	barkʼʷ	49
+201	Mukhad_Rutul	bone	10	qʼɨrɨb {кьырыб}	кьырыб	qʼɨrɨb	48
+202	Ixrek_Rutul	bone	10	qʼɨrɨb {кьырыб}	кьырыб	qʼɨrɨb	48
+203	Luchek_Rutul	bone	10	qʼɨrɨb	qʼɨrɨb	qʼɨrɨb	48
+204	Koshan_Aghul	bone	10	yirkː	yirkː	yirkː	46
+205	Keren_Aghul	bone	10	irkː	irkː	irkː	46
+206	Gequn_Aghul	bone	10	irkː	irkː	irkː	46
+207	Fite_Aghul	bone	10	irkː	irkː	irkː	46
+208	Aghul_proper	bone	10	irkː	irkː	irkː	46
+209	Northern_Tabasaran	bone	10	yˈirkː-i	yˈirkː-i	yˈirkː-i	46
+210	Southern_Tabasaran	bone	10	kʼurˈab	kʼurˈab	kʼurˈab	48
+211	Gyune_Lezgi	bone	10	kʼarˈab	kʼarˈab	kʼarˈab	48
+212	Outgroup_Chechen	bone	10	däʕaxk {даьIахк}	даьIахк	däʕaxk	46
+#
+213	Nidzh_Udi	breast	11	šˤaqː {шIаъкъ ~ шаъкъ}	шIаъкъ ~ шаъкъ	šˤaqː	50
+214	Vartashen_Udi	breast	11	aqˤ {аъхъ}	аъхъ	aqˤ	51
+215	Archi	breast	11	χˈatum	χˈatum	χˈatum	52
+216	Kryts_proper	breast	11	maχar	maχar	maχar	53
+217	Alyk_Kryts	breast	11	maχar	maχar	maχar	53
+218	Budukh	breast	11	maχar {махар}	махар	maχar	53
+219	Mishlesh_Tsakhur	breast	11	koksi {кокси}	кокси	koksi	-523
+220	Mikik_Tsakhur	breast	11	koksɨ	koksɨ	koksɨ	-524
+221	Gelmets_Tsakhur	breast	11	koksɨ	koksɨ	koksɨ	-525
+222	Mukhad_Rutul	breast	11	mɨχɨr {мыхыр}	мыхыр	mɨχɨr	53
+223	Ixrek_Rutul	breast	11	mɨχɨr {мыхыр}	мыхыр	mɨχɨr	53
+224	Luchek_Rutul	breast	11	mɨχɨr	mɨχɨr	mɨχɨr	53
+225	Koshan_Aghul	breast	11	muχur	muχur	muχur	53
+226	Keren_Aghul	breast	11	muχur	muχur	muχur	53
+227	Gequn_Aghul	breast	11	muχur	muχur	muχur	53
+228	Fite_Aghul	breast	11	muχur	muχur	muχur	53
+229	Aghul_proper	breast	11	muχur	muχur	muχur	53
+230	Northern_Tabasaran	breast	11	muχˈur	muχˈur	muχˈur	53
+231	Southern_Tabasaran	breast	11	muχˈur	muχˈur	muχˈur	53
+232	Gyune_Lezgi	breast	11	χur	χur	χur	53
+233	Outgroup_Chechen	breast	11	naːqa {нāкха}	нāкха	naːqa	53
+#
+234	Nidzh_Udi	burn tr.	12	bokː-b-esun {бокIбесун}	бокIбесун	bokː-b-esun	54
+235	Vartashen_Udi	burn tr.	12	bokː-en-b-esun ~ bokː-es-b-esun	bokː-en-b-esun ~ bokː-es-b-esun	bokː-en-b-esun ~ bokː-es-b-esun	54
+236	Archi	burn tr.	12	=ˈokːa- ~ =ˈukːa-	=ˈokːa- ~ =ˈukːa-	=ˈokːa- ~ =ˈukːa-	54
+237	Kryts_proper	burn tr.	12	uga-	uga-	uga-	54
+238	Alyk_Kryts	burn tr.	12	ugu-	ugu-	ugu-	54
+239	Budukh	burn tr.	12	s=ugu-r- {сугур-}	сугур-	s=ugu-r-	54
+240	Mishlesh_Tsakhur	burn tr.	12	gʸ=oxːʷan-aʔ- {гёххьан-аъ-ас, гёйхьван-ейъ-ас}	гёххьан-аъ-ас, гёйхьван-ейъ-ас	gʸ=oxːʷan-aʔ-	55
+241	Mikik_Tsakhur	burn tr.	12	gʸ=oxːan-aʔ-	gʸ=oxːan-aʔ-	gʸ=oxːan-aʔ-	55
+242	Gelmets_Tsakhur	burn tr.	12	gʸ=oxːan-aʔ- {гёххьан-аъ-}	гёххьан-аъ-	gʸ=oxːan-aʔ-	55
+243	Mukhad_Rutul	burn tr.	12	h=ux-a aʔ- {ъудхьа-ъас}	ъудхьа-ъас	h=ux-a aʔ-	55
+244	Ixrek_Rutul	burn tr.	12	h=ux-ä haʔ- {гьудхьаь гьаькьын}	гьудхьаь гьаькьын	h=ux-ä haʔ-	55
+245	Luchek_Rutul	burn tr.	12	l=ikʼ-u aʔ-	l=ikʼ-u aʔ-	l=ikʼ-u aʔ-	56
+246	Koshan_Aghul	burn tr.	12	uršː-ana-	uršː-ana-	uršː-ana-	57
+247	Keren_Aghul	burn tr.	12	ug-a-	ug-a-	ug-a-	54
+248	Gequn_Aghul	burn tr.	12	ugʷ-a-	ugʷ-a-	ugʷ-a-	54
+249	Aghul_proper	burn tr.	12	ug-a-	ug-a-	ug-a-	54
+250	Northern_Tabasaran	burn tr.	12	ug-ˈ	ug-ˈ	ug-ˈ	54
+251	Southern_Tabasaran	burn tr.	12	ug-ˈ	ug-ˈ	ug-ˈ	54
+252	Gyune_Lezgi	burn tr.	12	kːu-	kːu-	kːu-	54
+253	Outgroup_Chechen	burn tr.	12	d=aːg-oː {дāгō}	дāгō	d=aːg-oː	56
+#
+254	Nidzh_Udi	claw (nail)	13	muχ {мух}	мух	muχ	58
+255	Vartashen_Udi	claw (nail)	13	muχ {мух}	мух	muχ	58
+256	Archi	claw (nail)	13	ƛʼontʼˈol	ƛʼontʼˈol	ƛʼontʼˈol	59
+257	Kryts_proper	claw (nail)	13	mičʼ-ek	mičʼ-ek	mičʼ-ek	60
+258	Alyk_Kryts	claw (nail)	13	dirnaχ	dirnaχ	dirnaχ	-526
+259	Budukh	claw (nail)	13	dɨrnaʁ {дырнагъ}	дырнагъ	dɨrnaʁ	-527
+260	Mishlesh_Tsakhur	claw (nail)	13	xubana {хьубана}	хьубана	xubana	58
+261	Mikik_Tsakhur	claw (nail)	13	xɨwna	xɨwna	xɨwna	58
+262	Gelmets_Tsakhur	claw (nail)	13	xɨbɨna	xɨbɨna	xɨbɨna	58
+263	Mukhad_Rutul	claw (nail)	13	xäb ~ xeb {хьеб}	хьеб	xäb ~ xeb	58
+264	Ixrek_Rutul	claw (nail)	13	xeb {хьеб}	хьеб	xeb	58
+265	Luchek_Rutul	claw (nail)	13	xeb	xeb	xeb	58
+266	Koshan_Aghul	claw (nail)	13	kirk	kirk	kirk	61
+267	Keren_Aghul	claw (nail)	13	kirk	kirk	kirk	61
+268	Gequn_Aghul	claw (nail)	13	kerkʷ	kerkʷ	kerkʷ	61
+269	Fite_Aghul	claw (nail)	13	kirk	kirk	kirk	61
+270	Aghul_proper	claw (nail)	13	kirk	kirk	kirk	61
+271	Northern_Tabasaran	claw (nail)	13	šaw	šaw	šaw	58
+272	Southern_Tabasaran	claw (nail)	13	šib	šib	šib	58
+273	Gyune_Lezgi	claw (nail)	13	kek	kek	kek	61
+274	Outgroup_Chechen	claw (nail)	13	mʕaːra ~ maʕar {мIāра ~ маIар}	мIāра ~ маIар	mʕaːra ~ maʕar	58
+#
+275	Nidzh_Udi	cloud	14	aso-y {асой}	асой	aso-y	62
+276	Vartashen_Udi	cloud	14	haso {гьасо}	гьасо	haso	62
+277	Archi	cloud	14	diɬːʷ-	diɬːʷ-	diɬːʷ-	63
+278	Kryts_proper	cloud	14	kʼäbäl	kʼäbäl	kʼäbäl	64
+279	Alyk_Kryts	cloud	14	kʼapʼal	kʼapʼal	kʼapʼal	64
+280	Budukh	cloud	14	bulut {булут}	булут	bulut	-528
+281	Mishlesh_Tsakhur	cloud	14	gɨmɨlʸ {гымылʹ}	гымылʹ	gɨmɨlʸ	65
+282	Mikik_Tsakhur	cloud	14	gumulʸ ~ gɨmɨlʸ	gumulʸ ~ gɨmɨlʸ	gumulʸ ~ gɨmɨlʸ	65
+283	Gelmets_Tsakhur	cloud	14	gɨmɨlʸ	gɨmɨlʸ	gɨmɨlʸ	65
+284	Mukhad_Rutul	cloud	14	gɨbul ~ gɨbɨl {гыбыл}	гыбыл	gɨbul ~ gɨbɨl	65
+285	Ixrek_Rutul	cloud	14	gɨbɨl {гыбыл}	гыбыл	gɨbɨl	65
+286	Luchek_Rutul	cloud	14	gɨbɨl	gɨbɨl	gɨbɨl	65
+287	Koshan_Aghul	cloud	14	qːiri	qːiri	qːiri	-529
+288	Keren_Aghul	cloud	14	qːiri	qːiri	qːiri	-530
+289	Gequn_Aghul	cloud	14	qːiri	qːiri	qːiri	-531
+290	Fite_Aghul	cloud	14	amsar	amsar	amsar	62
+291	Aghul_proper	cloud	14	qːiri	qːiri	qːiri	-532
+292	Northern_Tabasaran	cloud	14	aˈms-a	aˈms-a	aˈms-a	62
+293	Southern_Tabasaran	cloud	14	ǯif	ǯif	ǯif	63
+294	Gyune_Lezgi	cloud	14	cːif	cːif	cːif	63
+295	Outgroup_Chechen	cloud	14	marxa {марха}	марха	marxa	66
+296	Alyk_Kryts	cloud	14	ǯif	ǯif	ǯif	63
+#
+297	Nidzh_Udi	cold	15	čaχ {чах}	чах	čaχ	67
+298	Vartashen_Udi	cold	15	čaχ {чах}	чах	čaχ	67
+299	Archi	cold	15	χˤˈe-tːu-class	χˤˈe-tːu-class	χˤˈe-tːu-class	68
+300	Kryts_proper	cold	15	s=aʁa-y	s=aʁa-y	s=aʁa-y	69
+301	Alyk_Kryts	cold	15	qːa-y	qːa-y	qːa-y	69
+302	Budukh	cold	15	s=aʁa {сагъа}	сагъа	s=aʁa	69
+303	Mishlesh_Tsakhur	cold	15	mɨkʼa-n {мыкIан}	мыкIан	mɨkʼa-n	70
+304	Mikik_Tsakhur	cold	15	mɨkʼa-n	mɨkʼa-n	mɨkʼa-n	70
+305	Gelmets_Tsakhur	cold	15	mɨkʼa-nʸ	mɨkʼa-nʸ	mɨkʼa-nʸ	70
+306	Mukhad_Rutul	cold	15	mɨqʼ-dɨ ~ muqʼ-dɨ {мыкьды}	мыкьды	mɨqʼ-dɨ ~ muqʼ-dɨ	70
+307	Ixrek_Rutul	cold	15	mɨqʼ-dɨ {мыкьды}	мыкьды	mɨqʼ-dɨ	70
+308	Luchek_Rutul	cold	15	mɨqʼ-dɨ	mɨqʼ-dɨ	mɨqʼ-dɨ	70
+309	Koshan_Aghul	cold	15	mikʼ-le-r	mikʼ-le-r	mikʼ-le-r	70
+310	Keren_Aghul	cold	15	ruʁu-f	ruʁu-f	ruʁu-f	69
+311	Gequn_Aghul	cold	15	ruʁu-f	ruʁu-f	ruʁu-f	69
+312	Fite_Aghul	cold	15	ruʁu-t	ruʁu-t	ruʁu-t	69
+313	Aghul_proper	cold	15	ruʁu-f	ruʁu-f	ruʁu-f	69
+314	Northern_Tabasaran	cold	15	aqˤ-lˈi	aqˤ-lˈi	aqˤ-lˈi	68
+315	Southern_Tabasaran	cold	15	ʁ=ˈaʁu	ʁ=ˈaʁu	ʁ=ˈaʁu	69
+316	Gyune_Lezgi	cold	15	qːa-yˈi	qːa-yˈi	qːa-yˈi	69
+317	Outgroup_Chechen	cold	15	šiyla {шийла}	шийла	šiyla	71
+#
+318	Nidzh_Udi	come	16	ey- ~ e- {ейсун ~ эйсун}	ейсун ~ эйсун	ey- ~ e-	72
+319	Vartashen_Udi	come	16	ey- ~ e- {есун ~ ейсун}	есун ~ ейсун	ey- ~ e-	72
+320	Archi	come	16	=ˈaƛi-	=ˈaƛi-	=ˈaƛi-	74
+321	Kryts_proper	come	16	ʕ=ušχä-	ʕ=ušχä-	ʕ=ušχä-	75
+322	Alyk_Kryts	come	16	ʕ=ašxa-	ʕ=ašxa-	ʕ=ašxa-	75
+323	Budukh	come	16	ʕ=ašχa- {гIашха-}	гIашха-	ʕ=ašχa-	75
+324	Mishlesh_Tsakhur	come	16	q=aʔ- {хъарий}	хъарий	q=aʔ-	73
+325	Mikik_Tsakhur	come	16	q=aʔ-	q=aʔ-	q=aʔ-	73
+326	Gelmets_Tsakhur	come	16	q=iʔ-	q=iʔ-	q=iʔ-	73
+327	Mukhad_Rutul	come	16	class=iʔi {йикьас, йиркьын}	йикьас, йиркьын	class=iʔi	73
+328	Ixrek_Rutul	come	16	class=iʔi {йиркьын}	йиркьын	class=iʔi	73
+329	Luchek_Rutul	come	16	class=iʔi	class=iʔi	class=iʔi	73
+330	Koshan_Aghul	come	16	waˤ-y-	waˤ-y-	waˤ-y-	72
+331	Keren_Aghul	come	16	ad-i-	ad-i-	ad-i-	74
+332	Gequn_Aghul	come	16	waˤ-	waˤ-	waˤ-	72
+333	Fite_Aghul	come	16	ad-a-	ad-a-	ad-a-	74
+334	Aghul_proper	come	16	we-y-	we-y-	we-y-	72
+335	Northern_Tabasaran	come	16	ɢˤ-	ɢˤ-	ɢˤ-	72
+336	Southern_Tabasaran	come	16	ʁˤ-	ʁˤ-	ʁˤ-	72
+337	Gyune_Lezgi	come	16	qːʷe-	qːʷe-	qːʷe-	72
+338	Outgroup_Chechen	come	16	d=aː-n {дāн}	дāн	d=aː-n	73
+339	Nidzh_Udi	come	16	har-	har-	har-	73
+340	Vartashen_Udi	come	16	ar-	ar-	ar-	73
+341	Archi	come	16	=qˤˈa	=qˤˈa	=qˤˈa	72
+342	Kryts_proper	come	16	ʕ=uxu-	ʕ=uxu-	ʕ=uxu-	76
+343	Alyk_Kryts	come	16	ʕ=axu-	ʕ=axu-	ʕ=axu-	76
+344	Budukh	come	16	ʕ=axi- {гIахьи-}	гIахьи-	ʕ=axi-	76
+345	Mukhad_Rutul	come	16	y=iqʼ-ɨ-r	y=iqʼ-ɨ-r	y=iqʼ-ɨ-r	77
+346	Ixrek_Rutul	come	16	y=iqʼ-ɨ-r	y=iqʼ-ɨ-r	y=iqʼ-ɨ-r	77
+347	Luchek_Rutul	come	16	y=iqʼ-ɨ-r	y=iqʼ-ɨ-r	y=iqʼ-ɨ-r	77
+348	Koshan_Aghul	come	16	arg-i-	arg-i-	arg-i-	74
+349	Gequn_Aghul	come	16	ar-i-	ar-i-	ar-i-	74
+350	Aghul_proper	come	16	ad-ina-	ad-ina-	ad-ina-	74
+351	Northern_Tabasaran	come	16	af-ˈ	af-ˈ	af-ˈ	76
+352	Southern_Tabasaran	come	16	af-ˈ	af-ˈ	af-ˈ	76
+353	Gyune_Lezgi	come	16	atːˈa-	atːˈa-	atːˈa-	78
+#
+354	Nidzh_Udi	die	17	bi-esun {биесун}	биесун	bi-esun	79
+355	Vartashen_Udi	die	17	bi-esun {биесун}	биесун	bi-esun	79
+356	Archi	die	17	=k""|a-	=k""|a-	=k""|a-	79
+357	Kryts_proper	die	17	qʼäy-	qʼäy-	qʼäy-	79
+358	Alyk_Kryts	die	17	qʼäy-	qʼäy-	qʼäy-	79
+359	Budukh	die	17	s=aqʼa- {сакьа-, саркьар-}	сакьа-, саркьар-	s=aqʼa-	79
+360	Mishlesh_Tsakhur	die	17	q=ikʼ- {хъикIуй}	хъикIуй	q=ikʼ-	79
+361	Mikik_Tsakhur	die	17	q=ikʼ-	q=ikʼ-	q=ikʼ-	79
+362	Gelmets_Tsakhur	die	17	q=ikʼ-	q=ikʼ-	q=ikʼ-	79
+363	Mukhad_Rutul	die	17	class=iqʼ-i-r {йикьин}	йикьин	class=iqʼ-i-r	79
+364	Ixrek_Rutul	die	17	class=iqʼ-i-r {йикьин}	йикьин	class=iqʼ-i-r	79
+365	Luchek_Rutul	die	17	class=iqʼ-i-r	class=iqʼ-i-r	class=iqʼ-i-r	79
+366	Koshan_Aghul	die	17	kʼ-i-	kʼ-i-	kʼ-i-	79
+367	Keren_Aghul	die	17	kʼʸ-a-	kʼʸ-a-	kʼʸ-a-	79
+368	Gequn_Aghul	die	17	kʼ-e-	kʼ-e-	kʼ-e-	79
+369	Fite_Aghul	die	17	kʼ-e-	kʼ-e-	kʼ-e-	79
+370	Aghul_proper	die	17	kʼ-e-	kʼ-e-	kʼ-e-	79
+371	Northern_Tabasaran	die	17	yikʼ-	yikʼ-	yikʼ-	79
+372	Southern_Tabasaran	die	17	yikʼ-	yikʼ-	yikʼ-	79
+373	Gyune_Lezgi	die	17	r=äqʼˈi-	r=äqʼˈi-	r=äqʼˈi-	79
+374	Outgroup_Chechen	die	17	d=al-a {дала}	дала	d=al-a	79
+375	Nidzh_Udi	die	17	pːu-r-	pːu-r-	pːu-r-	80
+376	Vartashen_Udi	die	17	pːu-r-	pːu-r-	pːu-r-	80
+377	Gyune_Lezgi	die	17	qʼˈe-	qʼˈe-	qʼˈe-	79
+#
+378	Nidzh_Udi	dog	18	χˤa {хаъ}	хаъ	χˤa	81
+379	Vartashen_Udi	dog	18	χˤa {хаъ}	хаъ	χˤa	81
+380	Archi	dog	18	gʷˈači	gʷˈači	gʷˈači	-533
+381	Kryts_proper	dog	18	χʷar ~ χor	χʷar ~ χor	χʷar ~ χor	81
+382	Alyk_Kryts	dog	18	χʷar	χʷar	χʷar	81
+383	Budukh	dog	18	χor {хор}	хор	χor	81
+384	Mishlesh_Tsakhur	dog	18	χʷaː {хваа}	хваа	χʷaː	81
+385	Mikik_Tsakhur	dog	18	χʷaː	χʷaː	χʷaː	81
+386	Gelmets_Tsakhur	dog	18	χʷayä	χʷayä	χʷayä	81
+387	Mukhad_Rutul	dog	18	tɨla {тыла}	тыла	tɨla	-534
+388	Ixrek_Rutul	dog	18	tɨlä ~ tɨla {тылаь ~ тыла}	тылаь ~ тыла	tɨlä ~ tɨla	-535
+389	Luchek_Rutul	dog	18	tɨla	tɨla	tɨla	-536
+390	Koshan_Aghul	dog	18	χˤuy	χˤuy	χˤuy	81
+391	Keren_Aghul	dog	18	tula	tula	tula	-537
+392	Gequn_Aghul	dog	18	χuy	χuy	χuy	81
+393	Fite_Aghul	dog	18	χuy	χuy	χuy	81
+394	Aghul_proper	dog	18	ʁuy	ʁuy	ʁuy	81
+395	Northern_Tabasaran	dog	18	χuy	χuy	χuy	81
+396	Southern_Tabasaran	dog	18	χu	χu	χu	81
+397	Gyune_Lezgi	dog	18	kicʼ	kicʼ	kicʼ	82
+398	Outgroup_Chechen	dog	18	žʕäla {жIаьла}	жIаьла	žʕäla	-538
+#
+399	Nidzh_Udi	drink	19	uʁˤ-sun {уъгъсун}	уъгъсун	uʁˤ-sun	83
+400	Vartashen_Udi	drink	19	uʁˤ-sun ~ uʁˤ-esun {уъгъсун}	уъгъсун	uʁˤ-sun ~ uʁˤ-esun	83
+401	Archi	drink	19	cʼˈa-bu-	cʼˈa-bu-	cʼˈa-bu-	84
+402	Kryts_proper	drink	19	qːɨr-	qːɨr-	qːɨr-	83
+403	Alyk_Kryts	drink	19	qːir-	qːir-	qːir-	83
+404	Budukh	drink	19	s=eʁir- {сегъир-, согъуру}	сегъир-, согъуру	s=eʁir-	83
+405	Mishlesh_Tsakhur	drink	19	ilʸ=oʁ- {илёбгъий, илёдгъий}	илёбгъий, илёдгъий	ilʸ=oʁ-	83
+406	Mikik_Tsakhur	drink	19	ulʸ=oʁ-	ulʸ=oʁ-	ulʸ=oʁ-	83
+407	Gelmets_Tsakhur	drink	19	ulʸ=oʁ-	ulʸ=oʁ-	ulʸ=oʁ-	83
+408	Mukhad_Rutul	drink	19	class=raʁ- {рагъын}	рагъын	class=raʁ-	83
+409	Ixrek_Rutul	drink	19	class=raʁ- {рагъин, рагъас}	рагъин, рагъас	class=raʁ-	83
+410	Luchek_Rutul	drink	19	class=raʁˤ-	class=raʁˤ-	class=raʁˤ-	83
+411	Koshan_Aghul	drink	19	uχ-a-	uχ-a-	uχ-a-	85
+412	Keren_Aghul	drink	19	uχ-a-	uχ-a-	uχ-a-	85
+413	Gequn_Aghul	drink	19	uχ-a-	uχ-a-	uχ-a-	85
+414	Fite_Aghul	drink	19	uχ-a-	uχ-a-	uχ-a-	85
+415	Aghul_proper	drink	19	uχ-a-	uχ-a-	uχ-a-	85
+416	Northern_Tabasaran	drink	19	uɢ-ˈ	uɢ-ˈ	uɢ-ˈ	83
+417	Southern_Tabasaran	drink	19	uχ-ˈ	uχ-ˈ	uχ-ˈ	85
+418	Gyune_Lezgi	drink	19	qʷa-	qʷa-	qʷa-	86
+419	Outgroup_Chechen	drink	19	miyl-a {мийла}	мийла	miyl-a	87
+#
+420	Nidzh_Udi	dry	20	qːari {къари}	къари	qːari	88
+421	Vartashen_Udi	dry	20	qːari {къари}	къари	qːari	88
+422	Archi	dry	20	qʼurˈe-tːu-class	qʼurˈe-tːu-class	qʼurˈe-tːu-class	88
+423	Kryts_proper	dry	20	säʕ-y	säʕ-y	säʕ-y	89
+424	Alyk_Kryts	dry	20	saʔa	saʔa	saʔa	89
+425	Budukh	dry	20	saʔa {саъа}	саъа	saʔa	89
+426	Mishlesh_Tsakhur	dry	20	qːuru-n {къурун}	къурун	qːuru-n	88
+427	Mikik_Tsakhur	dry	20	qːuru-n	qːuru-n	qːuru-n	88
+428	Gelmets_Tsakhur	dry	20	qːuru-nʸ	qːuru-nʸ	qːuru-nʸ	88
+429	Mukhad_Rutul	dry	20	qːuru-d {къуруд}	къуруд	qːuru-d	88
+430	Ixrek_Rutul	dry	20	qːuru-dɨ {къуруды}	къуруды	qːuru-dɨ	88
+431	Luchek_Rutul	dry	20	qːuru-d	qːuru-d	qːuru-d	88
+432	Koshan_Aghul	dry	20	urqːa-r	urqːa-r	urqːa-r	88
+433	Keren_Aghul	dry	20	ruqːu-f	ruqːu-f	ruqːu-f	88
+434	Gequn_Aghul	dry	20	ruqːu-f	ruqːu-f	ruqːu-f	88
+435	Fite_Aghul	dry	20	ruqːu-t	ruqːu-t	ruqːu-t	88
+436	Aghul_proper	dry	20	ruqːu-f	ruqːu-f	ruqːu-f	88
+437	Northern_Tabasaran	dry	20	yiʒˈi	yiʒˈi	yiʒˈi	90
+438	Southern_Tabasaran	dry	20	ʁe=yˈecːu	ʁe=yˈecːu	ʁe=yˈecːu	90
+439	Gyune_Lezgi	dry	20	qʼurˈa-y	qʼurˈa-y	qʼurˈa-y	88
+440	Outgroup_Chechen	dry	20	d=eqʼ-a {декъа}	декъа	d=eqʼ-a	88
+#
+441	Nidzh_Udi	ear	21	um-uχˤ {уъмуъх}	уъмуъх	um-uχˤ	91
+442	Vartashen_Udi	ear	21	im-uχ	im-uχ	im-uχ	91
+443	Archi	ear	21	oy	oy	oy	91
+444	Kryts_proper	ear	21	ibɨr	ibɨr	ibɨr	91
+445	Alyk_Kryts	ear	21	ibur	ibur	ibur	91
+446	Budukh	ear	21	ibir {ибир}	ибир	ibir	91
+447	Mishlesh_Tsakhur	ear	21	kʼɨrɨ {кIыры}	кIыры	kʼɨrɨ	92
+448	Mikik_Tsakhur	ear	21	kʼɨrɨ	kʼɨrɨ	kʼɨrɨ	92
+449	Gelmets_Tsakhur	ear	21	kʼɨrɨ	kʼɨrɨ	kʼɨrɨ	92
+450	Mukhad_Rutul	ear	21	ubur {убур}	убур	ubur	91
+451	Ixrek_Rutul	ear	21	ubur {убур}	убур	ubur	91
+452	Luchek_Rutul	ear	21	ubur	ubur	ubur	91
+453	Koshan_Aghul	ear	21	iwir	iwir	iwir	91
+454	Keren_Aghul	ear	21	yabur	yabur	yabur	91
+455	Gequn_Aghul	ear	21	iwur	iwur	iwur	91
+456	Fite_Aghul	ear	21	ibur	ibur	ibur	91
+457	Aghul_proper	ear	21	ibur	ibur	ibur	91
+458	Northern_Tabasaran	ear	21	iw	iw	iw	91
+459	Southern_Tabasaran	ear	21	ib	ib	ib	91
+460	Gyune_Lezgi	ear	21	yab	yab	yab	91
+461	Outgroup_Chechen	ear	21	lerg {лерг}	лерг	lerg	93
+#
+462	Nidzh_Udi	earth	22	očˤal {очъал}	очъал	očˤal	94
+463	Vartashen_Udi	earth	22	kːul {кIул}	кIул	kːul	95
+464	Archi	earth	22	naqʼʷ	naqʼʷ	naqʼʷ	96
+465	Kryts_proper	earth	22	nöqʼ	nöqʼ	nöqʼ	96
+466	Alyk_Kryts	earth	22	neuqʼ	neuqʼ	neuqʼ	96
+467	Budukh	earth	22	noqʼ {нокь}	нокь	noqʼ	96
+468	Mishlesh_Tsakhur	earth	22	čʼiye {чIийе}	чIийе	čʼiye	97
+469	Mikik_Tsakhur	earth	22	nʸaqʼʷ	nʸaqʼʷ	nʸaqʼʷ	96
+470	Gelmets_Tsakhur	earth	22	nʸaqʼʷ	nʸaqʼʷ	nʸaqʼʷ	96
+471	Mukhad_Rutul	earth	22	naqʼʷ {накьв}	накьв	naqʼʷ	96
+472	Ixrek_Rutul	earth	22	neqʼʷ {некьв}	некьв	neqʼʷ	96
+473	Luchek_Rutul	earth	22	naqʼʷ	naqʼʷ	naqʼʷ	96
+474	Koshan_Aghul	earth	22	rug	rug	rug	98
+475	Keren_Aghul	earth	22	neqʼʷ	neqʼʷ	neqʼʷ	96
+476	Gequn_Aghul	earth	22	rug	rug	rug	98
+477	Fite_Aghul	earth	22	rug	rug	rug	98
+478	Aghul_proper	earth	22	rug	rug	rug	98
+479	Northern_Tabasaran	earth	22	rˈug-u	rˈug-u	rˈug-u	98
+480	Southern_Tabasaran	earth	22	rug	rug	rug	98
+481	Gyune_Lezgi	earth	22	rug	rug	rug	98
+482	Outgroup_Chechen	earth	22	latta {латта}	латта	latta	99
+#
+483	Nidzh_Udi	eat	23	uk-sun {уксун}	уксун	uk-sun	100
+484	Vartashen_Udi	eat	23	uk-sun {уксун}	уксун	uk-sun	100
+485	Archi	eat	23	=kʷan-	=kʷan-	=kʷan-	100
+486	Kryts_proper	eat	23	üʕl-	üʕl-	üʕl-	101
+487	Alyk_Kryts	eat	23	ul-	ul-	ul-	101
+488	Budukh	eat	23	s=oʡul- {соъул-}	соъул-	s=oʡul-	101
+489	Mishlesh_Tsakhur	eat	23	oxan- ~ oxʷan- {охьан-, эйхьван-}	охьан-, эйхьван-	oxan- ~ oxʷan-	102
+490	Mikik_Tsakhur	eat	23	oxan-	oxan-	oxan-	102
+491	Gelmets_Tsakhur	eat	23	oxan- {охьан-аз}	охьан-аз	oxan-	102
+492	Mukhad_Rutul	eat	23	class=ʔil- {илаьс}	илаьс	class=ʔil-	101
+493	Ixrek_Rutul	eat	23	il- {лиъин}	лиъин	il-	101
+494	Luchek_Rutul	eat	23	class=il-	class=il-	class=il-	101
+495	Koshan_Aghul	eat	23	ʡutʼ-ala-	ʡutʼ-ala-	ʡutʼ-ala-	101
+496	Keren_Aghul	eat	23	ʢutʼ-a-	ʢutʼ-a-	ʢutʼ-a-	101
+497	Gequn_Aghul	eat	23	Hal-di	Hal-di	Hal-di	101
+498	Fite_Aghul	eat	23	Hutʼ-a-	Hutʼ-a-	Hutʼ-a-	101
+499	Aghul_proper	eat	23	ʡal-di	ʡal-di	ʡal-di	101
+500	Northern_Tabasaran	eat	23	ˈüd-	ˈüd-	ˈüd-	101
+501	Southern_Tabasaran	eat	23	ipʼ-ˈ	ipʼ-ˈ	ipʼ-ˈ	101
+502	Gyune_Lezgi	eat	23	ne-	ne-	ne-	101
+503	Outgroup_Chechen	eat	23	d=aʔ-a {даа}	даа	d=aʔ-a	103
+504	Nidzh_Udi	eat	23	käy-	käy-	käy-	100
+505	Vartashen_Udi	eat	23	käy-	käy-	käy-	100
+506	Mukhad_Rutul	eat	23	liʔ-	liʔ-	liʔ-	101
+507	Ixrek_Rutul	eat	23	liʔ-	liʔ-	liʔ-	101
+508	Luchek_Rutul	eat	23	liʔ-	liʔ-	liʔ-	101
+509	Gequn_Aghul	eat	23	utʼ-una-	utʼ-una-	utʼ-una-	101
+510	Aghul_proper	eat	23	ʡutʼ-una-	ʡutʼ-una-	ʡutʼ-una-	101
+511	Northern_Tabasaran	eat	23	ˈuˤpʼ-	ˈuˤpʼ-	ˈuˤpʼ-	101
+512	Gyune_Lezgi	eat	23	tʼü-	tʼü-	tʼü-	101
+#
+513	Nidzh_Udi	egg	24	qokːla ~ qoqːla ~ qːoqla {хъокIла ~ хъокъла ~ къохъла}	хъокIла ~ хъокъла ~ къохъла	qokːla ~ qoqːla ~ qːoqla	104
+514	Vartashen_Udi	egg	24	qoqːla ~ χoχla ~ qoqla ~ qːoqːla ~ kokla ~ koχla {хъокъла}	хъокъла	qoqːla ~ χoχla ~ qoqla ~ qːoqːla ~ kokla ~ koχla	104
+515	Archi	egg	24	gˈenukː-	gˈenukː-	gˈenukː-	-539
+516	Kryts_proper	egg	24	kusuntʼ	kusuntʼ	kusuntʼ	105
+517	Alyk_Kryts	egg	24	kusχuntʼ	kusχuntʼ	kusχuntʼ	105
+518	Budukh	egg	24	kusxud {кусхьуд}	кусхьуд	kusxud	105
+519	Mishlesh_Tsakhur	egg	24	qʼuqʼ {кьукь}	кьукь	qʼuqʼ	106
+520	Mikik_Tsakhur	egg	24	qʼuqʼ	qʼuqʼ	qʼuqʼ	106
+521	Gelmets_Tsakhur	egg	24	qʼuqʼ	qʼuqʼ	qʼuqʼ	106
+522	Mukhad_Rutul	egg	24	ʁɨlɨʁ {гъылыгъ}	гъылыгъ	ʁɨlɨʁ	104
+523	Ixrek_Rutul	egg	24	ʁɨlɨʁ {гъылыгъ}	гъылыгъ	ʁɨlɨʁ	104
+524	Luchek_Rutul	egg	24	ʁɨlɨʁ	ʁɨlɨʁ	ʁɨlɨʁ	104
+525	Koshan_Aghul	egg	24	ʕuraʕa-n	ʕuraʕa-n	ʕuraʕa-n	104
+526	Keren_Aghul	egg	24	ʁˤaraʁa-l	ʁˤaraʁa-l	ʁˤaraʁa-l	104
+527	Gequn_Aghul	egg	24	ʁaraʁi-l	ʁaraʁi-l	ʁaraʁi-l	104
+528	Fite_Aghul	egg	24	ʁˤaraʁi-l	ʁˤaraʁi-l	ʁˤaraʁi-l	104
+529	Aghul_proper	egg	24	ʁuraʁa-l	ʁuraʁa-l	ʁuraʁa-l	104
+530	Northern_Tabasaran	egg	24	paːluχˤˈuw ~ peliχˤuw {пелихюв}	пелихюв	paːluχˤˈuw ~ peliχˤuw	107
+531	Southern_Tabasaran	egg	24	murtˈa	murtˈa	murtˈa	-540
+532	Gyune_Lezgi	egg	24	kːakːˈa	kːakːˈa	kːakːˈa	108
+533	Outgroup_Chechen	egg	24	hoa {хIоа}	хIоа	hoa	109
+#
+534	Nidzh_Udi	eye	25	pul {пул}	пул	pul	110
+535	Vartashen_Udi	eye	25	pul {пул}	пул	pul	110
+536	Archi	eye	25	l-ur	l-ur	l-ur	110
+537	Kryts_proper	eye	25	ʕül	ʕül	ʕül	110
+538	Alyk_Kryts	eye	25	ʕul	ʕul	ʕul	110
+539	Budukh	eye	25	ʕül {гIуьл}	гIуьл	ʕül	110
+540	Mishlesh_Tsakhur	eye	25	ulʸ {улʹ}	улʹ	ulʸ	110
+541	Mikik_Tsakhur	eye	25	ulʸ	ulʸ	ulʸ	110
+542	Gelmets_Tsakhur	eye	25	ulʸ	ulʸ	ulʸ	110
+543	Mukhad_Rutul	eye	25	ul {ул}	ул	ul	110
+544	Ixrek_Rutul	eye	25	ul {ул}	ул	ul	110
+545	Luchek_Rutul	eye	25	ul	ul	ul	110
+546	Koshan_Aghul	eye	25	il	il	il	110
+547	Keren_Aghul	eye	25	ul	ul	ul	110
+548	Gequn_Aghul	eye	25	ul	ul	ul	110
+549	Fite_Aghul	eye	25	ul	ul	ul	110
+550	Aghul_proper	eye	25	ul	ul	ul	110
+551	Northern_Tabasaran	eye	25	ul	ul	ul	110
+552	Southern_Tabasaran	eye	25	ul	ul	ul	110
+553	Gyune_Lezgi	eye	25	wil	wil	wil	110
+554	Outgroup_Chechen	eye	25	bʕärg {бIаьрг}	бIаьрг	bʕärg	110
+#
+2231	Nidzh_Udi	far	101	aχˤi-l {аъхиъл}	аъхиъл	aχˤi-l	445
+2232	Vartashen_Udi	far	101	aχˤi-l {аъхиъл}	аъхиъл	aχˤi-l	445
+2233	Archi	far	101	ˈaχ-ši	ˈaχ-ši	ˈaχ-ši	445
+2234	Kryts_proper	far	101	yuqː-ta	yuqː-ta	yuqː-ta	445
+2235	Alyk_Kryts	far	101	iχ-ta	iχ-ta	iχ-ta	445
+2236	Budukh	far	101	yɨχ-ta {йыхта}	йыхта	yɨχ-ta	445
+2237	Mishlesh_Tsakhur	far	101	aqʼˤa-na {акьаIна}	акьаIна	aqʼˤa-na	446
+2238	Mikik_Tsakhur	far	101	aqʼˤa-na	aqʼˤa-na	aqʼˤa-na	446
+2239	Gelmets_Tsakhur	far	101	aqʼˤa-na	aqʼˤa-na	aqʼˤa-na	446
+2240	Mukhad_Rutul	far	101	χɨr-ɨd-a {хырыда}	хырыда	χɨr-ɨd-a	445
+2241	Ixrek_Rutul	far	101	χɨr-ɨd-ä {хырыдаь}	хырыдаь	χɨr-ɨd-ä	445
+2242	Luchek_Rutul	far	101	χɨr-ɨd-ɨ	χɨr-ɨd-ɨ	χɨr-ɨd-ɨ	445
+2243	Koshan_Aghul	far	101	warχa-ʔ ~ warχa-l	warχa-ʔ ~ warχa-l	warχa-ʔ ~ warχa-l	445
+2244	Keren_Aghul	far	101	warχa-ʔ ~ warχa-l	warχa-ʔ ~ warχa-l	warχa-ʔ ~ warχa-l	445
+2245	Gequn_Aghul	far	101	warχa-ʔ ~ warχa-l	warχa-ʔ ~ warχa-l	warχa-ʔ ~ warχa-l	445
+2246	Fite_Aghul	far	101	warχa-d ~ warχa	warχa-d ~ warχa	warχa-d ~ warχa	445
+2247	Aghul_proper	far	101	warχa-l	warχa-l	warχa-l	445
+2248	Northern_Tabasaran	far	101	yarχu-lˈa	yarχu-lˈa	yarχu-lˈa	445
+2249	Southern_Tabasaran	far	101	yarχʷ-lˈa	yarχʷ-lˈa	yarχʷ-lˈa	445
+2250	Gyune_Lezgi	far	101	yarʁˈa-l	yarʁˈa-l	yarʁˈa-l	445
+2251	Outgroup_Chechen	far	101	geːna-ra {генара}	генара	geːna-ra	447
+#
+555	Nidzh_Udi	fat n.	26	bošin=čːäyin	bošin=čːäyin	bošin=čːäyin	111
+556	Vartashen_Udi	fat n.	26	čːäin	čːäin	čːäin	111
+557	Archi	fat n.	26	may ~ miy	may ~ miy	may ~ miy	112
+558	Kryts_proper	fat n.	26	mäʔ	mäʔ	mäʔ	112
+559	Alyk_Kryts	fat n.	26	maʔ	maʔ	maʔ	112
+560	Budukh	fat n.	26	maʔ {маъ}	маъ	maʔ	112
+561	Mishlesh_Tsakhur	fat n.	26	maʔ {маъ}	маъ	maʔ	112
+562	Mikik_Tsakhur	fat n.	26	maʔa	maʔa	maʔa	112
+563	Gelmets_Tsakhur	fat n.	26	maʔ	maʔ	maʔ	112
+564	Mukhad_Rutul	fat n.	26	maʔ {маъ}	маъ	maʔ	112
+565	Koshan_Aghul	fat n.	26	ħul	ħul	ħul	113
+566	Keren_Aghul	fat n.	26	maw	maw	maw	112
+567	Gequn_Aghul	fat n.	26	maw	maw	maw	112
+568	Fite_Aghul	fat n.	26	maw	maw	maw	112
+569	Aghul_proper	fat n.	26	yaʁ	yaʁ	yaʁ	114
+570	Northern_Tabasaran	fat n.	26	χˤul	χˤul	χˤul	113
+571	Southern_Tabasaran	fat n.	26	χˤul	χˤul	χˤul	113
+572	Gyune_Lezgi	fat n.	26	maqʼ	maqʼ	maqʼ	112
+573	Outgroup_Chechen	fat n.	26	moħ {мохь}	мохь	moħ	112
+#
+574	Nidzh_Udi	feather	27	maǯa {маджа}	маджа	maǯa	115
+575	Vartashen_Udi	feather	27	kuk	kuk	kuk	116
+576	Archi	feather	27	cal	cal	cal	118
+577	Kryts_proper	feather	27	kʷak	kʷak	kʷak	116
+578	Alyk_Kryts	feather	27	kuk	kuk	kuk	116
+579	Budukh	feather	27	qːanət {къанат}	къанат	qːanət	-541
+580	Mishlesh_Tsakhur	feather	27	wusun {вусун}	вусун	wusun	119
+581	Mikik_Tsakhur	feather	27	kuk-ra	kuk-ra	kuk-ra	116
+582	Gelmets_Tsakhur	feather	27	wɨsɨn	wɨsɨn	wɨsɨn	119
+583	Mukhad_Rutul	feather	27	maqˤaq ~ maɢˤaɢ {маIкъаIкъ}	маIкъаIкъ	maqˤaq ~ maɢˤaɢ	120
+584	Ixrek_Rutul	feather	27	pɨy {пый}	пый	pɨy	-542
+585	Luchek_Rutul	feather	27	maqˤaq	maqˤaq	maqˤaq	120
+586	Koshan_Aghul	feather	27	purcʼ	purcʼ	purcʼ	121
+587	Keren_Aghul	feather	27	pincʼ	pincʼ	pincʼ	121
+588	Gequn_Aghul	feather	27	murcʼ ~ purcʼ	murcʼ ~ purcʼ	murcʼ ~ purcʼ	121
+589	Fite_Aghul	feather	27	murcʼ	murcʼ	murcʼ	121
+590	Aghul_proper	feather	27	murcʼ	murcʼ	murcʼ	121
+591	Northern_Tabasaran	feather	27	ʁik	ʁik	ʁik	122
+592	Southern_Tabasaran	feather	27	cːikʷ	cːikʷ	cːikʷ	123
+593	Gyune_Lezgi	feather	27	cʼap-ˈur	cʼap-ˈur	cʼap-ˈur	121
+594	Outgroup_Chechen	feather	27	peːlag {пēлаг}	пēлаг	peːlag	124
+595	Vartashen_Udi	feather	27	posposkːal	posposkːal	posposkːal	117
+#
+596	Nidzh_Udi	fire	28	ar-uχ {арух}	арух	ar-uχ	125
+597	Vartashen_Udi	fire	28	ar-uχ {арух}	арух	ar-uχ	125
+598	Archi	fire	28	ocʼ	ocʼ	ocʼ	125
+599	Kryts_proper	fire	28	cʼä	cʼä	cʼä	125
+600	Alyk_Kryts	fire	28	cʼa	cʼa	cʼa	125
+601	Budukh	fire	28	cʼe ~ cʼa {цIе ~ цIа}	цIе ~ цIа	cʼe ~ cʼa	125
+602	Mishlesh_Tsakhur	fire	28	cʼa {цIа}	цIа	cʼa	125
+603	Mikik_Tsakhur	fire	28	cʼa	cʼa	cʼa	125
+604	Gelmets_Tsakhur	fire	28	cʼa	cʼa	cʼa	125
+605	Mukhad_Rutul	fire	28	cʼay {цIай}	цIай	cʼay	125
+606	Ixrek_Rutul	fire	28	cʼä {цIаь}	цIаь	cʼä	125
+607	Luchek_Rutul	fire	28	cʼay	cʼay	cʼay	125
+608	Koshan_Aghul	fire	28	cʼa ~ cʼay	cʼa ~ cʼay	cʼa ~ cʼay	125
+609	Keren_Aghul	fire	28	cʼa	cʼa	cʼa	125
+610	Gequn_Aghul	fire	28	cʼa ~ cʼay	cʼa ~ cʼay	cʼa ~ cʼay	125
+611	Fite_Aghul	fire	28	cʼay	cʼay	cʼay	125
+612	Aghul_proper	fire	28	cʼa ~ cʼay	cʼa ~ cʼay	cʼa ~ cʼay	125
+613	Northern_Tabasaran	fire	28	cʼa	cʼa	cʼa	125
+614	Southern_Tabasaran	fire	28	cʼa	cʼa	cʼa	125
+615	Gyune_Lezgi	fire	28	cʼay	cʼay	cʼay	125
+616	Outgroup_Chechen	fire	28	cʼe {цIе}	цIе	cʼe	125
+#
+617	Nidzh_Udi	fish	29	čäli {чаьли}	чаьли	čäli	126
+618	Vartashen_Udi	fish	29	čäli {чаьли}	чаьли	čäli	126
+619	Archi	fish	29	χˤˈabχi	χˤˈabχi	χˤˈabχi	127
+620	Kryts_proper	fish	29	balɨʁ	balɨʁ	balɨʁ	-543
+621	Alyk_Kryts	fish	29	baluʁ	baluʁ	baluʁ	-544
+622	Budukh	fish	29	baluʁ {балугъ}	балугъ	baluʁ	-545
+623	Mishlesh_Tsakhur	fish	29	baluʁ {балугъ}	балугъ	baluʁ	-546
+624	Mikik_Tsakhur	fish	29	baluʁ	baluʁ	baluʁ	-547
+625	Gelmets_Tsakhur	fish	29	baluʁ	baluʁ	baluʁ	-548
+626	Mukhad_Rutul	fish	29	baluʁ {балугъ}	балугъ	baluʁ	-549
+627	Ixrek_Rutul	fish	29	bäluʁ ~ baluʁ {баьлугъ ~ балугъ}	баьлугъ ~ балугъ	bäluʁ ~ baluʁ	-550
+628	Luchek_Rutul	fish	29	baluʁ	baluʁ	baluʁ	-551
+629	Koshan_Aghul	fish	29	baluʢ ~ baluʁ	baluʢ ~ baluʁ	baluʢ ~ baluʁ	-552
+630	Keren_Aghul	fish	29	čʼekːʸ	čʼekːʸ	čʼekːʸ	128
+631	Gequn_Aghul	fish	29	čʼekʼ	čʼekʼ	čʼekʼ	128
+632	Fite_Aghul	fish	29	baluʁ	baluʁ	baluʁ	-553
+633	Aghul_proper	fish	29	čʼekʼ	čʼekʼ	čʼekʼ	128
+634	Northern_Tabasaran	fish	29	čˈičʼ-i	čˈičʼ-i	čˈičʼ-i	128
+635	Southern_Tabasaran	fish	29	čičʼ	čičʼ	čičʼ	128
+636	Gyune_Lezgi	fish	29	ʁed	ʁed	ʁed	129
+637	Outgroup_Chechen	fish	29	čʼaːra {чIāра}	чIāра	čʼaːra	130
+#
+638	Nidzh_Udi	fly v.	30	pur-p-esun {пурпесун}	пурпесун	pur-p-esun	131
+639	Vartashen_Udi	fly v.	30	pur-p-esun {пурпесун}	пурпесун	pur-p-esun	131
+640	Archi	fly v.	30	pˈarχː-bo-	pˈarχː-bo-	pˈarχː-bo-	-554
+641	Kryts_proper	fly v.	30	qː=alqʼon-	qː=alqʼon-	qː=alqʼon-	132
+642	Alyk_Kryts	fly v.	30	qː=anqʼʷan-	qː=anqʼʷan-	qː=anqʼʷan-	132
+643	Budukh	fly v.	30	učmi yɨxə-r-i {учми йыхьари ~ йихьари}	учми йыхьари ~ йихьари	učmi yɨxə-r-i	-555
+644	Mishlesh_Tsakhur	fly v.	30	ilʸ=eχ- {алихас}	алихас	ilʸ=eχ-	133
+645	Mikik_Tsakhur	fly v.	30	alʸ=iχ-	alʸ=iχ-	alʸ=iχ-	133
+646	Gelmets_Tsakhur	fly v.	30	alʸ=eχʷ- {алехва}	алехва	alʸ=eχʷ-	133
+647	Mukhad_Rutul	fly v.	30	l=äč- {лийчес}	лийчес	l=äč-	134
+648	Ixrek_Rutul	fly v.	30	l=äš- {лаьйшин}	лаьйшин	l=äš-	134
+649	Luchek_Rutul	fly v.	30	l=ač-	l=ač-	l=ač-	134
+650	Koshan_Aghul	fly v.	30	al=t=waˤ-y-	al=t=waˤ-y-	al=t=waˤ-y-	135
+651	Keren_Aghul	fly v.	30	zawulas=baˤ-	zawulas=baˤ-	zawulas=baˤ-	135
+652	Aghul_proper	fly v.	30	hiš-a-	hiš-a-	hiš-a-	136
+653	Northern_Tabasaran	fly v.	30	tʼi=ʔiχ-ˈ	tʼi=ʔiχ-ˈ	tʼi=ʔiχ-ˈ	133
+654	Southern_Tabasaran	fly v.	30	tʼ=iχ-ˈ	tʼ=iχ-ˈ	tʼ=iχ-ˈ	133
+655	Gyune_Lezgi	fly v.	30	luw ɣu-	luw ɣu-	luw ɣu-	137
+656	Outgroup_Chechen	fly v.	30	leːl-a {лēла}	лēла	leːl-a	138
+#
+657	Nidzh_Udi	foot	31	tur {тур}	тур	tur	139
+658	Vartashen_Udi	foot	31	tur {тур}	тур	tur	139
+659	Archi	foot	31	aq	aq	aq	140
+660	Kryts_proper	foot	31	qːil	qːil	qːil	141
+661	Alyk_Kryts	foot	31	qːil	qːil	qːil	141
+662	Budukh	foot	31	qːil {къил}	къил	qːil	141
+663	Mishlesh_Tsakhur	foot	31	qːelʸ {къелʹ}	къелʹ	qːelʸ	141
+664	Mikik_Tsakhur	foot	31	ʁelʸ	ʁelʸ	ʁelʸ	141
+665	Gelmets_Tsakhur	foot	31	ʁelʸ	ʁelʸ	ʁelʸ	141
+666	Mukhad_Rutul	foot	31	ʁil {гъил}	гъил	ʁil	141
+667	Ixrek_Rutul	foot	31	ʁil {гъил}	гъил	ʁil	141
+668	Luchek_Rutul	foot	31	ʁil	ʁil	ʁil	141
+669	Koshan_Aghul	foot	31	lek	lek	lek	142
+670	Keren_Aghul	foot	31	lak	lak	lak	142
+671	Gequn_Aghul	foot	31	lek	lek	lek	142
+672	Fite_Aghul	foot	31	lik	lik	lik	142
+673	Aghul_proper	foot	31	läk ~ lek	läk ~ lek	läk ~ lek	142
+674	Northern_Tabasaran	foot	31	lik	lik	lik	142
+675	Southern_Tabasaran	foot	31	lik	lik	lik	142
+676	Gyune_Lezgi	foot	31	kʼʷač	kʼʷač	kʼʷač	143
+677	Outgroup_Chechen	foot	31	kog {ког}	ког	kog	144
+#
+678	Nidzh_Udi	full	32	b=uy {буй}	буй	b=uy	145
+679	Vartashen_Udi	full	32	b=uy {буй}	буй	b=uy	145
+680	Archi	full	32	ˈaːcʼu-tːu-class	ˈaːcʼu-tːu-class	ˈaːcʼu-tːu-class	145
+681	Kryts_proper	full	32	ʕacʼä-	ʕacʼä-	ʕacʼä-	145
+682	Alyk_Kryts	full	32	ʕacʼa	ʕacʼa	ʕacʼa	145
+683	Budukh	full	32	s=əcʼə {сацIа}	сацIа	s=əcʼə	145
+684	Mishlesh_Tsakhur	full	32	gʸ=acʼʸiː-n {гяцIийн}	гяцIийн	gʸ=acʼʸiː-n	145
+685	Mikik_Tsakhur	full	32	gʸ=acʼʸiː-n	gʸ=acʼʸiː-n	gʸ=acʼʸiː-n	145
+686	Gelmets_Tsakhur	full	32	gʸ=äcʼʸiyi-nʸ	gʸ=äcʼʸiyi-nʸ	gʸ=äcʼʸiyi-nʸ	145
+687	Mukhad_Rutul	full	32	acʼɨ-d {ацIыд}	ацIыд	acʼɨ-d	145
+688	Ixrek_Rutul	full	32	l=ecʼi-d {лецIид}	лецIид	l=ecʼi-d	145
+689	Luchek_Rutul	full	32	acʼɨ-d	acʼɨ-d	acʼɨ-d	145
+690	Koshan_Aghul	full	32	ʔ=acʼi-r ~ acʼa-r	ʔ=acʼi-r ~ acʼa-r	ʔ=acʼi-r ~ acʼa-r	145
+691	Gequn_Aghul	full	32	acʼu-f	acʼu-f	acʼu-f	145
+692	Fite_Aghul	full	32	acʼu-t	acʼu-t	acʼu-t	145
+693	Aghul_proper	full	32	ʔ=acʼu-f ~ acʼu-f	ʔ=acʼu-f ~ acʼu-f	ʔ=acʼu-f ~ acʼu-f	145
+694	Southern_Tabasaran	full	32	ˈacʼu {ацIу}	ацIу	ˈacʼu	145
+695	Gyune_Lezgi	full	32	acʼˈa-	acʼˈa-	acʼˈa-	145
+696	Outgroup_Chechen	full	32	d=üz-na ~ d=üzz-ina {дуьзна ~ дуьззина}	дуьзна ~ дуьззина	d=üz-na ~ d=üzz-ina	145
+#
+697	Nidzh_Udi	give	33	tad- {тад- ~ тастIун}	тад- ~ тастIун	tad-	146
+698	Vartashen_Udi	give	33	tad- {тад- ~ тастIун}	тад- ~ тастIун	tad-	146
+699	Archi	give	33	=ƛo-	=ƛo-	=ƛo-	146
+700	Kryts_proper	give	33	v=ucʼn-	v=ucʼn-	v=ucʼn-	147
+701	Alyk_Kryts	give	33	v=ucʼ-	v=ucʼ-	v=ucʼ-	147
+702	Budukh	give	33	yucʼu- {йуцIу-}	йуцIу-	yucʼu-	147
+703	Mishlesh_Tsakhur	give	33	h=el- {гьилес, гьеле}	гьилес, гьеле	h=el-	146
+704	Mikik_Tsakhur	give	33	h=el-	h=el-	h=el-	146
+705	Gelmets_Tsakhur	give	33	h=il- {гьилез}	гьилез	h=il-	146
+706	Mukhad_Rutul	give	33	class=w=ɨcʼ- {выс}	выс	class=w=ɨcʼ-	147
+707	Ixrek_Rutul	give	33	class=ɨcʼ- {вын}	вын	class=ɨcʼ-	147
+708	Luchek_Rutul	give	33	class=w=ɨcʼ-	class=w=ɨcʼ-	class=w=ɨcʼ-	147
+709	Koshan_Aghul	give	33	icʼ-an-di-	icʼ-an-di-	icʼ-an-di-	147
+710	Keren_Aghul	give	33	i-ne	i-ne	i-ne	146
+711	Gequn_Aghul	give	33	icʼ-an-di	icʼ-an-di	icʼ-an-di	147
+712	Fite_Aghul	give	33	icʼ-ada	icʼ-ada	icʼ-ada	147
+713	Aghul_proper	give	33	icʼ-an-di-	icʼ-an-di-	icʼ-an-di-	147
+714	Northern_Tabasaran	give	33	l=icʼ-ˈ	l=icʼ-ˈ	l=icʼ-ˈ	147
+715	Southern_Tabasaran	give	33	tː=ˈuw- ~ t=ˈuw-	tː=ˈuw- ~ t=ˈuw-	tː=ˈuw- ~ t=ˈuw-	146
+716	Gyune_Lezgi	give	33	ɣu-	ɣu-	ɣu-	146
+717	Outgroup_Chechen	give	33	d=al-a {дала}	дала	d=al-a	146
+718	Kryts_proper	give	33	vu-	vu-	vu-	146
+719	Alyk_Kryts	give	33	vu-	vu-	vu-	146
+720	Budukh	give	33	yɨvə- {йыва-}	йыва-	yɨvə-	146
+721	Mishlesh_Tsakhur	give	33	h=iw-	h=iw-	h=iw-	146
+722	Mikik_Tsakhur	give	33	h=uw-	h=uw-	h=uw-	146
+723	Mukhad_Rutul	give	33	class=w-ɨ-r	class=w-ɨ-r	class=w-ɨ-r	146
+724	Ixrek_Rutul	give	33	class=w-ɨ-r	class=w-ɨ-r	class=w-ɨ-r	146
+725	Luchek_Rutul	give	33	class=w-ɨ-r	class=w-ɨ-r	class=w-ɨ-r	146
+726	Koshan_Aghul	give	33	i-na-w	i-na-w	i-na-w	146
+727	Gequn_Aghul	give	33	i-na	i-na	i-na	146
+728	Fite_Aghul	give	33	i-na	i-na	i-na	146
+729	Aghul_proper	give	33	i-na ~ yi-ne	i-na ~ yi-ne	i-na ~ yi-ne	146
+730	Northern_Tabasaran	give	33	d=ˈuɣ-	d=ˈuɣ-	d=ˈuɣ-	146
+731	Northern_Tabasaran	give	33	du=ʔˈuw-	du=ʔˈuw-	du=ʔˈuw-	146
+#
+732	Nidzh_Udi	good	34	šahatː ~ šaʁatː ~ šavatː ~ šaːtː {шагьатI ~ шагъатI ~ шаватI ~ шаатI}	шагьатI ~ шагъатI ~ шаватI ~ шаатI	šahatː ~ šaʁatː ~ šavatː ~ šaːtː	148
+733	Vartashen_Udi	good	34	šel {шел}	шел	šel	149
+734	Archi	good	34	hibˈa-tːu-class	hibˈa-tːu-class	hibˈa-tːu-class	150
+735	Kryts_proper	good	34	ʁalä	ʁalä	ʁalä	151
+736	Alyk_Kryts	good	34	ɣala	ɣala	ɣala	151
+737	Budukh	good	34	ʕari {гIари}	гIари	ʕari	152
+738	Mishlesh_Tsakhur	good	34	yugu-n {югун}	югун	yugu-n	153
+739	Mikik_Tsakhur	good	34	yugu-n	yugu-n	yugu-n	153
+740	Gelmets_Tsakhur	good	34	yugu-nʸ {югунʹ}	югунʹ	yugu-nʸ	153
+741	Mukhad_Rutul	good	34	y=ɨχ-dɨ {йыхды}	йыхды	y=ɨχ-dɨ	154
+742	Ixrek_Rutul	good	34	h=ɨχ-dɨ {гьыхды}	гьыхды	h=ɨχ-dɨ	154
+743	Koshan_Aghul	good	34	iǯe-r	iǯe-r	iǯe-r	155
+744	Keren_Aghul	good	34	iže-f	iže-f	iže-f	155
+745	Gequn_Aghul	good	34	iže-f ~ iǯe-f	iže-f ~ iǯe-f	iže-f ~ iǯe-f	155
+746	Fite_Aghul	good	34	iǯi-t	iǯi-t	iǯi-t	155
+747	Aghul_proper	good	34	iǯe-f	iǯe-f	iǯe-f	155
+748	Northern_Tabasaran	good	34	iǯˈi	iǯˈi	iǯˈi	155
+749	Southern_Tabasaran	good	34	uǯˈu {ужжу}	ужжу	uǯˈu	155
+750	Gyune_Lezgi	good	34	qisˈe-n	qisˈe-n	qisˈe-n	156
+751	Outgroup_Chechen	good	34	dik-a {дика}	дика	dik-a	153
+#
+752	Nidzh_Udi	green	35	yäšil {йаьшил}	йаьшил	yäšil	-556
+753	Vartashen_Udi	green	35	gog-in	gog-in	gog-in	-557
+754	Archi	green	35	oˤlˈow-tːu-class	oˤlˈow-tːu-class	oˤlˈow-tːu-class	157
+755	Kryts_proper	green	35	čʼukʼ-ni	čʼukʼ-ni	čʼukʼ-ni	158
+756	Alyk_Kryts	green	35	čʼuk-nu	čʼuk-nu	čʼuk-nu	158
+757	Budukh	green	35	gug {гуг}	гуг	gug	-558
+758	Mishlesh_Tsakhur	green	35	čɨˤwa-n {чыIван}	чыIван	čɨˤwa-n	159
+759	Mikik_Tsakhur	green	35	čiˤwa-n ~ čuˤwa-n	čiˤwa-n ~ čuˤwa-n	čiˤwa-n ~ čuˤwa-n	159
+760	Gelmets_Tsakhur	green	35	čiˤwa-nʸ	čiˤwa-nʸ	čiˤwa-nʸ	159
+761	Mukhad_Rutul	green	35	šil-dɨ {шилды}	шилды	šil-dɨ	159
+762	Ixrek_Rutul	green	35	šil-dɨ {шилды}	шилды	šil-dɨ	159
+763	Luchek_Rutul	green	35	šil-dɨ	šil-dɨ	šil-dɨ	159
+764	Koshan_Aghul	green	35	ʢaze-r	ʢaze-r	ʢaze-r	160
+765	Keren_Aghul	green	35	ʁaze-f	ʁaze-f	ʁaze-f	160
+766	Gequn_Aghul	green	35	ʁaze-f	ʁaze-f	ʁaze-f	160
+767	Fite_Aghul	green	35	ʁazi-t	ʁazi-t	ʁazi-t	160
+768	Aghul_proper	green	35	ʁaze-f	ʁaze-f	ʁaze-f	160
+769	Northern_Tabasaran	green	35	čirˈi	čirˈi	čirˈi	161
+770	Southern_Tabasaran	green	35	čru	čru	čru	161
+771	Gyune_Lezgi	green	35	qːacːˈu	qːacːˈu	qːacːˈu	160
+772	Outgroup_Chechen	green	35	bäcca-r-a {баьццара}	баьццара	bäcca-r-a	162
+#
+773	Nidzh_Udi	hair	36	pop {поп}	поп	pop	163
+774	Vartashen_Udi	hair	36	pop {поп}	поп	pop	163
+775	Archi	hair	36	čʼˈaːˤri	čʼˈaːˤri	čʼˈaːˤri	164
+776	Kryts_proper	hair	36	čʼer	čʼer	čʼer	164
+777	Alyk_Kryts	hair	36	čʼar	čʼar	čʼar	164
+778	Budukh	hair	36	čʼer {чIер}	чIер	čʼer	164
+779	Mishlesh_Tsakhur	hair	36	čʼaˤr {чIаIр}	чIаIр	čʼaˤr	164
+780	Mikik_Tsakhur	hair	36	čʼer	čʼer	čʼer	164
+781	Gelmets_Tsakhur	hair	36	čʼar	čʼar	čʼar	164
+782	Mukhad_Rutul	hair	36	čʼar {чIар}	чIар	čʼar	164
+783	Ixrek_Rutul	hair	36	čʼer ~ čʼär {чIер ~ чIаьр}	чIер ~ чIаьр	čʼer ~ čʼär	164
+784	Luchek_Rutul	hair	36	čʼar	čʼar	čʼar	164
+785	Koshan_Aghul	hair	36	čʼar	čʼar	čʼar	164
+786	Keren_Aghul	hair	36	čʼar	čʼar	čʼar	164
+787	Gequn_Aghul	hair	36	čʼar	čʼar	čʼar	164
+788	Fite_Aghul	hair	36	čʼar	čʼar	čʼar	164
+789	Aghul_proper	hair	36	čʼar	čʼar	čʼar	164
+790	Northern_Tabasaran	hair	36	čʼar	čʼar	čʼar	164
+791	Southern_Tabasaran	hair	36	čʼar	čʼar	čʼar	164
+792	Gyune_Lezgi	hair	36	čʼar	čʼar	čʼar	164
+793	Outgroup_Chechen	hair	36	mas {мас}	мас	mas	165
+#
+794	Nidzh_Udi	hand	37	kul {кул}	кул	kul	166
+795	Vartashen_Udi	hand	37	kul {кул}	кул	kul	166
+796	Archi	hand	37	kul	kul	kul	166
+797	Kryts_proper	hand	37	χäb	χäb	χäb	167
+798	Alyk_Kryts	hand	37	χab	χab	χab	167
+799	Budukh	hand	37	χab {хаб}	хаб	χab	167
+800	Mishlesh_Tsakhur	hand	37	χɨlʸ {хылʹ}	хылʹ	χɨlʸ	168
+801	Mikik_Tsakhur	hand	37	χɨlʸ	χɨlʸ	χɨlʸ	168
+802	Gelmets_Tsakhur	hand	37	χɨlʸ	χɨlʸ	χɨlʸ	168
+803	Mukhad_Rutul	hand	37	χɨl {хыл}	хыл	χɨl	168
+804	Ixrek_Rutul	hand	37	χɨl {хыл}	хыл	χɨl	168
+805	Luchek_Rutul	hand	37	χɨl	χɨl	χɨl	168
+806	Koshan_Aghul	hand	37	χil	χil	χil	168
+807	Keren_Aghul	hand	37	χil	χil	χil	168
+808	Gequn_Aghul	hand	37	χil	χil	χil	168
+809	Fite_Aghul	hand	37	χil	χil	χil	168
+810	Aghul_proper	hand	37	ʁil	ʁil	ʁil	168
+811	Northern_Tabasaran	hand	37	χil	χil	χil	168
+812	Southern_Tabasaran	hand	37	χil	χil	χil	168
+813	Gyune_Lezgi	hand	37	ʁil	ʁil	ʁil	168
+814	Outgroup_Chechen	hand	37	kü-g {куьг}	куьг	kü-g	166
+#
+815	Nidzh_Udi	head	38	bul {бул}	бул	bul	169
+816	Vartashen_Udi	head	38	bul {бул}	бул	bul	169
+817	Archi	head	38	kˈartʼi	kˈartʼi	kˈartʼi	170
+818	Kryts_proper	head	38	qʼɨl	qʼɨl	qʼɨl	169
+819	Alyk_Kryts	head	38	qʼil	qʼil	qʼil	169
+820	Budukh	head	38	qʼɨl {кьыл}	кьыл	qʼɨl	169
+821	Mishlesh_Tsakhur	head	38	kalːʸe {калле}	калле	kalːʸe	-559
+822	Mikik_Tsakhur	head	38	wukʼulʸ	wukʼulʸ	wukʼulʸ	169
+823	Gelmets_Tsakhur	head	38	wuqʼulʸ	wuqʼulʸ	wuqʼulʸ	169
+824	Mukhad_Rutul	head	38	qʼul {кьул}	кьул	qʼul	169
+825	Ixrek_Rutul	head	38	huqʼul {гьукьул}	гьукьул	huqʼul	169
+826	Luchek_Rutul	head	38	huqʼul	huqʼul	huqʼul	169
+827	Koshan_Aghul	head	38	kʼil	kʼil	kʼil	169
+828	Keren_Aghul	head	38	kʼil	kʼil	kʼil	169
+829	Gequn_Aghul	head	38	kʼil	kʼil	kʼil	169
+830	Fite_Aghul	head	38	kʼil	kʼil	kʼil	169
+831	Aghul_proper	head	38	kʼil	kʼil	kʼil	169
+832	Northern_Tabasaran	head	38	kʼul	kʼul	kʼul	169
+833	Southern_Tabasaran	head	38	kʼul	kʼul	kʼul	169
+834	Gyune_Lezgi	head	38	qʼil	qʼil	qʼil	169
+835	Outgroup_Chechen	head	38	korta {корта}	корта	korta	170
+#
+836	Nidzh_Udi	hear	39	i-bak-sun {ибаксун}	ибаксун	i-bak-sun	171
+837	Vartashen_Udi	hear	39	i-bak-sun {ибаксун}	ибаксун	i-bak-sun	171
+838	Archi	hear	39	=kˈo-	=kˈo-	=kˈo-	172
+839	Kryts_proper	hear	39	ix-	ix-	ix-	171
+840	Alyk_Kryts	hear	39	ixa-	ixa-	ixa-	171
+841	Budukh	hear	39	ixi- {ихьи-}	ихьи-	ixi-	171
+842	Mishlesh_Tsakhur	hear	39	qː=iːx- {къайхьый}	къайхьый	qː=iːx-	171
+843	Mikik_Tsakhur	hear	39	ʁ=iyx-	ʁ=iyx-	ʁ=iyx-	171
+844	Gelmets_Tsakhur	hear	39	ʁ=iyx-	ʁ=iyx-	ʁ=iyx-	171
+845	Mukhad_Rutul	hear	39	un y=ik- {ун йикис}	ун йикис	un y=ik-	173
+846	Ixrek_Rutul	hear	39	un y=ɨχˤ- {ун йыIхыIн}	ун йыIхыIн	un y=ɨχˤ-	173
+847	Luchek_Rutul	hear	39	un ečʼʷ-	un ečʼʷ-	un ečʼʷ-	173
+848	Koshan_Aghul	hear	39	daχ xi-	daχ xi-	daχ xi-	174
+849	Keren_Aghul	hear	39	un xa-	un xa-	un xa-	173
+850	Gequn_Aghul	hear	39	un-i xa-	un-i xa-	un-i xa-	173
+851	Aghul_proper	hear	39	un xa- ~ un-i xa-	un xa- ~ un-i xa-	un xa- ~ un-i xa-	173
+852	Northern_Tabasaran	hear	39	yik-ˈ	yik-ˈ	yik-ˈ	172
+853	Southern_Tabasaran	hear	39	yex-ˈ	yex-ˈ	yex-ˈ	171
+854	Gyune_Lezgi	hear	39	wan že-	wan že-	wan že-	173
+855	Outgroup_Chechen	hear	39	xaz-a {хаза}	хаза	xaz-a	175
+#
+856	Nidzh_Udi	heart	40	ukː ~ ükː {укI ~ уькI}	укI ~ уькI	ukː ~ ükː	176
+857	Vartashen_Udi	heart	40	ukː {укI}	укI	ukː	176
+858	Archi	heart	40	ikʼʷ	ikʼʷ	ikʼʷ	176
+859	Kryts_proper	heart	40	yikʼ	yikʼ	yikʼ	176
+860	Alyk_Kryts	heart	40	yikʼ	yikʼ	yikʼ	176
+861	Budukh	heart	40	yɨkʼ {йыкI}	йыкI	yɨkʼ	176
+862	Mishlesh_Tsakhur	heart	40	yikʼ {йикI}	йикI	yikʼ	176
+863	Mikik_Tsakhur	heart	40	yikʼʸ	yikʼʸ	yikʼʸ	176
+864	Gelmets_Tsakhur	heart	40	yikʼʸ	yikʼʸ	yikʼʸ	176
+865	Mukhad_Rutul	heart	40	yikʼ {йикI}	йикI	yikʼ	176
+866	Ixrek_Rutul	heart	40	yikʼ {йикI}	йикI	yikʼ	176
+867	Luchek_Rutul	heart	40	yikʼʸ	yikʼʸ	yikʼʸ	176
+868	Koshan_Aghul	heart	40	yirkʼʷ	yirkʼʷ	yirkʼʷ	176
+869	Keren_Aghul	heart	40	irkʼʷ	irkʼʷ	irkʼʷ	176
+870	Gequn_Aghul	heart	40	irkʼʷ	irkʼʷ	irkʼʷ	176
+871	Fite_Aghul	heart	40	yirkʼʷ	yirkʼʷ	yirkʼʷ	176
+872	Aghul_proper	heart	40	yirkʼʷ	yirkʼʷ	yirkʼʷ	176
+873	Northern_Tabasaran	heart	40	yˈukʼ-u	yˈukʼ-u	yˈukʼ-u	176
+874	Southern_Tabasaran	heart	40	yukʼ	yukʼ	yukʼ	176
+875	Gyune_Lezgi	heart	40	rikʼ	rikʼ	rikʼ	176
+876	Outgroup_Chechen	heart	40	dog {дог}	дог	dog	176
+#
+2252	Nidzh_Udi	heavy	102	biʁˤi ~ biˤhi ~ bɨʁˤɨ {биъгъиъ ~ биъгьиъ ~ быъгъыъ}	биъгъиъ ~ биъгьиъ ~ быъгъыъ	biʁˤi ~ biˤhi ~ bɨʁˤɨ	448
+2253	Vartashen_Udi	heavy	102	biˤ ~ bɨˤ {биъ ~ быъ}	биъ ~ быъ	biˤ ~ bɨˤ	448
+2254	Archi	heavy	102	class=ˈiʁʷˤ-du-class ~ class=ˈiʁˤ-du-class	class=ˈiʁʷˤ-du-class ~ class=ˈiʁˤ-du-class	class=ˈiʁʷˤ-du-class ~ class=ˈiʁˤ-du-class	448
+2255	Kryts_proper	heavy	102	ʕakʼ	ʕakʼ	ʕakʼ	448
+2256	Alyk_Kryts	heavy	102	ʕarkʼa	ʕarkʼa	ʕarkʼa	448
+2257	Budukh	heavy	102	herkʼi {гьеркIи}	гьеркIи	herkʼi	448
+2258	Mishlesh_Tsakhur	heavy	102	yiqʼˤɨ-n {йиIкьын, йыIкьын}	йиIкьын, йыIкьын	yiqʼˤɨ-n	448
+2259	Mikik_Tsakhur	heavy	102	yɨqʼˤɨ-n	yɨqʼˤɨ-n	yɨqʼˤɨ-n	448
+2260	Gelmets_Tsakhur	heavy	102	yɨqʼˤɨ-nʸ	yɨqʼˤɨ-nʸ	yɨqʼˤɨ-nʸ	448
+2261	Mukhad_Rutul	heavy	102	yuqʼˤ-dɨ {юкьIды}	юкьIды	yuqʼˤ-dɨ	448
+2262	Ixrek_Rutul	heavy	102	yuqʼˤ-dɨ {йуIкьды}	йуIкьды	yuqʼˤ-dɨ	448
+2263	Luchek_Rutul	heavy	102	yuqʼˤ-dɨ	yuqʼˤ-dɨ	yuqʼˤ-dɨ	448
+2264	Koshan_Aghul	heavy	102	ʁeʁe-r	ʁeʁe-r	ʁeʁe-r	449
+2265	Keren_Aghul	heavy	102	yarqʼʷˤe-f	yarqʼʷˤe-f	yarqʼʷˤe-f	448
+2266	Gequn_Aghul	heavy	102	ʡürʡä-f	ʡürʡä-f	ʡürʡä-f	448
+2267	Fite_Aghul	heavy	102	qːaqːi-t	qːaqːi-t	qːaqːi-t	449
+2268	Aghul_proper	heavy	102	qːeqːe-f ~ qːiqːe-f	qːeqːe-f ~ qːiqːe-f	qːeqːe-f ~ qːiqːe-f	449
+2269	Northern_Tabasaran	heavy	102	aqʼˤˈi	aqʼˤˈi	aqʼˤˈi	448
+2270	Southern_Tabasaran	heavy	102	ʁaʁˈi	ʁaʁˈi	ʁaʁˈi	449
+2271	Gyune_Lezgi	heavy	102	zalˈan	zalˈan	zalˈan	450
+2272	Outgroup_Chechen	heavy	102	d=ez-a {деза}	деза	d=ez-a	451
+2273	Gequn_Aghul	heavy	102	qːeqːe-f	qːeqːe-f	qːeqːe-f	449
+2274	Northern_Tabasaran	heavy	102	ɢaɢˈi	ɢaɢˈi	ɢaɢˈi	449
+#
+877	Nidzh_Udi	horn	41	muqːˤa {муъкъаъ}	муъкъаъ	muqːˤa	177
+878	Vartashen_Udi	horn	41	muqːˤa	muqːˤa	muqːˤa	177
+879	Archi	horn	41	bˈatː-	bˈatː-	bˈatː-	179
+880	Kryts_proper	horn	41	käč	käč	käč	180
+881	Alyk_Kryts	horn	41	karč	karč	karč	180
+882	Budukh	horn	41	kərč {карч}	карч	kərč	180
+883	Mishlesh_Tsakhur	horn	41	gač {гач}	гач	gač	180
+884	Mikik_Tsakhur	horn	41	gač	gač	gač	180
+885	Gelmets_Tsakhur	horn	41	gač	gač	gač	180
+886	Mukhad_Rutul	horn	41	kač {кач}	кач	kač	180
+887	Ixrek_Rutul	horn	41	kač {кач}	кач	kač	180
+888	Luchek_Rutul	horn	41	kač	kač	kač	180
+889	Koshan_Aghul	horn	41	kʼarč	kʼarč	kʼarč	180
+890	Keren_Aghul	horn	41	kʼarč	kʼarč	kʼarč	180
+891	Gequn_Aghul	horn	41	kʼarč	kʼarč	kʼarč	180
+892	Fite_Aghul	horn	41	kʼarč	kʼarč	kʼarč	180
+893	Aghul_proper	horn	41	kʼarč	kʼarč	kʼarč	180
+894	Northern_Tabasaran	horn	41	kʼarč	kʼarč	kʼarč	180
+895	Southern_Tabasaran	horn	41	kʼarč	kʼarč	kʼarč	180
+896	Gyune_Lezgi	horn	41	karč	karč	karč	180
+897	Outgroup_Chechen	horn	41	maʕa {маIа}	маIа	maʕa	181
+898	Vartashen_Udi	horn	41	qːˤancː {къаънцI}	къаънцI	qːˤancː	178
+#
+931	Nidzh_Udi	kill	43	be-s-b-esun {бесбесун}	бесбесун	be-s-b-esun	184
+932	Vartashen_Udi	kill	43	be-s-b-esun {бесбесун}	бесбесун	be-s-b-esun	184
+933	Archi	kill	43	=ˈača-	=ˈača-	=ˈača-	185
+934	Kryts_proper	kill	43	qʼäy-	qʼäy-	qʼäy-	184
+935	Alyk_Kryts	kill	43	qʼäy-	qʼäy-	qʼäy-	184
+936	Budukh	kill	43	atʼu- {атIу-}	атIу-	atʼu-	186
+937	Mishlesh_Tsakhur	kill	43	gʸ=ikʼ- {гʹикIас}	гʹикIас	gʸ=ikʼ-	184
+938	Mikik_Tsakhur	kill	43	gʸ=ikʼ-	gʸ=ikʼ-	gʸ=ikʼ-	184
+939	Gelmets_Tsakhur	kill	43	gʸ=ikʼ- {гʹикIаз, гикIаз}	гʹикIаз, гикIаз	gʸ=ikʼ-	184
+940	Mukhad_Rutul	kill	43	class=iqʼ-i-r {йикьин}	йикьин	class=iqʼ-i-r	184
+941	Ixrek_Rutul	kill	43	class=iqʼ-i-r {йикьин}	йикьин	class=iqʼ-i-r	184
+942	Luchek_Rutul	kill	43	y=ɨχˤ-ɨ-r	y=ɨχˤ-ɨ-r	y=ɨχˤ-ɨ-r	187
+943	Koshan_Aghul	kill	43	kʼ-i-	kʼ-i-	kʼ-i-	184
+944	Keren_Aghul	kill	43	kʼʸ-a-	kʼʸ-a-	kʼʸ-a-	184
+945	Gequn_Aghul	kill	43	kʼ-e-	kʼ-e-	kʼ-e-	184
+946	Fite_Aghul	kill	43	kʼ-e-	kʼ-e-	kʼ-e-	184
+947	Aghul_proper	kill	43	kʼ-e-	kʼ-e-	kʼ-e-	184
+948	Northern_Tabasaran	kill	43	yikʼ-	yikʼ-	yikʼ-	184
+949	Southern_Tabasaran	kill	43	yikʼ-	yikʼ-	yikʼ-	184
+950	Gyune_Lezgi	kill	43	r=äqʼˈi-	r=äqʼˈi-	r=äqʼˈi-	184
+951	Outgroup_Chechen	kill	43	d=eː-n {дēн}	дēн	d=eː-n	188
+952	Gyune_Lezgi	kill	43	qʼˈe-	qʼˈe-	qʼˈe-	184
+#
+953	Nidzh_Udi	knee	44	kːaˤkːapː {кIаъкIаъпI}	кIаъкIаъпI	kːaˤkːapː	189
+954	Vartashen_Udi	knee	44	kːeˤkːepː {кIеъкIеъпI}	кIеъкIеъпI	kːeˤkːepː	189
+955	Archi	knee	44	poˤmp	poˤmp	poˤmp	190
+956	Kryts_proper	knee	44	pip	pip	pip	190
+957	Alyk_Kryts	knee	44	pip	pip	pip	190
+958	Budukh	knee	44	pep {пеп}	пеп	pep	190
+959	Mishlesh_Tsakhur	knee	44	qʼaraca {кьараца}	кьараца	qʼaraca	191
+960	Mikik_Tsakhur	knee	44	qʼaraca	qʼaraca	qʼaraca	191
+961	Gelmets_Tsakhur	knee	44	qʼaraca	qʼaraca	qʼaraca	191
+962	Mukhad_Rutul	knee	44	qʼʷaqʼ {кьвакь}	кьвакь	qʼʷaqʼ	192
+963	Ixrek_Rutul	knee	44	qʼʷaqʼ {кьвакь}	кьвакь	qʼʷaqʼ	192
+964	Luchek_Rutul	knee	44	qʼʷaqʼ	qʼʷaqʼ	qʼʷaqʼ	192
+965	Koshan_Aghul	knee	44	qʼuqʼ	qʼuqʼ	qʼuqʼ	192
+966	Keren_Aghul	knee	44	qʼʷaqʼʷ	qʼʷaqʼʷ	qʼʷaqʼʷ	192
+967	Gequn_Aghul	knee	44	qʼʷaqʼʷ ~ qʼuqʼ	qʼʷaqʼʷ ~ qʼuqʼ	qʼʷaqʼʷ ~ qʼuqʼ	192
+968	Fite_Aghul	knee	44	qʼʷaqʼʷ	qʼʷaqʼʷ	qʼʷaqʼʷ	192
+969	Aghul_proper	knee	44	qʼʷaqʼʷ	qʼʷaqʼʷ	qʼʷaqʼʷ	192
+970	Northern_Tabasaran	knee	44	qʼˈamqʼ-a	qʼˈamqʼ-a	qʼˈamqʼ-a	192
+971	Southern_Tabasaran	knee	44	qʼamqʼ	qʼamqʼ	qʼamqʼ	192
+972	Gyune_Lezgi	knee	44	met	met	met	193
+973	Outgroup_Chechen	knee	44	goː-la {гōла}	гōла	goː-la	194
+#
+974	Nidzh_Udi	know	45	a-va-bak-sun {авабаксун}	авабаксун	a-va-bak-sun	195
+975	Vartashen_Udi	know	45	a-ba-bak-sun {абабаксун}	абабаксун	a-ba-bak-sun	195
+976	Archi	know	45	sˈini	sˈini	sˈini	196
+977	Kryts_proper	know	45	class=äcʼä-	class=äcʼä-	class=äcʼä-	195
+978	Alyk_Kryts	know	45	class=acʼa-ra ša-r-	class=acʼa-ra ša-r-	class=acʼa-ra ša-r-	195
+979	Budukh	know	45	hacʼə-r- {гьацIар-}	гьацIар-	hacʼə-r-	195
+980	Mishlesh_Tsakhur	know	45	class=acʼa {ацIа}	ацIа	class=acʼa	195
+981	Mikik_Tsakhur	know	45	class=acʼa-x-	class=acʼa-x-	class=acʼa-x-	195
+982	Gelmets_Tsakhur	know	45	class=acʼa-x-	class=acʼa-x-	class=acʼa-x-	195
+983	Mukhad_Rutul	know	45	class=acʼ- {вацIас, гьацIас}	вацIас, гьацIас	class=acʼ-	195
+984	Ixrek_Rutul	know	45	class=äcʼ- {гьаьцIин}	гьаьцIин	class=äcʼ-	195
+985	Luchek_Rutul	know	45	class=acʼ-	class=acʼ-	class=acʼ-	195
+986	Koshan_Aghul	know	45	aħa xi- ~ aħa-r xi-	aħa xi- ~ aħa-r xi-	aħa xi- ~ aħa-r xi-	197
+987	Keren_Aghul	know	45	ħu-y-e	ħu-y-e	ħu-y-e	197
+988	Gequn_Aghul	know	45	ħa-r xa-	ħa-r xa-	ħa-r xa-	197
+989	Fite_Aghul	know	45	aχˤi-r xa-	aχˤi-r xa-	aχˤi-r xa-	197
+990	Aghul_proper	know	45	y=aʢa-r xa-	y=aʢa-r xa-	y=aʢa-r xa-	197
+991	Northern_Tabasaran	know	45	aʁˤˈa-di x-	aʁˤˈa-di x-	aʁˤˈa-di x-	197
+992	Southern_Tabasaran	know	45	aʁˤˈu š-	aʁˤˈu š-	aʁˤˈu š-	197
+993	Gyune_Lezgi	know	45	čːi-	čːi-	čːi-	198
+994	Outgroup_Chechen	know	45	xaʔ-a {хаа}	хаа	xaʔ-a	199
+#
+995	Nidzh_Udi	leaf	46	χazal {хазал}	хазал	χazal	-560
+996	Vartashen_Udi	leaf	46	χazal {хазал}	хазал	χazal	-561
+997	Archi	leaf	46	kʼˈačʼi	kʼˈačʼi	kʼˈačʼi	200
+998	Kryts_proper	leaf	46	beš	beš	beš	201
+999	Alyk_Kryts	leaf	46	yarpaʁ	yarpaʁ	yarpaʁ	-562
+1000	Budukh	leaf	46	yarpaʁ {йарпагъ}	йарпагъ	yarpaʁ	-563
+1001	Mishlesh_Tsakhur	leaf	46	tʼʸelʸe {тIеле}	тIеле	tʼʸelʸe	202
+1002	Mikik_Tsakhur	leaf	46	tʼʸelʸe	tʼʸelʸe	tʼʸelʸe	202
+1003	Gelmets_Tsakhur	leaf	46	tʼʸelʸe	tʼʸelʸe	tʼʸelʸe	202
+1004	Mukhad_Rutul	leaf	46	qʼuruqʼ {кьурукь}	кьурукь	qʼuruqʼ	203
+1005	Ixrek_Rutul	leaf	46	qʼuruqʼ {кьурукь}	кьурукь	qʼuruqʼ	203
+1006	Luchek_Rutul	leaf	46	qʼuruqʼ	qʼuruqʼ	qʼuruqʼ	203
+1007	Koshan_Aghul	leaf	46	cʼaw	cʼaw	cʼaw	204
+1008	Keren_Aghul	leaf	46	pʼaˤž	pʼaˤž	pʼaˤž	201
+1009	Gequn_Aghul	leaf	46	pʼaˤž ~ pʼaˤǯ	pʼaˤž ~ pʼaˤǯ	pʼaˤž ~ pʼaˤǯ	201
+1010	Fite_Aghul	leaf	46	cʼab	cʼab	cʼab	204
+1011	Aghul_proper	leaf	46	cʼab	cʼab	cʼab	204
+1012	Northern_Tabasaran	leaf	46	kʼˈaǯ-a	kʼˈaǯ-a	kʼˈaǯ-a	200
+1013	Southern_Tabasaran	leaf	46	kʼaǯ	kʼaǯ	kʼaǯ	200
+1014	Gyune_Lezgi	leaf	46	beš	beš	beš	201
+1015	Outgroup_Chechen	leaf	46	ɣa {гIа}	гIа	ɣa	205
+#
+1016	Nidzh_Udi	lie	47	bas-kː-sun {баскIсун}	баскIсун	bas-kː-sun	206
+1017	Vartashen_Udi	lie	47	bas-kː-sun ~ bas-kː-esun {баскIсун}	баскIсун	bas-kː-sun ~ bas-kː-esun	206
+1018	Archi	lie	47	=ˈaχa-	=ˈaχa-	=ˈaχa-	207
+1019	Kryts_proper	lie	47	c=uqʼäl-	c=uqʼäl-	c=uqʼäl-	208
+1020	Alyk_Kryts	lie	47	qː=aqʼal-	qː=aqʼal-	qː=aqʼal-	208
+1021	Budukh	lie	47	qː=aqʼal- {къакьал, къалкьал-}	къакьал, къалкьал-	qː=aqʼal-	208
+1022	Mishlesh_Tsakhur	lie	47	qːilʸ=ex- {къалихьас}	къалихьас	qːilʸ=ex-	209
+1023	Mikik_Tsakhur	lie	47	ʁilʸ=ex-	ʁilʸ=ex-	ʁilʸ=ex-	209
+1024	Mukhad_Rutul	lie	47	l=uk- {лукус ~ лукас}	лукус ~ лукас	l=uk-	210
+1025	Ixrek_Rutul	lie	47	ow=l=uk- {ов лукун}	ов лукун	ow=l=uk-	210
+1026	Luchek_Rutul	lie	47	l=uk-	l=uk-	l=uk-	210
+1027	Koshan_Aghul	lie	47	aχ-a-	aχ-a-	aχ-a-	207
+1028	Keren_Aghul	lie	47	fa=tː=ix-a-	fa=tː=ix-a-	fa=tː=ix-a-	209
+1029	Gequn_Aghul	lie	47	aχ-a-	aχ-a-	aχ-a-	207
+1030	Aghul_proper	lie	47	a=q=ux-a-	a=q=ux-a-	a=q=ux-a-	209
+1031	Northern_Tabasaran	lie	47	da=ʔˈaq-	da=ʔˈaq-	da=ʔˈaq-	213
+1032	Southern_Tabasaran	lie	47	d=ˈaq-	d=ˈaq-	d=ˈaq-	213
+1033	Gyune_Lezgi	lie	47	qːat=xˈi-	qːat=xˈi-	qːat=xˈi-	210
+1034	Outgroup_Chechen	lie	47	ʕ=ill-a {Iилла}	Iилла	ʕ=ill-a	209
+1035	Ixrek_Rutul	lie	47	k=utʼ-	k=utʼ-	k=utʼ-	211
+1036	Koshan_Aghul	lie	47	utː=ark-i- ~ ʁ=ark-i- ~ q=ark-i-	utː=ark-i- ~ ʁ=ark-i- ~ q=ark-i-	utː=ark-i- ~ ʁ=ark-i- ~ q=ark-i-	212
+1037	Keren_Aghul	lie	47	a=q=ux-a-	a=q=ux-a-	a=q=ux-a-	209
+1038	Gequn_Aghul	lie	47	q=ux-a-	q=ux-a-	q=ux-a-	209
+#
+1039	Nidzh_Udi	liver	48	maˤyin=papaš {маъйин папаш}	маъйин папаш	maˤyin=papaš	214
+1040	Vartashen_Udi	liver	48	maˤin=pušˤpuš	maˤin=pušˤpuš	maˤin=pušˤpuš	214
+1041	Archi	liver	48	dilˈikʼ	dilˈikʼ	dilˈikʼ	-564
+1042	Kryts_proper	liver	48	läħä=läħkän	läħä=läħkän	läħä=läħkän	215
+1043	Alyk_Kryts	liver	48	taχul ~ leha=taχul	taχul ~ leha=taχul	taχul ~ leha=taχul	216
+1044	Budukh	liver	48	läqʼ {лаькь}	лаькь	läqʼ	215
+1045	Mishlesh_Tsakhur	liver	48	kʼɨlʸkʼam {кIылʹкIам}	кIылʹкIам	kʼɨlʸkʼam	215
+1046	Mikik_Tsakhur	liver	48	kʼɨlʸkʼam	kʼɨlʸkʼam	kʼɨlʸkʼam	215
+1047	Gelmets_Tsakhur	liver	48	qʼalqʼam	qʼalqʼam	qʼalqʼam	215
+1048	Mukhad_Rutul	liver	48	laqʼ {лакь}	лакь	laqʼ	215
+1049	Ixrek_Rutul	liver	48	leqʼ {лекь}	лекь	leqʼ	215
+1050	Luchek_Rutul	liver	48	laqʼ	laqʼ	laqʼ	215
+1051	Koshan_Aghul	liver	48	lekʼ	lekʼ	lekʼ	215
+1052	Keren_Aghul	liver	48	lekʼʸ	lekʼʸ	lekʼʸ	215
+1053	Gequn_Aghul	liver	48	lekʼʸ	lekʼʸ	lekʼʸ	215
+1054	Fite_Aghul	liver	48	likʼʸ	likʼʸ	likʼʸ	215
+1055	Aghul_proper	liver	48	lekʼʸ	lekʼʸ	lekʼʸ	215
+1056	Northern_Tabasaran	liver	48	lˈikʼ-i	lˈikʼ-i	lˈikʼ-i	215
+1057	Southern_Tabasaran	liver	48	kʼarˈu=likʼ	kʼarˈu=likʼ	kʼarˈu=likʼ	215
+1058	Gyune_Lezgi	liver	48	läqʼ	läqʼ	läqʼ	215
+1059	Outgroup_Chechen	liver	48	doʕax {доIах}	доIах	doʕax	217
+#
+1060	Nidzh_Udi	long	49	boχo-y {бохой}	бохой	boχo-y	218
+1061	Vartashen_Udi	long	49	boχo {бохо}	бохо	boχo	218
+1062	Archi	long	49	ˈaqa-tːu-class	ˈaqa-tːu-class	ˈaqa-tːu-class	219
+1063	Kryts_proper	long	49	ʕaχ-ti	ʕaχ-ti	ʕaχ-ti	218
+1064	Alyk_Kryts	long	49	ʕaqa	ʕaqa	ʕaqa	221
+1065	Budukh	long	49	ʕapχu ~ hapχu {гIапху, гIабху, гьапху}	гIапху, гIабху, гьапху	ʕapχu ~ hapχu	218
+1066	Mishlesh_Tsakhur	long	49	χɨlʸiː-n ~ χlʸiː-n {хылийн}	хылийн	χɨlʸiː-n ~ χlʸiː-n	220
+1067	Mikik_Tsakhur	long	49	χɨlːʸiː-n	χɨlːʸiː-n	χɨlːʸiː-n	220
+1068	Gelmets_Tsakhur	long	49	χɨlʸiyi-nʸ	χɨlʸiyi-nʸ	χɨlʸiyi-nʸ	220
+1069	Mukhad_Rutul	long	49	χˤulaχ-dɨ {хуIлаIхды}	хуIлаIхды	χˤulaχ-dɨ	220
+1070	Ixrek_Rutul	long	49	χulːiχ-dɨ {хуллихды}	хуллихды	χulːiχ-dɨ	220
+1071	Luchek_Rutul	long	49	χuleχ-dɨ	χuleχ-dɨ	χuleχ-dɨ	220
+1072	Koshan_Aghul	long	49	yirχe-r ~ yerχe-r	yirχe-r ~ yerχe-r	yirχe-r ~ yerχe-r	220
+1073	Keren_Aghul	long	49	yarχˤe-f	yarχˤe-f	yarχˤe-f	220
+1074	Gequn_Aghul	long	49	yerχe-f	yerχe-f	yerχe-f	220
+1075	Fite_Aghul	long	49	yarχi-t	yarχi-t	yarχi-t	220
+1076	Aghul_proper	long	49	irχe-f	irχe-f	irχe-f	220
+1077	Northern_Tabasaran	long	49	yarχˈi	yarχˈi	yarχˈi	220
+1078	Southern_Tabasaran	long	49	yarχˈi	yarχˈi	yarχˈi	220
+1079	Gyune_Lezgi	long	49	yärʁˈi	yärʁˈi	yärʁˈi	220
+1080	Outgroup_Chechen	long	49	d=eːx-a {деха}	деха	d=eːx-a	220
+1081	Archi	long	49	lˈaːχa-tːu-class	lˈaːχa-tːu-class	lˈaːχa-tːu-class	220
+#
+1082	Nidzh_Udi	louse	50	necː {нецI}	нецI	necː	222
+1083	Vartashen_Udi	louse	50	necː {нецI}	нецI	necː	222
+1084	Archi	louse	50	nˈacʼː-	nˈacʼː-	nˈacʼː-	222
+1085	Kryts_proper	louse	50	liš	liš	liš	223
+1086	Alyk_Kryts	louse	50	liš	liš	liš	223
+1087	Budukh	louse	50	liš {лиш}	лиш	liš	223
+1088	Mishlesh_Tsakhur	louse	50	wixʸ {вихьʹ}	вихьʹ	wixʸ	223
+1089	Mikik_Tsakhur	louse	50	wixʸ	wixʸ	wixʸ	223
+1090	Gelmets_Tsakhur	louse	50	wixʸ	wixʸ	wixʸ	223
+1091	Mukhad_Rutul	louse	50	lix {лихь}	лихь	lix	223
+1092	Ixrek_Rutul	louse	50	lix {лихь}	лихь	lix	223
+1093	Luchek_Rutul	louse	50	lixʸ	lixʸ	lixʸ	223
+1094	Koshan_Aghul	louse	50	netː	netː	netː	222
+1095	Keren_Aghul	louse	50	netː	netː	netː	222
+1096	Gequn_Aghul	louse	50	netː	netː	netː	222
+1097	Fite_Aghul	louse	50	nitː	nitː	nitː	222
+1098	Aghul_proper	louse	50	netː	netː	netː	222
+1099	Northern_Tabasaran	louse	50	nˈicː-i	nˈicː-i	nˈicː-i	222
+1100	Southern_Tabasaran	louse	50	nicː	nicː	nicː	222
+1101	Gyune_Lezgi	louse	50	net	net	net	222
+1102	Outgroup_Chechen	louse	50	meza {меза}	меза	meza	222
+#
+1103	Nidzh_Udi	man	51	iš-qːar {ишкъар}	ишкъар	iš-qːar	224
+1104	Vartashen_Udi	man	51	išu {ишу}	ишу	išu	224
+1105	Archi	man	51	bošˈor	bošˈor	bošˈor	225
+1106	Kryts_proper	man	51	firi	firi	firi	224
+1107	Alyk_Kryts	man	51	furi	furi	furi	224
+1108	Budukh	man	51	furi {фури}	фури	furi	224
+1109	Mishlesh_Tsakhur	man	51	adamiː {адамий}	адамий	adamiː	-565
+1110	Mikik_Tsakhur	man	51	adami	adami	adami	-566
+1111	Gelmets_Tsakhur	man	51	adami	adami	adami	-567
+1112	Mukhad_Rutul	man	51	wɨɣɨl {выгыл}	выгыл	wɨɣɨl	226
+1113	Ixrek_Rutul	man	51	wɨɣɨl-dɨ {выгIылды}	выгIылды	wɨɣɨl-dɨ	226
+1114	Luchek_Rutul	man	51	wɨɣɨl-dɨ	wɨɣɨl-dɨ	wɨɣɨl-dɨ	226
+1115	Koshan_Aghul	man	51	ile-r	ile-r	ile-r	227
+1116	Keren_Aghul	man	51	idemi	idemi	idemi	-568
+1117	Gequn_Aghul	man	51	eremi	eremi	eremi	-569
+1118	Fite_Aghul	man	51	edim	edim	edim	-570
+1119	Aghul_proper	man	51	idemi	idemi	idemi	-571
+1120	Northern_Tabasaran	man	51	žʷi	žʷi	žʷi	224
+1121	Southern_Tabasaran	man	51	admˈi	admˈi	admˈi	-572
+1122	Gyune_Lezgi	man	51	tːim	tːim	tːim	-573
+1123	Outgroup_Chechen	man	51	stag {стаг}	стаг	stag	228
+#
+1124	Nidzh_Udi	many	52	gele {ҝеле, геле}	ҝеле, геле	gele	229
+1125	Vartashen_Udi	many	52	gölö {ҝоьлоь, гоьлоь}	ҝоьлоь, гоьлоь	gölö	229
+1126	Archi	many	52	nˈaːqʼukan ~ nˈoːqʼukan ~ nˈoːqʼukun ~ nˈaːqʼukun-nu-class	nˈaːqʼukan ~ nˈoːqʼukan ~ nˈoːqʼukun ~ nˈaːqʼukun-nu-class	nˈaːqʼukan ~ nˈoːqʼukan ~ nˈoːqʼukun ~ nˈaːqʼukun-nu-class	230
+1127	Kryts_proper	many	52	parä	parä	parä	-574
+1128	Alyk_Kryts	many	52	χayla	χayla	χayla	-575
+1129	Budukh	many	52	läħ-ki ~ läħ-ki-ǯe {лаьхIки ~ лаьхIкидже}	лаьхIки ~ лаьхIкидже	läħ-ki ~ läħ-ki-ǯe	231
+1130	Mishlesh_Tsakhur	many	52	χe-class-adv.class {херра}	херра	χe-class-adv.class	231
+1131	Mikik_Tsakhur	many	52	χe-class-adv.class	χe-class-adv.class	χe-class-adv.class	231
+1132	Gelmets_Tsakhur	many	52	χˤa-class-adv.class	χˤa-class-adv.class	χˤa-class-adv.class	231
+1133	Mukhad_Rutul	many	52	bala {бала}	бала	bala	232
+1134	Ixrek_Rutul	many	52	balä {балаь}	балаь	balä	232
+1135	Luchek_Rutul	many	52	bala	bala	bala	232
+1136	Koshan_Aghul	many	52	pːara	pːara	pːara	-576
+1137	Keren_Aghul	many	52	pːara	pːara	pːara	-577
+1138	Gequn_Aghul	many	52	pːara	pːara	pːara	-578
+1139	Fite_Aghul	many	52	pːara	pːara	pːara	-579
+1140	Aghul_proper	many	52	pːara	pːara	pːara	-580
+1141	Northern_Tabasaran	many	52	aχˤ=čʼʷˈa	aχˤ=čʼʷˈa	aχˤ=čʼʷˈa	233
+1142	Southern_Tabasaran	many	52	aχˤu=čʼʷˈiʔ	aχˤu=čʼʷˈiʔ	aχˤu=čʼʷˈiʔ	233
+1143	Gyune_Lezgi	many	52	gizˈaf	gizˈaf	gizˈaf	-581
+1144	Outgroup_Chechen	many	52	duqa {дукха}	дукха	duqa	234
+#
+1145	Nidzh_Udi	meat	53	yeqː {йекъ}	йекъ	yeqː	235
+1146	Vartashen_Udi	meat	53	eqː {екъ}	екъ	eqː	235
+1147	Archi	meat	53	aƛʼ	aƛʼ	aƛʼ	235
+1148	Kryts_proper	meat	53	yek	yek	yek	235
+1149	Alyk_Kryts	meat	53	yak	yak	yak	235
+1150	Budukh	meat	53	yək {йак}	йак	yək	235
+1151	Mishlesh_Tsakhur	meat	53	čura {чура}	чура	čura	236
+1152	Mikik_Tsakhur	meat	53	čuru	čuru	čuru	236
+1153	Gelmets_Tsakhur	meat	53	čuroy	čuroy	čuroy	236
+1154	Mukhad_Rutul	meat	53	yak {йак, як}	йак, як	yak	235
+1155	Ixrek_Rutul	meat	53	yak {як}	як	yak	235
+1156	Luchek_Rutul	meat	53	yak	yak	yak	235
+1157	Koshan_Aghul	meat	53	yakː	yakː	yakː	235
+1158	Keren_Aghul	meat	53	yakː	yakː	yakː	235
+1159	Gequn_Aghul	meat	53	yakː	yakː	yakː	235
+1160	Fite_Aghul	meat	53	yikː	yikː	yikː	235
+1161	Aghul_proper	meat	53	yakː	yakː	yakː	235
+1162	Northern_Tabasaran	meat	53	yˈakː-a	yˈakː-a	yˈakː-a	235
+1163	Southern_Tabasaran	meat	53	yikː	yikː	yikː	235
+1164	Gyune_Lezgi	meat	53	yak	yak	yak	235
+1165	Outgroup_Chechen	meat	53	žiži-g {жижиг}	жижиг	žiži-g	237
+#
+1166	Nidzh_Udi	moon	54	χaš {хаш}	хаш	χaš	238
+1167	Vartashen_Udi	moon	54	χaš {хаш}	хаш	χaš	238
+1168	Archi	moon	54	bac	bac	bac	239
+1169	Kryts_proper	moon	54	väz	väz	väz	239
+1170	Alyk_Kryts	moon	54	vaz	vaz	vaz	239
+1171	Budukh	moon	54	vəz {ваз}	ваз	vəz	239
+1172	Mishlesh_Tsakhur	moon	54	waz {ваз}	ваз	waz	239
+1173	Mikik_Tsakhur	moon	54	waz	waz	waz	239
+1174	Gelmets_Tsakhur	moon	54	waz	waz	waz	239
+1175	Mukhad_Rutul	moon	54	waz {ваз}	ваз	waz	239
+1176	Ixrek_Rutul	moon	54	waz {ваз}	ваз	waz	239
+1177	Luchek_Rutul	moon	54	waz	waz	waz	239
+1178	Koshan_Aghul	moon	54	waz	waz	waz	239
+1179	Keren_Aghul	moon	54	waz	waz	waz	239
+1180	Gequn_Aghul	moon	54	waz	waz	waz	239
+1181	Fite_Aghul	moon	54	waz	waz	waz	239
+1182	Aghul_proper	moon	54	waz	waz	waz	239
+1183	Northern_Tabasaran	moon	54	wˈaʒ-a	wˈaʒ-a	wˈaʒ-a	239
+1184	Southern_Tabasaran	moon	54	waz	waz	waz	239
+1185	Gyune_Lezgi	moon	54	warʒ	warʒ	warʒ	239
+1186	Outgroup_Chechen	moon	54	butt {бутт}	бутт	butt	239
+#
+1187	Nidzh_Udi	mountain	55	b-ur-uχ {бурух}	бурух	b-ur-uχ	240
+1188	Vartashen_Udi	mountain	55	b-ur-uχ {бурух}	бурух	b-ur-uχ	240
+1189	Archi	mountain	55	mul	mul	mul	241
+1190	Kryts_proper	mountain	55	bel	bel	bel	242
+1191	Alyk_Kryts	mountain	55	daʁ	daʁ	daʁ	-582
+1192	Budukh	mountain	55	daʁ {дагъ}	дагъ	daʁ	-583
+1193	Mishlesh_Tsakhur	mountain	55	sɨwa {сыва}	сыва	sɨwa	240
+1194	Mikik_Tsakhur	mountain	55	sɨwa ~ suwa	sɨwa ~ suwa	sɨwa ~ suwa	240
+1195	Gelmets_Tsakhur	mountain	55	sɨwa	sɨwa	sɨwa	240
+1196	Mukhad_Rutul	mountain	55	sɨw ~ suw {сыв ~ сув}	сыв ~ сув	sɨw ~ suw	240
+1197	Ixrek_Rutul	mountain	55	sɨw {сыв}	сыв	sɨw	240
+1198	Luchek_Rutul	mountain	55	sɨw	sɨw	sɨw	240
+1199	Koshan_Aghul	mountain	55	sːu	sːu	sːu	240
+1200	Keren_Aghul	mountain	55	su	su	su	240
+1201	Gequn_Aghul	mountain	55	su	su	su	240
+1202	Fite_Aghul	mountain	55	suw	suw	suw	240
+1203	Aghul_proper	mountain	55	su	su	su	240
+1204	Northern_Tabasaran	mountain	55	siw	siw	siw	240
+1205	Southern_Tabasaran	mountain	55	siw	siw	siw	240
+1206	Gyune_Lezgi	mountain	55	daʁ	daʁ	daʁ	-584
+1207	Outgroup_Chechen	mountain	55	lam {лам}	лам	lam	241
+#
+1208	Nidzh_Udi	mouth	56	žˤomo {жIомо}	жIомо	žˤomo	243
+1209	Vartashen_Udi	mouth	56	žˤomo-χ {жIомох}	жIомох	žˤomo-χ	243
+1210	Archi	mouth	56	sːob	sːob	sːob	244
+1211	Kryts_proper	mouth	56	siv	siv	siv	244
+1212	Alyk_Kryts	mouth	56	siy	siy	siy	244
+1213	Budukh	mouth	56	siv {сив}	сив	siv	244
+1214	Mishlesh_Tsakhur	mouth	56	ɣalʸ {гIалʹ}	гIалʹ	ɣalʸ	245
+1215	Mikik_Tsakhur	mouth	56	ɣalʸ	ɣalʸ	ɣalʸ	245
+1216	Gelmets_Tsakhur	mouth	56	ɣalʸ	ɣalʸ	ɣalʸ	245
+1217	Mukhad_Rutul	mouth	56	ɣal {гал}	гал	ɣal	245
+1218	Ixrek_Rutul	mouth	56	ɣal {гIал}	гIал	ɣal	245
+1219	Luchek_Rutul	mouth	56	ɣal	ɣal	ɣal	245
+1220	Koshan_Aghul	mouth	56	siw	siw	siw	244
+1221	Keren_Aghul	mouth	56	sib	sib	sib	244
+1222	Gequn_Aghul	mouth	56	siw	siw	siw	244
+1223	Fite_Aghul	mouth	56	siw	siw	siw	244
+1224	Aghul_proper	mouth	56	siw	siw	siw	244
+1225	Northern_Tabasaran	mouth	56	ˈužʷ-u	ˈužʷ-u	ˈužʷ-u	244
+1226	Southern_Tabasaran	mouth	56	ušʷ	ušʷ	ušʷ	244
+1227	Gyune_Lezgi	mouth	56	siw	siw	siw	244
+1228	Outgroup_Chechen	mouth	56	baga {бага}	бага	baga	246
+#
+1229	Nidzh_Udi	name	57	cːi {цIи}	цIи	cːi	247
+1230	Vartashen_Udi	name	57	cːi {цIи}	цIи	cːi	247
+1231	Archi	name	57	cʼor	cʼor	cʼor	247
+1232	Kryts_proper	name	57	tɨr	tɨr	tɨr	247
+1233	Alyk_Kryts	name	57	tur	tur	tur	247
+1234	Budukh	name	57	tur {тур}	тур	tur	247
+1235	Mishlesh_Tsakhur	name	57	do {до}	до	do	247
+1236	Mikik_Tsakhur	name	57	do	do	do	247
+1237	Gelmets_Tsakhur	name	57	do	do	do	247
+1238	Mukhad_Rutul	name	57	dur {дур}	дур	dur	247
+1239	Ixrek_Rutul	name	57	dur {дур}	дур	dur	247
+1240	Luchek_Rutul	name	57	dur	dur	dur	247
+1241	Koshan_Aghul	name	57	tːur	tːur	tːur	247
+1242	Keren_Aghul	name	57	tːur	tːur	tːur	247
+1243	Gequn_Aghul	name	57	tːur	tːur	tːur	247
+1244	Fite_Aghul	name	57	tːur	tːur	tːur	247
+1245	Aghul_proper	name	57	tːur	tːur	tːur	247
+1246	Northern_Tabasaran	name	57	ʒur	ʒur	ʒur	247
+1247	Southern_Tabasaran	name	57	čːʷur	čːʷur	čːʷur	247
+1248	Gyune_Lezgi	name	57	tʼar	tʼar	tʼar	247
+1249	Outgroup_Chechen	name	57	cʼe {цIе}	цIе	cʼe	247
+#
+2275	Nidzh_Udi	near	103	išˤa ~ ɨšˤa {иъшIа ~ ыъшIа}	иъшIа ~ ыъшIа	išˤa ~ ɨšˤa	452
+2276	Vartashen_Udi	near	103	išˤa {иъшIа}	иъшIа	išˤa	452
+2277	Archi	near	103	ɬːʷa-k	ɬːʷa-k	ɬːʷa-k	453
+2278	Kryts_proper	near	103	müqʼo-v ~ möqʼö-v	müqʼo-v ~ möqʼö-v	müqʼo-v ~ möqʼö-v	454
+2279	Alyk_Kryts	near	103	miqʼe-ʕ	miqʼe-ʕ	miqʼe-ʕ	454
+2280	Budukh	near	103	bədə ~ bodə {бада, бода}	бада, бода	bədə ~ bodə	455
+2281	Mishlesh_Tsakhur	near	103	dʸolʸe-s ~ dʸolʸe-s-wallʸe ~ dʸolʸe-s-class {дёлес-на}	дёлес-на	dʸolʸe-s ~ dʸolʸe-s-wallʸe ~ dʸolʸe-s-class	456
+2282	Mikik_Tsakhur	near	103	dʸelʸe-s	dʸelʸe-s	dʸelʸe-s	456
+2283	Gelmets_Tsakhur	near	103	dʸolʸe-s-class	dʸolʸe-s-class	dʸolʸe-s-class	456
+2284	Mukhad_Rutul	near	103	beg-ed-ä ~ bey-d-ä ~ bey-d-e {бейдаь ~ бейде}	бейдаь ~ бейде	beg-ed-ä ~ bey-d-ä ~ bey-d-e	457
+2285	Ixrek_Rutul	near	103	bex-d-ä ~ bex-d-e {бехьдаь ~ бехьде}	бехьдаь ~ бехьде	bex-d-ä ~ bex-d-e	457
+2286	Luchek_Rutul	near	103	bey-d-ɨ	bey-d-ɨ	bey-d-ɨ	457
+2287	Koshan_Aghul	near	103	bugu-h	bugu-h	bugu-h	457
+2288	Keren_Aghul	near	103	muqʼu	muqʼu	muqʼu	454
+2289	Gequn_Aghul	near	103	bugu-li-h ~ bugu-li-w	bugu-li-h ~ bugu-li-w	bugu-li-h ~ bugu-li-w	457
+2290	Fite_Aghul	near	103	muqʼu	muqʼu	muqʼu	454
+2291	Northern_Tabasaran	near	103	bagˈa-x	bagˈa-x	bagˈa-x	457
+2292	Southern_Tabasaran	near	103	bagˈa-x	bagˈa-x	bagˈa-x	457
+2293	Gyune_Lezgi	near	103	maqʼʷa	maqʼʷa	maqʼʷa	454
+2294	Outgroup_Chechen	near	103	gerga-ra {гергара}	гергара	gerga-ra	459
+2295	Fite_Aghul	near	103	bagu	bagu	bagu	457
+2296	Southern_Tabasaran	near	103	ʁʷalˈa-q	ʁʷalˈa-q	ʁʷalˈa-q	458
+#
+1250	Nidzh_Udi	neck	58	ozan {озан}	озан	ozan	248
+1251	Vartashen_Udi	neck	58	ozan {озан}	озан	ozan	248
+1252	Archi	neck	58	oˤčʼ-lˈekːi	oˤčʼ-lˈekːi	oˤčʼ-lˈekːi	250
+1253	Kryts_proper	neck	58	gardan	gardan	gardan	-585
+1254	Alyk_Kryts	neck	58	gardan	gardan	gardan	-586
+1255	Budukh	neck	58	gərdən {гардан}	гардан	gərdən	-587
+1256	Mishlesh_Tsakhur	neck	58	gardan {гардан}	гардан	gardan	-588
+1257	Mikik_Tsakhur	neck	58	gardan	gardan	gardan	-589
+1258	Gelmets_Tsakhur	neck	58	gardan	gardan	gardan	-590
+1259	Mukhad_Rutul	neck	58	gardan {гардан}	гардан	gardan	-591
+1260	Ixrek_Rutul	neck	58	gardan {гардан}	гардан	gardan	-592
+1261	Luchek_Rutul	neck	58	gardan	gardan	gardan	-593
+1262	Koshan_Aghul	neck	58	gardan	gardan	gardan	-594
+1263	Keren_Aghul	neck	58	gardan	gardan	gardan	-595
+1264	Gequn_Aghul	neck	58	gardan	gardan	gardan	-596
+1265	Fite_Aghul	neck	58	gardan	gardan	gardan	-597
+1266	Aghul_proper	neck	58	gardan	gardan	gardan	-598
+1267	Northern_Tabasaran	neck	58	gardˈan	gardˈan	gardˈan	-599
+1268	Southern_Tabasaran	neck	58	gardˈan	gardˈan	gardˈan	-600
+1269	Gyune_Lezgi	neck	58	gardˈan	gardˈan	gardˈan	-601
+1270	Outgroup_Chechen	neck	58	worta {ворта}	ворта	worta	-602
+1271	Vartashen_Udi	neck	58	qːoqː {къокъ}	къокъ	qːoqː	249
+#
+1272	Nidzh_Udi	new	59	täzä {таьзаь}	таьзаь	täzä	-603
+1273	Vartashen_Udi	new	59	ini {ини}	ини	ini	251
+1274	Archi	new	59	macʼˈa-tːu-class	macʼˈa-tːu-class	macʼˈa-tːu-class	251
+1275	Kryts_proper	new	59	cʼiyä	cʼiyä	cʼiyä	251
+1276	Alyk_Kryts	new	59	taza	taza	taza	-604
+1277	Budukh	new	59	təzə {таза}	таза	təzə	-605
+1278	Mishlesh_Tsakhur	new	59	cʼʸe-class-n {цIедын}	цIедын	cʼʸe-class-n	251
+1279	Mikik_Tsakhur	new	59	cʼʸe-class-n	cʼʸe-class-n	cʼʸe-class-n	251
+1280	Gelmets_Tsakhur	new	59	cʼʸe-class-nʸ	cʼʸe-class-nʸ	cʼʸe-class-nʸ	251
+1281	Mukhad_Rutul	new	59	cʼin-dɨ {цIинды}	цIинды	cʼin-dɨ	251
+1282	Ixrek_Rutul	new	59	cʼin-dɨ {цIинды}	цIинды	cʼin-dɨ	251
+1283	Luchek_Rutul	new	59	cʼin-dɨ	cʼin-dɨ	cʼin-dɨ	251
+1284	Koshan_Aghul	new	59	cʼeye-r	cʼeye-r	cʼeye-r	251
+1285	Keren_Aghul	new	59	cʼaye-f	cʼaye-f	cʼaye-f	251
+1286	Gequn_Aghul	new	59	cʼeye-f	cʼeye-f	cʼeye-f	251
+1287	Fite_Aghul	new	59	cʼayi-t	cʼayi-t	cʼayi-t	251
+1288	Aghul_proper	new	59	cʼeye-f	cʼeye-f	cʼeye-f	251
+1289	Northern_Tabasaran	new	59	cʼeyˈi	cʼeyˈi	cʼeyˈi	251
+1290	Southern_Tabasaran	new	59	cʼiyˈi	cʼiyˈi	cʼiyˈi	251
+1291	Gyune_Lezgi	new	59	cʼeyˈi	cʼeyˈi	cʼeyˈi	251
+1292	Outgroup_Chechen	new	59	kerla {керла}	керла	kerla	252
+#
+1293	Nidzh_Udi	night	60	šü {шуь}	шуь	šü	253
+1294	Vartashen_Udi	night	60	šu {шу}	шу	šu	253
+1295	Archi	night	60	ˈišː-	ˈišː-	ˈišː-	253
+1296	Kryts_proper	night	60	yif	yif	yif	253
+1297	Alyk_Kryts	night	60	yif	yif	yif	253
+1298	Budukh	night	60	yuǯə-n-ǯiǯ {йуджанджидж, йудженджидж}	йуджанджидж, йудженджидж	yuǯə-n-ǯiǯ	253
+1299	Mishlesh_Tsakhur	night	60	χˤam {хаIм}	хаIм	χˤam	254
+1300	Mikik_Tsakhur	night	60	χˤam	χˤam	χˤam	254
+1301	Gelmets_Tsakhur	night	60	χˤam	χˤam	χˤam	254
+1302	Mukhad_Rutul	night	60	wɨš ~ wuš {выш ~ вуш}	выш ~ вуш	wɨš ~ wuš	253
+1303	Ixrek_Rutul	night	60	yüš ~ yuš {йуьш ~ йуш}	йуьш ~ йуш	yüš ~ yuš	253
+1304	Luchek_Rutul	night	60	wɨš	wɨš	wɨš	253
+1305	Koshan_Aghul	night	60	išːʷ	išːʷ	išːʷ	253
+1306	Keren_Aghul	night	60	ʢuš	ʢuš	ʢuš	253
+1307	Gequn_Aghul	night	60	ʡüš	ʡüš	ʡüš	253
+1308	Fite_Aghul	night	60	üxʸ	üxʸ	üxʸ	253
+1309	Aghul_proper	night	60	ʡüš	ʡüš	ʡüš	253
+1310	Northern_Tabasaran	night	60	yˈižʷ-i	yˈižʷ-i	yˈižʷ-i	253
+1311	Southern_Tabasaran	night	60	yišʷ	yišʷ	yišʷ	253
+1312	Gyune_Lezgi	night	60	yif	yif	yif	253
+1313	Outgroup_Chechen	night	60	büysa {буьйса}	буьйса	büysa	255
+#
+1314	Nidzh_Udi	nose	61	boχˤmoʁ {боъхмоъгъ}	боъхмоъгъ	boχˤmoʁ	256
+1315	Vartashen_Udi	nose	61	boχˤmoʁ {боъхмоъгъ}	боъхмоъгъ	boχˤmoʁ	256
+1316	Archi	nose	61	muč	muč	muč	257
+1317	Kryts_proper	nose	61	miʔel	miʔel	miʔel	258
+1318	Alyk_Kryts	nose	61	maʔal	maʔal	maʔal	258
+1319	Budukh	nose	61	meʔel {меъел}	меъел	meʔel	258
+1320	Mishlesh_Tsakhur	nose	61	qow {хъов}	хъов	qow	259
+1321	Mikik_Tsakhur	nose	61	quš	quš	quš	260
+1322	Gelmets_Tsakhur	nose	61	qow	qow	qow	259
+1323	Mukhad_Rutul	nose	61	xex {хьехь}	хьехь	xex	261
+1324	Ixrek_Rutul	nose	61	xex {хьехь}	хьехь	xex	261
+1325	Luchek_Rutul	nose	61	xexʸ	xexʸ	xexʸ	261
+1326	Koshan_Aghul	nose	61	qˤuq	qˤuq	qˤuq	262
+1327	Keren_Aghul	nose	61	qˤuq	qˤuq	qˤuq	262
+1328	Gequn_Aghul	nose	61	qʷeqʷ ~ qüqʸ	qʷeqʷ ~ qüqʸ	qʷeqʷ ~ qüqʸ	262
+1329	Fite_Aghul	nose	61	qʷeqʷ	qʷeqʷ	qʷeqʷ	262
+1330	Aghul_proper	nose	61	qeqʷ	qeqʷ	qeqʷ	262
+1331	Northern_Tabasaran	nose	61	qˤaq	qˤaq	qˤaq	262
+1332	Southern_Tabasaran	nose	61	qˤuq	qˤuq	qˤuq	262
+1333	Gyune_Lezgi	nose	61	ner	ner	ner	258
+1334	Outgroup_Chechen	nose	61	mara {мара}	мара	mara	263
+1335	Mikik_Tsakhur	nose	61	qow	qow	qow	259
+#
+1336	Nidzh_Udi	not	62	te- {те-}	те-	te-	264
+1337	Vartashen_Udi	not	62	te- {те-}	те-	te-	264
+1338	Archi	not	62	=t""u	=t""u	=t""u	264
+1339	Kryts_proper	not	62	d-ä-class	d-ä-class	d-ä-class	264
+1340	Alyk_Kryts	not	62	d-a-class	d-a-class	d-a-class	264
+1341	Budukh	not	62	d-ə-class {да-}	да-	d-ə-class	264
+1342	Mishlesh_Tsakhur	not	62	dʸe-š {деш}	деш	dʸe-š	264
+1343	Gelmets_Tsakhur	not	62	dʸi-ʔ {диъ}	диъ	dʸi-ʔ	264
+1344	Mukhad_Rutul	not	62	di-š {диш}	диш	di-š	264
+1345	Ixrek_Rutul	not	62	di-š {диш}	диш	di-š	264
+1346	Koshan_Aghul	not	62	=da	=da	=da	264
+1347	Keren_Aghul	not	62	=da	=da	=da	264
+1348	Gequn_Aghul	not	62	=da	=da	=da	264
+1349	Fite_Aghul	not	62	=da	=da	=da	264
+1350	Aghul_proper	not	62	=da	=da	=da	264
+1351	Northern_Tabasaran	not	62	da-r	da-r	da-r	264
+1352	Southern_Tabasaran	not	62	da-r	da-r	da-r	264
+1353	Gyune_Lezgi	not	62	=č	=č	=č	265
+1354	Outgroup_Chechen	not	62	ca {ца}	ца	ca	265
+#
+1355	Nidzh_Udi	one	63	sa {са}	са	sa	266
+1356	Vartashen_Udi	one	63	sa {са}	са	sa	266
+1357	Archi	one	63	ˈosː-	ˈosː-	ˈosː-	266
+1358	Kryts_proper	one	63	sa-class	sa-class	sa-class	266
+1359	Alyk_Kryts	one	63	sa-class	sa-class	sa-class	266
+1360	Budukh	one	63	sə-class {са-}	са-	sə-class	266
+1361	Mishlesh_Tsakhur	one	63	sa ~ sa-class-lʸe {са, салле}	са, салле	sa ~ sa-class-lʸe	266
+1362	Mikik_Tsakhur	one	63	sa ~ sa-class-lʸe	sa ~ sa-class-lʸe	sa ~ sa-class-lʸe	266
+1363	Gelmets_Tsakhur	one	63	sa ~ sa-class-lʸä	sa ~ sa-class-lʸä	sa ~ sa-class-lʸä	266
+1364	Mukhad_Rutul	one	63	sa {са}	са	sa	266
+1365	Ixrek_Rutul	one	63	sä {саь}	саь	sä	266
+1366	Luchek_Rutul	one	63	sa	sa	sa	266
+1367	Koshan_Aghul	one	63	sːa-r	sːa-r	sːa-r	266
+1368	Keren_Aghul	one	63	sa-d	sa-d	sa-d	266
+1369	Gequn_Aghul	one	63	sa-d	sa-d	sa-d	266
+1370	Fite_Aghul	one	63	sa-d	sa-d	sa-d	266
+1371	Aghul_proper	one	63	sa-d	sa-d	sa-d	266
+1372	Northern_Tabasaran	one	63	sa-class	sa-class	sa-class	266
+1373	Southern_Tabasaran	one	63	sa-class	sa-class	sa-class	266
+1374	Gyune_Lezgi	one	63	sa	sa	sa	266
+1375	Outgroup_Chechen	one	63	cħaʔ {цхьаъ}	цхьаъ	cħaʔ	266
+#
+1376	Nidzh_Udi	person	64	amd-ar {амдар}	амдар	amd-ar	-606
+1377	Vartashen_Udi	person	64	adam-ar {адамар}	адамар	adam-ar	-607
+1378	Archi	person	64	adˈam	adˈam	adˈam	-608
+1379	Kryts_proper	person	64	admi	admi	admi	-609
+1380	Alyk_Kryts	person	64	adami	adami	adami	-610
+1381	Budukh	person	64	idmi {идми}	идми	idmi	-611
+1382	Mishlesh_Tsakhur	person	64	insan ~ iːsan {инсан}	инсан	insan ~ iːsan	-612
+1383	Mikik_Tsakhur	person	64	insan	insan	insan	-613
+1384	Gelmets_Tsakhur	person	64	insan	insan	insan	-614
+1385	Mukhad_Rutul	person	64	edemi ~ ädämi {эдеми ~ аьдаьми}	эдеми ~ аьдаьми	edemi ~ ädämi	-615
+1386	Ixrek_Rutul	person	64	edemi {эдеми}	эдеми	edemi	-616
+1387	Luchek_Rutul	person	64	edemi	edemi	edemi	-617
+1388	Koshan_Aghul	person	64	insan	insan	insan	-618
+1389	Gequn_Aghul	person	64	insan	insan	insan	-619
+1390	Aghul_proper	person	64	insan	insan	insan	-620
+1391	Northern_Tabasaran	person	64	ermˈi {эрми}	эрми	ermˈi	-621
+1392	Southern_Tabasaran	person	64	edmˈi {эдми}	эдми	edmˈi	-622
+1393	Gyune_Lezgi	person	64	insˈan	insˈan	insˈan	-623
+1394	Outgroup_Chechen	person	64	stag {стаг}	стаг	stag	268
+#
+1395	Nidzh_Udi	rain	65	aʁa-la {агъала}	агъала	aʁa-la	269
+1396	Vartashen_Udi	rain	65	aʁa-la {агъала}	агъала	aʁa-la	269
+1397	Archi	rain	65	χːˤel	χːˤel	χːˤel	270
+1398	Kryts_proper	rain	65	čʼebi-ǯ	čʼebi-ǯ	čʼebi-ǯ	271
+1399	Alyk_Kryts	rain	65	čʼebi-ǯ	čʼebi-ǯ	čʼebi-ǯ	271
+1400	Budukh	rain	65	məf {маф}	маф	məf	272
+1401	Mishlesh_Tsakhur	rain	65	gʸ=oʁiː {гёгий}	гёгий	gʸ=oʁiː	269
+1402	Mikik_Tsakhur	rain	65	gʸ=oːʁiː	gʸ=oːʁiː	gʸ=oːʁiː	269
+1403	Gelmets_Tsakhur	rain	65	gʸ=eʁu-y	gʸ=eʁu-y	gʸ=eʁu-y	269
+1404	Mukhad_Rutul	rain	65	h=uʁa-l ~ uʁa-l {гьугъал}	гьугъал	h=uʁa-l ~ uʁa-l	269
+1405	Ixrek_Rutul	rain	65	h=uʁa-l {гьугъал}	гьугъал	h=uʁa-l	269
+1406	Luchek_Rutul	rain	65	h=uʁa-l	h=uʁa-l	h=uʁa-l	269
+1407	Koshan_Aghul	rain	65	uʢa-l	uʢa-l	uʢa-l	269
+1408	Keren_Aghul	rain	65	uʁa-l	uʁa-l	uʁa-l	269
+1409	Gequn_Aghul	rain	65	uʁa-l	uʁa-l	uʁa-l	269
+1410	Fite_Aghul	rain	65	uʁa-l	uʁa-l	uʁa-l	269
+1411	Aghul_proper	rain	65	uʁa-l	uʁa-l	uʁa-l	269
+1412	Northern_Tabasaran	rain	65	marx	marx	marx	272
+1413	Southern_Tabasaran	rain	65	marx	marx	marx	272
+1414	Gyune_Lezgi	rain	65	marf	marf	marf	272
+1415	Outgroup_Chechen	rain	65	doɣa {догIа}	догIа	doɣa	269
+1416	Fite_Aghul	rain	65	marf	marf	marf	272
+#
+1417	Nidzh_Udi	red	66	čːˤočːˤa {чоча}	чоча	čːˤočːˤa	273
+1418	Vartashen_Udi	red	66	čːˤočːˤa {чоча}	чоча	čːˤočːˤa	273
+1419	Archi	red	66	yˈaˤtʼan-nu-class	yˈaˤtʼan-nu-class	yˈaˤtʼan-nu-class	-624
+1420	Kryts_proper	red	66	iri	iri	iri	274
+1421	Alyk_Kryts	red	66	iuru	iuru	iuru	274
+1422	Budukh	red	66	al {ал}	ал	al	-625
+1423	Mishlesh_Tsakhur	red	66	čʼara-n {чIаран, чIаIран}	чIаран, чIаIран	čʼara-n	275
+1424	Mikik_Tsakhur	red	66	čʼera-n	čʼera-n	čʼera-n	275
+1425	Gelmets_Tsakhur	red	66	čʼara-nʸ	čʼara-nʸ	čʼara-nʸ	275
+1426	Mukhad_Rutul	red	66	ir-dɨ {ирды}	ирды	ir-dɨ	274
+1427	Ixrek_Rutul	red	66	ir-dɨ {ирды}	ирды	ir-dɨ	274
+1428	Luchek_Rutul	red	66	ir-dɨ	ir-dɨ	ir-dɨ	274
+1429	Koshan_Aghul	red	66	ire-r	ire-r	ire-r	274
+1430	Keren_Aghul	red	66	ire-f	ire-f	ire-f	274
+1431	Gequn_Aghul	red	66	ire-f	ire-f	ire-f	274
+1432	Fite_Aghul	red	66	iri-t	iri-t	iri-t	274
+1433	Aghul_proper	red	66	ire-f	ire-f	ire-f	274
+1434	Northern_Tabasaran	red	66	irˈi	irˈi	irˈi	274
+1435	Southern_Tabasaran	red	66	ürˈu	ürˈu	ürˈu	274
+1436	Gyune_Lezgi	red	66	yarˈu	yarˈu	yarˈu	274
+1437	Outgroup_Chechen	red	66	cʼeːn {цIēн}	цIēн	cʼeːn	276
+#
+1438	Nidzh_Udi	road	67	yaqː {йакъ}	йакъ	yaqː	277
+1439	Vartashen_Udi	road	67	yaqː {йакъ}	йакъ	yaqː	277
+1440	Archi	road	67	dˈeqʼːˤ-	dˈeqʼːˤ-	dˈeqʼːˤ-	277
+1441	Kryts_proper	road	67	riχ	riχ	riχ	278
+1442	Alyk_Kryts	road	67	riχ	riχ	riχ	278
+1443	Budukh	road	67	riχ {рих}	рих	riχ	278
+1444	Mishlesh_Tsakhur	road	67	yaqːˤ- {йаIхъ, йаIххъ-}	йаIхъ, йаIххъ-	yaqːˤ-	277
+1445	Mikik_Tsakhur	road	67	yaqːˤ-	yaqːˤ-	yaqːˤ-	277
+1446	Gelmets_Tsakhur	road	67	yɨqːˤ-	yɨqːˤ-	yɨqːˤ-	277
+1447	Mukhad_Rutul	road	67	raqˤ {раIхъ}	раIхъ	raqˤ	277
+1448	Ixrek_Rutul	road	67	raqˤ {раIхъ}	раIхъ	raqˤ	277
+1449	Luchek_Rutul	road	67	raqˤ	raqˤ	raqˤ	277
+1450	Koshan_Aghul	road	67	raqːˤ	raqːˤ	raqːˤ	277
+1451	Keren_Aghul	road	67	raqːˤ	raqːˤ	raqːˤ	277
+1452	Gequn_Aghul	road	67	reqːʸ	reqːʸ	reqːʸ	277
+1453	Fite_Aghul	road	67	raqːˤ	raqːˤ	raqːˤ	277
+1454	Aghul_proper	road	67	räqː ~ reqː	räqː ~ reqː	räqː ~ reqː	277
+1455	Northern_Tabasaran	road	67	rˈaqːˤ-a	rˈaqːˤ-a	rˈaqːˤ-a	277
+1456	Southern_Tabasaran	road	67	raqːˤ	raqːˤ	raqːˤ	277
+1457	Gyune_Lezgi	road	67	räq	räq	räq	277
+1458	Outgroup_Chechen	road	67	neqʼ {некъ}	некъ	neqʼ	277
+#
+1459	Nidzh_Udi	root	68	tum ~ tüm {тум}	тум	tum ~ tüm	279
+1460	Vartashen_Udi	root	68	tum {тум}	тум	tum	279
+1461	Archi	root	68	mˈarχːu	mˈarχːu	mˈarχːu	-626
+1462	Kryts_proper	root	68	kuk	kuk	kuk	-627
+1463	Alyk_Kryts	root	68	kuk	kuk	kuk	-628
+1464	Budukh	root	68	kuk {кук}	кук	kuk	-629
+1465	Mishlesh_Tsakhur	root	68	kok {кок}	кок	kok	-630
+1466	Mikik_Tsakhur	root	68	kokː-	kokː-	kokː-	-631
+1467	Gelmets_Tsakhur	root	68	kok	kok	kok	-632
+1468	Mukhad_Rutul	root	68	ʁʷab {гъваб}	гъваб	ʁʷab	280
+1469	Ixrek_Rutul	root	68	ʁʷab {гъваб}	гъваб	ʁʷab	280
+1470	Luchek_Rutul	root	68	ʁʷab	ʁʷab	ʁʷab	280
+1471	Koshan_Aghul	root	68	marʡ	marʡ	marʡ	281
+1472	Keren_Aghul	root	68	marqʷˤ	marqʷˤ	marqʷˤ	281
+1473	Gequn_Aghul	root	68	märʡ	märʡ	märʡ	281
+1474	Fite_Aghul	root	68	marʔ	marʔ	marʔ	281
+1475	Aghul_proper	root	68	märʡ	märʡ	märʡ	281
+1476	Northern_Tabasaran	root	68	ǯuw	ǯuw	ǯuw	282
+1477	Southern_Tabasaran	root	68	čːiw	čːiw	čːiw	282
+1478	Gyune_Lezgi	root	68	duwˈul	duwˈul	duwˈul	283
+1479	Outgroup_Chechen	root	68	oːra-m {ōрам}	ōрам	oːra-m	284
+#
+1480	Nidzh_Udi	round	69	kːankːoroy {кIанкIорой}	кIанкIорой	kːankːoroy	285
+1481	Vartashen_Udi	round	69	kːakːanikː {кIакIаникI}	кIакIаникI	kːakːanikː	285
+1482	Archi	round	69	gukːˈi-tːu-class	gukːˈi-tːu-class	gukːˈi-tːu-class	-633
+1483	Kryts_proper	round	69	gurgu-m	gurgu-m	gurgu-m	285
+1484	Alyk_Kryts	round	69	bembeleɢʷatʼa	bembeleɢʷatʼa	bembeleɢʷatʼa	286
+1485	Budukh	round	69	gungu-r-tʼi ~ gungu-lu-tʼi {гунгуртIи}	гунгуртIи	gungu-r-tʼi ~ gungu-lu-tʼi	285
+1486	Mishlesh_Tsakhur	round	69	gɨlʸgɨlʸe-n {гылʹгылен}	гылʹгылен	gɨlʸgɨlʸe-n	285
+1487	Mikik_Tsakhur	round	69	gɨrgara-n	gɨrgara-n	gɨrgara-n	285
+1488	Gelmets_Tsakhur	round	69	top-xʸilʸi-nʸ	top-xʸilʸi-nʸ	top-xʸilʸi-nʸ	287
+1489	Mukhad_Rutul	round	69	ruʁ-ud {ругъуд}	ругъуд	ruʁ-ud	288
+1490	Ixrek_Rutul	round	69	gɨrg-ɨ-n-dɨ {гыргынды}	гыргынды	gɨrg-ɨ-n-dɨ	285
+1491	Luchek_Rutul	round	69	ruʁu-d	ruʁu-d	ruʁu-d	288
+1492	Koshan_Aghul	round	69	al=arc-ni-r	al=arc-ni-r	al=arc-ni-r	289
+1493	Keren_Aghul	round	69	gilg-e-n-f	gilg-e-n-f	gilg-e-n-f	285
+1494	Gequn_Aghul	round	69	gilg-e-n-f ~ girg-e-n-f	gilg-e-n-f ~ girg-e-n-f	gilg-e-n-f ~ girg-e-n-f	285
+1495	Fite_Aghul	round	69	gug-mi-t	gug-mi-t	gug-mi-t	285
+1496	Aghul_proper	round	69	girg-e-n-f	girg-e-n-f	girg-e-n-f	285
+1497	Northern_Tabasaran	round	69	cʼˈi=gurgu-mi	cʼˈi=gurgu-mi	cʼˈi=gurgu-mi	285
+1498	Southern_Tabasaran	round	69	gerg-mˈi	gerg-mˈi	gerg-mˈi	285
+1499	Gyune_Lezgi	round	69	el=qːʷˈe-y {элкъвей}	элкъвей	el=qːʷˈe-y	288
+1500	Outgroup_Chechen	round	69	gorga {горга}	горга	gorga	285
+1501	Koshan_Aghul	round	69	tʼaˤrlič	tʼaˤrlič	tʼaˤrlič	290
+1502	Fite_Aghul	round	69	al=urcu-t	al=urcu-t	al=urcu-t	289
+#
+2297	Nidzh_Udi	salt	104	el {ел}	ел	el	460
+2298	Vartashen_Udi	salt	104	el {ел}	ел	el	460
+2299	Archi	salt	104	ˈorχˤi	ˈorχˤi	ˈorχˤi	461
+2300	Kryts_proper	salt	104	qʼel	qʼel	qʼel	460
+2301	Alyk_Kryts	salt	104	qʼel	qʼel	qʼel	460
+2302	Budukh	salt	104	qʼel {кьел}	кьел	qʼel	460
+2303	Mishlesh_Tsakhur	salt	104	qʼew {кьев}	кьев	qʼew	460
+2304	Mikik_Tsakhur	salt	104	qʼew	qʼew	qʼew	460
+2305	Gelmets_Tsakhur	salt	104	qʼew	qʼew	qʼew	460
+2306	Mukhad_Rutul	salt	104	qʼäl ~ qʼel {кьаьл ~ кьел}	кьаьл ~ кьел	qʼäl ~ qʼel	460
+2307	Ixrek_Rutul	salt	104	qʼel ~ qʼäl {кьел ~ кьаьл}	кьел ~ кьаьл	qʼel ~ qʼäl	460
+2308	Luchek_Rutul	salt	104	qʼelʸ	qʼelʸ	qʼelʸ	460
+2309	Koshan_Aghul	salt	104	qʼel	qʼel	qʼel	460
+2310	Keren_Aghul	salt	104	qʼˤal	qʼˤal	qʼˤal	460
+2311	Gequn_Aghul	salt	104	qʼel ~ qʼäl	qʼel ~ qʼäl	qʼel ~ qʼäl	460
+2312	Fite_Aghul	salt	104	qʼil	qʼil	qʼil	460
+2313	Aghul_proper	salt	104	qʼel	qʼel	qʼel	460
+2314	Northern_Tabasaran	salt	104	qʼil	qʼil	qʼil	460
+2315	Southern_Tabasaran	salt	104	qʼil	qʼil	qʼil	460
+2316	Gyune_Lezgi	salt	104	qʼäl	qʼäl	qʼäl	460
+2317	Outgroup_Chechen	salt	104	tüxa {туьха}	туьха	tüxa	462
+#
+1503	Nidzh_Udi	sand	70	qːum {къум}	къум	qːum	-634
+1504	Vartashen_Udi	sand	70	ša {ша}	ша	ša	291
+1505	Archi	sand	70	sˈarsi	sˈarsi	sˈarsi	292
+1506	Kryts_proper	sand	70	qːum	qːum	qːum	-635
+1507	Alyk_Kryts	sand	70	qːum	qːum	qːum	-636
+1508	Budukh	sand	70	qːum {къум}	къум	qːum	-637
+1509	Mishlesh_Tsakhur	sand	70	qːum {къум}	къум	qːum	-638
+1510	Mikik_Tsakhur	sand	70	qːum	qːum	qːum	-639
+1511	Gelmets_Tsakhur	sand	70	qːum	qːum	qːum	-640
+1512	Mukhad_Rutul	sand	70	šim ~ šum {шим}	шим	šim ~ šum	291
+1513	Ixrek_Rutul	sand	70	qːum {къум}	къум	qːum	-641
+1514	Luchek_Rutul	sand	70	qːum	qːum	qːum	-642
+1515	Koshan_Aghul	sand	70	qːum	qːum	qːum	-643
+1516	Keren_Aghul	sand	70	qːum	qːum	qːum	-644
+1517	Gequn_Aghul	sand	70	qːum	qːum	qːum	-645
+1518	Fite_Aghul	sand	70	qːum	qːum	qːum	-646
+1519	Aghul_proper	sand	70	qːum	qːum	qːum	-647
+1520	Northern_Tabasaran	sand	70	ɢum	ɢum	ɢum	-648
+1521	Southern_Tabasaran	sand	70	ʁum	ʁum	ʁum	-649
+1522	Gyune_Lezgi	sand	70	qːum	qːum	qːum	-650
+1523	Outgroup_Chechen	sand	70	ɣum {гIум}	гIум	ɣum	-651
+1524	Mukhad_Rutul	sand	70	secʼ {сецI}	сецI	secʼ	293
+#
+1525	Nidzh_Udi	say	71	neχ- {нех-}	нех-	neχ-	294
+1526	Vartashen_Udi	say	71	eχ- {ех-}	ех-	eχ-	295
+1527	Archi	say	71	bo-	bo-	bo-	296
+1528	Kryts_proper	say	71	l=u-	l=u-	l=u-	296
+1529	Alyk_Kryts	say	71	l=i-yi	l=i-yi	l=i-yi	296
+1530	Budukh	say	71	yuʔu- {йуъу-}	йуъу-	yuʔu-	296
+1531	Mishlesh_Tsakhur	say	71	eh- {эгьес, ивгьес}	эгьес, ивгьес	eh-	296
+1532	Mikik_Tsakhur	say	71	ih-	ih-	ih-	296
+1533	Gelmets_Tsakhur	say	71	ih- {игьез}	игьез	ih-	296
+1534	Mukhad_Rutul	say	71	class=ux- {гьухьус}	гьухьус	class=ux-	297
+1535	Ixrek_Rutul	say	71	class=ux- {гьухьун}	гьухьун	class=ux-	297
+1536	Luchek_Rutul	say	71	class=ux-	class=ux-	class=ux-	297
+1537	Koshan_Aghul	say	71	kː-a-	kː-a-	kː-a-	298
+1538	Keren_Aghul	say	71	aʁ-a-y-	aʁ-a-y-	aʁ-a-y-	299
+1539	Gequn_Aghul	say	71	aʁ-a-	aʁ-a-	aʁ-a-	299
+1540	Fite_Aghul	say	71	aʁ-a-	aʁ-a-	aʁ-a-	299
+1541	Aghul_proper	say	71	aʁ-a-y-	aʁ-a-y-	aʁ-a-y-	299
+1542	Northern_Tabasaran	say	71	kʼ-	kʼ-	kʼ-	300
+1543	Southern_Tabasaran	say	71	kʼ-	kʼ-	kʼ-	300
+1544	Gyune_Lezgi	say	71	l=uhˈu-	l=uhˈu-	l=uhˈu-	296
+1545	Outgroup_Chechen	say	71	aːl-a {āла}	āла	aːl-a	301
+1546	Nidzh_Udi	say	71	p-	p-	p-	296
+1547	Vartashen_Udi	say	71	p-	p-	p-	296
+1548	Archi	say	71	wa-r-	wa-r-	wa-r-	296
+1549	Kryts_proper	say	71	l=ip-	l=ip-	l=ip-	296
+1550	Alyk_Kryts	say	71	l=ip-	l=ip-	l=ip-	296
+1551	Budukh	say	71	yɨpə- {йыпа-}	йыпа-	yɨpə-	296
+1552	Mishlesh_Tsakhur	say	71	iwh-	iwh-	iwh-	296
+1553	Mikik_Tsakhur	say	71	uwh-	uwh-	uwh-	296
+1554	Koshan_Aghul	say	71	p-una-	p-una-	p-una-	296
+1555	Keren_Aghul	say	71	p-una-	p-una-	p-una-	296
+1556	Gequn_Aghul	say	71	p-una-	p-una-	p-una-	296
+1557	Fite_Aghul	say	71	up-una-	up-una-	up-una-	296
+1558	Aghul_proper	say	71	p-una-	p-una-	p-una-	296
+1559	Northern_Tabasaran	say	71	p-	p-	p-	296
+1560	Southern_Tabasaran	say	71	p-	p-	p-	296
+#
+1561	Nidzh_Udi	see	72	akː-sun {акIсун}	акIсун	akː-sun	302
+1562	Vartashen_Udi	see	72	akː-sun {акIсун}	акIсун	akː-sun	302
+1563	Archi	see	72	=ˈakːu-	=ˈakːu-	=ˈakːu-	302
+1564	Kryts_proper	see	72	irqi-	irqi-	irqi-	303
+1565	Alyk_Kryts	see	72	irqi-	irqi-	irqi-	303
+1566	Budukh	see	72	irqi- {ирхъи-}	ирхъи-	irqi-	303
+1567	Mishlesh_Tsakhur	see	72	qː=aǯ- {къаджес}	къаджес	qː=aǯ-	304
+1568	Mikik_Tsakhur	see	72	ʁ=ež-	ʁ=ež-	ʁ=ež-	304
+1569	Gelmets_Tsakhur	see	72	ʁ=až-	ʁ=až-	ʁ=až-	304
+1570	Mukhad_Rutul	see	72	h=agʷ- {гьагвас}	гьагвас	h=agʷ-	302
+1571	Ixrek_Rutul	see	72	ʁ=ägʷ- {гъаьгун}	гъаьгун	ʁ=ägʷ-	302
+1572	Luchek_Rutul	see	72	h=agʷ-	h=agʷ-	h=agʷ-	302
+1573	Koshan_Aghul	see	72	raqːˤ-a-	raqːˤ-a-	raqːˤ-a-	303
+1574	Keren_Aghul	see	72	agʷ-a-	agʷ-a-	agʷ-a-	302
+1575	Gequn_Aghul	see	72	agʷ-a-	agʷ-a-	agʷ-a-	302
+1576	Fite_Aghul	see	72	agʷ-a-	agʷ-a-	agʷ-a-	302
+1577	Aghul_proper	see	72	agʷ-a-	agʷ-a-	agʷ-a-	302
+1578	Northern_Tabasaran	see	72	aɢːˤ-ˈ	aɢːˤ-ˈ	aɢːˤ-ˈ	303
+1579	Southern_Tabasaran	see	72	raqːˤ-ˈ	raqːˤ-ˈ	raqːˤ-ˈ	303
+1580	Gyune_Lezgi	see	72	akːʷˈa-	akːʷˈa-	akːʷˈa-	302
+1581	Outgroup_Chechen	see	72	ga-n {ган}	ган	ga-n	302
+#
+1582	Nidzh_Udi	seed	73	cil {цил}	цил	cil	305
+1583	Vartashen_Udi	seed	73	cil {цил}	цил	cil	305
+1584	Archi	seed	73	ɬːʷinː-	ɬːʷinː-	ɬːʷinː-	306
+1585	Kryts_proper	seed	73	tum	tum	tum	-652
+1586	Alyk_Kryts	seed	73	tum	tum	tum	-653
+1587	Budukh	seed	73	tum {тум}	тум	tum	-654
+1588	Mishlesh_Tsakhur	seed	73	toχum {тохум}	тохум	toχum	-655
+1589	Mikik_Tsakhur	seed	73	dʸenʸe	dʸenʸe	dʸenʸe	-656
+1590	Gelmets_Tsakhur	seed	73	dʸenʸe	dʸenʸe	dʸenʸe	-657
+1591	Mukhad_Rutul	seed	73	suk {сук}	сук	suk	307
+1592	Ixrek_Rutul	seed	73	tuχum {тухум}	тухум	tuχum	-658
+1593	Luchek_Rutul	seed	73	tuχum	tuχum	tuχum	-659
+1594	Koshan_Aghul	seed	73	tum	tum	tum	-660
+1595	Keren_Aghul	seed	73	tum	tum	tum	-661
+1596	Gequn_Aghul	seed	73	tum	tum	tum	-662
+1597	Fite_Aghul	seed	73	tum	tum	tum	-663
+1598	Aghul_proper	seed	73	tum	tum	tum	-664
+1599	Northern_Tabasaran	seed	73	tum	tum	tum	-665
+1600	Southern_Tabasaran	seed	73	tum	tum	tum	-666
+1601	Gyune_Lezgi	seed	73	fin	fin	fin	306
+1602	Outgroup_Chechen	seed	73	hu {хIу}	хIу	hu	306
+#
+2318	Nidzh_Udi	short	105	gödäy {гоьдаьй}	гоьдаьй	gödäy	-693
+2319	Vartashen_Udi	short	105	gödäk {гоьдаьк}	гоьдаьк	gödäk	-694
+2320	Archi	short	105	kˈuːtʼa-tːu-class	kˈuːtʼa-tːu-class	kˈuːtʼa-tːu-class	-695
+2321	Kryts_proper	short	105	gʷädä	gʷädä	gʷädä	463
+2322	Alyk_Kryts	short	105	gʷada	gʷada	gʷada	463
+2323	Budukh	short	105	godə {года}	года	godə	463
+2324	Mishlesh_Tsakhur	short	105	ǯitʼa-n {джитIан}	джитIан	ǯitʼa-n	464
+2325	Mikik_Tsakhur	short	105	ǯitʼa-n	ǯitʼa-n	ǯitʼa-n	464
+2326	Gelmets_Tsakhur	short	105	ǯitʼa-nʸ	ǯitʼa-nʸ	ǯitʼa-nʸ	464
+2327	Mukhad_Rutul	short	105	ǯɨk-dɨ {джыкды}	джыкды	ǯɨk-dɨ	464
+2328	Ixrek_Rutul	short	105	ǯik-dɨ {джикды}	джикды	ǯik-dɨ	464
+2329	Luchek_Rutul	short	105	ǯɨk-dɨ	ǯɨk-dɨ	ǯɨk-dɨ	464
+2330	Koshan_Aghul	short	105	ǯeʁe-r	ǯeʁe-r	ǯeʁe-r	464
+2331	Keren_Aghul	short	105	žaqːe-f	žaqːe-f	žaqːe-f	464
+2332	Gequn_Aghul	short	105	ǯeqːe-f ~ žiqːe-f	ǯeqːe-f ~ žiqːe-f	ǯeqːe-f ~ žiqːe-f	464
+2333	Fite_Aghul	short	105	ǯaqːi-t	ǯaqːi-t	ǯaqːi-t	464
+2334	Aghul_proper	short	105	ǯiqːe-f ~ ǯiqːä-f	ǯiqːe-f ~ ǯiqːä-f	ǯiqːe-f ~ ǯiqːä-f	464
+2335	Northern_Tabasaran	short	105	ǯiqːˈi	ǯiqːˈi	ǯiqːˈi	464
+2336	Southern_Tabasaran	short	105	ǯiqːˈi	ǯiqːˈi	ǯiqːˈi	464
+2337	Gyune_Lezgi	short	105	kːʷerˈi	kːʷerˈi	kːʷerˈi	465
+2338	Outgroup_Chechen	short	105	d=oːca {дōца}	дōца	d=oːca	466
+#
+1603	Nidzh_Udi	sit	74	arc-esun {арцесун}	арцесун	arc-esun	308
+1604	Vartashen_Udi	sit	74	arc-esun {арцесун}	арцесун	arc-esun	308
+1605	Archi	sit	74	qʼˈeˤyqʼi-	qʼˈeˤyqʼi-	qʼˈeˤyqʼi-	309
+1606	Kryts_proper	sit	74	äs=qʼʷan-	äs=qʼʷan-	äs=qʼʷan-	309
+1607	Alyk_Kryts	sit	74	as=qʼʷan-	as=qʼʷan-	as=qʼʷan-	309
+1608	Budukh	sit	74	aqʼol- {алкьол-, акьул-}	алкьол-, акьул-	aqʼol-	309
+1609	Mishlesh_Tsakhur	sit	74	gʸ=īʔar {гюъарас}	гюъарас	gʸ=īʔar	310
+1610	Mikik_Tsakhur	sit	74	gʸ=iyar ~ gʸ=uʔor	gʸ=iyar ~ gʸ=uʔor	gʸ=iyar ~ gʸ=uʔor	310
+1611	Gelmets_Tsakhur	sit	74	gʸ=iʔor-	gʸ=iʔor-	gʸ=iʔor-	310
+1612	Mukhad_Rutul	sit	74	s=uqʼʷ- {сукьус ~ сукьас}	сукьус ~ сукьас	s=uqʼʷ-	309
+1613	Ixrek_Rutul	sit	74	s=iqʼ- {сикьун}	сикьун	s=iqʼ-	309
+1614	Luchek_Rutul	sit	74	s=iqʼʷ-	s=iqʼʷ-	s=iqʼʷ-	309
+1615	Koshan_Aghul	sit	74	a=wqʼ-a-	a=wqʼ-a-	a=wqʼ-a-	309
+1616	Keren_Aghul	sit	74	iqʼʷ-a-	iqʼʷ-a-	iqʼʷ-a-	309
+1617	Gequn_Aghul	sit	74	iqʼʷ-a-	iqʼʷ-a-	iqʼʷ-a-	309
+1618	Fite_Aghul	sit	74	üqʼʷ-e-	üqʼʷ-e-	üqʼʷ-e-	309
+1619	Aghul_proper	sit	74	eqʼʷ-a-	eqʼʷ-a-	eqʼʷ-a-	309
+1620	Northern_Tabasaran	sit	74	de=ʔˈeʔ-	de=ʔˈeʔ-	de=ʔˈeʔ-	310
+1621	Southern_Tabasaran	sit	74	č=ˈeʔ-	č=ˈeʔ-	č=ˈeʔ-	310
+1622	Gyune_Lezgi	sit	74	az=ˈuqʼ-	az=ˈuqʼ-	az=ˈuqʼ-	309
+1623	Outgroup_Chechen	sit	74	xiʔ-na ʕan {хиъна Iан}	хиъна Iан	xiʔ-na ʕan	311
+#
+1624	Nidzh_Udi	skin	75	tːol {тIол}	тIол	tːol	312
+1625	Vartashen_Udi	skin	75	tːol {тIол}	тIол	tːol	312
+1626	Archi	skin	75	qal	qal	qal	313
+1627	Kryts_proper	skin	75	leʕ	leʕ	leʕ	314
+1628	Alyk_Kryts	skin	75	ʕič	ʕič	ʕič	315
+1629	Budukh	skin	75	läʕ {лаьгI}	лаьгI	läʕ	314
+1630	Mishlesh_Tsakhur	skin	75	qːekʷa {къеква}	къеква	qːekʷa	316
+1631	Mikik_Tsakhur	skin	75	ʁekʷa	ʁekʷa	ʁekʷa	316
+1632	Gelmets_Tsakhur	skin	75	qʼabɨχ {кьабых}	кьабых	qʼabɨχ	317
+1633	Mukhad_Rutul	skin	75	liʔ {лиъ}	лиъ	liʔ	314
+1634	Ixrek_Rutul	skin	75	qʼɨdiqʼ {кьыдикь}	кьыдикь	qʼɨdiqʼ	318
+1635	Keren_Aghul	skin	75	χam	χam	χam	319
+1636	Gequn_Aghul	skin	75	qʼareqʼ	qʼareqʼ	qʼareqʼ	318
+1637	Aghul_proper	skin	75	χam	χam	χam	319
+1638	Northern_Tabasaran	skin	75	qʼiriqʼ	qʼiriqʼ	qʼiriqʼ	318
+1639	Southern_Tabasaran	skin	75	χam {хам}	хам	χam	319
+1640	Gyune_Lezgi	skin	75	χam	χam	χam	319
+1641	Outgroup_Chechen	skin	75	neʕ {неI}	неI	neʕ	314
+1642	Mukhad_Rutul	skin	75	qːɨdɨqʼ {къыдыкь}	къыдыкь	qːɨdɨqʼ	318
+1643	Outgroup_Chechen	skin	75	cʼoːka {цIōка}	цIōка	cʼoːka	320
+#
+1644	Nidzh_Udi	sleep	76	bas-kː-sun	bas-kː-sun	bas-kː-sun	321
+1645	Vartashen_Udi	sleep	76	nepː-aχ-e-sun {непIахесун}	непIахесун	nepː-aχ-e-sun	322
+1646	Archi	sleep	76	ˈaχu-ke-	ˈaχu-ke-	ˈaχu-ke-	323
+1647	Kryts_proper	sleep	76	aχar-	aχar-	aχar-	323
+1648	Alyk_Kryts	sleep	76	aχar-	aχar-	aχar-	323
+1649	Budukh	sleep	76	aχar- {архар-, ехир-}	архар-, ехир-	aχar-	323
+1650	Mishlesh_Tsakhur	sleep	76	qː=iːsan- {къийсан-}	къийсан-	qː=iːsan-	321
+1651	Mikik_Tsakhur	sleep	76	ʁilʸ=ex-	ʁilʸ=ex-	ʁilʸ=ex-	324
+1652	Gelmets_Tsakhur	sleep	76	ʁalʸ=ix- {гъалихьаз}	гъалихьаз	ʁalʸ=ix-	324
+1653	Mukhad_Rutul	sleep	76	s=aχ- {сахас}	сахас	s=aχ-	323
+1654	Ixrek_Rutul	sleep	76	s=aχ- {сахын}	сахын	s=aχ-	323
+1655	Luchek_Rutul	sleep	76	s=aχ-	s=aχ-	s=aχ-	323
+1656	Koshan_Aghul	sleep	76	aχ-a-	aχ-a-	aχ-a-	323
+1657	Keren_Aghul	sleep	76	ʁ=arx-a-	ʁ=arx-a-	ʁ=arx-a-	326
+1658	Gequn_Aghul	sleep	76	aχ-a-	aχ-a-	aχ-a-	323
+1659	Fite_Aghul	sleep	76	ʁ=arx-a-	ʁ=arx-a-	ʁ=arx-a-	326
+1660	Aghul_proper	sleep	76	ʁ=arx-a-	ʁ=arx-a-	ʁ=arx-a-	326
+1661	Northern_Tabasaran	sleep	76	ɢaʔ=ˈaχ-	ɢaʔ=ˈaχ-	ɢaʔ=ˈaχ-	323
+1662	Southern_Tabasaran	sleep	76	aːχ-ˈ	aːχ-ˈ	aːχ-ˈ	323
+1663	Gyune_Lezgi	sleep	76	k=usˈu-	k=usˈu-	k=usˈu-	321
+1664	Outgroup_Chechen	sleep	76	nab yan {наб ян}	наб ян	nab yan	322
+1665	Koshan_Aghul	sleep	76	ʢ=ark-i-	ʢ=ark-i-	ʢ=ark-i-	325
+#
+1666	Nidzh_Udi	small	77	micːikː {мицIикI}	мицIикI	micːikː	327
+1667	Vartashen_Udi	small	77	kːicːi {кIицIи}	кIицIи	kːicːi	328
+1668	Archi	small	77	tʼˈi-tːu-class	tʼˈi-tːu-class	tʼˈi-tːu-class	329
+1669	Kryts_proper	small	77	silä	silä	silä	330
+1670	Alyk_Kryts	small	77	sila	sila	sila	330
+1671	Budukh	small	77	mikʼe {микIе}	микIе	mikʼe	331
+1672	Mishlesh_Tsakhur	small	77	kʼɨlʸi-n {кIылин}	кIылин	kʼɨlʸi-n	332
+1673	Mikik_Tsakhur	small	77	kʼɨlʸɨ-n	kʼɨlʸɨ-n	kʼɨlʸɨ-n	332
+1674	Gelmets_Tsakhur	small	77	kʼɨlʸi-nʸ	kʼɨlʸi-nʸ	kʼɨlʸi-nʸ	332
+1675	Mukhad_Rutul	small	77	kʼaʔ-dɨ {кIаъды}	кIаъды	kʼaʔ-dɨ	332
+1676	Ixrek_Rutul	small	77	kʼa-dɨ {кIады}	кIады	kʼa-dɨ	332
+1677	Luchek_Rutul	small	77	kʼɨʔ-dɨ	kʼɨʔ-dɨ	kʼɨʔ-dɨ	332
+1678	Koshan_Aghul	small	77	icʼi-r	icʼi-r	icʼi-r	333
+1679	Keren_Aghul	small	77	bicʼi-f	bicʼi-f	bicʼi-f	333
+1680	Gequn_Aghul	small	77	bicʼi-f	bicʼi-f	bicʼi-f	333
+1681	Fite_Aghul	small	77	bicʼi-t	bicʼi-t	bicʼi-t	333
+1682	Aghul_proper	small	77	bicʼi-f	bicʼi-f	bicʼi-f	333
+1683	Northern_Tabasaran	small	77	bičʼːʷˈi ~ bičʼʷˈi	bičʼːʷˈi ~ bičʼʷˈi	bičʼːʷˈi ~ bičʼʷˈi	333
+1684	Southern_Tabasaran	small	77	bicʼˈi	bicʼˈi	bicʼˈi	333
+1685	Gyune_Lezgi	small	77	ʁʷačʼˈi	ʁʷačʼˈi	ʁʷačʼˈi	334
+1686	Outgroup_Chechen	small	77	žima {жима}	жима	žima	335
+#
+1687	Nidzh_Udi	smoke	78	kːüyin ~ kːüyün {кӀуьйин ~ кӀуьйуьн}	кӀуьйин ~ кӀуьйуьн	kːüyin ~ kːüyün	336
+1688	Vartashen_Udi	smoke	78	kːuin {кӀуин}	кӀуин	kːuin	336
+1689	Archi	smoke	78	huqʼ	huqʼ	huqʼ	337
+1690	Kryts_proper	smoke	78	firmi	firmi	firmi	338
+1691	Alyk_Kryts	smoke	78	ximi	ximi	ximi	338
+1692	Budukh	smoke	78	xim {хьим}	хьим	xim	338
+1693	Mishlesh_Tsakhur	smoke	78	kuma {кума}	кума	kuma	338
+1694	Mikik_Tsakhur	smoke	78	kuma	kuma	kuma	338
+1695	Gelmets_Tsakhur	smoke	78	kuma	kuma	kuma	338
+1696	Mukhad_Rutul	smoke	78	xum {хьум}	хьум	xum	338
+1697	Ixrek_Rutul	smoke	78	xum {хьум}	хьум	xum	338
+1698	Luchek_Rutul	smoke	78	xum	xum	xum	338
+1699	Koshan_Aghul	smoke	78	kum	kum	kum	338
+1700	Keren_Aghul	smoke	78	kum	kum	kum	338
+1701	Gequn_Aghul	smoke	78	kum	kum	kum	338
+1702	Fite_Aghul	smoke	78	kum	kum	kum	338
+1703	Aghul_proper	smoke	78	kum	kum	kum	338
+1704	Northern_Tabasaran	smoke	78	kum	kum	kum	338
+1705	Southern_Tabasaran	smoke	78	kum	kum	kum	338
+1706	Gyune_Lezgi	smoke	78	ɣum	ɣum	ɣum	338
+1707	Outgroup_Chechen	smoke	78	kʼur {кIур}	кIур	kʼur	339
+#
+2339	Nidzh_Udi	snake	106	dizikː {дизикI}	дизикI	dizikː	467
+2340	Vartashen_Udi	snake	106	dizikː {дизикI}	дизикI	dizikː	467
+2341	Archi	snake	106	yˈaˤtʼi	yˈaˤtʼi	yˈaˤtʼi	-696
+2342	Kryts_proper	snake	106	ilan	ilan	ilan	-697
+2343	Alyk_Kryts	snake	106	ɣar	ɣar	ɣar	468
+2344	Budukh	snake	106	yer {йер}	йер	yer	468
+2345	Mishlesh_Tsakhur	snake	106	χoče {хоче}	хоче	χoče	469
+2346	Mikik_Tsakhur	snake	106	χoče	χoče	χoče	469
+2347	Gelmets_Tsakhur	snake	106	χočä	χočä	χočä	469
+2348	Mukhad_Rutul	snake	106	ɣar {гар}	гар	ɣar	468
+2349	Ixrek_Rutul	snake	106	ɣar {гIар}	гIар	ɣar	468
+2350	Luchek_Rutul	snake	106	ɣar	ɣar	ɣar	468
+2351	Koshan_Aghul	snake	106	ilan	ilan	ilan	-698
+2352	Keren_Aghul	snake	106	ilan	ilan	ilan	-699
+2353	Gequn_Aghul	snake	106	ilan	ilan	ilan	-700
+2354	Fite_Aghul	snake	106	ilan	ilan	ilan	-701
+2355	Aghul_proper	snake	106	ilan	ilan	ilan	-702
+2356	Northern_Tabasaran	snake	106	bˈitʼ-i	bˈitʼ-i	bˈitʼ-i	470
+2357	Southern_Tabasaran	snake	106	bitʼ	bitʼ	bitʼ	470
+2358	Gyune_Lezgi	snake	106	ʁülˈäʁ	ʁülˈäʁ	ʁülˈäʁ	471
+2359	Outgroup_Chechen	snake	106	läħa {лаьхьа}	лаьхьа	läħa	468
+#
+1708	Nidzh_Udi	stand	79	čur-p-sun {чурпсун}	чурпсун	čur-p-sun	340
+1709	Vartashen_Udi	stand	79	čur-p-esun	čur-p-esun	čur-p-esun	340
+1710	Archi	stand	79	=ˈoci-	=ˈoci-	=ˈoci-	341
+1711	Kryts_proper	stand	79	qː=atʼäl-	qː=atʼäl-	qː=atʼäl-	342
+1712	Alyk_Kryts	stand	79	qː=atʼal-	qː=atʼal-	qː=atʼal-	342
+1713	Budukh	stand	79	qː=atʼəl- {къатIал, къалтIал-}	къатIал, къалтIал-	qː=atʼəl-	342
+1714	Mishlesh_Tsakhur	stand	79	ilʸ=ozar ~ ilʸ=ozʷar {илёйзар-}	илёйзар-	ilʸ=ozar ~ ilʸ=ozʷar	341
+1715	Mikik_Tsakhur	stand	79	ulʸ=ozar	ulʸ=ozar	ulʸ=ozar	341
+1716	Gelmets_Tsakhur	stand	79	ulʸ=ozar-az	ulʸ=ozar-az	ulʸ=ozar-az	341
+1717	Mukhad_Rutul	stand	79	l=uz- {лузас}	лузас	l=uz-	341
+1718	Ixrek_Rutul	stand	79	l=uz- {лузун}	лузун	l=uz-	341
+1719	Luchek_Rutul	stand	79	χˤɨʁ=ɨχ-	χˤɨʁ=ɨχ-	χˤɨʁ=ɨχ-	343
+1720	Koshan_Aghul	stand	79	a=ʢ=z-a-	a=ʢ=z-a-	a=ʢ=z-a-	341
+1721	Keren_Aghul	stand	79	ʁ=uz-a-	ʁ=uz-a-	ʁ=uz-a-	341
+1722	Gequn_Aghul	stand	79	ʁ=uz-a-	ʁ=uz-a-	ʁ=uz-a-	341
+1723	Aghul_proper	stand	79	ʁ=uz-ana-	ʁ=uz-ana-	ʁ=uz-ana-	341
+1724	Northern_Tabasaran	stand	79	di=ʔˈiɢ-	di=ʔˈiɢ-	di=ʔˈiɢ-	344
+1725	Southern_Tabasaran	stand	79	di=yiʁ-ˈ	di=yiʁ-ˈ	di=yiʁ-ˈ	344
+1726	Gyune_Lezgi	stand	79	aqːʷ=ˈaz-	aqːʷ=ˈaz-	aqːʷ=ˈaz-	341
+1727	Outgroup_Chechen	stand	79	latt-a {латта}	латта	latt-a	341
+#
+1728	Nidzh_Udi	star	80	mučːˤuli {мучули}	мучули	mučːˤuli	345
+1729	Vartashen_Udi	star	80	qabun {хъабун}	хъабун	qabun	346
+1730	Archi	star	80	χːˤolˈoš=qˤan	χːˤolˈoš=qˤan	χːˤolˈoš=qˤan	347
+1731	Kryts_proper	star	80	ħäčʼ	ħäčʼ	ħäčʼ	347
+1732	Alyk_Kryts	star	80	hačʼ	hačʼ	hačʼ	347
+1733	Budukh	star	80	ħačʼ {хIачI}	хIачI	ħačʼ	347
+1734	Mishlesh_Tsakhur	star	80	χˤanʸe {хаIне}	хаIне	χˤanʸe	347
+1735	Mikik_Tsakhur	star	80	χˤanʸe	χˤanʸe	χˤanʸe	347
+1736	Gelmets_Tsakhur	star	80	χˤanʸe	χˤanʸe	χˤanʸe	347
+1737	Mukhad_Rutul	star	80	χˤad-ey ~ χˤad-iy {хаIдий}	хаIдий	χˤad-ey ~ χˤad-iy	347
+1738	Ixrek_Rutul	star	80	χˤad-ey {хаIдей}	хаIдей	χˤad-ey	347
+1739	Luchek_Rutul	star	80	χˤad-ey	χˤad-ey	χˤad-ey	347
+1740	Koshan_Aghul	star	80	ħar	ħar	ħar	347
+1741	Keren_Aghul	star	80	ħad	ħad	ħad	347
+1742	Gequn_Aghul	star	80	ħad	ħad	ħad	347
+1743	Fite_Aghul	star	80	χˤad	χˤad	χˤad	347
+1744	Aghul_proper	star	80	ʢad	ʢad	ʢad	347
+1745	Northern_Tabasaran	star	80	χˤay {хяй}	хяй	χˤay	347
+1746	Southern_Tabasaran	star	80	χˤaǯ	χˤaǯ	χˤaǯ	347
+1747	Gyune_Lezgi	star	80	ʁed	ʁed	ʁed	347
+1748	Outgroup_Chechen	star	80	seːda {сēда}	сēда	seːda	348
+#
+1749	Nidzh_Udi	stone	81	žˤe {жIеъ}	жIеъ	žˤe	349
+1750	Vartashen_Udi	stone	81	žˤe {жIеъ}	жIеъ	žˤe	349
+1751	Archi	stone	81	čʼelˈe	čʼelˈe	čʼelˈe	350
+1752	Kryts_proper	stone	81	χud	χud	χud	351
+1753	Alyk_Kryts	stone	81	dahar	dahar	dahar	352
+1754	Budukh	stone	81	qːaye {къайе}	къайе	qːaye	-667
+1755	Mishlesh_Tsakhur	stone	81	qːaye {къае}	къае	qːaye	-668
+1756	Mikik_Tsakhur	stone	81	qːaye	qːaye	qːaye	-669
+1757	Gelmets_Tsakhur	stone	81	qːayä	qːayä	qːayä	-670
+1758	Mukhad_Rutul	stone	81	duχ-ul {духул}	духул	duχ-ul	351
+1759	Ixrek_Rutul	stone	81	duχ-ul {духул}	духул	duχ-ul	351
+1760	Luchek_Rutul	stone	81	dahar	dahar	dahar	353
+1761	Koshan_Aghul	stone	81	ʢʷan	ʢʷan	ʢʷan	354
+1762	Keren_Aghul	stone	81	ʁʷan	ʁʷan	ʁʷan	354
+1763	Gequn_Aghul	stone	81	ʁʷan	ʁʷan	ʁʷan	354
+1764	Fite_Aghul	stone	81	ʁʷan	ʁʷan	ʁʷan	354
+1765	Aghul_proper	stone	81	ʁʷan	ʁʷan	ʁʷan	354
+1766	Northern_Tabasaran	stone	81	ɢan	ɢan	ɢan	354
+1767	Southern_Tabasaran	stone	81	ʁʷan	ʁʷan	ʁʷan	354
+1768	Gyune_Lezgi	stone	81	qːʷan	qːʷan	qːʷan	354
+1769	Outgroup_Chechen	stone	81	tʼulg {тIулг}	тIулг	tʼulg	355
+#
+1770	Nidzh_Udi	sun	82	beʁˤ {беъгъ}	беъгъ	beʁˤ	356
+1771	Vartashen_Udi	sun	82	beʁˤ {беъгъ}	беъгъ	beʁˤ	356
+1772	Archi	sun	82	barq	barq	barq	356
+1773	Kryts_proper	sun	82	viraʁ	viraʁ	viraʁ	356
+1774	Alyk_Kryts	sun	82	varaʁ	varaʁ	varaʁ	356
+1775	Budukh	sun	82	viraʁ {вирагъ}	вирагъ	viraʁ	356
+1776	Mishlesh_Tsakhur	sun	82	werɨʁ {верыгъ}	верыгъ	werɨʁ	356
+1777	Mikik_Tsakhur	sun	82	wirɨʁ	wirɨʁ	wirɨʁ	356
+1778	Gelmets_Tsakhur	sun	82	wiriʁ	wiriʁ	wiriʁ	356
+1779	Mukhad_Rutul	sun	82	wirɨʁ {вирыгъ}	вирыгъ	wirɨʁ	356
+1780	Ixrek_Rutul	sun	82	wiriʁ {виригъ}	виригъ	wiriʁ	356
+1781	Luchek_Rutul	sun	82	wiriʁ	wiriʁ	wiriʁ	356
+1782	Koshan_Aghul	sun	82	raʢ	raʢ	raʢ	356
+1783	Keren_Aghul	sun	82	raʁ	raʁ	raʁ	356
+1784	Gequn_Aghul	sun	82	raʁ	raʁ	raʁ	356
+1785	Fite_Aghul	sun	82	raʁ	raʁ	raʁ	356
+1786	Aghul_proper	sun	82	raʁ	raʁ	raʁ	356
+1787	Northern_Tabasaran	sun	82	rˈiɢ-i	rˈiɢ-i	rˈiɢ-i	356
+1788	Southern_Tabasaran	sun	82	riʁ	riʁ	riʁ	356
+1789	Gyune_Lezgi	sun	82	raʁ	raʁ	raʁ	356
+1790	Outgroup_Chechen	sun	82	malx {малх}	малх	malx	357
+#
+1791	Nidzh_Udi	swim	83	üzmüš-sun {уьзмуьшсун}	уьзмуьшсун	üzmüš-sun	-671
+1792	Vartashen_Udi	swim	83	üzmiš-b-esun	üzmiš-b-esun	üzmiš-b-esun	-672
+1793	Archi	swim	83	ɬːan-a-	ɬːan-a-	ɬːan-a-	358
+1794	Kryts_proper	swim	83	üzmiš xi-	üzmiš xi-	üzmiš xi-	-673
+1795	Alyk_Kryts	swim	83	šina ar-	šina ar-	šina ar-	-674
+1796	Budukh	swim	83	üzmi yɨxə-r-i {уьзми йыхьари ~ йихьари}	уьзми йыхьари ~ йихьари	üzmi yɨxə-r-i	-675
+1797	Mishlesh_Tsakhur	swim	83	yuzgʸi haʔ- {юзги гьаий}	юзги гьаий	yuzgʸi haʔ-	-676
+1798	Mikik_Tsakhur	swim	83	yüzmiš-x-	yüzmiš-x-	yüzmiš-x-	-677
+1799	Gelmets_Tsakhur	swim	83	uzmiš-x-	uzmiš-x-	uzmiš-x-	-678
+1800	Mukhad_Rutul	swim	83	xed haʔ- {хьед гьаъас}	хьед гьаъас	xed haʔ-	358
+1801	Ixrek_Rutul	swim	83	xed haʔ- {хьед гьаькьын}	хьед гьаькьын	xed haʔ-	358
+1802	Koshan_Aghul	swim	83	sirnaw aqʼa-	sirnaw aqʼa-	sirnaw aqʼa-	-679
+1803	Gequn_Aghul	swim	83	samah aqʼa- ~ sameh aqʼa-	samah aqʼa- ~ sameh aqʼa-	samah aqʼa- ~ sameh aqʼa-	-680
+1804	Aghul_proper	swim	83	salaw aqʼa-	salaw aqʼa-	salaw aqʼa-	-681
+1805	Northern_Tabasaran	swim	83	čʼučʼurufˈan apʼ-	čʼučʼurufˈan apʼ-	čʼučʼurufˈan apʼ-	360
+1806	Southern_Tabasaran	swim	83	sirnˈaw apʼ- {сирнав апIуб}	сирнав апIуб	sirnˈaw apʼ-	-682
+1807	Gyune_Lezgi	swim	83	sirnˈaw-	sirnˈaw-	sirnˈaw-	-683
+1808	Outgroup_Chechen	swim	83	neːka dan {нēка дан}	нēка дан	neːka dan	361
+#
+1809	Nidzh_Udi	tail	84	ožˤil ~ ožˤul {ожIиъл ~ ожIул}	ожIиъл ~ ожIул	ožˤil ~ ožˤul	362
+1810	Vartashen_Udi	tail	84	ožˤil {ожIиъл}	ожIиъл	ožˤil	362
+1811	Archi	tail	84	oˤč	oˤč	oˤč	362
+1812	Kryts_proper	tail	84	ǯi	ǯi	ǯi	362
+1813	Alyk_Kryts	tail	84	ǯiy	ǯiy	ǯiy	362
+1814	Budukh	tail	84	ǯi-bir {джибир}	джибир	ǯi-bir	362
+1815	Mishlesh_Tsakhur	tail	84	bɨˤtːʸ- {быIтʹ}	быIтʹ	bɨˤtːʸ-	363
+1816	Mikik_Tsakhur	tail	84	bɨˤtːʸ-	bɨˤtːʸ-	bɨˤtːʸ-	363
+1817	Gelmets_Tsakhur	tail	84	bɨˤt	bɨˤt	bɨˤt	363
+1818	Mukhad_Rutul	tail	84	ǯɨbɨr ~ ǯubur {джыбыр ~ джубур}	джыбыр ~ джубур	ǯɨbɨr ~ ǯubur	362
+1819	Ixrek_Rutul	tail	84	ǯibɨr {джибыр}	джибыр	ǯibɨr	362
+1820	Luchek_Rutul	tail	84	ǯɨbɨr	ǯɨbɨr	ǯɨbɨr	362
+1821	Koshan_Aghul	tail	84	ruǯ	ruǯ	ruǯ	362
+1822	Keren_Aghul	tail	84	ruž	ruž	ruž	362
+1823	Gequn_Aghul	tail	84	ruǯ	ruǯ	ruǯ	362
+1824	Fite_Aghul	tail	84	rügʸ	rügʸ	rügʸ	362
+1825	Aghul_proper	tail	84	ruǯ	ruǯ	ruǯ	362
+1826	Northern_Tabasaran	tail	84	rˈiǯʷ-i	rˈiǯʷ-i	rˈiǯʷ-i	362
+1827	Southern_Tabasaran	tail	84	riǯʷ	riǯʷ	riǯʷ	362
+1828	Gyune_Lezgi	tail	84	tːum	tːum	tːum	-684
+1829	Outgroup_Chechen	tail	84	cʼoga {цIога}	цIога	cʼoga	364
+#
+1830	Nidzh_Udi	that	85	tːe {тIе}	тIе	tːe	365
+1831	Vartashen_Udi	that	85	tːe {тIе}	тIе	tːe	365
+1832	Archi	that	85	to-class	to-class	to-class	365
+1833	Kryts_proper	that	85	lä	lä	lä	366
+1834	Alyk_Kryts	that	85	la	la	la	366
+1835	Budukh	that	85	a=la {ала}	ала	a=la	366
+1836	Mishlesh_Tsakhur	that	85	še-n ~ hoː=še-n {шен, гьо̄шен}	шен, гьо̄шен	še-n ~ hoː=še-n	368
+1837	Mikik_Tsakhur	that	85	še-n	še-n	še-n	368
+1838	Mukhad_Rutul	that	85	ti {ти}	ти	ti	365
+1839	Ixrek_Rutul	that	85	ti-n-dɨ {тинды}	тинды	ti-n-dɨ	365
+1840	Koshan_Aghul	that	85	ti-me	ti-me	ti-me	365
+1841	Keren_Aghul	that	85	ti	ti	ti	365
+1842	Gequn_Aghul	that	85	te	te	te	365
+1843	Fite_Aghul	that	85	ti	ti	ti	365
+1844	Aghul_proper	that	85	te	te	te	365
+1845	Northern_Tabasaran	that	85	du-mu	du-mu	du-mu	369
+1846	Southern_Tabasaran	that	85	du-mu	du-mu	du-mu	369
+1847	Gyune_Lezgi	that	85	a=tʼˈa	a=tʼˈa	a=tʼˈa	365
+1848	Outgroup_Chechen	that	85	dʕaː-ra {дIāра}	дIāра	dʕaː-ra	369
+1849	Nidzh_Udi	that	85	šo {шо}	шо	šo	368
+1850	Budukh	that	85	a-la {ала}	ала	a-la	367
+1851	Gyune_Lezgi	that	85	a-tʼˈa	a-tʼˈa	a-tʼˈa	367
+#
+2360	Nidzh_Udi	thin	107	näzik ~ näzikː {наьзик ~ наьзикI}	наьзик ~ наьзикI	näzik ~ näzikː	-703
+2361	Vartashen_Udi	thin	107	näzikː ~ näzig {наьзикI}	наьзикI	näzikː ~ näzig	-704
+2362	Archi	thin	107	kʼalˈa-tːu-class	kʼalˈa-tːu-class	kʼalˈa-tːu-class	472
+2363	Kryts_proper	thin	107	qʼɨl	qʼɨl	qʼɨl	472
+2364	Alyk_Kryts	thin	107	qʼilːa	qʼilːa	qʼilːa	472
+2365	Budukh	thin	107	kɨ-tːi {кытти}	кытти	kɨ-tːi	473
+2366	Mishlesh_Tsakhur	thin	107	kʼɨˤwa-n ~ kʼiˤwa-n {кIыIван ~ кIиIван}	кIыIван ~ кIиIван	kʼɨˤwa-n ~ kʼiˤwa-n	472
+2367	Mikik_Tsakhur	thin	107	kʼɨˤwa-n	kʼɨˤwa-n	kʼɨˤwa-n	472
+2368	Gelmets_Tsakhur	thin	107	qʼˤɨwa-nʸ	qʼˤɨwa-nʸ	qʼˤɨwa-nʸ	472
+2369	Mukhad_Rutul	thin	107	qʼɨl-dɨ ~ qʼil-dɨ {кьил-ды}	кьил-ды	qʼɨl-dɨ ~ qʼil-dɨ	472
+2370	Ixrek_Rutul	thin	107	qʼɨl-dɨ {кьыл-ды}	кьыл-ды	qʼɨl-dɨ	472
+2371	Luchek_Rutul	thin	107	qʼɨl-dɨ	qʼɨl-dɨ	qʼɨl-dɨ	472
+2372	Koshan_Aghul	thin	107	kʼelːe-r	kʼelːe-r	kʼelːe-r	472
+2373	Keren_Aghul	thin	107	kʼilːe-f	kʼilːe-f	kʼilːe-f	472
+2374	Gequn_Aghul	thin	107	kʼilːe-f	kʼilːe-f	kʼilːe-f	472
+2375	Fite_Aghul	thin	107	kːu-ri-t	kːu-ri-t	kːu-ri-t	473
+2376	Aghul_proper	thin	107	kʼilːe-f	kʼilːe-f	kʼilːe-f	472
+2377	Northern_Tabasaran	thin	107	čʼilːˈi	čʼilːˈi	čʼilːˈi	472
+2378	Southern_Tabasaran	thin	107	čʼilːˈi	čʼilːˈi	čʼilːˈi	472
+2379	Gyune_Lezgi	thin	107	qʼelˈečʼ	qʼelˈečʼ	qʼelˈečʼ	472
+2380	Outgroup_Chechen	thin	107	d=utqʼ-a {дуткъа}	дуткъа	d=utqʼ-a	474
+2381	Mishlesh_Tsakhur	thin	107	hɨˤkːʸe-n {гьыIккен}	гьыIккен	hɨˤkːʸe-n	473
+2382	Mikik_Tsakhur	thin	107	hɨˤkːʸe-n	hɨˤkːʸe-n	hɨˤkːʸe-n	473
+2383	Gelmets_Tsakhur	thin	107	hɨkːa-nʸ	hɨkːa-nʸ	hɨkːa-nʸ	473
+2384	Ixrek_Rutul	thin	107	gaˤd-dɨ-dɨ {гаIддыды}	гаIддыды	gaˤd-dɨ-dɨ	473
+2385	Luchek_Rutul	thin	107	ged-dɨ	ged-dɨ	ged-dɨ	473
+2386	Koshan_Aghul	thin	107	kːu-re-r	kːu-re-r	kːu-re-r	473
+2387	Keren_Aghul	thin	107	ikːe-f	ikːe-f	ikːe-f	473
+2388	Gequn_Aghul	thin	107	ikːe-f	ikːe-f	ikːe-f	473
+2389	Aghul_proper	thin	107	ikːe-f	ikːe-f	ikːe-f	473
+2390	Southern_Tabasaran	thin	107	kːu-rˈu	kːu-rˈu	kːu-rˈu	473
+2391	Gyune_Lezgi	thin	107	šükʼˈü	šükʼˈü	šükʼˈü	473
+#
+1852	Nidzh_Udi	this	86	mo {мо}	мо	mo	370
+1853	Vartashen_Udi	this	86	me {ме}	ме	me	370
+1854	Archi	this	86	ya-class	ya-class	ya-class	371
+1855	Kryts_proper	this	86	li	li	li	372
+1856	Alyk_Kryts	this	86	lu	lu	lu	372
+1857	Budukh	this	86	u=lu ~ o=lu {улу ~ олу}	улу ~ олу	u=lu ~ o=lu	372
+1858	Mishlesh_Tsakhur	this	86	i-n ~ ha=y-n {ин, гьайн}	ин, гьайн	i-n ~ ha=y-n	371
+1859	Mikik_Tsakhur	this	86	i-n ~ ha=y-n	i-n ~ ha=y-n	i-n ~ ha=y-n	371
+1860	Mukhad_Rutul	this	86	mi {ми}	ми	mi	370
+1861	Ixrek_Rutul	this	86	mi-dɨ {миды}	миды	mi-dɨ	370
+1862	Koshan_Aghul	this	86	mi-me	mi-me	mi-me	370
+1863	Keren_Aghul	this	86	mi	mi	mi	370
+1864	Gequn_Aghul	this	86	me	me	me	370
+1865	Fite_Aghul	this	86	mi	mi	mi	370
+1866	Aghul_proper	this	86	me	me	me	370
+1867	Northern_Tabasaran	this	86	mu ~ mu-mu	mu ~ mu-mu	mu ~ mu-mu	370
+1868	Southern_Tabasaran	this	86	mu	mu	mu	370
+1869	Gyune_Lezgi	this	86	i	i	i	371
+1870	Outgroup_Chechen	this	86	ha-ra {хIа-ра}	хIа-ра	ha-ra	374
+1871	Budukh	this	86	u-lu ~ o-lu {улу, олу}	улу, олу	u-lu ~ o-lu	373
+1872	Mishlesh_Tsakhur	this	86	ma-n ~ ha=ma-n {ма ~ гьаман}	ма ~ гьаман	ma-n ~ ha=ma-n	370
+1873	Mikik_Tsakhur	this	86	ma-n ~ ha=ma-n	ma-n ~ ha=ma-n	ma-n ~ ha=ma-n	370
+#
+1874	Nidzh_Udi	thou1	87	hu-n {гьун}	гьун	hu-n	375
+1875	Vartashen_Udi	thou1	87	u-n {ун}	ун	u-n	375
+1876	Archi	thou1	87	u-n	u-n	u-n	375
+1877	Kryts_proper	thou1	87	vu-n ~ vɨ-n	vu-n ~ vɨ-n	vu-n ~ vɨ-n	375
+1878	Alyk_Kryts	thou1	87	vu-n	vu-n	vu-n	375
+1879	Budukh	thou1	87	vɨ-n {вын}	вын	vɨ-n	375
+1880	Mishlesh_Tsakhur	thou1	87	ʁu {гъу}	гъу	ʁu	376
+1881	Mikik_Tsakhur	thou1	87	ʁu	ʁu	ʁu	376
+1882	Gelmets_Tsakhur	thou1	87	ʁu	ʁu	ʁu	376
+1883	Mukhad_Rutul	thou1	87	wɨ {вы}	вы	wɨ	375
+1884	Ixrek_Rutul	thou1	87	ʁu {гъу}	гъу	ʁu	376
+1885	Luchek_Rutul	thou1	87	wɨ	wɨ	wɨ	375
+1886	Koshan_Aghul	thou1	87	wu-n	wu-n	wu-n	375
+1887	Keren_Aghul	thou1	87	wu-n	wu-n	wu-n	375
+1888	Gequn_Aghul	thou1	87	wu-n	wu-n	wu-n	375
+1889	Fite_Aghul	thou1	87	wu-n	wu-n	wu-n	375
+1890	Aghul_proper	thou1	87	wu-n	wu-n	wu-n	375
+1891	Northern_Tabasaran	thou1	87	iwˈu	iwˈu	iwˈu	375
+1892	Southern_Tabasaran	thou1	87	uwˈu	uwˈu	uwˈu	375
+1893	Gyune_Lezgi	thou1	87	wu-n	wu-n	wu-n	375
+1894	Outgroup_Chechen	thou1	87	ħo {хьо}	хьо	ħo	376
+#
+1895	Nidzh_Udi	thou2	87	vi {ви}	ви	vi	377
+1896	Vartashen_Udi	thou2	87	vi {ви}	ви	vi	377
+1897	Archi	thou2	87	wi-t	wi-t	wi-t	377
+1898	Mishlesh_Tsakhur	thou2	87	yiʁ-ɨn {йигъын}	йигъын	yiʁ-ɨn	378
+1899	Mikik_Tsakhur	thou2	87	wa-s-ɨn	wa-s-ɨn	wa-s-ɨn	377
+1900	Gelmets_Tsakhur	thou2	87	yɨʁˤ-ɨn	yɨʁˤ-ɨn	yɨʁˤ-ɨn	378
+1901	Ixrek_Rutul	thou2	87	yuʁ-dɨ	yuʁ-dɨ	yuʁ-dɨ	378
+1902	Koshan_Aghul	thou2	87	yaw-ir ~ yaw	yaw-ir ~ yaw	yaw-ir ~ yaw	377
+1903	Northern_Tabasaran	thou2	87	yaw	yaw	yaw	377
+1904	Southern_Tabasaran	thou2	87	yaw	yaw	yaw	377
+#
+1905	Nidzh_Udi	tongue	88	muz {муз}	муз	muz	379
+1906	Vartashen_Udi	tongue	88	muz {муз}	муз	muz	379
+1907	Archi	tongue	88	mac	mac	mac	379
+1908	Kryts_proper	tongue	88	mez	mez	mez	379
+1909	Alyk_Kryts	tongue	88	mez	mez	mez	379
+1910	Budukh	tongue	88	mäz ~ mez {маьз ~ мез}	маьз ~ мез	mäz ~ mez	379
+1911	Mishlesh_Tsakhur	tongue	88	miz {миз}	миз	miz	379
+1912	Mikik_Tsakhur	tongue	88	miz	miz	miz	379
+1913	Gelmets_Tsakhur	tongue	88	miz	miz	miz	379
+1914	Mukhad_Rutul	tongue	88	miz {миз}	миз	miz	379
+1915	Ixrek_Rutul	tongue	88	miz {миз}	миз	miz	379
+1916	Luchek_Rutul	tongue	88	miz	miz	miz	379
+1917	Koshan_Aghul	tongue	88	mez	mez	mez	379
+1918	Keren_Aghul	tongue	88	mez	mez	mez	379
+1919	Gequn_Aghul	tongue	88	mez	mez	mez	379
+1920	Fite_Aghul	tongue	88	miz	miz	miz	379
+1921	Aghul_proper	tongue	88	mez	mez	mez	379
+1922	Northern_Tabasaran	tongue	88	mˈilʒ-i	mˈilʒ-i	mˈilʒ-i	379
+1923	Southern_Tabasaran	tongue	88	melʒ ~ melz	melʒ ~ melz	melʒ ~ melz	379
+1924	Gyune_Lezgi	tongue	88	meʒ	meʒ	meʒ	379
+1925	Outgroup_Chechen	tongue	88	mott {мотт}	мотт	mott	379
+#
+1926	Nidzh_Udi	tooth	89	ul-uχ {улух}	улух	ul-uχ	380
+1927	Vartashen_Udi	tooth	89	ul-uχ {улух}	улух	ul-uχ	380
+1928	Archi	tooth	89	sotː-	sotː-	sotː-	380
+1929	Kryts_proper	tooth	89	sil	sil	sil	380
+1930	Alyk_Kryts	tooth	89	sil	sil	sil	380
+1931	Budukh	tooth	89	sil {сил}	сил	sil	380
+1932	Mishlesh_Tsakhur	tooth	89	sʸilʸi {сили}	сили	sʸilʸi	380
+1933	Mikik_Tsakhur	tooth	89	sʸilʸi	sʸilʸi	sʸilʸi	380
+1934	Gelmets_Tsakhur	tooth	89	sʸilʸi	sʸilʸi	sʸilʸi	380
+1935	Mukhad_Rutul	tooth	89	sɨl-ab {сылаб}	сылаб	sɨl-ab	380
+1936	Ixrek_Rutul	tooth	89	sɨl-ab {сылаб}	сылаб	sɨl-ab	380
+1937	Luchek_Rutul	tooth	89	sɨs	sɨs	sɨs	381
+1938	Koshan_Aghul	tooth	89	selew	selew	selew	380
+1939	Keren_Aghul	tooth	89	sileb	sileb	sileb	380
+1940	Gequn_Aghul	tooth	89	selew ~ silew	selew ~ silew	selew ~ silew	380
+1941	Fite_Aghul	tooth	89	silib	silib	silib	380
+1942	Aghul_proper	tooth	89	sileb	sileb	sileb	380
+1943	Northern_Tabasaran	tooth	89	sˈilb-i	sˈilb-i	sˈilb-i	380
+1944	Southern_Tabasaran	tooth	89	slib	slib	slib	380
+1945	Gyune_Lezgi	tooth	89	sas	sas	sas	381
+1946	Outgroup_Chechen	tooth	89	cerg {церг}	церг	cerg	380
+#
+1947	Nidzh_Udi	tree	90	χod {ход}	ход	χod	382
+1948	Vartashen_Udi	tree	90	χod {ход}	ход	χod	382
+1949	Archi	tree	90	qʷˈatʼi	qʷˈatʼi	qʷˈatʼi	383
+1950	Kryts_proper	tree	90	dar	dar	dar	384
+1951	Alyk_Kryts	tree	90	kʼina	kʼina	kʼina	385
+1952	Budukh	tree	90	dər {дар}	дар	dər	384
+1953	Mishlesh_Tsakhur	tree	90	yiw {йив}	йив	yiw	386
+1954	Mikik_Tsakhur	tree	90	yɨw ~ yuw	yɨw ~ yuw	yɨw ~ yuw	386
+1955	Gelmets_Tsakhur	tree	90	yiw	yiw	yiw	386
+1956	Mukhad_Rutul	tree	90	χuk {хук}	хук	χuk	387
+1957	Ixrek_Rutul	tree	90	χuk {хук}	хук	χuk	387
+1958	Luchek_Rutul	tree	90	χuk	χuk	χuk	387
+1959	Koshan_Aghul	tree	90	kʼur	kʼur	kʼur	388
+1960	Keren_Aghul	tree	90	kʼur	kʼur	kʼur	388
+1961	Gequn_Aghul	tree	90	kʼur	kʼur	kʼur	388
+1962	Fite_Aghul	tree	90	kʼur	kʼur	kʼur	388
+1963	Aghul_proper	tree	90	kʼur	kʼur	kʼur	388
+1964	Northern_Tabasaran	tree	90	har	har	har	389
+1965	Southern_Tabasaran	tree	90	har	har	har	389
+1966	Gyune_Lezgi	tree	90	tːar	tːar	tːar	384
+1967	Outgroup_Chechen	tree	90	ditt {дитт}	дитт	ditt	390
+1968	Fite_Aghul	tree	90	dar	dar	dar	384
+#
+1969	Nidzh_Udi	two	91	pːaˤ {пIаъ}	пIаъ	pːaˤ	391
+1970	Vartashen_Udi	two	91	pːaˤ {пIаъ}	пIаъ	pːaˤ	391
+1971	Archi	two	91	qʼʷˤe	qʼʷˤe	qʼʷˤe	391
+1972	Kryts_proper	two	91	qʼʷa-class	qʼʷa-class	qʼʷa-class	391
+1973	Alyk_Kryts	two	91	qʼʷa-class	qʼʷa-class	qʼʷa-class	391
+1974	Budukh	two	91	qʼa-class {кьа-}	кьа-	qʼa-class	391
+1975	Mishlesh_Tsakhur	two	91	qʼˤo-class ~ qʼˤo-class-lʸe {кьоI-}	кьоI-	qʼˤo-class ~ qʼˤo-class-lʸe	391
+1976	Mikik_Tsakhur	two	91	qʼˤo-class-lʸe	qʼˤo-class-lʸe	qʼˤo-class-lʸe	391
+1977	Gelmets_Tsakhur	two	91	qʼˤo-class-lʸä	qʼˤo-class-lʸä	qʼˤo-class-lʸä	391
+1978	Mukhad_Rutul	two	91	qʼʷˤa-class {кьваIд}	кьваIд	qʼʷˤa-class	391
+1979	Ixrek_Rutul	two	91	qʼʷˤa-class {кьваIд}	кьваIд	qʼʷˤa-class	391
+1980	Luchek_Rutul	two	91	qʼʷˤa-class	qʼʷˤa-class	qʼʷˤa-class	391
+1981	Koshan_Aghul	two	91	qʼˤu-r	qʼˤu-r	qʼˤu-r	391
+1982	Keren_Aghul	two	91	qʼˤu-d	qʼˤu-d	qʼˤu-d	391
+1983	Gequn_Aghul	two	91	ʡa-d	ʡa-d	ʡa-d	391
+1984	Fite_Aghul	two	91	qʼˤu-d	qʼˤu-d	qʼˤu-d	391
+1985	Aghul_proper	two	91	ʡu-d	ʡu-d	ʡu-d	391
+1986	Northern_Tabasaran	two	91	qʼˤu-class	qʼˤu-class	qʼˤu-class	391
+1987	Southern_Tabasaran	two	91	qʼˤu-class	qʼˤu-class	qʼˤu-class	391
+1988	Gyune_Lezgi	two	91	qʼʷe	qʼʷe	qʼʷe	391
+1989	Outgroup_Chechen	two	91	šiʔ {шиъ}	шиъ	šiʔ	391
+#
+1990	Nidzh_Udi	walk (go)	92	ta=y- {тайес ~ тайсун}	тайес ~ тайсун	ta=y-	392
+1991	Vartashen_Udi	walk (go)	92	ta=y- {тайес ~ тайсун}	тайес ~ тайсун	ta=y-	392
+1992	Archi	walk (go)	92	=ˈoqˤe-	=ˈoqˤe-	=ˈoqˤe-	392
+1993	Kryts_proper	walk (go)	92	č=ä-r-	č=ä-r-	č=ä-r-	392
+1994	Alyk_Kryts	walk (go)	92	č=a-r-	č=a-r-	č=a-r-	392
+1995	Budukh	walk (go)	92	č=aʁa-r- {чагъар-}	чагъар-	č=aʁa-r-	392
+1996	Mishlesh_Tsakhur	walk (go)	92	aˤlʸ=ha- {алʹгьааIс}	алʹгьааIс	aˤlʸ=ha-	395
+1997	Mikik_Tsakhur	walk (go)	92	aˤl=h-	aˤl=h-	aˤl=h-	395
+1998	Gelmets_Tsakhur	walk (go)	92	alʸ=h- {алʹгьаз}	алʹгьаз	alʸ=h-	395
+1999	Mukhad_Rutul	walk (go)	92	class=iʔi {йирхьас, йыхьын}	йирхьас, йыхьын	class=iʔi	395
+2000	Ixrek_Rutul	walk (go)	92	class=iʔi {гьыхьын}	гьыхьын	class=iʔi	395
+2001	Luchek_Rutul	walk (go)	92	class=iʔi	class=iʔi	class=iʔi	395
+2002	Koshan_Aghul	walk (go)	92	waˤ-y-	waˤ-y-	waˤ-y-	392
+2003	Keren_Aghul	walk (go)	92	baˤ-y-	baˤ-y-	baˤ-y-	392
+2004	Gequn_Aghul	walk (go)	92	waˤ-	waˤ-	waˤ-	392
+2005	Fite_Aghul	walk (go)	92	ʁʷˤa-	ʁʷˤa-	ʁʷˤa-	392
+2006	Aghul_proper	walk (go)	92	we-y-	we-y-	we-y-	392
+2007	Northern_Tabasaran	walk (go)	92	aɢˤ-ˈ	aɢˤ-ˈ	aɢˤ-ˈ	392
+2008	Southern_Tabasaran	walk (go)	92	aʁˤ-ˈ	aʁˤ-ˈ	aʁˤ-ˈ	392
+2009	Gyune_Lezgi	walk (go)	92	šu-	šu-	šu-	394
+2010	Outgroup_Chechen	walk (go)	92	d=ax-a {даха}	даха	d=ax-a	394
+2011	Nidzh_Udi	walk (go)	92	ta=c-	ta=c-	ta=c-	393
+2012	Vartashen_Udi	walk (go)	92	ta=c-	ta=c-	ta=c-	393
+2013	Kryts_proper	walk (go)	92	=ix-	=ix-	=ix-	394
+2014	Alyk_Kryts	walk (go)	92	yixi-	yixi-	yixi-	394
+2015	Budukh	walk (go)	92	v=ixi- {вихьи}	вихьи	v=ixi-	394
+2016	Mishlesh_Tsakhur	walk (go)	92	akʼɨn ~ h=akʼɨn {акIын, гьакIын}	акIын, гьакIын	akʼɨn ~ h=akʼɨn	396
+2017	Mikik_Tsakhur	walk (go)	92	h=akʼɨn	h=akʼɨn	h=akʼɨn	396
+2018	Mukhad_Rutul	walk (go)	92	class=ɨx-ɨ-r	class=ɨx-ɨ-r	class=ɨx-ɨ-r	394
+2019	Ixrek_Rutul	walk (go)	92	class=ɨx-ɨ-r	class=ɨx-ɨ-r	class=ɨx-ɨ-r	394
+2020	Luchek_Rutul	walk (go)	92	class=ɨx-ɨ-r	class=ɨx-ɨ-r	class=ɨx-ɨ-r	394
+2021	Keren_Aghul	walk (go)	92	š-une	š-une	š-une	397
+2022	Gequn_Aghul	walk (go)	92	uš-una	uš-una	uš-una	397
+2023	Aghul_proper	walk (go)	92	uš-una	uš-una	uš-una	397
+2024	Northern_Tabasaran	walk (go)	92	ˈuš-	ˈuš-	ˈuš-	397
+2025	Southern_Tabasaran	walk (go)	92	ˈuš-	ˈuš-	ˈuš-	397
+2026	Mishlesh_Tsakhur	walk (go)	92	ɨqːˤ- ~ uqːˤ- {ыIххъас, уIххъас}	ыIххъас, уIххъас	ɨqːˤ- ~ uqːˤ-	392
+2027	Mikik_Tsakhur	walk (go)	92	ɨqːˤ-	ɨqːˤ-	ɨqːˤ-	392
+#
+2028	Nidzh_Udi	warm (hot)	93	gam {гам}	гам	gam	-685
+2029	Vartashen_Udi	warm (hot)	93	gam {гам}	гам	gam	-686
+2030	Archi	warm (hot)	93	ʁilˈi-tːu-class	ʁilˈi-tːu-class	ʁilˈi-tːu-class	-687
+2031	Kryts_proper	warm (hot)	93	ɣɨr	ɣɨr	ɣɨr	398
+2032	Alyk_Kryts	warm (hot)	93	ɣira	ɣira	ɣira	398
+2033	Budukh	warm (hot)	93	feye ~ feyi {фейе, фейи}	фейе, фейи	feye ~ feyi	399
+2034	Mishlesh_Tsakhur	warm (hot)	93	qːˤuma-n {къуIман}	къуIман	qːˤuma-n	400
+2035	Mikik_Tsakhur	warm (hot)	93	ʁˤuma-n	ʁˤuma-n	ʁˤuma-n	400
+2036	Gelmets_Tsakhur	warm (hot)	93	ʁˤuma-nʸ	ʁˤuma-nʸ	ʁˤuma-nʸ	400
+2037	Mukhad_Rutul	warm (hot)	93	siɣ-ɨd {сигыд}	сигыд	siɣ-ɨd	398
+2038	Ixrek_Rutul	warm (hot)	93	siɣ-dɨ {сигIды}	сигIды	siɣ-dɨ	398
+2039	Luchek_Rutul	warm (hot)	93	siɣ-ɨd	siɣ-ɨd	siɣ-ɨd	398
+2040	Koshan_Aghul	warm (hot)	93	uʕa-r	uʕa-r	uʕa-r	401
+2041	Keren_Aghul	warm (hot)	93	ibʢa-f	ibʢa-f	ibʢa-f	401
+2042	Gequn_Aghul	warm (hot)	93	iwa-f	iwa-f	iwa-f	401
+2043	Fite_Aghul	warm (hot)	93	ʁˤabi-t	ʁˤabi-t	ʁˤabi-t	401
+2044	Aghul_proper	warm (hot)	93	ibʢa-f	ibʢa-f	ibʢa-f	401
+2045	Northern_Tabasaran	warm (hot)	93	manˈi	manˈi	manˈi	-688
+2046	Southern_Tabasaran	warm (hot)	93	manˈi	manˈi	manˈi	-689
+2047	Gyune_Lezgi	warm (hot)	93	čimˈi	čimˈi	čimˈi	402
+2048	Outgroup_Chechen	warm (hot)	93	d=owx-a {довха}	довха	d=owx-a	403
+#
+2049	Nidzh_Udi	water	94	χe {хе}	хе	χe	404
+2050	Vartashen_Udi	water	94	χe {хе}	хе	χe	404
+2051	Archi	water	94	ɬːanː-	ɬːanː-	ɬːanː-	404
+2052	Kryts_proper	water	94	xäd	xäd	xäd	404
+2053	Alyk_Kryts	water	94	xad	xad	xad	404
+2054	Budukh	water	94	xəd {хьад}	хьад	xəd	404
+2055	Mishlesh_Tsakhur	water	94	xʸan {хьян}	хьян	xʸan	404
+2056	Mikik_Tsakhur	water	94	xʸan	xʸan	xʸan	404
+2057	Gelmets_Tsakhur	water	94	xʸan	xʸan	xʸan	404
+2058	Mukhad_Rutul	water	94	xed {хьед}	хьед	xed	404
+2059	Ixrek_Rutul	water	94	xed {хьед}	хьед	xed	404
+2060	Luchek_Rutul	water	94	xed	xed	xed	404
+2061	Koshan_Aghul	water	94	šer	šer	šer	404
+2062	Keren_Aghul	water	94	xitː-	xitː-	xitː-	404
+2063	Gequn_Aghul	water	94	xer	xer	xer	404
+2064	Fite_Aghul	water	94	xitː-	xitː-	xitː-	404
+2065	Aghul_proper	water	94	xetː-	xetː-	xetː-	404
+2066	Northern_Tabasaran	water	94	šay	šay	šay	404
+2067	Southern_Tabasaran	water	94	šid	šid	šid	404
+2068	Gyune_Lezgi	water	94	yad	yad	yad	404
+2069	Outgroup_Chechen	water	94	xi {хи}	хи	xi	404
+#
+2070	Nidzh_Udi	we1	95	ya-n {йан}	йан	ya-n	405
+2071	Vartashen_Udi	we1	95	ya-n {йан}	йан	ya-n	405
+2072	Archi	we1	95	ne-n / nˈen-tʼ-u	ne-n / nˈen-tʼ-u	ne-n / nˈen-tʼ-u	405
+2073	Kryts_proper	we1	95	ži-n	ži-n	ži-n	406
+2074	Alyk_Kryts	we1	95	ži-n	ži-n	ži-n	406
+2075	Budukh	we1	95	yi-n {йин}	йин	yi-n	405
+2076	Mishlesh_Tsakhur	we1	95	ši {ши}	ши	ši	406
+2077	Mikik_Tsakhur	we1	95	šɨ	šɨ	šɨ	406
+2078	Gelmets_Tsakhur	we1	95	ši ~ ši-bi	ši ~ ši-bi	ši ~ ši-bi	406
+2079	Mukhad_Rutul	we1	95	ye ~ yä {йе}	йе	ye ~ yä	405
+2080	Ixrek_Rutul	we1	95	ži {жи}	жи	ži	406
+2081	Luchek_Rutul	we1	95	ye	ye	ye	405
+2082	Koshan_Aghul	we1	95	či-n	či-n	či-n	406
+2083	Keren_Aghul	we1	95	či-n	či-n	či-n	406
+2084	Gequn_Aghul	we1	95	či-n	či-n	či-n	406
+2085	Fite_Aghul	we1	95	či-n	či-n	či-n	406
+2086	Aghul_proper	we1	95	či-n	či-n	či-n	406
+2087	Northern_Tabasaran	we1	95	ičˈu	ičˈu	ičˈu	406
+2088	Southern_Tabasaran	we1	95	učˈu	učˈu	učˈu	406
+2089	Gyune_Lezgi	we1	95	ču-n	ču-n	ču-n	406
+2090	Outgroup_Chechen	we1	95	txo {тхо}	тхо	txo	405
+#
+2091	Nidzh_Udi	we2	95	beši ~ beš {беши ~ беш}	беши ~ беш	beši ~ beš	408
+2092	Vartashen_Udi	we2	95	beši {беши}	беши	beši	408
+2093	Archi	we2	95	class=olˈo / lˈa-class-u	class=olˈo / lˈa-class-u	class=olˈo / lˈa-class-u	407
+2094	Kryts_proper	we2	95	yi-n	yi-n	yi-n	407
+2095	Alyk_Kryts	we2	95	yi-n	yi-n	yi-n	407
+2096	Mishlesh_Tsakhur	we2	95	yiš-ɨn {йишын, йишин}	йишын, йишин	yiš-ɨn	408
+2097	Mikik_Tsakhur	we2	95	yiš-ɨn	yiš-ɨn	yiš-ɨn	408
+2098	Mukhad_Rutul	we2	95	yix-dɨ	yix-dɨ	yix-dɨ	407
+2099	Ixrek_Rutul	we2	95	yi {йи}	йи	yi	407
+2100	Luchek_Rutul	we2	95	ixʸ-dɨ	ixʸ-dɨ	ixʸ-dɨ	407
+2101	Koshan_Aghul	we2	95	ši-n	ši-n	ši-n	407
+2102	Keren_Aghul	we2	95	xi-n	xi-n	xi-n	407
+2103	Gequn_Aghul	we2	95	xi-n	xi-n	xi-n	407
+2104	Fite_Aghul	we2	95	xi-n	xi-n	xi-n	407
+2105	Aghul_proper	we2	95	xi-n	xi-n	xi-n	407
+2106	Northern_Tabasaran	we2	95	ixˈu	ixˈu	ixˈu	407
+2107	Southern_Tabasaran	we2	95	uxˈu	uxˈu	uxˈu	407
+#
+2108	Nidzh_Udi	what	96	hi-kːä {гьикIаь}	гьикIаь	hi-kːä	409
+2109	Vartashen_Udi	what	96	e-kːa {екIа}	екIа	e-kːa	409
+2110	Archi	what	96	hˈa-ni	hˈa-ni	hˈa-ni	410
+2111	Kryts_proper	what	96	ši	ši	ši	411
+2112	Alyk_Kryts	what	96	ši	ši	ši	411
+2113	Budukh	what	96	ši {ши}	ши	ši	411
+2114	Mishlesh_Tsakhur	what	96	hi=ǯoː {гьиджо̄}	гьиджо̄	hi=ǯoː	412
+2115	Mikik_Tsakhur	what	96	hi=žoː ~ hu=žoː ~ žoː	hi=žoː ~ hu=žoː ~ žoː	hi=žoː ~ hu=žoː ~ žoː	412
+2116	Gelmets_Tsakhur	what	96	ha=ži-way	ha=ži-way	ha=ži-way	412
+2117	Mukhad_Rutul	what	96	ši-w {шив}	шив	ši-w	411
+2118	Ixrek_Rutul	what	96	ši-w {шив}	шив	ši-w	411
+2119	Luchek_Rutul	what	96	ši-wi	ši-wi	ši-wi	411
+2120	Koshan_Aghul	what	96	fi	fi	fi	414
+2121	Keren_Aghul	what	96	fi	fi	fi	414
+2122	Gequn_Aghul	what	96	fi	fi	fi	414
+2123	Fite_Aghul	what	96	fi	fi	fi	414
+2124	Aghul_proper	what	96	fi	fi	fi	414
+2125	Northern_Tabasaran	what	96	fi	fi	fi	414
+2126	Southern_Tabasaran	what	96	fu	fu	fu	414
+2127	Gyune_Lezgi	what	96	wu=č	wu=č	wu=č	412
+2128	Outgroup_Chechen	what	96	hun {хIун}	хIун	hun	415
+2129	Mukhad_Rutul	what	96	ši=w	ši=w	ši=w	413
+2130	Ixrek_Rutul	what	96	ši=w	ši=w	ši=w	413
+2131	Luchek_Rutul	what	96	ši=wi	ši=wi	ši=wi	413
+2132	Gyune_Lezgi	what	96	wu-č	wu-č	wu-č	414
+#
+2133	Nidzh_Udi	white	97	macːi {мацIи}	мацIи	macːi	416
+2134	Vartashen_Udi	white	97	macːi {мацIи}	мацIи	macːi	416
+2135	Archi	white	97	čʼuˤbˈa-tːu-class	čʼuˤbˈa-tːu-class	čʼuˤbˈa-tːu-class	417
+2136	Kryts_proper	white	97	läzɨ	läzɨ	läzɨ	418
+2137	Alyk_Kryts	white	97	luzu	luzu	luzu	418
+2138	Budukh	white	97	luzu {лузу}	лузу	luzu	418
+2139	Mishlesh_Tsakhur	white	97	ǯagʷara-n {джагваран}	джагваран	ǯagʷara-n	419
+2140	Mikik_Tsakhur	white	97	ǯagʷara-n	ǯagʷara-n	ǯagʷara-n	419
+2141	Gelmets_Tsakhur	white	97	ǯagʷara-nʸ	ǯagʷara-nʸ	ǯagʷara-nʸ	419
+2142	Mukhad_Rutul	white	97	ǯagʷar-dɨ {джагварды}	джагварды	ǯagʷar-dɨ	419
+2143	Ixrek_Rutul	white	97	ǯegʷär-dɨ ~ ǯagʷar-dɨ {джегваьрды ~ джагварды}	джегваьрды ~ джагварды	ǯegʷär-dɨ ~ ǯagʷar-dɨ	419
+2144	Luchek_Rutul	white	97	ǯagːʷar-dɨ	ǯagːʷar-dɨ	ǯagːʷar-dɨ	419
+2145	Koshan_Aghul	white	97	ǯagʷari-r	ǯagʷari-r	ǯagʷari-r	419
+2146	Keren_Aghul	white	97	žagʷar-f	žagʷar-f	žagʷar-f	419
+2147	Gequn_Aghul	white	97	ǯagʷar-f	ǯagʷar-f	ǯagʷar-f	419
+2148	Fite_Aghul	white	97	žagʷar-t	žagʷar-t	žagʷar-t	419
+2149	Aghul_proper	white	97	ǯagʷar-f	ǯagʷar-f	ǯagʷar-f	419
+2150	Northern_Tabasaran	white	97	liʒˈi	liʒˈi	liʒˈi	418
+2151	Southern_Tabasaran	white	97	lizˈi	lizˈi	lizˈi	418
+2152	Gyune_Lezgi	white	97	lacːˈu	lacːˈu	lacːˈu	418
+2153	Outgroup_Chechen	white	97	kʼay-n {кIайн}	кIайн	kʼay-n	420
+#
+2154	Nidzh_Udi	who	98	šu {шу}	шу	šu	421
+2155	Vartashen_Udi	who	98	šu {шу}	шу	šu	421
+2156	Archi	who	98	kʷi	kʷi	kʷi	422
+2157	Kryts_proper	who	98	tiy ~ ti	tiy ~ ti	tiy ~ ti	423
+2158	Alyk_Kryts	who	98	ti	ti	ti	423
+2159	Budukh	who	98	tu {ту}	ту	tu	423
+2160	Mishlesh_Tsakhur	who	98	ha=šːu {гьащу}	гьащу	ha=šːu	421
+2161	Mikik_Tsakhur	who	98	hu=šːiː ~ ha=šːu	hu=šːiː ~ ha=šːu	hu=šːiː ~ ha=šːu	421
+2162	Gelmets_Tsakhur	who	98	ha=šːu	ha=šːu	ha=šːu	421
+2163	Mukhad_Rutul	who	98	wu=š ~ wɨ=š {вуш ~ выш}	вуш ~ выш	wu=š ~ wɨ=š	421
+2164	Ixrek_Rutul	who	98	wɨ=š {выш}	выш	wɨ=š	421
+2165	Luchek_Rutul	who	98	hu=ši	hu=ši	hu=ši	421
+2166	Koshan_Aghul	who	98	fu=š	fu=š	fu=š	421
+2167	Keren_Aghul	who	98	fi=š	fi=š	fi=š	421
+2168	Gequn_Aghul	who	98	fi=š	fi=š	fi=š	421
+2169	Fite_Aghul	who	98	fi=ǯ ~ fi=ž	fi=ǯ ~ fi=ž	fi=ǯ ~ fi=ž	421
+2170	Aghul_proper	who	98	fu=š	fu=š	fu=š	421
+2171	Northern_Tabasaran	who	98	hu=žˈu ~ hu=ž	hu=žˈu ~ hu=ž	hu=žˈu ~ hu=ž	421
+2172	Southern_Tabasaran	who	98	fu=ž	fu=ž	fu=ž	421
+2173	Gyune_Lezgi	who	98	wu=ž	wu=ž	wu=ž	421
+2174	Outgroup_Chechen	who	98	mi-la {мила}	мила	mi-la	427
+2175	Mukhad_Rutul	who	98	wu-š	wu-š	wu-š	424
+2176	Ixrek_Rutul	who	98	wɨ-š	wɨ-š	wɨ-š	424
+2177	Luchek_Rutul	who	98	hu-ši	hu-ši	hu-ši	424
+2178	Koshan_Aghul	who	98	fu-š	fu-š	fu-š	425
+2179	Keren_Aghul	who	98	fi-š	fi-š	fi-š	425
+2180	Gequn_Aghul	who	98	fi-š	fi-š	fi-š	425
+2181	Fite_Aghul	who	98	fi-ǯ ~ fi-ž	fi-ǯ ~ fi-ž	fi-ǯ ~ fi-ž	425
+2182	Aghul_proper	who	98	fu-š	fu-š	fu-š	425
+2183	Northern_Tabasaran	who	98	hu-žˈu	hu-žˈu	hu-žˈu	426
+2184	Southern_Tabasaran	who	98	fu-ž	fu-ž	fu-ž	425
+2185	Gyune_Lezgi	who	98	wu-ž	wu-ž	wu-ž	425
+2186	Outgroup_Chechen	who	98	ħa	ħa	ħa	428
+#
+2392	Nidzh_Udi	wind	108	muš {муш}	муш	muš	475
+2393	Vartashen_Udi	wind	108	muš {муш}	муш	muš	475
+2394	Archi	wind	108	hawˈa	hawˈa	hawˈa	-705
+2395	Kryts_proper	wind	108	kulak	kulak	kulak	-706
+2396	Alyk_Kryts	wind	108	kulak	kulak	kulak	-707
+2397	Budukh	wind	108	kulak {кулак}	кулак	kulak	-708
+2398	Mishlesh_Tsakhur	wind	108	mɨc {мыц}	мыц	mɨc	475
+2399	Mikik_Tsakhur	wind	108	mɨc	mɨc	mɨc	475
+2400	Gelmets_Tsakhur	wind	108	mɨc	mɨc	mɨc	475
+2401	Mukhad_Rutul	wind	108	xɨbɨl ~ xɨbul {хьыбыл}	хьыбыл	xɨbɨl ~ xɨbul	476
+2402	Ixrek_Rutul	wind	108	kulak {кулак}	кулак	kulak	-709
+2403	Luchek_Rutul	wind	108	xɨbɨl	xɨbɨl	xɨbɨl	476
+2404	Koshan_Aghul	wind	108	kulak	kulak	kulak	-710
+2405	Keren_Aghul	wind	108	tireb	tireb	tireb	477
+2406	Gequn_Aghul	wind	108	tireb	tireb	tireb	477
+2407	Fite_Aghul	wind	108	kulak	kulak	kulak	-711
+2408	Aghul_proper	wind	108	kulak	kulak	kulak	-712
+2409	Northern_Tabasaran	wind	108	mˈikʼ-i	mˈikʼ-i	mˈikʼ-i	478
+2410	Southern_Tabasaran	wind	108	mikʼ	mikʼ	mikʼ	478
+2411	Gyune_Lezgi	wind	108	ɣar	ɣar	ɣar	479
+2412	Outgroup_Chechen	wind	108	mox {мох}	мох	mox	480
+#
+2187	Nidzh_Udi	woman	99	čuː-χ ~ čuh-uχ ~ ču-b-uχ ~ ču-p-uχ ~ ču {чух ~ чугьух ~ чубух ~ чупух}	чух ~ чугьух ~ чубух ~ чупух	čuː-χ ~ čuh-uχ ~ ču-b-uχ ~ ču-p-uχ ~ ču	429
+2188	Vartashen_Udi	woman	99	ču-b-uχ ~ či-b-uχ {чубух}	чубух	ču-b-uχ ~ či-b-uχ	429
+2189	Archi	woman	99	ɬːonː-ˈol	ɬːonː-ˈol	ɬːonː-ˈol	430
+2190	Kryts_proper	woman	99	χɨnɨb	χɨnɨb	χɨnɨb	431
+2191	Alyk_Kryts	woman	99	χinib	χinib	χinib	431
+2192	Budukh	woman	99	heǯ ~ ħeǯ {гьедж, хIедж}	гьедж, хIедж	heǯ ~ ħeǯ	-690
+2193	Mishlesh_Tsakhur	woman	99	xunašːe {хьунаще}	хьунаще	xunašːe	430
+2194	Mikik_Tsakhur	woman	99	xunašːe	xunašːe	xunašːe	430
+2195	Gelmets_Tsakhur	woman	99	xunašːe	xunašːe	xunašːe	430
+2196	Mukhad_Rutul	woman	99	xɨdɨl-dɨ {хьыдылды}	хьыдылды	xɨdɨl-dɨ	430
+2197	Ixrek_Rutul	woman	99	xɨdɨl-dɨ {хьыдылды}	хьыдылды	xɨdɨl-dɨ	430
+2198	Luchek_Rutul	woman	99	xɨdɨl-dɨ	xɨdɨl-dɨ	xɨdɨl-dɨ	430
+2199	Koshan_Aghul	woman	99	χewe-r	χewe-r	χewe-r	431
+2200	Keren_Aghul	woman	99	xir	xir	xir	432
+2201	Gequn_Aghul	woman	99	xir	xir	xir	432
+2202	Fite_Aghul	woman	99	xir	xir	xir	432
+2203	Aghul_proper	woman	99	xir	xir	xir	432
+2204	Northern_Tabasaran	woman	99	šiw	šiw	šiw	433
+2205	Southern_Tabasaran	woman	99	χpːi-r	χpːi-r	χpːi-r	431
+2206	Gyune_Lezgi	woman	99	pːab	pːab	pːab	434
+2207	Outgroup_Chechen	woman	99	zud-a {зуда}	зуда	zud-a	435
+#
+2413	Nidzh_Udi	worm	109	meq {мехъ}	мехъ	meq	481
+2414	Vartashen_Udi	worm	109	meq {мехъ}	мехъ	meq	481
+2415	Archi	worm	109	milˈiχˤu	milˈiχˤu	milˈiχˤu	481
+2416	Kryts_proper	worm	109	kʷak	kʷak	kʷak	482
+2417	Alyk_Kryts	worm	109	čič	čič	čič	483
+2418	Budukh	worm	109	čič {чич}	чич	čič	483
+2419	Mishlesh_Tsakhur	worm	109	aˤbrawučʼ {аIбравучI}	аIбравучI	aˤbrawučʼ	484
+2420	Mikik_Tsakhur	worm	109	abrawučʼe	abrawučʼe	abrawučʼe	484
+2421	Gelmets_Tsakhur	worm	109	bɨrqʼˤɨnʸäš	bɨrqʼˤɨnʸäš	bɨrqʼˤɨnʸäš	485
+2422	Mukhad_Rutul	worm	109	mulɨχˤ ~ müluχˤ ~ mulüχˤ {муьлуIх ~ мулюIх}	муьлуIх ~ мулюIх	mulɨχˤ ~ müluχˤ ~ mulüχˤ	481
+2423	Ixrek_Rutul	worm	109	muluχˤ ~ müluχˤ {муIлуIх ~ муьлуIх}	муIлуIх ~ муьлуIх	muluχˤ ~ müluχˤ	481
+2424	Luchek_Rutul	worm	109	muluχˤ	muluχˤ	muluχˤ	481
+2425	Koshan_Aghul	worm	109	malaqʷˤ	malaqʷˤ	malaqʷˤ	481
+2426	Keren_Aghul	worm	109	maluqˤ	maluqˤ	maluqˤ	481
+2427	Gequn_Aghul	worm	109	maleqʷˤ	maleqʷˤ	maleqʷˤ	481
+2428	Fite_Aghul	worm	109	müluqˤ	müluqˤ	müluqˤ	481
+2429	Aghul_proper	worm	109	milaqʷ	milaqʷ	milaqʷ	481
+2430	Northern_Tabasaran	worm	109	šar	šar	šar	486
+2431	Southern_Tabasaran	worm	109	šar	šar	šar	486
+2432	Gyune_Lezgi	worm	109	šar	šar	šar	486
+2433	Outgroup_Chechen	worm	109	nʕäna {нIаьна}	нIаьна	nʕäna	487
+2434	Kryts_proper	worm	109	čič	čič	čič	483
+#
+2435	Nidzh_Udi	year	110	usen {усен}	усен	usen	488
+2436	Vartashen_Udi	year	110	usen {усен}	усен	usen	488
+2437	Archi	year	110	sːan	sːan	sːan	488
+2438	Kryts_proper	year	110	sän	sän	sän	488
+2439	Alyk_Kryts	year	110	san	san	san	488
+2440	Budukh	year	110	sən {сан}	сан	sən	488
+2441	Mishlesh_Tsakhur	year	110	sʸen {сен}	сен	sʸen	488
+2442	Mikik_Tsakhur	year	110	sʸen	sʸen	sʸen	488
+2443	Gelmets_Tsakhur	year	110	sʸenʸ	sʸenʸ	sʸenʸ	488
+2444	Mukhad_Rutul	year	110	sen {сен}	сен	sen	488
+2445	Ixrek_Rutul	year	110	sen {сен}	сен	sen	488
+2446	Luchek_Rutul	year	110	sen	sen	sen	488
+2447	Koshan_Aghul	year	110	isː	isː	isː	489
+2448	Keren_Aghul	year	110	is	is	is	489
+2449	Gequn_Aghul	year	110	is	is	is	489
+2450	Fite_Aghul	year	110	is	is	is	489
+2451	Aghul_proper	year	110	is	is	is	489
+2452	Northern_Tabasaran	year	110	yˈiz-i	yˈiz-i	yˈiz-i	489
+2453	Southern_Tabasaran	year	110	yis	yis	yis	489
+2454	Gyune_Lezgi	year	110	yis	yis	yis	489
+2455	Outgroup_Chechen	year	110	šo {шо}	шо	šo	489
+#
+2208	Nidzh_Udi	yellow	100	nešˤ-um {неъшIум}	неъшIум	nešˤ-um	436
+2209	Vartashen_Udi	yellow	100	nešˤ-um {неъшIум}	неъшIум	nešˤ-um	436
+2210	Archi	yellow	100	χˈaχa-tːu-class	χˈaχa-tːu-class	χˈaχa-tːu-class	437
+2211	Kryts_proper	yellow	100	cʼari	cʼari	cʼari	438
+2212	Alyk_Kryts	yellow	100	qʼalːi	qʼalːi	qʼalːi	439
+2213	Budukh	yellow	100	sozə {соза}	соза	sozə	440
+2214	Mishlesh_Tsakhur	yellow	100	zɨrgɨ-n {зыргын}	зыргын	zɨrgɨ-n	-691
+2215	Mikik_Tsakhur	yellow	100	ʁˤubɨ-n ~ ʁˤɨbɨ-n	ʁˤubɨ-n ~ ʁˤɨbɨ-n	ʁˤubɨ-n ~ ʁˤɨbɨ-n	441
+2216	Gelmets_Tsakhur	yellow	100	dɨraqʼɨ-nʸ	dɨraqʼɨ-nʸ	dɨraqʼɨ-nʸ	442
+2217	Mukhad_Rutul	yellow	100	qːˤɨb-dɨ {къыIбды}	къыIбды	qːˤɨb-dɨ	441
+2218	Ixrek_Rutul	yellow	100	dɨraqʼ-dɨ ~ daraqʼ-dɨ {дыракьды ~ даракьды}	дыракьды ~ даракьды	dɨraqʼ-dɨ ~ daraqʼ-dɨ	442
+2219	Luchek_Rutul	yellow	100	daraqʼ-dɨ	daraqʼ-dɨ	daraqʼ-dɨ	442
+2220	Koshan_Aghul	yellow	100	qeqe-r	qeqe-r	qeqe-r	437
+2221	Keren_Aghul	yellow	100	qˤuqe-f	qˤuqe-f	qˤuqe-f	437
+2222	Gequn_Aghul	yellow	100	qäqä-f ~ qeqe-f	qäqä-f ~ qeqe-f	qäqä-f ~ qeqe-f	437
+2223	Fite_Aghul	yellow	100	qˤuqi-t	qˤuqi-t	qˤuqi-t	437
+2224	Aghul_proper	yellow	100	qüqe-f	qüqe-f	qüqe-f	437
+2225	Northern_Tabasaran	yellow	100	ɢarχˈi	ɢarχˈi	ɢarχˈi	443
+2226	Southern_Tabasaran	yellow	100	ʁatχˈu	ʁatχˈu	ʁatχˈu	443
+2227	Gyune_Lezgi	yellow	100	qʸpːˈi	qʸpːˈi	qʸpːˈi	441
+2228	Outgroup_Chechen	yellow	100	moːž-a {мōжа}	мōжа	moːž-a	444
+2229	Mishlesh_Tsakhur	yellow	100	qːˤɨbɨ-n	qːˤɨbɨ-n	qːˤɨbɨ-n	441
+2230	Mikik_Tsakhur	yellow	100	zɨrɣɨ-n	zɨrɣɨ-n	zɨrɣɨ-n	-692
