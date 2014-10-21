@@ -1692,7 +1692,7 @@ function storeAlignment() {
   for (var i=0,idx; idx=CFG['_current_idx'][i]; i++) {
     var alm = ALIGN.ALMS[i].join(' ');
     WLS[idx][this_idx] = alm;
-    storeModification(idx, this_idx, alm, true);
+    storeModification(idx, this_idx, alm, false);
     console.log(alm,WLS[idx]);
   }
 
