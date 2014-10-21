@@ -1586,10 +1586,16 @@ function editGroup(event,idx) {
     fakeAlert("This entry cannot be edited, since it is not related to any other entry.");
     return;
   }
-  if (WLS.header.indexOf('ALIGNMENT') != -1) {
+
+
+  /* check for proper values to be displayed for alignment analysis */
+  var rows = WLS['etyma'][idx];
+
+  /* check for proper alignments first */
+  if (WLS.header.indexOf('ALIGNMENT') != -1 && WLS[rows[0]][WLS.header.indexOf('ALIGNMENT')]) {
     var this_idx = WLS.header.indexOf('ALIGNMENT');
   }
-  else if (WLS.header.indexOf('TOKENS') != -1) {
+  else if (WLS.header.indexOf('TOKENS') != -1 && WLS[rows[0]][WLS.header.indexOf('TOKENS')]) {
     var this_idx = WLS.header.indexOf('TOKENS');
   }
   else if (WLS.header.indexOf('IPA') != -1) {
@@ -1607,7 +1613,7 @@ function editGroup(event,idx) {
   editmode.id = 'editmode';
   editmode.className = 'editmode';
 
-  var rows = WLS['etyma'][idx];
+
   var alms = [];
   var langs = [];
   var blobtxt = '';
