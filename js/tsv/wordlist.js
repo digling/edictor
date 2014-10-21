@@ -1611,7 +1611,18 @@ function editGroup(event,idx) {
   var alms = [];
   var langs = [];
   var blobtxt = '';
+
+  CFG['_current_alms'] = [];
+  CFG['_current_taxa'] = [];
+  CFG['_current_idx'] = rows;
+
+  /* now create an alignment object */
   for (var i=0,r;r=rows[i];i++) {
+    
+    /* add stuff to temporary container for quick alignment access */
+    CFG['_current_alms'].push(WLS[r][this_idx].split(' '));
+    CFG['_current_taxa'].push(WLS[r][CFG['_tidx']]);
+
     var alm = plotWord(WLS[r][this_idx]);
     var lang = WLS[r][CFG['_tidx']];
     alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace(new RegExp('span','gi'),'td'));
@@ -1625,13 +1636,14 @@ function editGroup(event,idx) {
   }
   var text = '<div class="edit_links" id="editlinks">';
   text += '<p>' + CFG['formatter'] + ' &quot;'+idx+'&quot; links the following '+alms.length+' entries:</p>';
-  text += '<div class="alignments"><table>';
+  text += '<div class="alignments" id="alignments"><table>';
   for (var i=0,alm;alm=alms[i];i++) {
     text += '<tr>'+alm+'</tr>';
   }
   text += '</table></div>';
   text += '<div class="submitline">';
-  text += '<input class="btn btn-primary submit" type="button" onclick="fakeAlert(\'This part is under construction.\')" value="EDIT" /> ';
+  text += '<input class="btn btn-primary submit" type="button" onclick="editAlignment()" value="EDIT" /> ';
+  text += '<input class="btn btn-primary submit" type="button" onclick="storeAlignment()" value="SUBMIT" /> '; 
   text += '<input class="btn btn-primary submit" type="button" onclick="saveAlignment('+idx+')" value="EXPORT" /> ';
   text += '<input class="btn btn-primary submit" type="button" onclick="$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /></div><br><br> ';
   text += '</div> ';
@@ -1644,6 +1656,50 @@ function editGroup(event,idx) {
       basickeydown(event);
     };
   };
+}
+
+/* function creates and ALIGN object for editing alignments in text */
+function editAlignment() {
+  ALIGN.ALMS = CFG['_current_alms'];
+  ALIGN.TAXA = CFG['_current_taxa'];
+  console.log('alms',ALIGN.ALMS);
+  ALIGN.refresh();
+}
+
+/* function writes alignments that have been carried out to the wordlist object */
+function storeAlignment() {
+  ALIGN.refresh();
+  /* check for index of alignments in data */
+  if (WLS.header.indexOf('ALIGNMENT') != -1) {
+    var this_idx = WLS.header.indexOf('ALIGNMENT');
+  }
+  /* if alignemtns are not present, we have a problem, and we need to add them as a column */
+  else {
+    /* get index of tokens */
+    var tidx = WLS.header.indexOf('TOKENS');
+
+    WLS.header.push('ALIGNMENT');
+    WLS.columns['ALIGNMENT'] = WLS.header.indexOf('Alignment');
+    WLS.column_names['ALIGNMENT'] = 'ALIGNMENT';
+    for (k in WLS) {
+      if (!isNaN(k)) {
+        WLS[k].push(WLS[k][tidx]);
+      }
+    }
+    var this_idx = WLS.header.indexOf('ALIGNMENT');
+  }
+
+  for (var i=0,idx; idx=CFG['_current_idx'][i]; i++) {
+    var alm = ALIGN.ALMS[i].join(' ');
+    WLS[idx][this_idx] = alm;
+    storeModification(idx, this_idx, alm, true);
+    console.log(alm,WLS[idx]);
+  }
+
+  resetFormat(CFG['formatter']);
+  createSelectors();
+  applyFilter();
+  showWLS(getCurrent());
 }
 
 function toggleClasses(classes,from,to) {
