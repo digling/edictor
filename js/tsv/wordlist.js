@@ -1649,9 +1649,9 @@ function editGroup(event,idx) {
   text += '</table></div>';
   text += '<div class="submitline">';
   text += '<input class="btn btn-primary submit" type="button" onclick="editAlignment()" value="EDIT" /> ';
-  text += '<input class="btn btn-primary submit" type="button" onclick="storeAlignment()" value="SUBMIT" /> '; 
+  text += '<input id="submit_alignment" class="btn btn-primary submit hidden" type="button" onclick="storeAlignment()" value="SUBMIT" /> '; 
   text += '<input class="btn btn-primary submit" type="button" onclick="saveAlignment('+idx+')" value="EXPORT" /> ';
-  text += '<input class="btn btn-primary submit" type="button" onclick="$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /></div><br><br> ';
+  text += '<input class="btn btn-primary submit" type="button" onclick="ALIGN.destroy_alignment();$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /></div><br><br> ';
   text += '</div> ';
 
   document.body.appendChild(editmode);
@@ -1670,11 +1670,15 @@ function editAlignment() {
   ALIGN.TAXA = CFG['_current_taxa'];
   console.log('alms',ALIGN.ALMS);
   ALIGN.refresh();
+
+  /* toggle visibility of submit button */
+  $('#submit_alignment').removeClass('hidden');
 }
 
 /* function writes alignments that have been carried out to the wordlist object */
 function storeAlignment() {
-  ALIGN.refresh();
+  //ALIGN.refresh();
+  ALIGN.export_alignments();
   /* check for index of alignments in data */
   if (WLS.header.indexOf('ALIGNMENT') != -1) {
     var this_idx = WLS.header.indexOf('ALIGNMENT');
@@ -1685,22 +1689,27 @@ function storeAlignment() {
     var tidx = WLS.header.indexOf('TOKENS');
 
     WLS.header.push('ALIGNMENT');
-    WLS.columns['ALIGNMENT'] = WLS.header.indexOf('Alignment');
+    WLS.columns['ALIGNMENT'] = WLS.header.indexOf('ALIGNMENT');
     WLS.column_names['ALIGNMENT'] = 'ALIGNMENT';
     for (k in WLS) {
       if (!isNaN(k)) {
-        WLS[k].push(WLS[k][tidx]);
+        WLS[k].push(''); /* start with empty string, easier for manual editing */
       }
     }
     var this_idx = WLS.header.indexOf('ALIGNMENT');
   }
 
+  var blobtxt = '';
+
   for (var i=0,idx; idx=CFG['_current_idx'][i]; i++) {
     var alm = ALIGN.ALMS[i].join(' ');
     WLS[idx][this_idx] = alm;
     storeModification(idx, this_idx, alm, false);
-    console.log(alm,WLS[idx]);
+
+    blobtxt += idx+'\t'+ALIGN.TAXA[i]+'\t'+ALIGN.ALMS[i].join('\t')+'\n';
   }
+
+  CFG['_alignment'] = blobtxt;
 
   resetFormat(CFG['formatter']);
   createSelectors();

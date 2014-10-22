@@ -11,6 +11,7 @@
 var ALIGN = {};
 ALIGN.ALMS = [];
 ALIGN.TAXA = [];
+ALIGN.UDX = [];
 
 ALIGN.normalize = function(alms) {
   /* function normalizes an alignment by adding gaps so that all strings
@@ -46,6 +47,33 @@ ALIGN.normalize = function(alms) {
     }
   }
 
+  /* check for unalignable parts */
+  if (ALIGN.UDX.length == 0) {
+    var unalignable = false;
+    var udx = [];
+    var minus = 0;
+    for (var i=0; i < alms[0].length; i++) {
+      if (alms[0][i] == '(') {
+        unalignable = true;
+        empty_columns.push(i);
+        minus += 1;
+      }
+      else if (unalignable && alms[0][i] != ')') {
+        udx.push(i-minus);
+      }
+      else if (unalignable && alms[0][i] == ')') {
+        empty_columns.push(i);
+        unalignable = false;
+        minus += 1;
+      }
+    }
+    ALIGN.UDX = udx;
+  }
+
+  empty_columns.sort();
+  console.log('ec',empty_columns);
+  console.log('up',udx);
+
   /* delete allgap columns */
   for (var i=0,row; row=alms[i]; i++) {
     var alm = [];
@@ -68,14 +96,24 @@ ALIGN.style = function (idx,alm) {
   for (var i=0, seg; seg=alm[i]; i++) {
     var idf = 'alm_'+idx+'_'+i;
     var sound_class = getSoundClass(seg);
-
-    if (sound_class != '-') {
-      txt += '<td class="residue pointed dolgo_'+sound_class+'" id="'+idf+
-        '" onclick="ALIGN.addGap('+idx+','+i+')">'+seg+'</td>';
+    
+    if (ALIGN.UDX.indexOf(i) != -1) {
+      if (sound_class != '-') {
+        txt += '<td class="residue dolgo_IGNORE dolgo_'+sound_class+'" id="'+idf+'">'+seg+'</td>';
+      }
+      else {
+        txt += '<td class="residue dolgo_IGNORE dolgo_GAP" id="'+idf+'">'+seg+'</td>';
+      }
     }
     else {
-      txt += '<td class="residue gap pointed" id="'+idf+'" '+
-        'onclick="ALIGN.delGap('+idx+','+i+')">'+seg+'</td>';
+      if (sound_class != '-') {
+        txt += '<td class="residue pointed dolgo_'+sound_class+'" id="'+idf+
+          '" onclick="ALIGN.addGap('+idx+','+i+')">'+seg+'</td>';
+      }
+      else {
+        txt += '<td class="residue dolgo_GAP pointed" id="'+idf+'" '+
+          'onclick="ALIGN.delGap('+idx+','+i+')">'+seg+'</td>';
+      }
     }
   }
   return txt;
@@ -91,9 +129,77 @@ ALIGN.make_table = function (taxa, alms) {
     txt += this.style(i+1,alms[i]);
     txt += '</tr>';
   }
+  txt += '<tr class="up_fill"><td></td></tr>';
+  txt += '<tr id="unalignable"><th>IGNORE</th>';
+  for (var i=0; i< alms[0].length; i++) {
+    if (ALIGN.UDX.indexOf(i) != -1) {
+      txt += '<td class="up_check"><input onchange="ALIGN.reset_UP('+i+')" type="checkbox" name="alignment" value="'+i+'" checked /></td>';
+    }
+    else {
+      txt += '<td class="up_check"><input onchange="ALIGN.reset_UP('+i+')" type="checkbox" name="alignment" value="'+i+'" /></td>';
+    }
+  }
+  txt += '</tr>';
   txt += '</table>';
 
   return txt;
+}
+
+ALIGN.reset_UP = function(idx) {
+  if (ALIGN.UDX.indexOf(idx) == -1) {
+    ALIGN.UDX.push(idx);
+  }
+  else {
+    delete ALIGN.UDX[ALIGN.UDX.indexOf(idx)];
+  }
+  ALIGN.refresh();
+  //console.log(ALIGN.UDX);
+}
+
+ALIGN.export_alignments = function() {
+  var alms = [];
+  var unalignable = false;
+  for (var i=0,alm; alm=ALIGN.ALMS[i]; i++) {
+    var out = [];
+    for (var j=0,val; val=alm[j]; j++) {
+      if (ALIGN.UDX.indexOf(j) != -1) {
+        /* just started a new unalignable */
+        if (!unalignable) {
+          unalignable = true;
+          out.push('(');
+          out.push(val);
+        }
+        else if (unalignable) {
+          out.push(val);
+        }
+      }
+      else {
+        /* if we are still in unalignable mode, we add the bracket */
+        if (unalignable) {
+          out.push(')');
+          out.push(val);
+          unalignable = false;
+        }
+        else {
+          out.push(val);
+        }
+      }
+    }
+    if (unalignable) {
+      out.push(')');
+      unalignable = false;
+    }
+    alms.push(out);
+  }
+  ALIGN.ALMS = alms;
+  ALIGN.UDX = [];
+}
+
+ALIGN.destroy_alignment = function()
+{
+  ALIGN.ALMS = [];
+  ALIGN.UDX = [];
+  ALIGN.TAXA = [];
 }
 
 ALIGN.addGap = function (i,j) {

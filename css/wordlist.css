@@ -238,6 +238,7 @@ td.dolgo_T{background-color: #9664c8;}
 td.dolgo_W{background-color: #c864c8;} 
 td.dolgo_1{background-color: #c86496;} 
 td.dolgo_X{background-color: #bbbbbb;}
+td.dolgo_IGNORE{opacity: 0.5; color: black;}
 td.dolgo_GAP{background-color: #bbbbbb;}
 td.dolgo_NAS{
   background: -moz-linear-gradient(left,#c86464,#64c8c8);
@@ -691,4 +692,30 @@ div.alignments {
 	height: 100%;
 	float: left;
 	text-align:center;
+}
+
+/* class for unalignable parts in checkboxes */
+.up_check {
+  text-align: center;
+  vertical-align: center;
+}
+tr#unalignable th {
+  color: Crimson;
+  text-size: 80%;
+  text-align: left;
+}
+tr#unalignable {
+  margin-top: 5px;
+  padding-top: 5px;
+}
+
+tr#unalignable td {
+  border: 1px solid Crimson;
+  padding-bottom: 5px;
+}
+
+tr.up_fill {
+}
+tr.up_fill > td {
+  height: 5px;
 }
