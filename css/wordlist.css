@@ -261,6 +261,7 @@ span.dolgo_W{background-color: #c864c8;}
 span.dolgo_1{background-color: #c86496;} 
 span.dolgo_X{background-color: #bbbbbb;}
 span.dolgo_GAP{background-color: #bbbbbb;}
+span.dolgo_IGNORE{color: black; opacity: 0.25;}
 span.dolgo_NAS{
   background: -moz-linear-gradient(left,#c86464,#64c8c8);
   background: -webkit-linear-gradient(left,#c86464,#64c8c8);

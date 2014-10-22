@@ -289,9 +289,15 @@ function csvToArrays(allText, separator, comment, keyval) {
   var this_key = false;
   for (var key in WLS['columns']) {
     if (key.indexOf('ID') - key.length == -2 && tmp_count == 0 && key != CFG['formatter']) {
-      tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+key+'">'+key+' ';
-      this_key = key;
-      tmp_count += 1;
+      if('COGID' in WLS.columns && key != 'COGID')
+      {
+        tmp_text += '<inpyt onchange=resetFormat(this.value)" type="radio" name="formatter" value="'+key+'">'+key+' ';
+      }
+      else {
+        tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+key+'">'+key+' ';
+        this_key = key;
+        tmp_count += 1;
+      }
     }
     else if (key.indexOf('ID') - key.length == -2 && CFG['formatter'] != key) {
       tmp_text += '<input onchange="resetFormat(this.value)" type="radio" name="formatter" value="'+key+'">'+key+' ';
