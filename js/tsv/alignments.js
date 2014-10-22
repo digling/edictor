@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-10-21 12:58
- * modified : 2014-10-21 15:39
+ * modified : 2014-10-22 14:30
  *
  */
 
@@ -16,6 +16,57 @@ ALIGN.UDX = [];
 ALIGN.normalize = function(alms) {
   /* function normalizes an alignment by adding gaps so that all strings
    * are of equal length */
+
+  /* check for unalignable parts */
+  var brackets = [];
+  if (ALIGN.UDX.length == 0) {
+    var unalignable = false;
+    var udx = [];
+    var minus = 0;
+    for (var i=0; i < alms[0].length; i++) {
+      if (alms[0][i] == '(') {
+        unalignable = true;
+        brackets.push(i);
+        minus += 1;
+      }
+      else if (unalignable && alms[0][i] != ')') {
+        udx.push(i-minus);
+      }
+      else if (unalignable && alms[0][i] == ')') {
+        brackets.push(i);
+        unalignable = false;
+        minus += 1;
+      }
+    }
+    ALIGN.UDX = udx;
+  }
+
+  /* check whether brackets interfere with empty columns, this means
+   * that if a full-gap column is followed by a UP column, the index needs
+   * to be lowered. In order to guarantee this, we first delete bracket columns,
+   * and raise indices if needed, we then delete the rest of the columns */
+  
+  /* first deal with brackets */
+  var udx_error = false;
+  for (var i=0; row=alms[i]; i++) {
+    var alm = [];
+    for (var j=0,cell; cell=alms[i][j]; j++) {
+      if (brackets.indexOf(j) == -1 && cell != '(' && cell != ')') {
+        alm.push(cell);
+      }
+      else {
+        if (cell != ')' && cell != '(') {
+          alm.push(cell);
+          udx_error = true;
+        }
+      }
+    }
+    alms[i] = alm;
+  }
+
+  if (udx_error) {
+    ALIGN.UDX = [];
+  }
 
   /* determine longest string */
   var longest_sequence = 0;
@@ -47,34 +98,7 @@ ALIGN.normalize = function(alms) {
     }
   }
 
-  /* check for unalignable parts */
-  if (ALIGN.UDX.length == 0) {
-    var unalignable = false;
-    var udx = [];
-    var minus = 0;
-    for (var i=0; i < alms[0].length; i++) {
-      if (alms[0][i] == '(') {
-        unalignable = true;
-        empty_columns.push(i);
-        minus += 1;
-      }
-      else if (unalignable && alms[0][i] != ')') {
-        udx.push(i-minus);
-      }
-      else if (unalignable && alms[0][i] == ')') {
-        empty_columns.push(i);
-        unalignable = false;
-        minus += 1;
-      }
-    }
-    ALIGN.UDX = udx;
-  }
-
-  empty_columns.sort();
-  console.log('ec',empty_columns);
-  console.log('up',udx);
-
-  /* delete allgap columns */
+  /* now deal with empty columns */
   for (var i=0,row; row=alms[i]; i++) {
     var alm = [];
     for (var j=0,cell; cell=alms[i][j]; j++) {
@@ -83,6 +107,20 @@ ALIGN.normalize = function(alms) {
       }
     }
     alms[i] = alm;
+  }
+
+  /* lower UDX for everythign higher than empty cols */
+  for (var i=0; i< empty_columns.length; i++) {
+    var idx = empty_columns[i];
+    
+    /* check for higher values in UDX than idx */
+    var raise_val = false;
+    for (var j=0; j < ALIGN.UDX.length; j++) {
+      var jdx = ALIGN.UDX[j];
+      if (jdx > idx) {
+        ALIGN.UDX[j] -=1;
+      }
+    }
   }
 
   return alms
@@ -153,7 +191,6 @@ ALIGN.reset_UP = function(idx) {
     delete ALIGN.UDX[ALIGN.UDX.indexOf(idx)];
   }
   ALIGN.refresh();
-  //console.log(ALIGN.UDX);
 }
 
 ALIGN.export_alignments = function() {
@@ -202,33 +239,115 @@ ALIGN.destroy_alignment = function()
   ALIGN.TAXA = [];
 }
 
-ALIGN.addGap = function (i,j) {
+ALIGN.addGap = function (idx,jdx) {
   /* introduce a gap to the left of an aligned sequence */
 
   /* determine index of alignment and rebuild the whole stuff with one more gap */
-  var alm = ALIGN.ALMS[i-1];
-  alm.splice(j,0,"-");
-  ALIGN.ALMS[i-1] = alm;
-  ALIGN.refresh();
+  /* if no unalignable parts are used, this is simple to do */
+  if (ALIGN.UDX.length == 0) {
+  
+    var alm = ALIGN.ALMS[idx-1];
+    alm.splice(jdx,0,"-");
+    ALIGN.ALMS[idx-1] = alm;
+    ALIGN.refresh();
 
-  /* note that this method is really, really simple, but it basically works for 
-   * smaller alignments.
-   * it may, however, show some performance deficits for larger alignments...
-   */
-}
-
-ALIGN.delGap = function (i,j) {
-  /* delete a gap from an aligned sequence */
-
-  var tmp_alm = ALIGN.ALMS[i-1];
-  var new_alm = [];
-  for (var k=0,segment; segment=tmp_alm[k]; k++) {
-    if (k != j) {
-      new_alm.push(segment);
+    /* note that this method is really, really simple, but it basically works for 
+    * smaller alignments.
+    * it may, however, show some performance deficits for larger alignments...
+    */
+  }
+  /* if we have unalignable parts, we need to keep track of them and insert
+   * the gap before the next part starts */
+  else {
+    /* first get the current index and determine, whether it is followed by an 
+     * unalignable part */
+    var first_idx = false;
+    var nidx = false;
+    for (var i=0; i < ALIGN.UDX.length; i++) {
+      var udx = ALIGN.UDX[i];
+      if (udx > jdx && !first_idx) {
+        first_idx = true;
+        nidx = udx;
+      }
+    }
+    console.log('ndx',nidx,jdx,ALIGN.UDX, first_idx)
+    if (nidx) {
+      var alm = ALIGN.ALMS[idx-1];
+      alm.splice(jdx,0,"-");
+      for (var i=0,alm; alm=ALIGN.ALMS[i]; i++) {
+        if (i != idx-1) {
+          alm.splice(nidx,0,'-');
+        }
+      }
+      for (var i=0; i<ALIGN.UDX.length; i++) {
+        var udx = ALIGN.UDX[i];
+        if (udx >= nidx) {
+          ALIGN.UDX[i] += 1;
+        }
+      }
+      ALIGN.refresh();
+    }
+    else {
+      var alm = ALIGN.ALMS[idx-1];
+      alm.splice(jdx, 0, "-");
+      ALIGN.ALMS[idx-1] = alm;
+      ALIGN.refresh();
     }
   }
-  ALIGN.ALMS[i-1] = new_alm;
-  ALIGN.refresh();
+}
+
+ALIGN.delGap = function (idx,jdx) {
+  /* delete a gap from an aligned sequence */
+  
+  if (ALIGN.UDX.length == 0) {
+    var tmp_alm = ALIGN.ALMS[idx-1];
+    var new_alm = [];
+    for (var k=0,segment; segment=tmp_alm[k]; k++) {
+      if (k != jdx) {
+        new_alm.push(segment);
+      }
+    }
+    ALIGN.ALMS[idx-1] = new_alm;
+    ALIGN.refresh();
+  }
+  else {
+    /* determine which strings are involved */
+    var first_idx = false;
+    var nidx = false;
+    for (var i=0;i < ALIGN.UDX.length;i++) {
+      var udx = ALIGN.UDX[i];
+      if (udx > jdx && !first_idx) {
+        first_idx = true;
+        nidx = udx;
+      }
+    }
+    if (nidx) {
+      var tmp_alm = ALIGN.ALMS[idx-1];
+      var new_alm = [];
+      for (var i=0,segment; segment=tmp_alm[i]; i++) {
+        if (i+1 == nidx) {
+          new_alm.push(segment);
+          new_alm.push('-');
+        }
+        else if (i != jdx) {
+          new_alm.push(segment);
+        }
+      }
+      ALIGN.ALMS[idx-1] = new_alm;
+      ALIGN.refresh();
+    }
+    else {
+      var tmp_alm = ALIGN.ALMS[idx-1];
+      var new_alm = [];
+      for (var k=0,segment; segment=tmp_alm[k]; k++) {
+        if (k != jdx) {
+          new_alm.push(segment);
+        }
+      }
+      ALIGN.ALMS[idx-1] = new_alm;
+      ALIGN.refresh();
+    }
+  }
 }
 
 ALIGN.refresh = function(idx) {

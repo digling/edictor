@@ -1600,9 +1600,11 @@ function editGroup(event,idx) {
   /* check for proper alignments first */
   if (WLS.header.indexOf('ALIGNMENT') != -1 && WLS[rows[0]][WLS.header.indexOf('ALIGNMENT')]) {
     var this_idx = WLS.header.indexOf('ALIGNMENT');
+    var fall_back = WLS.header.indexOf('TOKENS');
   }
   else if (WLS.header.indexOf('TOKENS') != -1 && WLS[rows[0]][WLS.header.indexOf('TOKENS')]) {
     var this_idx = WLS.header.indexOf('TOKENS');
+    var fall_back = WLS.header.indexOf('IPA');
   }
   else if (WLS.header.indexOf('IPA') != -1) {
     var this_idx = WLS.header.indexOf('IPA');
@@ -1631,11 +1633,15 @@ function editGroup(event,idx) {
   /* now create an alignment object */
   for (var i=0,r;r=rows[i];i++) {
     
+    var current_line = WLS[r][this_idx];
+    if(!current_line) {
+      current_line = WLS[r][fall_back];
+    }
     /* add stuff to temporary container for quick alignment access */
-    CFG['_current_alms'].push(WLS[r][this_idx].split(' '));
+    CFG['_current_alms'].push(current_line.split(' '));
     CFG['_current_taxa'].push(WLS[r][CFG['_tidx']]);
 
-    var alm = plotWord(WLS[r][this_idx]);
+    var alm = plotWord(current_line);
     var lang = WLS[r][CFG['_tidx']];
     alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace(new RegExp('span','gi'),'td'));
     blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(new RegExp(' ','gi'),'\t')+'\n';
@@ -1647,7 +1653,9 @@ function editGroup(event,idx) {
     return;
   }
   var text = '<div class="edit_links" id="editlinks">';
-  text += '<p>' + CFG['formatter'] + ' &quot;'+idx+'&quot; links the following '+alms.length+' entries:</p>';
+  text += '<p>';
+  text += '<span class="main_handle pull-left" style="margin-left:-7px;margin-top:2px;" ></span>';
+  text += CFG['formatter'] + ' &quot;'+idx+'&quot; links the following '+alms.length+' entries:</p>';
   text += '<div class="alignments" id="alignments"><table>';
   for (var i=0,alm;alm=alms[i];i++) {
     text += '<tr>'+alm+'</tr>';
@@ -1668,6 +1676,8 @@ function editGroup(event,idx) {
       basickeydown(event);
     };
   };
+
+  $('#editlinks').draggable({handle:'.main_handle'}).resizable();
 }
 
 /* function creates and ALIGN object for editing alignments in text */
