@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2014-09-05 22:08
+ * modified : 2014-10-27 15:49
  *
  */
 
@@ -289,15 +289,9 @@ function csvToArrays(allText, separator, comment, keyval) {
   var this_key = false;
   for (var key in WLS['columns']) {
     if (key.indexOf('ID') - key.length == -2 && tmp_count == 0 && key != CFG['formatter']) {
-      if('COGID' in WLS.columns && key != 'COGID')
-      {
-        tmp_text += '<inpyt onchange=resetFormat(this.value)" type="radio" name="formatter" value="'+key+'">'+key+' ';
-      }
-      else {
-        tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+key+'">'+key+' ';
-        this_key = key;
-        tmp_count += 1;
-      }
+      tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+key+'">'+key+' ';
+      this_key = key;
+      tmp_count += 1;
     }
     else if (key.indexOf('ID') - key.length == -2 && CFG['formatter'] != key) {
       tmp_text += '<input onchange="resetFormat(this.value)" type="radio" name="formatter" value="'+key+'">'+key+' ';
