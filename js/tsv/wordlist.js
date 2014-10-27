@@ -177,18 +177,21 @@ function csvToArrays(allText, separator, comment, keyval) {
         }
       }
       /* apply check for tidx and cidx */
-      if (tIdx == -1 && cIdx == -1) {tIdx = 1;cIdx = 2;}
-      else if (cIdx == -1 && tIdx > 1) {cIdx = 1; }
-      else if (cIdx == -1 && tIdx <= 1) {cIdx = 2; }
-      else if (tIdx == -1 && cIdx > 1) {tIdx = 1; }
-      else if (tIdx == -1 && cIdx <= 1) {tIdx = 2; }
+      if (tIdx == -1 && cIdx == -1) {tIdx = 1;cIdx = 2; CFG['tc_status'] = 'notc'}
+      else if (cIdx == -1 && tIdx > 1) {cIdx = 1; CFG['tc_status'] = 'noc' }
+      else if (cIdx == -1 && tIdx <= 1 && tIdx > -1) {cIdx = 2; CFG['tc_status'] = 'noc'}
+      else if (tIdx == -1 && cIdx > 1) {tIdx = 1; CFG['tc_status'] = 'not' }
+      else if (tIdx == -1 && cIdx <= 1 && cIdx > -1) {tIdx = 2; CFG['tc_status'] = 'not'}
 
       /* append to basics */
       columns[data[tIdx].toUpperCase()] = Math.abs(columns[data[tIdx].toUpperCase()]);
       columns[data[cIdx].toUpperCase()] = Math.abs(columns[data[cIdx].toUpperCase()]);
       CFG['basics'].push(data[tIdx].toUpperCase());
       CFG['basics'].push(data[cIdx].toUpperCase());
-
+      
+      console.log('TIDX',tIdx);
+      console.log('CIDX',cIdx);
+      console.log('columns:',columns);
     }
     /* handle cases where no ID has been submitted */
     else if (firstLineFound == false) {
@@ -196,25 +199,60 @@ function csvToArrays(allText, separator, comment, keyval) {
       noid = true;
       CFG['noid'] = true;
 
+
       /* get the header */
       var header = [];
       for (j = 0; j < data.length; j++) {
         var datum = data[j].toUpperCase();
+        
+        /* check for prohibited columns */
+        if (datum.slice(0,1) == '_') {
+          datum = datum.slice(1,datum.length);
+          var tmp = datum.replace(/_/g,' ');
+          datum = datum.replace(/_/g,'');
+          column_names[datum] = tmp;
+          uneditables.push(datum);
+        }
+        else {
+          var tmp = datum.replace(/_/g,' ');
+          datum = datum.replace(/_/g,'');
+          column_names[datum] = tmp;
+        }
+
         header.push(datum);
         if (ALIAS['doculect'].indexOf(datum) != -1) {
           tIdx = j;
         }
-        if (datum == 'GLOSS' || datum == 'CONCEPT') {
+        if (ALIAS['concept'].indexOf(datum) != -1) {
           cIdx = j;
         }
-        columns[datum] = j+1;
+        if (CFG['basics'].indexOf(datum) != -1) {
+          columns[datum] = j + 1;
+        }
+        else {
+          columns[datum] = -(j + 1);
+        }
       }
+
+      /* get the header */
+      //var header = [];
+      //for (j = 0; j < data.length; j++) {
+      //  var datum = data[j].toUpperCase();
+      //  header.push(datum);
+      //  if (ALIAS['doculect'].indexOf(datum) != -1) {
+      //    tIdx = j;
+      //  }
+      //  if (datum == 'GLOSS' || datum == 'CONCEPT') {
+      //    cIdx = j;
+      //  }
+      //  columns[datum] = j+1;
+      //}
       /* apply check for tidx and cidx */
-      if (tIdx == -1 && cIdx == -1) {tIdx = 0;cIdx = 1;}
-      else if (cIdx == -1 && tIdx > 1) {cIdx = 0; }
-      else if (cIdx == -1 && tIdx <= 1) {cIdx = 1; }
-      else if (tIdx == -1 && cIdx > 1) {tIdx = 2; }
-      else if (tIdx == -1 && cIdx <= 1) {tIdx = 1; }
+      if (tIdx == -1 && cIdx == -1) {tIdx = 1;cIdx = 2; CFG['tc_status'] = 'notc'}
+      else if (cIdx == -1 && tIdx > 1) {cIdx = 1; CFG['tc_status'] = 'noc' }
+      else if (cIdx == -1 && tIdx <= 1 && tIdx > -1) {cIdx = 2; CFG['tc_status'] = 'noc'}
+      else if (tIdx == -1 && cIdx > 1) {tIdx = 1; CFG['tc_status'] = 'not' }
+      else if (tIdx == -1 && cIdx <= 1 && cIdx > -1) {tIdx = 2; CFG['tc_status'] = 'not'}
 
       /* append to basics */
       columns[data[tIdx].toUpperCase()] = Math.abs(columns[data[tIdx].toUpperCase()]);
@@ -222,6 +260,9 @@ function csvToArrays(allText, separator, comment, keyval) {
       CFG['basics'].push(data[tIdx].toUpperCase());
       CFG['basics'].push(data[cIdx].toUpperCase());
 
+      console.log('TIDX',tIdx);
+      console.log('CIDX',cIdx);
+      console.log('columns:',columns);
     }
     //else if (data[0].charAt(0) == comment || data[0] == '') {}
     else if (firstLineFound) {
@@ -320,26 +361,34 @@ function csvToArrays(allText, separator, comment, keyval) {
 /* create selectors for languages, concepts, and columns */
 function createSelectors() {
   
-  console.log('creating columns');
-  var did = document.getElementById('select_doculects');
-  var doculects = Object.keys(WLS.taxa);
-  doculects.sort();
-  var txt = '';
-  for (var i=0,doculect; doculect=doculects[i]; i++) {
-    txt += '<option value="'+doculect+'" selected>'+doculect+'</option>';
+  /* fro taxa and concepts, we should check whether they are actually 
+   * in the data passed to the app. If they are missing, we shouldn't bother 
+   * displaying the stuff */
+  if (CFG['tc_status'] != 'not' && CFG['tc_status'] != 'notc') {
+    console.log('creating columns');
+    var did = document.getElementById('select_doculects');
+    var doculects = Object.keys(WLS.taxa);
+    doculects.sort();
+    var txt = '';
+    for (var i=0,doculect; doculect=doculects[i]; i++) {
+      txt += '<option value="'+doculect+'" selected>'+doculect+'</option>';
+    }
+    did.innerHTML = txt;
   }
-  did.innerHTML = txt;
+  
+  if (CFG['tc_status'] != 'noc' && CFG['tc_status'] != 'notc') {
+    var cid = document.getElementById('select_concepts');
+    var concepts = Object.keys(WLS.concepts);
+    concepts.sort();
+    txt = ''
 
-  var cid = document.getElementById('select_concepts');
-  var concepts = Object.keys(WLS.concepts);
-  concepts.sort();
-  txt = ''
-
-  for (var i=0,concept; concept=concepts[i]; i++) {
-    txt += '<option value="'+concept+'" selected>'+concept+'</option>';
+    for (var i=0,concept; concept=concepts[i]; i++) {
+      txt += '<option value="'+concept+'" selected>'+concept+'</option>';
+    }
+    cid.innerHTML = txt;
   }
-  cid.innerHTML = txt;
-
+ 
+  /* column selection, however, will always be displayed */
   var eid = document.getElementById('select_columns');
   var columns = Object.keys(WLS.columns);
   columns.sort();
@@ -356,31 +405,43 @@ function createSelectors() {
   }
   eid.innerHTML = txt;
   
-  $('#select_doculects').multiselect({
-    disableIfEmtpy: true,
-    includeSelectAllOption : true,
-    enableFiltering: true,
-    maxHeight: window.innerHeight-100,
-    buttonClass : 'btn btn-primary mright submit pull-left',
-    enableCaseInsensitiveFiltering: true,
-    buttonContainer: '<div id="select_doculects_button" class="select_button" />',
-    buttonText: function (options, select) {
-      return 'Select Doculects <b class="caret"></b>';
-    }
-  });
-  
-  $('#select_concepts').multiselect({
-    disableIfEmpty: true,
-    includeSelectAllOption : true,
-    enableFiltering: true,
-    maxHeight: window.innerHeight-100,
-    buttonClass : 'btn btn-primary mright submit pull-left',
-    enableCaseInsensitiveFiltering: true,
-    buttonContainer: '<div id="select_concepts_button" class="select_button" />',
-    buttonText: function (options, select) {
-      return 'Select Concepts <b class="caret"></b>';
-    }
-  });
+  /* check again fro taxa */
+  if (CFG['tc_status'] != 'not' && CFG['tc_status'] != 'notc'){
+    $('#select_doculects').multiselect({
+      disableIfEmtpy: true,
+      includeSelectAllOption : true,
+      enableFiltering: true,
+      maxHeight: window.innerHeight-100,
+      buttonClass : 'btn btn-primary mright submit pull-left',
+      enableCaseInsensitiveFiltering: true,
+      buttonContainer: '<div id="select_doculects_button" class="select_button" />',
+      buttonText: function (options, select) {
+        return 'Select Doculects <b class="caret"></b>';
+      }
+    });
+  }
+  else {
+    document.getElementById('select_doculects').style.display = "none";
+  }
+
+  /* check again fro concepts */
+  if (CFG['tc_status'] != 'noc' && CFG['tc_status'] != 'notc') {
+    $('#select_concepts').multiselect({
+      disableIfEmpty: true,
+      includeSelectAllOption : true,
+      enableFiltering: true,
+      maxHeight: window.innerHeight-100,
+      buttonClass : 'btn btn-primary mright submit pull-left',
+      enableCaseInsensitiveFiltering: true,
+      buttonContainer: '<div id="select_concepts_button" class="select_button" />',
+      buttonText: function (options, select) {
+        return 'Select Concepts <b class="caret"></b>';
+      }
+    });
+  }
+  else {
+    document.getElementById('select_concepts').style.display = "none";
+  }
   
   $('#select_columns').multiselect('destroy');
   $('#select_columns').multiselect({
@@ -1131,7 +1192,10 @@ function applyFilter()
    * one taxon has been selected */
   if (tlist.length == 0) {
     tlist = Object.keys(WLS['taxa']);
-    $('#select_doculects').multiselect('select',tlist);
+    
+    if (CFG['tc_status'] != 'not' && CFG['tc_status'] != 'notc') {
+      $('#select_doculects').multiselect('select',tlist);
+    }
   }
   var trows = [];
   for (var i=0,taxon; taxon=tlist[i]; i++) {
@@ -1150,7 +1214,11 @@ function applyFilter()
   /* make sure list is not empty to avoid that nothing is selected */
   if (clist.length == 0) {
     clist = Object.keys(WLS.concepts);
-    $('#select_concepts').multiselect('select',clist);
+    
+    
+    if (CFG['tc_status'] != 'noc' && CFG['tc_status'] != 'notc') {
+      $('#select_concepts').multiselect('select',clist);
+    }
   }
 
   var crows = [];
@@ -1281,6 +1349,19 @@ function applyFilter()
   else {
     WLS['rows'] = rows.sort(function(x, y) {return x - y;});
   }
+
+  /* check if there are empty fields and prevent displaying them */
+  //if (CFG['tc_status'] == 'not') {
+  //  document.getElementById('select_doculects').parentNode.style.display = 'none';
+  //}
+  //else if (CFG['tc_status'] == 'noc') {
+  //  document.getElementById('select_concepts').style.display = 'none';
+  //}
+  //else if (CFG['tc_status'] == 'notc') {
+  //  document.getElementById('select_doculects').style.display = 'none';
+  //  document.getElementById('select_concepts').style.display = 'none';
+  //}
+
 }
 
 /* filter the columns in the data */
