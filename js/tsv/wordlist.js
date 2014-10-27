@@ -1087,7 +1087,7 @@ function modifyEntry(event, idx, jdx, xvalue) {
   if (reset_format) {
     var start = '';
     var cclass = 'd1';
-    var cogids = document.getElementsByClassName('COGID');
+    var cogids = document.getElementsByClassName(CFG['formatter']);
     for (var i=0,cogid; cogid=cogids[i]; i++) {
       if (cogid.dataset.value != start) {
         start = cogid.dataset.value;
