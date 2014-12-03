@@ -12,7 +12,13 @@ var ALIGN = {};
 ALIGN.ALMS = [];
 ALIGN.TAXA = [];
 ALIGN.UDX = [];
+ALIGN.SEQS = [];
 
+ALIGN.initialize = function(seqs) {
+  for (var i=0; i<seqs.length; i++) {
+    ALIGN.SEQS.push(seqs[i]);
+  }
+}
 ALIGN.normalize = function(alms) {
   /* function normalizes an alignment by adding gaps so that all strings
    * are of equal length */
@@ -237,6 +243,7 @@ ALIGN.destroy_alignment = function()
   ALIGN.ALMS = [];
   ALIGN.UDX = [];
   ALIGN.TAXA = [];
+  ALIGN.SEQS = [];
 }
 
 ALIGN.addGap = function (idx,jdx) {
@@ -361,4 +368,11 @@ ALIGN.refresh = function(idx) {
   txt = ALIGN.make_table(ALIGN.TAXA, ALIGN.ALMS);
 
   document.getElementById(idx).innerHTML = txt;
+}
+
+ALIGN.align = function() {
+  
+  var alms = scalign(ALIGN.SEQS);
+  ALIGN.ALMS = alms;
+  ALIGN.refresh();
 }

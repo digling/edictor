@@ -1692,6 +1692,14 @@ function editGroup(event,idx) {
     return;
   }
 
+  /* check for sequence index */
+  if (WLS.header.indexOf('TOKENS') != -1) {
+    var seq_idx = WLS.header.indexOf('TOKENS');
+  }
+  else if (WLS.header.indexOf('IPA') != -1) {
+    var seq_idx = WLS.header.indexOf('IPA');
+  }
+
   var editmode = document.createElement('div');
   editmode.id = 'editmode';
   editmode.className = 'editmode';
@@ -1704,6 +1712,7 @@ function editGroup(event,idx) {
   CFG['_current_alms'] = [];
   CFG['_current_taxa'] = [];
   CFG['_current_idx'] = rows;
+  CFG['_current_seqs'] = [];
 
   /* now create an alignment object */
   for (var i=0,r;r=rows[i];i++) {
@@ -1715,6 +1724,18 @@ function editGroup(event,idx) {
     /* add stuff to temporary container for quick alignment access */
     CFG['_current_alms'].push(current_line.split(' '));
     CFG['_current_taxa'].push(WLS[r][CFG['_tidx']]);
+
+    /* add sequence data to allow for automatic alignment */
+    var this_seq = WLS[r][seq_idx];
+    if (!this_seq) {
+      var this_seq = current_line;
+    }
+    if (this_seq.indexOf(' ') == -1) {
+      CFG['_current_seqs'].push(this_seq.split());
+    }
+    else {
+      CFG['_current_seqs'].push(this_seq.split(' '));
+    }
 
     var alm = plotWord(current_line);
     var lang = WLS[r][CFG['_tidx']];
@@ -1738,6 +1759,7 @@ function editGroup(event,idx) {
   text += '</table></div>';
   text += '<div class="submitline">';
   text += '<input class="btn btn-primary submit" type="button" onclick="editAlignment()" value="EDIT" /> ';
+  text += '<input class="btn btn-primary submit" type="button" onclick="automaticAlignment()" value="ALIGN" /> ';
   text += '<input id="submit_alignment" class="btn btn-primary submit hidden" type="button" onclick="storeAlignment()" value="SUBMIT" /> '; 
   text += '<input class="btn btn-primary submit" type="button" onclick="saveAlignment('+idx+')" value="EXPORT" /> ';
   text += '<input class="btn btn-primary submit" type="button" onclick="ALIGN.destroy_alignment();$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /></div><br><br> ';
@@ -1753,6 +1775,16 @@ function editGroup(event,idx) {
   };
 
   $('#editlinks').draggable({handle:'.main_handle'}).resizable();
+}
+
+/* function creates and alignment of the current alignments */
+function automaticAlignment() {
+  /* simply align the stuff first */
+  var alms = scalign(CFG['_current_seqs']);
+  ALIGN.ALMS = alms;
+  ALIGN.TAXA = CFG['_current_taxa'];
+  ALIGN.refresh();
+  $('#submit_alignment').removeClass('hidden');
 }
 
 /* function creates and ALIGN object for editing alignments in text */
