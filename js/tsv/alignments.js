@@ -370,9 +370,4 @@ ALIGN.refresh = function(idx) {
   document.getElementById(idx).innerHTML = txt;
 }
 
-ALIGN.align = function() {
-  
-  var alms = scalign(ALIGN.SEQS);
-  ALIGN.ALMS = alms;
-  ALIGN.refresh();
-}
+
