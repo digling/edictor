@@ -533,6 +533,20 @@ div.alignments {
   float: left;
   display: block;
 }
+
+table.alignments {
+  font-weight: bold;
+  border: 2px solid #2D6CA2;
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom:5px;
+  margin-left: 5px;
+  margin-right:5px;
+  padding:5px;
+  float: left;
+  display: block;
+}
+
 .submitline {
   display: block;
   clear: both;
@@ -547,6 +561,33 @@ div.alignments {
   text-align: left;
   color: #2D6CA2;
 }
+.alm_line {
+  font-weight: bold;
+  display: table-cell;
+  max-width: 100px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+  color: #2D6CA2;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.alm_head {
+	font-weight: bold;
+	display: table-cell;
+	padding: 5px;
+	color: white;
+	background-color: #2D6CA2;
+}
+
+.alm_bdl {
+	border-left: 2px solid #2D6CA2;
+}
+.alm_bdr {
+	border-right: 2px solid #2D6CA2;
+}
+
 
 #previous {
   //background-repeat: no-repeat;

@@ -188,10 +188,6 @@ function csvToArrays(allText, separator, comment, keyval) {
       columns[data[cIdx].toUpperCase()] = Math.abs(columns[data[cIdx].toUpperCase()]);
       CFG['basics'].push(data[tIdx].toUpperCase());
       CFG['basics'].push(data[cIdx].toUpperCase());
-      
-      console.log('TIDX',tIdx);
-      console.log('CIDX',cIdx);
-      console.log('columns:',columns);
     }
     /* handle cases where no ID has been submitted */
     else if (firstLineFound == false) {
@@ -1572,19 +1568,6 @@ function getDate(with_seconds) {
     today += '.'+secs;
   }
   return today;
-}
-
-/* function inserts unique ids for unassigned cognate sets */
-function cognateIdentifier(cogid) {
-  if (isNaN(parseInt(cogid))) {
-    var etym_len = Object.keys(WLS.etyma).length;
-    for (var i=1; i < etym_len+1; i++) {
-      if (!(i in WLS.etyma)) {
-        return i;
-      }
-    }
-  }
-  return cogid;
 }
 
 /* highlight all IPA entries which are specified as such */

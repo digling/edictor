@@ -1,0 +1,28 @@
+<!--
+
+Cognate settings
+
+author   : Johann-Mattis List
+email    : mattis.list@lingulist.de
+created  : 2014-12-18 14:23
+modified : 2014-12-18 14:23
+
+-->
+<span class="main_handle pull-left"></span>
+<button type="button" onclick="$('#toggle_cognates > span').toggle(); $('#cognates').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+<div class="btn-group" style="display:block;margin-bottom:10px;">
+  <select class="multiselect" multiple id="cognates_select_concepts" title="Select concepts">
+  </select>
+  <!--<select class="multiselect" multiple id="cognates_select_cognates" title="Select cognates">
+    </select>-->
+  <button class="btn-primary submit3" onclick="display_cognates()">OK</button>
+</div>
+
+<p id="cognates_description"></p>
+<div id="cognates_table" class="pull-left" style="display:block"></div>
+<br>
+<div class="btn-group pull-left">
+  <button class="btn-primary submit3" title="Assign new cognate IDs to selected words." onclick="assign_new_cogid();">NEW</button>
+  <button class="btn-primary submit3" title="Combine cognate IDs of selected words." onclick="combine_cogids();">COMBINE</button>
+</div>
