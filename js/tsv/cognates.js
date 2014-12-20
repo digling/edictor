@@ -73,7 +73,16 @@ function display_cognates() {
     var doc = WLS[idx][CFG['_tidx']];
     var con = WLS[idx][CFG['_cidx']];
     
-    var tkl = tks.replace(/\s*\(\s|\s\)\s*/,'').split(' ').length;
+    /* retrieve length of tokens, current solution is not very economic,
+     * but it seems to suffice here for the time being */
+    var tkl = tks.split(' ');
+    var brackets = 0;
+    for (var j=0;j<tkl.length; j++) {
+      if (tkl[j] == '(' || tkl[j] == ')'){
+	brackets += 1;
+      }
+    }
+    tkl = tkl.length - brackets;
     if (tkl > maxlen) {maxlen = tkl}
     
     data.push([idx,doc,con,cid,tks]);
