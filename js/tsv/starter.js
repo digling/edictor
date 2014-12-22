@@ -60,16 +60,17 @@ function startWordlist() {
   }
 }
 
-function toggleDiv(divid) {
-  var divo = document.getElementById(divid);
-  if (divo.style.display != 'none') {
-    divo.style.display = 'none';
-  }
-  else {
-    divo.style.display = 'block';
-  }
-}
+//->function toggleDiv(divid) {
+//->  var divo = document.getElementById(divid);
+//->  if (divo.style.display != 'none') {
+//->    divo.style.display = 'none';
+//->  }
+//->  else {
+//->    divo.style.display = 'block';
+//->  }
+//->}
 
+/* handle key events */
 function basickeydown (event) {
   /* CTRL + I */
   if (event.keyCode == 73 && event.ctrlKey) {
@@ -167,6 +168,7 @@ function basickeydown (event) {
 
 document.onkeydown = function(event){basickeydown(event);};
 
+/* undo redo manager */
 function UnDo() {
   undoManager.undo();
   var idx = undoManager.getindex();
@@ -188,6 +190,8 @@ function UnDo() {
     $('#redo').addClass('hidden');
   }  
 }
+
+/* undo redo manager */
 function ReDo() {
   undoManager.redo();
   var idx = undoManager.getindex();
@@ -214,7 +218,7 @@ function ReDo() {
  * which are loaded if the user selects them 
  */
 function handleAjax (event, url) {
-  
+
   if (url == 'url') {
     url = document.getElementById('ajaxfile').value;
   }
@@ -228,6 +232,9 @@ function handleAjax (event, url) {
       return;
     }
   }
+
+
+
 
   /* reset whole process in case this is not the first time the stuff
    * stuff is loaded */
@@ -243,7 +250,7 @@ function handleAjax (event, url) {
     CFG['storable'] = true;
   }
 
-  console.log(new_url);
+  //->console.log(new_url);
 
   /* we set the filename as the same as the url */
   localStorage.filename = url;
@@ -310,7 +317,7 @@ $.ajax({
 });
 
 function getDataBases() {
-  console.log("Loading database");
+  //->console.log("Loading database");
   $.ajax({
         async: false,
         type: "GET",
@@ -341,11 +348,13 @@ if (document.URL.indexOf('=') != -1) {
   }
   PARAMS = params;
   reset();
-
+    
   if (CFG.server_side_files.indexOf(params['file']) != -1) {
     handleAjax("event",params['file']);
     try {
       showWLS(1);
+      toggleDisplay('','filedisplay');
+      $('#textfields').show();
     }
     catch (e) {
       $('#view').css('display','block');
@@ -354,8 +363,9 @@ if (document.URL.indexOf('=') != -1) {
   else if('file' in params) {
     handleAjax("event", params['file']);
     try {
-      $('#toggle_filedisplay > span').toggle();
+      toggleDisplay('','filedisplay');
       showWLS(1);
+      $('#textfields').show();
     }
     catch (e) {
       $('#view').css('display', 'block');
@@ -571,7 +581,9 @@ function showSpinner(code) {
 /* a simple helper function for those cases where no ajax load will create the elements
  * in our file display */
 function toggleDisplay(event,elm_id) {
-  event.preventDefault();
+  if (typeof event != 'string') {
+    event.preventDefault();
+  }
   $('#'+elm_id).toggle();
   $('#toggle_'+elm_id+'>span').toggle();  
 }
@@ -600,4 +612,4 @@ $(function() {
 
 $('.colx').addClass('ui-helper-clearfix');
 
-$(window).load(function(){$("#popup_background").fadeOut("slow");});
+$(window).load(function(){$("#popup_background").fadeOut("fast");});

@@ -322,7 +322,8 @@ ul.nav
 }
 #menu {
   display:block;
-  overflow:hidden;
+  position: relative;
+  clear:both;
   border: 2px solid #2D6CA2;
   margin-top: 20px;
   margin-left: 5px;
@@ -332,6 +333,7 @@ ul.nav
   padding-right:25px;
   padding-top:10px;
   border-radius:5px;
+  min-height: 150px;
 }
 .drop_zone_start {
   margin-top: 10px;
@@ -483,17 +485,17 @@ tr.d2 td {
 }
 
 .editmode {
-	position: fixed;
-	background-color: rgba(0,0,0,0.5);
-	z-index: 1;
-	top:0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	width: 100%;
-	height: 100%;
-	float: left;
-	text-align:center;
+  position: fixed;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1040;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  float: left;
+  text-align:center;
   overflow: auto;
 }
 
@@ -505,15 +507,12 @@ tr.d2 td {
   left:0;
   right:0;
   background-color: Crimson;
-  //background-color: white;
-  //border: 2px solid #2D6CA2;
   border: 2px solid white;
   text-align:center;
   display: table;
   border-radius:5px;
 }
 .edit_links p {
-  //color: #2D6CA2;
   color: white;
   font-weight: bold;
   padding-right: 10px;
@@ -523,7 +522,6 @@ tr.d2 td {
 div.alignments {
   font-weight: bold;
   border: 2px solid #2D6CA2;
-  //border: 2px solid white;
   background-color: white;
   border-radius: 5px;
   margin-bottom:5px;
@@ -725,7 +723,7 @@ table.alignments {
 
 .popup_background{
 	position: fixed;
-	z-index: 100;
+	z-index: 2000;
 	top:0;
 	left: 0;
 	right: 0;

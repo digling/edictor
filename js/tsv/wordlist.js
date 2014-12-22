@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2014-10-27 15:49
+ * modified : 2014-12-22 14:16
  *
  */
 
@@ -25,7 +25,7 @@ function reset() {
     'highlight': ['TOKENS','ALIGNMENT'],
     'sampa' : ['IPA','TOKENS'],
     'pinyin' : ['CHINESE'],
-    'css': ["menu:show","textfields:hide","database:hide"],
+    'css': ["menu:show","database:hide"],
     'status' : {},
     'server_side_files' : [],
     'server_side_bases' : [],
@@ -59,7 +59,6 @@ function reset() {
     }
   }
   
-  $('#filedisplay').css('display','none');
 }
 
 /* the wordlist object */
@@ -78,7 +77,7 @@ var CFG = {
   'highlight'         : ['TOKENS','ALIGNMENT'],
   'sampa'             : ['IPA','TOKENS'],
   'pinyin'            : ['CHINESE'],
-  'css'               : ["menu:show","textfields:hide","database:hide"],
+  'css'               : ["menu:show","database:hide"],
   'status'            : {},
   'server_side_files' : [],
   'server_side_bases' : [],
@@ -86,15 +85,18 @@ var CFG = {
   'last_time' : false,
   'parsed' : false
 };
+
 var STORE = ''; // global variable to store the text data in raw format
 var PARAMS = {};
 
-/* function for resetting the formatter */
+/* function for resetting the formatter, that is the basic column that handles
+ * what is treated as a cognate or not */
 function resetFormat(value) {
 
   if (!value) {
     CFG['formatter'] = false;
     WLS['etyma'] = [];
+    CFG['_fidx'] = false;
   }
   else {
     var size = 0;
@@ -114,9 +116,8 @@ function resetFormat(value) {
       }
     }
     WLS['etyma'] = format_selection;
-    console.log("Etyma:",WLS['etyma'])
+    CFG['_fidx'] = WLS.header.indexOf(CFG['formatter']);
   }
-  //showWLS(getCurrent());
 }
 
 /* load qlc-file */
@@ -230,19 +231,6 @@ function csvToArrays(allText, separator, comment, keyval) {
         }
       }
 
-      /* get the header */
-      //var header = [];
-      //for (j = 0; j < data.length; j++) {
-      //  var datum = data[j].toUpperCase();
-      //  header.push(datum);
-      //  if (ALIAS['doculect'].indexOf(datum) != -1) {
-      //    tIdx = j;
-      //  }
-      //  if (datum == 'GLOSS' || datum == 'CONCEPT') {
-      //    cIdx = j;
-      //  }
-      //  columns[datum] = j+1;
-      //}
       /* apply check for tidx and cidx */
       if (tIdx == -1 && cIdx == -1) {tIdx = 1;cIdx = 2; CFG['tc_status'] = 'notc'}
       else if (cIdx == -1 && tIdx > 1) {cIdx = 1; CFG['tc_status'] = 'noc' }
@@ -256,11 +244,10 @@ function csvToArrays(allText, separator, comment, keyval) {
       CFG['basics'].push(data[tIdx].toUpperCase());
       CFG['basics'].push(data[cIdx].toUpperCase());
 
-      console.log('TIDX',tIdx);
-      console.log('CIDX',cIdx);
-      console.log('columns:',columns);
+      //->console.log('TIDX',tIdx);
+      //->console.log('CIDX',cIdx);
+      //->console.log('columns:',columns);
     }
-    //else if (data[0].charAt(0) == comment || data[0] == '') {}
     else if (firstLineFound) {
       if (!noid) {
         var idx = parseInt(data[0]);
@@ -290,7 +277,6 @@ function csvToArrays(allText, separator, comment, keyval) {
       selection.push(idx);
     }
   }
-  // check whether or not we need this sorting mode, maybe we can as well get rid of it
   
   /* create a concept - id converter and vice versa for various purposes */
   var c2i = {};
@@ -300,7 +286,6 @@ function csvToArrays(allText, separator, comment, keyval) {
     c2i[c] = count;
     count += 1;
   }
-  
 
   WLS = qlc;
   WLS['header'] = header;
@@ -315,34 +300,53 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS['c2i'] = c2i;
   
   /* ! attention here, this may change if no ids are submitted! */
-  CFG['_tidx'] = tIdx-1;
-  CFG['_cidx'] = cIdx-1;
+  CFG['_tidx'] = tIdx-1; // index of taxa
+  CFG['_cidx'] = cIdx-1; // index of concepts
   CFG['parsed'] = true;
 
-  /* add formatting options for all "ID" headers to the data */
+  /* add formatting options for all "ID" headers to the data, this is important
+   * to make sure that cognate ids can be handled as such */
   var formatter = document.getElementById('formatter');
   var tmp_text = '<th>Formatter</th><td>';
-  var tmp_count = 0;
-  var this_key = false;
-  for (var key in WLS['columns']) {
-    if (key.indexOf('ID') - key.length == -2 && tmp_count == 0 && key != CFG['formatter']) {
-      tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+key+'">'+key+' ';
-      this_key = key;
-      tmp_count += 1;
+
+  /* first get all id headers into an array */
+  var formattable_keys = [];
+  for (key in WLS['columns']) {
+    if (key.indexOf('ID') == key.length -2) {
+      formattable_keys.push(key);
     }
-    else if (key.indexOf('ID') - key.length == -2 && CFG['formatter'] != key) {
+  }
+
+  /* check for cogid or glossid first */
+  if (formattable_keys.indexOf('COGID') != -1) {
+    CFG['formatter'] = 'COGID';
+  }
+  else if (formattable_keys.indexOf('GLOSSID') != -1) {
+    CFG['formatter'] = 'GLOSSID';
+  }
+  else if (formattable_keys.length > 0){
+    CFG['formatter'] = formattable_keys[0];
+  }
+  else {
+    CFG['formatter'] = false;
+  }
+
+  /* add cognate index to CFG as "_fidx" if formatter is found */
+  if (CFG['formatter']) {CFG['_fidx'] = WLS.columns[CFG['formatter']];}
+
+  for (var k=0,key; key=formattable_keys[k]; k++) {
+    if (key != CFG['formatter']) {
       tmp_text += '<input onchange="resetFormat(this.value)" type="radio" name="formatter" value="'+key+'">'+key+' ';
-      tmp_count += 1;
     }
-    else if (key == CFG['formatter']) {
+    else {
       tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+key+'">'+key+' ';
-      tmp_count += 1;
-      this_key = CFG['formatter'];
     }
   }
   tmp_text += '<input onchange="resetFormat(false)" type="radio" name="formatter" value="">FALSE ';
-  if (tmp_count > 0) {
-    resetFormat(this_key);
+  
+  /* reset the format to the currently chosen formatting option */
+  if (CFG['formatter']) {
+    resetFormat(CFG['formatter']);
     formatter.innerHTML = tmp_text + '</td>';
     formatter.style.display = "table-row";
   }
@@ -361,7 +365,7 @@ function createSelectors() {
    * in the data passed to the app. If they are missing, we shouldn't bother 
    * displaying the stuff */
   if (CFG['tc_status'] != 'not' && CFG['tc_status'] != 'notc') {
-    console.log('creating columns');
+    //->console.log('creating columns');
     var did = document.getElementById('select_doculects');
     var doculects = Object.keys(WLS.taxa);
     doculects.sort();
@@ -389,7 +393,7 @@ function createSelectors() {
   var columns = Object.keys(WLS.columns);
   columns.sort();
   txt = '';
-  console.log(columns);
+  //->console.log(columns);
 
   for (var i=0,column; column=columns[i]; i++) {
     if (WLS.columns[column] > 0) {
@@ -453,12 +457,11 @@ function createSelectors() {
     }
   });
   
-  $('#textfields').toggle();
-
 }
 
+/* major function for displaying the Wordlist panel of the Edictor */
 function showWLS(start)
-{ 
+{
 
   if (!CFG['parsed']) {
     if (CFG['storable']) {
@@ -552,7 +555,7 @@ function showWLS(start)
   if (CFG['formatter']) {
     var previous_format = '';
     var tmp_class = 'd0';
-    console.log(WLS['rows']);
+    //->console.log(WLS['rows']);
     for (i in WLS['rows'])  {
       var idx = WLS['rows'][i];
       var current_format = WLS[idx][WLS['header'].indexOf(CFG['formatter'])];
@@ -690,9 +693,15 @@ function showWLS(start)
 
   toggleClasses(['first','filename','current'],'hidden','unhidden');
   
+  ///* check whether WLS is hidden or not */
+  //if (document.getElementById('filedisplay').style.display != 'none') {
+  //  toggleDisplay('', 'filedisplay');
+  //}
+
+
   document.getElementById('view').style.display = 'none';
   document.getElementById('mainsettings').style.display = 'inline';
-  document.getElementById('filedisplay').style.display = 'block';
+  //document.getElementById('filedisplay').style.display = 'block';
   var fn = document.getElementById('filename');
   fn.innerHTML = '&lt;' + CFG['filename'] + '&gt;';
   highLight();
@@ -1651,7 +1660,6 @@ function editGroup(event,idx) {
     return;
   }
 
-
   /* check for proper values to be displayed for alignment analysis */
   var rows = WLS['etyma'][idx];
 
@@ -1743,7 +1751,7 @@ function editGroup(event,idx) {
   text += '<div class="submitline">';
   text += '<input class="btn btn-primary submit" type="button" onclick="editAlignment()" value="EDIT" /> ';
   text += '<input class="btn btn-primary submit" type="button" onclick="automaticAlignment()" value="ALIGN" /> ';
-  text += '<input id="submit_alignment" class="btn btn-primary submit hidden" type="button" onclick="storeAlignment()" value="SUBMIT" /> '; 
+  text += '<input id="submit_alignment" class="btn btn-primary submit hidden" type="button" onclick="$(\'#popup_background\').show();storeAlignment();$(\'#popup_background\').fadeOut();" value="SUBMIT" /> '; 
   text += '<input class="btn btn-primary submit" type="button" onclick="saveAlignment('+idx+')" value="EXPORT" /> ';
   text += '<input class="btn btn-primary submit" type="button" onclick="ALIGN.destroy_alignment();$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /></div><br><br> ';
   text += '</div> ';
@@ -1818,6 +1826,9 @@ function storeAlignment() {
   CFG['_alignment'] = blobtxt;
 
   resetFormat(CFG['formatter']);
+  if ('_current_concept' in CFG) {
+    display_current_cognate();
+  }
   createSelectors();
   applyFilter();
   showWLS(getCurrent());

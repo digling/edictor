@@ -90,7 +90,7 @@ modified : 2014-09-06 20:21
 		<a id="toggle_cognates" onclick="loadAjax(event, 'sortable', 'cognates', 'smallbox col-sm-8'); handle_cognate_selection();">
 		  <span class="glyphicon glyphicon-remove"></span>
 		  <span class="glyphicon glyphicon-ok" style="display:none"></span>
-		  COGNATES
+		  COGNATE SETS
 		</a>
 	      </li>
               <li>
@@ -190,7 +190,7 @@ modified : 2014-09-06 20:21
 	  <input id="last" type="button" onclick="showWLS(1);$('#last').removeClass('unhidden');$('#last').addClass('hidden');" class="submit hidden" value="&nbsp;LAST&nbsp;" />
 
 	  <div id="mainsettings" class="btn-group pull-right" style="display:none">
-	    <button type="button" title="refresh current dataset" onclick="resetFormat(CFG['formatter']);createSelectors();applyFilter();showWLS(getCurrent());" class="btn-primary mleft btn submit3">
+	    <button type="button" title="refresh current dataset" onclick="resetFormat(CFG['formatter']);createSelectors();applyFilter();showWLS(getCurrent());display_current_cognate();" class="btn-primary mleft btn submit3">
 	      <span class="glyphicon glyphicon-refresh"></span>
 	    </button>
 	    <button class="submit3 btn-primary mleft btn titled" title="Filter data (shortcut [F3])" id="textfieldsettings" onclick="$('#textfields').toggle();">
@@ -216,7 +216,8 @@ modified : 2014-09-06 20:21
 	  </div>
 	  <br>
 	  <!-- FILTERS -->
-	  <div id="textfields" class="pull-left" style="display:none;position:absolute">
+	  <div id="textfields" class="pull-left"
+	    style="display:none;overflow: visible; clear:both;">
 	    <div class="btn-group">
 	      <select class="multiselect" multiple id="select_doculects" title="filter doculects"></select>
 	      <select class="multiselect" multiple id="select_concepts" title="filter concepts"></select>
@@ -230,7 +231,6 @@ modified : 2014-09-06 20:21
 	      <input type="text" class="form-control textfield mleft" style="width:25%;" onkeyup="filterColumnValue(event);" id="filter_all" placeholder="COLUMN = value" />
 	    </div>
 	  </div>
-	  <br>
 	</div>
       </li>
       <!-- MAIN TABLE -->
@@ -288,7 +288,7 @@ modified : 2014-09-06 20:21
       <!-- drop zone and information handling -->
       <li class="colx" style="width:100%">
 	<div class="drop_zone_start" id="eingang">Files are loading, please wait...</div>
-	<div id="view" onclick="$('#toggle_filedisplay > span').toggle(); showWLS(1);" class="view" style="display:none" value="&nbsp;VIEW&nbsp;">
+	<div id="view" onclick="showWLS(1);toggleDisplay(event,'filedisplay');$('#textfields').show();" class="view" style="display:none" value="&nbsp;VIEW&nbsp;">
 	  Open the file.
 	</div>
       </li>

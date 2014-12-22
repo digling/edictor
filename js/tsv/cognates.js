@@ -3,11 +3,18 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-12-18 14:11
- * modified : 2014-12-18 14:11
+ * modified : 2014-12-22 14:16
  *
  */
 
+/* basic handler class that initiates the multiselect and other functionalities
+ * which are later needed for the cognate set panel */
 function handle_cognate_selection() {
+
+  /* check whether formatter is true or not */
+  if (!CFG['formatter']) {
+    return;
+  }
   
   /* get selector */
   var slc = document.getElementById('cognates_select_concepts');
@@ -15,10 +22,11 @@ function handle_cognate_selection() {
   /* retrieve concepts and add them to selection */
   var txt = '';
   for (concept in WLS['concepts']) {
-    txt += '<option value="'+concept+'">'+concept+'</option>';
+    txt += '<option id="concept_'+WLS.c2i[concept]+'" value="'+concept+'">'+concept+'</option>';
   }
   slc.innerHTML = txt;
   slc.options[0].selected = true;
+  CFG['_current_concept'] = slc.options[0].value;
 
   $('#cognates_select_concepts').multiselect({
         disableIfEmtpy: true,
@@ -33,20 +41,47 @@ function handle_cognate_selection() {
         }
       });
 
-  display_cognates();
+  display_cognates(CFG['_current_concept']);
+  document.getElementById('cognates_current_concept').innerHTML = CFG['_current_concept'];
 }
 
 /* function displays all cognates in a table and makes them ready for editing */
-function display_cognates() {
+function display_cognates(concept) {
   
-  /* get the word ids for the selected concepts */
-  var idxs = [];
-  var slc = document.getElementById('cognates_select_concepts');
+  /* if concept is not passed, check for selection */
+  if (typeof concept == 'undefined') {
+    /* get the word ids for the selected concepts */
+    var idxs = [];
+    var slc = document.getElementById('cognates_select_concepts');
+    var all_concepts = [];
 
-  for (var i=0,option; option=slc.options[i]; i++) {
-    if (option.selected) {
-      for (var j=0,idx; idx=WLS['concepts'][option.value][j]; j++) {
-	idxs.push(idx);
+    for (var i=0,option; option=slc.options[i]; i++) {
+      if (option.selected) {
+        for (var j=0,idx; idx=WLS['concepts'][option.value][j]; j++) {
+          idxs.push(idx);
+        }
+	all_concepts.push(option.value);
+      }
+    }
+    if (all_concepts.length > 0) {
+      document.getElementById('cognates_current_concept').innerHTML = all_concepts[0];
+    }
+  }
+  else {
+    idxs = WLS['concepts'][concept];
+
+    /* uncheck and check the options of the multiselect item, note that we don't refresh it here,
+     * since it is much faster to do this "manually" by modifying the items then using the
+     * multiselect.refresh option */
+    var slcs = document.getElementsByClassName('checkbox');
+    for (var k=0,slc; slc=slcs[k]; k++) {
+      console.log('slc',slc,k);
+      var cn = slc.childNodes[0];
+      if (cn.checked && cn.value != concept) {
+	cn.checked = false;
+      }
+      else if (cn.value == concept) {
+	cn.checked = true;
       }
     }
   }
@@ -61,10 +96,10 @@ function display_cognates() {
   var data = [];
   var aidx = WLS.header.indexOf('ALIGNMENT');
   var tidx = WLS.header.indexOf('TOKENS');
-  var cidx = WLS.header.indexOf(CFG['formatter']);
+  var cidx = CFG['_fidx'];
   
   for (var i=0,idx; idx = idxs[i]; i++) {
-    var cid = WLS[idx][WLS.header.indexOf('COGID')];
+    var cid = WLS[idx][cidx];
     
     var tks = WLS[idx][aidx];
     if (!tks) {
@@ -168,6 +203,31 @@ function display_cognates() {
 
 }
 
+function display_previous_cognate() {
+  
+  var ccon = CFG['_current_concept'];
+  var acon = Object.keys(WLS.concepts);
+  var pcon = acon[(acon.indexOf(ccon)-1)];
+  display_cognates(pcon);
+  document.getElementById('cognates_current_concept').innerHTML = pcon;
+  CFG['_current_concept'] = pcon;
+}
+
+function display_next_cognate() {
+
+  var ccon = CFG['_current_concept'];
+  var acon = Object.keys(WLS.concepts);
+  var ncon = acon[(acon.indexOf(ccon)+1)];
+  display_cognates(ncon);
+
+  document.getElementById('cognates_current_concept').innerHTML = ncon;
+  CFG['_current_concept'] = ncon;
+}
+function display_current_cognate() {
+  var ccon = CFG['_current_concept'];
+  display_cognates(ccon);
+}
+
 function get_selected_indices() {
   /* get the word ids for the selected concepts */
   var idxs = [];
@@ -191,6 +251,7 @@ function get_selected_indices() {
   return checked;
 }
 
+/* create a new cognate id for all selected words */
 function assign_new_cogid() {
   
   var checked = get_selected_indices();
@@ -201,12 +262,16 @@ function assign_new_cogid() {
 
   for (var i=0,chk; chk=checked[i]; i++) {
     WLS[chk][cidx] = new_cogid;
+    /* remote store if possible */
+    storeModification(chk, cidx, new_cogid, false);
   }
 
   resetFormat(CFG['formatter']);
   display_cognates();
 }
 
+/* create a new combined cognate id for all cognate sets whose
+ * representatative words are selected */
 function combine_cogids() {
 
   var checked = get_selected_indices();
@@ -226,9 +291,11 @@ function combine_cogids() {
   for (var i=0,chk; chk=checked[i]; i++) {
     var tmp_cogid = parseInt(WLS[chk][cidx]);
     if (visited.indexOf(tmp_cogid) == -1) {
-      console.log(WLS.etyma[tmp_cogid]);
       for (var j=0,idx; idx=WLS.etyma[tmp_cogid][j]; j++) {
 	WLS[idx][cidx] = cogid;
+	
+	/* store remote if possible */
+	storeModification(idx, cidx, cogid, false);
       }
       visited.push(tmp_cogid);
     }
