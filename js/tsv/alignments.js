@@ -3,16 +3,16 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-10-21 12:58
- * modified : 2014-10-22 14:30
+ * modified : 2014-12-23 18:55
  *
  */
-
 
 var ALIGN = {};
 ALIGN.ALMS = [];
 ALIGN.TAXA = [];
 ALIGN.UDX = [];
 ALIGN.SEQS = [];
+ALIGN.LOCKS = [];
 
 ALIGN.initialize = function(seqs) {
   for (var i=0; i<seqs.length; i++) {
@@ -169,7 +169,13 @@ ALIGN.make_table = function (taxa, alms) {
   var txt = '<table id="alignment_table">';
   for (var i=0,taxon; taxon=taxa[i]; i++) {
     txt += '<tr>';
-    txt += '<th class="alm_taxon">'+taxon+'</th>';
+    if (ALIGN.LOCKS.indexOf(i) != -1) {
+      col = 'lightgray';
+    }
+    else {
+      col = 'white';
+    }
+    txt += '<th style="background-color:'+col+';" id="alm_'+i+'" onclick="ALIGN.lock_sequence('+i+')" class="pointed alm_taxon">'+taxon+'</th>';
     txt += this.style(i+1,alms[i]);
     txt += '</tr>';
   }
@@ -192,10 +198,20 @@ ALIGN.make_table = function (taxa, alms) {
 ALIGN.reset_UP = function(idx) {
   if (ALIGN.UDX.indexOf(idx) == -1) {
     ALIGN.UDX.push(idx);
+    ALIGN.UDX.sort();
   }
   else {
-    delete ALIGN.UDX[ALIGN.UDX.indexOf(idx)];
+    ALIGN.UDX.sort();
+    var delidx = ALIGN.UDX.indexOf(idx);
+    var new_udx = [];
+    for (var i=0; i<ALIGN.UDX.length; i++) {
+      if (i != delidx) {
+	new_udx.push(ALIGN.UDX[i]);
+      }
+    }
+    ALIGN.UDX = new_udx;
   }
+  console.log('udx',ALIGN.UDX);
   ALIGN.refresh();
 }
 
@@ -244,18 +260,38 @@ ALIGN.destroy_alignment = function()
   ALIGN.UDX = [];
   ALIGN.TAXA = [];
   ALIGN.SEQS = [];
+  ALIGN.LOCKS = [];
 }
 
 ALIGN.addGap = function (idx,jdx) {
   /* introduce a gap to the left of an aligned sequence */
 
+  /* check whether idx is in locks */
+  var check = ALIGN.LOCKS.indexOf(idx-1);
+  
+  /* we now iterate over all items in locks and give them the 
+   * same treatment as we already settled for the other items 
+   * before. */
+  if (check != -1) {
+    var idxs = ALIGN.LOCKS;
+    //->console.log(ALIGN.LOCKS);
+  }
+  else {
+    var idxs = [idx-1];
+  }
+
   /* determine index of alignment and rebuild the whole stuff with one more gap */
   /* if no unalignable parts are used, this is simple to do */
   if (ALIGN.UDX.length == 0) {
-  
-    var alm = ALIGN.ALMS[idx-1];
-    alm.splice(jdx,0,"-");
-    ALIGN.ALMS[idx-1] = alm;
+
+    for (var i=0; i<idxs.length; i++) {
+      var tdx = idxs[i];
+      var alm = ALIGN.ALMS[tdx];
+      alm.splice(jdx,0,"-");
+      ALIGN.ALMS[tdx] = alm;
+      //->console.log(tdx,alm);
+    }
+
     ALIGN.refresh();
 
     /* note that this method is really, really simple, but it basically works for 
@@ -263,6 +299,7 @@ ALIGN.addGap = function (idx,jdx) {
     * it may, however, show some performance deficits for larger alignments...
     */
   }
+
   /* if we have unalignable parts, we need to keep track of them and insert
    * the gap before the next part starts */
   else {
@@ -277,12 +314,17 @@ ALIGN.addGap = function (idx,jdx) {
         nidx = udx;
       }
     }
-    console.log('ndx',nidx,jdx,ALIGN.UDX, first_idx)
+    //->console.log('ndx',nidx,jdx,ALIGN.UDX, first_idx)
+    /* XXX doesn't work here with the code XXX */
     if (nidx) {
-      var alm = ALIGN.ALMS[idx-1];
-      alm.splice(jdx,0,"-");
+      console.log('addgap,after',ALIGN.UDX,jdx);
+      for (var j=0; j < idxs.length; j++) {
+	var tdx = idxs[j];
+	var alm = ALIGN.ALMS[tdx];
+	alm.splice(jdx,0,'-');
+      }
       for (var i=0,alm; alm=ALIGN.ALMS[i]; i++) {
-        if (i != idx-1) {
+        if (ALIGN.LOCKS.indexOf(i) != -1) {
           alm.splice(nidx,0,'-');
         }
       }
@@ -292,12 +334,19 @@ ALIGN.addGap = function (idx,jdx) {
           ALIGN.UDX[i] += 1;
         }
       }
+      console.log(ALIGN.UDX);
       ALIGN.refresh();
     }
     else {
-      var alm = ALIGN.ALMS[idx-1];
-      alm.splice(jdx, 0, "-");
-      ALIGN.ALMS[idx-1] = alm;
+
+      for (var i=0; i<idxs.length; i++) {
+        var tdx = idxs[i];
+        var alm = ALIGN.ALMS[tdx];
+        alm.splice(jdx,0,"-");
+        ALIGN.ALMS[tdx] = alm;
+        //->console.log(tdx,alm);
+      }
+
       ALIGN.refresh();
     }
   }
@@ -305,16 +354,28 @@ ALIGN.addGap = function (idx,jdx) {
 
 ALIGN.delGap = function (idx,jdx) {
   /* delete a gap from an aligned sequence */
+  var check = ALIGN.LOCKS.indexOf(idx-1);
+  if (check != -1) {
+    var idxs = ALIGN.LOCKS;
+  }
+  else {
+    var idxs = [idx-1];
+  } 
   
   if (ALIGN.UDX.length == 0) {
-    var tmp_alm = ALIGN.ALMS[idx-1];
-    var new_alm = [];
-    for (var k=0,segment; segment=tmp_alm[k]; k++) {
-      if (k != jdx) {
-        new_alm.push(segment);
+
+    /* now we iterate for all items in idxs */
+    for (var j=0; j<idxs.length; j++) {
+      var tdx = idxs[j];
+      var tmp_alm = ALIGN.ALMS[tdx];
+      var new_alm = [];
+      for (var k=0,segment; segment=tmp_alm[k]; k++) {
+	if (k != jdx) {
+	  new_alm.push(segment);
+	}
       }
+      ALIGN.ALMS[tdx] = new_alm;
     }
-    ALIGN.ALMS[idx-1] = new_alm;
     ALIGN.refresh();
   }
   else {
@@ -328,30 +389,40 @@ ALIGN.delGap = function (idx,jdx) {
         nidx = udx;
       }
     }
+    /* XXX doesn't work here with the code XXX */
     if (nidx) {
-      var tmp_alm = ALIGN.ALMS[idx-1];
-      var new_alm = [];
-      for (var i=0,segment; segment=tmp_alm[i]; i++) {
-        if (i+1 == nidx) {
-          new_alm.push(segment);
-          new_alm.push('-');
-        }
-        else if (i != jdx) {
-          new_alm.push(segment);
-        }
+      console.log('delgap,gap-after',ALIGN.UDX,idxs,jdx)
+
+      for (var j=0;j<idxs.length;j++) {
+	var tdx = idxs[j];
+	var tmp_alm = ALIGN.ALMS[tdx];
+	var new_alm = [];
+	for (var i=0,segment; segment=tmp_alm[i]; i++) {
+	  if (i == jdx) {
+	    new_alm.push(segment);
+	    new_alm.push('-');
+	  }
+	  else if (i != jdx) {
+	    new_alm.push(segment);
+	  }
+	}
+	ALIGN.ALMS[tdx] = new_alm;
       }
-      ALIGN.ALMS[idx-1] = new_alm;
       ALIGN.refresh();
     }
     else {
-      var tmp_alm = ALIGN.ALMS[idx-1];
-      var new_alm = [];
-      for (var k=0,segment; segment=tmp_alm[k]; k++) {
-        if (k != jdx) {
-          new_alm.push(segment);
+      console.log('delgap,gap-before',ALIGN.UDX,idxs,jdx)
+      for (var j=0; j<idxs.length; j++) {
+        var tdx = idxs[j];
+        var tmp_alm = ALIGN.ALMS[tdx];
+        var new_alm = [];
+        for (var k=0,segment; segment=tmp_alm[k]; k++) {
+          if (k != jdx) {
+            new_alm.push(segment);
+          }
         }
+        ALIGN.ALMS[tdx] = new_alm;
       }
-      ALIGN.ALMS[idx-1] = new_alm;
       ALIGN.refresh();
     }
   }
@@ -370,4 +441,23 @@ ALIGN.refresh = function(idx) {
   document.getElementById(idx).innerHTML = txt;
 }
 
+/* function locks an alignment and treats all locked sequences as the
+ * same when using the alignment operations */
+ALIGN.lock_sequence = function(i) {
+  var idx = ALIGN.LOCKS.indexOf(i);
+  
+  if (idx == -1) {
+    ALIGN.LOCKS.push(i);
+  }
+  else {
+    var new_lock = [];
+    for (var j=0;j<ALIGN.LOCKS.length; j++) {
+      if (ALIGN.LOCKS[j] != i) {
+	new_lock.push(ALIGN.LOCKS[j]);
+      }
+    }
+    ALIGN.LOCKS = new_lock;
+  }
+  ALIGN.refresh();
+}
 
