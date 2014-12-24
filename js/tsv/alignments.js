@@ -201,17 +201,20 @@ ALIGN.reset_UP = function(idx) {
     ALIGN.UDX.sort();
   }
   else {
+    var alm_len = ALIGN.ALMS[0].length;
     ALIGN.UDX.sort();
     var delidx = ALIGN.UDX.indexOf(idx);
     var new_udx = [];
+    var in_udx = [];
     for (var i=0; i<ALIGN.UDX.length; i++) {
-      if (i != delidx) {
+      if (i != delidx && in_udx.indexOf(ALIGN.UDX[i]) == -1 && ALIGN.UDX[i] < alm_len) {
 	new_udx.push(ALIGN.UDX[i]);
+	in_udx.push(ALIGN.UDX[i]);
       }
     }
     ALIGN.UDX = new_udx;
   }
-  console.log('udx',ALIGN.UDX);
+  //->console.log('udx',ALIGN.UDX);
   ALIGN.refresh();
 }
 
@@ -263,8 +266,8 @@ ALIGN.destroy_alignment = function()
   ALIGN.LOCKS = [];
 }
 
+/* funciton introduces a gap on the left of a segment in an alignment */
 ALIGN.addGap = function (idx,jdx) {
-  /* introduce a gap to the left of an aligned sequence */
 
   /* check whether idx is in locks */
   var check = ALIGN.LOCKS.indexOf(idx-1);
@@ -274,7 +277,7 @@ ALIGN.addGap = function (idx,jdx) {
    * before. */
   if (check != -1) {
     var idxs = ALIGN.LOCKS;
-    //->console.log(ALIGN.LOCKS);
+    //->//->console.log(ALIGN.LOCKS);
   }
   else {
     var idxs = [idx-1];
@@ -289,7 +292,7 @@ ALIGN.addGap = function (idx,jdx) {
       var alm = ALIGN.ALMS[tdx];
       alm.splice(jdx,0,"-");
       ALIGN.ALMS[tdx] = alm;
-      //->console.log(tdx,alm);
+      //->//->console.log(tdx,alm);
     }
 
     ALIGN.refresh();
@@ -314,27 +317,35 @@ ALIGN.addGap = function (idx,jdx) {
         nidx = udx;
       }
     }
-    //->console.log('ndx',nidx,jdx,ALIGN.UDX, first_idx)
+    //->//->console.log('ndx',nidx,jdx,ALIGN.UDX, first_idx)
     /* XXX doesn't work here with the code XXX */
     if (nidx) {
-      console.log('addgap,after',ALIGN.UDX,jdx);
+      //->console.log('addgap,after',ALIGN.UDX,jdx);
+      /* insert gap before the segment */
       for (var j=0; j < idxs.length; j++) {
 	var tdx = idxs[j];
 	var alm = ALIGN.ALMS[tdx];
 	alm.splice(jdx,0,'-');
       }
-      for (var i=0,alm; alm=ALIGN.ALMS[i]; i++) {
-        if (ALIGN.LOCKS.indexOf(i) != -1) {
-          alm.splice(nidx,0,'-');
-        }
+
+      /* insert gap after all other segments */
+      for (var j=0; j < ALIGN.ALMS.length; j++) {
+	if (idxs.indexOf(j) == -1) {
+	  ALIGN.ALMS[j].splice(nidx,0,'-');
+	}
       }
+      //for (var i=0,alm; alm=ALIGN.ALMS[i]; i++) {
+      //  if (ALIGN.LOCKS.indexOf(i) != -1) {
+      //    alm.splice(nidx,0,'-');
+      //  }
+      //}
       for (var i=0; i<ALIGN.UDX.length; i++) {
         var udx = ALIGN.UDX[i];
         if (udx >= nidx) {
           ALIGN.UDX[i] += 1;
         }
       }
-      console.log(ALIGN.UDX);
+      //->console.log(ALIGN.UDX);
       ALIGN.refresh();
     }
     else {
@@ -344,7 +355,7 @@ ALIGN.addGap = function (idx,jdx) {
         var alm = ALIGN.ALMS[tdx];
         alm.splice(jdx,0,"-");
         ALIGN.ALMS[tdx] = alm;
-        //->console.log(tdx,alm);
+        //->//->console.log(tdx,alm);
       }
 
       ALIGN.refresh();
@@ -391,14 +402,24 @@ ALIGN.delGap = function (idx,jdx) {
     }
     /* XXX doesn't work here with the code XXX */
     if (nidx) {
-      console.log('delgap,gap-after',ALIGN.UDX,idxs,jdx)
-
-      for (var j=0;j<idxs.length;j++) {
+      //->console.log('delgap,gap-after',ALIGN.UDX,idxs,jdx)
+      
+      /* check for bad delete position right before the element 
+       * beware that we do not allow to delete an element just
+       * before the end of an alignment, make also sure to append
+       * a new element to fill the shift right before the 
+       * index of the uneditable column */
+      if (nidx - jdx != 1) {
+	for (var j=0;j<idxs.length;j++) {
 	var tdx = idxs[j];
 	var tmp_alm = ALIGN.ALMS[tdx];
 	var new_alm = [];
 	for (var i=0,segment; segment=tmp_alm[i]; i++) {
-	  if (i == jdx) {
+	  //->console.log(segment,i,idx,jdx,nidx);
+	  if (i == jdx-1) {
+	    new_alm.push(segment);
+	  }
+	  else if (i == nidx-1) {
 	    new_alm.push(segment);
 	    new_alm.push('-');
 	  }
@@ -407,11 +428,12 @@ ALIGN.delGap = function (idx,jdx) {
 	  }
 	}
 	ALIGN.ALMS[tdx] = new_alm;
+	}
+	ALIGN.refresh();
       }
-      ALIGN.refresh();
     }
     else {
-      console.log('delgap,gap-before',ALIGN.UDX,idxs,jdx)
+      //->console.log('delgap,gap-before',ALIGN.UDX,idxs,jdx)
       for (var j=0; j<idxs.length; j++) {
         var tdx = idxs[j];
         var tmp_alm = ALIGN.ALMS[tdx];
