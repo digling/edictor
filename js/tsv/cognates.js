@@ -64,9 +64,16 @@ function display_cognates(concept) {
       }
     }
     if (all_concepts.length > 0) {
-      document.getElementById('cognates_current_concept').innerHTML = all_concepts[0];
+      if (all_concepts.length > 1) {
+	document.getElementById('cognates_current_concept').innerHTML = all_concepts[0]+', ...';
+      }
+      else {
+	document.getElementById('cognates_current_concept').innerHTML = all_concepts[0];
+      }
     }
   }
+  /* if cognates is not undefined, we have to change the multiselect options to display what
+   * we really want to see */
   else {
     idxs = WLS['concepts'][concept];
 
@@ -75,13 +82,26 @@ function display_cognates(concept) {
      * multiselect.refresh option */
     var slcs = document.getElementsByClassName('checkbox');
     for (var k=0,slc; slc=slcs[k]; k++) {
-      console.log('slc',slc,k);
+      //->//->console.log('slc',slc,k);
       var cn = slc.childNodes[0];
       if (cn.checked && cn.value != concept) {
 	cn.checked = false;
       }
       else if (cn.value == concept) {
 	cn.checked = true;
+      }
+    }
+
+    /* don't forget to also change the internal options which are not displayed here */
+    var slcs = document.getElementById('cognates_select_concepts');
+    for (var k=0,option; option=slcs.options[k]; k++) {
+      if (option.selected && option.value != concept) {
+	//->console.log(option,option.selected,option.value);
+	option.selected = false;
+      }
+      else if (option.value == concept) {
+	option.selected = true;
+	//->console.log(option.selected,option.value);
       }
     }
   }
@@ -223,11 +243,13 @@ function display_next_cognate() {
   document.getElementById('cognates_current_concept').innerHTML = ncon;
   CFG['_current_concept'] = ncon;
 }
+
 function display_current_cognate() {
   var ccon = CFG['_current_concept'];
   display_cognates(ccon);
 }
 
+/* get the word indices for all currently selected concepts */
 function get_selected_indices() {
   /* get the word ids for the selected concepts */
   var idxs = [];
@@ -240,13 +262,16 @@ function get_selected_indices() {
       }
     }
   }
-
+  
+  
   var checked = [];
   for (var i=0,idx; idx=idxs[i]; i++) {
     if (document.getElementById('cognates_idx_'+idx).checked) {
       checked.push(idx);
     }
   }
+
+  //->console.log(checked);
 
   return checked;
 }
