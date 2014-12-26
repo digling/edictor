@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-10-21 12:58
- * modified : 2014-12-23 18:55
+ * modified : 2014-12-26 15:31
  *
  */
 
@@ -381,7 +381,12 @@ ALIGN.delGap = function (idx,jdx) {
       var tmp_alm = ALIGN.ALMS[tdx];
       var new_alm = [];
       for (var k=0,segment; segment=tmp_alm[k]; k++) {
-	if (k != jdx) {
+	/* not that it is of great importance here to *check* before 
+	 * not appending an element to the new sequence, since we do
+	 * never want to remove segments from an alignment but only 
+	 * gaps when removing a gap, but if we lock sequences, we may
+	 * do that without actually indending it */
+	if (k != jdx || segment != '-') {
 	  new_alm.push(segment);
 	}
       }
@@ -423,7 +428,7 @@ ALIGN.delGap = function (idx,jdx) {
 	    new_alm.push(segment);
 	    new_alm.push('-');
 	  }
-	  else if (i != jdx) {
+	  else if (i != jdx || segment != '-') {
 	    new_alm.push(segment);
 	  }
 	}
@@ -439,7 +444,7 @@ ALIGN.delGap = function (idx,jdx) {
         var tmp_alm = ALIGN.ALMS[tdx];
         var new_alm = [];
         for (var k=0,segment; segment=tmp_alm[k]; k++) {
-          if (k != jdx) {
+          if (k != jdx || segment != '-') {
             new_alm.push(segment);
           }
         }
