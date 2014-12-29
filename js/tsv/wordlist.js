@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2014-12-22 14:16
+ * modified : 2014-12-28 13:29
  *
  */
 
@@ -156,6 +156,7 @@ function csvToArrays(allText, separator, comment, keyval) {
           datum = datum.replace(/_/g,'');
           column_names[datum] = tmp;
           uneditables.push(datum);
+          console.log(datum,column_names,uneditables,tmp);
         }
         else {
           var tmp = datum.replace(/_/g,' ');
@@ -164,6 +165,7 @@ function csvToArrays(allText, separator, comment, keyval) {
         }
 
         header.push(datum);
+        
         if (ALIAS['doculect'].indexOf(datum) != -1) {
           tIdx = j;
         }
@@ -183,12 +185,19 @@ function csvToArrays(allText, separator, comment, keyval) {
       else if (cIdx == -1 && tIdx <= 1 && tIdx > -1) {cIdx = 2; CFG['tc_status'] = 'noc'}
       else if (tIdx == -1 && cIdx > 1) {tIdx = 1; CFG['tc_status'] = 'not' }
       else if (tIdx == -1 && cIdx <= 1 && cIdx > -1) {tIdx = 2; CFG['tc_status'] = 'not'}
-
-      /* append to basics */
-      columns[data[tIdx].toUpperCase()] = Math.abs(columns[data[tIdx].toUpperCase()]);
-      columns[data[cIdx].toUpperCase()] = Math.abs(columns[data[cIdx].toUpperCase()]);
-      CFG['basics'].push(data[tIdx].toUpperCase());
-      CFG['basics'].push(data[cIdx].toUpperCase());
+      else {
+        CFG['tc_status'] = '';
+      }
+      
+      /* append to basics if it is not already defined, but be careful with other stuff */
+      if (CFG['tc_status'].indexOf('t') != -1) {
+        columns[header[tIdx-1]] = Math.abs(columns[header[tIdx-1]]);
+        CFG['basics'].push(header[tIdx-1]);
+      }
+      if (CFG['tc_status'].indexOf('c') != -1) {
+        columns[header[cIdx-1]] = Math.abs(columns[header[cIdx-1]]);
+        CFG['basics'].push(header[cIdx-1]);
+      }
     }
     /* handle cases where no ID has been submitted */
     else if (firstLineFound == false) {
@@ -356,6 +365,10 @@ function csvToArrays(allText, separator, comment, keyval) {
 
   /* create selectors */
   createSelectors();
+
+  /* log basic settings */
+  console.log('WLS:',WLS);
+  console.log('CFG:',CFG);
 }
 
 /* create selectors for languages, concepts, and columns */
@@ -424,7 +437,7 @@ function createSelectors() {
     document.getElementById('select_doculects').style.display = "none";
   }
 
-  /* check again fro concepts */
+  /* check again for concepts */
   if (CFG['tc_status'] != 'noc' && CFG['tc_status'] != 'notc') {
     $('#select_concepts').multiselect({
       disableIfEmpty: true,
@@ -466,7 +479,7 @@ function showWLS(start)
   if (!CFG['parsed']) {
     if (CFG['storable']) {
       CFG['last_time'] = new Date();
-      console.log(CFG.last_time);
+      //->console.log(CFG.last_time);
     }
     csvToArrays(STORE, '\t', '#', '@');
   }
@@ -521,7 +534,7 @@ function showWLS(start)
             }
           }
         }
-        console.log("ShowWls, check updates:",txt);
+        //->console.log("ShowWls, check updates:",txt);
         /* set up new time frame */
         CFG['passed_time'] = now;
       }
@@ -549,8 +562,6 @@ function showWLS(start)
   text += '<tr>';
   text += '<th>ID</th>';
   text += thtext;
-  text += '</tr>';
-
   var count = 1;
   if (CFG['formatter']) {
     var previous_format = '';
@@ -707,7 +718,7 @@ function showWLS(start)
   highLight();
   
   if (CFG['sorted']) {
-    console.log(CFG['sorted']);
+    //->console.log(CFG['sorted']);
     var tmp = CFG['sorted'].split('_');
     document.getElementById('HEAD_'+tmp.slice(1,tmp.length-1).join('_')).style.backgroundColor = 'Crimson';
     //document.getElementById('HEAD_'+CFG['sorted'].split('_').[1]).style.backgroundColor = 'Crimson';
@@ -814,7 +825,7 @@ function addColumn(event)
       if (count >= 800 || i >= keys.length-1) {
 
         var key_count = Object.keys(nmods).length - 2;
-        console.log(key_count);
+        //->console.log(key_count);
 
         $.ajax({
           async: true,
@@ -822,12 +833,12 @@ function addColumn(event)
           type: "POST",
           url: 'triples/update.php',
           success: function(data) {
-            console.log('submitted the data');
+            //->console.log('submitted the data');
             if (data.indexOf('COLUMN') != -1) {
               dataSavedMessage('post', key_count) ;
             }
             else {
-              console.log(data);
+              //->console.log(data);
             }
           },
           error: function() {
@@ -864,7 +875,6 @@ function editEntry(idx, jdx, from_idx, from_jdx)
   if (line == null || typeof line == 'undefined') {
     var ridx = WLS['rows'].indexOf(idx);
     var fidx = WLS['rows'].indexOf(from_idx);
-    //fakeAlert(fidx+' '+ridx);
     if (ridx == -1 && fidx == -1) {
       fakeAlert("Error with the IDs, cannot find the correct indices for "+ridx+" and "+fidx);
       return;
@@ -921,14 +931,26 @@ function editEntry(idx, jdx, from_idx, from_jdx)
     }
     else if (jdx - 1 == WLS['header'].length) {
       jdx = 1;
-      from_jdx = 2;
+      from_jdx = 0;
       editEntry(idx, jdx, from_idx, from_jdx);
       return;
     }
   }
+  
+  /* check for uneditable fields */
+  if (entry.className.indexOf('uneditable') != -1) {
+    //->console.log('checko:',jdx,from_jdx);
+    if (from_jdx > jdx) {
+      editEntry(idx, jdx-1, from_idx, from_jdx);
+    }
+    else if (from_jdx < jdx) {
+      editEntry(idx, jdx+1, from_idx, from_jdx);
+    }
+    return;
+  }
 
+  /* check for hidden columns and skip them if necessary */
   var col = document.getElementById(entry.className);
-
   if (col.style.visibility == 'hidden') {
     if (from_jdx > jdx) {
       editEntry(idx, jdx - 1, from_idx, from_jdx);
@@ -938,11 +960,12 @@ function editEntry(idx, jdx, from_idx, from_jdx)
     }
     return;
   }
-
+  
+  /* now we format the entry and turn it into a text-input field */
   entry.onclick = '';
   var value = entry.dataset.value;
   var size = value.length + 5;
-  var text = '<input class="cellinput" type="text" size="' + size + '" id="modify_' + idx + '_' + jdx + '" value="' + value + '" />';
+  //var text = '<input onblur="unmodifyEntry(\''+idx+'\',\''+jdx+'\',\''+value+'\');" class="cellinput" type="text" size="' + size + '" id="modify_' + idx + '_' + jdx + '" value="' + value + '" />';
 
   var ipt = document.createElement('input');
   ipt.setAttribute('class', 'cellinput');
@@ -950,8 +973,8 @@ function editEntry(idx, jdx, from_idx, from_jdx)
   ipt.setAttribute('id', 'modify_' + idx + '_' + jdx);
   ipt.setAttribute('value', value);
   ipt.setAttribute('data-value', value);
-  ipt.setAttribute('onkeyup', 'modifyEntry(event,' + idx + ',' + jdx + ',this.value)');
   ipt.setAttribute('onblur', 'unmodifyEntry(' + idx + ',' + jdx + ',"' + value + '")');
+  ipt.setAttribute('onkeyup', 'modifyEntry(event,' + idx + ',' + jdx + ',this.value)');
 
 
   ipt.size = size;
@@ -987,6 +1010,8 @@ function autoModifyEntry(idx, jdx, value, current) {
 
 /* function modifies a given entry */
 function modifyEntry(event, idx, jdx, xvalue) {
+  
+  CFG['entry_is_currently_modifying'] = true;
 
   var process = false;
 
@@ -1040,12 +1065,13 @@ function modifyEntry(event, idx, jdx, xvalue) {
   }
   /* unmodify on escape */
   else if (event.keyCode == 27) {
+    CFG['entry_is_currently_modifying'] = false;
     unmodifyEntry(idx, jdx, entry.dataset.value);
     return;
   }
   /* modify on enter */
   else if (event.keyCode != 13) {
-    
+    CFG['entry_is_currently_modifying'] = false; 
     return;
   }
 
@@ -1066,10 +1092,11 @@ function modifyEntry(event, idx, jdx, xvalue) {
   }
 
   var prevalue = entry.dataset.value;
+  
   entry.dataset.value = xvalue;
 
+  entry.innerHTML = xvalue;
   entry.onclick = function() {editEntry(idx, jdx, 0, 0)};
-  entry.innerHTML = xvalue; 
   
   /* check whether the value has been modified, if so, change the underlying
    * entry in the big WLS Object */
@@ -1089,6 +1116,8 @@ function modifyEntry(event, idx, jdx, xvalue) {
   }
   highLight();
   
+  /* reset format means that we change coloration of entries in the 
+   * data representation of the wordlist */
   if (reset_format) {
     var start = '';
     var cclass = 'd1';
@@ -1115,6 +1144,8 @@ function modifyEntry(event, idx, jdx, xvalue) {
     $('#undo').removeClass('unhidden');
     $('#undo').addClass('hidden');
   }
+
+  CFG['entry_is_currently_modifying'] = false;
 }
 
 /* function stores (if possible) a given modification in the project's triple store */
@@ -1127,7 +1158,7 @@ function storeModification(idx, jdx, value, async) {
    * make the modifying ajax-call to ensure that the data has been edited 
    * and stored */
   if (CFG['storable']) {
-    console.log('encountered storable stuff');
+    //->console.log('encountered storable stuff');
 
     /* create url first */
     var new_url = 'triples/update.php?' + 
@@ -1164,6 +1195,11 @@ function storeModification(idx, jdx, value, async) {
 /* revert a given entry to its original value */
 function unmodifyEntry(idx, jdx, xvalue)
 {
+  /* check whether key is currently modified to prevent that the onblur-event 
+   * pre-catches the real modifying event */
+  if (CFG['entry_is_currently_modifying']) {
+    return;
+  }
   var entry = document.getElementById('L_' + idx).cells[jdx];
   var value = xvalue; //entry.innerText;
   entry.onclick = function() {editEntry(idx, jdx, 0, 0)};
@@ -1344,7 +1380,7 @@ function applyFilter()
   var rows = intersection_destructive(trows, crows);
   rows = intersection_destructive(rows, arows);
 
-  console.log('applyFilter6:',rows);
+  //->console.log('applyFilter6:',rows);
 
   if (rows.length < 1) {
     fakeAlert("No entries matching your filter criteria could be found. All filters will be reset.");
@@ -1782,7 +1818,7 @@ function automaticAlignment() {
 function editAlignment() {
   ALIGN.ALMS = CFG['_current_alms'];
   ALIGN.TAXA = CFG['_current_taxa'];
-  console.log('alms',ALIGN.ALMS);
+  //->console.log('alms',ALIGN.ALMS);
   ALIGN.refresh();
 
   /* toggle visibility of submit button */
@@ -1916,7 +1952,7 @@ function showPhonology (event, doculect, sort, direction) {
     direction = 1;
   }
   
-  console.log(doculect);
+  //->console.log(doculect);
 
   /* create an object in which the data will be stored */
   var occs = {};
@@ -2009,7 +2045,7 @@ function showPhonology (event, doculect, sort, direction) {
     /* create concepts */
     var concepts = [];
     var cids = [];
-    console.log('c2i',WLS.c2i);
+    //->console.log('c2i',WLS.c2i);
     for (var j=0,idx; idx=keys[j]; j++) {
       var concept = WLS[idx][c];
       if (concepts.indexOf(concept) == -1) {
