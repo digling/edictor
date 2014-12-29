@@ -474,6 +474,18 @@ ul.nav
   float: left;
   border-radius: 5px;
 }
+#cognates {
+  border: 2px solid #2D6CA2;
+  margin: 5px;
+  padding-left:25px;
+  padding-right:25px;
+  padding-top:10px;
+  padding-bottom:25px;
+  overflow:hidden;
+  float: left;
+  border-radius: 5px;
+
+}
 tr.d1 td {
   background-color:#e0e6f8;
 }
@@ -559,10 +571,11 @@ table.alignments {
   text-align: left;
   color: #2D6CA2;
 }
+
 .alm_line {
   font-weight: bold;
   display: table-cell;
-  max-width: 100px;
+  max-width: 250px;
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: left;
@@ -572,11 +585,11 @@ table.alignments {
 }
 
 .alm_head {
-	font-weight: bold;
-	display: table-cell;
-	padding: 5px;
-	color: white;
-	background-color: #2D6CA2;
+  font-weight: bold;
+  display: table-cell;
+  padding: 5px;
+  color: white;
+  background-color: #2D6CA2;
 }
 
 .alm_bdl {
