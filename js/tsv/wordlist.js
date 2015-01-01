@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2014-12-28 13:29
+ * modified : 2015-01-01 16:22
  *
  */
 
@@ -374,6 +374,21 @@ function csvToArrays(allText, separator, comment, keyval) {
 /* create selectors for languages, concepts, and columns */
 function createSelectors() {
   
+  /* check first if the selectors have been created already, if so, destroy them */
+  var doculect_button = document.getElementById('select_doculects_button');
+  if (typeof doculect_button != 'undefined') {
+    $('#select_doculects').multiselect('destroy');
+  }
+  var concepts_button = document.getElementById('select_concepts_button');
+  if (typeof doculect_button != 'undefined') {
+    $('#select_concepts').multiselect('destroy');
+  }
+  var columns_button = document.getElementById('select_columns_button');
+  if (typeof doculect_button != 'undefined') {
+    $('#select_columns').multiselect('destroy');
+  }
+
+  
   /* fro taxa and concepts, we should check whether they are actually 
    * in the data passed to the app. If they are missing, we shouldn't bother 
    * displaying the stuff */
@@ -703,12 +718,6 @@ function showWLS(start)
   current.innerHTML = 'Showing ' + start + ' - ' + following + ' of ' + parseInt(WLS['rows'].length) + ' entries';
 
   toggleClasses(['first','filename','current'],'hidden','unhidden');
-  
-  ///* check whether WLS is hidden or not */
-  //if (document.getElementById('filedisplay').style.display != 'none') {
-  //  toggleDisplay('', 'filedisplay');
-  //}
-
 
   document.getElementById('view').style.display = 'none';
   document.getElementById('mainsettings').style.display = 'inline';
@@ -1473,6 +1482,13 @@ function handleFileSelect(evt)
 
   var fn = document.getElementById('filename');
   fn.innerHTML = '&lt;' + CFG['filename'] + '&gt;';
+  
+  /* toggle display if the wordlist is not hidden */
+  var fd = document.getElementById('filedisplay');
+  console.log('fdstart',fd.style.display);
+  if (fd.style.display != 'none' && fd.style.display != ''){
+    toggleDisplay(evt, 'filedisplay');
+  }
 }
 
 /* this function actually writes the whole wordlist to file, so it does 
@@ -1911,8 +1927,12 @@ function dataSavedMessage(what, howmuch) {
 /* function redefines the filters for phonological data */
 function filterOccurrences(doculect, occurrences) {
 
-  $('#select_doculects').multiselect('deselectAll',false); //'deselect', Object.keys(WLS.taxa));
-  $('#select_doculects').multiselect('select',doculect);
+  /* if doculect is set to false, we leave the doculects in our filter
+   * untouched */
+  if (doculect) {
+    $('#select_doculects').multiselect('deselectAll',false); //'deselect', Object.keys(WLS.taxa));
+    $('#select_doculects').multiselect('select',doculect);
+  }
   
   var concepts = [];
   occurrences = occurrences.split(',');

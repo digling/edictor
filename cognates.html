@@ -5,28 +5,28 @@ Cognate settings
 author   : Johann-Mattis List
 email    : mattis.list@lingulist.de
 created  : 2014-12-18 14:23
-modified : 2014-12-22 15:28
+modified : 2015-01-01 16:21
 
 -->
 <span class="main_handle pull-left"></span>
 <button type="button" onclick="$('#toggle_cognates > span').toggle(); $('#cognates').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 
-<div class="btn-group" style="display:block">
-  <div class="btn-group pull-left" style="margin-bottom:10px;margin-right:10px;">
+<p id="cognates_description" style="text-align:left;float:left;"></p>
+
+<div style="display:block">
+  <div class="btn-group" style="margin-bottom:10px;margin-right:10px;">
     <select class="multiselect" multiple id="cognates_select_concepts" title="Select concepts">
     </select>
-    <button class="btn-primary submit3" onclick="display_cognates()">OK</button>
-    <button class="btn-primary submit3" onclick="display_previous_cognate()">←</button>
-    <button id="cognates_current_concept" class="btn-primary submit3" onclick="display_current_cognate()"></button>
-    <button class="btn-primary submit3" onclick="display_next_cognate()">→</button>
+    <button class="btn btn-primary mright submit3" onclick="display_cognates()">OK</button>
+    <button class="btn btn-primary mright submit3" onclick="display_previous_cognate()">←</button>
+    <button id="cognates_current_concept" class="btn btn-primary mright submit3" onclick="display_current_cognate()"></button>
+    <button class="btn btn-primary mright submit3" onclick="display_next_cognate()">→</button>
   </div>
   <div class="btn-group pull-right">
-    <button class="btn-primary submit3" title="Assign new cognate IDs to selected words." onclick="$('#popup_background').show();assign_new_cogid();$('#popup_background').fadeOut();">NEW</button>
-    <button class="btn-primary submit3" title="Combine cognate IDs of selected words." onclick="$('#popup_background').show();combine_cogids();$('#popup_background').fadeOut();">COMBINE</button>
+    <button class="btn btn-primary mleft submit3" title="Assign new cognate IDs to selected words." onclick="$('#popup_background').show();assign_new_cogid();$('#popup_background').fadeOut();">NEW</button>
+    <button class="btn btn-primary mleft submit3" title="Combine cognate IDs of selected words." onclick="$('#popup_background').show();combine_cogids();$('#popup_background').fadeOut();">COMBINE</button>
   </div>
 </div>
-
-<p id="cognates_description"></p>
 <div id="cognates_table" class="pull-left" style="display:block"></div>
 <br>
 <br>

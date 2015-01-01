@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-09-03 13:40
- * modified : 2014-09-06 20:24
+ * modified : 2015-01-01 13:38
  *
  */
 
@@ -27,16 +27,17 @@ function startWordlist() {
 
   try {
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
-
-    if (typeof localStorage.text == 'undefined'){}
-    else {
-      STORE = localStorage.text;
-      $("#last").show();
-      var last = document.getElementById('last');
-      last.value = "VIEW "+"<"+localStorage.filename+">";
-      document.getElementById('filename').innerHTML = '<'+localStorage.filename+'>';
-      CFG['filename'] = localStorage.filename;
-    }
+    
+    /* let's get rid of local storage, we never really needed it ! */
+    //if (typeof localStorage.text == 'undefined'){}
+    //else {
+    //  STORE = localStorage.text;
+    //  $("#last").show();
+    //  var last = document.getElementById('last');
+    //  last.value = "VIEW "+"&lg;"+localStorage.filename+"&gt;";
+    //  document.getElementById('filename').innerHTML = '<'+localStorage.filename+'>';
+    //  CFG['filename'] = localStorage.filename;
+    //}
     $('#eingang').remove();
     if ('css' in CFG) {
       for(var i=0,line;line=CFG['css'][i];i++) {
@@ -233,9 +234,6 @@ function handleAjax (event, url) {
     }
   }
 
-
-
-
   /* reset whole process in case this is not the first time the stuff
    * stuff is loaded */
   reset();
@@ -283,9 +281,19 @@ function handleAjax (event, url) {
   $('#mainsettings').css('display','inline');
   $('#view').css('display','block');
   $('#qlc').html('');
-
+  
+  /* add the filename to the filename-button */
   var fn = document.getElementById('filename');
   fn.innerHTML = '&lt;'+CFG['filename']+'&gt;';
+  console.log('filename',fn.innerHTML);
+
+  /* toggle display if the wordlist is not hidden */
+  var fd = document.getElementById('filedisplay');
+  console.log('fdstart',fd.style.display);
+  if (fd.style.display != 'none' && fd.style.display != ''){
+    toggleDisplay('', 'filedisplay');
+  }
+
 }
 
 /* helper function that handles the drag over event */
@@ -608,8 +616,10 @@ $(function() {
         handle: '.main_handle',
 
     });
+
 });
 
 $('.colx').addClass('ui-helper-clearfix');
 
 $(window).load(function(){$("#popup_background").fadeOut("fast");});
+

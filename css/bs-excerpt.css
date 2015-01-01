@@ -48,10 +48,8 @@
   font-size: 12px;
   clear: both;
   position:absolute;
-  top: 100%;
   left: inherit;
   max-width:350px;
-  z-index: 2500;
 }
 .multisect {
   padding: 15px;

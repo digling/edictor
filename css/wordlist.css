@@ -17,6 +17,22 @@
   cursor: -webkit-grabbing; 
   cursor: -moz-grabbing;
 }
+#menu {
+  display:block;
+  position: relative;
+  clear:both;
+  border: 2px solid #2D6CA2;
+  margin-top: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-bottom:25px;
+  padding-left:25px;
+  padding-right:25px;
+  padding-top:10px;
+  border-radius:5px;
+  min-height: 150px;
+  overflow: visible;
+}
 @media screen and (max-width: 600px) {
   #qlc_table th{
     text-align: left;
@@ -43,6 +59,22 @@
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+  #menu {
+    display:block;
+    position: relative;
+    clear:both;
+    border: 2px solid #2D6CA2;
+    margin-top: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-bottom:25px;
+    padding-left:25px;
+    padding-right:25px;
+    padding-top:10px;
+    border-radius:5px;
+    min-height: 350px;
+    overflow: visible;
+  }
 }
 @media screen and (max-width: 1000px) and (min-width: 601px) {
   #qlc_table th{
@@ -60,7 +92,6 @@
   }
   #qlc_table td{
     text-align: left;
-    //background-color: white;
     color: black;
     border: solid 1px #2D6CA2;
     max-width: 220px;
@@ -70,6 +101,23 @@
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+  #menu {
+    display:block;
+    position: relative;
+    clear:both;
+    border: 2px solid #2D6CA2;
+    margin-top: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-bottom:25px;
+    padding-left:25px;
+    padding-right:25px;
+    padding-top:10px;
+    border-radius:5px;
+    min-height: 175px;
+    overflow: visible;
+  }
+
 }
 
 
@@ -161,7 +209,7 @@
   display: block;
   float: left;
   max-width: 1000px;
-  width: 80%;
+  width: 100%;
 }
 
 
@@ -320,21 +368,7 @@ ul.nav
 {
   opacity: 0.5;
 }
-#menu {
-  display:block;
-  position: relative;
-  clear:both;
-  border: 2px solid #2D6CA2;
-  margin-top: 20px;
-  margin-left: 5px;
-  margin-right: 5px;
-  padding-bottom:25px;
-  padding-left:25px;
-  padding-right:25px;
-  padding-top:10px;
-  border-radius:5px;
-  min-height: 150px;
-}
+
 .drop_zone_start {
   margin-top: 10px;
     border: 2px dotted white;
@@ -575,7 +609,7 @@ table.alignments {
 .alm_line {
   font-weight: bold;
   display: table-cell;
-  max-width: 250px;
+  max-width: 450px;
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: left;
@@ -597,26 +631,6 @@ table.alignments {
 }
 .alm_bdr {
 	border-right: 2px solid #2D6CA2;
-}
-
-
-#previous {
-  //background-repeat: no-repeat;
-  //background-position:center;
-  //font-size: 80%;
-  //border-radius: 10px;
-}
-#next {
-  //background-repeat: no-repeat;
-  //background-position:center;
-  //font-size: 80%;
-  //border-radius: 10px;
-}
-#first {
-  //background-repeat: no-repeat;
-  //background-position:center;
-  //font-size: 80%;
-  //border-radius: 10px;
 }
 
 /* class needed to prevent tables with long alignment strings from overflowing */

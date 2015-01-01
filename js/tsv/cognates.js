@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-12-18 14:11
- * modified : 2014-12-22 14:16
+ * modified : 2015-01-01 16:22
  *
  */
 
@@ -35,7 +35,7 @@ function handle_cognate_selection() {
         maxHeight: window.innerHeight-100,
         buttonClass : 'btn btn-primary mright submit pull-left',
         enableCaseInsensitiveFiltering: true,
-        buttonContainer: '<div id="select_concepts_button" class="select_button" />',
+        buttonContainer: '<div id="cognates_select_concepts_button" class="select_button" />',
         buttonText: function (options, select) {
           return 'Select Concepts <b class="caret"></b>';
         }
@@ -50,6 +50,11 @@ function display_cognates(concept) {
   
   /* if concept is not passed, check for selection */
   if (typeof concept == 'undefined') {
+
+    /* set up variable for integer ids of concepts to get them passed to the function that
+     * handles the restricted file display of the wordlist */
+    var selected_concepts = [];
+    
     /* get the word ids for the selected concepts */
     var idxs = [];
     var slc = document.getElementById('cognates_select_concepts');
@@ -61,6 +66,7 @@ function display_cognates(concept) {
           idxs.push(idx);
         }
 	all_concepts.push(option.value);
+	selected_concepts.push(WLS.c2i[option.value]);
       }
     }
     if (all_concepts.length > 0) {
@@ -71,16 +77,25 @@ function display_cognates(concept) {
 	document.getElementById('cognates_current_concept').innerHTML = all_concepts[0];
       }
     }
+
+    /* make string from selected concepts */
+    selected_concepts = selected_concepts.join(',');
+
   }
   /* if cognates is not undefined, we have to change the multiselect options to display what
    * we really want to see */
   else {
-    idxs = WLS['concepts'][concept];
+    var idxs = WLS['concepts'][concept];
+    var selected_concepts = ''+WLS.c2i[concept];
 
     /* uncheck and check the options of the multiselect item, note that we don't refresh it here,
      * since it is much faster to do this "manually" by modifying the items then using the
-     * multiselect.refresh option */
-    var slcs = document.getElementsByClassName('checkbox');
+     * multiselect.refresh option 
+     * note further that we use the query selector to restrict the range of the buttons we
+     * change */
+    var slcid = document.getElementById('cognates_select_concepts_button');
+    var slcs = slcid.querySelectorAll('.checkbox');
+
     for (var k=0,slc; slc=slcs[k]; k++) {
       //->//->console.log('slc',slc,k);
       var cn = slc.childNodes[0];
@@ -110,7 +125,7 @@ function display_cognates(concept) {
   /* add first concept */
   var tab = document.getElementById('cognates_table');
   var txt = '<table id="cognates_alignments" class="alignments">';
-  var maxlen = 0;
+  var maxlen = 4;
   
   /* store in data array first */
   var data = [];
@@ -138,8 +153,9 @@ function display_cognates(concept) {
       }
     }
     tkl = tkl.length - brackets;
-    if (tkl > maxlen) {maxlen = tkl}
-    
+    if (tkl > maxlen) {
+      maxlen = tkl;
+    }
     data.push([idx,doc,con,cid,tks]);
   }
 
@@ -218,9 +234,11 @@ function display_cognates(concept) {
   txt += '</table>';
   tab.innerHTML = txt;
   
-  var des = document.getElementById('cognates_description');
-  des.innerHTML = 'Showing '+alms.length +' words.';
-
+  //var des = document.getElementById('cognates_description');
+  //des.innerHTML = 'Showing '+alms.length +' words.';
+  
+  /* reset wordlist selection to the range of selected concepts */
+  filterOccurrences(false, selected_concepts);
 }
 
 function display_previous_cognate() {
