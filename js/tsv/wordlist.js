@@ -606,7 +606,7 @@ function showWLS(start)
         }
 
         text += '<tr class="'+tmp_class+'" id="L_' + idx + '">';
-        text += '<td class="ID" title="LINE ' + rowidx + '">' + idx + '</td>';
+        text += '<td title="Click to add a new line or to remove the current line." onclick="addLine(event,'+rowidx+');" class="ID" title="LINE ' + rowidx + '">' + idx + '</td>';
         for (j in WLS[idx]) {
           var jdx = parseInt(j) + 1;
 
@@ -1547,8 +1547,7 @@ function refreshFile()
   fakeAlert("Document was saved in local storage and can now be exported. Note that only those columns which are currently displayed will be written to file. If You want to select different columns for export, check out the current settings of column display by pressing F2, alter them accordingly, and SAVE the document again."); 
 }
 
-function fakeAlert(text)
-{
+function fakeAlert(text){
   var falert = document.createElement('div');
   falert.id = 'fake';
   var text = '<div class="message"><p>' + text + '</p>';
@@ -1558,7 +1557,15 @@ function fakeAlert(text)
   document.body.appendChild(falert);
   falert.innerHTML = text;
   document.onkeydown = function(event){$('#fake').remove(); document.onkeydown = function(event){basickeydown(event);};};
+}
 
+function addLine(event, rowidx) {
+  event.preventDefault();
+  fakeAlert("under construction to add line after "+rowidx);
+}
+function removeLine(event, rowidx) {
+  event.preventDefault();
+  fakeAlert("under construction to remove a line on right mouseclick "+rowidx);
 }
 
 /* save file */
