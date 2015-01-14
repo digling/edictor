@@ -366,6 +366,15 @@ function csvToArrays(allText, separator, comment, keyval) {
   /* create selectors */
   createSelectors();
 
+  /* sort the data following the default sorting options */
+  sort_rows = function (x,y){
+    var _x = WLS[x][CFG['_cidx']] + ' ' + WLS[x][CFG['_tidx']];
+    var _y = WLS[y][CFG['_cidx']] + ' ' + WLS[y][CFG['_tidx']];
+    return _x.localeCompare(_y);
+  }
+  WLS._trows.sort(sort_rows);
+  WLS.rows.sort(sort_rows);
+  
   /* log basic settings */
   console.log('WLS:',WLS);
   console.log('CFG:',CFG);
@@ -606,7 +615,7 @@ function showWLS(start)
         }
 
         text += '<tr class="'+tmp_class+'" id="L_' + idx + '">';
-        text += '<td title="Click to add a new line or to remove the current line." onclick="addLine(event,'+rowidx+');" class="ID" title="LINE ' + rowidx + '">' + idx + '</td>';
+        text += '<td title="Click to add a new line or to remove the current line." onclick="editLine(event,'+idx+');" class="ID pointed" title="LINE ' + rowidx + '">' + idx + '</td>';
         for (j in WLS[idx]) {
           var jdx = parseInt(j) + 1;
 
@@ -1397,21 +1406,14 @@ function applyFilter()
     applyFilter();
   }
   else {
-    WLS['rows'] = rows.sort(function(x, y) {return x - y;});
+
+    sort_rows = function (x,y){
+      var _x = WLS[x][CFG['_cidx']] + ' ' + WLS[x][CFG['_tidx']];
+      var _y = WLS[y][CFG['_cidx']] + ' ' + WLS[y][CFG['_tidx']];
+      return _x.localeCompare(_y);
+    }
+    WLS['rows'] = rows.sort(sort_rows);
   }
-
-  /* check if there are empty fields and prevent displaying them */
-  //if (CFG['tc_status'] == 'not') {
-  //  document.getElementById('select_doculects').parentNode.style.display = 'none';
-  //}
-  //else if (CFG['tc_status'] == 'noc') {
-  //  document.getElementById('select_concepts').style.display = 'none';
-  //}
-  //else if (CFG['tc_status'] == 'notc') {
-  //  document.getElementById('select_doculects').style.display = 'none';
-  //  document.getElementById('select_concepts').style.display = 'none';
-  //}
-
 }
 
 /* filter the columns in the data */
@@ -1440,7 +1442,7 @@ function getCurrent()
 {
   var previous = document.getElementById('previous');
   var current_index = 1;
-  if (previous == null) {
+  if (previous === null) {
     current_index = 1;
   }
   else {
@@ -1559,13 +1561,274 @@ function fakeAlert(text){
   document.onkeydown = function(event){$('#fake').remove(); document.onkeydown = function(event){basickeydown(event);};};
 }
 
-function addLine(event, rowidx) {
+/* basic function for modifying lines */
+function editLine(event, rowidx) {
   event.preventDefault();
-  fakeAlert("under construction to add line after "+rowidx);
+   
+  var editmode = document.createElement('div');
+  editmode.id = 'editmode';
+  editmode.className = 'editmode';
+
+  var text = '<div class="message"><p>What do you want to do?</p>';
+  text += '<p>';
+  text += '<button class="btn btn-submit submit3 mright" onclick="deleteLine('+rowidx+');">DELETE ROW</button>';
+  text += '<button class="btn btn-submit submit3 mright" onclick="addLine('+rowidx+');">ADD ROW AFTER</button>';
+  text += '<button class="btn btn-submit submit3 mright" onclick="$(\'#editmode\').remove();">CANCEL</button>';
+  text += '</p>';
+  document.body.appendChild(editmode);
+  editmode.innerHTML = text;
+  document.onkeydown = function(event) {
+    $('#editmode').remove(); 
+    document.onkeydown = function(event) {
+      basickeydown(event);
+    };
+  }; 
 }
-function removeLine(event, rowidx) {
-  event.preventDefault();
-  fakeAlert("under construction to remove a line on right mouseclick "+rowidx);
+
+/* function deletes a given line by removing it from all references */
+function deleteLine(rowidx) {
+  
+  /* get index of item in rowns array */
+  var index_in_row = WLS.rows.indexOf(rowidx);
+  WLS.rows.splice(index_in_row, 1);
+
+  /* get index of item in taxon array */
+  var taxon = WLS[rowidx][CFG['_tidx']];
+  var index_in_row = WLS.taxa[taxon].indexOf(rowidx);
+  WLS.taxa[taxon].splice(index_in_row, 1);
+
+  /* get index of iten in concepts array */
+  var concept = WLS[rowidx][CFG['_cidx']];
+  var index_in_row = WLS.concepts[concept].indexOf(rowidx);
+  WLS.concepts[concept].splice(index_in_row, 1);
+  
+  /* finally delete the full entry from the WLS object */
+  delete WLS[rowidx];
+
+  if (CFG['storable']) {
+
+    /* create url first */
+    var new_url = 'triples/update.php?' + 
+      'file='+CFG['filename'] +
+      '&delete' + 
+      '&ID='+rowidx;
+
+    $.ajax({
+      async: true,
+      type: "GET",
+      contentType: "application/text; charset=utf-8",
+      url: new_url,
+      dataType: "text",
+      success: function(data) {
+	dataSavedMessage('deletion', rowidx);
+      },
+      error: function() {
+        fakeAlert('data could not be stored');
+      }
+    });
+  }
+  else {
+    console.log('storable failed somehow %o',CFG['storable']);
+  }
+
+  resetFormat(CFG['formatter']);
+  
+  $('#editmode').remove();
+
+  showWLS(getCurrent());
+}
+
+/* function adds a new line right behind the given index */
+function addLine(rowidx) {
+  /* in order to prevent confusion, we always add indices to the top, 
+   * that is, we search for the highest current index, and add a new
+   * one for it, this is not save in terms of tracking changes, if we
+   * add many new entries and remove them afterwards, but currently, 
+   * I don't know how to manage this otherwise.
+   * For remote sessions, we can always go through data and history and
+   * request the information, so here we are save regarding the consistency
+   * of IDs being assigned ot the data.
+   */
+  if (!CFG['storable']) {
+    var current_rows = [];
+    for (key in WLS) {
+      if (!isNaN(parseInt(key))) {
+        current_rows.push(parseInt(key));
+      }
+    }
+    current_rows.sort(function (x,y){return x - y;});
+    var maxInt = current_rows[current_rows.length-1];
+    var newIdx = maxInt + 1;
+  }
+  else {
+    /* create url first */
+    var new_url = 'triples/triples.php?' + 
+      'file='+CFG['filename'] +
+      '&new_id';
+    var newIdx = 0;
+    
+    $.ajax({
+      async: false,
+      type: "GET",
+      contentType: "application/text; charset=utf-8",
+      url: new_url,
+      dataType: "text",
+      success: function(data) {
+	newIdx = parseInt(data);
+      },
+      error: function() {
+        fakeAlert('data could not be stored');
+      }
+    });
+  }
+  
+  /* now that we received the new index, we can go on by defining new 
+   * contents, here, we should insist on a specific taxon and a specific 
+   * meaning, and we add them suggestively, but the user can modify 
+   * afterwards */
+  var taxon = WLS[rowidx][CFG['_tidx']];
+  var concept = WLS[rowidx][CFG['_cidx']];
+  var text = '<div class="message">';
+  text += '<p>Please select doculect and concept for the new entry:</p>';
+  text += '<p>';
+  text += '<label style="min-width:100px">Doculect</label> <input id="addline_taxon" class="form-control textfield mleft" type="text" value="'+taxon+'" /><br><br>';
+  text += '<label style="min-width:100px">Concept</label> <input id="addline_concept" class="form-control textfield mleft" type="text" value="'+concept+'" /><br><br>';
+  text += '<button onclick="finishAddLine('+newIdx+');" class="btn submit3 btn-submit mright">SUBMIT</button>';
+  text += '<button onclick="$(\'#editmode\').remove();" class="btn submit3 btn-submit mright">CANCEL</button>';
+  text += '</p></div>';
+  $('#editmode').remove();
+
+  var editmode = document.createElement('div');
+  editmode.id = 'editmode';
+  editmode.className = 'editmode';
+
+  document.body.appendChild(editmode);
+  editmode.innerHTML = text;
+  document.onkeydown = function(event) {
+    
+    if (event.keyCode == 27) {
+      $('#editmode').remove(); 
+      document.onkeydown = function(event) {
+        basickeydown(event);
+      };
+    }
+  }; 
+
+  $('#addline_taxon').autocomplete({
+    delay: 0,
+    source: Object.keys(WLS['taxa'])
+  });
+  $('#addline_concept').autocomplete({
+    delay: 0,
+    source: Object.keys(WLS['concepts'])
+  });
+}
+
+/* due to the interactive component, we need to add a funciton that finalizes
+ * the adding of a new line to the data */
+function finishAddLine(new_idx) {
+  
+  /* get concept and taxon */
+  var taxon = document.getElementById('addline_taxon').value;
+  var concept = document.getElementById('addline_concept').value;
+  
+  /* check if taxon and concept are in the original list */
+  if (!(taxon in WLS.taxa)) {
+    fakeAlert('The doculect you selected does not occur in the list!');
+    $('#editmode').remove();
+    return;
+  }
+  if (!(concept in WLS.concepts)) {
+    fakeAlert('The concept you selected does not occur in the list!');
+    $('#editmode').remove();
+    return;
+  }
+
+  /* add the new entry if everything is fine */
+  WLS[new_idx] = [];
+  for (var i=0,headline; headline=WLS.header[i]; i++) {
+    if (headline.indexOf('ID') == headline.length -2) {
+      WLS[new_idx].push(0);
+    }
+    else {
+      WLS[new_idx].push('-');
+    }
+  }
+  WLS[new_idx][CFG['_tidx']] = taxon;
+  WLS[new_idx][CFG['_cidx']] = concept;
+
+  /* resort the concept array and the like */
+  WLS.concepts[concept].push(new_idx);
+  WLS.taxa[taxon].push(new_idx);
+
+  /* add the stuff to trows */
+  WLS._trows.push(new_idx);
+
+  applyFilter();
+  
+  /* reset format */
+  resetFormat(CFG['formatter']);
+
+  /* if storable is set to "true" and wer are working with a remote server, 
+   * make the modifying ajax-call to ensure that the data has been edited 
+   * and stored */
+  if (CFG['storable']) {
+    //->console.log('encountered storable stuff');
+
+    /* create url first */
+    var new_url1 = 'triples/update.php?' + 
+      'file='+CFG['filename'] +
+      '&update' + 
+      '&ID='+new_idx +
+      '&COL='+ WLS.column_names[WLS.header[CFG['_tidx']]].replace(/ /g,'_') +
+      '&VAL='+taxon;
+    var new_url2 = 'triples/update.php?' + 
+      'file='+CFG['filename'] +
+      '&update' + 
+      '&ID='+new_idx +
+      '&COL='+ WLS.column_names[WLS.header[CFG['_cidx']]].replace(/ /g,'_') +
+      '&VAL='+concept;
+
+    $.ajax({
+      async: true,
+      type: "GET",
+      contentType: "application/text; charset=utf-8",
+      url: new_url1,
+      dataType: "text",
+      success: function(data) {
+        if(data.indexOf("UPDATE") != -1) {
+          dataSavedMessage("update");
+        }
+        else if(data.indexOf("INSERTION") != -1) {
+          dataSavedMessage("insertion");
+        }
+      },
+      error: function() {
+        fakeAlert('data could not be stored');
+      }
+    });
+    $.ajax({
+      async: true,
+      type: "GET",
+      contentType: "application/text; charset=utf-8",
+      url: new_url2,
+      dataType: "text",
+      success: function(data) {
+        if(data.indexOf("UPDATE") != -1) {
+          dataSavedMessage("update");
+        }
+        else if(data.indexOf("INSERTION") != -1) {
+          dataSavedMessage("insertion");
+        }
+      },
+      error: function() {
+        fakeAlert('data could not be stored');
+      }
+    });
+  }
+  
+  showWLS(getCurrent());
+  $('#editmode').remove();
 }
 
 /* save file */
@@ -1659,8 +1922,14 @@ function highLight()
 /* sort the table according to specific criteria */
 function sortTable(event,head)
 {
+  sort_rows = function (x,y){
+    var _x = WLS[x][CFG['_cidx']] + ' ' + WLS[x][CFG['_tidx']];
+    var _y = WLS[y][CFG['_cidx']] + ' ' + WLS[y][CFG['_tidx']];
+    return _x.localeCompare(_y);
+  }
+  
   if (CFG['sorted'] == 'th_'+head+'_0') {
-    WLS['rows'].sort(function(x,y){return x-y});
+    WLS['rows'].sort(sort_rows);
     CFG['sorted'] = false;
   }
   else if (CFG['sorted'] == 'th_'+head+'_1') {
@@ -1920,6 +2189,9 @@ function dataSavedMessage(what, howmuch) {
   }
   else if (what == 'insertion') {
     msg.innerHTML = "New entry has been inserted on " + mydatestring+'.';
+  }
+  else if (what == 'deletion') {
+    msg.innerHTML = "Deleted row " + howmuch + " from the database on " + mydatestring+'.';
   }
   else if (what == 'post') {
     msg.innerHTML = "Posted "+howmuch+" new entries to the database on " + mydatestring+'.';

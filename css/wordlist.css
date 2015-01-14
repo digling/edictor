@@ -533,7 +533,7 @@ tr.d2 td {
 .editmode {
   position: fixed;
   background-color: rgba(0,0,0,0.5);
-  z-index: 1040;
+  z-index: 100;
   top:0;
   left: 0;
   right: 0;
