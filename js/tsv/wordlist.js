@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2015-01-01 16:22
+ * modified : 2015-01-19 11:14
  *
  */
 
@@ -16,7 +16,7 @@ ALIAS = {
 function reset() {
   WLS = {};
   CFG = {
-    'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ALIGNMENT', 'ETYMONID', 'CHINESE'],
+    'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ETYMONID', 'CHINESE'],
     'preview': 10,
     'noid': false, 
     'sorting': false, 
@@ -31,11 +31,21 @@ function reset() {
     'server_side_bases' : [],
     'storable' : false,
     'last_time' : false, 
-    'parsed' : false
+    'parsed' : false,
+    'doculects' : false,
+    'concepts' : false,
+    'columns' : false
   };
   
   STORE = '';
   var BL = ['file'];
+
+  /* make array for list-type entries */
+  var list_types = ['highlight', 'sampa', 'pinyin', 'css', 'doculects', 'columns', 'basics', 'concepts'];
+
+  /* XXX note that we have inconsistencies here: we use aliases to determine basic
+   * display of taxon, concept, ipa, but we don't use them when parsing from 
+   * get-url-line */
   
   for (var param in PARAMS) {
     var value = PARAMS[param];
@@ -44,7 +54,7 @@ function reset() {
      if (!isNaN(parseInt(value))) {
        CFG[param] = parseInt(value);
      }
-     else if (value.indexOf(',') != -1) {
+     else if (list_types.indexOf(param) != -1) {
        CFG[param] = [];
        var values = value.split(',');
        for (var i=0,val;val=values[i];i++) {
@@ -83,7 +93,10 @@ var CFG = {
   'server_side_bases' : [],
   'storable' : false,
   'last_time' : false,
-  'parsed' : false
+  'parsed' : false,
+  'doculects' : false,
+  'concepts': false,
+  'columns' : false
 };
 
 var STORE = ''; // global variable to store the text data in raw format
@@ -120,7 +133,8 @@ function resetFormat(value) {
   }
 }
 
-/* load qlc-file */
+/* load qlc-file, core function to handle a wordlist text file and 
+ * display it with the edictor */
 function csvToArrays(allText, separator, comment, keyval) {
   var allTextLines = allText.split(/\r\n|\n/);
 
@@ -149,35 +163,37 @@ function csvToArrays(allText, separator, comment, keyval) {
       for (j = 1; j < data.length; j++) {
         var datum = data[j].toUpperCase();
         
-        /* check for prohibited columns */
-        if (datum.slice(0,1) == '_') {
-          datum = datum.slice(1,datum.length);
-          var tmp = datum.replace(/_/g,' ');
-          datum = datum.replace(/_/g,'');
-          column_names[datum] = tmp;
-          uneditables.push(datum);
-          console.log(datum,column_names,uneditables,tmp);
-        }
-        else {
-          var tmp = datum.replace(/_/g,' ');
-          datum = datum.replace(/_/g,'');
-          column_names[datum] = tmp;
-        }
+	if (!CFG['columns'] || CFG['columns'].indexOf(datum) != -1) {
+          /* check for prohibited columns */
+          if (datum.slice(0,1) == '_') {
+            datum = datum.slice(1,datum.length);
+            var tmp = datum.replace(/_/g,' ');
+            datum = datum.replace(/_/g,'');
+            column_names[datum] = tmp;
+            uneditables.push(datum);
+            //->console.log(datum,column_names,uneditables,tmp);
+          }
+          else {
+            var tmp = datum.replace(/_/g,' ');
+            datum = datum.replace(/_/g,'');
+            column_names[datum] = tmp;
+          }
 
-        header.push(datum);
-        
-        if (ALIAS['doculect'].indexOf(datum) != -1) {
-          tIdx = j;
-        }
-        if (ALIAS['concept'].indexOf(datum) != -1) {
-          cIdx = j;
-        }
-        if (CFG['basics'].indexOf(datum) != -1) {
-          columns[datum] = j;
-        }
-        else {
-          columns[datum] = -j;
-        }
+          header.push(datum);
+          
+          if (ALIAS['doculect'].indexOf(datum) != -1) {
+            tIdx = j;
+          }
+          if (ALIAS['concept'].indexOf(datum) != -1) {
+            cIdx = j;
+          }
+          if (CFG['basics'].indexOf(datum) != -1) {
+            columns[datum] = j;
+          }
+          else {
+            columns[datum] = -j;
+          }
+	}
       }
       /* apply check for tidx and cidx */
       if (tIdx == -1 && cIdx == -1) {tIdx = 1;cIdx = 2; CFG['tc_status'] = 'notc'}
@@ -205,39 +221,41 @@ function csvToArrays(allText, separator, comment, keyval) {
       noid = true;
       CFG['noid'] = true;
 
-
       /* get the header */
       var header = [];
       for (j = 0; j < data.length; j++) {
         var datum = data[j].toUpperCase();
-        
-        /* check for prohibited columns */
-        if (datum.slice(0,1) == '_') {
-          datum = datum.slice(1,datum.length);
-          var tmp = datum.replace(/_/g,' ');
-          datum = datum.replace(/_/g,'');
-          column_names[datum] = tmp;
-          uneditables.push(datum);
-        }
-        else {
-          var tmp = datum.replace(/_/g,' ');
-          datum = datum.replace(/_/g,'');
-          column_names[datum] = tmp;
-        }
 
-        header.push(datum);
-        if (ALIAS['doculect'].indexOf(datum) != -1) {
-          tIdx = j;
-        }
-        if (ALIAS['concept'].indexOf(datum) != -1) {
-          cIdx = j;
-        }
-        if (CFG['basics'].indexOf(datum) != -1) {
-          columns[datum] = j + 1;
-        }
-        else {
-          columns[datum] = -(j + 1);
-        }
+	if (!CFG['columns'] || CFG['columns'].indexOf(datum) != -1) {
+        
+	  /* check for prohibited columns */
+          if (datum.slice(0,1) == '_') {
+            datum = datum.slice(1,datum.length);
+            var tmp = datum.replace(/_/g,' ');
+            datum = datum.replace(/_/g,'');
+            column_names[datum] = tmp;
+            uneditables.push(datum);
+          }
+          else {
+            var tmp = datum.replace(/_/g,' ');
+            datum = datum.replace(/_/g,'');
+            column_names[datum] = tmp;
+          }
+
+          header.push(datum);
+          if (ALIAS['doculect'].indexOf(datum) != -1) {
+            tIdx = j;
+          }
+          if (ALIAS['concept'].indexOf(datum) != -1) {
+            cIdx = j;
+          }
+          if (CFG['basics'].indexOf(datum) != -1) {
+            columns[datum] = j + 1;
+          }
+          else {
+            columns[datum] = -(j + 1);
+          }
+	}
       }
 
       /* apply check for tidx and cidx */
@@ -257,33 +275,55 @@ function csvToArrays(allText, separator, comment, keyval) {
       //->console.log('CIDX',cIdx);
       //->console.log('columns:',columns);
     }
+    /* successively load the data into the wordlist object */
     else if (firstLineFound) {
-      if (!noid) {
-        var idx = parseInt(data[0]);
-        qlc[idx] = data.slice(1, data.length);
-      }
-      else {
-        var idx = count;
-        count += 1;
-        qlc[idx] = data.slice(0,data.length);
-      }
-
       /* check for header */
       var taxon = data[tIdx];
       var concept = data[cIdx];
-      if (taxon in taxa) {
+
+      /* now, suppose we have a restricted taxa- or concept list, we check
+       * whether the items occur in this selection */
+      if (
+	  (!CFG['doculects'] || CFG['doculects'].indexOf(taxon) != -1) &&
+	  (!CFG['concepts'] || CFG['concepts'].indexOf(concept) != -1)
+	 ) {
+
+	/* the following lines append taxonomic values */
+	if (taxon in taxa) {
         taxa[taxon].push(idx);
+	}
+        else {
+          taxa[taxon] = [idx];
+        }
+
+        /* these lines append concepts */
+        if (concept in concepts) {
+          concepts[concept].push(idx);
+        }
+        else {
+          concepts[concept] = [idx];
+        }
+
+        if (!noid) {
+          var idx = parseInt(data[0]);
+	  /* check whether columns have been passed via configs */
+	  if (!CFG['columns']) {
+	    qlc[idx] = data.slice(1, data.length);
+	  }
+	  else {
+	    qlc[idx] = [];
+	    for (key in columns) {
+	      qlc[idx].push(data[Math.abs(columns[key])]);
+	    }
+	  }
+        }
+        else {
+          var idx = count;
+          count += 1;
+          qlc[idx] = data.slice(0,data.length);
+        }
+        selection.push(idx);
       }
-      else {
-        taxa[taxon] = [idx];
-      }
-      if (concept in concepts) {
-        concepts[concept].push(idx);
-      }
-      else {
-        concepts[concept] = [idx];
-      }
-      selection.push(idx);
     }
   }
   
@@ -658,8 +698,10 @@ function showWLS(start)
       var idx = WLS['rows'][i];
       if (!isNaN(idx) && count >= start) {
         var rowidx = parseInt(i) + 1;
-        text += '<tr id="L_' + idx + '">';
-        text += '<td class="ID" title="LINE ' + rowidx + '">' + idx + '</td>';
+        text += '<tr class="'+tmp_class+'" id="L_' + idx + '">';
+        text += '<td title="Click to add a new line or to remove the current line." onclick="editLine(event,'+idx+');" class="ID pointed" title="LINE ' + rowidx + '">' + idx + '</td>';
+        //text += '<tr id="L_' + idx + '">';
+        //text += '<td class="ID" title="LINE ' + rowidx + '">' + idx + '</td>';
         for (j in WLS[idx]) {
           var jdx = parseInt(j) + 1;
 

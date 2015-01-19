@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-09-03 13:40
- * modified : 2015-01-01 13:38
+ * modified : 2015-01-19 11:15
  *
  */
 
@@ -27,17 +27,6 @@ function startWordlist() {
 
   try {
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
-    
-    /* let's get rid of local storage, we never really needed it ! */
-    //if (typeof localStorage.text == 'undefined'){}
-    //else {
-    //  STORE = localStorage.text;
-    //  $("#last").show();
-    //  var last = document.getElementById('last');
-    //  last.value = "VIEW "+"&lg;"+localStorage.filename+"&gt;";
-    //  document.getElementById('filename').innerHTML = '<'+localStorage.filename+'>';
-    //  CFG['filename'] = localStorage.filename;
-    //}
     $('#eingang').remove();
     if ('css' in CFG) {
       for(var i=0,line;line=CFG['css'][i];i++) {
@@ -60,16 +49,6 @@ function startWordlist() {
     return 0;
   }
 }
-
-//->function toggleDiv(divid) {
-//->  var divo = document.getElementById(divid);
-//->  if (divo.style.display != 'none') {
-//->    divo.style.display = 'none';
-//->  }
-//->  else {
-//->    divo.style.display = 'block';
-//->  }
-//->}
 
 /* handle key events */
 function basickeydown (event) {
@@ -245,13 +224,26 @@ function handleAjax (event, url) {
   }
   else {
     var new_url = 'triples/triples.php?file='+url;
+
+    /* append values for columns etc. to url */
+    if (CFG['columns']) {
+      new_url += '&columns='+CFG['columns'].join(',');
+    }
+    if (CFG['doculects']) {
+      new_url += '&doculects='+CFG['doculects'].join(',');
+    }
+    if (CFG['concepts']) {
+      new_url += '&concepts='+CFG['concepts'].join(',');
+    }
+    if (CFG['remote_dbase']) {
+      new_url += '&remote_dbase='+CFG['remote_dbase'];
+    }
     CFG['storable'] = true;
   }
 
   //->console.log(new_url);
 
   /* we set the filename as the same as the url */
-  localStorage.filename = url;
   CFG['filename'] = url;
 
   /* load the file by putting all data in the STORE global variable */
@@ -308,6 +300,7 @@ $.ajax({
       async:false,
       type: "GET",
       url: 'data/filelist.csv',
+      contentType: 'application/text; charset=utf-8',
       dataType: "text",
       success: function(data) {
         CFG['server_side_files'] = data.split('\n');
@@ -330,6 +323,7 @@ function getDataBases() {
         async: false,
         type: "GET",
         url: 'triples/triples.php?tables',
+	contentType : 'application/text; charset=utf-8',
         dataType : "text",
         success: function(data) {
           CFG['server_side_bases'] = data.split('\n');
