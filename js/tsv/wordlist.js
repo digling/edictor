@@ -34,7 +34,8 @@ function reset() {
     'parsed' : false,
     'doculects' : false,
     'concepts' : false,
-    'columns' : false
+    'columns' : false,
+    'remote_dbase' : 'triples.sqlite3'
   };
   
   STORE = '';
@@ -96,7 +97,8 @@ var CFG = {
   'parsed' : false,
   'doculects' : false,
   'concepts': false,
-  'columns' : false
+  'columns' : false,
+  'remote_dbase' : 'triples.sqlite3'
 };
 
 var STORE = ''; // global variable to store the text data in raw format
@@ -288,6 +290,10 @@ function csvToArrays(allText, separator, comment, keyval) {
 	  (!CFG['concepts'] || CFG['concepts'].indexOf(concept) != -1)
 	 ) {
 
+	/* check for the index */
+	if (!noid) {var idx = parseInt(data[0]);}
+	else {var idx = count; count += 1;}
+
 	/* the following lines append taxonomic values */
 	if (taxon in taxa) {
         taxa[taxon].push(idx);
@@ -305,7 +311,6 @@ function csvToArrays(allText, separator, comment, keyval) {
         }
 
         if (!noid) {
-          var idx = parseInt(data[0]);
 	  /* check whether columns have been passed via configs */
 	  if (!CFG['columns']) {
 	    qlc[idx] = data.slice(1, data.length);
@@ -318,8 +323,6 @@ function csvToArrays(allText, separator, comment, keyval) {
 	  }
         }
         else {
-          var idx = count;
-          count += 1;
           qlc[idx] = data.slice(0,data.length);
         }
         selection.push(idx);
@@ -347,7 +350,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS['uneditables'] = uneditables;
   WLS['column_names'] = column_names;
   WLS['c2i'] = c2i;
-  
+
   /* ! attention here, this may change if no ids are submitted! */
   CFG['_tidx'] = tIdx-1; // index of taxa
   CFG['_cidx'] = cIdx-1; // index of concepts
@@ -559,7 +562,7 @@ function showWLS(start)
       if (passed_time >= 1000) { /* reset TIME to other minutes later */
 
         /* create the url */
-        var url = 'triples/triples.php?file=' + CFG['filename'] + 
+        var url = 'triples/triples.php?remote_dbase='+CFG['remote_dbase']+'&file=' + CFG['filename'] + 
           '&date=' + CFG['last_time'].getTime();
 
         var txt = '';
@@ -891,7 +894,7 @@ function addColumn(event)
           async: true,
           data: nmods,
           type: "POST",
-          url: 'triples/update.php',
+          url: 'triples/update.php?remote_dbase='+CFG['remote_dbase'],
           success: function(data) {
             //->console.log('submitted the data');
             if (data.indexOf('COLUMN') != -1) {
@@ -1221,8 +1224,9 @@ function storeModification(idx, jdx, value, async) {
     //->console.log('encountered storable stuff');
 
     /* create url first */
-    var new_url = 'triples/update.php?' + 
-      'file='+CFG['filename'] +
+    var new_url = 'triples/update.php?' +
+      'remote_dbase='+CFG['remote_dbase'] +
+      '&file='+CFG['filename'] +
       '&update' + 
       '&ID='+idx +
       '&COL='+ WLS.column_names[WLS.header[jdx]].replace(/ /g,'_') +
@@ -1529,7 +1533,7 @@ function handleFileSelect(evt)
   
   /* toggle display if the wordlist is not hidden */
   var fd = document.getElementById('filedisplay');
-  console.log('fdstart',fd.style.display);
+  //->console.log('fdstart',fd.style.display);
   if (fd.style.display != 'none' && fd.style.display != ''){
     toggleDisplay(evt, 'filedisplay');
   }
@@ -1651,7 +1655,8 @@ function deleteLine(rowidx) {
 
     /* create url first */
     var new_url = 'triples/update.php?' + 
-      'file='+CFG['filename'] +
+      'remote_dbase='+CFG['remote_dbase'] + 
+      '&file='+CFG['filename'] +
       '&delete' + 
       '&ID='+rowidx;
 
@@ -1704,8 +1709,9 @@ function addLine(rowidx) {
   }
   else {
     /* create url first */
-    var new_url = 'triples/triples.php?' + 
+    var new_url = 'triples/triples.php?' +
       'file='+CFG['filename'] +
+      '&remote_dbase='+CFG['remote_dbase'] + 
       '&new_id';
     var newIdx = 0;
     
@@ -1731,7 +1737,7 @@ function addLine(rowidx) {
   var taxon = WLS[rowidx][CFG['_tidx']];
   var concept = WLS[rowidx][CFG['_cidx']];
   var text = '<div class="message">';
-  text += '<p>Please select doculect and concept for the new entry:</p>';
+  text += '<p>Please select doculect and concept for the new entry ('+newIdx+'):</p>';
   text += '<p>';
   text += '<label style="min-width:100px">Doculect</label> <input id="addline_taxon" class="form-control textfield mleft" type="text" value="'+taxon+'" /><br><br>';
   text += '<label style="min-width:100px">Concept</label> <input id="addline_concept" class="form-control textfield mleft" type="text" value="'+concept+'" /><br><br>';
@@ -1820,12 +1826,14 @@ function finishAddLine(new_idx) {
     /* create url first */
     var new_url1 = 'triples/update.php?' + 
       'file='+CFG['filename'] +
+      '&remote_dbase='+CFG['remote_dbase'] + 
       '&update' + 
       '&ID='+new_idx +
       '&COL='+ WLS.column_names[WLS.header[CFG['_tidx']]].replace(/ /g,'_') +
       '&VAL='+taxon;
     var new_url2 = 'triples/update.php?' + 
       'file='+CFG['filename'] +
+      '&remote_dbase='+CFG['remote_dbase'] + 
       '&update' + 
       '&ID='+new_idx +
       '&COL='+ WLS.column_names[WLS.header[CFG['_cidx']]].replace(/ /g,'_') +
@@ -1844,6 +1852,7 @@ function finishAddLine(new_idx) {
         else if(data.indexOf("INSERTION") != -1) {
           dataSavedMessage("insertion");
         }
+	else {fakeAlert(data)};
       },
       error: function() {
         fakeAlert('data could not be stored');
