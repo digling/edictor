@@ -325,9 +325,13 @@ function combine_cogids() {
   cogid = false;
   for (var i=0;i<checked.length; i++) {
     var tmp_cogid = WLS[checked[i]][cidx];
-    if (!cogid || tmp_cogid < cogid) {
+    if (!cogid || 0 < tmp_cogid < cogid) {
       cogid = tmp_cogid;
     }
+  }
+  
+  if (!cogid) {
+    cogid = get_new_cogid();
   }
   
   var visited = [];
