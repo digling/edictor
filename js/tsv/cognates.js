@@ -349,13 +349,37 @@ function combine_cogids() {
 
 /* get cognate identifier */
 function get_new_cogid() {
-  var etym_len = Object.keys(WLS.etyma).length;
-  for (var i=1; i < etym_len+1; i++) {
-    if (!(i in WLS.etyma)) {
-      return i;
+  if (!CFG['storable']) {
+    var etym_len = Object.keys(WLS.etyma).length;
+    for (var i=1; i < etym_len+1; i++) {
+      if (!(i in WLS.etyma)) {
+        return i;
+      }
     }
+    return etym_len+1;
   }
-  return etym_len+1;
+  else {
+    var cogid = false;
+    var url = 'triples/triples.php?' +
+      'remote_dbase='+CFG['remote_dbase'] +
+      '&file='+CFG['filename'] +
+      '&new_id='+CFG['formatter']
+      ;
+    $.ajax({
+      async: false,
+      type: "GET",
+      contentType: "application/text; charset=utf-8",
+      url: url,
+      dataType: "text",
+      success: function(data) {
+	cogid=parseInt(data);
+      },
+      error: function(){
+	fakeAlert("problem retrieving a new cognate ID fromt he dbase");
+      }
+    });
+    return cogid;
+  }
 }
 /* function inserts unique ids for unassigned cognate sets */
 function cognateIdentifier(cogid) {
