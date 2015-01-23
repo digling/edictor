@@ -618,7 +618,10 @@ function showWLS(start)
     var head = WLS['header'][i];
     if (WLS['columns'][head] > 0) {
       text += '<col id="' + head + '" />';
-      thtext += '<th class="titled" title="Double-click for sorting along this column." id="HEAD_'+head+'" ondblclick="sortTable(event,'+"'"+head+"'"+')">' + WLS.column_names[head] + '</th>';
+      thtext += '<th class="titled" title="Double-click for sorting along this column."' 
+	+ 'id="HEAD_'+head+'" '
+	+ 'ondblclick="sortTable(event,'+"'"+head+"'"+')">' + 
+	WLS.column_names[head] + '</th>';
     }
     else {
       text += '<col id="' + head + '" style="visibility:hidden;" />';
@@ -638,59 +641,70 @@ function showWLS(start)
       var idx = WLS['rows'][i];
       var current_format = WLS[idx][WLS['header'].indexOf(CFG['formatter'])];
       if (!isNaN(idx) && count >= start) {
-        var rowidx = parseInt(i) + 1;
-        if (current_format == 0) {
-          tmp_class = 'd2';
-          previous_format = current_format;
-        }
-        else if (previous_format == 0) {
-          tmp_class = 'd0';
-          previous_format = current_format;
-        }
-        else if (current_format != previous_format) {
-          if (tmp_class == 'd0') {
-            tmp_class = 'd1';
-          }
-          else {
-            tmp_class = 'd0';
-          }
-          previous_format = current_format;
-        }
+	var rowidx = parseInt(i) + 1;
+	if (current_format == 0) {
+	  tmp_class = 'd2';
+	  previous_format = current_format;
+	}
+	else if (previous_format == 0) {
+	  tmp_class = 'd0';
+	  previous_format = current_format;
+	}
+	else if (current_format != previous_format) {
+	  if (tmp_class == 'd0') {
+	    tmp_class = 'd1';
+	  }
+	  else {
+	    tmp_class = 'd0';
+	  }
+	  previous_format = current_format;
+	}
 
-        text += '<tr class="'+tmp_class+'" id="L_' + idx + '">';
-        text += '<td title="Click to add a new line or to remove the current line." onclick="editLine(event,'+idx+');" class="ID pointed" title="LINE ' + rowidx + '">' + idx + '</td>';
-        for (j in WLS[idx]) {
-          var jdx = parseInt(j) + 1;
+	text += '<tr class="'+tmp_class+'" id="L_' + idx + '">';
+	text += '<td title="Click to add a new line or to remove the current line." onclick="editLine(event,'+idx+');" class="ID pointed" title="LINE ' + rowidx + '">' + idx + '</td>';
+	for (j in WLS[idx]) {
+	  var jdx = parseInt(j) + 1;
 
-          var head = WLS['header'][j];
-          if (WLS['columns'][head] > 0) {
-            var cell_display = '';
-          }
-          else {
-            var cell_display = ' style="display:none"'; // ff vs. chrome problem
-          }
-          
-          if (WLS.header[j] != CFG['formatter'] && WLS.uneditables.indexOf(WLS.header[j]) == -1) {
-            text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
-            text += WLS[idx][j];
-            text += '</td>';
-          }
-          else if (WLS.uneditables.indexOf(WLS.header[j]) != -1) {
-            text += '<td class="uneditable '+WLS['header'][j]+'" title="ENTRY '+idx+'/'+jdx+'">';
-            text += WLS[idx][j];
-            text += '</td>';
-          }
-          else {
-            text += '<td ondblclick="editGroup(event,'+"'"+WLS[idx][j]+"'"+')" oncontextmenu="editGroup(event,'+"'"+WLS[idx][j]+"')"+'" class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
-            text += WLS[idx][j];
-            text += '</td>';
-          }
+	  var head = WLS['header'][j];
+	  if (WLS['columns'][head] > 0) {
+	    var cell_display = '';
+	  }
+	  else {
+	    var cell_display = ' style="display:none"'; // ff vs. chrome problem
+	  }
 
-        }
-        text += '</tr>';
-        count += 1;
-      }
-      else {count += 1;}
+	  /* check for normal cases */
+	  if (WLS.header[j] != CFG['formatter'] && WLS.uneditables.indexOf(WLS.header[j]) == -1) {
+	    text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx 
+	      + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)"'
+	      + ' oncontextmenu="copyPasteEntry(event,'+idx+','+jdx+','+j+')"'
+	      + ' data-value="' + WLS[idx][j] + '" ' + cell_display + '>';
+	    text += WLS[idx][j];
+	    text += '</td>';
+	  }
+	  /* check for uneditable values */
+	  else if (WLS.uneditables.indexOf(WLS.header[j]) != -1) {
+	    text += '<td class="uneditable '+WLS['header'][j]+'" title="ENTRY '+idx+'/'+jdx+'">';
+	    text += WLS[idx][j];
+	    text += '</td>';
+	  }
+	  /* apply the rest */
+	  else {
+	    text += '<td ondblclick="editGroup(event,'+"'"
+	      + WLS[idx][j]+"'"+')" oncontextmenu="editGroup(event,'+"'"
+		+ WLS[idx][j]+"')"+'" class="' + WLS['header'][j] 
+		+ '" title="MODIFY ENTRY ' + idx + '/' + jdx 
+		+ '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)"'
+		+ ' data-value="' 
+		+ WLS[idx][j] + '"' + cell_display + '>';
+		text += WLS[idx][j];
+		text += '</td>';
+		}
+		}
+		text += '</tr>';
+		count += 1;
+		}
+		else {count += 1;}
       if (count >= start + CFG['preview']) {
         break;
       }
@@ -789,6 +803,48 @@ function showWLS(start)
   
   //document.location.hash = 'qlc';
   return 1;
+}
+
+/* function handles copy-pasting of elements */
+function copyPasteEntry(event,idx,jdx,j) {
+
+	var cpval = document.getElementById('copy_value');
+
+	/* make everything to false if event is passed as "abort" */
+	if (event == 'abort') {
+	  CFG['_cpentry'] = false;
+		cpval.innerHTML = '';
+		cpval.style.display = 'none';
+		return;
+	}
+
+  event.preventDefault();
+
+	/* we store copy-paste entries in CFG */
+  if ('_cpentry' in CFG) {
+    if (!CFG['_cpentry']) {
+      CFG['_cpentry'] = WLS[idx][j];
+
+			/* manage visual feedback */
+			cpval.innerHTML = 'Cached: &quot;'+CFG['_cpentry']+'&quot;';
+			cpval.style.display = 'inline';
+    }
+    else {
+      var entry = CFG['_cpentry'];
+      CFG['_cpentry'] = false;
+      editEntry(idx,jdx,0,0,entry)
+
+			/* remove visual feedback */
+			cpval.innerHTML = '';
+			cpval.style.display = 'none';
+
+    }
+  }
+  else {
+    CFG['_cpentry'] = WLS[idx][j];
+		cpval.innerHTML = 'Cached: &quot;'+CFG['_cpentry']+'&quot;';
+		cpval.style.display = 'inline';
+  }
 }
 
 /* specific customized functions for adding a column to the wordlist */
@@ -930,7 +986,7 @@ function addColumn(event)
   showWLS(1);
 }
 
-function editEntry(idx, jdx, from_idx, from_jdx)
+function editEntry(idx, jdx, from_idx, from_jdx, special_value)
 {
   var line = document.getElementById('L_' + idx);
 
@@ -1026,19 +1082,28 @@ function editEntry(idx, jdx, from_idx, from_jdx)
   
   /* now we format the entry and turn it into a text-input field */
   entry.onclick = '';
-  var value = entry.dataset.value;
+
+  /* check whether special value is submitted or alternatively whether CFG contains 
+   * a valid value to be inserted */
+  if (typeof special_value == 'undefined' && !CFG['_cpentry']) { 
+    var value = entry.dataset.value;
+    var special_value = entry.dataset.value;
+  }
+  else {
+    var value = entry.dataset.value;
+  }
+  
   var size = value.length + 5;
-  //var text = '<input onblur="unmodifyEntry(\''+idx+'\',\''+jdx+'\',\''+value+'\');" class="cellinput" type="text" size="' + size + '" id="modify_' + idx + '_' + jdx + '" value="' + value + '" />';
 
   var ipt = document.createElement('input');
   ipt.setAttribute('class', 'cellinput');
   ipt.setAttribute('type', 'text');
   ipt.setAttribute('id', 'modify_' + idx + '_' + jdx);
-  ipt.setAttribute('value', value);
+  ipt.setAttribute('value', special_value);
   ipt.setAttribute('data-value', value);
+  ipt.setAttribute('ondblclick', 'modifyEntry("click",'+idx+','+jdx+',this.value)');
   ipt.setAttribute('onblur', 'unmodifyEntry(' + idx + ',' + jdx + ',"' + value + '")');
   ipt.setAttribute('onkeyup', 'modifyEntry(event,' + idx + ',' + jdx + ',this.value)');
-
 
   ipt.size = size;
   entry.innerHTML = '';
@@ -1047,12 +1112,15 @@ function editEntry(idx, jdx, from_idx, from_jdx)
 
 }
 
+/* function modifies entries automatically using undo-redo facility */
 function autoModifyEntry(idx, jdx, value, current) {
-
+  
   var tcurrent = parseInt(getCurrent());
   current = parseInt(current);
+  
+  console.log(current,tcurrent);
 
-  if (tcurrent != current) {
+  if (tcurrent != current && !isNaN(current)) {
     var tmp = showWLS(current);
   }
   var line = document.getElementById('L_' + idx);
@@ -1103,7 +1171,7 @@ function modifyEntry(event, idx, jdx, xvalue) {
       return;
     }
   }
-
+	
   /* move up and down */
   if (event.keyCode == 38) {
     process = true;
@@ -1133,7 +1201,7 @@ function modifyEntry(event, idx, jdx, xvalue) {
     return;
   }
   /* modify on enter */
-  else if (event.keyCode != 13) {
+  else if (event.keyCode != 13 && event != 'click') {
     CFG['entry_is_currently_modifying'] = false; 
     return;
   }
@@ -1152,6 +1220,15 @@ function modifyEntry(event, idx, jdx, xvalue) {
       xvalue = nxvalue;
     }
     resetFormat(CFG['formatter']);
+  }
+  /* XXX */ 
+  else if (CFG['highlight'].indexOf(entry.className) != -1) {
+    if (xvalue.length > 1 && xvalue.indexOf(' ') == -1) {
+      var nxvalue = ipa2tokens(xvalue);
+      if (nxvalue != xvalue) {
+	xvalue = nxvalue;
+      }
+    }
   }
 
   var prevalue = entry.dataset.value;
@@ -1250,9 +1327,6 @@ function storeModification(idx, jdx, value, async) {
         fakeAlert('data could not be stored');
       }
     });
-  }
-  else {
-    console.log('storable failed somehow %o',CFG['storable']);
   }
 }
 
