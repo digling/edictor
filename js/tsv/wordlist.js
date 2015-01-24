@@ -35,7 +35,8 @@ function reset() {
     'doculects' : false,
     'concepts' : false,
     'columns' : false,
-    'remote_dbase' : 'triples.sqlite3'
+    'remote_dbase' : 'triples.sqlite3',
+    '_cpentry' : false
   };
   
   STORE = '';
@@ -98,7 +99,8 @@ var CFG = {
   'doculects' : false,
   'concepts': false,
   'columns' : false,
-  'remote_dbase' : 'triples.sqlite3'
+  'remote_dbase' : 'triples.sqlite3',
+  '_cpentry' : false
 };
 
 var STORE = ''; // global variable to store the text data in raw format
@@ -808,42 +810,48 @@ function showWLS(start)
 /* function handles copy-pasting of elements */
 function copyPasteEntry(event,idx,jdx,j) {
 
-	var cpval = document.getElementById('copy_value');
+  var cpval = document.getElementById('copy_value');
 
-	/* make everything to false if event is passed as "abort" */
-	if (event == 'abort') {
-	  CFG['_cpentry'] = false;
-		cpval.innerHTML = '';
-		cpval.style.display = 'none';
-		return;
-	}
+  /* make everything to false if event is passed as "abort" */
+  if (event == 'abort') {
+    CFG['_cpentry'] = false;
+    cpval.innerHTML = '';
+    cpval.style.display = 'none';
+    return;
+  }
 
   event.preventDefault();
+  if (!CFG['_cpentry']) {
+    CFG['_cpentry'] = WLS[idx][j];
 
-	/* we store copy-paste entries in CFG */
-  if ('_cpentry' in CFG) {
-    if (!CFG['_cpentry']) {
-      CFG['_cpentry'] = WLS[idx][j];
+    /* manage visual feedback */
+    var txt = '<span class="info_mark">?</span><span class="main_handle" style="position:absolute;left:23px;top:8px;"></span>'
+      + '<table cellpadding="5"><tr><th colspan="2">CACHED ENTRY</th></tr>'
+      + '<tr><td>VALUE</td><td>&quot;'+CFG['_cpentry']+'&quot;</td></tr>'
+      + '<td>ROW</td><td>'+idx+'</td></tr><tr><td>CELL</td><td>'+j+'</td></tr>'
+      + '<tr><td colspan="2" style="text-align:center">'
+      + '<div class="btn-group-vertical"><button onclick="copyPasteEntry(\'abort\')"'
+      + ' title="click to abort" class="btn btn-primary submit3"'
+      + '>CLEAR CACHE</button>'
+      + '<button onclick="showHistory(\''+idx+','+j+'\')"'
+      + ' title="show previous versions of this entry"'
+      + ' class="btn btn-primary submit3">SHOW HISTORY</button>'
+      + '</div>'
+      + '</td></tr></table>';
 
-			/* manage visual feedback */
-			cpval.innerHTML = 'Cached: &quot;'+CFG['_cpentry']+'&quot;';
-			cpval.style.display = 'inline';
-    }
-    else {
-      var entry = CFG['_cpentry'];
-      CFG['_cpentry'] = false;
-      editEntry(idx,jdx,0,0,entry)
-
-			/* remove visual feedback */
-			cpval.innerHTML = '';
-			cpval.style.display = 'none';
-
-    }
+    cpval.innerHTML = txt;
+    cpval.style.display = 'table';
+    $(cpval).draggable({handle: '.main_handle'});
   }
   else {
-    CFG['_cpentry'] = WLS[idx][j];
-		cpval.innerHTML = 'Cached: &quot;'+CFG['_cpentry']+'&quot;';
-		cpval.style.display = 'inline';
+    var entry = CFG['_cpentry'];
+    CFG['_cpentry'] = false;
+    editEntry(idx,jdx,0,0,entry)
+
+      /* remove visual feedback */
+      cpval.innerHTML = '';
+    cpval.style.display = 'none';
+
   }
 }
 
@@ -1085,12 +1093,13 @@ function editEntry(idx, jdx, from_idx, from_jdx, special_value)
 
   /* check whether special value is submitted or alternatively whether CFG contains 
    * a valid value to be inserted */
-  if (typeof special_value == 'undefined' && !CFG['_cpentry']) { 
+  if (typeof special_value == 'undefined') { 
     var value = entry.dataset.value;
     var special_value = entry.dataset.value;
   }
   else {
     var value = entry.dataset.value;
+    //var special_value = CFG['_cpentry'];
   }
   
   var size = value.length + 5;
@@ -1221,7 +1230,7 @@ function modifyEntry(event, idx, jdx, xvalue) {
     }
     resetFormat(CFG['formatter']);
   }
-  /* XXX */ 
+  /* XXX tokenize entry  */ 
   else if (CFG['highlight'].indexOf(entry.className) != -1) {
     if (xvalue.length > 1 && xvalue.indexOf(' ') == -1) {
       var nxvalue = ipa2tokens(xvalue);

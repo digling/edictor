@@ -432,6 +432,72 @@ ul.nav
 	text-align:center;
 }
 
+/* side message is used to handle the display of the cache
+ * for simply copying of entries and to display the history of
+ * edits of all edited items */
+.side_message {
+  background-color:Crimson;
+  border-radius:5px;
+  border:3px solid #2D6CA2;
+  max-width:350px;
+  position:fixed;
+  bottom:20;right:0;
+  padding:10px;
+  color:white;
+  font-weight:bold;
+  z-index: 100;
+  max-height: 350px;
+}
+.side_message:hover span.main_handle {
+	display: block;
+}
+.side_message span.main_handle {
+	display: none;
+}
+.side_message:hover span.info_mark {
+	display: none;
+}
+.side_message span.info_mark {
+	display: inline;
+	font-weight: bold;
+}
+.side_message table {
+	background-color: white;
+	color: #2D6CA2;
+	font-weight: bold;
+	border-radius: 10px;
+	border: 2px solid #2D6CA2;
+	margin: 5px;
+	border-collapse: separate;
+	border-spacing: 0;
+	padding: 5px;
+	display: none;
+}
+.side_message:hover table {
+	background-color: white;
+	color: #2D6CA2;
+	font-weight: bold;
+	border-radius: 10px;
+	border: 2px solid #2D6CA2;
+	margin: 5px;
+	border-collapse: separate;
+	border-spacing: 0;
+	padding: 5px;
+	display: table;
+}
+
+.side_message td {
+	padding: 1px;
+	color: #2D6CA2;
+	font-weight: bold;
+	min-width: 65px;
+}
+.side_message th {
+	padding: 1px;
+	color: Crimson;
+	text-align: center;
+	border-bottom: 2px solid #2D6CA2;
+}
 .message {
   position: absolute;
   margin-left: auto;

@@ -16,6 +16,7 @@ modified : 2014-09-06 20:21
 <title>EDICTOR</title>
 </head>
 <body>
+  <div id="copy_value" class="side_message" style="display:none"></div>
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container" style="width:100%">
       <div class="navbar-header">
@@ -101,7 +102,7 @@ modified : 2014-09-06 20:21
                 </a>
               </li>
               <li>
-                <a id="toggle_correspondences" onclick="event.preventDefault();fakeAlert('under construction');">
+                <a id="toggle_correspondences" onclick="loadAjax(event, 'sortable', 'correspondences', 'smallbox');">
                   <span class="glyphicon glyphicon-remove"></span>
                   <span class="glyphicon glyphicon-ok" style="display: none"></span>
                   Correspondences
@@ -249,6 +250,8 @@ modified : 2014-09-06 20:21
 	    <input id="first" type="button"    class="btn btn-primary mright submit3 unhidden" value="START " onclick="showWLS(1)" />
 	    <input id="next" type="button"     class="btn btn-primary mright submit3 hidden" value="1-1" />
 	  </div>
+
+
 	  <br><br>
 	  <div id="db"></div>
 	  <div name="qlc" style="overflow:visible;" id="qlc" ></div>
@@ -312,6 +315,7 @@ PRISON.import(
     'js/vendor/spin',
     'js/tsv/alignments',
     'js/tsv/cognates',
+    'js/tsv/correspondences',
     'js/tsv/wordlist',
     'js/tsv/starter'
   );
