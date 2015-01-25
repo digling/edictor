@@ -2341,8 +2341,16 @@ function dataSavedMessage(what, howmuch) {
 function filterOccurrences(doculect, occurrences) {
 
   /* if doculect is set to false, we leave the doculects in our filter
-   * untouched */
-  if (doculect) {
+   * untouched, if doculect contains a comma, we break it and display all doculects passed in the
+   * split */
+  if (doculect.indexOf(',') != -1) {
+    var doculects = doculect.split(',');
+    $('#select_doculects').multiselect('deselectAll', false);
+    for (var i=0,d; d=doculects[i]; i++) {
+      $('#select_doculects').multiselect('select', d);
+    }
+  }
+  else if (doculect) {
     $('#select_doculects').multiselect('deselectAll',false); //'deselect', Object.keys(WLS.taxa));
     $('#select_doculects').multiselect('select',doculect);
   }
