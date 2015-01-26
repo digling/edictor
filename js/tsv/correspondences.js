@@ -21,10 +21,12 @@ function sumValues( obj ) {
 }
 
 /* simple starter for activation */
-CORRS.show_correspondences = function(sorter,direction) {
+CORRS.show_correspondences = function(sorter,direction,symbol) {
   var d = CORRS.get_doculects();
   var d1 = d[0];
   var d2 = d[1];
+
+  if (typeof symbol == 'undefined') {symbol = false;}
 
   /* get shared cogids */
   shared_cogs = CORRS.shared_cognates(d1,d2);
@@ -64,66 +66,69 @@ CORRS.show_correspondences = function(sorter,direction) {
     var s12 = k.split('//');
     var tk1 = s12[0];
     var tk2 = s12[1];
-    var s1 = plotWord(tk1,'span');
-    var s2 = plotWord(tk2,'span');
-    var freq = corrs[k];
-    var concepts = refs[k];
 
-    /* get the occurrences */
-    if (tk1 in occsA) {
-      var occA = occsA[tk1];
+    if (!symbol || (sorter == 'doculA' && symbol == tk1) || (sorter == 'doculB' && symbol == tk2)) { 
+      var s1 = plotWord(tk1,'span pointed');
+      var s2 = plotWord(tk2,'span pointed');
+      var freq = corrs[k];
+      var concepts = refs[k];
+  
+      /* get the occurrences */
+      if (tk1 in occsA) {
+        var occA = occsA[tk1];
+      }
+      else {
+        var occA = 0;
+      }
+      if (tk2 in occsB) {
+        var occB = occsB[tk2];
+      }
+      else {
+        var occB = 0;
+      }
+      if (tk1 in occs_bgA) {
+        var occ_bgA = occs_bgA[tk1];
+      }
+      else {var occ_bgA = 0}
+      if (tk2 in occs_bgB) {
+        var occ_bgB = occs_bgB[tk2];
+      }
+      else {var occ_bgB = 0}
+  
+      
+      /* determine a score for occurrence and matches */
+      var expectedA = occ_bgA / occs_bglA;
+      var expectedB = occ_bgB / occs_bglB;
+  
+      var expected = expectedA != 0 && expectedB != 0 ? (expectedA * expectedB) : 0.00005;
+      var attested = freq > 1 ? freq / corrsl : 0.00005;
+  
+      var score = Math.log(attested / expected).toFixed(0);
+      score = typeof score != 'undefined' && !(isNaN(score)) ? score : 0;
+      
+      /* get the index for the filtering of occurrences */
+      var filter = [];
+      for (var j=0,concept; concept = concepts[j]; j++) {
+        filter.push(WLS.c2i[concept]);
+      }
+      filter = filter.join(',');
+      concepts = '&quot;' + concepts.join('&quot;, &quot;') + '&quot;';
+  
+      data.push([
+  	s1,
+  	tk1,
+  	occA,
+  	occ_bgA,
+  	s2,
+  	tk2,
+  	occB,
+  	occ_bgB,
+  	freq,
+  	score,
+  	concepts,
+  	filter
+  	]);
     }
-    else {
-      var occA = 0;
-    }
-    if (tk2 in occsB) {
-      var occB = occsB[tk2];
-    }
-    else {
-      var occB = 0;
-    }
-    if (tk1 in occs_bgA) {
-      var occ_bgA = occs_bgA[tk1];
-    }
-    else {var occ_bgA = 0}
-    if (tk2 in occs_bgB) {
-      var occ_bgB = occs_bgB[tk2];
-    }
-    else {var occ_bgB = 0}
-
-    
-    /* determine a score for occurrence and matches */
-    var expectedA = occ_bgA / occs_bglA;
-    var expectedB = occ_bgB / occs_bglB;
-
-    var expected = expectedA != 0 && expectedB != 0 ? (expectedA * expectedB) : 0.00005;
-    var attested = freq > 1 ? freq / corrsl : 0.00005;
-
-    var score = Math.log(attested / expected).toFixed(0);
-    score = typeof score != 'undefined' && !(isNaN(score)) ? score : 0;
-    
-    /* get the index for the filtering of occurrences */
-    var filter = [];
-    for (var j=0,concept; concept = concepts[j]; j++) {
-      filter.push(WLS.c2i[concept]);
-    }
-    filter = filter.join(',');
-    concepts = '&quot;' + concepts.join('&quot;, &quot;') + '&quot;';
-
-    data.push([
-	s1,
-	tk1,
-	occA,
-	occ_bgA,
-	s2,
-	tk2,
-	occB,
-	occ_bgB,
-	freq,
-	score,
-	concepts,
-	filter
-	]);
   }
   /* make a translater for the sort */
   var translate = {
@@ -186,9 +191,9 @@ CORRS.show_correspondences = function(sorter,direction) {
   for (var i=0,line; line=data[i]; i++) {
 
     txt += '<tr>'
-      + '<td>' + line[0] + '</td>'
+      + '<td class="pointed" title="click to show only this sound" onclick="CORRS.show_correspondences(\'doculA\',1,\''+line[1]+'\')">' + line[0] + '</td>'
       + '<td>' + line[2] +'<sub>('+ line[3] +')</sub>'+'</td>'
-      + '<td>' + line[4] + '</td>'
+      + '<td class="pointed" title="click to show only this sound" onclick="CORRS.show_correspondences(\'doculB\',1,\''+line[5]+'\')">' + line[4] + '</td>'
       + '<td>' + line[6] + '<sub>('+line[7]+')</sub>'+ '</td>'
       + '<td>' + line[8] + '</td>'
       + '<td>' + line[9] + '</td>'

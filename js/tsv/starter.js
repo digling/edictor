@@ -223,17 +223,17 @@ function handleAjax (event, url) {
     CFG['storable'] = false;
   }
   else {
-    var new_url = 'triples/triples.php?file='+url;
+    var new_url = 'triples/triples.py?file='+url;
 
     /* append values for columns etc. to url */
     if (CFG['columns']) {
-      new_url += '&columns='+CFG['columns'].join(',');
+      new_url += '&columns='+CFG['columns'].join('|');
     }
     if (CFG['doculects']) {
-      new_url += '&doculects='+CFG['doculects'].join(',');
+      new_url += '&doculects='+CFG['doculects'].join('|');
     }
     if (CFG['concepts']) {
-      new_url += '&concepts='+CFG['concepts'].join(',');
+      new_url += '&concepts='+CFG['concepts'].join('|');
     }
     if (CFG['remote_dbase']) {
       new_url += '&remote_dbase='+CFG['remote_dbase'];
@@ -322,7 +322,7 @@ function getDataBases() {
   $.ajax({
         async: false,
         type: "GET",
-        url: 'triples/triples.php?tables',
+        url: 'triples/triples.py?tables=tables',
 	contentType : 'application/text; charset=utf-8',
         dataType : "text",
         success: function(data) {

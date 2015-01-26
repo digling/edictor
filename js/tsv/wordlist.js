@@ -58,7 +58,7 @@ function reset() {
      }
      else if (list_types.indexOf(param) != -1) {
        CFG[param] = [];
-       var values = value.split(',');
+       var values = value.split('|');
        for (var i=0,val;val=values[i];i++) {
          if (val != '') {
           CFG[param].push(val);
@@ -564,7 +564,7 @@ function showWLS(start)
       if (passed_time >= 1000) { /* reset TIME to other minutes later */
 
         /* create the url */
-        var url = 'triples/triples.php?remote_dbase='+CFG['remote_dbase']+'&file=' + CFG['filename'] + 
+        var url = 'triples/triples.py?remote_dbase='+CFG['remote_dbase']+'&file=' + CFG['filename'] + 
           '&date=' + CFG['last_time'].getTime();
 
         var txt = '';
@@ -935,48 +935,49 @@ function addColumn(event)
   }
   
   /* get everything together for a big post request */
-  if (CFG['storable']) {
-    
-    // check out how posts have to be made 
-    var keys = Object.keys(mods);
-    
-    var count = 0;
-    var nmods = {};
-    nmods['column'] = name;
-    nmods['file'] = CFG['filename'];
-    for (var i=0,key; key=keys[i]; i++) {
-      count += 1;
-      if (mods[key] != '?' && mods[key] != '' && mods[key] != '-') {
-        nmods[key] = mods[key];
-      }
-      if (count >= 800 || i >= keys.length-1) {
+  /* we don't make column post requests right now, since we don't need it */
+  //if (CFG['storable']) {
+  //  
+  //  // check out how posts have to be made 
+  //  var keys = Object.keys(mods);
+  //  
+  //  var count = 0;
+  //  var nmods = {};
+  //  nmods['column'] = name;
+  //  nmods['file'] = CFG['filename'];
+  //  for (var i=0,key; key=keys[i]; i++) {
+  //    count += 1;
+  //    if (mods[key] != '?' && mods[key] != '' && mods[key] != '-') {
+  //      nmods[key] = mods[key];
+  //    }
+  //    if (count >= 800 || i >= keys.length-1) {
 
-        var key_count = Object.keys(nmods).length - 2;
-        //->console.log(key_count);
+  //      var key_count = Object.keys(nmods).length - 2;
+  //      //->console.log(key_count);
 
-        $.ajax({
-          async: true,
-          data: nmods,
-          type: "POST",
-          url: 'triples/update.php?remote_dbase='+CFG['remote_dbase'],
-          success: function(data) {
-            //->console.log('submitted the data');
-            if (data.indexOf('COLUMN') != -1) {
-              dataSavedMessage('post', key_count) ;
-            }
-            else {
-              //->console.log(data);
-            }
-          },
-          error: function() {
-            fakeAlert('data could not be stored');
-          }
-        });
-        count = 0;
-        nmods = {'column':name,'file':CFG['filename']};
-      }
-    }
-  }
+  //      $.ajax({
+  //        async: true,
+  //        data: nmods,
+  //        type: "POST",
+  //        url: 'triples/update.php?remote_dbase='+CFG['remote_dbase'],
+  //        success: function(data) {
+  //          //->console.log('submitted the data');
+  //          if (data.indexOf('COLUMN') != -1) {
+  //            dataSavedMessage('post', key_count) ;
+  //          }
+  //          else {
+  //            //->console.log(data);
+  //          }
+  //        },
+  //        error: function() {
+  //          fakeAlert('data could not be stored');
+  //        }
+  //      });
+  //      count = 0;
+  //      nmods = {'column':name,'file':CFG['filename']};
+  //    }
+  //  }
+  //}
 
   /* adjust name to new name */
   var new_name = name.replace(/_/g,'');
@@ -987,7 +988,6 @@ function addColumn(event)
   if (CFG['basics'].indexOf(new_name) == -1) {
     CFG['basics'].push(new_name);
   }
-
 
   col.value = '';
   createSelectors();
@@ -1234,10 +1234,18 @@ function modifyEntry(event, idx, jdx, xvalue) {
   else if (CFG['highlight'].indexOf(entry.className) != -1) {
     if (xvalue.length > 1 && xvalue.indexOf(' ') == -1) {
       var nxvalue = ipa2tokens(xvalue);
+      console.log('transforming',xvalue,nxvalue);
       if (nxvalue != xvalue) {
 	xvalue = nxvalue;
       }
     }
+    ///* check for bad white-spaces before or after */
+    //else if (xvalue[0] == ' ' || xvalue[xvalue.length-1] == ' ') {
+    //  var nxvalue = xvalue.replace(/^ /,'').replace(/ $/,'');
+    //  if (nxvalue != xvalue) {
+    //    xvalue = nxvalue;
+    //  }
+    //}
   }
 
   var prevalue = entry.dataset.value;
@@ -1310,16 +1318,16 @@ function storeModification(idx, jdx, value, async) {
     //->console.log('encountered storable stuff');
 
     /* create url first */
-    var new_url = 'triples/update.php?' +
+    var new_url = 'triples/update.py?' +
       'remote_dbase='+CFG['remote_dbase'] +
       '&file='+CFG['filename'] +
-      '&update' + 
+      '&update=true' + 
       '&ID='+idx +
       '&COL='+ WLS.column_names[WLS.header[jdx]].replace(/ /g,'_') +
       '&VAL='+value;
 
     $.ajax({
-      async: async,
+      async: false,
       type: "GET",
       contentType: "application/text; charset=utf-8",
       url: new_url,
@@ -1331,6 +1339,9 @@ function storeModification(idx, jdx, value, async) {
         else if(data.indexOf("INSERTION") != -1) {
           dataSavedMessage("insertion");
         }
+	else {
+	  fakeAlert("PROBLEM IN SAVING THE VALUE ENCOUNTERED!");
+	}
       },
       error: function() {
         fakeAlert('data could not be stored');
@@ -1792,10 +1803,10 @@ function addLine(rowidx) {
   }
   else {
     /* create url first */
-    var new_url = 'triples/triples.php?' +
+    var new_url = 'triples/triples.py?' +
       'file='+CFG['filename'] +
       '&remote_dbase='+CFG['remote_dbase'] + 
-      '&new_id';
+      '&new_id=true';
     var newIdx = 0;
     
     $.ajax({
@@ -1907,17 +1918,17 @@ function finishAddLine(new_idx) {
     //->console.log('encountered storable stuff');
 
     /* create url first */
-    var new_url1 = 'triples/update.php?' + 
+    var new_url1 = 'triples/update.py?' + 
       'file='+CFG['filename'] +
       '&remote_dbase='+CFG['remote_dbase'] + 
-      '&update' + 
+      '&update=true' + 
       '&ID='+new_idx +
       '&COL='+ WLS.column_names[WLS.header[CFG['_tidx']]].replace(/ /g,'_') +
       '&VAL='+taxon;
-    var new_url2 = 'triples/update.php?' + 
+    var new_url2 = 'triples/update.py?' + 
       'file='+CFG['filename'] +
       '&remote_dbase='+CFG['remote_dbase'] + 
-      '&update' + 
+      '&update=true' + 
       '&ID='+new_idx +
       '&COL='+ WLS.column_names[WLS.header[CFG['_cidx']]].replace(/ /g,'_') +
       '&VAL='+concept;
@@ -2343,7 +2354,7 @@ function filterOccurrences(doculect, occurrences) {
   /* if doculect is set to false, we leave the doculects in our filter
    * untouched, if doculect contains a comma, we break it and display all doculects passed in the
    * split */
-  if (doculect.indexOf(',') != -1) {
+  if (doculect && doculect.indexOf(',') != -1) {
     var doculects = doculect.split(',');
     $('#select_doculects').multiselect('deselectAll', false);
     for (var i=0,d; d=doculects[i]; i++) {
