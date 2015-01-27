@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2015-01-24 17:27
- * modified : 2015-01-24 17:27
+ * modified : 2015-01-27 14:15
  *
  */
 
@@ -68,8 +68,13 @@ CORRS.show_correspondences = function(sorter,direction,symbol) {
     var tk2 = s12[1];
 
     if (!symbol || (sorter == 'doculA' && symbol == tk1) || (sorter == 'doculB' && symbol == tk2)) { 
-      var s1 = plotWord(tk1,'span pointed');
-      var s2 = plotWord(tk2,'span pointed');
+      var s1ab = tk1.split('.');
+      var s2ab = tk2.split('.');
+      var s1 = plotWord(s1ab[0],'span pointed');
+      if (tk1 != '-') {s1 += '<span class="context pointed">'+s1ab[1]+'</span>';}
+      var s2 = plotWord(s2ab[0],'span pointed');
+      if (tk2 != '-') {s2 += '<span class="context pointed">'+s2ab[1]+'</span>';}
+
       var freq = corrs[k];
       var concepts = refs[k];
   
@@ -267,6 +272,23 @@ CORRS.occurrences = function(docul, idxs) {
   var occs = {};
   for (var i=0,idx; idx=idxs[i]; i++) {
     var tks = WLS[idx][tidx].split(' ');
+    
+    /* get the prostrings */
+    var ngp = [];
+    var ngp_idx = [];
+    for (var j=0; j<tks.length; j++) {
+      if (tks[j] != '(' && tks[j] != ')' && tks[j] != '-') {
+	ngp.push(tks[j]);
+	ngp_idx.push(j); /* store index of valid entries here */
+      }
+    }
+    var prs = prosodic_string(ngp);
+
+    /* modify alignment */
+    for (var j=0; j<ngp_idx.length; j++) {
+      tks[ngp_idx[j]] += '.'+prs[j];
+    }
+    
     for (var j=0,tkn; tkn=tks[j]; j++) {
       if (!(tkn in occs)) {
 	occs[tkn] = 1;
@@ -336,7 +358,12 @@ CORRS.correspondences = function(doculA, doculB, shared_cogids) {
 
 /* parse an alignment between two strings in such a way that only
  * the essential parts are taken into account */
-CORRS.parse_alignments = function (idxA, idxB) {
+CORRS.parse_alignments = function (idxA, idxB, context) {
+
+  /* check whether context has been passed */
+  if (typeof context == 'undefined') {
+    context = false;
+  }
   
   /* get the alignments */
   var almA = WLS[idxA][WLS.header.indexOf(CFG['_almcol'])].split(' ');
@@ -344,6 +371,38 @@ CORRS.parse_alignments = function (idxA, idxB) {
   
   /* return and ignore if the alignemnt is wrongly encoded */
   if (almA.length != almB.length) {return false;}
+
+  /* get prostring, if this is not specified in almcol, that is, for the
+   * moment we calculate all prostrings, later on, we can allow them to 
+   * be passed via CFG-specs */
+  var nogapA = [];
+  var nogapB = [];
+  for (var i=0; i<almA.length; i++) {
+    var segA = almA[i];
+    var segB = almB[i];
+    if (segA != '-' && segA != ')' && segA != '(') {nogapA.push(segA);}
+    if (segB != '-' && segB != ')' && segB != '(') {nogapB.push(segB);}
+  }
+  var prosA = prosodic_string(nogapA);
+  var prosB = prosodic_string(nogapB);
+
+  /* attach information to the alignments, using a dot symbol for distinction */
+  var cntA = 0;
+  var cntB = 0;
+  for (var i=0; i<almA.length; i++) {
+    var segA = almA[i];
+    var segB = almB[i];
+
+    if (segA != '-' && segA != ')' && segA != '(') {
+      almA[i] += '.' + prosA[cntA];
+      cntA += 1;
+    }
+
+    if (segB != '-' && segB != ')' && segB != '(') {
+      almB[i] += '.'+prosB[cntB];
+      cntB += 1;
+    }
+  }
 
   /* reduce stuff in brackets, using a simple bracket indicator  */
   var tmpA = [];
@@ -390,7 +449,7 @@ CORRS.parse_alignments = function (idxA, idxB) {
       }
 
       /* raise in case that we encounter a tone marker */
-      if (DOLGO['_tones'].indexOf(sgmA[0]) || DOLGO['_tones'].indexOf(sgmB[0])) {
+      if (DOLGO['_tones'].indexOf(sgmA[0]) != -1 || DOLGO['_tones'].indexOf(sgmB[0]) != -1) {
 	cnt += 1;
       }
     }

@@ -262,6 +262,20 @@ span.residue {
   color: white;
   cursor: default;
 }
+span.context:before {
+	content: " / ";
+}
+span.context {
+  display: table-cell;
+  width: 20px;
+  background-color: #f1f1f1;
+  font-weight: bold;
+  text-align: center;
+  color: black;
+  cursor: default;
+  font-size: 50%;
+}
+
 td.residue{
   display: table-cell;
   width: 30px;
