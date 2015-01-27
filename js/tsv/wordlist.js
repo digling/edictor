@@ -36,7 +36,8 @@ function reset() {
     'concepts' : false,
     'columns' : false,
     'remote_dbase' : 'triples.sqlite3',
-    '_cpentry' : false
+    '_cpentry' : false,
+    '_almcol' : 'ALIGNMENT'
   };
   
   STORE = '';
@@ -100,7 +101,8 @@ var CFG = {
   'concepts': false,
   'columns' : false,
   'remote_dbase' : 'triples.sqlite3',
-  '_cpentry' : false
+  '_cpentry' : false,
+  '_almcol':'ALIGNMENT'
 };
 
 var STORE = ''; // global variable to store the text data in raw format
@@ -1748,10 +1750,10 @@ function deleteLine(rowidx) {
   if (CFG['storable']) {
 
     /* create url first */
-    var new_url = 'triples/update.php?' + 
+    var new_url = 'triples/update.py?' + 
       'remote_dbase='+CFG['remote_dbase'] + 
       '&file='+CFG['filename'] +
-      '&delete' + 
+      '&delete=true' + 
       '&ID='+rowidx;
 
     $.ajax({
@@ -2287,6 +2289,8 @@ function storeAlignment() {
   }
 
   var blobtxt = '';
+  
+  /* XXX we now try to update them all at once, in order to save time TODO */
 
   for (var i=0,idx; idx=CFG['_current_idx'][i]; i++) {
     var alm = ALIGN.ALMS[i].join(' ');

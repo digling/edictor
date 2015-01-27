@@ -425,6 +425,14 @@ function loadAjax(event, where, what, classes) {
       source: Object.keys(WLS['taxa'])
     });
   }
+  if (what == 'correspondences') {
+    var doculs = Object.keys(WLS['taxa']);
+    $('#corrs_docula').autocomplete({
+      delay: 0, source: doculs});
+    $('#corrs_doculb').autocomplete({
+      delay: 0, source: doculs, 
+      select: function(event,ui){CORRS.show_correspondences('doculA',1)}});
+  }
 
   $('#toggle_'+what+' > span').toggle();
 }

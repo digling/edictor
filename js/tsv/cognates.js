@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-12-18 14:11
- * modified : 2015-01-21 13:02
+ * modified : 2015-01-27 10:35
  *
  */
 
@@ -88,24 +88,26 @@ function display_cognates(concept) {
     var idxs = WLS['concepts'][concept];
     var selected_concepts = ''+WLS.c2i[concept];
 
-    /* uncheck and check the options of the multiselect item, note that we don't refresh it here,
-     * since it is much faster to do this "manually" by modifying the items then using the
-     * multiselect.refresh option 
-     * note further that we use the query selector to restrict the range of the buttons we
-     * change */
-    var slcid = document.getElementById('cognates_select_concepts_button');
-    var slcs = slcid.querySelectorAll('.checkbox');
+    ///* uncheck and check the options of the multiselect item, note that we don't refresh it here,
+    // * since it is much faster to do this "manually" by modifying the items then using the
+    // * multiselect.refresh option 
+    // * note further that we use the query selector to restrict the range of the buttons we
+    // * change */
+    //var slcid = document.getElementById('cognates_select_concepts_button');
+    //var slcs = slcid.querySelectorAll('.checkbox');
 
-    for (var k=0,slc; slc=slcs[k]; k++) {
-      //->//->console.log('slc',slc,k);
-      var cn = slc.childNodes[0];
-      if (cn.checked && cn.value != concept) {
-	cn.checked = false;
-      }
-      else if (cn.value == concept) {
-	cn.checked = true;
-      }
-    }
+    //for (var k=0,slc; slc=slcs[k]; k++) {
+    //  //->//->console.log('slc',slc,k);
+    //  var cn = slc.childNodes[0];
+    //  if (cn.checked && cn.value != concept) {
+    //    cn.checked = false;
+    //  }
+    //  else if (cn.value == concept) {
+    //    cn.checked = true;
+    //  }
+    //}
+    $('#cognates_select_concepts').multiselect('deselectAll',false);
+    $('#cognates_select_concepts').multiselect('select',concept);
 
     /* don't forget to also change the internal options which are not displayed here */
     var slcs = document.getElementById('cognates_select_concepts');
@@ -364,7 +366,7 @@ function get_new_cogid() {
   }
   else {
     var cogid = false;
-    var url = 'triples/triples.php?' +
+    var url = 'triples/triples.py?' +
       'remote_dbase='+CFG['remote_dbase'] +
       '&file='+CFG['filename'] +
       '&new_id='+CFG['formatter']

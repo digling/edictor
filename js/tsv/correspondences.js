@@ -291,7 +291,7 @@ CORRS.correspondences = function(doculA, doculB, shared_cogids) {
   var refs = {}
 
   /* get index of alignments */
-  var aidx = WLS.header.indexOf('ALIGNMENT');
+  var aidx = WLS.header.indexOf(CFG['_almcol']);
   for (key in shared_cogids) {
     /* get the concept */
     var concept = WLS[shared_cogids[key][0]][CFG['_cidx']];
@@ -299,17 +299,23 @@ CORRS.correspondences = function(doculA, doculB, shared_cogids) {
     /* get the alignemnts */
     var almA = WLS[shared_cogids[key][0]][aidx].split(' ');
     var almB = WLS[shared_cogids[key][1]][aidx].split(' ');
+
+    /* test alignment settling function */
+    var matches = CORRS.parse_alignments(
+        shared_cogids[key][0],
+        shared_cogids[key][1]);
     
     /* check for valid alignments */
-    if (almA.length != almB.length) {
-      console.log('bad alignments encountered');
+    if (!matches) {
+      console.log('bad alignments',key,almA.join(' '),almB.join(' '));
     }
     else {
+      
+      for (var i=0; i<matches.length; i++) {
+	segA = matches[i][0];
+	segB = matches[i][1];
       /* iterate over the zipped alignments, also append the concepts as a
        * reference for later backtracking */
-      for (var i=0; i<almA.length; i++) {
-	segA = almA[i];
-	segB = almB[i];
 	/* make sure no double gaps are encountered */
 	if (!(segA == '-' && segB == '-')) {
 	  if (segA+'//'+segB in corrs){
@@ -328,3 +334,101 @@ CORRS.correspondences = function(doculA, doculB, shared_cogids) {
   return [corrs,refs];
 };
 
+/* parse an alignment between two strings in such a way that only
+ * the essential parts are taken into account */
+CORRS.parse_alignments = function (idxA, idxB) {
+  
+  /* get the alignments */
+  var almA = WLS[idxA][WLS.header.indexOf(CFG['_almcol'])].split(' ');
+  var almB = WLS[idxB][WLS.header.indexOf(CFG['_almcol'])].split(' ');
+  
+  /* return and ignore if the alignemnt is wrongly encoded */
+  if (almA.length != almB.length) {return false;}
+
+  /* reduce stuff in brackets, using a simple bracket indicator  */
+  var tmpA = [];
+  var tmpB = [];
+  
+  var bop = false;
+  for (var i=0; i<almA.length; i++) {
+    sgmA = almA[i];
+    sgmB = almB[i];
+
+    if (sgmA == '(' && sgmB == '(') {
+      bop = true;
+    }
+    else if (sgmA == ')' && sgmB == ')') {
+      bop = false;
+    }
+    else if (!bop) {
+      tmpA.push(sgmA);
+      tmpB.push(sgmB);
+    }
+  }
+
+  /* split remaining things, here we go both for tone markers and for the
+   * morpheme marker */
+  var dA = {1:[]};
+  var dB = {1:[]}; 
+  var cnt = 1;
+  for (var i=0; i<tmpA.length; i++) {
+    var sgmA = tmpA[i];
+    var sgmB = tmpB[i];
+
+    /* check for breakers and increase the count */
+    if (sgmA == '◦' || sgmB == '◦') {
+      cnt += 1;
+    }
+    else {
+      if (cnt in dA && cnt in dB) {
+        dA[cnt].push(sgmA);
+        dB[cnt].push(sgmB);
+      }
+      else {
+        dA[cnt] = [sgmA];
+        dB[cnt] = [sgmB];
+      }
+
+      /* raise in case that we encounter a tone marker */
+      if (DOLGO['_tones'].indexOf(sgmA[0]) || DOLGO['_tones'].indexOf(sgmB[0])) {
+	cnt += 1;
+      }
+    }
+  }
+  var matches = [];
+  for (var i=1; i<=cnt; i++) {
+
+    if (i in dA && i in dB) {
+      
+      /* need to check whether stuff is empty */
+      if (dA[i].length > 0 && dB[i].length > 0) {
+      var morphA = dA[i];
+      var morphB = dB[i];
+      var matched = false;
+      var tmp_match = [];
+      for (var j=0;j<morphA.length; j++) {
+	var sgmA = morphA[j];
+	var sgmB = morphB[j];
+	/* only append non-empty matches */
+	if (sgmA != '-' || sgmB != '-') {
+	  tmp_match.push([sgmA,sgmB]);
+	}
+
+	/* check for real matches */
+	if (sgmA != '-' && sgmB != '-') {
+	  matched = true;
+	}
+      }}
+      if (matched) {
+	for (var k=0;k< tmp_match.length; k++) {
+	  matches.push(tmp_match[k]);
+	}
+      }
+    }
+  }
+  if (matches.length == 0) {
+    return false;
+  }
+
+  return matches;
+};
