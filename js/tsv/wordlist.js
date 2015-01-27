@@ -44,7 +44,7 @@ function reset() {
   var BL = ['file'];
 
   /* make array for list-type entries */
-  var list_types = ['highlight', 'sampa', 'pinyin', 'css', 'doculects', 'columns', 'basics', 'concepts'];
+  var list_types = ['highlight', 'sound_classes', 'sampa', 'pinyin', 'css', 'doculects', 'columns', 'basics', 'concepts'];
 
   /* XXX note that we have inconsistencies here: we use aliases to determine basic
    * display of taxon, concept, ipa, but we don't use them when parsing from 

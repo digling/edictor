@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-09-03 13:40
- * modified : 2015-01-19 11:15
+ * modified : 2015-01-27 11:35
  *
  */
 
@@ -351,6 +351,15 @@ if (document.URL.indexOf('=') != -1) {
   PARAMS = params;
   reset();
     
+  /* account for display modifications */
+  if ('sound_classes' in params) {
+    for (var i=0,dlg; dlg=CFG['sound_classes'][i]; i++) {
+      var vals = dlg.split(':');
+      DOLGO[vals[0]] = vals[1];
+    }
+  }
+  
+  /* account for server-side stuff */
   if (CFG.server_side_files.indexOf(params['file']) != -1) {
     handleAjax("event",params['file']);
     try {
