@@ -148,6 +148,9 @@ function display_cognates(concept) {
     /* retrieve length of tokens, current solution is not very economic,
      * but it seems to suffice here for the time being */
     var tkl = tks.split(' ');
+
+    /* check for empty tokens */
+    //if (tkl != 0) {
     var brackets = 0;
     for (var j=0;j<tkl.length; j++) {
       if (tkl[j] == '(' || tkl[j] == ')'){
@@ -159,6 +162,7 @@ function display_cognates(concept) {
       maxlen = tkl;
     }
     data.push([idx,doc,con,cid,tks]);
+    
   }
 
   txt += '<tr><th class="alm_head alm_bdl">DOCULECT</th>';
@@ -200,7 +204,13 @@ function display_cognates(concept) {
 	color = 'white';
       }
     }
+    
+    if (row[4] == '-' || row[4] == '') {
+      txt += '<tr style="background-color:'+color+';display:none;">';
+    }
+    else {
     txt += '<tr style="background-color:'+color+'">';
+    }
     txt += '<td class="alm_line alm_bdl">'+row[1]+'</td>';
     txt += '<td></td>';
     txt += '<td class="alm_line alm_bdl">'+row[2]+'</td>';

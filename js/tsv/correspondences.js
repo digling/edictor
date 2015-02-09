@@ -312,6 +312,8 @@ CORRS.correspondences = function(doculA, doculB, shared_cogids) {
   var corrs = {};
   var refs = {}
 
+ 
+
   /* get index of alignments */
   var aidx = WLS.header.indexOf(CFG['_almcol']);
   for (key in shared_cogids) {
@@ -325,7 +327,9 @@ CORRS.correspondences = function(doculA, doculB, shared_cogids) {
     /* test alignment settling function */
     var matches = CORRS.parse_alignments(
         shared_cogids[key][0],
-        shared_cogids[key][1]);
+        shared_cogids[key][1],
+	true
+	);
     
     /* check for valid alignments */
     if (!matches) {
@@ -361,8 +365,15 @@ CORRS.correspondences = function(doculA, doculB, shared_cogids) {
 CORRS.parse_alignments = function (idxA, idxB, context) {
 
   /* check whether context has been passed */
-  if (typeof context == 'undefined') {
+  if (typeof context == 'undefined' || !context) {
     context = false;
+  }
+  else {
+    context = document.getElementById('corrs_context').value;
+    if(WLS.header.indexOf(context) == -1) {
+      context = false;
+    }
+    console.log('context', context);
   }
   
   /* get the alignments */
@@ -383,8 +394,16 @@ CORRS.parse_alignments = function (idxA, idxB, context) {
     if (segA != '-' && segA != ')' && segA != '(') {nogapA.push(segA);}
     if (segB != '-' && segB != ')' && segB != '(') {nogapB.push(segB);}
   }
-  var prosA = prosodic_string(nogapA);
-  var prosB = prosodic_string(nogapB);
+
+  if(!context) {
+    var prosA = prosodic_string(nogapA);
+    var prosB = prosodic_string(nogapB);
+  }
+  else {
+    var prosA = WLS[idxA][WLS.header.indexOf(context)];
+    var prosB = WLS[idxB][WLS.header.indexOf(context)];
+    console.log(prosA,prosB);
+  }
 
   /* attach information to the alignments, using a dot symbol for distinction */
   var cntA = 0;
