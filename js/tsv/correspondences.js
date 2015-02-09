@@ -312,7 +312,10 @@ CORRS.correspondences = function(doculA, doculB, shared_cogids) {
   var corrs = {};
   var refs = {}
 
- 
+  var context = document.getElementById('corrs_context').value;
+    if(WLS.header.indexOf(context) == -1) {
+      context = false;
+    }
 
   /* get index of alignments */
   var aidx = WLS.header.indexOf(CFG['_almcol']);
@@ -328,7 +331,7 @@ CORRS.correspondences = function(doculA, doculB, shared_cogids) {
     var matches = CORRS.parse_alignments(
         shared_cogids[key][0],
         shared_cogids[key][1],
-	true
+	context
 	);
     
     /* check for valid alignments */
@@ -368,13 +371,6 @@ CORRS.parse_alignments = function (idxA, idxB, context) {
   if (typeof context == 'undefined' || !context) {
     context = false;
   }
-  else {
-    context = document.getElementById('corrs_context').value;
-    if(WLS.header.indexOf(context) == -1) {
-      context = false;
-    }
-    console.log('context', context);
-  }
   
   /* get the alignments */
   var almA = WLS[idxA][WLS.header.indexOf(CFG['_almcol'])].split(' ');
@@ -391,8 +387,8 @@ CORRS.parse_alignments = function (idxA, idxB, context) {
   for (var i=0; i<almA.length; i++) {
     var segA = almA[i];
     var segB = almB[i];
-    if (segA != '-' && segA != ')' && segA != '(') {nogapA.push(segA);}
-    if (segB != '-' && segB != ')' && segB != '(') {nogapB.push(segB);}
+    if (segA != '-' && segA != ')' && segA != '(' && '◦' != segA ) {nogapA.push(segA);}
+    if (segB != '-' && segB != ')' && segB != '(' && '◦' != segB ) {nogapB.push(segB);}
   }
 
   if(!context) {
@@ -402,6 +398,13 @@ CORRS.parse_alignments = function (idxA, idxB, context) {
   else {
     var prosA = WLS[idxA][WLS.header.indexOf(context)];
     var prosB = WLS[idxB][WLS.header.indexOf(context)];
+
+    /* check for mult-context nodes */
+    if(prosA.indexOf(' ') != -1) {
+      prosA = prosA.split(' ');
+      prosB = prosB.split(' ');
+    }
+
     console.log(prosA,prosB);
   }
 
@@ -412,12 +415,12 @@ CORRS.parse_alignments = function (idxA, idxB, context) {
     var segA = almA[i];
     var segB = almB[i];
 
-    if (segA != '-' && segA != ')' && segA != '(') {
+    if (segA != '-' && segA != ')' && segA != '(' && segA != '◦') {
       almA[i] += '.' + prosA[cntA];
       cntA += 1;
     }
 
-    if (segB != '-' && segB != ')' && segB != '(') {
+    if (segB != '-' && segB != ')' && segB != '(' && segB != '◦') {
       almB[i] += '.'+prosB[cntB];
       cntB += 1;
     }
