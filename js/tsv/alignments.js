@@ -175,7 +175,7 @@ ALIGN.make_table = function (taxa, alms) {
     else {
       col = 'white';
     }
-    txt += '<th style="background-color:'+col+';" id="alm_'+i+'" onclick="ALIGN.lock_sequence('+i+')" class="pointed alm_taxon">'+taxon+'</th>';
+    txt += '<th style="background-color:'+col+';" id="alm_'+i+'" oncontextmenu="ALIGN.lock_sequences('+i+',event)" onclick="ALIGN.lock_sequence('+i+')" class="pointed alm_taxon">'+taxon+'</th>';
     txt += this.style(i+1,alms[i]);
     txt += '</tr>';
   }
@@ -265,6 +265,10 @@ ALIGN.destroy_alignment = function()
   ALIGN.SEQS = [];
   ALIGN.LOCKS = [];
 }
+
+ALIGN.lock_others = function(idx) {
+
+};
 
 /* funciton introduces a gap on the left of a segment in an alignment */
 ALIGN.addGap = function (idx,jdx) {
@@ -488,4 +492,27 @@ ALIGN.lock_sequence = function(i) {
   ALIGN.refresh();
 }
 
+/* function locks an alignment and treats all locked sequences as the
+ * same when using the alignment operations */
+ALIGN.lock_sequences = function(i,event) {
+  event.preventDefault();
+  
+  var check = 0;
+  var new_lock = [];
+  for (var j=0; j < ALIGN.ALMS.length; j++) {
+    if (j != i) {
+      new_lock.push(j);
+      if (ALIGN.LOCKS.indexOf(j) != -1) {
+	check += 1;
+      }
+    }
+  }
 
+  if (check == ALIGN.LOCKS.length && check != 0) {
+    new_lock = [];
+  }
+  console.log(check, new_lock, ALIGN.LOCKS);
+  
+  ALIGN.LOCKS = new_lock;
+  ALIGN.refresh();
+}
