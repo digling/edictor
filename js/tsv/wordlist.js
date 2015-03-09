@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2015-01-27 11:36
+ * modified : 2015-03-09 13:33
  *
  */
 
@@ -374,7 +374,9 @@ function csvToArrays(allText, separator, comment, keyval) {
   }
 
   /* check for cogid or glossid first */
-  if (formattable_keys.indexOf('COGID') != -1) {
+  if (CFG['formatter']) {
+  }
+  else if (formattable_keys.indexOf('COGID') != -1) {
     CFG['formatter'] = 'COGID';
   }
   else if (formattable_keys.indexOf('GLOSSID') != -1) {
@@ -1895,7 +1897,7 @@ function finishAddLine(new_idx) {
       WLS[new_idx].push(0);
     }
     else {
-      WLS[new_idx].push('-');
+      WLS[new_idx].push('');
     }
   }
   WLS[new_idx][CFG['_tidx']] = taxon;
