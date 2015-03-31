@@ -262,6 +262,10 @@ CORRS.occurrences = function(docul, idxs) {
   if (typeof idxs == 'undefined') {
     idxs = WLS.taxa[docul];
   }
+  var context = document.getElementById('corrs_context').value;
+  if (WLS.header.indexOf(context) == -1) {
+      context = false;
+  }
   
   /* we take tokens from the alignment, for the simple reason that 
    * we want also to search for instances of gaps which may be useful
@@ -282,7 +286,14 @@ CORRS.occurrences = function(docul, idxs) {
 	ngp_idx.push(j); /* store index of valid entries here */
       }
     }
-    var prs = prosodic_string(ngp);
+
+    if (!context) {
+      var prs = prosodic_string(ngp);
+    }
+    else {
+      var prs = WLS[idx][WLS.header.indexOf(context)];
+      if (prs.indexOf(' ')) { prs = prs.split(' ');}
+    }
 
     /* modify alignment */
     for (var j=0; j<ngp_idx.length; j++) {

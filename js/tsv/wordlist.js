@@ -9,14 +9,14 @@
 
 /* define alias system for frequently occurring terms */
 ALIAS = {
-  'doculect': ['TAXON', 'LANGUAGE', 'DOCULECT', 'DOCULECTS', 'TAXA', 'LANGUAGES'],
+  'doculect': ['TAXON', 'LANGUAGE', 'DOCULECT', 'DOCULECTS', 'TAXA', 'LANGUAGES', 'CONCEPTLIST'],
   'concept': ['CONCEPT', 'GLOSS']
 }
 
 function reset() {
   WLS = {};
   CFG = {
-    'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ETYMONID', 'CHINESE'],
+    'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ETYMONID', 'CHINESE', 'CONCEPTLIST'],
     'preview': 10,
     'noid': false, 
     'sorting': false, 
@@ -81,7 +81,7 @@ var WLS = {};
 var CFG = {
   'basics'            : [
     'DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 
-    'PROTO_TOKENS', 'ALIGNMENT', 'ETYMONID', 'CHINESE'],
+    'PROTO_TOKENS', 'ALIGNMENT', 'ETYMONID', 'CHINESE', 'CONCEPTLIST'],
   'preview'           : 10,
   'noid'              : false,
   'sorting'           : false,
@@ -2139,6 +2139,7 @@ function editGroup(event,idx) {
 
   /* check for proper values to be displayed for alignment analysis */
   var rows = WLS['etyma'][idx];
+  var concepticon = false;
 
   /* check for proper alignments first */
   if (WLS.header.indexOf('ALIGNMENT') != -1 && WLS[rows[0]][WLS.header.indexOf('ALIGNMENT')]) {
@@ -2154,6 +2155,11 @@ function editGroup(event,idx) {
   }
   else if (WLS.header.indexOf('WORD') != -1) {
     var this_idx = WLS.header.indexOf('WORD');
+  }
+  /* specific case for concepticon maintenance */
+  else if (WLS.header.indexOf('CONCEPT') != -1 && WLS.header.indexOf('CONCEPTLIST') != -1) {
+    var this_idx = WLS.header.indexOf('CONCEPT');
+    concepticon = true;
   }
   else {
     fakeAlert('No phonetic entries were specified in the data.');
@@ -2181,34 +2187,48 @@ function editGroup(event,idx) {
   CFG['_current_taxa'] = [];
   CFG['_current_idx'] = rows;
   CFG['_current_seqs'] = [];
-
-  /* now create an alignment object */
-  for (var i=0,r;r=rows[i];i++) {
-    
-    var current_line = WLS[r][this_idx];
-    if(!current_line) {
-      current_line = WLS[r][fall_back];
-    }
-    /* add stuff to temporary container for quick alignment access */
-    CFG['_current_alms'].push(current_line.split(' '));
-    CFG['_current_taxa'].push(WLS[r][CFG['_tidx']]);
-
-    /* add sequence data to allow for automatic alignment */
-    var this_seq = WLS[r][seq_idx];
-    if (!this_seq) {
-      var this_seq = current_line;
-    }
-    if (this_seq.indexOf(' ') == -1) {
-      CFG['_current_seqs'].push(this_seq.split());
-    }
-    else {
-      CFG['_current_seqs'].push(this_seq.split(' '));
+  
+  if (concepticon) {
+    for (var i=0,r; r=rows[i]; i++) {
+      rows.sort(
+	  function(x,y) {
+	    return WLS[x][CFG['_tidx']].charCodeAt(0) - WLS[y][CFG['_tidx']].charCodeAt(0);}
+	    );
+      var current_line = WLS[r][this_idx];
+      var lang = WLS[r][CFG['_tidx']];
+      alms.push('<td class="alm_taxon">'+lang+'</td><td style="width:250px;font-family=monospace;padding-left:10px;">'+current_line+'</td>')
     }
 
-    var alm = plotWord(current_line);
-    var lang = WLS[r][CFG['_tidx']];
-    alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace(new RegExp('span','gi'),'td'));
-    blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(new RegExp(' ','gi'),'\t')+'\n';
+  }
+  else {
+    /* now create an alignment object */
+    for (var i=0,r;r=rows[i];i++) {
+      
+      var current_line = WLS[r][this_idx];
+      if(!current_line) {
+        current_line = WLS[r][fall_back];
+      }
+      /* add stuff to temporary container for quick alignment access */
+      CFG['_current_alms'].push(current_line.split(' '));
+      CFG['_current_taxa'].push(WLS[r][CFG['_tidx']]);
+
+      /* add sequence data to allow for automatic alignment */
+      var this_seq = WLS[r][seq_idx];
+      if (!this_seq) {
+        var this_seq = current_line;
+      }
+      if (this_seq.indexOf(' ') == -1) {
+        CFG['_current_seqs'].push(this_seq.split());
+      }
+      else {
+        CFG['_current_seqs'].push(this_seq.split(' '));
+      }
+
+      var alm = plotWord(current_line);
+      var lang = WLS[r][CFG['_tidx']];
+      alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace(new RegExp('span','gi'),'td'));
+      blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(new RegExp(' ','gi'),'\t')+'\n';
+    }
   }
   CFG['_alignment'] = blobtxt;
   
@@ -2226,10 +2246,12 @@ function editGroup(event,idx) {
   }
   text += '</table></div>';
   text += '<div class="submitline">';
-  text += '<input class="btn btn-primary submit" type="button" onclick="editAlignment()" value="EDIT" /> ';
-  text += '<input class="btn btn-primary submit" type="button" onclick="automaticAlignment()" value="ALIGN" /> ';
-  text += '<input id="submit_alignment" class="btn btn-primary submit hidden" type="button" onclick="$(\'#popup_background\').show();storeAlignment();$(\'#popup_background\').fadeOut();" value="SUBMIT" /> '; 
-  text += '<input class="btn btn-primary submit" type="button" onclick="saveAlignment('+idx+')" value="EXPORT" /> ';
+  if (!concepticon) {
+    text += '<input class="btn btn-primary submit" type="button" onclick="editAlignment()" value="EDIT" /> ';
+    text += '<input class="btn btn-primary submit" type="button" onclick="automaticAlignment()" value="ALIGN" /> ';
+    text += '<input id="submit_alignment" class="btn btn-primary submit hidden" type="button" onclick="$(\'#popup_background\').show();storeAlignment();$(\'#popup_background\').fadeOut();" value="SUBMIT" /> '; 
+    text += '<input class="btn btn-primary submit" type="button" onclick="saveAlignment('+idx+')" value="EXPORT" /> ';
+  }
   text += '<input class="btn btn-primary submit" type="button" onclick="ALIGN.destroy_alignment();$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /></div><br><br> ';
   text += '</div> ';
 
@@ -2514,11 +2536,11 @@ function showPhonology (event, doculect, sort, direction) {
     }
     text += '<tr>';
     text += '<td>' + (i+1) + '</td>';
-    text += '<td class="pointed" title="click to filter the occurrences of this phoneme" ' +
-      'onclick="filterOccurrences(\''+doculect+'\',\''+cids.join(',')+'\')">' + 
-      plotWord(phoneme, 'span', 'pointed') + '</td>';
+    text += '<td>' + 
+      plotWord(phoneme, 'span') + '</td>';
     text += '<td>' + noc + '</td>';
-    text += '<td class="concepts" title="'+concepts.join(', ')+'">' + concepts.join(', ') + '</td>';
+    //text += '<td class="concepts pointed" title="'+concepts.join(', ')+'">' + concepts.join(', ') + '</td>';
+    text += '<td onclick="filterOccurrences(\''+doculect+'\',\''+cids.join(',')+'\')" class="concepts pointed" title="click to filter the occurrences of this phoneme">' + concepts.join(', ') + '</td>';
     text += '</tr>';
   }
   text += '</table>';
