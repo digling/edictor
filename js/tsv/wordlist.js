@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2015-03-09 13:33
+ * modified : 2015-04-13 21:28
  *
  */
 
@@ -62,7 +62,7 @@ function reset() {
        var values = value.split('|');
        for (var i=0,val;val=values[i];i++) {
          if (val != '') {
-          CFG[param].push(val);
+          CFG[param].push(decodeURIComponent(val));
          }
        }
      }
