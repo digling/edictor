@@ -238,6 +238,10 @@ function handleAjax (event, url) {
     if (CFG['remote_dbase']) {
       new_url += '&remote_dbase='+CFG['remote_dbase'];
     }
+    if (CFG['template']) {
+      new_url += '&template=template';
+    }
+      
     CFG['storable'] = true;
   }
 
