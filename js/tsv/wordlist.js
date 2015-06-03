@@ -37,7 +37,9 @@ function reset() {
     'columns' : false,
     'remote_dbase' : 'triples.sqlite3',
     '_cpentry' : false,
-    '_almcol' : 'ALIGNMENT'
+    '_almcol' : 'ALIGNMENT',
+    'template' : false,
+    'update_mode' : "save"
   };
   
   STORE = '';
@@ -102,7 +104,9 @@ var CFG = {
   'columns' : false,
   'remote_dbase' : 'triples.sqlite3',
   '_cpentry' : false,
-  '_almcol':'ALIGNMENT'
+  '_almcol':'ALIGNMENT',
+  'template' : false,
+  'update_mode' : "save"
 };
 
 var STORE = ''; // global variable to store the text data in raw format
@@ -1322,13 +1326,28 @@ function storeModification(idx, jdx, value, async) {
     //->console.log('encountered storable stuff');
 
     /* create url first */
-    var new_url = 'triples/update.py?' +
-      'remote_dbase='+CFG['remote_dbase'] +
-      '&file='+CFG['filename'] +
-      '&update=true' + 
-      '&ID='+idx +
-      '&COL='+ WLS.column_names[WLS.header[jdx]].replace(/ /g,'_') +
-      '&VAL='+value;
+    if (CFG['update_mode'] == "save") {
+      var new_url = 'triples/update.py?' +
+        'remote_dbase='+CFG['remote_dbase'] + 
+	'&file='+CFG['filename'] +
+        '&update=true' + 
+        '&ID='+idx +'|' + idx + '|'+ idx +
+        '&COL='+ WLS.column_names[WLS.header[jdx]].replace(/ /g,'_') +
+	'|CONCEPT|DOCULECT' + 
+        '&VAL='+value.replace(/\|/,'###') + 
+	'|' + WLS[idx][CFG['_cidx']] + '|' + WLS[idx][CFG['_tidx']];
+      console.log(new_url);
+
+    }
+    else {
+      var new_url = 'triples/update.py?' +
+        'remote_dbase='+CFG['remote_dbase'] +
+        '&file='+CFG['filename'] +
+        '&update=true' + 
+        '&ID='+idx +
+        '&COL='+ WLS.column_names[WLS.header[jdx]].replace(/ /g,'_') +
+        '&VAL='+value;
+    }
 
     $.ajax({
       async: false,
