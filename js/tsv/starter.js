@@ -471,24 +471,24 @@ function makeMyURL() {
   
   /* check out on-off-switches (could be done more elegantly, but this suffices so far */
   if (menuX.checked && filtersX.checked) {
-    base_url += 'css=menu:show,textfields:show,'; 
+    base_url += 'css=menu:show|textfields:show|'; 
   }
   else if (menuX.checked) {
-    base_url += 'css=menu:show,textfields:hide,';
+    base_url += 'css=menu:show|textfields:hide|';
   }
   else if (filtersX.checked) {
-    base_url += 'css=menu:hide,textfields:show,';
+    base_url += 'css=menu:hide|textfields:show|';
   }
   else {
-    base_url += 'css=menu:hide,textfields:hide,';
+    base_url += 'css=menu:hide|textfields:hide|';
   }
   
   /* check out database and append to url */
   if ( dbase.checked ) {
-    base_url += 'database:show,'; 
+    base_url += 'database:show|'; 
   }
   else {
-    base_url += 'database:hide,'; 
+    base_url += 'database:hide|'; 
   }
   
   if (formatterX.value != '') {
@@ -500,16 +500,16 @@ function makeMyURL() {
     base_url += '&preview='+previewX.value;
   }
   if (basicsX.value != '') {
-    base_url += '&basics='+basicsX.value;
+    base_url += '&basics='+basicsX.value.replace(/,/g,'|');
   }
   if (pinyinX.value != '') {
-    base_url += '&pinyin='+pinyinX.value;
+    base_url += '&pinyin='+pinyinX.value.replace(/,/g,'|');
   }
   if (sampaX.value != '') {
-    base_url += '&sampa='+sampaX.value;
+    base_url += '&sampa='+sampaX.value.replace(/,/g,'|');
   }
   if (highlightX.value != '') {
-    base_url += '&highlight='+highlightX.value;
+    base_url += '&highlight='+highlightX.value.replace(/,/g,'|');
   }
   if (file_nameX.value != '') {
     base_url += '&file='+file_nameX.value;
