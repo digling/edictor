@@ -1319,12 +1319,12 @@ function storeModification(idx, jdx, value, async) {
     async = true;
   }
   
-  /* if storable is set to "true" and wer are working with a remote server, 
+  /* if storable is set to "true" and we are working with a remote server, 
    * make the modifying ajax-call to ensure that the data has been edited 
    * and stored */
   if (CFG['storable']) {
     //->console.log('encountered storable stuff');
-
+    
     /* create url first */
     if (CFG['update_mode'] == "save") {
       var new_url = 'triples/update.py?' +
@@ -1334,7 +1334,7 @@ function storeModification(idx, jdx, value, async) {
         '&ID='+idx +'|' + idx + '|'+ idx +
         '&COL='+ WLS.column_names[WLS.header[jdx]].replace(/ /g,'_') +
 	'|CONCEPT|DOCULECT' + 
-        '&VAL='+value.replace(/\|/,'###') + 
+        '&VAL='+ typeof value == 'string' ? value.replace(/\|/g,'###') : value + 
 	'|' + WLS[idx][CFG['_cidx']] + '|' + WLS[idx][CFG['_tidx']];
       console.log(new_url);
 
