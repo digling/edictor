@@ -1334,7 +1334,7 @@ function storeModification(idx, jdx, value, async) {
         '&ID='+idx +'|' + idx + '|'+ idx +
         '&COL='+ WLS.column_names[WLS.header[jdx]].replace(/ /g,'_') +
 	'|CONCEPT|DOCULECT' + 
-        '&VAL='+ typeof value == 'string' ? value.replace(/\|/g,'###') : value + 
+        '&VAL='+ String(value).replace(/\|/g,'###') + 
 	'|' + WLS[idx][CFG['_cidx']] + '|' + WLS[idx][CFG['_tidx']];
       console.log(new_url);
 

@@ -337,10 +337,12 @@ function combine_cogids() {
   cogid = false;
   for (var i=0;i<checked.length; i++) {
     var tmp_cogid = WLS[checked[i]][cidx];
-    if (!cogid || 0 < tmp_cogid < cogid) {
-      cogid = tmp_cogid;
+    if (!cogid || 0 < tmp_cogid < cogid || cogid == 0) {
+	cogid = tmp_cogid;
     }
   }
+
+  console.log('cogid', cogid, tmp_cogid);
   
   if (!cogid) {
     cogid = get_new_cogid();
@@ -348,13 +350,20 @@ function combine_cogids() {
   
   var visited = [];
   for (var i=0,chk; chk=checked[i]; i++) {
+    console.log(chk, cidx, WLS[chk]);
     var tmp_cogid = parseInt(WLS[chk][cidx]);
     if (visited.indexOf(tmp_cogid) == -1) {
-      for (var j=0,idx; idx=WLS.etyma[tmp_cogid][j]; j++) {
-	WLS[idx][cidx] = cogid;
-	
-	/* store remote if possible */
-	storeModification(idx, cidx, cogid, false);
+      if (tmp_cogid != 0) {
+	for (var j=0,idx; idx=WLS.etyma[tmp_cogid][j]; j++) {
+      	  WLS[idx][cidx] = cogid;
+      	  
+      	  /* store remote if possible */
+      	  storeModification(idx, cidx, cogid, false);
+      	}
+      }
+      else {
+	WLS[chk][cidx] = cogid;
+	storeModification(chk, cidx, cogid, false);
       }
       visited.push(tmp_cogid);
     }
