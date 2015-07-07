@@ -39,7 +39,8 @@ function reset() {
     '_cpentry' : false,
     '_almcol' : 'ALIGNMENT',
     'template' : false,
-    'update_mode' : "save"
+    'update_mode' : "save",
+    'align_all_words' : true
   };
   
   STORE = '';
@@ -73,7 +74,6 @@ function reset() {
      }
     }
   }
-  
 }
 
 /* the wordlist object */
@@ -106,7 +106,8 @@ var CFG = {
   '_cpentry' : false,
   '_almcol':'ALIGNMENT',
   'template' : false,
-  'update_mode' : "save"
+  'update_mode' : "save",
+  'align_all_words' : true
 };
 
 var STORE = ''; // global variable to store the text data in raw format
@@ -363,6 +364,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   CFG['_tidx'] = tIdx-1; // index of taxa
   CFG['_cidx'] = cIdx-1; // index of concepts
   CFG['parsed'] = true;
+  CFG['_selected_doculects'] = Object.keys(WLS.taxa);
 
   /* add formatting options for all "ID" headers to the data, this is important
    * to make sure that cognate ids can be handled as such */
@@ -643,7 +645,7 @@ function showWLS(start)
   text += '<th>ID</th>';
   text += thtext;
   var count = 1;
-  console.log('wls.rows',WLS.rows);
+  //console.log('wls.rows',WLS.rows);
   if (CFG['formatter']) {
     var previous_format = '';
     var tmp_class = 'd0';
@@ -1467,6 +1469,8 @@ function applyFilter()
     }
   }
 
+
+
   /* check for empty selection, we need to guarantee that at least
    * one taxon has been selected */
   if (tlist.length == 0) {
@@ -1476,6 +1480,9 @@ function applyFilter()
       $('#select_doculects').multiselect('select',tlist);
     }
   }
+
+  CFG['_selected_doculects'] = tlist;
+
   var trows = [];
   for (var i=0,taxon; taxon=tlist[i]; i++) {
     trows.push.apply(trows, WLS['taxa'][taxon]);
@@ -1499,6 +1506,8 @@ function applyFilter()
       $('#select_concepts').multiselect('select',clist);
     }
   }
+
+  CFG['_selected_concepts'] = clist;
 
   var crows = [];
   for (var i=0,concept; concept=clist[i]; i++) {
@@ -2272,7 +2281,10 @@ function editGroup(event,idx) {
 	    );
       var current_line = WLS[r][this_idx];
       var lang = WLS[r][CFG['_tidx']];
-      alms.push('<td class="alm_taxon">'+lang+'</td><td style="width:250px;font-family=monospace;padding-left:10px;">'+current_line+'</td>')
+      /* only align elements if they are currently displayed XXX */
+      if (CFG['_selected_doculects'].indexOf(lang) != -1 || CFG['align_all_words'] != "false") {
+	alms.push('<td class="alm_taxon">'+lang+'</td><td style="width:250px;font-family=monospace;padding-left:10px;">'+current_line+'</td>')
+      }
     }
 
   }
@@ -2302,8 +2314,12 @@ function editGroup(event,idx) {
 
       var alm = plotWord(current_line);
       var lang = WLS[r][CFG['_tidx']];
-      alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace(new RegExp('span','gi'),'td'));
-      blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(new RegExp(' ','gi'),'\t')+'\n';
+
+      /* only take those sequences into account which are currently selected in the alignment */
+      if (CFG['_selected_doculects'].indexOf(lang) != -1 || CFG['align_all_words'] != "false") {
+	alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace(new RegExp('span','gi'),'td'));
+	blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(new RegExp(' ','gi'),'\t')+'\n';
+      }
     }
   }
   CFG['_alignment'] = blobtxt;

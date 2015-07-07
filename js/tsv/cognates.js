@@ -90,7 +90,8 @@ function display_cognates(concept, sortby) {
   /* if cognates is not undefined, we have to change the multiselect options to display what
    * we really want to see */
   else {
-    var idxs = WLS['concepts'][concept];
+    var idxs = WLS.concepts[concept];
+    
     var selected_concepts = ''+WLS.c2i[concept];
 
     $('#cognates_select_concepts').multiselect('deselectAll',false);
@@ -132,23 +133,25 @@ function display_cognates(concept, sortby) {
     var doc = WLS[idx][CFG['_tidx']];
     var con = WLS[idx][CFG['_cidx']];
     
-    /* retrieve length of tokens, current solution is not very economic,
-     * but it seems to suffice here for the time being */
-    var tkl = tks.split(' ');
+    if (CFG['_selected_doculects'].indexOf(doc) != -1) {
+      /* retrieve length of tokens, current solution is not very economic,
+       * but it seems to suffice here for the time being */
+      var tkl = tks.split(' ');
 
-    /* check for empty tokens */
-    //if (tkl != 0) {
-    var brackets = 0;
-    for (var j=0;j<tkl.length; j++) {
-      if (tkl[j] == '(' || tkl[j] == ')'){
-	brackets += 1;
+      /* check for empty tokens */
+      //if (tkl != 0) {
+      var brackets = 0;
+      for (var j=0;j<tkl.length; j++) {
+        if (tkl[j] == '(' || tkl[j] == ')'){
+          brackets += 1;
+        }
       }
+      tkl = tkl.length - brackets;
+      if (tkl > maxlen) {
+        maxlen = tkl;
+      }
+      data.push([idx,doc,con,cid,tks]);
     }
-    tkl = tkl.length - brackets;
-    if (tkl > maxlen) {
-      maxlen = tkl;
-    }
-    data.push([idx,doc,con,cid,tks]);
     
   }
 
@@ -242,11 +245,10 @@ function display_cognates(concept, sortby) {
   txt += '</table>';
   tab.innerHTML = txt;
   
-  //var des = document.getElementById('cognates_description');
-  //des.innerHTML = 'Showing '+alms.length +' words.';
-  
   /* reset wordlist selection to the range of selected concepts */
-  filterOccurrences(false, selected_concepts);
+  if (data.length != 0) {
+    filterOccurrences(false, selected_concepts);
+  }
 }
 
 function display_previous_cognate() {
