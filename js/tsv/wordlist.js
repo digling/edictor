@@ -643,6 +643,7 @@ function showWLS(start)
   text += '<th>ID</th>';
   text += thtext;
   var count = 1;
+  console.log('wls.rows',WLS.rows);
   if (CFG['formatter']) {
     var previous_format = '';
     var tmp_class = 'd0';
@@ -1318,36 +1319,92 @@ function storeModification(idx, jdx, value, async) {
   if (typeof async == 'undefined') {
     async = true;
   }
+
+  /* check whether idx, jdx, and value contain multiple entries */
+  if (typeof idx == 'number' && typeof jdx == 'number') {
+    var idxs = [idx];
+    var jdxs = [jdx];
+    var values = [value];
+  }
+  else {
+    var idxs = idx;
+    var jdxs = jdx;
+    var values = value;
+  }
+
   
   /* if storable is set to "true" and we are working with a remote server, 
    * make the modifying ajax-call to ensure that the data has been edited 
    * and stored */
   if (CFG['storable']) {
     //->console.log('encountered storable stuff');
-    
-    /* create url first */
-    if (CFG['update_mode'] == "save") {
-      var new_url = 'triples/update.py?' +
-        'remote_dbase='+CFG['remote_dbase'] + 
-	'&file='+CFG['filename'] +
-        '&update=true' + 
-        '&ID='+idx +'|' + idx + '|'+ idx +
-        '&COL='+ WLS.column_names[WLS.header[jdx]].replace(/ /g,'_') +
-	'|CONCEPT|DOCULECT' + 
-        '&VAL='+ String(value).replace(/\|/g,'###') + 
-	'|' + WLS[idx][CFG['_cidx']] + '|' + WLS[idx][CFG['_tidx']];
-      console.log(new_url);
+    //
 
+    var new_url = 'triples/update.py?remote_dbase='+CFG['remote_dbase'] + 
+      '&file='+CFG['filename'] +
+      '&update=true';
+    
+    var ids = [];
+    var cols = [];
+    var vals = [];
+    
+    for (var i=0; i<idxs.length; i++) {
+      /* get the three values from the arrays */
+      var idx = idxs[i];
+      var jdx = jdxs[i];
+      var val = values[i];
+
+      ids.push(idx);
+      cols.push(WLS.column_names[WLS.header[jdx]].replace(/ /g,'_'));
+      vals.push(val);
+
+      if (CFG['update_mode'] == 'save') {
+	/* add two ids, very simple */
+	ids.push(idx);
+	ids.push(idx);
+
+	/* add the column names */
+	cols.push('CONCEPT');
+	cols.push('DOCULECT');
+
+	/* add the values */
+	vals.push(WLS[idx][CFG['_cidx']]);
+	vals.push(WLS[idx][CFG['_tidx']]);
+      }
     }
-    else {
-      var new_url = 'triples/update.py?' +
-        'remote_dbase='+CFG['remote_dbase'] +
-        '&file='+CFG['filename'] +
-        '&update=true' + 
-        '&ID='+idx +
-        '&COL='+ WLS.column_names[WLS.header[jdx]].replace(/ /g,'_') +
-        '&VAL='+value;
-    }
+
+    /* now add the whole big dump in one go */
+    new_url += '&ID='+ids.join("|");
+    new_url += '&COL='+cols.join("|");
+    new_url += '&VAL='+vals.join("|"); // XXX change this to ensure safe adding of pipe! 
+
+	
+
+
+    
+    ///* create url first */
+    //if (CFG['update_mode'] == "save") {
+    //  var new_url = 'triples/update.py?' +
+    //    'remote_dbase='+CFG['remote_dbase'] + 
+    //    '&file='+CFG['filename'] +
+    //    '&update=true' + 
+    //    '&ID='+idx +'|' + idx + '|'+ idx +
+    //    '&COL='+ WLS.column_names[WLS.header[jdx]].replace(/ /g,'_') +
+    //    '|CONCEPT|DOCULECT' + 
+    //    '&VAL='+ String(value).replace(/\|/g,'###') + 
+    //    '|' + WLS[idx][CFG['_cidx']] + '|' + WLS[idx][CFG['_tidx']];
+    //  console.log(new_url);
+
+    //}
+    //else {
+    //  var new_url = 'triples/update.py?' +
+    //    'remote_dbase='+CFG['remote_dbase'] +
+    //    '&file='+CFG['filename'] +
+    //    '&update=true' + 
+    //    '&ID='+idx +
+    //    '&COL='+ WLS.column_names[WLS.header[jdx]].replace(/ /g,'_') +
+    //    '&VAL='+value;
+    //}
 
     $.ajax({
       async: false,
@@ -2297,6 +2354,7 @@ function automaticAlignment() {
 }
 
 /* function creates and ALIGN object for editing alignments in text */
+/* XXX go hear for sorting the alignmetns when aligning the words */
 function editAlignment() {
   ALIGN.ALMS = CFG['_current_alms'];
   ALIGN.TAXA = CFG['_current_taxa'];
@@ -2334,14 +2392,26 @@ function storeAlignment() {
   var blobtxt = '';
   
   /* XXX we now try to update them all at once, in order to save time TODO */
+  /* in order to make sure that we can submit everything at once, we collect
+   * all info in three arrays, ids,cols, vals */
+  var ids = [];
+  var cols = [];
+  var vals = [];
 
   for (var i=0,idx; idx=CFG['_current_idx'][i]; i++) {
     var alm = ALIGN.ALMS[i].join(' ');
     WLS[idx][this_idx] = alm;
-    storeModification(idx, this_idx, alm, false);
+    //storeModification(idx, this_idx, alm, false);
+    
+    /* add the values to the three arrays */
+    ids.push(idx);
+    cols.push(this_idx);
+    vals.push(alm);
 
     blobtxt += idx+'\t'+ALIGN.TAXA[i]+'\t'+ALIGN.ALMS[i].join('\t')+'\n';
   }
+
+  storeModification(ids,cols,vals,false);
 
   CFG['_alignment'] = blobtxt;
 
@@ -2351,7 +2421,8 @@ function storeAlignment() {
   }
   createSelectors();
   applyFilter();
-  showWLS(getCurrent());
+  //console.log('current',getCurrent());
+  //showWLS(getCurrent());
 }
 
 function toggleClasses(classes,from,to) {

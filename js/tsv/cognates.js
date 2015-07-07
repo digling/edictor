@@ -46,10 +46,15 @@ function handle_cognate_selection() {
 }
 
 /* function displays all cognates in a table and makes them ready for editing */
-function display_cognates(concept) {
+function display_cognates(concept, sortby) {
+
+  /* check for emtpy sortby */
+  if (typeof sortby == 'undefined') {
+    sortby = 2;
+  }
   
   /* if concept is not passed, check for selection */
-  if (typeof concept == 'undefined') {
+  if (typeof concept == 'undefined' || ! concept) {
 
     /* set up variable for integer ids of concepts to get them passed to the function that
      * handles the restricted file display of the wordlist */
@@ -88,24 +93,6 @@ function display_cognates(concept) {
     var idxs = WLS['concepts'][concept];
     var selected_concepts = ''+WLS.c2i[concept];
 
-    ///* uncheck and check the options of the multiselect item, note that we don't refresh it here,
-    // * since it is much faster to do this "manually" by modifying the items then using the
-    // * multiselect.refresh option 
-    // * note further that we use the query selector to restrict the range of the buttons we
-    // * change */
-    //var slcid = document.getElementById('cognates_select_concepts_button');
-    //var slcs = slcid.querySelectorAll('.checkbox');
-
-    //for (var k=0,slc; slc=slcs[k]; k++) {
-    //  //->//->console.log('slc',slc,k);
-    //  var cn = slc.childNodes[0];
-    //  if (cn.checked && cn.value != concept) {
-    //    cn.checked = false;
-    //  }
-    //  else if (cn.value == concept) {
-    //    cn.checked = true;
-    //  }
-    //}
     $('#cognates_select_concepts').multiselect('deselectAll',false);
     $('#cognates_select_concepts').multiselect('select',concept);
 
@@ -165,19 +152,28 @@ function display_cognates(concept) {
     
   }
 
-  txt += '<tr><th class="alm_head alm_bdl">DOCULECT</th>';
+  /* set up a concept string or nothing in case concept is undefined */
+  if (typeof concept == 'undefined') {
+    var cstring = '';
+  }
+  else {
+    var cstring = concept;
+  }
+
+  txt += '<tr>';
+  txt += '<th onclick="display_cognates(\''+cstring+'\',1)" class="pointed alm_head alm_bdl">DOCULECT</th>';
   txt += '<th style="width: 5px"></th>';
-  txt += '<th class="alm_head alm_bdl">CONCEPT</th>';
+  txt += '<th onclick="display_cognates(\''+cstring+'\',2)" class="pointed alm_head alm_bdl">CONCEPT</th>';
   txt += '<th style="width:5px" class="alm_bdr"></th>';
-  txt += '<th class="alm_head" colspan="'+maxlen+'">ALIGNMENTS</th>';
+  txt += '<th onclick="display_cognates(\''+cstring+'\',4)" class="pointed alm_head" colspan="'+maxlen+'">ALIGNMENTS</th>';
   txt += '<th style="width:5px"></th>';
-  txt += '<th class="alm_head alm_bdl" colspan="3">EDIT</th></tr>';
+  txt += '<th onclick="display_cognates(\''+cstring+'\',3)" class="pointed alm_head alm_bdl" colspan="3">EDIT</th></tr>';
 
   /* sort data according to concept and cognate id and taxon */
   data.sort(
       function(x,y) {
-	var _x = [x[2],x[3],x[1]].join(' ');
-	var _y = [y[2],y[3],y[1]].join(' ');
+	var _x = [x[3], x[sortby], x[2],x[1]].join(' ');
+	var _y = [y[3], y[sortby], y[2],y[1]].join(' ');
 	return _x.localeCompare(_y);
       });
 
@@ -314,14 +310,29 @@ function assign_new_cogid() {
   /* calculate new cogid */
   var new_cogid = get_new_cogid();
   var cidx = WLS.header.indexOf(CFG['formatter']);
+  
+  /* we submit all at once now to make it faster */
+  var ids = [];
+  var cols = [];
+  var vals = [];
 
   for (var i=0,chk; chk=checked[i]; i++) {
     WLS[chk][cidx] = new_cogid;
-    /* remote store if possible */
-    storeModification(chk, cidx, new_cogid, false);
-  }
+    
+    /* add to remote store arrays */
+    ids.push(chk);
+    cols.push(cidx);
+    vals.push(new_cogid);
 
+    //storeModification(chk, cidx, new_cogid, false);
+  }
+  
+  /* go for remote store */
+  storeModification(ids, cols, vals, false);
+  
+  /* XXX consider not resetting format here ? XXX */
   resetFormat(CFG['formatter']);
+  
   display_cognates();
 }
 
@@ -347,27 +358,43 @@ function combine_cogids() {
   if (!cogid) {
     cogid = get_new_cogid();
   }
+
+  var ids = [];
+  var cols = [];
+  var vals = [];
   
   var visited = [];
   for (var i=0,chk; chk=checked[i]; i++) {
     console.log(chk, cidx, WLS[chk]);
     var tmp_cogid = parseInt(WLS[chk][cidx]);
     if (visited.indexOf(tmp_cogid) == -1) {
-      if (tmp_cogid != 0) {
+      if (tmp_cogid != 0 && typeof tmp_cogid == 'number') {
+	console.log(tmp_cogid, typeof tmp_cogid);
 	for (var j=0,idx; idx=WLS.etyma[tmp_cogid][j]; j++) {
       	  WLS[idx][cidx] = cogid;
       	  
       	  /* store remote if possible */
-      	  storeModification(idx, cidx, cogid, false);
+      	  ids.push(idx);
+	  cols.push(cidx);
+	  vals.push(cogid);
+	  //storeModification(idx, cidx, cogid, false);
       	}
       }
       else {
 	WLS[chk][cidx] = cogid;
-	storeModification(chk, cidx, cogid, false);
+	ids.push(chk);
+	cols.push(cidx);
+	vals.push(cogid);
+	//storeModification(chk, cidx, cogid, false);
       }
       visited.push(tmp_cogid);
     }
   }
+
+  /* store modification */
+  storeModification(ids, cols, vals, false);
+
+  /* XXX consider not resetting the formatter? */
   resetFormat(CFG['formatter']);
   display_cognates();
 }
