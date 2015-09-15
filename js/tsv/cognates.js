@@ -313,7 +313,7 @@ function get_selected_indices() {
     }
   }
 
-  //->console.log(checked);
+  console.log('checked',checked);
 
   return checked;
 }
@@ -340,7 +340,6 @@ function assign_new_cogid() {
     cols.push(cidx);
     vals.push(new_cogid);
 
-    //storeModification(chk, cidx, new_cogid, false);
   }
   
   /* go for remote store */
@@ -364,12 +363,10 @@ function combine_cogids() {
   cogid = false;
   for (var i=0;i<checked.length; i++) {
     var tmp_cogid = WLS[checked[i]][cidx];
-    if (!cogid || 0 < tmp_cogid < cogid || cogid == 0) {
+    if ((!cogid || 0 < tmp_cogid < cogid || cogid == 0) && tmp_cogid != 0) {
 	cogid = tmp_cogid;
     }
   }
-
-  console.log('cogid', cogid, tmp_cogid);
   
   if (!cogid) {
     cogid = get_new_cogid();
