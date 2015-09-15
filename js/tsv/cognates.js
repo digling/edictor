@@ -64,14 +64,17 @@ function display_cognates(concept, sortby) {
     var idxs = [];
     var slc = document.getElementById('cognates_select_concepts');
     var all_concepts = [];
-
+  
+    /* set up restriction to maximally five concepts per slot */
+    var restriction = 1
     for (var i=0,option; option=slc.options[i]; i++) {
-      if (option.selected) {
+      if (option.selected && restriction <= 5) {
         for (var j=0,idx; idx=WLS['concepts'][option.value][j]; j++) {
           idxs.push(idx);
         }
 	all_concepts.push(option.value);
 	selected_concepts.push(WLS.c2i[option.value]);
+	restriction += 1;
       }
     }
     if (all_concepts.length > 0) {
@@ -81,13 +84,19 @@ function display_cognates(concept, sortby) {
       else {
 	document.getElementById('cognates_current_concept').innerHTML = all_concepts[0];
       }
+      /* mark the current concept */
+      CFG['_current_concept'] = all_concepts[0];
+      CFG['_concept_multiselect'] = true;
+
+      /* make string from selected concepts */
+      selected_concepts = selected_concepts.join(',');
     }
-
-    /* make string from selected concepts */
-    selected_concepts = selected_concepts.join(',');
-
+    else {
+      display_cognates(CFG['_current_concept']);
+      return;
+    }
   }
-  /* if cognates is not undefined, we have to change the multiselect options to display what
+  /* if the concept is not undefined, we have to change the multiselect options to display what
    * we really want to see */
   else {
     var idxs = WLS.concepts[concept];
@@ -101,14 +110,14 @@ function display_cognates(concept, sortby) {
     var slcs = document.getElementById('cognates_select_concepts');
     for (var k=0,option; option=slcs.options[k]; k++) {
       if (option.selected && option.value != concept) {
-	//->console.log(option,option.selected,option.value);
 	option.selected = false;
       }
       else if (option.value == concept) {
 	option.selected = true;
-	//->console.log(option.selected,option.value);
       }
     }
+    /* store that there is no multiselect option chosen here */
+    CFG['_concept_multiselect'] = false;
   }
 
   /* get the selected concep
@@ -219,7 +228,7 @@ function display_cognates(concept, sortby) {
     alms.push(row[4].split(' '));
 
     /* add missing tds for the rest of the table */
-    var clen = maxlen - row[4].split(' ').length;
+    var clen = maxlen - row[4].split(' ').length + row[4].replace(/[^\(\)]/g, '').length;
     for (var j=0; j < clen; j++) {
       txt += '<td></td>';
     }
@@ -273,8 +282,13 @@ function display_next_cognate() {
 }
 
 function display_current_cognate() {
-  var ccon = CFG['_current_concept'];
-  display_cognates(ccon);
+  if (!CFG['_concept_multiselect']) {
+    var ccon = CFG['_current_concept'];
+    display_cognates(ccon);
+  }
+  else {
+    display_cognates();
+  }
 }
 
 /* get the word indices for all currently selected concepts */

@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2015-04-13 21:28
+ * modified : 2015-09-15 11:52
  *
  */
 
@@ -295,6 +295,7 @@ function csvToArrays(allText, separator, comment, keyval) {
       /* now, suppose we have a restricted taxa- or concept list, we check
        * whether the items occur in this selection */
       if (
+	  (typeof concept != 'undefined') &&
 	  (!CFG['doculects'] || CFG['doculects'].indexOf(taxon) != -1) &&
 	  (!CFG['concepts'] || CFG['concepts'].indexOf(concept) != -1)
 	 ) {
@@ -1358,7 +1359,7 @@ function storeModification(idx, jdx, value, async) {
 
       ids.push(idx);
       cols.push(WLS.column_names[WLS.header[jdx]].replace(/ /g,'_'));
-      vals.push(val);
+      vals.push(encodeURIComponent(val));
 
       if (CFG['update_mode'] == 'save') {
 	/* add two ids, very simple */
@@ -1380,34 +1381,6 @@ function storeModification(idx, jdx, value, async) {
     new_url += '&COL='+cols.join("|");
     new_url += '&VAL='+vals.join("|"); // XXX change this to ensure safe adding of pipe! 
 
-	
-
-
-    
-    ///* create url first */
-    //if (CFG['update_mode'] == "save") {
-    //  var new_url = 'triples/update.py?' +
-    //    'remote_dbase='+CFG['remote_dbase'] + 
-    //    '&file='+CFG['filename'] +
-    //    '&update=true' + 
-    //    '&ID='+idx +'|' + idx + '|'+ idx +
-    //    '&COL='+ WLS.column_names[WLS.header[jdx]].replace(/ /g,'_') +
-    //    '|CONCEPT|DOCULECT' + 
-    //    '&VAL='+ String(value).replace(/\|/g,'###') + 
-    //    '|' + WLS[idx][CFG['_cidx']] + '|' + WLS[idx][CFG['_tidx']];
-    //  console.log(new_url);
-
-    //}
-    //else {
-    //  var new_url = 'triples/update.py?' +
-    //    'remote_dbase='+CFG['remote_dbase'] +
-    //    '&file='+CFG['filename'] +
-    //    '&update=true' + 
-    //    '&ID='+idx +
-    //    '&COL='+ WLS.column_names[WLS.header[jdx]].replace(/ /g,'_') +
-    //    '&VAL='+value;
-    //}
-
     $.ajax({
       async: false,
       type: "GET",
@@ -1422,7 +1395,7 @@ function storeModification(idx, jdx, value, async) {
           dataSavedMessage("insertion");
         }
 	else {
-	  fakeAlert("PROBLEM IN SAVING THE VALUE ENCOUNTERED!");
+	  fakeAlert("PROBLEM IN SAVING THE VALUE ENCOUNTERED! <" + new_url+'>');
 	}
       },
       error: function() {
@@ -1468,8 +1441,6 @@ function applyFilter()
       tlist.push(option.value);
     }
   }
-
-
 
   /* check for empty selection, we need to guarantee that at least
    * one taxon has been selected */
@@ -2432,9 +2403,9 @@ function storeAlignment() {
   CFG['_alignment'] = blobtxt;
 
   resetFormat(CFG['formatter']);
-  if ('_current_concept' in CFG) {
-    display_current_cognate();
-  }
+  //if ('_current_concept' in CFG) {
+  //  display_current_cognate();
+  //}
   createSelectors();
   applyFilter();
   //console.log('current',getCurrent());
@@ -2548,12 +2519,29 @@ function showPhonology (event, doculect, sort, direction) {
   var idxs = WLS['taxa'][doculect];
 
   /* get index of tokens and concepts*/
-  var t = WLS.header.indexOf('TOKENS');
+  var tidx = WLS.header.indexOf('TOKENS');
+  var aidx = WLS.header.indexOf('ALIGNMENT');
+  var iidx = WLS.header.indexOf('IPA');
   var c = CFG['_cidx'];
   
   /* iterate over the data */
   for (var i=0,idx; idx = idxs[i]; i++) {
-    var tokens = WLS[idx][t].split(' ');
+    /* first check for valid alignments */
+    if (WLS[idx][aidx] != 'undefined' && WLS[idx][aidx]) {
+      var _tokens = WLS[idx][aidx].split(' ');
+      var tokens = [];
+      for (var j=0; j<_tokens.length; j++) {
+	if ('()-'.indexOf(_tokens[j]) == -1) {
+	  tokens.push(_tokens[j]);
+	}
+      }
+    }
+    else if (WLS[idx][tidx] != 'undefined' && WLS[idx][tidx]) {
+      var tokens = WLS[idx][t].split(' ');
+    }
+    else {
+      var tokens = ipa2tokens(WLS[idx][iidx]).split(' ');
+    }
     for (var j=0,token; token=tokens[j]; j++) {
       try {
         occs[token].push(idx);
@@ -2575,14 +2563,21 @@ function showPhonology (event, doculect, sort, direction) {
     }
     else if (sort == 'phoneme') {
       var sorter = function (x,y) {
-          var a = getSoundClass(x).charCodeAt(0);
-          var b = getSoundClass(y).charCodeAt(0);
-          return a - b;  
+        var a = getSoundClass(x).charCodeAt(0);
+        var b = getSoundClass(y).charCodeAt(0);
+        return a - b;  
       };
     }
     else if (sort == 'occurrences') {
       var sorter = function (x,y) { 
         return occs[x].length - occs[y].length; 
+      };
+    }
+    else if (sort == 'type' || sort == 'place' || sort == 'manner' || sort == 'misc1' || sort == 'misc2') {
+      var sorter = function(x,y) {
+	var a = getSoundDescription(x, sort);
+	var b = getSoundDescription(y, sort);
+	return a.localeCompare(b);
       };
     }
 
@@ -2594,34 +2589,54 @@ function showPhonology (event, doculect, sort, direction) {
     }
   }
 
+  /* define featueres for convenience */
+  var features = ['place','manner','type','misc1','misc2'];
+
   /* change selection for the current sorting scheme */
   if (sort == 'phoneme') {
     var p_dir = (direction == 1) ? 0 : 1;
     var o_dir = 1;
+    var f_dir = 1;
     var pclass = 'sorted';
     var oclass = 'unsorted';
   }
   else if (sort == 'occurrences') {
     var p_dir = 1;
     var o_dir = (direction == 1) ? 0 : 1;
+    var f_dir = 1;
     var pclass = 'unsorted';
     var oclass = 'sorted';
   }
-  else {
+  else if (features.indexOf(sort) != -1) {
+    var f_dir = (direction == 1) ? 0 : 1;
     var p_dir = 1;
     var o_dir = 1;
     var pclass = 'unsorted';
     var oclass = 'unsorted';
   }
+  else {
+    var p_dir = 1;
+    var o_dir = 1;
+    var f_dir = 1;
+    var pclass = 'unsorted';
+    var oclass = 'unsorted';
+  }
+
+  console.log(get_sorter(sort), 'sorted');
 
   /* create the text, first not really sorted */
   phonemes.sort(get_sorter(sort, direction));
   var text = '<table class="data_table"><tr>' + 
     '<th title="double click to sort" ondblclick="showPhonology(false,\''+doculect+'\')">No.</th>' +
     '<th title="double click to sort" class="'+ pclass + '" ' + 
-    'ondblclick="showPhonology(false,\''+doculect+'\',\'phoneme\',\''+p_dir+'\')">Phoneme</th>' + 
+    'ondblclick="showPhonology(false,\''+doculect+'\',\'phoneme\',\''+p_dir+'\')">SOUND</th>' + 
     '<th title="double click to sort" class="'+ oclass + '" ' + 
-    'ondblclick="showPhonology(false,\''+doculect+'\',\'occurrences\',\''+o_dir+'\')">Occurrences</th>' + 
+    'ondblclick="showPhonology(false,\''+doculect+'\',\'occurrences\',\''+o_dir+'\')">FREQ</th>' + 
+    '<th ondblclick="showPhonology(false,\''+doculect+'\',\'type\','  +f_dir+')" title="double click to sort" class="features '+((sort == 'type') ? 'sorted' :  'unsorted')+'" >TYPE</th>' + 
+    '<th ondblclick="showPhonology(false,\''+doculect+'\',\'manner\','+f_dir+')" title="double click to sort" class="features '+((sort == 'manner') ? 'sorted' :'unsorted')+'" >MANNER (HEIGHT)</th>' +
+    '<th ondblclick="showPhonology(false,\''+doculect+'\',\'place\',' +f_dir+')" title="double click to sort" class="features '+((sort == 'place') ? 'sorted' : 'unsorted')+'" >PLACE (COLOR)</th>' +
+    '<th ondblclick="showPhonology(false,\''+doculect+'\',\'misc1\',' +f_dir+')" title="double click to sort" class="features '+((sort == 'misc1') ? 'sorted' : 'unsorted')+'" >VOICE (NASAL)</th>' +
+    '<th ondblclick="showPhonology(false,\''+doculect+'\',\'misc2\',' +f_dir+')" title="double click to sort" class="features '+((sort == 'misc2') ? 'sorted' : 'unsorted')+'" >SECONDARY</th>' +
     '<th>Concepts</th>' + 
     '</tr>';
   for (var i=0,phoneme; phoneme=phonemes[i]; i++) {
@@ -2645,7 +2660,13 @@ function showPhonology (event, doculect, sort, direction) {
     text += '<td>' + 
       plotWord(phoneme, 'span') + '</td>';
     text += '<td>' + noc + '</td>';
-    //text += '<td class="concepts pointed" title="'+concepts.join(', ')+'">' + concepts.join(', ') + '</td>';
+    var description = getSoundDescription(phoneme);
+    if (description) {
+      text += '<td class="features">'+description.join('</td><td class="features">')+'</td>'; // TODO no inline css!
+    }
+    else {
+      text += '<td></td><td></td><td></td><td></td><td></td>';
+    }
     text += '<td onclick="filterOccurrences(\''+doculect+'\',\''+cids.join(',')+'\')" class="concepts pointed" title="click to filter the occurrences of this phoneme">' + concepts.join(', ') + '</td>';
     text += '</tr>';
   }

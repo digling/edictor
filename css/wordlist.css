@@ -263,7 +263,7 @@ span.residue {
   cursor: default;
 }
 span.context:before {
-	content: " / ";
+	content: "";
 }
 span.context {
   display: table-cell;
@@ -836,6 +836,13 @@ table.alignments {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+.data_table td.features {
+  max-width: 150px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 85%;
 }
 
 .uneditable {
