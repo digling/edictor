@@ -2537,7 +2537,7 @@ function showPhonology (event, doculect, sort, direction) {
       }
     }
     else if (WLS[idx][tidx] != 'undefined' && WLS[idx][tidx]) {
-      var tokens = WLS[idx][t].split(' ');
+      var tokens = WLS[idx][tidx].split(' ');
     }
     else {
       var tokens = ipa2tokens(WLS[idx][iidx]).split(' ');
@@ -2622,8 +2622,6 @@ function showPhonology (event, doculect, sort, direction) {
     var oclass = 'unsorted';
   }
 
-  console.log(get_sorter(sort), 'sorted');
-
   /* create the text, first not really sorted */
   phonemes.sort(get_sorter(sort, direction));
   var text = '<table class="data_table"><tr>' + 
@@ -2639,6 +2637,8 @@ function showPhonology (event, doculect, sort, direction) {
     '<th ondblclick="showPhonology(false,\''+doculect+'\',\'misc2\',' +f_dir+')" title="double click to sort" class="features '+((sort == 'misc2') ? 'sorted' : 'unsorted')+'" >SECONDARY</th>' +
     '<th>Concepts</th>' + 
     '</tr>';
+
+  var normalized_sounds = [];
   for (var i=0,phoneme; phoneme=phonemes[i]; i++) {
     var noc = occs[phoneme].length;
     var keys = occs[phoneme];
@@ -2660,7 +2660,9 @@ function showPhonology (event, doculect, sort, direction) {
     text += '<td>' + 
       plotWord(phoneme, 'span') + '</td>';
     text += '<td>' + noc + '</td>';
-    var description = getSoundDescription(phoneme);
+    var normalized_sound = normalize_ipa(phoneme);
+    normalized_sounds.push(normalized_sound);
+    var description = getSoundDescription(normalized_sound);
     if (description) {
       text += '<td class="features">'+description.join('</td><td class="features">')+'</td>'; // TODO no inline css!
     }
@@ -2671,6 +2673,12 @@ function showPhonology (event, doculect, sort, direction) {
     text += '</tr>';
   }
   text += '</table>';
+
+  /* make url for link */
+  var link = 'phonobank.html?doculect='+encodeURIComponent(doculect)+'&sound_list='+encodeURIComponent(normalized_sounds.join(','));
+  var ipa_chars = document.getElementById('ipa_charts');
+  ipa_charts.style.display="inline";
+  ipa_charts.onclick = window.open(link, '_blank');
 
   document.getElementById('phonemes').innerHTML = text;
 }
