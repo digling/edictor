@@ -2661,7 +2661,9 @@ function showPhonology (event, doculect, sort, direction) {
       plotWord(phoneme, 'span') + '</td>';
     text += '<td>' + noc + '</td>';
     var normalized_sound = normalize_ipa(phoneme);
-    normalized_sounds.push(normalized_sound);
+    if (normalized_sounds.indexOf(normalized_sound) == -1) {
+      normalized_sounds.push(normalized_sound);
+    }
     var description = getSoundDescription(normalized_sound);
     if (description) {
       text += '<td class="features">'+description.join('</td><td class="features">')+'</td>'; // TODO no inline css!
@@ -2678,7 +2680,7 @@ function showPhonology (event, doculect, sort, direction) {
   var link = 'phonobank.html?doculect='+encodeURIComponent(doculect)+'&sound_list='+encodeURIComponent(normalized_sounds.join(','));
   var ipa_chars = document.getElementById('ipa_charts');
   ipa_charts.style.display="inline";
-  ipa_charts.onclick = window.open(link, '_blank');
+  ipa_charts.href = link; //function(){ window.open(link, '_blank')};
 
   document.getElementById('phonemes').innerHTML = text;
 }
