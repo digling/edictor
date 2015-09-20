@@ -40,38 +40,43 @@ function reset() {
     '_almcol' : 'ALIGNMENT',
     'template' : false,
     'update_mode' : "save",
-    'align_all_words' : true
+    'align_all_words' : true,
+    'async' : false
   };
-  
+
   STORE = '';
   var BL = ['file'];
 
   /* make array for list-type entries */
   var list_types = ['highlight', 'sound_classes', 'sampa', 'pinyin', 'css', 'doculects', 'columns', 'basics', 'concepts'];
+  var eval_types = ['async'];
 
   /* XXX note that we have inconsistencies here: we use aliases to determine basic
    * display of taxon, concept, ipa, but we don't use them when parsing from 
    * get-url-line */
-  
+
   for (var param in PARAMS) {
     var value = PARAMS[param];
 
     if (BL.indexOf(param) == -1) {
-     if (!isNaN(parseInt(value))) {
-       CFG[param] = parseInt(value);
-     }
-     else if (list_types.indexOf(param) != -1) {
-       CFG[param] = [];
-       var values = value.split('|');
-       for (var i=0,val;val=values[i];i++) {
-         if (val != '') {
-          CFG[param].push(decodeURIComponent(val));
-         }
-       }
-     }
-     else {
-       CFG[param] = PARAMS[param];
-     }
+      if (!isNaN(parseInt(value))) {
+	CFG[param] = parseInt(value);
+      }
+      else if (list_types.indexOf(param) != -1) {
+	CFG[param] = [];
+	var values = value.split('|');
+	for (var i=0,val;val=values[i];i++) {
+	  if (val != '') {
+	    CFG[param].push(decodeURIComponent(val));
+	  }
+	}
+      }
+      else if (eval_types.indexOf(param) != -1) {
+	CFG[param] = eval(value);
+      }
+      else {
+	CFG[param] = PARAMS[param];
+      }
     }
   }
 }
@@ -107,7 +112,8 @@ var CFG = {
   '_almcol':'ALIGNMENT',
   'template' : false,
   'update_mode' : "save",
-  'align_all_words' : true
+  'align_all_words' : true,
+  'async' : false
 };
 
 var STORE = ''; // global variable to store the text data in raw format
@@ -1382,7 +1388,7 @@ function storeModification(idx, jdx, value, async) {
     new_url += '&VAL='+vals.join("|"); // XXX change this to ensure safe adding of pipe! 
 
     $.ajax({
-      async: false,
+      async: CFG['async'],
       type: "GET",
       contentType: "application/text; charset=utf-8",
       url: new_url,
