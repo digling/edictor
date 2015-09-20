@@ -1,0 +1,53 @@
+<html>
+<head>
+  <title>EDICTOR SELECTION TOOL</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <link rel="icon" href="img/wordlists.png" type="image/png" />
+  <link rel="stylesheet" href="css/main.css" type="text/css" /></head>
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container" style="width:100%">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <img class="navbar-brand" style="margin-top:8px;padding:0px;margin-right:5px;width:30px;height:30px;" src="img/wordlists.png" alt="tsv" />
+        <a class="navbar-brand" onclick="event.preventDefault();window.location.reload();">EDICTOR
+	  SELECTION TOOL</a>
+      </div>
+    </div>
+  </div>
+  <div id="outerbox">
+  
+  <select id="dbase">
+
+  </select>
+  <button onclick="open_dbase()">GO</button>
+  <hr style="width:90%;border:2px solid Crimson;color:Crimson;background:Crimson;" />
+  <iframe id="frame" src=""
+    style="width:75%;height:90%;border:0px solid white;"></iframe>
+  </div>
+  <script>
+var dbases = ['germanic', 'huber1992', 'burmish', 'sinotibetan', 'tukano'];
+var idx = document.getElementById('dbase');
+for (var i=0,dbase; dbase = dbases[i]; i++) {
+  idx.innerHTML += '<option value="'+dbase+'">'+dbase+'</option>';
+}
+
+function open_dbase() {
+  var idx = document.getElementById('dbase');
+  for (var i=0,option; option=idx.options[i]; i++) {
+    if (option.selected) {
+      var url = "triples/triples.py?file="+option.value+'&remote_dbase='+option.value+'&summary=summary';
+      document.getElementById('frame').src = url;
+      console.log(url);
+      break;
+    }
+  }
+}
+  </script>
+</body>
+</html>
