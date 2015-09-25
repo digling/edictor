@@ -2529,6 +2529,9 @@ function showPhonology (event, doculect, sort, direction) {
   var aidx = WLS.header.indexOf('ALIGNMENT');
   var iidx = WLS.header.indexOf('IPA');
   var c = CFG['_cidx'];
+
+  /* define symbols we do not want to trace */
+  var dontrace = ['∼','◦'];
   
   /* iterate over the data */
   for (var i=0,idx; idx = idxs[i]; i++) {
@@ -2548,14 +2551,17 @@ function showPhonology (event, doculect, sort, direction) {
     else {
       var tokens = ipa2tokens(WLS[idx][iidx]).split(' ');
     }
+
     for (var j=0,token; token=tokens[j]; j++) {
-      try {
-        occs[token].push(idx);
-      }
-      catch (e)
-      {
-        occs[token] = [idx];
-        phonemes.push(token);
+      if (dontrace.indexOf(token) == -1) {
+	try {
+      	  occs[token].push(idx);
+      	}
+      	catch (e)
+      	{
+      	  occs[token] = [idx];
+      	  phonemes.push(token);
+      	}
       }
     }
   }

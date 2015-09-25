@@ -17,7 +17,7 @@ var doco = document.getElementById('doculect');
 console.log(doco, settings);
 doco.innerHTML = settings['doculect'];
 
-var secondary_articulations = ['ʰ','ʲ','ʱ','ː','ⁿ', 'ʷ', '˞'];
+var secondary_articulations = ['ʰ','ʲ','ʱ','ː','ⁿ', 'ʷ', '˞', '\u0331', '\u0306'];
 console.log(secondary_articulations, sound_list);
 
 

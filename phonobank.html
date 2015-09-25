@@ -1,9 +1,11 @@
 <html>
 <head>
-  <title>PhonoBank IPA Charts</title>
+  <title>EDICTOR PHONO CHARTS</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link rel="icon" href="img/wordlists.png" type="image/png" />
   <link rel="stylesheet" type="text/css" href="css/phonobank.css" />
+    <link rel="icon" href="img/wordlists.png" type="image/png" />
+  <link rel="stylesheet" href="css/main.css" type="text/css" /></head>
 </head>
 <body>
   <style>
@@ -39,8 +41,22 @@ td a {
 }
 
   </style>
-  <h2>IPA Chart for <span id="doculect"></span> (with links to Wikipedia)</h2>
-
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container" style="width:100%">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <img class="navbar-brand" style="margin-top:8px;padding:0px;margin-right:5px;width:30px;height:30px;" src="img/wordlists.png" alt="tsv" />
+        <a class="navbar-brand" onclick="event.preventDefault();window.location.reload();">
+	  EDICTOR Phonetic Chart for <span id="doculect"></span></a>
+      </div>
+    </div>
+  </div>
+  <div id="outerbox" style="margin-left:10px;margin-right:10px;">
   <div id="first_table" style="float:left;display: block;">
   <table id="ipa_chart_1" style="font-size:125%; margin-right:1.0em; margin-bottom:0.5em; text-align:center; vertical-align:bottom; border-collapse:collapse; background:transparent;" border="1" cellpadding="1" cellspacing="0" align="left">
     <th colspan="30" style="background-color:Crimson;color:white">Pulmonic Consonants</th>
@@ -722,7 +738,7 @@ td a {
 
   </div>
   <div id="missing_sounds"></div>
-
+</div>
   <script type="text/javascript" src="js/phonobank.js">
   </script>
 </body>
