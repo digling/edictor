@@ -221,6 +221,7 @@ function handleAjax (event, url) {
   if (url.indexOf('.tsv') == url.length - 4 && url.length -4 != -1) {
     var new_url = 'data/'+url;
     CFG['storable'] = false;
+    console.log('url',url,new_url);
   }
   else {
     var new_url = 'triples/triples.py?file='+url;
@@ -288,6 +289,12 @@ function handleAjax (event, url) {
   console.log('fdstart',fd.style.display);
   if (fd.style.display != 'none' && fd.style.display != ''){
     toggleDisplay('', 'filedisplay');
+  }
+
+  /* check for navbar */
+  if (!CFG['navbar']) {
+    document.getElementById('navbar').style.display = 'none';
+    document.getElementById('outerbox').style.marginTop = "5px";
   }
 
 }

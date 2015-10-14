@@ -41,7 +41,8 @@ function reset() {
     'template' : false,
     'update_mode' : "save",
     'align_all_words' : true,
-    'async' : false
+    'async' : false,
+    'navbar' : true
   };
 
   STORE = '';
@@ -49,7 +50,7 @@ function reset() {
 
   /* make array for list-type entries */
   var list_types = ['highlight', 'sound_classes', 'sampa', 'pinyin', 'css', 'doculects', 'columns', 'basics', 'concepts'];
-  var eval_types = ['async'];
+  var eval_types = ['async', 'navbar'];
 
   /* XXX note that we have inconsistencies here: we use aliases to determine basic
    * display of taxon, concept, ipa, but we don't use them when parsing from 
@@ -113,7 +114,8 @@ var CFG = {
   'template' : false,
   'update_mode' : "save",
   'align_all_words' : true,
-  'async' : false
+  'async' : false,
+  'navbar' : true
 };
 
 var STORE = ''; // global variable to store the text data in raw format
@@ -154,7 +156,6 @@ function resetFormat(value) {
  * display it with the edictor */
 function csvToArrays(allText, separator, comment, keyval) {
   var allTextLines = allText.split(/\r\n|\n/);
-
   var qlc = {};
   var taxa = {};
   var concepts = {};
@@ -212,6 +213,7 @@ function csvToArrays(allText, separator, comment, keyval) {
           }
 	}
       }
+      console.log('header',header);
       /* apply check for tidx and cidx */
       if (tIdx == -1 && cIdx == -1) {tIdx = 1;cIdx = 2; CFG['tc_status'] = 'notc'}
       else if (cIdx == -1 && tIdx > 1) {cIdx = 1; CFG['tc_status'] = 'noc' }
@@ -287,10 +289,6 @@ function csvToArrays(allText, separator, comment, keyval) {
       columns[data[cIdx].toUpperCase()] = Math.abs(columns[data[cIdx].toUpperCase()]);
       CFG['basics'].push(data[tIdx].toUpperCase());
       CFG['basics'].push(data[cIdx].toUpperCase());
-
-      //->console.log('TIDX',tIdx);
-      //->console.log('CIDX',cIdx);
-      //->console.log('columns:',columns);
     }
     /* successively load the data into the wordlist object */
     else if (firstLineFound) {
