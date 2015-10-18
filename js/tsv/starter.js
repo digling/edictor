@@ -294,7 +294,8 @@ function handleAjax (event, url) {
   /* check for navbar */
   if (!CFG['navbar']) {
     document.getElementById('navbar').style.display = 'none';
-    document.getElementById('outerbox').style.marginTop = "5px";
+    document.getElementById('outerbox').style.margin = "10px";
+    document.getElementById('filedisplay').style.marginBottom = "25px";
   }
 
 }
