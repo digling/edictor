@@ -309,7 +309,7 @@ function csvToArrays(allText, separator, comment, keyval) {
 	else {var idx = count; count += 1;}
 
 	/* the following lines append taxonomic values */
-	if (taxon in taxa) {
+	if (typeof taxa[taxon] == 'object') {
         taxa[taxon].push(idx);
 	}
         else {
@@ -317,10 +317,13 @@ function csvToArrays(allText, separator, comment, keyval) {
         }
 
         /* these lines append concepts */
-        if (concept in concepts) {
+	/* note that we need to make the object typecheck here, since gecko-engines and firefox
+	 * define the watch-property for arrays, which clashes when trying to fill it (awful) */
+        if (typeof concepts[concept] == 'object') {
           concepts[concept].push(idx);
         }
         else {
+	  console.log(concept, idx, concepts[concept])
           concepts[concept] = [idx];
         }
 
@@ -806,7 +809,9 @@ function showWLS(start)
   toggleClasses(['first','filename','current'],'hidden','unhidden');
 
   document.getElementById('view').style.display = 'none';
-  document.getElementById('mainsettings').style.display = 'inline';
+  if (CFG['navbar']) {
+    document.getElementById('mainsettings').style.display = 'inline';
+  }
   //document.getElementById('filedisplay').style.display = 'block';
   var fn = document.getElementById('filename');
   fn.innerHTML = '&lt;' + CFG['filename'] + '&gt;';
@@ -2307,16 +2312,16 @@ function editGroup(event,idx) {
   text += '<p>';
   text += '<span class="main_handle pull-left" style="margin-left:-7px;margin-top:2px;" ></span>';
   text += CFG['formatter'] + ' &quot;'+idx+'&quot; links the following '+alms.length+' entries:</p>';
-  text += '<div class="alignments" id="alignments"><table>';
+  text += '<div class="alignments" id="alignments"><table onclick="fakeAlert(\'Press on EDIT or ALIGN to edit the alignmetn.\');">';
   for (var i=0,alm;alm=alms[i];i++) {
     text += '<tr>'+alm+'</tr>';
   }
   text += '</table></div>';
   text += '<div class="submitline">';
   if (!concepticon) {
-    text += '<input class="btn btn-primary submit" type="button" onclick="editAlignment()" value="EDIT" /> ';
-    text += '<input class="btn btn-primary submit" type="button" onclick="automaticAlignment()" value="ALIGN" /> ';
-    text += '<input id="submit_alignment" class="btn btn-primary submit hidden" type="button" onclick="$(\'#popup_background\').show();storeAlignment();$(\'#popup_background\').fadeOut();" value="SUBMIT" /> '; 
+    text += '<input id="edit_alignment_button" class="btn btn-primary submit" type="button" onclick="editAlignment()" value="EDIT" /> ';
+    text += '<input id="automatic_alignment_button" class="btn btn-primary submit" type="button" onclick="automaticAlignment();" value="ALIGN" /> ';
+    text += '<input id="submit_alignment_button" class="btn btn-primary submit hidden" type="button" onclick="$(\'#popup_background\').show();storeAlignment();$(\'#popup_background\').fadeOut();ALIGN.destroy_alignment();$(\'#editmode\').remove();basickeydown(event);" value="SUBMIT" /> '; 
     text += '<input class="btn btn-primary submit" type="button" onclick="saveAlignment('+idx+')" value="EXPORT" /> ';
   }
   text += '<input class="btn btn-primary submit" type="button" onclick="ALIGN.destroy_alignment();$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /></div><br><br> ';
@@ -2341,7 +2346,9 @@ function automaticAlignment() {
   ALIGN.ALMS = alms;
   ALIGN.TAXA = CFG['_current_taxa'];
   ALIGN.refresh();
-  $('#submit_alignment').removeClass('hidden');
+  $('#submit_alignment_button').removeClass('hidden');
+  $('#automatic_alignment_button').addClass('hidden');
+  $('#edit_alignment_button').addClass('hidden');
 }
 
 /* function creates and ALIGN object for editing alignments in text */
@@ -2353,7 +2360,9 @@ function editAlignment() {
   ALIGN.refresh();
 
   /* toggle visibility of submit button */
-  $('#submit_alignment').removeClass('hidden');
+  $('#submit_alignment_button').removeClass('hidden');
+  $('#automatic_alignment_button').addClass('hidden');
+  $('#edit_alignment_button').addClass('hidden');
 }
 
 /* function writes alignments that have been carried out to the wordlist object */
