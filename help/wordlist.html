@@ -1,0 +1,82 @@
+
+<h1>Help for the Wordlist Panel</h1>
+<p>The Wordlist is the central view of the EDICTOR and all other ways to inspect and edit the data are centered around the Wordlist module.</p>
+<p>A Wordlist in the EDICTOR is a simple tabular format that displays the data which is either submitted as a text file in TSV format or loaded from a server.</p>
+<h2>Basic Structure</h2>
+<p>The basic structure of a wordlist in the EDICTOR follows the specifications of wordlists used in the <a target="_blank" href="http://lingpy.org">LingPy</a> software package. 
+For users interested in the ideas behind the wordlist representation, it is generally recommended to read <a target="_blank" href="http://lingpy.org/tutorial/lingpy.basic.wordlist.html">this wordlist tutorial</a>. </p>
+<p>A Wordlist in the EDICTOR is basically a spreadsheet in which each word of a given language is displayed in a single row of the spreadsheet, and columns are used to store different data <em>about</em> the word. A general distinction has to be made between optional and required data. Data which is required for a wordlists is:</p>
+<ul>
+<li>the language of the word (called the "doculect" in the context of the EDICTOR, following <a target="_blank" href="http://bibliography.lingpy.org?key=Good2013">Good and Cysouw 2013</a>)</li>
+<li>the concept which the word denotes </li>
+</ul>
+<p>Furthermore, in order to make use of the majority of the features, a phonetic or phonological transcription of each word is required, but the EDICTOR can also be used to actively add the transcription.</p>
+<p>In order to allow the EDICTOR to identify these required columns when parsing the data, it is important to supply a header with the data in which specific column names for transcription, language, and concept are used. In order to allow users to select from their preferred names, some aliases are defined for each of the data types. The column names are:</p>
+<table>
+<thead>
+<tr>
+<th>BASIC NAME</th>
+<th>DESCRIPTION</th>
+<th>ALIAS</th>
+<th>REQUIRED</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DOCULECT</td>
+<td>identifier for the language</td>
+<td>doculect, language, taxon</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>CONCEPT</td>
+<td>identifier of the concept</td>
+<td>concept, gloss</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>TRANSCRIPTION</td>
+<td>phonological or phonetic transcription of the word</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>SEGMENTS</td>
+<td>phonetic transcription in segmented form</td>
+<td>tokens, segments</td>
+<td>no</td>
+</tr>
+<tr>
+<td>COGID</td>
+<td>cognate identifier</td>
+<td>cogid, <code>*</code>id</td>
+<td>no</td>
+</tr>
+<tr>
+<td>ALIGNMENT</td>
+<td>phonetic alignment of a set of cognate words</td>
+<td>alignment</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+<h2>Features</h2>
+<h3>Modifying the Display</h3>
+<p>+++ pending +++</p>
+<h3>Sorting the Data</h3>
+<p>As a general rule throughout many modules of the EDICTOR, double-clicking on a column header will trigger a sort along that column.
+To mark the sorted column, the header will be colored in red. By double-clicking again on the same column, the sort will be reversed, and by double-clicking a third time, the original (unsorted) order will be re-established.</p>
+<h3>Browsing the Data</h3>
+<p>The Wordlist view is per default restricted to show only a short preview of 10 items of the full wordlist. 
+If you want to change the amount of items which are show in preview, you can do so by changing the "preview" option in the settings, which you can access through the top-menu.</p>
+<p>For a quick browsing of the data, you can click on the buttons to the left and the right of the "START" symbol on top of the Wordlist panel. If you just loaded your data, there won't be a browse-button on the left of "START", but only on the right, indicating the next number of items which you can inspect. In this way, you can go forward and backward through your data. As a convenient shortcut for quick browsing, use the "PAGE UP" and the "PAGE DOWN" keys to browse back and forth.</p>
+<h3>Editing the Data</h3>
+<p>A general feature of the Wordlist panel is to offer a quick way to edit the data. Essentially, each cell in the Wordlist can be edited by clicking one time on the cell and modifying the entry. In order to save the data, you need to press either the "ENTER" key, or one of the "UP" and "DOWN" keys, which will automatically bring you to the next cell above or beyond the cell you just edited. </p>
+<p>Instead of editing the data, you can also use the keys to navigate quickly through your data.
+While "UP" and "DOWN" key work as expected, you need to press "CTRL" in addition to "LEFT" and "RIGHT" to jump from one cell to the cell at the left or the cell at the right. This is important, since otherwise you would have difficulties in editing the content of a cell, where "LEFT" and "RIGHT" are also needed to navigate.</p>
+<h3>Cognates and Alignments</h3>
+<p>+++ pending +++</p>
+<h3>References</h3>
+<ul>
+<li>Good, J. and M. Cysouw (2013): <strong>Languoid, doculect, glossonym: Formalizing the notion of ’language’</strong>. <em>Journal of Language Documentation and Conservation</em> 7. 331-359.</li>
+</ul>

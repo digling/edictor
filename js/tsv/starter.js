@@ -294,10 +294,21 @@ function handleAjax (event, url) {
   /* check for navbar */
   if (!CFG['navbar']) {
     document.getElementById('navbar').style.display = 'none';
-    document.getElementById('outerbox').style.margin = "10px";
+    document.getElementById('outerbox').style.margin = "20px";
     document.getElementById('filedisplay').style.marginBottom = "25px";
+    document.getElementById('add_column').style.display = 'none';
+    document.getElementById('mainsettings').style.display = 'none';
+    document.getElementById('file').style.display = 'none';
+    document.getElementById('ajaxfile').style.display = 'none';
+    document.getElementById('menu_handle').style.width = '90%';
+    document.getElementById('menu').style.minHeight = "80px";
+    document.getElementById('menu').style.margin = "5px";
+    document.getElementById('undoredo').style.display = "none";
+    var brs = document.getElementsByClassName('menubr');
+    for (var i=0, br; br=brs[i]; i++) {
+      br.style.display = 'none';
+    }
   }
-
 }
 
 /* helper function that handles the drag over event */
@@ -307,27 +318,6 @@ function handleDragOver(evt) {
   evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
 }
 
-/* handle server-side files */
-$.ajax({
-      async:false,
-      type: "GET",
-      url: 'data/filelist.csv',
-      contentType: 'application/text; charset=utf-8',
-      dataType: "text",
-      success: function(data) {
-        CFG['server_side_files'] = data.split('\n');
-        /* manage autocomplete */
-        $('#ajaxfile').autocomplete({
-          delay:0,
-          source: CFG['server_side_files']
-        });
-      },
-      error: function() {
-        fakeAlert("Could not load remote files. Usage will be restricted " + 
-            " to explicit file selection.");
-        $('#ajaxfile').hide(); 
-      }    
-});
 
 function getDataBases() {
   //->console.log("Loading database");
@@ -411,13 +401,10 @@ function loadAjax(event, where, what, classes) {
     else {
       window.location.hash = '#'+what+'_anchor';
     }
-
     $('#toggle_'+what+' > span').toggle();
     return;
   }
-
   loaded_files.push(what); 
-
   $('#'+where).append('<li id="'+what+'" class="'+classes+'"></li>');
   $.ajax( {
       async:false,
@@ -446,6 +433,13 @@ function loadAjax(event, where, what, classes) {
       source: Object.keys(WLS['taxa'])
     });
   }
+  if (what == 'morphology') {
+    $('#input_morphology').autocomplete({
+      delay: 0,
+      source: Object.keys(WLS['taxa'])
+    });
+  }
+
   if (what == 'correspondences') {
     var doculs = Object.keys(WLS['taxa']);
     $('#corrs_docula').autocomplete({
@@ -623,6 +617,32 @@ function toggleDisplay(event,elm_id) {
   $('#toggle_'+elm_id+'>span').toggle();  
 }
 
+
+function startEverything () {
+
+/* handle server-side files */
+$.ajax({
+      async:false,
+      type: "GET",
+      url: 'data/filelist.csv',
+      contentType: 'application/text; charset=utf-8',
+      dataType: "text",
+      success: function(data) {
+        CFG['server_side_files'] = data.split('\n');
+        /* manage autocomplete */
+        $('#ajaxfile').autocomplete({
+          delay:0,
+          source: CFG['server_side_files']
+        });
+      },
+      error: function() {
+        fakeAlert("Could not load remote files. Usage will be restricted " + 
+            " to explicit file selection.");
+        $('#ajaxfile').hide(); 
+      }    
+});
+
+
 startWordlist();
 
 /* make stuff sortable, based on 
@@ -650,3 +670,7 @@ $('.colx').addClass('ui-helper-clearfix');
 
 $(window).load(function(){$("#popup_background").fadeOut("fast");});
 
+}
+
+console.log('starter loaded now');
+startEverything();

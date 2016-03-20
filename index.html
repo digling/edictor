@@ -5,7 +5,7 @@ EDICTOR main page
 author   : Johann-Mattis List
 email    : mattis.list@lingulist.de
 created  : 2014-06-28 09:47
-modified : 2014-09-06 20:21
+modified : 2016-03-20 10:41
 
 -->
 <html>
@@ -102,13 +102,19 @@ modified : 2014-09-06 20:21
                 </a>
               </li>
               <li>
+                <a id="toggle_morphology" onclick="loadAjax(event, 'sortable', 'morphology', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+		  MORPHOLOGY
+                </a>
+              </li>
+              <li>
                 <a id="toggle_correspondences" onclick="loadAjax(event, 'sortable', 'correspondences', 'largebox');">
                   <span class="glyphicon glyphicon-remove"></span>
                   <span class="glyphicon glyphicon-ok" style="display: none"></span>
                   CORRESPONDENCES
                 </a>
               </li>
-
             </ul>
           </li>
           <li class="dropdown">
@@ -177,14 +183,14 @@ modified : 2014-09-06 20:21
     <ul id="sortable">
 
       <!-- MENU -->
-      <li class="colx" style="display:block;width:100%;">
+      <li id="menu_handle" class="colx" style="display:block;width:100%;">
 	<div id="menu">
 	  <span class="main_handle pull-left"></span>
 	  <button type="button" onclick="$('#toggle_menu > span').toggle();$('#menu').toggle();" class="pull-right close" style="margin-left:5px">
 	    <span aria-hidden="true">&times;</span>
 	    <span class="sr-only">Close</span>
 	  </button>
-	  <br>
+	  <br class="menubr">
 	  <input type="file" id="file" name="file" class="btn btn-primary pull-left submit3" style="margin-left:0px;margin-right:3px;padding:7px;" />
 	  <input type="text" class="form-control pull-left mright textfield" style="width:140px;display:inline" onkeyup="showSpinner(function(){handleAjax(event,'url')});" id="ajaxfile" placeholder="select remote file" />
 	  <input type="text" class="form-control pull-left mright textfield" style="width:140px;display:inline;" onkeyup="showSpinner(function(){handleAjax(event,'db')});" id="database" placeholder="select database" />
@@ -206,7 +212,7 @@ modified : 2014-09-06 20:21
 	      <span class="glyphicon glyphicon-download-alt"></span>
 	    </button>
 	  </div>
-	  <br><br>
+	  <br class="menubr"><br class="menubr">
 	  <div id="undoredo" class="btn-group pull-right">
 	    <button title="UNDO (shortcut [CTRL+Y])" id="undo" onclick="UnDo();" class="mleft btn-primary btn titled hidden submit3" style="margin:3px">
 	      <span class="glyphicon glyphicon-arrow-left"></span>
@@ -215,7 +221,7 @@ modified : 2014-09-06 20:21
 	      <span class="glyphicon glyphicon-arrow-right"></span>
 	    </button>
 	  </div>
-	  <br>
+	  <br class="menubr">
 	  <!-- FILTERS -->
 	  <div id="textfields" class="pull-left"
 	    style="display:none;overflow: visible; clear:both;">
@@ -250,11 +256,16 @@ modified : 2014-09-06 20:21
 	    <input id="first" type="button"    class="btn btn-primary mright submit3 unhidden" value="START " onclick="showWLS(1)" />
 	    <input id="next" type="button"     class="btn btn-primary mright submit3 hidden" value="1-1" />
 	  </div>
-
+	  <button type="button" class="btn-primary titled btn submit3 pull-right"
+	    title="show help"
+	    onclick="UTIL.show_help('wordlist', 'qlc', 'filedisplay');" 
+	    style="margin-left:5px;"><span class="glyphicon glyphicon-question-sign"></span>
+	  </button>
 
 	  <br><br>
 	  <div id="db"></div>
-	  <div name="qlc" style="overflow:visible;" id="qlc" ></div>
+	  <div name="wordlist" style="overflow:visible;" id="qlc" ></div>
+	  <div name="wordlist_help" class="help-message" style="overflow:visible;" id="wordlist_help" ></div>
 	  <div id="store" style="display:none"></div>
 	</div>
       </li>
@@ -298,9 +309,11 @@ modified : 2014-09-06 20:21
     </ul>
   </div>
   <div id="#data_saved" style="color:white;font-size:12px">Data has not yet been saved.</div>
-  <script src="prison/main.js"></script>
+  <!--<script data-main="prison/main" src="prison/lib/vendor/require.js"></script>-->
+  <script src="prison_old/main.js"></script>
+
 <script>
-PRISON.import(
+var load = PRISON.import(
     'highlight',
     'sampa',
     'edit',
@@ -314,13 +327,18 @@ PRISON.import(
     'js/vendor/bootstrap.min',
     'js/vendor/bootstrap-multiselect',
     'js/vendor/spin',
+    'js/tsv/util',
     'js/tsv/alignments',
     'js/tsv/cognates',
+    'js/tsv/phonology',
+    'js/tsv/morphology',
     'js/tsv/correspondences',
     'js/tsv/wordlist',
     'js/tsv/starter'
-  );
+    );
+
 </script>
+
 <div id="popup_background" class="popup_background"></div>
 </body>
 </html>

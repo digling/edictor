@@ -18,7 +18,7 @@ ALIGN.initialize = function(seqs) {
   for (var i=0; i<seqs.length; i++) {
     ALIGN.SEQS.push(seqs[i]);
   }
-}
+};
 ALIGN.normalize = function(alms) {
   /* function normalizes an alignment by adding gaps so that all strings
    * are of equal length */
@@ -130,7 +130,7 @@ ALIGN.normalize = function(alms) {
   }
 
   return alms
-}
+};
 
 ALIGN.style = function (idx,alm) {
   /* function styles an alignment for easy output */
@@ -161,7 +161,7 @@ ALIGN.style = function (idx,alm) {
     }
   }
   return txt;
-}
+};
 
 ALIGN.make_table = function (taxa, alms) {
   /* function creates a full-fledged alignment table */
@@ -193,7 +193,7 @@ ALIGN.make_table = function (taxa, alms) {
   txt += '</table>';
 
   return txt;
-}
+};
 
 ALIGN.reset_UP = function(idx) {
   if (ALIGN.UDX.indexOf(idx) == -1) {
@@ -255,7 +255,7 @@ ALIGN.export_alignments = function() {
   }
   ALIGN.ALMS = alms;
   ALIGN.UDX = [];
-}
+};
 
 ALIGN.destroy_alignment = function()
 {
@@ -264,7 +264,7 @@ ALIGN.destroy_alignment = function()
   ALIGN.TAXA = [];
   ALIGN.SEQS = [];
   ALIGN.LOCKS = [];
-}
+};
 
 ALIGN.lock_others = function(idx) {
 
@@ -365,7 +365,7 @@ ALIGN.addGap = function (idx,jdx) {
       ALIGN.refresh();
     }
   }
-}
+};
 
 ALIGN.delGap = function (idx,jdx) {
   /* delete a gap from an aligned sequence */
@@ -457,7 +457,7 @@ ALIGN.delGap = function (idx,jdx) {
       ALIGN.refresh();
     }
   }
-}
+};
 
 ALIGN.refresh = function(idx) {
 
@@ -470,7 +470,7 @@ ALIGN.refresh = function(idx) {
   txt = ALIGN.make_table(ALIGN.TAXA, ALIGN.ALMS);
 
   document.getElementById(idx).innerHTML = txt;
-}
+};
 
 /* function locks an alignment and treats all locked sequences as the
  * same when using the alignment operations */
@@ -490,7 +490,7 @@ ALIGN.lock_sequence = function(i) {
     ALIGN.LOCKS = new_lock;
   }
   ALIGN.refresh();
-}
+};
 
 /* function locks an alignment and treats all locked sequences as the
  * same when using the alignment operations */
@@ -515,4 +515,4 @@ ALIGN.lock_sequences = function(i,event) {
   
   ALIGN.LOCKS = new_lock;
   ALIGN.refresh();
-}
+};

@@ -10,38 +10,40 @@ modified : 2014-09-04 10:17
 -->
 <span class="main_handle pull-left"></span>
 <button type="button" onclick="$('#toggle_help > span').toggle(); $('#help').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+<div class="help-message">
+<h3>How to use the Wordlist-Editor </h3>
+In order to use the wordlist editor, you will need a valid input file. This file should be structured as a Wordlist file with the first line indicating the names of all columns and the first column pointing to a unique ID for each row of the file.
+<h4>Key Bindings</h4>
+<ul>
+  <li>[F1] Toggle this help message.</li><br>
+  <li>[F2] Toggle the settings.</li><br>
+  <li>[F3] Toggle the filters.</li><br>
+  <li>[F4] Toggle all columns / basic columns.</li><br>
+  <li>[CTRL+I] Go to first cell (insert mode).</li><br>
+  <li>[CTRL+LEFT] Go to left cell (insert mode).</li><br>
+  <li>[CTRL+RIGHT] Got to right cell (insert mode).</li><br>
+  <li>[ESC] Exit insert mode without saving (insert mode).</li><br>
+  <li>[ENTER] Exit insert mode and save (insert mode).</li><br>
+  <li>[RIGHT MOUSE CLICK] Show related entries (works only, if the given entry is selected as the current format option).</li><br>
+  <li>[PAGE UP] Go to previous rows.</li><br>
+  <li>[PAGE DOWN] Go to following rows.</li><br>
+  <li>[LEFT+ALT] Move table to the left.</li><br>
+  <li>[RIGHT+ALT] Move table to the right.</li><br>
+</ul>
+<h4>Filtering</h4>
+The Wordlist-Editor allows you to filter the entries in multiple ways. 
+With help of the text fields, you can select that only
+<ul>
+  <li>specific taxa,</li><br>
+  <li>specific concepts, or</li><br>
+  <li>specific columns</li><br>
+  <li>specific entries</li><br>
+</ul>
+are displayed. 
+For taxa and concepts, just type in the name of the taxon or concept you want to select and separate multiple taxa and concept by a comma. For the filtering of columns, you may also toggle between the display of the basic columns (default) and all columns by pressing [F4], or you may select the columns within the settings menu (press [F2] to show or close the settings).
+In order to filter specific entries, type &quot;COLUMNNAME = entry&quot;, where COLUMNAME is the name of one of the columns in the data, and entry is one entry you want to search for. Using &quot;=&quot; will search for all entries which <em>contain</em> the given string. If you want to search for a direct match, use &quot;==&quot; instead.
 
-        <h3>How to use the Wordlist-Editor </h3>
-        In order to use the wordlist editor, you will need a valid input file. This file should be structured as a Wordlist file with the first line indicating the names of all columns and the first column pointing to a unique ID for each row of the file.
-        <h4>Key Bindings</h4>
-        <ul>
-          <li>[F1] Toggle this help message.</li><br>
-          <li>[F2] Toggle the settings.</li><br>
-          <li>[F3] Toggle the filters.</li><br>
-          <li>[F4] Toggle all columns / basic columns.</li><br>
-          <li>[CTRL+I] Go to first cell (insert mode).</li><br>
-          <li>[CTRL+LEFT] Go to left cell (insert mode).</li><br>
-          <li>[CTRL+RIGHT] Got to right cell (insert mode).</li><br>
-          <li>[ESC] Exit insert mode without saving (insert mode).</li><br>
-          <li>[ENTER] Exit insert mode and save (insert mode).</li><br>
-          <li>[RIGHT MOUSE CLICK] Show related entries (works only, if the given entry is selected as the current format option).</li><br>
-          <li>[PAGE UP] Go to previous rows.</li><br>
-          <li>[PAGE DOWN] Go to following rows.</li><br>
-          <li>[LEFT+ALT] Move table to the left.</li><br>
-          <li>[RIGHT+ALT] Move table to the right.</li><br>
-        </ul>
-        <h4>Filtering</h4>
-        The Wordlist-Editor allows you to filter the entries in multiple ways. 
-        With help of the text fields, you can select that only
-        <ul>
-          <li>specific taxa,</li><br>
-          <li>specific concepts, or</li><br>
-          <li>specific columns</li><br>
-          <li>specific entries</li><br>
-        </ul>
-        are displayed. 
-        For taxa and concepts, just type in the name of the taxon or concept you want to select and separate multiple taxa and concept by a comma. For the filtering of columns, you may also toggle between the display of the basic columns (default) and all columns by pressing [F4], or you may select the columns within the settings menu (press [F2] to show or close the settings).
-        In order to filter specific entries, type &quot;COLUMNNAME = entry&quot;, where COLUMNAME is the name of one of the columns in the data, and entry is one entry you want to search for. Using &quot;=&quot; will search for all entries which <em>contain</em> the given string. If you want to search for a direct match, use &quot;==&quot; instead.
+<h4>Navigation</h4>
+Having entered the insert mode (just click on any of the cells of the table or press [CTRL+I]), you can navigate with key up and key down from cell to cell along the same column. If you want to navigate between columns within the same row, use [CTRL+LEFT] and [CTRL+RIGHT]. Having modified the content of a cell, you can submit the modification by navigating to the next neighboring cell or by pressing [ENTER]. The letter will also close the insert mode. In order to leave the insert mode without submitting any modifications, just press [ESC].  
 
-        <h4>Navigation</h4>
-        Having entered the insert mode (just click on any of the cells of the table or press [CTRL+I]), you can navigate with key up and key down from cell to cell along the same column. If you want to navigate between columns within the same row, use [CTRL+LEFT] and [CTRL+RIGHT]. Having modified the content of a cell, you can submit the modification by navigating to the next neighboring cell or by pressing [ENTER]. The letter will also close the insert mode. In order to leave the insert mode without submitting any modifications, just press [ESC].  
+</div>

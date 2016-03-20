@@ -5,6 +5,16 @@ Browse the phonologies of the doculects
 
 </h3>
 <input id="input_phonology" class="form-control pull-left textfield" type="text" placeholder="select your doculect" onkeyup="showPhonology(event,this.value)" style="width:250px" />
+<button type="button"
+  onclick="showPhonology(false,document.getElementById('input_phonology').value);"
+  class="btn-primary submit3 titled btn">OK</button>
 <a id="ipa_charts" target="pubWindow" class="btn btn-primary submit3">SHOW IPA CHART</a>
+<button type="button" class="btn-primary titled btn submit3 pull-right"
+	title="show help"
+	onclick="UTIL.show_help('phonology');" 
+	style="margin-left:5px;"><span class="glyphicon glyphicon-question-sign"></span>
+</button>
 <br><br>
-<div style="max-height:500px;max-width:1000px;overflow-x:hidden;overflow-y:scroll;" id="phonemes"></div>
+<div style="max-height:500px;max-width:1000px;overflow-x:hidden;overflow-y:scroll;display:none;"
+     id="phonology_table"></div>
+<div class="help-message" id="phonology_help" style="display:none;"></div>
