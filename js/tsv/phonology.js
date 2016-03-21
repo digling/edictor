@@ -8,10 +8,27 @@
  */
 
 PHON = {};
-PHON
-PHON.show_help = function() {
 
-};
+PHON.showChart = function(url, doculect) {
+
+  var url = 'plugouts/ipa_chart.html?'+url;
+  var nid = document.createElement('div');
+  nid.style.display = '';
+  nid.className = 'editmode';
+  var text = '<div class="iframe-message" id="ipachart">' + 
+    '<p style="color:white;font-weight:bold;">' +
+    '<span class="main_handle pull-left" style="margin-left:0px;margin-top:2px;" ></span>' +
+    ' IPA chart for '+ doculect+':</p>' +
+    '<iframe onload="UTIL.resizeframe(this)" id="ipaiframe" src="'+url+'" style="width:90%;min-height:400px;border:2px solid #2D6CA2"></iframe><br><div class="btn btn-primary okbutton" onclick="' + 
+    "$('#editmode').remove(); document.onkeydown = function(event){basickeydown(event)};" +
+    '")> OK </div></div>';
+  nid.id = 'editmode';
+  document.body.appendChild(nid);
+  nid.innerHTML = text;
+  var ipa = document.getElementById('ipachart');
+  ipa.style.width = document.getElementById('ipaiframe').contentWindow.document.body.scrollWidth + 'px';
+  $(ipa).draggable({handle:'.main_handle'});
+}
 
 /* function shows the occurrences of phonemes in the data */
 function showPhonology (event, doculect, sort, direction) {
@@ -213,9 +230,11 @@ function showPhonology (event, doculect, sort, direction) {
 
   /* make url for link */
   var link = 'phonobank.html?doculect='+encodeURIComponent(doculect)+'&sound_list='+encodeURIComponent(normalized_sounds.join(','));
+  var url = 'doculect='+encodeURIComponent(doculect)+'&sound_list='+encodeURIComponent(normalized_sounds.join(','));
   var ipa_chars = document.getElementById('ipa_charts');
   ipa_charts.style.display="inline";
-  ipa_charts.href = link; //function(){ window.open(link, '_blank')};
+  //ipa_charts.href = link; //function(){ window.open(link, '_blank')};
+  ipa_charts.onclick = function() {PHON.showChart(url, doculect)};
 
   var did = document.getElementById('phonology_table');
   did.innerHTML = text;

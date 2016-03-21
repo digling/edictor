@@ -80,13 +80,15 @@ var graph = JSON.parse(decodeURI(data[1]));
 var sig = {};
 sig.graph = graph;
 sig.container = 'container';
-sig.settings = {labelThreshold : 2};
+sig.settings = {labelThreshold : 0, defaultLabelSize: 18, defaultEdgeType: 'curve', minNodeSize: 2,
+  maxNodeSize: 4,
+  defaultEdgeSize: 20, minEdgeSize: 10, maxEdgeSize: 10, labelSizeRazio: 2};
 sig = new sigma(sig);
 
 
 var noverlapListener = sig.configNoverlap({
-  nodeMargin: 0.1,
-  scaleNodes: 1.05,
+  nodeMargin: 10,
+  scaleNodes: 20,
   gridSize: 75,
   easing: 'quadraticInOut', // animation transition function
   duration: 100   // animation duration. Long here for the purposes of this example only
@@ -119,6 +121,8 @@ dragListener.bind('drop', function(event) {
 dragListener.bind('dragend', function(event) {
   console.log(event);
 });
+
+
 </script>
 </body>
 </html>

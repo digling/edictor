@@ -35,3 +35,7 @@ UTIL.randint = function (min, max) {
   return Math.random() * (max - min) + min;
 };
 
+UTIL.resizeframe = function (iframe) {
+  iframe.height = (10 + iframe.contentWindow.document.body.scrollHeight) + 'px';
+  iframe.width =  (iframe.contentWindow.document.body.scrollWidth) + 'px';
+}
