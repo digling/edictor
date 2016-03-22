@@ -17,6 +17,38 @@
   cursor: -webkit-grabbing; 
   cursor: -moz-grabbing;
 }
+.data_table2 {
+  border-collapse: separate;
+  border-spacing: 2px;
+  border-radius: 2px;
+  empty-cells: show;
+}
+
+.data_table2 th{
+  text-align: left;
+  background-color:#2D6CA2;
+  color: white;
+  border: solid 1px #2D6CA2;
+  max-width: 250px;
+  overflow: auto;
+  padding: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: -webkit-grabbing; 
+  cursor: -moz-grabbing;
+}
+.data_table2 td{
+  text-align: left;
+  color: black;
+  border: solid 1px #2D6CA2;
+  max-width: 250px;
+  overflow: auto;
+  padding: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
 #menu {
   display:block;
   position: relative;
@@ -120,10 +152,8 @@
 
 }
 
-
 #qlc_table td{
   text-align: left;
-  //background-color: white;
   color: black;
   border: solid 1px #2D6CA2;
   max-width: 250px;
@@ -132,6 +162,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
 
 .hidden {
   display: none;
@@ -262,6 +293,9 @@ span.residue {
   color: white;
   cursor: default;
 }
+span.noresidue {
+  display: inline!important;
+}
 span.context:before {
 	content: "";
 }
@@ -284,6 +318,15 @@ td.residue{
   text-align: center;
   color: white;
   cursor: default;
+}
+td.missing {
+	display: table-cell;
+	width: 30px;
+	background-color: #f0f0f0;
+	font-weight: normal;
+	text-align:center;
+	color: lightgray;
+	cursor: default;
 }
 
 td.dolgo_ERROR{background-color: white; color:red;}
@@ -347,6 +390,26 @@ span.dolgo_PLUS{vertical-align:center;font-weight: bold; background-color:white;
   margin: 5px;
 
 }
+
+.morpheme {
+	border: 1px solid #2d6ca2;
+	border-radius: 5px;
+	font-weight: bold;
+	color: #2D6CA2;
+	display: table-cell;
+	padding: 1px;
+	font-size: 70%;
+}
+.morpheme-error {
+	border: 1px solid Crimson;
+	border-radius: 5px;
+	font-weight: bold;
+	color: Crimson;
+	display: table-cell;
+	padding: 1px;
+	font-size: 70%;
+}
+
 
 .cellinput {
   z-index: 1;
@@ -528,6 +591,22 @@ ul.nav
   float: left;
   border-radius:5px;
 }
+.iframe-message {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  top:30%;
+  left:0;
+  right:0;
+  background-color: Crimson;
+  border: 2px solid white;
+  text-align:center;
+  min-width:200px;
+  max-width:80%;
+  width: auto;
+  float: left;
+  border-radius:5px;
+}
 .message p {
   color: white;
   font-weight: bold;
@@ -698,12 +777,22 @@ table.alignments {
   padding-right: 5px;
 }
 
+
 .alm_head {
   font-weight: bold;
   display: table-cell;
   padding: 5px;
   color: white;
   background-color: #2D6CA2;
+}
+
+.pchead {
+	font-weight: bold;
+	display: table-cell;
+	padding: 5px;
+	color: white;
+	background-color: #2d6ca2;
+	border-bottom: 4px solid white;
 }
 
 .alm_bdl {
@@ -844,6 +933,12 @@ table.alignments {
   overflow: hidden;
   font-size: 85%;
 }
+.data_table td.words {
+  max-width: 600px;
+  white-space: nowrap;
+  text-overflow: show;
+  overflow: auto;
+}
 
 .uneditable {
   opacity: 0.8;
@@ -888,4 +983,48 @@ tr.up_fill {
 }
 tr.up_fill > td {
   height: 5px;
+}
+
+
+.help-message {
+	background-color: aliceblue;
+	border-radius: 25px;
+	border: 2px solid #2D6CA2;
+	padding: 10px;
+	color: Crimson;
+	font-size: 120%;
+	width: 120%;
+}
+.help-message a {
+	color: darkblue;
+}
+.help-message h1 {
+	font-size: 140%;
+	font-weight: bold;
+}
+.help-message h2 {
+	font-size: 120%;
+	font-weight: bold;
+}
+.help-message h3 {
+	font-size: 110%;
+	font-weight: bold;
+}
+.help-message h4 {
+	font-size: 100%;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.help-message table {
+	color: Crimson;
+	border: 2px solid #2D6CA2;
+}
+.help-message th {
+	color: Crimson;
+	border: 1px solid #2d6ca2;
+}
+.help-message td {
+	border: 1px solid #2d6ca2;
+	color: Crimson;
 }

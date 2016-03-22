@@ -10,20 +10,27 @@
 /* define alias system for frequently occurring terms */
 ALIAS = {
   'doculect': ['TAXON', 'LANGUAGE', 'DOCULECT', 'DOCULECTS', 'TAXA', 'LANGUAGES', 'CONCEPTLIST'],
-  'concept': ['CONCEPT', 'GLOSS']
+  'concept': ['CONCEPT', 'GLOSS'],
+  'segments' : ['SEGMENTS', 'TOKENS'],
+  'alignment' : ['ALIGNMENT'],
+  'morphemes' : ['MORPHEMES'],
+  'transcription' : ['IPA', 'TRANSCRIPTION']
 }
 
 function reset() {
   WLS = {};
   CFG = {
-    'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ETYMONID', 'CHINESE', 'CONCEPTLIST'],
+    'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 
+      'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ETYMONID', 'CHINESE', 'CONCEPTLIST',
+      'ORTHOGRAPHY','WORD','TRANSCRIPTION','SEGMENTS', 'PARTIALIDS'],
     'preview': 10,
     'noid': false, 
     'sorting': false, 
     'formatter': false, 
+    'root_formatter'    : false,
     '_alignment':false,
-    'highlight': ['TOKENS','ALIGNMENT'],
-    'sampa' : ['IPA','TOKENS'],
+    'highlight': ['TOKENS','ALIGNMENT', 'SEGMENTS'],
+    'sampa' : ['IPA','TOKENS', 'SEGMENTS', 'TRANSCRIPTION'],
     'pinyin' : ['CHINESE'],
     'css': ["menu:show","database:hide"],
     'status' : {},
@@ -42,6 +49,8 @@ function reset() {
     'update_mode' : "save",
     'align_all_words' : true,
     'async' : false,
+    'tone_marks' : '⁰¹²³⁴⁵⁶₀₁₂₃₄₅₆',
+    'morpheme_marks' : '+_◦',
     'navbar' : true
   };
 
@@ -87,16 +96,17 @@ var WLS = {};
 
 /* the basic configuration */
 var CFG = {
-  'basics'            : [
-    'DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 'TAXON', 'TAXA', 'PROTO', 
-    'PROTO_TOKENS', 'ALIGNMENT', 'ETYMONID', 'CHINESE', 'CONCEPTLIST'],
+    'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 
+      'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ETYMONID', 'CHINESE', 'CONCEPTLIST',
+      'ORTHOGRAPHY','WORD','TRANSCRIPTION','SEGMENTS', 'PARTIALIDS'],
   'preview'           : 10,
   'noid'              : false,
   'sorting'           : false,
   'formatter'         : false,
+  'root_formatter'    : false,
   '_alignment'        : false,
-  'highlight'         : ['TOKENS','ALIGNMENT'],
-  'sampa'             : ['IPA','TOKENS'],
+  'highlight'         : ['SEGMENTS','ALIGNMENT','TOKENS'],
+  'sampa'             : ['TRANSCRIPTION','IPA','SEGMENTS','TOKENS'],
   'pinyin'            : ['CHINESE'],
   'css'               : ["menu:show","database:hide"],
   'status'            : {},
@@ -115,6 +125,8 @@ var CFG = {
   'update_mode' : "save",
   'align_all_words' : true,
   'async' : false,
+  'tone_marks' : '⁰¹²³⁴⁵⁶₀₁₂₃₄₅₆',
+  'morpheme_marks' : '+_◦',
   'navbar' : true
 };
 
@@ -151,6 +163,39 @@ function resetFormat(value) {
     CFG['_fidx'] = WLS.header.indexOf(CFG['formatter']);
   }
 }
+
+/* reset the root format for partial cognates in the data */
+function resetRootFormat(value) {
+  if (!value) {
+    CFG['root_formatter'] = false;
+    WLS['roots'] = [];
+    CFG['_roots'] = false;
+  }
+  else {
+    var size = 0;
+    CFG['root_formatter'] = value;
+    var format_selection = {};
+    var format_idx = WLS.header.indexOf(value);
+    for (key in WLS) {
+      if (!isNaN(key)) {
+        var tmpkeys = WLS[key][format_idx].split(' ');
+	for (var i=0; i<tmpkeys.length; i++) {
+	  tmp = tmpkeys[i];
+	  if (tmp in format_selection) {
+	    format_selection[tmp].push([key,i]);
+	  }
+	  else if (tmp != 0) {
+	    format_selection[tmp] = [[key,i]];
+	  }
+	  size++;
+	}
+      }
+    }
+    WLS['roots'] = format_selection;
+    CFG['_roots'] = WLS.header.indexOf(CFG['root_formatter']);
+  }
+}
+
 
 /* load qlc-file, core function to handle a wordlist text file and 
  * display it with the edictor */
@@ -205,6 +250,18 @@ function csvToArrays(allText, separator, comment, keyval) {
           if (ALIAS['concept'].indexOf(datum) != -1) {
             cIdx = j;
           }
+	  if (ALIAS['segments'].indexOf(datum) != -1) {
+	    sIdx = j;
+	  }
+	  if (ALIAS['alignment'].indexOf(datum) != -1) {
+	    aIdx = j;
+	  }
+	  if (ALIAS['transcription'].indexOf(datum) != -1) {
+	    iIdx = j;
+	  }
+	  if (ALIAS['morphemes'].indexOf(datum) != -1) {
+	    mIdx = j;
+	  }
           if (CFG['basics'].indexOf(datum) != -1) {
             columns[datum] = j;
           }
@@ -213,7 +270,6 @@ function csvToArrays(allText, separator, comment, keyval) {
           }
 	}
       }
-      console.log('header',header);
       /* apply check for tidx and cidx */
       if (tIdx == -1 && cIdx == -1) {tIdx = 1;cIdx = 2; CFG['tc_status'] = 'notc'}
       else if (cIdx == -1 && tIdx > 1) {cIdx = 1; CFG['tc_status'] = 'noc' }
@@ -239,6 +295,8 @@ function csvToArrays(allText, separator, comment, keyval) {
       firstLineFound = true;
       noid = true;
       CFG['noid'] = true;
+
+      data = data.forEach(function(x) {x.replace(/"/,'&quot;');});
 
       /* get the header */
       var header = [];
@@ -268,6 +326,18 @@ function csvToArrays(allText, separator, comment, keyval) {
           if (ALIAS['concept'].indexOf(datum) != -1) {
             cIdx = j;
           }
+	  if (ALIAS['segments'].indexOf(datum) != -1) {
+	    sIdx = j;
+	  }
+	  if (ALIAS['alignment'].indexOf(datum) != -1) {
+	    aIdx = j;
+	  }
+	  if (ALIAS['transcription'].indexOf(datum) != -1) {
+	    iIdx = j;
+	  }
+	  if (ALIAS['morphemes'].indexOf(datum) != -1) {
+	    mIdx = j;
+	  }
           if (CFG['basics'].indexOf(datum) != -1) {
             columns[datum] = j + 1;
           }
@@ -323,7 +393,6 @@ function csvToArrays(allText, separator, comment, keyval) {
           concepts[concept].push(idx);
         }
         else {
-	  console.log(concept, idx, concepts[concept])
           concepts[concept] = [idx];
         }
 
@@ -355,7 +424,7 @@ function csvToArrays(allText, separator, comment, keyval) {
     c2i[c] = count;
     count += 1;
   }
-
+  
   WLS = qlc;
   WLS['header'] = header;
   WLS['taxa'] = taxa;
@@ -371,13 +440,19 @@ function csvToArrays(allText, separator, comment, keyval) {
   /* ! attention here, this may change if no ids are submitted! */
   CFG['_tidx'] = tIdx-1; // index of taxa
   CFG['_cidx'] = cIdx-1; // index of concepts
+  CFG['_concepts'] = cIdx-1;
+  CFG['_taxa'] = tIdx-1;
+  CFG['_segments'] = (typeof sIdx != 'undefined') ? sIdx-1 : -1;
+  CFG['_alignments'] = (typeof aIdx != 'undefined') ? aIdx-1 : -1;
+  CFG['_transcriptions'] = (typeof iIdx != 'undefined') ? iIdx-1 : -1;
+  CFG['_morphemes'] = (typeof mIdx != 'undefined') ? mIdx-1: -1;
   CFG['parsed'] = true;
   CFG['_selected_doculects'] = Object.keys(WLS.taxa);
 
   /* add formatting options for all "ID" headers to the data, this is important
    * to make sure that cognate ids can be handled as such */
   var formatter = document.getElementById('formatter');
-  var tmp_text = '<th>Formatter</th><td>';
+  var tmp_text = '<th>Cognate IDs</th><td>';
 
   /* first get all id headers into an array */
   var formattable_keys = [];
@@ -388,24 +463,13 @@ function csvToArrays(allText, separator, comment, keyval) {
   }
 
   /* check for cogid or glossid first */
-  if (CFG['formatter']) {
-  }
-  else if (formattable_keys.indexOf('COGID') != -1) {
-    CFG['formatter'] = 'COGID';
-  }
-  else if (formattable_keys.indexOf('GLOSSID') != -1) {
-    CFG['formatter'] = 'GLOSSID';
-  }
-  else if (formattable_keys.length > 0){
-    CFG['formatter'] = formattable_keys[0];
-  }
-  else {
-    CFG['formatter'] = false;
-  }
-
+  if (CFG['formatter']) {}
+  else if (formattable_keys.indexOf('COGID') != -1) { CFG['formatter'] = 'COGID'; }
+  else if (formattable_keys.indexOf('GLOSSID') != -1) { CFG['formatter'] = 'GLOSSID'; }
+  else if (formattable_keys.length > 0){ CFG['formatter'] = formattable_keys[0]; }
+  else { CFG['formatter'] = false; }
   /* add cognate index to CFG as "_fidx" if formatter is found */
   if (CFG['formatter']) {CFG['_fidx'] = WLS.columns[CFG['formatter']];}
-
   for (var k=0,key; key=formattable_keys[k]; k++) {
     if (key != CFG['formatter']) {
       tmp_text += '<input onchange="resetFormat(this.value)" type="radio" name="formatter" value="'+key+'">'+key+' ';
@@ -415,7 +479,6 @@ function csvToArrays(allText, separator, comment, keyval) {
     }
   }
   tmp_text += '<input onchange="resetFormat(false)" type="radio" name="formatter" value="">FALSE ';
-  
   /* reset the format to the currently chosen formatting option */
   if (CFG['formatter']) {
     resetFormat(CFG['formatter']);
@@ -425,6 +488,23 @@ function csvToArrays(allText, separator, comment, keyval) {
   else {
     formatter.style.display = "none";
   }
+  
+  /* handle root formatter */
+  var tmp_text = '<th>Partial Cognate IDs</th><td>';
+  var root_formattable_keys = [];
+  for (key in WLS['columns']) { if (key.indexOf('IDS') == key.length -3) { root_formattable_keys.push(key); } }
+  if (CFG['root_formatter']) {}
+  else if (root_formattable_keys.indexOf('COGIDS') != -1) {CFG['root_formatter'] = 'COGIDS';}
+  else if (root_formattable_keys.indexOf('PARTIALIDS') != -1) {CFG['root_formatter'] = 'PARTIALIDS';}
+  else {CFG['root_formatter'] = false;}
+  CFG['_roots'] = (CFG['root_formatter']) ? WLS.columns[CFG['root_formatter']] : -1;
+  for (var k=0,key; key=root_formattable_keys[k]; k++) {
+    if (key != CFG['root_formatter']) {tmp_text += '<input onchange="resetRootFormat(this.value)" type="radio" name="root_formatter" value="'+key+'">'+key+' ';}
+    else {tmp_text += '<input onchange="resetRootFormat(this.value)" type="radio" checked name="root_formatter" value="'+key+'" >'+key+' ';}}
+  tmp_text += '<input onchange="resetRootFormat(false)" type="radio" name="root_formatter" value="">FALSE ';
+  tmp_text += '</td>';
+  if (CFG['_roots'] != -1) {resetRootFormat(CFG['root_formatter']); document.getElementById('root_formatter').innerHTML = tmp_text;}
+  else {document.getElementById('root_formatter').style.display = 'none';}
 
   /* create selectors */
   createSelectors();
@@ -631,7 +711,6 @@ function showWLS(start)
   var text = '<table id="qlc_table">';
   
   /* we create the header of the table first */
-  // add col-tags to the dable
   text += '<col id="ID" />';
   var thtext = ''; // ff vs. chrome problem
   for (i in WLS['header']) {
@@ -687,15 +766,11 @@ function showWLS(start)
 	  var jdx = parseInt(j) + 1;
 
 	  var head = WLS['header'][j];
-	  if (WLS['columns'][head] > 0) {
-	    var cell_display = '';
-	  }
-	  else {
-	    var cell_display = ' style="display:none"'; // ff vs. chrome problem
-	  }
+	  if (WLS['columns'][head] > 0) { var cell_display = ''; }
+	  else { var cell_display = ' style="display:none"';  }
 
 	  /* check for normal cases */
-	  if (WLS.header[j] != CFG['formatter'] && WLS.uneditables.indexOf(WLS.header[j]) == -1) {
+	  if (WLS.header[j] != CFG['formatter'] && WLS.uneditables.indexOf(WLS.header[j]) == -1 && WLS.header[j]  != CFG['root_formatter']) {
 	    text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx 
 	      + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)"'
 	      + ' oncontextmenu="copyPasteEntry(event,'+idx+','+jdx+','+j+')"'
@@ -704,14 +779,14 @@ function showWLS(start)
 	    text += '</td>';
 	  }
 	  /* check for uneditable values */
-	  else if (WLS.uneditables.indexOf(WLS.header[j]) != -1) {
+	  else if (WLS.header[j] != CFG['root_formatter'] && WLS.uneditables.indexOf(WLS.header[j]) != -1) {
 	    text += '<td class="uneditable '+WLS['header'][j]+'" title="ENTRY '+idx+'/'+jdx+'">';
 	    text += WLS[idx][j];
 	    text += '</td>';
 	  }
 	  /* apply the rest */
-	  else {
-	    text += '<td ondblclick="editGroup(event,'+"'"
+	  else if (WLS.header[j] == CFG['formatter']){
+	    text += '<td ondblclick="editGroup(event,'+ "'"
 	      + WLS[idx][j]+"'"+')" oncontextmenu="editGroup(event,'+"'"
 		+ WLS[idx][j]+"')"+'" class="' + WLS['header'][j] 
 		+ '" title="MODIFY ENTRY ' + idx + '/' + jdx 
@@ -720,12 +795,22 @@ function showWLS(start)
 		+ WLS[idx][j] + '"' + cell_display + '>';
 		text += WLS[idx][j];
 		text += '</td>';
-		}
-		}
-		text += '</tr>';
-		count += 1;
-		}
-		else {count += 1;}
+	  }
+	  else if (WLS.header[j] == CFG['root_formatter']) {
+	    text += '<td ondblclick="PART.partial_alignment(event, '+idx+');" '+
+	      'oncontextmenu="PART.partial_alignment(event, '+idx+');" ' + 
+	      'class="'+WLS['header'][j] +'" ' +
+	      'title="MODIFY ENTRY"' + idx + '/'+ jdx +
+	      '" onclick="editEntry('+idx+','+jdx+',0,0)"' +
+	      ' data-value="'+WLS[idx][j] + '"' + cell_display + '>';
+	    text += WLS[idx][j];
+	    text += '</td>';
+	  }
+	}
+	text += '</tr>';
+	count += 1;
+      }
+      else {count += 1;}
       if (count >= start + CFG['preview']) {
         break;
       }
@@ -957,51 +1042,6 @@ function addColumn(event)
     }
   }
   
-  /* get everything together for a big post request */
-  /* we don't make column post requests right now, since we don't need it */
-  //if (CFG['storable']) {
-  //  
-  //  // check out how posts have to be made 
-  //  var keys = Object.keys(mods);
-  //  
-  //  var count = 0;
-  //  var nmods = {};
-  //  nmods['column'] = name;
-  //  nmods['file'] = CFG['filename'];
-  //  for (var i=0,key; key=keys[i]; i++) {
-  //    count += 1;
-  //    if (mods[key] != '?' && mods[key] != '' && mods[key] != '-') {
-  //      nmods[key] = mods[key];
-  //    }
-  //    if (count >= 800 || i >= keys.length-1) {
-
-  //      var key_count = Object.keys(nmods).length - 2;
-  //      //->console.log(key_count);
-
-  //      $.ajax({
-  //        async: true,
-  //        data: nmods,
-  //        type: "POST",
-  //        url: 'triples/update.php?remote_dbase='+CFG['remote_dbase'],
-  //        success: function(data) {
-  //          //->console.log('submitted the data');
-  //          if (data.indexOf('COLUMN') != -1) {
-  //            dataSavedMessage('post', key_count) ;
-  //          }
-  //          else {
-  //            //->console.log(data);
-  //          }
-  //        },
-  //        error: function() {
-  //          fakeAlert('data could not be stored');
-  //        }
-  //      });
-  //      count = 0;
-  //      nmods = {'column':name,'file':CFG['filename']};
-  //    }
-  //  }
-  //}
-
   /* adjust name to new name */
   var new_name = name.replace(/_/g,'');
   var name_name = name.replace(/_/g, ' ');
@@ -1262,13 +1302,6 @@ function modifyEntry(event, idx, jdx, xvalue) {
 	xvalue = nxvalue;
       }
     }
-    ///* check for bad white-spaces before or after */
-    //else if (xvalue[0] == ' ' || xvalue[xvalue.length-1] == ' ') {
-    //  var nxvalue = xvalue.replace(/^ /,'').replace(/ $/,'');
-    //  if (nxvalue != xvalue) {
-    //    xvalue = nxvalue;
-    //  }
-    //}
   }
 
   var prevalue = entry.dataset.value;
@@ -2209,24 +2242,16 @@ function editGroup(event,idx) {
   var concepticon = false;
 
   /* check for proper alignments first */
-  if (WLS.header.indexOf('ALIGNMENT') != -1 && WLS[rows[0]][WLS.header.indexOf('ALIGNMENT')]) {
-    var this_idx = WLS.header.indexOf('ALIGNMENT');
-    var fall_back = WLS.header.indexOf('TOKENS');
+  if (CFG['_alignments'] != -1) {
+    var this_idx = CFG['_alignments']; 
+    var fall_back = CFG['_segments']; 
   }
-  else if (WLS.header.indexOf('TOKENS') != -1 && WLS[rows[0]][WLS.header.indexOf('TOKENS')]) {
-    var this_idx = WLS.header.indexOf('TOKENS');
-    var fall_back = WLS.header.indexOf('IPA');
+  else if (CFG['_segments'] != -1) { 
+    var this_idx  = CFG['_segments']; 
+    var fall_back = CFG['_transcriptions'];
   }
-  else if (WLS.header.indexOf('IPA') != -1) {
-    var this_idx = WLS.header.indexOf('IPA');
-  }
-  else if (WLS.header.indexOf('WORD') != -1) {
-    var this_idx = WLS.header.indexOf('WORD');
-  }
-  /* specific case for concepticon maintenance */
-  else if (WLS.header.indexOf('CONCEPT') != -1 && WLS.header.indexOf('CONCEPTLIST') != -1) {
-    var this_idx = WLS.header.indexOf('CONCEPT');
-    concepticon = true;
+  else if (CFG['_transcriptions'] != -1) {
+    var this_idx = CFG['_transcriptions'];
   }
   else {
     fakeAlert('No phonetic entries were specified in the data.');
@@ -2234,11 +2259,11 @@ function editGroup(event,idx) {
   }
 
   /* check for sequence index */
-  if (WLS.header.indexOf('TOKENS') != -1) {
-    var seq_idx = WLS.header.indexOf('TOKENS');
+  if (CFG['_segments'] != -1) {
+    var seq_idx = CFG['_segments'];
   }
-  else if (WLS.header.indexOf('IPA') != -1) {
-    var seq_idx = WLS.header.indexOf('IPA');
+  else if (CFG['_transcriptions'] != -1) {
+    var seq_idx = CFG['_transcriptions'];
   }
 
   var editmode = document.createElement('div');
@@ -2255,53 +2280,37 @@ function editGroup(event,idx) {
   CFG['_current_idx'] = rows;
   CFG['_current_seqs'] = [];
   
-  if (concepticon) {
-    for (var i=0,r; r=rows[i]; i++) {
-      rows.sort(
-	  function(x,y) {
-	    return WLS[x][CFG['_tidx']].charCodeAt(0) - WLS[y][CFG['_tidx']].charCodeAt(0);}
-	    );
-      var current_line = WLS[r][this_idx];
-      var lang = WLS[r][CFG['_tidx']];
-      /* only align elements if they are currently displayed XXX */
-      if (CFG['_selected_doculects'].indexOf(lang) != -1 || CFG['align_all_words'] != "false") {
-	alms.push('<td class="alm_taxon">'+lang+'</td><td style="width:250px;font-family=monospace;padding-left:10px;">'+current_line+'</td>')
-      }
+
+  /* now create an alignment object */
+  for (var i=0,r;r=rows[i];i++) {
+    
+    var current_line = WLS[r][this_idx];
+    if(!current_line) {
+      current_line = WLS[r][fall_back];
+    }
+    /* add stuff to temporary container for quick alignment access */
+    CFG['_current_alms'].push(current_line.split(' '));
+    CFG['_current_taxa'].push(WLS[r][CFG['_tidx']]);
+
+    /* add sequence data to allow for automatic alignment */
+    var this_seq = WLS[r][seq_idx];
+    if (!this_seq) {
+      var this_seq = current_line;
+    }
+    if (this_seq.indexOf(' ') == -1) {
+      CFG['_current_seqs'].push(this_seq.split());
+    }
+    else {
+      CFG['_current_seqs'].push(this_seq.split(' '));
     }
 
-  }
-  else {
-    /* now create an alignment object */
-    for (var i=0,r;r=rows[i];i++) {
-      
-      var current_line = WLS[r][this_idx];
-      if(!current_line) {
-        current_line = WLS[r][fall_back];
-      }
-      /* add stuff to temporary container for quick alignment access */
-      CFG['_current_alms'].push(current_line.split(' '));
-      CFG['_current_taxa'].push(WLS[r][CFG['_tidx']]);
+    var alm = plotWord(current_line);
+    var lang = WLS[r][CFG['_tidx']];
 
-      /* add sequence data to allow for automatic alignment */
-      var this_seq = WLS[r][seq_idx];
-      if (!this_seq) {
-        var this_seq = current_line;
-      }
-      if (this_seq.indexOf(' ') == -1) {
-        CFG['_current_seqs'].push(this_seq.split());
-      }
-      else {
-        CFG['_current_seqs'].push(this_seq.split(' '));
-      }
-
-      var alm = plotWord(current_line);
-      var lang = WLS[r][CFG['_tidx']];
-
-      /* only take those sequences into account which are currently selected in the alignment */
-      if (CFG['_selected_doculects'].indexOf(lang) != -1 || CFG['align_all_words'] != "false") {
-	alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace(new RegExp('span','gi'),'td'));
-	blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(new RegExp(' ','gi'),'\t')+'\n';
-      }
+    /* only take those sequences into account which are currently selected in the alignment */
+    if (CFG['_selected_doculects'].indexOf(lang) != -1 || CFG['align_all_words'] != "false") {
+      alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace(new RegExp('span','gi'),'td'));
+      blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(new RegExp(' ','gi'),'\t')+'\n';
     }
   }
   CFG['_alignment'] = blobtxt;
@@ -2314,18 +2323,16 @@ function editGroup(event,idx) {
   text += '<p>';
   text += '<span class="main_handle pull-left" style="margin-left:-7px;margin-top:2px;" ></span>';
   text += CFG['formatter'] + ' &quot;'+idx+'&quot; links the following '+alms.length+' entries:</p>';
-  text += '<div class="alignments" id="alignments"><table onclick="fakeAlert(\'Press on EDIT or ALIGN to edit the alignmetn.\');">';
+  text += '<div class="alignments" id="alignments"><table onclick="fakeAlert(\'Press on EDIT or ALIGN to edit the alignments.\');">';
   for (var i=0,alm;alm=alms[i];i++) {
     text += '<tr>'+alm+'</tr>';
   }
   text += '</table></div>';
   text += '<div class="submitline">';
-  if (!concepticon) {
-    text += '<input id="edit_alignment_button" class="btn btn-primary submit" type="button" onclick="editAlignment()" value="EDIT" /> ';
-    text += '<input id="automatic_alignment_button" class="btn btn-primary submit" type="button" onclick="automaticAlignment();" value="ALIGN" /> ';
-    text += '<input id="submit_alignment_button" class="btn btn-primary submit hidden" type="button" onclick="$(\'#popup_background\').show();storeAlignment();$(\'#popup_background\').fadeOut();ALIGN.destroy_alignment();$(\'#editmode\').remove();basickeydown(event);" value="SUBMIT" /> '; 
-    text += '<input class="btn btn-primary submit" type="button" onclick="saveAlignment('+idx+')" value="EXPORT" /> ';
-  }
+  text += '<input id="edit_alignment_button" class="btn btn-primary submit" type="button" onclick="editAlignment()" value="EDIT" /> ';
+  text += '<input id="automatic_alignment_button" class="btn btn-primary submit" type="button" onclick="automaticAlignment();" value="ALIGN" /> ';
+  text += '<input id="submit_alignment_button" class="btn btn-primary submit hidden" type="button" onclick="$(\'#popup_background\').show();storeAlignment();$(\'#popup_background\').fadeOut();ALIGN.destroy_alignment();$(\'#editmode\').remove();basickeydown(event);" value="SUBMIT" /> '; 
+  text += '<input class="btn btn-primary submit" type="button" onclick="saveAlignment('+idx+')" value="EXPORT" /> ';
   text += '<input class="btn btn-primary submit" type="button" onclick="ALIGN.destroy_alignment();$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /></div><br><br> ';
   text += '</div> ';
 
@@ -2354,7 +2361,7 @@ function automaticAlignment() {
 }
 
 /* function creates and ALIGN object for editing alignments in text */
-/* XXX go hear for sorting the alignmetns when aligning the words */
+/* XXX go here for sorting the alignmetns when aligning the words */
 function editAlignment() {
   ALIGN.ALMS = CFG['_current_alms'];
   ALIGN.TAXA = CFG['_current_taxa'];
@@ -2372,13 +2379,13 @@ function storeAlignment() {
   //ALIGN.refresh();
   ALIGN.export_alignments();
   /* check for index of alignments in data */
-  if (WLS.header.indexOf('ALIGNMENT') != -1) {
-    var this_idx = WLS.header.indexOf('ALIGNMENT');
+  if (CFG['_alignments'] != -1) {
+    var this_idx = CFG['_alignments']; 
   }
   /* if alignemtns are not present, we have a problem, and we need to add them as a column */
   else {
     /* get index of tokens */
-    var tidx = WLS.header.indexOf('TOKENS');
+    var tidx = CFG['_segments']; 
 
     WLS.header.push('ALIGNMENT');
     WLS.columns['ALIGNMENT'] = WLS.header.indexOf('ALIGNMENT');
@@ -2389,6 +2396,7 @@ function storeAlignment() {
       }
     }
     var this_idx = WLS.header.indexOf('ALIGNMENT');
+    CFG['_alignments'] = this_idx;
   }
 
   var blobtxt = '';
@@ -2418,13 +2426,8 @@ function storeAlignment() {
   CFG['_alignment'] = blobtxt;
 
   resetFormat(CFG['formatter']);
-  //if ('_current_concept' in CFG) {
-  //  display_current_cognate();
-  //}
   createSelectors();
   applyFilter();
-  //console.log('current',getCurrent());
-  //showWLS(getCurrent());
 }
 
 function toggleClasses(classes,from,to) {

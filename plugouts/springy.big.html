@@ -1,0 +1,40 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"></head>
+  <body style="background-color:white;max-width:500px;">
+<script src="springy/jquery.js"></script>
+<script src="springy/springy.js"></script>
+<script src="springy/springyui.js"></script>
+<script>
+var data = window.location.href.split('?');
+var _graph = JSON.parse(decodeURI(data[1]));
+
+/* parse graph to springy */
+var graph = new Springy.Graph();
+
+/* iterate over nodes in graph */
+var nodes = {};
+for (var i=0; i<_graph.nodes.length; i++) {
+  var node = _graph.nodes[i];
+  nodes[node.id] = graph.newNode({label: node.label, color:node.color});
+}
+
+console.log(graph);
+for (var i=0; i<_graph.edges.length; i++) {
+  var edge = _graph.edges[i];
+  graph.newEdge(nodes[edge.source], nodes[edge.target], {color: edge.color});
+}
+
+
+jQuery(function(){
+  var springy = window.springy = jQuery('#springydemo').springy({
+    graph: graph,
+    nodeSelected: function(node){
+      console.log('Node selected: ' + JSON.stringify(node.data));
+    }
+  });
+});
+</script>
+<canvas id="springydemo" width="800" height="600">
+</canvas>
+  </body>
+</html>

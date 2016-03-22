@@ -27,6 +27,7 @@ UTIL.show_help = function(topic, table, container) {
       hid.style.width = eid.offsetWidth-50; //(mid.offsetWidth > 500) ? mid.offsetWidth : "0%";
       hid.style.display = '';
       mid.style.display = 'none';
+      hid.style.minWidth = '70%';
     }
   });
 }

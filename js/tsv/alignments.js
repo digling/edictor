@@ -7,6 +7,7 @@
  *
  */
 
+
 var ALIGN = {};
 ALIGN.ALMS = [];
 ALIGN.TAXA = [];
@@ -25,7 +26,7 @@ ALIGN.normalize = function(alms) {
 
   /* check for unalignable parts */
   var brackets = [];
-  if (ALIGN.UDX.length == 0) {
+  if (this.UDX.length == 0) {
     var unalignable = false;
     var udx = [];
     var minus = 0;
@@ -44,7 +45,7 @@ ALIGN.normalize = function(alms) {
         minus += 1;
       }
     }
-    ALIGN.UDX = udx;
+    this.UDX = udx;
   }
 
   /* check whether brackets interfere with empty columns, this means
@@ -71,7 +72,7 @@ ALIGN.normalize = function(alms) {
   }
 
   if (udx_error) {
-    ALIGN.UDX = [];
+    this.UDX = [];
   }
 
   /* determine longest string */
@@ -121,10 +122,10 @@ ALIGN.normalize = function(alms) {
     
     /* check for higher values in UDX than idx */
     var raise_val = false;
-    for (var j=0; j < ALIGN.UDX.length; j++) {
-      var jdx = ALIGN.UDX[j];
+    for (var j=0; j < this.UDX.length; j++) {
+      var jdx = this.UDX[j];
       if (jdx > idx) {
-        ALIGN.UDX[j] -=1;
+        this.UDX[j] -=1;
       }
     }
   }
@@ -141,7 +142,7 @@ ALIGN.style = function (idx,alm) {
     var idf = 'alm_'+idx+'_'+i;
     var sound_class = getSoundClass(seg);
     
-    if (ALIGN.UDX.indexOf(i) != -1) {
+    if (this.UDX.indexOf(i) != -1) {
       if (sound_class != '-') {
         txt += '<td class="residue dolgo_IGNORE dolgo_'+sound_class+'" id="'+idf+'">'+seg+'</td>';
       }
@@ -152,11 +153,11 @@ ALIGN.style = function (idx,alm) {
     else {
       if (sound_class != '-') {
         txt += '<td class="residue pointed dolgo_'+sound_class+'" id="'+idf+
-          '" onclick="ALIGN.addGap('+idx+','+i+')">'+seg+'</td>';
+          '" onclick="this.addGap('+idx+','+i+')">'+seg+'</td>';
       }
       else {
         txt += '<td class="residue dolgo_GAP pointed" id="'+idf+'" '+
-          'onclick="ALIGN.delGap('+idx+','+i+')">'+seg+'</td>';
+          'onclick="this.delGap('+idx+','+i+')">'+seg+'</td>';
       }
     }
   }
@@ -169,24 +170,24 @@ ALIGN.make_table = function (taxa, alms) {
   var txt = '<table id="alignment_table">';
   for (var i=0,taxon; taxon=taxa[i]; i++) {
     txt += '<tr>';
-    if (ALIGN.LOCKS.indexOf(i) != -1) {
+    if (this.LOCKS.indexOf(i) != -1) {
       col = 'lightgray';
     }
     else {
       col = 'white';
     }
-    txt += '<th style="background-color:'+col+';" id="alm_'+i+'" oncontextmenu="ALIGN.lock_sequences('+i+',event)" onclick="ALIGN.lock_sequence('+i+')" class="pointed alm_taxon">'+taxon+'</th>';
+    txt += '<th style="background-color:'+col+';" id="alm_'+i+'" oncontextmenu="this.lock_sequences('+i+',event)" onclick="this.lock_sequence('+i+')" class="pointed alm_taxon">'+taxon+'</th>';
     txt += this.style(i+1,alms[i]);
     txt += '</tr>';
   }
   txt += '<tr class="up_fill"><td></td></tr>';
   txt += '<tr id="unalignable"><th>IGNORE</th>';
   for (var i=0; i< alms[0].length; i++) {
-    if (ALIGN.UDX.indexOf(i) != -1) {
-      txt += '<td class="up_check"><input onchange="ALIGN.reset_UP('+i+')" type="checkbox" name="alignment" value="'+i+'" checked /></td>';
+    if (this.UDX.indexOf(i) != -1) {
+      txt += '<td class="up_check"><input onchange="this.reset_UP('+i+')" type="checkbox" name="alignment" value="'+i+'" checked /></td>';
     }
     else {
-      txt += '<td class="up_check"><input onchange="ALIGN.reset_UP('+i+')" type="checkbox" name="alignment" value="'+i+'" /></td>';
+      txt += '<td class="up_check"><input onchange="this.reset_UP('+i+')" type="checkbox" name="alignment" value="'+i+'" /></td>';
     }
   }
   txt += '</tr>';
@@ -196,35 +197,35 @@ ALIGN.make_table = function (taxa, alms) {
 };
 
 ALIGN.reset_UP = function(idx) {
-  if (ALIGN.UDX.indexOf(idx) == -1) {
-    ALIGN.UDX.push(idx);
-    ALIGN.UDX.sort();
+  if (this.UDX.indexOf(idx) == -1) {
+    this.UDX.push(idx);
+    this.UDX.sort();
   }
   else {
-    var alm_len = ALIGN.ALMS[0].length;
-    ALIGN.UDX.sort();
-    var delidx = ALIGN.UDX.indexOf(idx);
+    var alm_len = this.ALMS[0].length;
+    this.UDX.sort();
+    var delidx = this.UDX.indexOf(idx);
     var new_udx = [];
     var in_udx = [];
-    for (var i=0; i<ALIGN.UDX.length; i++) {
-      if (i != delidx && in_udx.indexOf(ALIGN.UDX[i]) == -1 && ALIGN.UDX[i] < alm_len) {
-	new_udx.push(ALIGN.UDX[i]);
-	in_udx.push(ALIGN.UDX[i]);
+    for (var i=0; i<this.UDX.length; i++) {
+      if (i != delidx && in_udx.indexOf(this.UDX[i]) == -1 && this.UDX[i] < alm_len) {
+	new_udx.push(this.UDX[i]);
+	in_udx.push(this.UDX[i]);
       }
     }
-    ALIGN.UDX = new_udx;
+    this.UDX = new_udx;
   }
-  //->console.log('udx',ALIGN.UDX);
-  ALIGN.refresh();
+  //->console.log('udx',this.UDX);
+  this.refresh();
 }
 
 ALIGN.export_alignments = function() {
   var alms = [];
   var unalignable = false;
-  for (var i=0,alm; alm=ALIGN.ALMS[i]; i++) {
+  for (var i=0,alm; alm=this.ALMS[i]; i++) {
     var out = [];
     for (var j=0,val; val=alm[j]; j++) {
-      if (ALIGN.UDX.indexOf(j) != -1) {
+      if (this.UDX.indexOf(j) != -1) {
         /* just started a new unalignable */
         if (!unalignable) {
           unalignable = true;
@@ -253,17 +254,17 @@ ALIGN.export_alignments = function() {
     }
     alms.push(out);
   }
-  ALIGN.ALMS = alms;
-  ALIGN.UDX = [];
+  this.ALMS = alms;
+  this.UDX = [];
 };
 
 ALIGN.destroy_alignment = function()
 {
-  ALIGN.ALMS = [];
-  ALIGN.UDX = [];
-  ALIGN.TAXA = [];
-  ALIGN.SEQS = [];
-  ALIGN.LOCKS = [];
+  this.ALMS = [];
+  this.UDX = [];
+  this.TAXA = [];
+  this.SEQS = [];
+  this.LOCKS = [];
 };
 
 ALIGN.lock_others = function(idx) {
@@ -274,14 +275,14 @@ ALIGN.lock_others = function(idx) {
 ALIGN.addGap = function (idx,jdx) {
 
   /* check whether idx is in locks */
-  var check = ALIGN.LOCKS.indexOf(idx-1);
+  var check = this.LOCKS.indexOf(idx-1);
   
   /* we now iterate over all items in locks and give them the 
    * same treatment as we already settled for the other items 
    * before. */
   if (check != -1) {
-    var idxs = ALIGN.LOCKS;
-    //->//->console.log(ALIGN.LOCKS);
+    var idxs = this.LOCKS;
+    //->//->console.log(this.LOCKS);
   }
   else {
     var idxs = [idx-1];
@@ -289,17 +290,17 @@ ALIGN.addGap = function (idx,jdx) {
 
   /* determine index of alignment and rebuild the whole stuff with one more gap */
   /* if no unalignable parts are used, this is simple to do */
-  if (ALIGN.UDX.length == 0) {
+  if (this.UDX.length == 0) {
 
     for (var i=0; i<idxs.length; i++) {
       var tdx = idxs[i];
-      var alm = ALIGN.ALMS[tdx];
+      var alm = this.ALMS[tdx];
       alm.splice(jdx,0,"-");
-      ALIGN.ALMS[tdx] = alm;
+      this.ALMS[tdx] = alm;
       //->//->console.log(tdx,alm);
     }
 
-    ALIGN.refresh();
+    this.refresh();
 
     /* note that this method is really, really simple, but it basically works for 
     * smaller alignments.
@@ -314,55 +315,55 @@ ALIGN.addGap = function (idx,jdx) {
      * unalignable part */
     var first_idx = false;
     var nidx = false;
-    for (var i=0; i < ALIGN.UDX.length; i++) {
-      var udx = ALIGN.UDX[i];
+    for (var i=0; i < this.UDX.length; i++) {
+      var udx = this.UDX[i];
       if (udx > jdx && !first_idx) {
         first_idx = true;
         nidx = udx;
       }
     }
-    //->//->console.log('ndx',nidx,jdx,ALIGN.UDX, first_idx)
+    //->//->console.log('ndx',nidx,jdx,this.UDX, first_idx)
     /* XXX doesn't work here with the code XXX */
     if (nidx) {
-      //->console.log('addgap,after',ALIGN.UDX,jdx);
+      //->console.log('addgap,after',this.UDX,jdx);
       /* insert gap before the segment */
       for (var j=0; j < idxs.length; j++) {
 	var tdx = idxs[j];
-	var alm = ALIGN.ALMS[tdx];
+	var alm = this.ALMS[tdx];
 	alm.splice(jdx,0,'-');
       }
 
       /* insert gap after all other segments */
-      for (var j=0; j < ALIGN.ALMS.length; j++) {
+      for (var j=0; j < this.ALMS.length; j++) {
 	if (idxs.indexOf(j) == -1) {
-	  ALIGN.ALMS[j].splice(nidx,0,'-');
+	  this.ALMS[j].splice(nidx,0,'-');
 	}
       }
-      //for (var i=0,alm; alm=ALIGN.ALMS[i]; i++) {
-      //  if (ALIGN.LOCKS.indexOf(i) != -1) {
+      //for (var i=0,alm; alm=this.ALMS[i]; i++) {
+      //  if (this.LOCKS.indexOf(i) != -1) {
       //    alm.splice(nidx,0,'-');
       //  }
       //}
-      for (var i=0; i<ALIGN.UDX.length; i++) {
-        var udx = ALIGN.UDX[i];
+      for (var i=0; i<this.UDX.length; i++) {
+        var udx = this.UDX[i];
         if (udx >= nidx) {
-          ALIGN.UDX[i] += 1;
+          this.UDX[i] += 1;
         }
       }
-      //->console.log(ALIGN.UDX);
-      ALIGN.refresh();
+      //->console.log(this.UDX);
+      this.refresh();
     }
     else {
 
       for (var i=0; i<idxs.length; i++) {
         var tdx = idxs[i];
-        var alm = ALIGN.ALMS[tdx];
+        var alm = this.ALMS[tdx];
         alm.splice(jdx,0,"-");
-        ALIGN.ALMS[tdx] = alm;
+        this.ALMS[tdx] = alm;
         //->//->console.log(tdx,alm);
       }
 
-      ALIGN.refresh();
+      this.refresh();
     }
   }
 };
@@ -465,9 +466,9 @@ ALIGN.refresh = function(idx) {
     idx = 'alignments';
   }
   
-  ALIGN.normalize(ALIGN.ALMS);
+  ALIGN.normalize(this.ALMS);
   
-  txt = ALIGN.make_table(ALIGN.TAXA, ALIGN.ALMS);
+  txt = ALIGN.make_table(this.TAXA, this.ALMS);
 
   document.getElementById(idx).innerHTML = txt;
 };

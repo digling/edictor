@@ -3,13 +3,15 @@
 <h3>
 Browse the morphology of the doculects 
 </h3>
-<input id="input_morphology" class="form-control pull-left textfield" type="text" placeholder="select your doculect" onkeyup="showMorphology(event, this.value)" style="width:250px" />
+<input id="input_morphology" class="form-control pull-left textfield" type="text"
+      placeholder="select your doculect" onkeyup="showMorphology(event, this.value)" style="width:250px" />
 <input id="morphology_filter" 
-       class="form-control pull-left textfield" 			      
-       type="text"
+      class="form-control pull-left textfield" 			      
+      type="text"
       placeholder="filter by morphemes" 
-      onkeyup="if (this.value[this.value.length-1] == ' ') {this.value = sampa2ipa(this.value);}" 
+      onkeyup="if (this.value[this.value.length-1] == ' ') {this.value=(CFG['sampa'].indexOf(WLS['header'][CFG['_segments']]) != -1) ?  sampa2ipa(this.value) : this.value;}" 
       style="width:150px" />
+
 <button type="button"
   onclick="showMorphology(false,document.getElementById('input_morphology').value);"
   class="btn-primary submit3 titled btn">OK</button>
@@ -18,8 +20,35 @@ Browse the morphology of the doculects
 	title="show help"
 	onclick="UTIL.show_help('morphology');" 
 	style="margin-left:5px;"><span class="glyphicon glyphicon-question-sign"></span>
-</button>
+</button> <br><br>
+<span style="background-color: #2d6ca2; color:white; border-radius:5px; border:2px solid #2d6ca2;padding:5px;margin-right:10px;">
+<b>ANALYSIS:</b>
+<input 
+      type="radio"
+      checked
+      name="morphology_style"
+      onchange="CFG['_morphology_style'] = 'auto';"
+      /> AUTOMATIC 
+<input 
+      type="radio" 
+      name="morphology_style" 
+      onchange="CFG['_morphology_style'] = 'user';"
+      /> MANUAL</span>
+<span style="background-color: #2d6ca2; color:white; border-radius:5px; border:2px solid #2d6ca2;padding:5px;margin-right:10px;">
+<b>MODE:</b>
+<input 
+      type="radio"
+      name="morphology_mode" 
+      onchange="CFG['_morphology_mode'] = 'full';"
+      /> FULL 
+<input 
+      type="radio" 
+      name="morphology_mode"
+      checked
+      onchange="CFG['_morphology_mode'] = 'partial';"
+      /> PARTIAL</span>
+
 <br><br>
-<div style="max-height:500px;max-width:90%;overflow-x:hidden;overflow-y:scroll;display:none;"
+<div style="max-height:500px;overflow-x:hidden;overflow-y:scroll;display:none;"
   id="morphology_table"></div>
 <div class="help-message" id="morphology_help" style="display:none;"></div>

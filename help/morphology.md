@@ -15,20 +15,32 @@ using superscript or subscript letters, the EDICTOR will automatically segment
 your data by assuming that each syllable that ends in a tone is a separate
 morpheme.
 
+Even if your data is not morpheme segmented, you can still use the module, but in this case you
+can only carry out full colexification analyses in which for a given doculect all
+words which are fully colexified in the sense of [François (2008)](:bib:Francois2008) are 
+displayed.
+
 ## Usage
 
 After selecting a doculect, just hit the ENTER key, or click on the OK button.
 A table will appear which shows all words of your doculect in morphologically
-segmented form.  If the same word is used to express more than one concept,
-these *colexifications* ([François 2008](:bib:Francois2008)) will appear in
-the column called "COLEXIFICATIONS". If a given word shares morphemes with
-another word, this is listed in the column "PARTIAL COLEXIFICATIONS". The table
-shows the concepts which are fully colexified. In the case of partial
-colexifications, the concept which is partially colexified is further given two
+segmented form.  
+If you chose the "full" mode as one of the options below the selection field for your doculect,
+the table shows for each word, whether this word form is used to express further concepts in your data.
+These *colexifications* ([François 2008](:bib:Francois2008)) will appear in
+the column called "COLEXIFICATIONS". If you chose "partial" as a mode, the EDICTOR searches for partial colexifications, that is, for each word, all other concepts are listed in which the same morpheme occurs.
+In partial colexification model, the concept which is partially colexified is further given two
 indices in superscript indicating where the colexification occurs, with the
 first index pointing to the actual word in the row, and the second pointing to
 the index of the morpheme in the target word.
+If you choose the "manual" analysis instead of the "automatic" analysis set as a default, 
+you will need to have one column called "MORPHEMES" in your data. If this is the case, the EDICTOR will 
+first search in this column, then compare the entries with your phonetic data in segmented form (default column name "TOKENS" or "SEGMENTS"), and finally add the morpheme information to each of the morphemes, if it can be found.
 
+Morpheme annotation in the MORPHEME column is straightforward: White-space is used as a separator, but otherwise all kind of text is allowed. The rule is: if you think that a morpheme occurs in two different words, just give it the same text identifiere. If you don't know a given morpheme, use a question mark to indicate this. This is important to allow the EDICTOR to compare the segmented phonetic entry with your morpheme annotation. The morpheme annotation should be aligned with the morpheme segmentation in the phonetic transcription. Thus, if you have a word "so+pik" and you know that the second element means something like "shoot", but you don't know the meaning of the first element, you could annotate this as "? shoot". 
+
+Note that the EDICTOR is rather tolerant regarding annotation errors: If you do not annotate a word, this is ignored, and if you misalign annotations by, for example, providing less morphemes in your annotation than you have in your phonetic representation, the EDICTOR will just add the missing question marks. But this tolerance has a drawback: You might have errors creeping in your analysis if you do not check your data meticously. 
+ 
 ## Features
 
 ### Sorting
@@ -43,8 +55,9 @@ You can filter the data in two ways:
 
 2. Filter the data by directly clicking on one of the morphemes in the words.
 
-In both cases, the table will be created again, but this time, only those words are considered which contain the selected morpheme.
+In both cases, the table will be created again, but this time, only those words are considered which contain the selected morpheme. If you have chosen the "manual" analysis with your own manually annotated morpheme analysis, you need to filter by supplying identifiers for your morphemes.
 
 ### Interaction with the Wordlist Module
 
-As in the Phonology module, the Morphology module also offers the possibility to directly interact with the Wordlist module. By clicking on the concept labels in the cells of the column "COLEXIFICATIONS", the wordlist will be filtered to show only the colexified concepts. This is identical for clicking on the concept labels in the column "PARTIAL COLEXIFICATIONS", only that these will filter for those concepts which are partially colexified.
+As in the Phonology module, the Morphology module also offers the possibility to directly interact with the Wordlist module. By clicking on the concept labels in the cells of the column "COLEXIFICATIONS", the wordlist will be filtered to show only the colexified concepts. If you click on a concept in the column "CONCEPTS", this will again filter the wordlist and only display your currently selected concept.
+This may turn out convenient for manual morpheme annotation, since you can switch back and forth by annotating morphemes in your wordlist and then checking results on colexifications immediately.

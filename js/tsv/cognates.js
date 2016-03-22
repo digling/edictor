@@ -128,8 +128,8 @@ function display_cognates(concept, sortby) {
   
   /* store in data array first */
   var data = [];
-  var aidx = WLS.header.indexOf('ALIGNMENT');
-  var tidx = WLS.header.indexOf('TOKENS');
+  var aidx = CFG['_alignments'];
+  var tidx = CFG['_segments'];
   var cidx = CFG['_fidx'];
   
   for (var i=0,idx; idx = idxs[i]; i++) {

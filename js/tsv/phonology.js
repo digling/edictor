@@ -233,7 +233,6 @@ function showPhonology (event, doculect, sort, direction) {
   var url = 'doculect='+encodeURIComponent(doculect)+'&sound_list='+encodeURIComponent(normalized_sounds.join(','));
   var ipa_chars = document.getElementById('ipa_charts');
   ipa_charts.style.display="inline";
-  //ipa_charts.href = link; //function(){ window.open(link, '_blank')};
   ipa_charts.onclick = function() {PHON.showChart(url, doculect)};
 
   var did = document.getElementById('phonology_table');
