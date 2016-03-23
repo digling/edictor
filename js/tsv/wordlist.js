@@ -59,6 +59,7 @@ function resetFormat(value) {
     CFG['formatter'] = false;
     WLS['etyma'] = [];
     CFG['_fidx'] = false;
+    CFG['_cognates'] = false;
   }
   else {
     var size = 0;
@@ -79,6 +80,7 @@ function resetFormat(value) {
     }
     WLS['etyma'] = format_selection;
     CFG['_fidx'] = WLS.header.indexOf(CFG['formatter']);
+    CFG['_cognates'] = CFG['_fidx'];
   }
 }
 
@@ -346,6 +348,8 @@ function csvToArrays(allText, separator, comment, keyval) {
     }
   }
 
+  /* +++ check from here, we're close to getting the crap away */
+
   /* check for cogid or glossid first */
   if (CFG['formatter']) {}
   else if (formattable_keys.indexOf('COGID') != -1) { CFG['formatter'] = 'COGID'; }
@@ -354,24 +358,24 @@ function csvToArrays(allText, separator, comment, keyval) {
   else { CFG['formatter'] = false; }
   /* add cognate index to CFG as "_fidx" if formatter is found */
   if (CFG['formatter']) {CFG['_fidx'] = WLS.columns[CFG['formatter']];}
-  for (var k=0,key; key=formattable_keys[k]; k++) {
-    if (key != CFG['formatter']) {
-      tmp_text += '<input onchange="resetFormat(this.value)" type="radio" name="formatter" value="'+key+'">'+key+' ';
-    }
-    else {
-      tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+key+'">'+key+' ';
-    }
-  }
-  tmp_text += '<input onchange="resetFormat(false)" type="radio" name="formatter" value="">FALSE ';
+  //for (var k=0,key; key=formattable_keys[k]; k++) {
+  //  if (key != CFG['formatter']) {
+  //    tmp_text += '<input onchange="resetFormat(this.value)" type="radio" name="formatter" value="'+key+'">'+key+' ';
+  //  }
+  //  else {
+  //    tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+key+'">'+key+' ';
+  //  }
+  //}
+  //tmp_text += '<input onchange="resetFormat(false)" type="radio" name="formatter" value="">FALSE ';
   /* reset the format to the currently chosen formatting option */
   if (CFG['formatter']) {
     resetFormat(CFG['formatter']);
-    formatter.innerHTML = tmp_text + '</td>';
-    formatter.style.display = "table-row";
+  //  formatter.innerHTML = tmp_text + '</td>';
+  //  formatter.style.display = "table-row";
   }
-  else {
-    formatter.style.display = "none";
-  }
+  //else {
+  //  formatter.style.display = "none";
+  //}
   
   /* handle root formatter */
   var tmp_text = '<th>Partial Cognate IDs</th><td>';
@@ -382,13 +386,14 @@ function csvToArrays(allText, separator, comment, keyval) {
   else if (root_formattable_keys.indexOf('PARTIALIDS') != -1) {CFG['root_formatter'] = 'PARTIALIDS';}
   else {CFG['root_formatter'] = false;}
   CFG['_roots'] = (CFG['root_formatter']) ? WLS.columns[CFG['root_formatter']] : -1;
-  for (var k=0,key; key=root_formattable_keys[k]; k++) {
-    if (key != CFG['root_formatter']) {tmp_text += '<input onchange="resetRootFormat(this.value)" type="radio" name="root_formatter" value="'+key+'">'+key+' ';}
-    else {tmp_text += '<input onchange="resetRootFormat(this.value)" type="radio" checked name="root_formatter" value="'+key+'" >'+key+' ';}}
-  tmp_text += '<input onchange="resetRootFormat(false)" type="radio" name="root_formatter" value="">FALSE ';
-  tmp_text += '</td>';
-  if (CFG['_roots'] != -1) {resetRootFormat(CFG['root_formatter']); document.getElementById('root_formatter').innerHTML = tmp_text;}
-  else {document.getElementById('root_formatter').style.display = 'none';}
+  //for (var k=0,key; key=root_formattable_keys[k]; k++) {
+  //  if (key != CFG['root_formatter']) {tmp_text += '<input onchange="resetRootFormat(this.value)" type="radio" name="root_formatter" value="'+key+'">'+key+' ';}
+  //  else {tmp_text += '<input onchange="resetRootFormat(this.value)" type="radio" checked name="root_formatter" value="'+key+'" >'+key+' ';}}
+  //tmp_text += '<input onchange="resetRootFormat(false)" type="radio" name="root_formatter" value="">FALSE ';
+  //tmp_text += '</td>';
+  if (CFG['_roots'] != -1) {resetRootFormat(CFG['root_formatter']);} 
+  //document.getElementById('root_formatter').innerHTML = tmp_text;}
+  //else {document.getElementById('root_formatter').style.display = 'none';}
 
   /* create selectors */
   createSelectors();
@@ -1573,7 +1578,8 @@ function getCurrent()
   var current_index = 1;
   if (previous === null) {
     current_index = 1;
-  }
+  
+  CFG['_cognates'] = CFG['_fidx'];}
   else {
     current_index = parseInt(previous.value.split('-')[1]) + 1;
   }

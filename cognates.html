@@ -1,18 +1,6 @@
-<!--
-
-Cognate settings
-
-author   : Johann-Mattis List
-email    : mattis.list@lingulist.de
-created  : 2014-12-18 14:23
-modified : 2015-01-01 16:21
-
--->
 <span class="main_handle pull-left"></span>
 <button type="button" onclick="$('#toggle_cognates > span').toggle(); $('#cognates').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-
-<p id="cognates_description" style="text-align:left;float:left;"></p>
-
+<h3>Edit and align cognate sets:</h3>
 <div style="display:block">
   <div class="btn-group" style="margin-bottom:10px;margin-right:10px;">
     <select class="multiselect" multiple id="cognates_select_concepts" title="Select concepts">
@@ -26,8 +14,13 @@ modified : 2015-01-01 16:21
     <button class="btn btn-primary mleft submit3" title="Assign new cognate IDs to selected words." onclick="$('#popup_background').show();assign_new_cogid();$('#popup_background').fadeOut();">NEW</button>
     <button class="btn btn-primary mleft submit3" title="Combine cognate IDs of selected words." onclick="$('#popup_background').show();combine_cogids();$('#popup_background').fadeOut();">COMBINE</button>
   </div>
+<button type="button" class="btn-primary titled btn submit3 pull-right"
+	title="show help"
+	onclick="UTIL.show_help('cognates');" 
+	style="margin-left:5px;"><span class="glyphicon glyphicon-question-sign"></span>
 </div>
 <div id="cognates_table" class="pull-left" style="display:block"></div>
+<div id="cognates_help" class="help-message" style="display:none"></div>
 <br>
 <br>
 

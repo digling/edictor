@@ -103,11 +103,11 @@ function basickeydown (event) {
     applyFilter();
     showCurrent();
   }
-  /* toggle settings F2 */
-  else if (event.keyCode == 113) {
-    event.preventDefault();
-    $('#settings').toggleClass("hidden unhidden");
-  }
+  //---+++---/* toggle settings F2 */
+  //---+++---//else if (event.keyCode == 113) {
+  //---+++---//  event.preventDefault();
+  //---+++---//  $('#settings').toggleClass("hidden unhidden");
+  //---+++---//}
   /* toggle filters F3*/
   else if (event.keyCode == 114) {
     event.preventDefault();
@@ -392,8 +392,7 @@ if (document.URL.indexOf('=') != -1) {
 /* handle the different resources which are loaded using ajax */
 var tmp_file_handler = '';
 var loaded_files = [];
-function loadAjax(event, where, what, classes) {
-  
+function loadAjax(event, where, what, classes) {  
   event.preventDefault();
 
   if (loaded_files.indexOf(what) != -1) {
@@ -454,6 +453,10 @@ function loadAjax(event, where, what, classes) {
       delay: 0, source: Object.keys(WLS.columns),
       select: function(event,ui){CORRS.show_correspondences('doculA',1)}
     });
+  }
+
+  if (what == 'settings') {
+    UTIL.load_settings();
   }
 
   $('#toggle_'+what+' > span').toggle();

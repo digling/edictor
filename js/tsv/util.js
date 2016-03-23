@@ -103,9 +103,10 @@ UTIL.open_remote_dbase = function(dbase, frame) {
   }
 }
 
-UTIL.refresh_settings = function() {
+UTIL.load_settings = function() {
 
-  var settables = ['preview', 'cognates', 'alignments', 'morphemes', 'roots'];
+  var settables = ['preview', 'cognates', 'alignments', 'morphemes', 'roots', 'highlight', 'sampa',
+    'pinyin'];
   var entries = {};
   for (var i=0, settable; settable=settables[i]; i++) {
     entries[settable] = document.getElementById('settings_'+settable);
@@ -131,14 +132,71 @@ UTIL.refresh_settings = function() {
     ? WLS['header'][CFG['_morphemes']]
     : ''
     ;
+  for (var i=0,val; val=['highlight', 'sampa', 'pinyin'][i]; i++) {
+    var defaults = CFG[val];
+    var outs = [];
+    for (var j=0,def; def=defaults[j]; j++) {
+      if (WLS.header.indexOf(def) != -1) {
+	outs.push(def);
+      }
+    }
+    entries[val].value = outs.join(',');
+  }
+      
   for (var i=0,entry; entry=['cognates', 'alignments', 'morphemes', 'roots'][i]; i++) {
     $(entries[entry]).autocomplete({
         source: WLS.header });
   }
 
-  console.log('modified settings');
-  
 };
+
+UTIL.refresh_settings = function() {
+
+  var settables = ['preview', 'cognates', 'alignments', 'morphemes', 'roots', 'highlight', 'sampa', 
+    'pinyin'];
+  var entries = {};
+  for (var i=0, settable; settable=settables[i]; i++) {
+    entries[settable] = document.getElementById('settings_'+settable);
+  }
+  
+  CFG['preview'] = parseInt(entries['preview'].value);
+  
+  for (var i=0,entry; entry=['cognates', 'alignments', 'morphemes', 'roots'][i]; i++) {
+    if (entry == 'cognates') {
+      var this_entry = '_fidx';
+    }
+    else {
+      var this_entry = '_'+entry;
+    }
+    if (entries[entry].value) {
+      var idx = WLS.header.indexOf(entries[entry].value);
+      CFG[this_entry] = (idx != -1)
+	? idx
+	: -1;
+      if (entry == 'cognates' && CFG[this_entry] != -1) {
+	resetFormat(entries[entry].value);
+      }
+      if (entry == 'roots' && CFG[this_entry] != -1) {
+	resetRootFormat(entries[entry].value);
+      }
+    }
+  }
+
+  for (var i=0,entry; entry=['highlight', 'sampa', 'pinyin'][i]; i++) {
+    var vals = entries[entry].value.split(',');
+    var new_vals = [];
+    for (var j=0; j<vals.length; j++) {
+      if (WLS.header.indexOf(vals[j]) != -1) {
+	new_vals.push(vals[j]);
+      }
+    }
+    CFG[entry] = new_vals;
+    entries[entry].value = new_vals.join(',');
+  }
+  showWLS(getCurrent());
+  console.log(CFG['_fidx'])
+};
+
 
 ALIAS = {
   'doculect': ['TAXON', 'LANGUAGE', 'DOCULECT', 'DOCULECTS', 'TAXA', 'LANGUAGES', 'CONCEPTLIST'],

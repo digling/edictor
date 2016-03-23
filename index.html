@@ -65,18 +65,18 @@
                   MENU
                 </a>
               </li>
-              <li>
+              <!--<li>
                 <a id="toggle_settings" onclick="toggleDisplay(event,'settings');">
                   <span class="glyphicon glyphicon-ok" style="display:none"></span>
                   <span class="glyphicon glyphicon-remove"></span>
                   SETTINGS
                 </a>
-              </li>
+	      </li>-->
               <li>
-                <a id="toggle_settings2" onclick="loadAjax(event,'sortable', 'settings2', 'help col-sm-8');">
+                <a id="toggle_settings" onclick="loadAjax(event,'sortable', 'settings', 'help col-sm-8');">
                   <span class="glyphicon glyphicon-ok" style="display:none"></span>
                   <span class="glyphicon glyphicon-remove"></span>
-                  SETTINGS2
+                  SETTINGS
                 </a>
               </li>
             </ul>
@@ -190,7 +190,8 @@
 	  <input id="last" type="button" onclick="showWLS(1);$('#last').removeClass('unhidden');$('#last').addClass('hidden');" class="submit hidden" value="&nbsp;LAST&nbsp;" />
 
 	  <div id="mainsettings" class="btn-group pull-right" style="display:none">
-	    <button type="button" title="refresh current dataset" onclick="resetFormat(CFG['formatter']);createSelectors();applyFilter();showWLS(getCurrent());display_current_cognate();" class="btn-primary mleft btn submit3">
+	    <button type="button" title="refresh current dataset"
+	      onclick="resetFormat(CFG['formatter']);resetRootFormat(CFG['root_formatter']);createSelectors();applyFilter();showWLS(getCurrent());display_current_cognate();" class="btn-primary mleft btn submit3">
 	      <span class="glyphicon glyphicon-refresh"></span>
 	    </button>
 	    <button class="submit3 btn-primary mleft btn titled" title="Filter data (shortcut [F3])" id="textfieldsettings" onclick="$('#textfields').toggle();">
@@ -263,9 +264,9 @@
 	</div>
       </li>
 
-      <!-- SETTINGS -->
-      <li class="colx" style="display:inline;">
-	<div id="settings" class="settings" style="display:none">
+      <!-- SETTINGS +++ delete this part completely +++-->
+      <!--<li class="colx" style="display:inline;">
+	<div id="settingsx" class="settings" style="display:none">
 	  <span class="main_handle pull-left"></span>
 	  <button type="button" onclick="toggleDisplay(event,'settings');" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 	  <table>
@@ -279,7 +280,8 @@
 	      <td>
 		<div class="btn-group">
 		  <input id="preview10"  type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] =  10; showWLS(1);" value="&nbsp;10&nbsp;" />
-		  <input id="preview20"  type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] =  20; showWLS(1);" value="&nbsp;20&nbsp;" />
+		  <input id="preview20"  type="button"  class="btn mright btn-primary submit"
+		  onclick="CFG['preview'] =  20; showWLS(1);" value="&nbsp;20&nbsp;" />
 		  <input id="preview50"  type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] =  50; showWLS(1);" value="&nbsp;50&nbsp;" />
 		  <input id="preview100" type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] = 100; showWLS(1);" value="&nbsp;100&nbsp;" />
 		  <input id="preview100" type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] = 200; showWLS(1);" value="&nbsp;200&nbsp;" />
@@ -292,7 +294,7 @@
 	    <tr id="root_formatter"></tr>
 	  </table>
 	</div>
-      </li>
+      </li>-->
       <!-- drop zone and information handling -->
       <li class="colx" style="width:100%">
 	<div class="drop_zone_start" id="eingang">Files are loading, please wait...</div>
