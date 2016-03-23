@@ -258,6 +258,17 @@
   padding-top:10px;
   padding-bottom:25px;
 }
+.border {
+	border: 2px solid #2d6ca2;
+	empty-cells: show;
+	margin: 0px!important;
+}
+.border th {
+	border: 2px solid #2d6ca2;
+}
+.border td {
+	border: 2px solid #2d6ca2!important;
+}
 .settings th{
   width: auto;
   text-align:left;
@@ -398,7 +409,6 @@ span.dolgo_PLUS{vertical-align:center;font-weight: bold; background-color:white;
 	color: #2D6CA2;
 	display: table-cell;
 	padding: 1px;
-	font-size: 70%;
 }
 .morpheme-error {
 	border: 1px solid Crimson;
@@ -407,6 +417,8 @@ span.dolgo_PLUS{vertical-align:center;font-weight: bold; background-color:white;
 	color: Crimson;
 	display: table-cell;
 	padding: 1px;
+}
+.small {
 	font-size: 70%;
 }
 
@@ -677,7 +689,6 @@ ul.nav
   overflow:hidden;
   float: left;
   border-radius: 5px;
-
 }
 tr.d1 td {
   background-color:#e0e6f8;
@@ -993,7 +1004,7 @@ tr.up_fill > td {
 	padding: 10px;
 	color: Crimson;
 	font-size: 120%;
-	width: 120%;
+	width: 100%;
 }
 .help-message a {
 	color: darkblue;

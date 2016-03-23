@@ -84,7 +84,10 @@ MORPH.get_user_morphemes = function (indices, words, concepts) {
 /* return morpheme graph in sigma.js format of nodes and edges*/
 MORPH.get_morpheme_graph = function(indices, words, concepts, full) {
   full = (typeof full == 'undefined') ? false : true;
-  var M = MORPH.get_all_morphemes(indices, words, concepts);
+  var M = (typeof CFG['_morphology_style'] == 'undefined' || CFG['_morphology_style'] == 'auto') 
+    ? MORPH.get_all_morphemes(indices, words, concepts)
+    : MORPH.get_user_morphemes(indices, words, concepts)
+    ;
   var G = { "nodes" : [], "edges" : [] };
   var idx = 1;
   var visited = [];
@@ -169,6 +172,145 @@ MORPH.showGraph = function(graph, fullgraph, doculect, word, concept) {
   $('#wfgraph').draggable({handle:'.main_handle'}).resizable();
 }
 
+MORPH.editMorphemeEntry = function(what, idx) {
+  value = WLS[idx][CFG['_'+what]];
+  entry = document.getElementById(what+'-'+idx);
+  jdx = CFG['_'+what];
+  entry.onclick = '';
+  var ipt = document.createElement('input');
+  ipt.setAttribute('class', 'cellinput');
+  ipt.setAttribute('type', 'text');
+  ipt.setAttribute('data-value', value);
+  ipt.setAttribute('onblur', 'MORPH.unmodifyMorphemeEntry(\'' + what + '\','+idx+')');
+  ipt.setAttribute('onkeyup', 'MORPH.modifyMorphemeEntry(event,'+ idx +',\''+what+'\',this.value)');
+  ipt.size = value.length + 5;
+  ipt.value = value;
+  entry.innerHTML = '';
+  entry.appendChild(ipt);
+  ipt.focus();
+};
+
+MORPH.unmodifyMorphemeEntry = function(what, idx) {
+  /* get the original values, as they are in the wordlist */
+  var _segments = MORPH.get_morphemes(WLS[idx][CFG['_segments']].split(/\s+/));
+  var _morphemes =  WLS[idx][CFG['_morphemes']].split(/\s+/);
+  
+  var out = [];
+  /* iterate over both, preference on segments, and assign values */
+  for (var i=0; i<_segments.length; i++) {
+    if (what == 'segments') {
+      var segment = '<span style="display:table-cell">' +
+	plotWord(_segments[i].join(' '), 'span') +
+	'</span>';
+      out.push(segment);
+    }
+    else if (what == 'morphemes') {
+      var morpheme = (typeof _morphemes[i] != 'undefined' &&_morphemes[i] && _morphemes[i][0] != '?')
+	? '<span class="morpheme">'+_morphemes[i]+'</span>'
+	: '<span class="morpheme-error">?</span>'
+	;
+      out.push(morpheme);
+    }
+  }
+  out = out.join('<span class="small" style="display:table-cell">+</span>');
+  var entry = document.getElementById(what+'-'+idx);
+  entry.innerHTML = out;
+  entry.onclick = function() {
+    MORPH.editMorphemeEntry(what, idx);
+  }
+};
+
+MORPH.modifyMorphemeEntry = function(event, idx, what, value) {
+  
+  CFG['entry_is_currently_modifying'] = true;
+  var ovalue = (what == 'morphemes') ? WLS[idx][CFG['_morphemes']] : WLS[idx][CFG['_segments']];
+
+  /* unmodify on escape */
+  if (event.keyCode == 27) {
+    CFG['entry_is_currently_modifying'] = false;
+    MORPH.unmodifyMorphemeEntry(what, idx);
+    return;
+  }
+  /* modify on enter */
+  else if (event.keyCode != 13 && event != 'click' && [37, 38, 39, 40].indexOf(event.keyCode) == -1)  {
+    CFG['entry_is_currently_modifying'] = false; 
+    return;
+  }
+  else if (ovalue == value) {
+    
+    if (event.keyCode == 40) {
+      var new_index = MORPH.indices[(MORPH.indices.indexOf(idx)+1)];
+      MORPH.editMorphemeEntry(what, new_index);
+      MORPH.unmodifyMorphemeEntry(what, idx);
+      return;
+    }
+    if (event.keyCode == 38) {
+      var new_index = MORPH.indices[(MORPH.indices.indexOf(idx)-1)];
+      MORPH.editMorphemeEntry(what, new_index);
+      MORPH.unmodifyMorphemeEntry(what, idx);
+      return;
+    }
+    if (event.keyCode == 37 && event.ctrlKey) {
+      MORPH.editMorphemeEntry('segments', idx);
+      MORPH.unmodifyMorphemeEntry(what, idx);
+      return;
+    }
+    if (event.keyCode == 39 && event.ctrlKey) {
+      MORPH.editMorphemeEntry('morphemes', idx);
+      MORPH.unmodifyMorphemeEntry(what, idx);
+      return;
+    }
+  
+    return;
+  }
+  
+  /* get the original values, as they are in the wordlist */
+  var _segments = (what != 'segments') 
+    ? MORPH.get_morphemes(WLS[idx][CFG['_segments']].split(/\s+/))
+    : MORPH.get_morphemes(value.split(/\s+/))
+    ;
+  var _morphemes = (what != 'morphemes')
+    ? WLS[idx][CFG['_morphemes']].split(/\s+/)
+    : value.split(/\s+/)
+    ;
+  
+  var outA = [];
+  var outB = [];
+  for (var i=0; i<_segments.length; i++) {
+    outA.push(_segments[i].join(' '));
+    outB.push(
+	(typeof _morphemes[i] != 'undefined' && _morphemes[i] && _morphemes[i][0] != '?') 
+	  ? _morphemes[i] 
+	  : '?'
+	);
+  }
+  var segments = (what != 'segments') ? WLS[idx][CFG['_segments']] : value;
+  var morphemes = outB.join(' ');
+  WLS[idx][CFG['_segments']] = segments;
+  WLS[idx][CFG['_morphemes']] = morphemes;
+  
+  storeModification(idx, CFG['_'+what], value);
+
+  if (event.keyCode == 40) {
+    var new_index = MORPH.indices[(MORPH.indices.indexOf(idx)+1)];
+    MORPH.editMorphemeEntry(what, new_index);
+  }
+  if (event.keyCode == 38) {
+    var new_index = MORPH.indices[(MORPH.indices.indexOf(idx)-1)];
+    MORPH.editMorphemeEntry(what, new_index);
+  }
+  if (event.keyCode == 37 && event.ctrlKey) {
+    MORPH.editMorphemeEntry('segments', idx);
+  }
+  if (event.keyCode == 39 && event.ctrlKey) {
+    MORPH.editMorphemeEntry('morphemes', idx);
+  }
+  MORPH.unmodifyMorphemeEntry(what, idx); 
+
+  return;
+};
+
+
 /* display morphology */
 function showMorphology(event, doculect, filter, sort, direction) {
   if (event) { if (event.keyCode != 13) { return; } }
@@ -180,6 +322,22 @@ function showMorphology(event, doculect, filter, sort, direction) {
   var style = (typeof CFG['_morphology_style'] == 'undefined')
     ? 'auto'
     : CFG['_morphology_style'];
+  var view = (typeof CFG['_morphology_view'] == 'undefined')
+    ? 'inspect'
+    : CFG['_morphology_view'];
+
+  /* check for existing morphemes in the data */
+  if (CFG['_morphemes'] == -1 && (view=='edit' || style=='user')) {
+    fakeAlert('For manual option in ANALYSIS and edit option in VIEW, you need to supply annotated morpheme data. Switching to automatic analyses instead.');
+    CFG['_morphology_style'] = 'auto';
+    CFG['_morphology_view'] = 'inspect';
+    
+    document.getElementById('morphology_style_user').checked = false;
+    document.getElementById('morphology_style_auto').checked = true;
+    document.getElementById('morphology_view_edit').checked = false;
+    document.getElementById('morphology_view_inspect').checked = true;
+    return;
+  }
 
   /* get current height of the window in order to determine maximal height of
    * the div */
@@ -192,69 +350,111 @@ function showMorphology(event, doculect, filter, sort, direction) {
   hid.innerHTML = '';
   hid.style.display = 'none';
   
-  if (typeof filter == 'undefined') {
-    filter = sampa2ipa(document.getElementById('morphology_filter').value);
-    sort = '';
+  filter = (typeof filter == 'undefined') ? document.getElementById('morphology_filter').value : filter;
+  if (typeof sort == 'undefined') {
+    sort = (typeof CFG['_morphology_sort'] == 'undefined') 
+      ? 'numeric' 
+      : CFG['_morphology_sort'];
+  }
+  if (typeof direction == 'undefined') {
+    direction = (typeof CFG['_morphology_direction'] == 'undefined')
+      ? 1
+      : CFG['_morphology_direction'];
+  }
+  if (CFG['_morphology_sort'] != sort) {
     direction = 1;
   }
-  else {
-    document.getElementById('morphology_filter').value = filter;
-    if (typeof sort == 'undefined') {
-      sort = 'alphabetic';
-      direction = 1;
-    }
-    else if (typeof direction == 'undefined') {
-      direction = 1;
-    }
-  }
+  CFG['_morphology_directon'] = direction;
+  CFG['_morphology_sort'] = sort;
   
   /* prepare the three arrays */
   var indices = WLS.taxa[doculect];
   if (sort == 'alphabetic') {
-    var sorter = function (x, y) {
-      return WLS[x][CFG._cidx].charCodeAt(0) - WLS[y][CFG._cidx].charCodeAt(0);
-    }
+    var sorter = (direction == 1) 
+      ? function (x, y) {return WLS[x][CFG._cidx].charCodeAt(0) - WLS[y][CFG._cidx].charCodeAt(0);}
+      : function (y, x) {return WLS[x][CFG._cidx].charCodeAt(0) - WLS[y][CFG._cidx].charCodeAt(0);}
+      ;
   }
   else if (sort == 'phonemes') {
-    var sorter = function (x, y) {
-      var a = getSoundClass(WLS[x][CFG['_segments']][0]).charCodeAt(0);
-      var b = getSoundClass(WLS[y][CFG['_segments']][0]).charCodeAt(0);
-      return a - b;
-    }
+    var sorter = (direction == 1) 
+      ? function (x, y) { var a = getSoundClass(WLS[x][CFG['_segments']][0]).charCodeAt(0); var b = getSoundClass(WLS[y][CFG['_segments']][0]).charCodeAt(0); return a - b; }
+      : function (y, x) { var a = getSoundClass(WLS[x][CFG['_segments']][0]).charCodeAt(0); var b = getSoundClass(WLS[y][CFG['_segments']][0]).charCodeAt(0); return a - b; }
+      ;
   }
   else { 
-    var sorter = function (x, y) {return x - y};
+    var sorter = (direction == 1) 
+      ? function (x, y) {return x - y;}
+      : function (y, x) {return x - y;}
+      ;
   }
   indices.sort(sorter);
 
   var words = indices.map(function (x) {return WLS[x][CFG['_segments']].split(' ');});
   var concepts = indices.map(function (x) {return WLS[x][CFG._cidx];});
 
-  switch (mode+'.'+style) {
-    case 'full.user' : 
-      fakeAlert('Not yet implemented, showing automatic partial colexifications instead.');
+  switch (mode+'.'+style+'.'+view) {
+    case 'full.auto.inspect' : 
+      var morphemes = MORPH.get_all_morphemes(indices, words, concepts);
+      var colexifications = MORPH.get_colexifications(indices, words, concepts);
+      break;
+    case 'full.auto.edit' :
+      var morphemes = MORPH.get_user_morphemes(indices, words, concepts);
+      var colexifications = MORPH.get_colexifications(indices, words, concepts);
+      break;
+    case 'full.user.inspect' :
+      fakeAlert('Not implemented yet, switching ANALYSIS from "manual" to "automatic".');
+      document.getElementById('morphology_style_user').checked = false;
+      document.getElementById('morphology_style_auto').checked = true;
+      style = 'auto';
+      CFG['_morphology_style'] = 'auto';
+      var morphemes = MORPH.get_all_morphemes(indices, words, concepts);
+      var colexifications = MORPH.get_colexifications(indices, words, concepts);
+      break;
+    case 'full.user.edit' :
+      fakeAlert('Not implemented yet, switching ANALYSIS from "manual" to "automatic".');
+      document.getElementById('morphology_style_user').checked = false;
+      document.getElementById('morphology_style_auto').checked = true;
+      style = 'auto';
+      CFG['_morphology_style'] = 'auto';
+      var morphemes = MORPH.get_user_morphemes(indices, words, concepts);
+      var colexifications = MORPH.get_colexifications(indices, words, concepts);
+      break;
+    case 'partial.auto.inspect' :
       var morphemes = MORPH.get_all_morphemes(indices, words, concepts);
       break;
-    case 'full.auto' : 
-      fakeAlert('Not yet implemented, showing automatic partial colexifications instead.');
+    case 'partial.auto.edit' :
       var morphemes = MORPH.get_all_morphemes(indices, words, concepts);
-      break
-    case 'partial.user' :
+      break;
+    case 'partial.user.inspect' :
       var morphemes = MORPH.get_user_morphemes(indices, words, concepts);
       break;
-    case 'partial.auto' :
-      var morphemes = MORPH.get_all_morphemes(indices, words, concepts);
+    case 'partial.user.edit' :
+      var morphemes = MORPH.get_user_morphemes(indices, words, concepts);
       break;
   }
 
+  var id_sort = (CFG['_morphology_sort'] == 'numeric' && direction != 1) 
+    ? 'style="background-color:crimson;" '
+    : '';
+  var concept_sort = (CFG['_morphology_sort'] == 'alphabetic') 
+    ? 'style="background-color:crimson;" '
+    : '';
+  var morpheme_sort = (CFG['_morphology_sort'] == 'phonemes')
+    ? 'style="background-color:crimson;" '
+    : '';
+  var th_edit = (view == 'edit') ? '<th class="titled">'+WLS.header[CFG['_morphemes']]+'</th>' : '';
+  var th_graph = '<th class="titled">GRAPH</th>';
+  
   /* write the header of the table */
   var text = '<table class="data_table2" style="padding-right:25px;"><thead>' +
     '<tr>' +
-    '<th class="titled" title="double click to sort" ondblclick="showMorphology(false,\''+doculect+'\')">ID</th>' +
-    '<th class="titled" title="double click ot sort" ondblclick="showMorphology(false,\''+doculect+'\', \'\', \'alphabetic\')">CONCEPT</th>' +
-    '<th class="titled" title="click on segment to filter, double click to sort" ondblclick="showMorphology(false,\''+doculect+'\',\'\',\'phonemes\')">MORPHEMES</th>' +
+    '<th class="titled" title="double click to sort" '+ id_sort +
+    'ondblclick="CFG[\'_morphology_direction\']='+(-1*direction)+';showMorphology(false,\''+doculect+'\',\'\',\'numeric\')">ID</th>' +
+    '<th class="titled" '+concept_sort+'title="double click ot sort" ondblclick="CFG[\'_morphology_direction\']='+(-1*direction)+';showMorphology(false,\''+doculect+'\', \'\', \'alphabetic\')">'+WLS.header[CFG['_concepts']]+'</th>' +
+    '<th class="titled" '+morpheme_sort+'title="click on segment to filter, double click to sort" ondblclick="CFG[\'_morphology_direction\']='+(-1*direction)+';showMorphology(false,\''+doculect+'\',\'\',\'phonemes\')">'+WLS.header[CFG['_segments']]+'</th>' +
+    th_edit + 
     '<th class="titled">COLEXIFICATIONS</th>' + 
-    '<th class="titled">GRAPH</th>' + 
+    th_graph + 
     '</tr></thead>'
     ;
   text += '<tbody>';
@@ -270,7 +470,10 @@ function showMorphology(event, doculect, filter, sort, direction) {
         if (typeof these_morphemes[j] == 'undefined' || these_morphemes[j][0] == '?' || !these_morphemes[j]) {
           these_morphemes[j] = widx+'.'+j;
         } 
-      } 
+      }
+      if (these_morphemes.length > original_morphemes.length) {
+	these_morphemes = these_morphemes.slice(0,original_morphemes.length);
+      }
     }
     var col_filter = [];
     var pcol_filter = [];
@@ -280,28 +483,54 @@ function showMorphology(event, doculect, filter, sort, direction) {
     if (!filter || these_morphemes.indexOf(filter) != -1) {
       /* the various text added to major text in table */
       var morpheme_data = []; // morphemes with click and filter
+      var user_morphemes = [];
       var pcol_data = []; // partial colexifications
       var col_data = []; // full colexifications
       var p = []; // partial colexification
       for (var j=0; morpheme=these_morphemes[j]; j++) {
 	_morph = (style=='auto') ? morpheme : original_morphemes[j];
         var these_concepts = [];
-	if (style == 'auto'){
-	  morpheme_data.push('<span style="display:table-cell;" title="click to filter" onclick="showMorphology(false,\''+doculect+'\',\''+morpheme+'\');">' + 
-	    plotWord(_morph, 'span', 'pointed')+'</span>');
-	}
-	else {
-	  if (morpheme == widx + '.' + j) {
-	    morpheme_data.push('<span style="display:table-cell;">' + 
-		plotWord(_morph, 'span')+'<sub class="morpheme-error">?</sub></span>')
+	if (view == 'inspect') {
+	  if (style == 'auto'){
+	    morpheme_data.push('<span style="display:table-cell;" title="click to filter" onclick="showMorphology(false,\''+doculect+'\',\''+morpheme+'\');">' + 
+	      plotWord(_morph, 'span', 'pointed')+'</span>');
 	  }
-	  else {
-	    morpheme_data.push('<span style="display:table-cell;" title="click to filter"' +
-		'onclick="showMorphology(false,\''+doculect+'\',\''+morpheme+'\');">' + 
-		plotWord(_morph, 'span', 'pointed') +
-		'<sub class="morpheme">'+morpheme+'</sub>'+'</span>');
+	  else if (style == 'user'){
+	    
+	    if (morpheme == widx + '.' + j) {
+	      morpheme_data.push('<span style="display:table-cell;">' + 
+	  	plotWord(_morph, 'span')+'<sub class="morpheme-error small">?</sub></span>')
+	    }
+	    else {
+	      morpheme_data.push('<span style="display:table-cell;" title="click to filter"' +
+	  	'onclick="showMorphology(false,\''+doculect+'\',\''+morpheme+'\');">' + 
+	  	plotWord(_morph, 'span', 'pointed') +
+	  	'<sub class="morpheme small">'+morpheme+'</sub>'+'</span>');
+	    }
 	  }
 	}
+	else if (view == 'edit') {
+	  if (style == 'user') {
+	    var sstring, mstring;
+	    sstring = '<span style="display:table-cell;">' + plotWord(_morph, 'span')+'</span>';
+	    mstring = (morpheme == widx + '.' + j) 
+	      ? '<span class="morpheme-error">?</span>'
+	      : '<span class="morpheme">'+morpheme+'</span>';
+	    morpheme_data.push(sstring);
+	    user_morphemes.push(mstring);
+	  }
+	  else if (style == 'auto') {
+	    var sstring, mstring, tmpm;
+	    sstring = '<span style="display:table-cell;">' + plotWord(_morph, 'span')+'</span>';
+	    tmpm = WLS[widx][CFG['_morphemes']].split(/\s+/);
+	    mstring = (typeof tmpm[j] == 'undefined' || !tmpm[j] || tmpm[j][0] == '?') 
+	      ? '<span class="morpheme-error">?</span>'
+	      : '<span class="morpheme">'+tmpm[j]+'</span>';
+	    morpheme_data.push(sstring);
+	    user_morphemes.push(mstring);
+	  }
+	}
+	console.log(style, mode, view, morpheme, morphemes);
         for (var k=0; k < morphemes[morpheme].length; k++) {
           var this_idx = morphemes[morpheme][k][0];
           var this_jdx = morphemes[morpheme][k][1];
@@ -321,30 +550,46 @@ function showMorphology(event, doculect, filter, sort, direction) {
 	  }
 	}
       }
-      //var c = colexifications[word.join(' ')]; // full colexification
-      //for (var j=0; j<c.length; j++) {
-      //  var this_idx = c[j][0];
-      //  var this_concept = c[j][1];
-      //  if (this_idx != widx) {
-      //    col_data.push('<span>' +
-      //      this_concept +
-      //      '</span>');
-      //  }
-      //  col_filter.push(WLS.c2i[this_concept]);
-      //}
+      if (mode == 'full') {
+	var c = colexifications[word.join(' ')]; // full colexification
+      	for (var j=0; j<c.length; j++) {
+      	  var this_idx = c[j][0];
+      	  var this_concept = c[j][1];
+      	  if (this_idx != widx) {
+      	    col_data.push('<span>' +
+      	      this_concept +
+      	      '</span>');
+      	  }
+      	  col_filter.push(WLS.c2i[this_concept]);
+      	}
+      }
     
-      var graph = (local_indices.length > 1) ? MORPH.get_morpheme_graph(local_indices, local_words, local_concepts, true) : false;
       
-      //td_col = (col_data.length > 0) ? '<td class="pointed" title="show colexifications in wordlist" onclick="filterOccurrences(\''+doculect+'\',\''+col_filter.join(',')+'\')">' + col_data.join(', ') +'</td>' : '<td></td>';
-      td_pcol = (pcol_data.length > 0) ? '<td class="pointed" title="show partial colexifications in wordlist" onclick="filterOccurrences(\''+doculect+'\',\''+pcol_filter.join(',')+'\')">' + pcol_data.join(', ') + '</td>' : '<td></td>';
-      td_graph = (graph) ? '<td><button class="btn btn-primary okbutton" onclick="MORPH.showGraph(\''+encodeURI(JSON.stringify(graph))+'\',false,\''+doculect+'\',\''+word.join(' ')+'\',\''+concept+'\')">GRAPH</button></td>' : '<td></td>';
+      td_col = (col_data.length > 0) ? '<td class="pointed" title="show colexifications in wordlist" onclick="filterOccurrences(\''+doculect+'\',\''+col_filter.join(',')+'\')">' + col_data.join(', ') +'</td>' : '<td></td>';
+      var graph = (local_indices.length > 1) ? MORPH.get_morpheme_graph(local_indices, local_words, local_concepts, true) : false;
+      var td_pcol = (pcol_data.length > 0) ? '<td class="pointed" title="show partial colexifications in wordlist" onclick="filterOccurrences(\''+doculect+'\',\''+pcol_filter.join(',')+'\')">' + pcol_data.join(', ') + '</td>' : '<td></td>';
+      var td_graph = (graph) ? '<td><button class="btn btn-primary okbutton" onclick="MORPH.showGraph(\''+encodeURI(JSON.stringify(graph))+'\',false,\''+doculect+'\',\''+word.join(' ')+'\',\''+concept+'\')">GRAPH</button></td>' : '<td></td>';
+      var td_user = (view == 'edit') 
+	? '<td title="click to edit" onclick="MORPH.editMorphemeEntry(\'morphemes\','+widx+')" id="morphemes-'+ widx+'" style="max-width:300px;">' + 
+	  user_morphemes.join('<span class="small" style="display:table-cell">+</span>') +
+	  '</td>' 
+	: '';
+      var td_seg = (view == 'edit') 
+	? '<td title="click to edit" onclick="MORPH.editMorphemeEntry(\'segments\','+widx+')" id="segments-'+widx+'" style="width:350px;">' + morpheme_data.join('<span class="small" style="display:table-cell">+</span>') + '</td>'
+	: '<td id="segments-'+widx+'" style="width:350px;">' + morpheme_data.join('<span class="small" style="display:table-cell">+</span>') + '</td>'
+	  ;
+      
+      td_col = (mode == 'full') 
+	? td_col
+	: td_pcol
+	;
 
       text += '<tr>' +
         '<td>' + widx + '</td>' +
 	'<td class="pointed" title="show word in wordlist" onclick="filterOccurrences(\''+doculect+'\',\''+WLS.c2i[concept]+'\')">' + concept + '</td>' +
-        '<td style="max-width:600px;width:350px;">' + morpheme_data.join('<span style="font-size:75%;display:table-cell">+</span>') + '</td>' +
-	//td_col +
-	td_pcol +
+	td_seg + 
+	td_user +
+	td_col +
 	td_graph +
         '</tr>'
 	;
@@ -360,6 +605,9 @@ function showMorphology(event, doculect, filter, sort, direction) {
   button.onclick = function () {MORPH.showGraph(encodeURI(JSON.stringify(G)), true, doculect, G['morphemes'], G['words']);}; 
   mid.innerHTML = text;
   mid.style.display = 'block';
+
+  /* store indices in MORPH, so that we can quickly edit them */
+  MORPH.indices = indices;
 };
 
 if (typeof process != 'undefined' && typeof process.argv != 'undefined') {

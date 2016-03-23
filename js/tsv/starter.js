@@ -365,6 +365,8 @@ if (document.URL.indexOf('=') != -1) {
   if (CFG.server_side_files.indexOf(params['file']) != -1) {
     handleAjax("event",params['file']);
     try {
+    $('#welcome').remove();
+
       showWLS(1);
       toggleDisplay('','filedisplay');
       $('#textfields').show();
@@ -375,6 +377,7 @@ if (document.URL.indexOf('=') != -1) {
   }
   else if('file' in params) {
     handleAjax("event", params['file']);
+    $('#welcome').remove();
     try {
       toggleDisplay('','filedisplay');
       showWLS(1);

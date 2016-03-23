@@ -7,63 +7,15 @@
  *
  */
 
-/* define alias system for frequently occurring terms */
-ALIAS = {
-  'doculect': ['TAXON', 'LANGUAGE', 'DOCULECT', 'DOCULECTS', 'TAXA', 'LANGUAGES', 'CONCEPTLIST'],
-  'concept': ['CONCEPT', 'GLOSS'],
-  'segments' : ['SEGMENTS', 'TOKENS'],
-  'alignment' : ['ALIGNMENT'],
-  'morphemes' : ['MORPHEMES'],
-  'transcription' : ['IPA', 'TRANSCRIPTION']
-}
-
 function reset() {
   WLS = {};
-  CFG = {
-    'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 
-      'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ETYMONID', 'CHINESE', 'CONCEPTLIST',
-      'ORTHOGRAPHY','WORD','TRANSCRIPTION','SEGMENTS', 'PARTIALIDS'],
-    'preview': 10,
-    'noid': false, 
-    'sorting': false, 
-    'formatter': false, 
-    'root_formatter'    : false,
-    '_alignment':false,
-    'highlight': ['TOKENS','ALIGNMENT', 'SEGMENTS'],
-    'sampa' : ['IPA','TOKENS', 'SEGMENTS', 'TRANSCRIPTION'],
-    'pinyin' : ['CHINESE'],
-    'css': ["menu:show","database:hide"],
-    'status' : {},
-    'server_side_files' : [],
-    'server_side_bases' : [],
-    'storable' : false,
-    'last_time' : false, 
-    'parsed' : false,
-    'doculects' : false,
-    'concepts' : false,
-    'columns' : false,
-    'remote_dbase' : 'triples.sqlite3',
-    '_cpentry' : false,
-    '_almcol' : 'ALIGNMENT',
-    'template' : false,
-    'update_mode' : "save",
-    'align_all_words' : true,
-    'async' : false,
-    'tone_marks' : '⁰¹²³⁴⁵⁶₀₁₂₃₄₅₆',
-    'morpheme_marks' : '+_◦',
-    'navbar' : true
-  };
-
+  CFG = $.extend(true, {}, UTIL.settings);
   STORE = '';
   var BL = ['file'];
 
   /* make array for list-type entries */
   var list_types = ['highlight', 'sound_classes', 'sampa', 'pinyin', 'css', 'doculects', 'columns', 'basics', 'concepts'];
   var eval_types = ['async', 'navbar'];
-
-  /* XXX note that we have inconsistencies here: we use aliases to determine basic
-   * display of taxon, concept, ipa, but we don't use them when parsing from 
-   * get-url-line */
 
   for (var param in PARAMS) {
     var value = PARAMS[param];
@@ -95,41 +47,7 @@ function reset() {
 var WLS = {};
 
 /* the basic configuration */
-var CFG = {
-    'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 
-      'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ETYMONID', 'CHINESE', 'CONCEPTLIST',
-      'ORTHOGRAPHY','WORD','TRANSCRIPTION','SEGMENTS', 'PARTIALIDS'],
-  'preview'           : 10,
-  'noid'              : false,
-  'sorting'           : false,
-  'formatter'         : false,
-  'root_formatter'    : false,
-  '_alignment'        : false,
-  'highlight'         : ['SEGMENTS','ALIGNMENT','TOKENS'],
-  'sampa'             : ['TRANSCRIPTION','IPA','SEGMENTS','TOKENS'],
-  'pinyin'            : ['CHINESE'],
-  'css'               : ["menu:show","database:hide"],
-  'status'            : {},
-  'server_side_files' : [],
-  'server_side_bases' : [],
-  'storable' : false,
-  'last_time' : false,
-  'parsed' : false,
-  'doculects' : false,
-  'concepts': false,
-  'columns' : false,
-  'remote_dbase' : 'triples.sqlite3',
-  '_cpentry' : false,
-  '_almcol':'ALIGNMENT',
-  'template' : false,
-  'update_mode' : "save",
-  'align_all_words' : true,
-  'async' : false,
-  'tone_marks' : '⁰¹²³⁴⁵⁶₀₁₂₃₄₅₆',
-  'morpheme_marks' : '+_◦',
-  'navbar' : true
-};
-
+var CFG = $.extend(true, {}, UTIL.settings); 
 var STORE = ''; // global variable to store the text data in raw format
 var PARAMS = {};
 
@@ -244,30 +162,14 @@ function csvToArrays(allText, separator, comment, keyval) {
 
           header.push(datum);
           
-          if (ALIAS['doculect'].indexOf(datum) != -1) {
-            tIdx = j;
-          }
-          if (ALIAS['concept'].indexOf(datum) != -1) {
-            cIdx = j;
-          }
-	  if (ALIAS['segments'].indexOf(datum) != -1) {
-	    sIdx = j;
-	  }
-	  if (ALIAS['alignment'].indexOf(datum) != -1) {
-	    aIdx = j;
-	  }
-	  if (ALIAS['transcription'].indexOf(datum) != -1) {
-	    iIdx = j;
-	  }
-	  if (ALIAS['morphemes'].indexOf(datum) != -1) {
-	    mIdx = j;
-	  }
-          if (CFG['basics'].indexOf(datum) != -1) {
-            columns[datum] = j;
-          }
-          else {
-            columns[datum] = -j;
-          }
+          if (ALIAS['doculect'].indexOf(datum) != -1) { tIdx = j; }
+          if (ALIAS['concept'].indexOf(datum) != -1) { cIdx = j; }
+	  if (ALIAS['segments'].indexOf(datum) != -1) { sIdx = j; }
+	  if (ALIAS['alignment'].indexOf(datum) != -1) { aIdx = j; }
+	  if (ALIAS['transcription'].indexOf(datum) != -1) { iIdx = j; }
+	  if (ALIAS['morphemes'].indexOf(datum) != -1) { mIdx = j; }
+          if (CFG['basics'].indexOf(datum) != -1) { columns[datum] = j; }
+          else { columns[datum] = -j; }
 	}
       }
       /* apply check for tidx and cidx */
@@ -276,9 +178,7 @@ function csvToArrays(allText, separator, comment, keyval) {
       else if (cIdx == -1 && tIdx <= 1 && tIdx > -1) {cIdx = 2; CFG['tc_status'] = 'noc'}
       else if (tIdx == -1 && cIdx > 1) {tIdx = 1; CFG['tc_status'] = 'not' }
       else if (tIdx == -1 && cIdx <= 1 && cIdx > -1) {tIdx = 2; CFG['tc_status'] = 'not'}
-      else {
-        CFG['tc_status'] = '';
-      }
+      else { CFG['tc_status'] = ''; }
       
       /* append to basics if it is not already defined, but be careful with other stuff */
       if (CFG['tc_status'].indexOf('t') != -1) {
@@ -320,30 +220,14 @@ function csvToArrays(allText, separator, comment, keyval) {
           }
 
           header.push(datum);
-          if (ALIAS['doculect'].indexOf(datum) != -1) {
-            tIdx = j;
-          }
-          if (ALIAS['concept'].indexOf(datum) != -1) {
-            cIdx = j;
-          }
-	  if (ALIAS['segments'].indexOf(datum) != -1) {
-	    sIdx = j;
-	  }
-	  if (ALIAS['alignment'].indexOf(datum) != -1) {
-	    aIdx = j;
-	  }
-	  if (ALIAS['transcription'].indexOf(datum) != -1) {
-	    iIdx = j;
-	  }
-	  if (ALIAS['morphemes'].indexOf(datum) != -1) {
-	    mIdx = j;
-	  }
-          if (CFG['basics'].indexOf(datum) != -1) {
-            columns[datum] = j + 1;
-          }
-          else {
-            columns[datum] = -(j + 1);
-          }
+          if (ALIAS['doculect'].indexOf(datum) != -1) { tIdx = j; }
+          if (ALIAS['concept'].indexOf(datum) != -1) { cIdx = j; }
+	  if (ALIAS['segments'].indexOf(datum) != -1) { sIdx = j; }
+	  if (ALIAS['alignment'].indexOf(datum) != -1) { aIdx = j; }
+	  if (ALIAS['transcription'].indexOf(datum) != -1) { iIdx = j; }
+	  if (ALIAS['morphemes'].indexOf(datum) != -1) { mIdx = j; }
+          if (CFG['basics'].indexOf(datum) != -1) { columns[datum] = j + 1; }
+          else { columns[datum] = -(j + 1); }
 	}
       }
 
@@ -525,7 +409,6 @@ function csvToArrays(allText, separator, comment, keyval) {
 
 /* create selectors for languages, concepts, and columns */
 function createSelectors() {
-  
   /* check first if the selectors have been created already, if so, destroy them */
   var doculect_button = document.getElementById('select_doculects_button');
   if (typeof doculect_button != 'undefined') {
@@ -539,7 +422,6 @@ function createSelectors() {
   if (typeof doculect_button != 'undefined') {
     $('#select_columns').multiselect('destroy');
   }
-
   
   /* fro taxa and concepts, we should check whether they are actually 
    * in the data passed to the app. If they are missing, we shouldn't bother 
@@ -555,13 +437,11 @@ function createSelectors() {
     }
     did.innerHTML = txt;
   }
-  
   if (CFG['tc_status'] != 'noc' && CFG['tc_status'] != 'notc') {
     var cid = document.getElementById('select_concepts');
     var concepts = Object.keys(WLS.concepts);
     concepts.sort();
     txt = ''
-
     for (var i=0,concept; concept=concepts[i]; i++) {
       txt += '<option value="'+concept+'" selected>'+concept+'</option>';
     }
@@ -1052,6 +932,13 @@ function addColumn(event)
     CFG['basics'].push(new_name);
   }
 
+  /* check for alignments */
+  for (var i=0,entry; entry=['morphemes', 'alignments', 'cognates', 'roots'][i]; i++) {
+    if (ALIAS[entry].indexOf(new_name) != -1) {
+      CFG['_'+entry] = WLS['header'].indexOf(new_name);
+    }
+  }
+
   col.value = '';
   createSelectors();
   showWLS(1);
@@ -1364,7 +1251,7 @@ function modifyEntry(event, idx, jdx, xvalue) {
 /* function stores (if possible) a given modification in the project's triple store */
 function storeModification(idx, jdx, value, async) {
   if (typeof async == 'undefined') {
-    async = true;
+    async = CFG['async'];
   }
 
   /* check whether idx, jdx, and value contain multiple entries */

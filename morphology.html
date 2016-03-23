@@ -22,9 +22,10 @@ Browse the morphology of the doculects
 	style="margin-left:5px;"><span class="glyphicon glyphicon-question-sign"></span>
 </button> <br><br>
 <span style="background-color: #2d6ca2; color:white; border-radius:5px; border:2px solid #2d6ca2;padding:5px;margin-right:10px;">
-<b>ANALYSIS:</b>
+<b title="Select between a manual analysis that takes user-specified morphemes into account and an automatic analysis based on automatically identified colexifications.">ANALYSIS:</b>
 <input 
       type="radio"
+      id="morphology_style_auto"
       checked
       name="morphology_style"
       onchange="CFG['_morphology_style'] = 'auto';"
@@ -32,10 +33,26 @@ Browse the morphology of the doculects
 <input 
       type="radio" 
       name="morphology_style" 
+      id="morphology_style_user"
       onchange="CFG['_morphology_style'] = 'user';"
       /> MANUAL</span>
 <span style="background-color: #2d6ca2; color:white; border-radius:5px; border:2px solid #2d6ca2;padding:5px;margin-right:10px;">
-<b>MODE:</b>
+<b title="Select between an interactive view and an editable view in which you can directly modify the data.">VIEW:</b>
+<input 
+      type="radio" 
+      name="morphology_view"
+      id="morphology_view_inspect"
+      checked
+      onchange="CFG['_morphology_view'] = 'inspect';"
+      /> INSPECT
+<input 
+      type="radio" 
+      name="morphology_view" 
+      id = "morphology_view_edit"
+      onchange="CFG['_morphology_view'] = 'edit';"
+      /> EDIT</span>
+<span style="background-color: #2d6ca2; color:white; border-radius:5px; border:2px solid #2d6ca2;padding:5px;margin-right:10px;">
+<b title="Select between full and partial colexification in the display.">MODE:</b>
 <input 
       type="radio"
       name="morphology_mode" 
@@ -47,7 +64,6 @@ Browse the morphology of the doculects
       checked
       onchange="CFG['_morphology_mode'] = 'partial';"
       /> PARTIAL</span>
-
 <br><br>
 <div style="max-height:500px;overflow-x:hidden;overflow-y:scroll;display:none;"
   id="morphology_table"></div>

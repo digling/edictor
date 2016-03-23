@@ -11,7 +11,7 @@ modified : 2016-03-20 10:41
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link rel="icon" href="img/wordlists.png" type="image/png" />
+<link rel="icon" href="img/edictor-small.png" type="image/png" />
 <link rel="stylesheet" href="css/main.css" type="text/css" />
 <title>EDICTOR</title>
 </head>
@@ -26,7 +26,9 @@ modified : 2016-03-20 10:41
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <img class="navbar-brand" style="margin-top:8px;padding:0px;margin-right:5px;width:30px;height:30px;" src="img/wordlists.png" alt="tsv" />
+        <img class="navbar-brand"
+	style="margin-top:2px;padding:0px;margin-right:5px;width:50px;height:50px;"
+	src="img/edictor-small.png" alt="tsv" />
         <a class="navbar-brand" onclick="event.preventDefault();window.location.reload();">EDICTOR</a>
       </div>
       <div class="collapse navbar-collapse">
@@ -38,7 +40,7 @@ modified : 2016-03-20 10:41
             </a>
             <ul class="dropdown-menu" role="menu">
               <li>
-                <a onclick="event.preventDefault();fakeAlert('under construction');">
+                <a onclick="loadAjax(event, 'sortable', 'about', 'help col-sm-8');">
                   <span class="glyphicon glyphicon-remove"></span>
                   <span class="glyphicon glyphicon-ok" style="display: none"></span>
                   ABOUT
@@ -81,6 +83,29 @@ modified : 2016-03-20 10:41
                 </a>
               </li>
               <li>
+                <a id="toggle_settings2" onclick="loadAjax(event,'sortable', 'settings2', 'help col-sm-8');">
+                  <span class="glyphicon glyphicon-ok" style="display:none"></span>
+                  <span class="glyphicon glyphicon-remove"></span>
+                  SETTINGS2
+                </a>
+              </li>
+              <li>
+                <a id="toggle_statistics" onclick="fakeAlert('under construction');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+		  STATISTICS 
+                </a>
+              </li>
+
+            </ul>
+          </li>
+	  <li class="dropdown">
+	    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+	      EDIT
+              <span class="caret"></span>
+	    </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
                 <a id="toggle_filedisplay" onclick="toggleDisplay(event,'filedisplay')">
                   <span class="glyphicon glyphicon-remove"></span>
                   <span class="glyphicon glyphicon-ok" style="display: none"></span>
@@ -94,6 +119,14 @@ modified : 2016-03-20 10:41
 		  COGNATE SETS
 		</a>
 	      </li>
+	    </ul>
+	  </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              ANALYZE
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
               <li>
                 <a id="toggle_phonology" onclick="loadAjax(event, 'sortable', 'phonology', 'largebox');">
                   <span class="glyphicon glyphicon-remove"></span>
@@ -119,7 +152,7 @@ modified : 2016-03-20 10:41
           </li>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-              CREATE
+              CUSTOMIZE
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
@@ -134,36 +167,14 @@ modified : 2016-03-20 10:41
                 <a id="toggle_customize" onclick="loadAjax(event, 'sortable', 'customize', 'help col-sm-8');">
                   <span class="glyphicon glyphicon-remove"></span>
                   <span class="glyphicon glyphicon-ok" style="display: none"></span>
-                  CUSTOMIZE
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-              ANALYZE
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-              <li>
-                <a id="toggle_column_check" onclick="fakeAlert('under construction');">
-                  <span class="glyphicon glyphicon-remove"></span>
-                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
-                  CHECK COLUMNS
+                  CUSTOM SETTINGS
                 </a>
               </li>
               <li>
-                <a id="toggle_row_check" onclick="fakeAlert('under construction');">
+                <a id="toggle_databases" onclick="loadAjax(event, 'sortable', 'databases', 'help col-sm-8');">
                   <span class="glyphicon glyphicon-remove"></span>
                   <span class="glyphicon glyphicon-ok" style="display: none"></span>
-                  CHECK ROWS
-                </a>
-              </li>
-              <li>
-                <a id="toggle_alignment_check" onclick="fakeAlert();">
-                  <span class="glyphicon glyphicon-remove"></span>
-                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
-                  CHECK ALIGNMENTS
+                  DATABASES
                 </a>
               </li>
             </ul>
@@ -303,8 +314,33 @@ modified : 2016-03-20 10:41
       <!-- drop zone and information handling -->
       <li class="colx" style="width:100%">
 	<div class="drop_zone_start" id="eingang">Files are loading, please wait...</div>
-	<div id="view" onclick="showWLS(1);toggleDisplay(event,'filedisplay');$('#textfields').show();" class="view" style="display:none" value="&nbsp;VIEW&nbsp;">
+	<div id="view" onclick="$('#welcome').remove();showWLS(1);toggleDisplay(event,'filedisplay');$('#textfields').show();" class="view" style="display:none" value="&nbsp;VIEW&nbsp;">
 	  Open the file.
+	</div>
+      </li>
+      <li class="colx largebox" id="welcome" style="background:#2d6ca2;min-width:50%;max-width:800px;">
+	  <span class="main_handle pull-left"></span>
+	  <button type="button" onclick="$('#welcome').remove();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+	<div class="colx">
+		<img style="display:table-cell;float:left;" src="img/wordlists.png" width="49%" alt="edictor" />
+	  <div style="color:white;font-size:150%;display:table-cell;float:left;width:49%;max-width:50%;" >
+	    <b>Welcome to the EDICTOR!</b> <br><br> The EDICTOR is an interactive tool for creating, maintaining, and publishing
+		etymological data which is stored in simple TSV format. <br><br>
+		Use the EDICTOR to 
+		<ul><li>create your datasets from scratch,</li>
+		  <li>annotate your existing datasets,</li>
+		  <li>identify and annotate cognates,</li>
+		  <li>create alignments,</li>
+		  <li>check your data, and</li>
+		  <li>carry out various kinds of analyses.</li></ul>
+		In order to get started with an existing example dataset, just click 
+		<a style="color:crimson" href="http://edictor.digling.org?file=BAI.tsv">this
+		  link</a>. Press 
+		<span class="pointed" onclick="$('#welcome').remove();loadAjax(event, 'sortable', 'about', 'help col-sm-8');" style="color:crimson">here</span> to learn more ABOUT the EDICTOR,
+	      or <span class="pointed" onclick="$('#welcome').remove();loadAjax(event, 'sortable', 'help', 'help col-sm-8');" 
+		style="color:crimson">here</span> to get further HELP.
+	  </div>
 	</div>
       </li>
     </ul>
