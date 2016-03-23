@@ -153,11 +153,11 @@ ALIGN.style = function (idx,alm) {
     else {
       if (sound_class != '-') {
         txt += '<td class="residue pointed dolgo_'+sound_class+'" id="'+idf+
-          '" onclick="this.addGap('+idx+','+i+')">'+seg+'</td>';
+          '" onclick="ALIGN.addGap('+idx+','+i+')">'+seg+'</td>';
       }
       else {
         txt += '<td class="residue dolgo_GAP pointed" id="'+idf+'" '+
-          'onclick="this.delGap('+idx+','+i+')">'+seg+'</td>';
+          'onclick="ALIGN.delGap('+idx+','+i+')">'+seg+'</td>';
       }
     }
   }
@@ -176,7 +176,7 @@ ALIGN.make_table = function (taxa, alms) {
     else {
       col = 'white';
     }
-    txt += '<th style="background-color:'+col+';" id="alm_'+i+'" oncontextmenu="this.lock_sequences('+i+',event)" onclick="this.lock_sequence('+i+')" class="pointed alm_taxon">'+taxon+'</th>';
+    txt += '<th style="background-color:'+col+';" id="alm_'+i+'" oncontextmenu="this.lock_sequences('+i+',event)" onclick="ALIGN.lock_sequence('+i+')" class="pointed alm_taxon">'+taxon+'</th>';
     txt += this.style(i+1,alms[i]);
     txt += '</tr>';
   }
@@ -184,10 +184,10 @@ ALIGN.make_table = function (taxa, alms) {
   txt += '<tr id="unalignable"><th>IGNORE</th>';
   for (var i=0; i< alms[0].length; i++) {
     if (this.UDX.indexOf(i) != -1) {
-      txt += '<td class="up_check"><input onchange="this.reset_UP('+i+')" type="checkbox" name="alignment" value="'+i+'" checked /></td>';
+      txt += '<td class="up_check"><input onchange="ALIGN.reset_UP('+i+')" type="checkbox" name="alignment" value="'+i+'" checked /></td>';
     }
     else {
-      txt += '<td class="up_check"><input onchange="this.reset_UP('+i+')" type="checkbox" name="alignment" value="'+i+'" /></td>';
+      txt += '<td class="up_check"><input onchange="ALIGN.reset_UP('+i+')" type="checkbox" name="alignment" value="'+i+'" /></td>';
     }
   }
   txt += '</tr>';
@@ -282,7 +282,6 @@ ALIGN.addGap = function (idx,jdx) {
    * before. */
   if (check != -1) {
     var idxs = this.LOCKS;
-    //->//->console.log(this.LOCKS);
   }
   else {
     var idxs = [idx-1];

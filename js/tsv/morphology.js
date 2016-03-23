@@ -163,7 +163,7 @@ MORPH.showGraph = function(graph, fullgraph, doculect, word, concept) {
     '<span class="main_handle pull-left" style="margin-left:0px;margin-top:2px;" ></span>' +
     wftext + 
     '</p>' +
-    '<iframe id="iframe-graph" onload=UTIL.resizeframe(this);" src="'+url+'" style="width:90%;height:80%;min-height:400px;border:2px solid #2D6CA2"></iframe><br><div class="btn btn-primary okbutton" onclick="' + 
+    '<iframe id="iframe-graph" onload=UTIL.resizeframe(this);" src="'+url+'" style="width:90%;height:80%;min-height:400px;max-height:600px;border:2px solid #2D6CA2;"></iframe><br><div class="btn btn-primary okbutton" onclick="' + 
     "$('#editmode').remove(); document.onkeydown = function(event){basickeydown(event)};" +
     '")> OK </div></div>';
   nid.id = 'editmode';

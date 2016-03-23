@@ -19,7 +19,7 @@ PHON.showChart = function(url, doculect) {
     '<p style="color:white;font-weight:bold;">' +
     '<span class="main_handle pull-left" style="margin-left:0px;margin-top:2px;" ></span>' +
     ' IPA chart for '+ doculect+':</p>' +
-    '<iframe onload="UTIL.resizeframe(this)" id="ipaiframe" src="'+url+'" style="width:90%;min-height:400px;border:2px solid #2D6CA2"></iframe><br><div class="btn btn-primary okbutton" onclick="' + 
+    '<iframe onload="UTIL.resizeframe(this)" id="ipaiframe" src="'+url+'" style="width:90%;min-height:600px;border:2px solid #2D6CA2;"></iframe><br><div class="btn btn-primary okbutton" onclick="' + 
     "$('#editmode').remove(); document.onkeydown = function(event){basickeydown(event)};" +
     '")> OK </div></div>';
   nid.id = 'editmode';

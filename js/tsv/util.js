@@ -3,33 +3,46 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2016-03-20 10:44
- * modified : 2016-03-20 10:44
+ * modified : 2016-03-23 18:25
  *
  */
 
 
 var UTIL = {};
+UTIL.log = {};
 UTIL.show_help = function(topic, table, container) {
   container = (typeof container == "undefined") ? topic : container;
   table = (typeof table == 'undefined') ? topic+'_table' : table;
-  console.log(topic, container, table);
-  
-  $.ajax({
-    async: true,
-    type: "GET",
-    url: "help/"+topic+'.html',
-    dataType: "text",
-    success: function(data) {
-      var mid = document.getElementById(table);
-      var hid = document.getElementById(topic+'_help');
-      var eid = document.getElementById(container);
-      hid.innerHTML = data;
-      hid.style.width = eid.offsetWidth-50; //(mid.offsetWidth > 500) ? mid.offsetWidth : "0%";
-      hid.style.display = '';
-      mid.style.display = 'none';
-      hid.style.minWidth = '70%';
-    }
-  });
+  console.log(UTIL.log);
+  if (topic in UTIL.log && UTIL.log[topic]) {
+    document.getElementById(table).style.display = '';
+    document.getElementById(topic+'_help').style.display = 'none';
+    UTIL.log[topic] = false;
+  }
+  else if (topic in UTIL.log) {
+    document.getElementById(table).style.display = 'none';
+    document.getElementById(topic+'_help').style.display = '';
+    UTIL.log[topic] = true;
+  }
+  else {
+    $.ajax({
+      async: true,
+      type: "GET",
+      url: "help/"+topic+'.html',
+      dataType: "text",
+      success: function(data) {
+        var mid = document.getElementById(table);
+        var hid = document.getElementById(topic+'_help');
+        var eid = document.getElementById(container);
+        hid.innerHTML = data;
+        hid.style.width = eid.offsetWidth-50; 
+        hid.style.display = '';
+        mid.style.display = 'none';
+        hid.style.minWidth = '70%';
+	UTIL.log[topic] = true;
+      }
+    });
+  }
 }
 
 UTIL.randint = function (min, max) {
@@ -37,8 +50,8 @@ UTIL.randint = function (min, max) {
 };
 
 UTIL.resizeframe = function (iframe) {
-  iframe.height = (10 + iframe.contentWindow.document.body.scrollHeight) + 'px';
-  iframe.width =  (iframe.contentWindow.document.body.scrollWidth) + 'px';
+  iframe.height = (10 + iframe.contentWindow.document.body.clientHeight) + 'px';
+  iframe.width =  (iframe.contentWindow.document.body.clientWidth) + 'px';
 }
 
 UTIL.settings = {
