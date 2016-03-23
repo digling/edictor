@@ -4,7 +4,7 @@ The Wordlist is the central view of the EDICTOR and all other ways to inspect an
 
 A Wordlist in the EDICTOR is a simple tabular format that displays the data which is either submitted as a text file in TSV format or loaded from a server.
 
-## Basic Structure
+# Basic Structure
 
 The basic structure of a wordlist in the EDICTOR follows the specifications of wordlists used in the [LingPy](http://lingpy.org) software package. 
 For users interested in the ideas behind the wordlist representation, it is generally recommended to read [this wordlist tutorial](http://lingpy.org/tutorial/lingpy.basic.wordlist.html). 
@@ -28,32 +28,32 @@ In order to allow the EDICTOR to identify these required columns when parsing th
 | ALIGNMENT     | phonetic alignment of a set of cognate words       | alignment                 | no       |
 
 
-## Features
+# Features
 
-### Modifying the Display
+## Modifying the Display
 
 +++ pending +++
 
-### Sorting the Data
+## Sorting the Data
 
 As a general rule throughout many modules of the EDICTOR, double-clicking on a column header will trigger a sort along that column.
 To mark the sorted column, the header will be colored in red. By double-clicking again on the same column, the sort will be reversed, and by double-clicking a third time, the original (unsorted) order will be re-established.
 
-### Browsing the Data
+## Browsing the Data
 
 The Wordlist view is per default restricted to show only a short preview of 10 items of the full wordlist. 
 If you want to change the amount of items which are show in preview, you can do so by changing the "preview" option in the settings, which you can access through the top-menu.
 
 For a quick browsing of the data, you can click on the buttons to the left and the right of the "START" symbol on top of the Wordlist panel. If you just loaded your data, there won't be a browse-button on the left of "START", but only on the right, indicating the next number of items which you can inspect. In this way, you can go forward and backward through your data. As a convenient shortcut for quick browsing, use the "PAGE UP" and the "PAGE DOWN" keys to browse back and forth.
 
-### Editing the Data
+## Editing the Data
 
 A general feature of the Wordlist panel is to offer a quick way to edit the data. Essentially, each cell in the Wordlist can be edited by clicking one time on the cell and modifying the entry. In order to save the data, you need to press either the "ENTER" key, or one of the "UP" and "DOWN" keys, which will automatically bring you to the next cell above or beyond the cell you just edited. 
 
 Instead of editing the data, you can also use the keys to navigate quickly through your data.
 While "UP" and "DOWN" key work as expected, you need to press "CTRL" in addition to "LEFT" and "RIGHT" to jump from one cell to the cell at the left or the cell at the right. This is important, since otherwise you would have difficulties in editing the content of a cell, where "LEFT" and "RIGHT" are also needed to navigate.
 
-### Cognates and Alignments
+## Cognates and Alignments
 
 +++ pending +++
 

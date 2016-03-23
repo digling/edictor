@@ -6,7 +6,7 @@ also regarding the distribution of words across meanings.  In this sense, the
 Morphology module offers basically a way to inspect the language-internal
 relations between the words in your data, the word families.
 
-## Requirements
+# Requirements
 
 To be able to use the Morphology module in its full form, your data should be
 morpheme-segmented. In order to segment your data, you can either
@@ -23,7 +23,7 @@ in this case you can only carry out full colexification analyses in which for a
 given doculect all words which are fully colexified in the sense of [François
 (2008)](:bib:Francois2008) are displayed.
 
-## Usage
+# Usage
 
 After selecting a doculect, just hit the ENTER key, or click on the OK button.
 A table will appear which shows all words of your doculect in morphologically
@@ -80,15 +80,15 @@ phonetic representation, the EDICTOR will just add the missing question marks.
 But this tolerance has a drawback: You might have errors creeping in your
 analysis if you do not check your data meticously. 
  
-## Features
+# Features
 
-### Sorting
+## Sorting
 
 As a general rule, as in many other modules of the EDICTOR, you can sort the
 data by double-clicking on the columns. However, in the Morphology module, only
 the columns "ID", "CONCEPT", and "MORPHEMES" are sortable.
 
-### Filtering
+## Filtering
 
 You can filter the data in two ways:
 
@@ -102,7 +102,7 @@ are considered which contain the selected morpheme. If you have chosen the
 "manual" analysis with your own manually annotated morpheme analysis, you need
 to filter by supplying identifiers for your morphemes.
 
-### Interaction with the Wordlist Module
+## Interaction with the Wordlist Module
 
 As in the Phonology module, the Morphology module also offers the possibility
 to directly interact with the Wordlist module. By clicking on the concept
