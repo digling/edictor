@@ -703,8 +703,6 @@ function showWLS(start)
         var rowidx = parseInt(i) + 1;
         text += '<tr class="'+tmp_class+'" id="L_' + idx + '">';
         text += '<td title="Click to add a new line or to remove the current line." onclick="editLine(event,'+idx+');" class="ID pointed" title="LINE ' + rowidx + '">' + idx + '</td>';
-        //text += '<tr id="L_' + idx + '">';
-        //text += '<td class="ID" title="LINE ' + rowidx + '">' + idx + '</td>';
         for (j in WLS[idx]) {
           var jdx = parseInt(j) + 1;
 
@@ -2048,6 +2046,23 @@ function highLight()
           var word = plotWord(tokens[j].dataset.value);
           tokens[j].innerHTML = '<div class="lock_alignment">'+word+"</div>";
         }
+      }
+    }
+    else if (i == CFG['_morphemes']) {
+      var morphemes = document.getElementsByClassName(head);
+      for (var j=0; j < morphemes.length; j++) {
+	if (morphemes[j].innerHTML == morphemes[j].dataset.value) {
+	  var parts = morphemes[j].dataset.value.split(/\s+/);
+	  var textout = [];
+	  for (var k=0;k<parts.length; k++) {
+	    var morph = (parts[k][0] != '?') 
+	      ? '<span class="morpheme">'+parts[k]+'</span>'
+	      : '<span class="morpehem-error">'+parts[k]+'</span>'
+	      ;
+	    textout.push(morph);
+	  }
+	  morphemes[j].innerHTML = textout.join('<span class="small" style="display:table-cell">+</span>');
+	}
       }
     }
     else {
