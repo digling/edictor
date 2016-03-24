@@ -14,7 +14,6 @@ PART.partial_alignment = function(event, widx) {
   var idx_string = WLS[widx][CFG['_roots']];
   var concept = WLS[widx][CFG['_concepts']];
   var doculect = WLS[widx][CFG['_taxa']];
-  console.log('palign', idx_string);
   var idxs = idx_string.split(' ');
   var words = {};
 
@@ -30,17 +29,20 @@ PART.partial_alignment = function(event, widx) {
       var word = WLS[idx][CFG['_segments']];
       var morphemes = MORPH.get_morphemes(word.split(' '));
       var this_morpheme = morphemes[jdx];
-      words[cogid]['taxa'].push(WLS[idx][CFG['_taxa']]);
-      words[cogid]['morphemes'].push(this_morpheme);
-      words[cogid]['indices'].push(idx);
-      words[cogid]['positions'].push(jdx);
+      if (typeof this_morpheme != 'undefined') {
+	words[cogid]['taxa'].push(WLS[idx][CFG['_taxa']]);
+	words[cogid]['morphemes'].push(this_morpheme);
+	words[cogid]['indices'].push(idx);
+	words[cogid]['positions'].push(jdx);
+      }
     }
-    words[cogid]['alignment'] = $.extend(true, {}, ALIGN);
-    words[cogid]['alignment']['ALMS'] = words[cogid]['morphemes'];
-    words[cogid]['alignment']['TAXA'] = words[cogid]['taxa'];
-    words[cogid]['alignment'].normalize(words[cogid]['alignment']['ALMS']);
-    console.log(words[cogid]['alignment']);
-    if (words[cogid]['taxa'].length > 1) {cogids.push(cogid);}
+    if (words[cogid]['taxa'].length != 0) {
+      words[cogid]['alignment'] = $.extend(true, {}, ALIGN);
+      words[cogid]['alignment']['ALMS'] = words[cogid]['morphemes'];
+      words[cogid]['alignment']['TAXA'] = words[cogid]['taxa'];
+      words[cogid]['alignment'].normalize(words[cogid]['alignment']['ALMS']);
+      if (words[cogid]['taxa'].length > 1) {cogids.push(cogid);}
+    }
   }
   text += '<div class="alignments" id="alignments">' + 
     '<table>' + 

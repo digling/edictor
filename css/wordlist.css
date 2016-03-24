@@ -1039,3 +1039,8 @@ tr.up_fill > td {
 	border: 1px solid #2d6ca2;
 	color: Crimson;
 }
+
+
+.outlink {
+	color: crimson!important;
+}

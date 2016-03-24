@@ -72,7 +72,7 @@ function resetFormat(value) {
         if (tmp in format_selection) {
           format_selection[tmp].push(key);
         }
-        else if (tmp != 0) {
+        else if (tmp && parseInt(tmp) != 0) {
           format_selection[tmp] = [key];
         }
         size++;
@@ -104,7 +104,7 @@ function resetRootFormat(value) {
 	  if (tmp in format_selection) {
 	    format_selection[tmp].push([key,i]);
 	  }
-	  else if (tmp != 0) {
+	  else if (tmp && parseInt(tmp) != 0) {
 	    format_selection[tmp] = [[key,i]];
 	  }
 	  size++;
@@ -335,10 +335,13 @@ function csvToArrays(allText, separator, comment, keyval) {
   CFG['parsed'] = true;
   CFG['_selected_doculects'] = Object.keys(WLS.taxa);
 
-  /* add formatting options for all "ID" headers to the data, this is important
-   * to make sure that cognate ids can be handled as such */
-  var formatter = document.getElementById('formatter');
-  var tmp_text = '<th>Cognate IDs</th><td>';
+  /* check for glottolog and concepticon in header */
+  for (var i=0,head; head=WLS.header[i]; i++) {
+    if (ALIAS['glottolog'].indexOf(head) != -1) {CFG['_glottolog'] = i;}
+    else {CFG['_glottolog'] == -1;}
+    if (ALIAS['concepticon'].indexOf(head) != -1) {CFG['_concepticon'] = i;}
+    else {CFG['_concepticon'] == -1;}
+  }
 
   /* first get all id headers into an array */
   var formattable_keys = [];
@@ -358,25 +361,10 @@ function csvToArrays(allText, separator, comment, keyval) {
   else { CFG['formatter'] = false; }
   /* add cognate index to CFG as "_fidx" if formatter is found */
   if (CFG['formatter']) {CFG['_fidx'] = WLS.columns[CFG['formatter']];}
-  //for (var k=0,key; key=formattable_keys[k]; k++) {
-  //  if (key != CFG['formatter']) {
-  //    tmp_text += '<input onchange="resetFormat(this.value)" type="radio" name="formatter" value="'+key+'">'+key+' ';
-  //  }
-  //  else {
-  //    tmp_text += '<input onchange="resetFormat(this.value)" type="radio" checked name="formatter" value="'+key+'">'+key+' ';
-  //  }
-  //}
-  //tmp_text += '<input onchange="resetFormat(false)" type="radio" name="formatter" value="">FALSE ';
   /* reset the format to the currently chosen formatting option */
   if (CFG['formatter']) {
     resetFormat(CFG['formatter']);
-  //  formatter.innerHTML = tmp_text + '</td>';
-  //  formatter.style.display = "table-row";
   }
-  //else {
-  //  formatter.style.display = "none";
-  //}
-  
   /* handle root formatter */
   var tmp_text = '<th>Partial Cognate IDs</th><td>';
   var root_formattable_keys = [];
@@ -386,18 +374,9 @@ function csvToArrays(allText, separator, comment, keyval) {
   else if (root_formattable_keys.indexOf('PARTIALIDS') != -1) {CFG['root_formatter'] = 'PARTIALIDS';}
   else {CFG['root_formatter'] = false;}
   CFG['_roots'] = (CFG['root_formatter']) ? WLS.columns[CFG['root_formatter']] : -1;
-  //for (var k=0,key; key=root_formattable_keys[k]; k++) {
-  //  if (key != CFG['root_formatter']) {tmp_text += '<input onchange="resetRootFormat(this.value)" type="radio" name="root_formatter" value="'+key+'">'+key+' ';}
-  //  else {tmp_text += '<input onchange="resetRootFormat(this.value)" type="radio" checked name="root_formatter" value="'+key+'" >'+key+' ';}}
-  //tmp_text += '<input onchange="resetRootFormat(false)" type="radio" name="root_formatter" value="">FALSE ';
-  //tmp_text += '</td>';
   if (CFG['_roots'] != -1) {resetRootFormat(CFG['root_formatter']);} 
-  //document.getElementById('root_formatter').innerHTML = tmp_text;}
-  //else {document.getElementById('root_formatter').style.display = 'none';}
-
   /* create selectors */
   createSelectors();
-
   /* sort the data following the default sorting options */
   sort_rows = function (x,y){
     var _x = WLS[x][CFG['_cidx']] + ' ' + WLS[x][CFG['_tidx']];
@@ -1019,7 +998,6 @@ function editEntry(idx, jdx, from_idx, from_jdx, special_value)
   
   /* check for uneditable fields */
   if (entry.className.indexOf('uneditable') != -1) {
-    //->console.log('checko:',jdx,from_jdx);
     if (from_jdx > jdx) {
       editEntry(idx, jdx-1, from_idx, from_jdx);
     }
@@ -1052,7 +1030,6 @@ function editEntry(idx, jdx, from_idx, from_jdx, special_value)
   }
   else {
     var value = entry.dataset.value;
-    //var special_value = CFG['_cpentry'];
   }
   
   var size = value.length + 5;
@@ -1176,12 +1153,18 @@ function modifyEntry(event, idx, jdx, xvalue) {
   /* modify cogid to get unique id if no integer is chosen */
   var reset_format = false;
   if (CFG['formatter'] == entry.className) {
-    var nxvalue = cognateIdentifier(xvalue);
+    var nxvalue = cognateIdentifier(xvalue, idx);
     reset_format = true;
     if (nxvalue != xvalue) {
       xvalue = nxvalue;
     }
-    resetFormat(CFG['formatter']);
+  }
+  else if (CFG['root_formatter'] == entry.className) {
+    var nxvalue = partialCognateIdentifier(xvalue, idx);
+    reset_format = true;
+    if (nxvalue != xvalue) {
+      xvalue = nxvalue;
+    }
   }
   /* XXX tokenize entry  */ 
   else if (CFG['highlight'].indexOf(entry.className) != -1) {
@@ -1237,6 +1220,8 @@ function modifyEntry(event, idx, jdx, xvalue) {
       }      
       cogid.parentNode.className = cclass;
     }
+    resetFormat(CFG['formatter']);
+    resetRootFormat(CFG['root_formatter']);
   }
 
   if (undoManager.hasUndo() == true) {
@@ -2061,9 +2046,9 @@ function highLight()
 	  var parts = morphemes[j].dataset.value.split(/\s+/);
 	  var textout = [];
 	  for (var k=0;k<parts.length; k++) {
-	    var morph = (parts[k][0] != '?') 
+	    var morph = (parts[k] && parts[k][0] != '?') 
 	      ? '<span class="morpheme">'+parts[k]+'</span>'
-	      : '<span class="morpehem-error">'+parts[k]+'</span>'
+	      : '<span class="morpheme-error">'+parts[k]+'</span>'
 	      ;
 	    textout.push(morph);
 	  }
@@ -2071,8 +2056,26 @@ function highLight()
 	}
       }
     }
-    else {
+    else if (i == CFG['_glottolog']) {
+      var items = document.getElementsByClassName(head);
+      for (var j=0,item; item=items[j]; j++) {
+        if (item.innerHTML == item.dataset.value) {
+          item.innerHTML = '<a class="outlink" href="http://glottolog.org/resource/languoid/id/'+item.dataset.value+'" target="_blank">'+item.dataset.value+'</a>';
+	  item.oncontextmenu = function (){};
+        }
+      }
     }
+    else if (i == CFG['_concepticon']) {
+      var items = document.getElementsByClassName(head);
+      for (var j=0,item; item=items[j]; j++) {
+        if (item.innerHTML == item.dataset.value) {
+          item.innerHTML = '<a class="outlink" href="http://concepticon.clld.org/parameters/'+item.dataset.value+'" target="_blank">'+item.dataset.value+'</a>';
+	  item.oncontextmenu = function (){};
+        }
+      }
+    }
+
+    else {}
   }
 }
 
@@ -2147,7 +2150,6 @@ function editGroup(event,idx) {
 
   /* check for proper values to be displayed for alignment analysis */
   var rows = WLS['etyma'][idx];
-  var concepticon = false;
 
   /* check for proper alignments first */
   if (CFG['_alignments'] != -1) {

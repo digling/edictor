@@ -180,6 +180,15 @@ UTIL.refresh_settings = function() {
 	resetRootFormat(entries[entry].value);
       }
     }
+    else {
+      CFG[this_entry] = -1;
+      if (entry == 'cognates') {
+	resetFormat(false);
+      }
+      if (entry == 'roots') {
+	resetRootFormat(false);
+      }
+    }
   }
 
   for (var i=0,entry; entry=['highlight', 'sampa', 'pinyin'][i]; i++) {
@@ -207,6 +216,8 @@ ALIAS = {
   'transcription' : ['IPA', 'TRANSCRIPTION'],
   'cognates' : ['COGID'],
   'roots' : ['PARTIALIDS', 'COGIDS'],
-  'alignments' : ['ALIGNMENT']
+  'alignments' : ['ALIGNMENT'],
+  'glottolog' : ['GLOTTOLOG'],
+  'concepticon' : ['CONCEPTICON', 'CONCEPTICONID']
 }
 

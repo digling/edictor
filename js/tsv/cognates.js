@@ -448,13 +448,36 @@ function get_new_cogid() {
 }
 /* function inserts unique ids for unassigned cognate sets */
 function cognateIdentifier(cogid) {
-  if (isNaN(parseInt(cogid))) {
+  if (isNaN(parseInt(cogid)) || !cogid) {
     var etym_len = Object.keys(WLS.etyma).length;
-    for (var i=1; i < etym_len+1; i++) {
+    for (var i=1; i < etym_len+2; i++) {
       if (!(i in WLS.etyma)) {
         return i;
       }
     }
   }
   return cogid;
+}
+function partialCognateIdentifier(cogids) {
+  var tmp = cogids.split(/\s+/);
+  var start = 1;
+  var out = [];
+  var etym_len = Object.keys(WLS.roots).length + tmp.length + 1;
+  for (var i=0;i<tmp.length; i++) {
+    if (isNaN(parseInt(tmp[i]))) {
+      console.log(tmp, tmp[i]);
+      for (var j=start; j<etym_len; j++) {
+	if (!(j in WLS.roots)) {
+	  out.push(j);
+	  start = j+1;
+	  break;
+	}
+      }
+    }
+    else {
+      out.push(tmp[i])
+    }
+  }
+  console.log(tmp, out);
+  return out.join(' ');
 }
