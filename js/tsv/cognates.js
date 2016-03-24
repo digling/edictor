@@ -363,7 +363,7 @@ function combine_cogids() {
   cogid = false;
   for (var i=0;i<checked.length; i++) {
     var tmp_cogid = WLS[checked[i]][cidx];
-    if ((!cogid || 0 < tmp_cogid < cogid || cogid == 0) && tmp_cogid != 0) {
+    if ((!cogid || 0 < tmp_cogid < cogid || cogid == 0) && tmp_cogid && tmp_cogid != 0) {
 	cogid = tmp_cogid;
     }
   }
@@ -381,8 +381,7 @@ function combine_cogids() {
     console.log(chk, cidx, WLS[chk]);
     var tmp_cogid = parseInt(WLS[chk][cidx]);
     if (visited.indexOf(tmp_cogid) == -1) {
-      if (tmp_cogid != 0 && typeof tmp_cogid == 'number') {
-	console.log(tmp_cogid, typeof tmp_cogid);
+      if (tmp_cogid && tmp_cogid != 0 && typeof tmp_cogid == 'number') {
 	for (var j=0,idx; idx=WLS.etyma[tmp_cogid][j]; j++) {
       	  WLS[idx][cidx] = cogid;
       	  
