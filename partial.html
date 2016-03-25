@@ -1,0 +1,23 @@
+<span class="main_handle pull-left"></span>
+<button type="button" onclick="$('#toggle_partial > span').toggle(); $('#partial').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+<h3>Edit and align partial cognate sets:</h3>
+<div style="display:block">
+  <div class="btn-group" style="margin-bottom:10px;margin-right:10px;">
+    <select class="multiselect" multiple id="partial_select_concepts" title="Select concepts">
+    </select>
+    <button class="btn btn-primary mright submit3" onclick="PART.display_partial()">OK</button>
+    <button class="btn btn-primary mright submit3" onclick="PART.display_previous_partial()">←</button>
+    <button id="partial_current_concept" class="btn btn-primary mright submit3"
+      onclick="PART.display_current_partial()"></button>
+    <button class="btn btn-primary mright submit3" onclick="PART.display_next_partial()">→</button>
+  </div>
+  <button type="button" class="btn-primary titled btn submit3 pull-right"
+	title="show help"
+	onclick="UTIL.show_help('partial');" 
+	style="margin-left:5px;"><span class="glyphicon glyphicon-question-sign"></span>
+</div>
+<div id="partial_table" class="pull-left" style="display:block"></div>
+<div id="partial_help" class="help-message" style="display:none"></div>
+<br>
+<br>
+

@@ -133,11 +133,13 @@ ALIGN.normalize = function(alms) {
   return alms
 };
 
+ 
 ALIGN.style = function (idx,alm) {
   /* function styles an alignment for easy output */
 
   /* create identifier */
   txt = '';
+  txt += '<td class="pre-align residue pointed" title="drag sequence to the left" onclick="ALIGN.dragToLeft('+idx+');">←</td>';
   for (var i=0, seg; seg=alm[i]; i++) {
     var idf = 'alm_'+idx+'_'+i;
     var sound_class = getSoundClass(seg);
@@ -181,7 +183,7 @@ ALIGN.make_table = function (taxa, alms) {
     txt += '</tr>';
   }
   txt += '<tr class="up_fill"><td></td></tr>';
-  txt += '<tr id="unalignable"><th>IGNORE</th>';
+  txt += '<tr id="unalignable"><th>IGNORE</th><td></td>';
   for (var i=0; i< alms[0].length; i++) {
     if (this.UDX.indexOf(i) != -1) {
       txt += '<td class="up_check"><input onchange="ALIGN.reset_UP('+i+')" type="checkbox" name="alignment" value="'+i+'" checked /></td>';
@@ -270,7 +272,75 @@ ALIGN.destroy_alignment = function()
 ALIGN.lock_others = function(idx) {
 
 };
-
+/* function drags one sequence to the left in the beginning of an alignment.
+ * this is convenient to correct one sequence that should be pulled to the left, and faster than
+ * pushing all other sequences to the right */
+ALIGN.dragToLeft = function(idx) {
+  /* check whether idx is in locks */
+  var check = this.LOCKS.indexOf(idx-1);
+  /* we now iterate over all items in locks and give them the 
+   * same treatment as we already settled for the other items 
+   * before. */
+  if (check != -1) {
+    var idxs = this.LOCKS;
+  }
+  else {
+    var idxs = [idx-1];
+  }
+  /* determine index of alignment and rebuild the whole stuff with one more gap */
+  /* if no unalignable parts are used, this is simple to do */
+  if (this.UDX.length == 0) {
+    for (var i=0; i<this.ALMS.length; i++) {
+      if (idxs.indexOf(i) == -1) {
+	var alm = this.ALMS[i];
+	alm.splice(0,0,"-");
+	this.ALMS[tdx] = alm;
+      }
+    }
+    this.refresh();
+    /* note that this method is really, really simple, but it basically works for 
+    * smaller alignments.
+    * it may, however, show some performance deficits for larger alignments...
+    */
+  }
+  /* if we have unalignable parts, we need to keep track of them and insert
+   * the gap before the next part starts */
+  else {
+    /* first get the first alignable part */
+    var nidx = false;
+    var fidx = -1;
+    for (var i=0; i < this.ALMS[0].length; i++) {
+      if (this.UDX.indexOf(i) == -1 && fidx == -1) {
+	fidx = i;
+      } 
+      if (this.UDX.indexOf(i) == -1 && fidx != -1) {
+	nidx = i;
+      }
+      if (this.UDX.indexOf(i) != -1 && fidx != -1 && nidx != -1) {
+	break;
+      }
+    }
+    /* insert gap before all other segments */
+    for (var j=0; j < this.ALMS.length; j++) {
+      if (idxs.indexOf(j) == -1) {
+        var alm = this.ALMS[j];
+        alm.splice(fidx,0,'-');
+      }
+    }
+    /* insert gap after the segment */
+    for (var j=0; j < idxs.length; j++) {
+      var tdx = idxs[j];
+      this.ALMS[tdx].splice(nidx+1,0,'-');
+    }
+    for (var i=0; i<this.UDX.length; i++) {
+      var udx = this.UDX[i];
+      if (udx > nidx) {
+        this.UDX[i] += 1;
+      }
+    }
+    this.refresh();
+  } 
+}
 /* funciton introduces a gap on the left of a segment in an alignment */
 ALIGN.addGap = function (idx,jdx) {
 
@@ -366,6 +436,8 @@ ALIGN.addGap = function (idx,jdx) {
     }
   }
 };
+
+
 
 ALIGN.delGap = function (idx,jdx) {
   /* delete a gap from an aligned sequence */

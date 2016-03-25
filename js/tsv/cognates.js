@@ -464,7 +464,6 @@ function partialCognateIdentifier(cogids) {
   var etym_len = Object.keys(WLS.roots).length + tmp.length + 1;
   for (var i=0;i<tmp.length; i++) {
     if (isNaN(parseInt(tmp[i]))) {
-      console.log(tmp, tmp[i]);
       for (var j=start; j<etym_len; j++) {
 	if (!(j in WLS.roots)) {
 	  out.push(j);
@@ -477,6 +476,5 @@ function partialCognateIdentifier(cogids) {
       out.push(tmp[i])
     }
   }
-  console.log(tmp, out);
   return out.join(' ');
 }
