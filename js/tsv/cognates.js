@@ -63,6 +63,7 @@ function display_cognates(concept, sortby) {
     /* get the word ids for the selected concepts */
     var idxs = [];
     var slc = document.getElementById('cognates_select_concepts');
+    if (typeof slc == 'undefined' || slc === null) {return;}
     var all_concepts = [];
   
     /* set up restriction to maximally five concepts per slot */

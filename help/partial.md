@@ -1,0 +1,55 @@
+# Partial Cognate Sets Module of the EDICTOR
+
+The Partial Cognate Sets panel of the EDICTOR is in some way similar to the
+Cognate Sets panel. It also offers possibilities to assign words to cognate
+sets and to align them. However, in contrast to the Cognate Sets panel, the
+Partial Cognate Sets panel was specifically designed to allow to assign parts
+of words to common cognate sets, that is, this panel allows you to be much more
+selective and precise regarding cognate relations.
+
+If your data is fully cognate, you can also use the Partial Cognate Sets panel for cognate assignment,
+and it may well be the case that users will prefer the slightly different interface to that of the Cognate Sets panel.
+If you, however, want to deal with questions of root cognacy, or partial cognacy proper, you **must** use the Partial Cognate Sets panel, since only here you can align only parts of words, provided you made sure that the morphological segmentation of your words has been properly carried out.
+
+# Basic Requirements
+
+As for the Cognate Sets panel, the first basic requirements is phonetic data in segmentized form, since otherwise you won't be able to align the words in your datasets. In addition to the Cognate Sets panel, you should, depending on the purpose and the goal of your analysis, also have segmented your phonetic data in its *secondary structures*, like morphemes or even roots. Turn to the help instructions provided in the Morphology panel for details regarding the way in which morpheme boundaries can be assigned in the EDICTOR.
+
+The second requirement is a column which stores the partial cognate identifiers
+and is labeled as such. The easiest way to accomplish this is to label one of
+the columns in your data as PARTIALIDS or COGIDS (note the "S" after the "ID",
+indicating plurality of the cognate sets in the naming of the identifier).
+Alternatively, you can specify the column which shall serve as your current
+cognate storage via the Settings panel, and you can even switch between
+different versions in one session.
+
+The third requirement is a (potentially empty) column storing the alignments.
+If you do not have this column yet, it will be automatically created when you
+carry out your first alignment analysis.
+
+# Features
+
+## Editing Partial Cognate Sets
+
+Unlike the two operations in the Cognate Sets panel, the Partial Cognate Sets panel is more restricted, but potentially intuitively also more easy to understand.
+The basic arrangement of data is in tabular form, following the alphabetic order of the names of the languages in your data. The major table itself is divided into several parts. The first two columns are devoted to the doculect name and concept label. The third column is devoted to your raw data and adds the current partial cognate ID for each of the morphemes of the words in your data. If partial cognate sets have not yet been assigned, this will be set to 0, and the respective morpheme will be less transparent than those words which have already been assigned a cognate identifier.
+The rest of the table is devoted to all cognate IDs which have currently been assigned in the excerpt of the data that you are editing, as well as one additional empty column offering a new cognate ID to which you can assign new word parts.
+In order to do so, just click on all word parts which you want to assign to a common partial cognate set in order to select them. Selection will be marked by changing the background of the word parts. In a second step, just click on the header of the column to which you want to assign the selected words. If you want to remove certain word parts from a given cognate sets, just click on those parts in the respective partial cognate ID column, and they will disappear from there.
+
+Note that you cannot (yet) assign two parts of the same word to the same cognate ID. You can do so, but they won't be displayed in this view, and it is generally not recommended. This means essentially, that reduplication cannot be indicated as such. While this is a disadvantage, it would be very complicated to change the layout of the tool, since reduplication would destroy the linear arrangement of one word per line. Future research on the modeling of reduplication is required to address this problem.
+
+## Aligning Partial Cognate Sets
+
++++currently not yet implemented +++
+
+## Selecting Data by Concepts
+
+If you want to search for cognates across concepts, you can do so by just
+selecting your preferred concepts where you suspect cognates across different
+meanings, and carry on with your annotation. Partial cognate identifiers are always
+global in the EDICTOR, so it does not matter whether you annotate cognates
+inside or across concepts. 
+
+## Sorting Data and other Operations
+
++++ not yet implemented +++
