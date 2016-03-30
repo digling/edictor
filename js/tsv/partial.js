@@ -151,8 +151,8 @@ PART.handle_partial_selection = function () {
 };
 
 PART.display_partial = function (concept, sortby) {
-  
-  sortby = (typeof sorby == 'undefined') ? 2 : sortby;
+  console.log('sortby',sortby);
+  sortby = (typeof sortby == 'undefined') ? 0 : sortby;
   
   /* if concept is not passed, check for selection */
   if (typeof concept == 'undefined' || ! concept) {
@@ -218,7 +218,26 @@ PART.display_partial = function (concept, sortby) {
     /* store that there is no multiselect option chosen here */
     CFG['_partial_multiselect'] = false;
   }
-
+  /* sort the indices */
+  if (sortby != 0) {
+    indices.sort(function(x, y) {
+      var _x = WLS[x][CFG['_roots']];
+      var _y = WLS[y][CFG['_roots']];
+      var _xs = _x.split(' ');
+      var _ys = _y.split(' ');
+      var _xx = _xs.indexOf(sortby);
+      var _yx = _ys.indexOf(sortby);
+      if (_xx != -1 && _yx != -1) {
+        if (_x > _y) { return 1;}
+        if (_x < _y) { return -1;}
+        return 0;
+      }
+      if (_xx != -1 && _yx == -1) {
+        return -1;
+      }
+      return 1;
+    });
+  }
 
   /* retrieve all indices for the concept */
   var new_rootid = partialCognateIdentifier('?');
@@ -286,7 +305,7 @@ PART.display_partial = function (concept, sortby) {
     '<th class="pointed alm_bdl alm_head" onclick="PART.display_partial(\''+concept+'\')">'+WLS['header'][CFG['_segments']]+'</th>' + 
     this.rootids.map(function (x) {
       return '<th style="width:5px"></th>' + 
-	'<th oncontextmenu="PART.editGroup(event,'+x+');" onclick="PART.modifyJudgment('+x+')" class="pointed alm_bdr alm_head">ID-'+x+' <button onclick="PART.editGroup(event, '+x+')" class="btn-primary btn mleft pull-right submit3" title="align the words"><span class="icon-bar"></span><span class="icon-bar"></span></button></th>';
+	'<th oncontextmenu="event.preventDefault();PART.display_partial(\''+concept+'\',\''+x+'\')" onclick="PART.modifyJudgment('+x+')" class="pointed alm_bdr alm_head" title="click to add marked morphemes to this cognate set, right-click to sort along this column">ID-'+x+' <button onclick="PART.editGroup(event, '+x+')" class="btn-primary btn mleft pull-right submit3" title="align the words"><span class="icon-bar"></span><span class="icon-bar"></span></button></th>';
     }).join('') +
     '</tr>';
 
