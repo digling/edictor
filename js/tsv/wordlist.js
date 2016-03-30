@@ -1314,7 +1314,7 @@ function storeModification(idx, jdx, value, async) {
           dataSavedMessage("insertion");
         }
 	else {
-	  fakeAlert("PROBLEM IN SAVING THE VALUE ENCOUNTERED! <" + new_url+'>');
+	  fakeAlert("PROBLEM IN SAVING THE VALUE ENCOUNTERED! «" + new_url+'»');
 	}
       },
       error: function() {

@@ -240,7 +240,7 @@ PART.display_partial = function (concept, sortby) {
   }
 
   /* retrieve all indices for the concept */
-  var new_rootid = partialCognateIdentifier('?');
+  var new_rootid = PART.get_new_cogid(); //partialCognateIdentifier('?');
   
   this.data = {};
   this.rootids = []; 
@@ -314,6 +314,7 @@ PART.display_partial = function (concept, sortby) {
 };
 
 PART.modifyJudgment = function (rootid) {
+  if (this.storage.length == 0) {return; };
   var mods = { idx : [], jdx : [], val : [] };
   for (var i=0,idf; idf=this.storage[i]; i++) {
     var idxjdx = idf.split('-').map(function (y) {return parseInt(y);});
@@ -561,7 +562,7 @@ PART.storeAlignment = function() {
     cols.push(this_idx);
     vals.push(alm_string);
   }
-
+  
   storeModification(ids, cols, vals, CFG['async']);
   resetRootFormat(CFG['root_formatter']);
   applyFilter();
@@ -580,5 +581,33 @@ PART.storeAlignment = function() {
     test.style.bottom=b;
     test.style.left = l;
     test.style.right=r;
+  }
+};
+
+PART.get_new_cogid = function () {
+  if (!CFG['storable']) {
+    cogid = partialCognateIdentifier(cogids);
+  }
+  else {
+    var cogid = false;
+    var url = 'triples/triples.py?' +
+      'remote_dbase='+CFG['remote_dbase'] +
+      '&file='+CFG['filename'] +
+      '&new_id='+CFG['root_formatter']
+      ;
+    $.ajax({
+      async: false,
+      type: "GET",
+      contentType: "application/text; charset=utf-8",
+      url: url,
+      dataType: "text",
+      success: function(data) {
+	cogid=parseInt(data);
+      },
+      error: function(){
+	fakeAlert("problem retrieving a new cognate ID fromt he dbase");
+      }
+    });
+    return cogid;
   }
 };
