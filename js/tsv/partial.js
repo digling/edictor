@@ -13,14 +13,17 @@ PART.rootids = {};
 PART.storage = [];
 
 PART.partial_alignment = function(event, widx) {
-  event.preventDefault();
+  if (event) {event.preventDefault();}
+  if (CFG['_segments'] == -1) {fakeAlert('No valid segmented transcriptions found in your data.');}
+  
   var idx_string = WLS[widx][CFG['_roots']];
   var concept = WLS[widx][CFG['_concepts']];
   var doculect = WLS[widx][CFG['_taxa']];
   var idxs = idx_string.split(' ');
   var words = {};
 
-  var text = '<div class="edit_links" id="editlinks">' + 
+  var text = '<div class="edit_links niceblue" id="partial-overview" data-value="'+widx+'">' + 
+    '<span class="main_handle pull-left" style="margin-left:5px;margin-top:2px;" ></span>' +
     '<p>'+doculect+' «'+concept+'» ('+CFG['root_formatter']+': '+idxs+')'; 
   var cogids = [];
   for (var i=0,cogid; cogid=idxs[i]; i++) {
@@ -28,7 +31,10 @@ PART.partial_alignment = function(event, widx) {
     for (var j=0; j<WLS.roots[cogid].length; j++) {
       var idx = WLS.roots[cogid][j][0];
       var jdx = WLS.roots[cogid][j][1];
-      var word = WLS[idx][CFG['_segments']];
+      var word = (CFG['_alignments'] != -1 && WLS[idx][CFG['_alignments']] != '' && WLS[idx][CFG['_alignments']] != '?') 
+	? WLS[idx][CFG['_alignments']]
+	: WLS[idx][CFG['_segments']]
+	;
       var morphemes = MORPH.get_morphemes(word.split(' '));
       var this_morpheme = morphemes[jdx];
       if (typeof this_morpheme != 'undefined') {
@@ -46,14 +52,14 @@ PART.partial_alignment = function(event, widx) {
       if (words[cogid]['taxa'].length > 1) {cogids.push(cogid);}
     }
   }
-  text += '<div class="alignments" id="alignments">' + 
+  text += '<div class="alignments" id="alignments-overview">' + 
     '<table>' + 
     '<tr>'+'<th class="pchead">DOCULECTS</th><td style="width:3px"></td><th class="pchead">CONCEPTS</th><td style="width:3px"></td>';
   var all_words = [];
   for (var i=0;i<cogids.length; i++) {
     var cogid = cogids[i];
     if (words[cogid]['taxa'].length > 1){
-      text += '<th class="pchead" colspan="'+words[cogid]['alignment']['ALMS'][0].length+'">ID: '+cogid+'</th>';
+      text += '<th oncontextmenu="PART.editGroup(event, '+cogid+')" class="pchead" colspan="'+words[cogid]['alignment']['ALMS'][0].length+'">ID: '+cogid+' <button onclick="PART.editGroup(event, '+cogid+')" class="btn-primary btn mleft pull-right submit3" title="align the words"><span class="icon-bar"></span><span class="icon-bar"></span></button></th>';
       for (var j=0, tidx; tidx=words[cogid]['indices'][j]; j++) {
 	if (all_words.indexOf(tidx) == -1) {
 	  all_words.push(tidx);
@@ -88,9 +94,9 @@ PART.partial_alignment = function(event, widx) {
     text += '</tr>';
   }
   text += '</table></div>';
-  text += '<div><input class="btn btn-primary submit" type="button" onclick="ALIGN.destroy_alignment();$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /></div><br><br></div>';
+  text += '<div><input class="btn btn-primary submit" type="button" onclick="ALIGN.destroy_alignment();$(\'#editmode-overview\').remove();basickeydown(event);" value="CLOSE" /></div><br><br></div>';
   var editmode = document.createElement('div');
-  editmode.id = 'editmode';
+  editmode.id = 'editmode-overview';
   editmode.className = 'editmode';
   document.body.appendChild(editmode);
   editmode.innerHTML = text;
@@ -101,7 +107,7 @@ PART.partial_alignment = function(event, widx) {
     };
   };
 
-  $('#editlinks').draggable({handle:'.main_handle'}).resizable();
+  $('#partial-overview').draggable({handle:'.main_handle'}).resizable();
 
 };
 
@@ -224,7 +230,11 @@ PART.display_partial = function (concept, sortby) {
     var roots = WLS[idx][CFG['_roots']].split(/\s+/);
     var taxon = WLS[idx][CFG['_taxa']];
     var concept = WLS[idx][CFG['_concepts']];
-    var morphemes = MORPH.get_morphemes(WLS[idx][CFG['_segments']].split(' '));
+    var _tmp = WLS[idx][CFG['_alignments']];
+    var morphemes = (typeof _tmp != 'undefined' && _tmp && _tmp != '?')
+      ? MORPH.get_morphemes(_tmp.split(' '))
+      : MORPH.get_morphemes(WLS[idx][CFG['_segments']].split(' '))
+      ;
     var morpheme_strings = [];
     this.data[idx] = {};
     for (var j=0,morpheme; morpheme = morphemes[j]; j++) {
@@ -276,7 +286,7 @@ PART.display_partial = function (concept, sortby) {
     '<th class="pointed alm_bdl alm_head" onclick="PART.display_partial(\''+concept+'\')">'+WLS['header'][CFG['_segments']]+'</th>' + 
     this.rootids.map(function (x) {
       return '<th style="width:5px"></th>' + 
-	'<th oncontextmenu="fakeAlert(\'align\')" onclick="PART.modifyJudgment('+x+')" class="pointed alm_bdr alm_head">ID-'+x+'</th>';
+	'<th oncontextmenu="PART.editGroup(event,'+x+');" onclick="PART.modifyJudgment('+x+')" class="pointed alm_bdr alm_head">ID-'+x+' <button onclick="PART.editGroup(event, '+x+')" class="btn-primary btn mleft pull-right submit3" title="align the words"><span class="icon-bar"></span><span class="icon-bar"></span></button></th>';
     }).join('') +
     '</tr>';
 
@@ -285,6 +295,7 @@ PART.display_partial = function (concept, sortby) {
 };
 
 PART.modifyJudgment = function (rootid) {
+  var mods = { idx : [], jdx : [], val : [] };
   for (var i=0,idf; idf=this.storage[i]; i++) {
     var idxjdx = idf.split('-').map(function (y) {return parseInt(y);});
     var idx = idxjdx[0];
@@ -298,8 +309,12 @@ PART.modifyJudgment = function (rootid) {
       this.data[idx][rootid] = [taxon, concept, morphemes[jdx], jdx];
       rootids[jdx] = rootid;
       WLS[idx][CFG['_roots']] = rootids.join(' ');
+      mods['idx'].push(idx);
+      mods['jdx'].push(CFG['_roots']);
+      mods['val'].push(WLS[idx][CFG['_roots']]);
     }
   }
+  storeModification(mods['idx'], mods['jdx'], mods['val']);
   resetRootFormat(CFG['root_formatter']);
   if (CFG['_partial_multiselect']) {
     this.display_partial();
@@ -377,7 +392,174 @@ PART.display_current_partial = function() {
 };
 
 
-PART.store = function (idx, jdx) {
+PART.editGroup = function (event, idx) {
+  /* functin handles the display of alignments */
+  event.preventDefault();
+  
+  /* check for various data, consider using switch statement here */
+  if (idx == 0) {
+    fakeAlert("This entry cannot be edited, since it is not related to any other entry.");
+    return;
+  }
 
+  /* check for proper values to be displayed for alignment analysis */
+  var rows = WLS['roots'][idx];
+
+  /* check for proper alignments first */
+  if (CFG['_alignments'] != -1) { var this_idx = CFG['_alignments']; var fall_back = CFG['_segments']; }
+  else if (CFG['_segments'] != -1) { var this_idx  = CFG['_segments']; var fall_back = CFG['_transcriptions']; }
+  else if (CFG['_transcriptions'] != -1) {
+    var this_idx = CFG['_transcriptions'];
+  }
+  else { fakeAlert('No phonetic entries were specified in the data.'); return; }
+
+  /* check for sequence index */
+  if (CFG['_segments'] != -1) { var seq_idx = CFG['_segments']; }
+  else if (CFG['_transcriptions'] != -1) { var seq_idx = CFG['_transcriptions']; }
+
+  var editmode = document.createElement('div');
+  editmode.id = 'editmode';
+  editmode.className = 'editmode';
+
+  var alms = [];
+  var langs = [];
+  CFG['_current_alms'] = [];
+  CFG['_current_taxa'] = [];
+  CFG['_current_idx'] = rows.map(function(x) {return x[0];});
+  CFG['_current_seqs'] = [];
+  CFG['_current_jdx'] = rows.map(function(x) {return x[1];});
+
+  /* now create an alignment object */
+  for (var i=0,r; r=rows[i]; i++) {
+    ri = r[0];
+    rj = r[1];
+    var current_line = WLS[ri][this_idx];
+    if(!current_line || current_line == '?') {
+      current_line = WLS[ri][fall_back];
+    }
+    /* get the current tokens */
+    var current_entry = MORPH.get_morphemes(current_line.split(' '))[rj];
+    /* add stuff to temporary container for quick alignment access */
+    CFG['_current_alms'].push(current_entry);
+    CFG['_current_taxa'].push(WLS[ri][CFG['_taxa']]);
+
+    /* add sequence data to allow for automatic alignment */
+    var this_seq = MORPH.get_morphemes(WLS[ri][seq_idx].split(' '))[rj];
+    if (!this_seq) { var this_seq = current_entry; }
+    CFG['_current_seqs'].push(this_seq);
+
+    var alm = plotWord(current_entry.join(' '));
+    var lang = WLS[ri][CFG['_taxa']];
+
+    /* only take those sequences into account which are currently selected in the alignment */
+    if (CFG['_selected_doculects'].indexOf(lang) != -1 || CFG['align_all_words'] != "false") {
+      alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace(new RegExp('span','gi'),'td'));
+    }
+  }
+  if (alms.length == 1) {
+    fakeAlert(CFG['formatter']+' &quot;'+idx+'&quot; links only one entry.');
+    return;
+  }
+  var text = '<div class="edit_links" id="editlinks">';
+  text += '<p>';
+  text += '<span class="main_handle pull-left" style="margin-left:-7px;margin-top:2px;" ></span>';
+  text += CFG['formatter'] + ' &quot;'+idx+'&quot; links the following '+alms.length+' entries:</p>';
+  text += '<div class="alignments" id="alignments"><table onclick="fakeAlert(\'Press on EDIT or ALIGN to edit the alignments.\');">';
+  for (var i=0,alm;alm=alms[i];i++) {
+    text += '<tr>'+alm+'</tr>';
+  }
+  text += '</table></div>';
+  text += '<div class="submitline">';
+  text += '<input id="edit_alignment_button" class="btn btn-primary submit" type="button" onclick="editAlignment()" value="EDIT" /> ';
+  text += '<input id="automatic_alignment_button" class="btn btn-primary submit" type="button" onclick="automaticAlignment();" value="ALIGN" /> ';
+  text += '<input id="submit_alignment_button" class="btn btn-primary submit hidden" type="button" onclick="$(\'#popup_background\').show();PART.storeAlignment();$(\'#popup_background\').fadeOut();ALIGN.destroy_alignment();$(\'#editmode\').remove();basickeydown(event);" value="SUBMIT" /> '; 
+  text += '<input class="btn btn-primary submit" type="button" onclick="ALIGN.destroy_alignment();$(\'#editmode\').remove();basickeydown(event);" value="CLOSE" /></div><br><br> ';
+  text += '</div> ';
+
+  document.body.appendChild(editmode);
+  editmode.innerHTML = text;
+  document.onkeydown = function(event) {
+    $('#editmode').remove(); 
+    document.onkeydown = function(event) {
+      basickeydown(event);
+    };
+  };
+
+  $('#editlinks').draggable({handle:'.main_handle'}).resizable();
+}
+
+/* write alignment to wordlist object and eventually to server */
+PART.storeAlignment = function() {
+  ALIGN.export_alignments();
+  if (CFG['_alignments'] != -1) { var this_idx = CFG['_alignments']; }
+  else {
+    /* get index of tokens */
+    var tidx = CFG['_segments']; 
+    WLS.header.push('ALIGNMENT');
+    WLS.columns['ALIGNMENT'] = WLS.header.indexOf('ALIGNMENT');
+    WLS.column_names['ALIGNMENT'] = 'ALIGNMENT';
+    for (k in WLS) { if (!isNaN(k)) { WLS[k].push(''); } }
+    var this_idx = WLS.header.indexOf('ALIGNMENT');
+    CFG['_alignments'] = this_idx;
+    createSelectors();
+  }
+  /* XXX we now try to update them all at once, in order to save time TODO */
+  /* in order to make sure that we can submit everything at once, we collect
+   * all info in three arrays, ids,cols, vals */
+  var ids = [];
+  var cols = [];
+  var vals = [];
+  for (var i=0,idx; idx=CFG['_current_idx'][i]; i++) {
+    var alm_part = ALIGN.ALMS[i].join(' ');
+    var alm_full = WLS[idx][this_idx];
+    var all_alms_with_morphemes = (alm_full != '?' && alm_full != '') 
+      ? MORPH.get_morphemes(alm_full.split(' '), true)
+      : MORPH.get_morphemes(WLS[idx][CFG['_segments']].split(' '), true)
+      ;
+    var all_alms = all_alms_with_morphemes[0];
+    var all_mms = all_alms_with_morphemes[1];
+
+    /* get new alm string */
+    var alm_list = [];
+    for (var j=0; j<all_alms.length; j++) {
+      var tmp = (j != CFG['_current_jdx'][i]) 
+	? all_alms[j].join(' ')
+	: alm_part 
+	;
+      if (typeof all_mms[j] != 'undefined') {
+	tmp += ' '+all_mms[j];
+      }
+      else if (j < all_alms.length -1) {
+	tmp += ' '+CFG['morpheme_separator'];
+      }
+      alm_list.push(tmp);
+    }
+    var alm_string = alm_list.join(' ');
+    WLS[idx][this_idx] = alm_string;
+    
+    /* add the values to the three arrays */
+    ids.push(idx);
+    cols.push(this_idx);
+    vals.push(alm_string);
+  }
+
+  storeModification(ids, cols, vals, CFG['async']);
+  resetRootFormat(CFG['root_formatter']);
+  applyFilter();
+
+  var test = document.getElementById('partial-overview');
+  if (typeof test != 'undefined' && test) {
+    var t = test.style.top;
+    var b = test.style.bottom;
+    var l = test.style.left;
+    var r = test.style.right;
+
+    $('#editmode-overview').remove();
+    PART.partial_alignment(false, test.dataset['value']);
+    var test = document.getElementById('partial-overview');
+    test.style.top = t;
+    test.style.bottom=b;
+    test.style.left = l;
+    test.style.right=r;
+  }
 };
-

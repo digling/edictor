@@ -2137,13 +2137,13 @@ function sortTable(event,head)
   showWLS(1);
 }
 
-function editGroup(event,idx) {
+function editGroup(event, idx) {
   /* functin handles the display of alignments */
 
   event.preventDefault();
   
   /* check for various data, consider using switch statement here */
-  if (idx == 0) {
+  if (idx == 0 || idx == '') {
     fakeAlert("This entry cannot be edited, since it is not related to any other entry.");
     return;
   }

@@ -221,6 +221,7 @@ ALIGN.reset_UP = function(idx) {
   this.refresh();
 }
 
+/* make alignments ready to be written to text, especially with their unalignable parts */
 ALIGN.export_alignments = function() {
   var alms = [];
   var unalignable = false;

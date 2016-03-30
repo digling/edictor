@@ -386,6 +386,9 @@ span.dolgo_NAS{
 
 span.dolgo_PLUS{vertical-align:center;font-weight: bold; background-color:white; color:black; width: 15px !important}
 
+td.pre-align {
+	color: #2d6ca2;
+}
 .help {
   border-radius: 5px;
   z-index: 1;
@@ -1043,4 +1046,9 @@ tr.up_fill > td {
 
 .outlink {
 	color: crimson!important;
+}
+
+
+.niceblue {
+	background-color:#2D6CA2;
 }

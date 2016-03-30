@@ -88,7 +88,10 @@ UTIL.settings = {
   'async' : false,
   'tone_marks' : '⁰¹²³⁴⁵⁶₀₁₂₃₄₅₆',
   'morpheme_marks' : '+_◦',
-  'navbar' : true
+  'navbar' : true,
+  'gap_marker' : '-',
+  'missing_marker' : 'Ø',
+  'morpheme_separator' : '◦'
 }
 
 UTIL.open_remote_dbase = function(dbase, frame) {

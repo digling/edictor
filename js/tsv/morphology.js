@@ -12,11 +12,12 @@ var MORPH = {};
 MORPH.morphemes = {};
 
 /* function to split a word into morphemes */
-MORPH.get_morphemes = function(word) {
+MORPH.get_morphemes = function(word, return_morpheme_marks) {
   var out = [[]];
+  var mm = [];
   var split = false;
   for (var i=0,segment; segment=word[i]; i++) {
-    if (split && CFG['morpheme_marks'].indexOf(segment) == -1) {
+    if (split && CFG['morpheme_marks'].indexOf(segment) == -1 && segment != CFG['gap_marker']) {
       out.push([]);
       split = false;
     }
@@ -26,12 +27,16 @@ MORPH.get_morphemes = function(word) {
     }
     else if (CFG['morpheme_marks'].indexOf(segment) != -1) {
       split = true;
+      mm.push(segment);
     }
     else {
       out[out.length-1].push(segment);
     }
   }
-  return out;
+  if (typeof return_morpheme_marks == 'undefined' || !return_morpheme_marks) {
+    return out;
+  }
+  return [out, mm];
 };
 
 /* function returns all morphemes from indices, words and concepts */
