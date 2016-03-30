@@ -425,14 +425,16 @@ function get_new_cogid() {
   }
   else {
     var cogid = false;
-    var url = 'triples/triples.py?' +
-      'remote_dbase='+CFG['remote_dbase'] +
-      '&file='+CFG['filename'] +
-      '&new_id='+CFG['formatter']
-      ;
+    var url = 'triples/triples.py';
+    var postdata = {
+      'remote_dbase': CFG['remote_dbase'],
+      'file': CFG['filename'],
+      'new_id': CFG['formatter']
+    };
     $.ajax({
       async: false,
-      type: "GET",
+      type: "POST",
+      data: postdata,
       contentType: "application/text; charset=utf-8",
       url: url,
       dataType: "text",

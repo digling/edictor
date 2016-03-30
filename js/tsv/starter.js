@@ -216,31 +216,33 @@ function handleAjax (event, url) {
   /* reset whole process in case this is not the first time the stuff
    * stuff is loaded */
   reset();
+  
+  var postdata = {}
 
   /* check for actual value of url */
   if (url.indexOf('.tsv') == url.length - 4 && url.length -4 != -1) {
     var new_url = 'data/'+url;
     CFG['storable'] = false;
-    console.log('url',url,new_url);
   }
   else {
-    var new_url = 'triples/triples.py?file='+url;
+    var new_url = 'triples/triples.py';
+    postdata['file'] = url;
 
     /* append values for columns etc. to url */
     if (CFG['columns']) {
-      new_url += '&columns='+CFG['columns'].join('|');
+      postdata['columns'] = CFG['columns'].join('|');
     }
     if (CFG['doculects']) {
-      new_url += '&doculects='+CFG['doculects'].join('|');
+      postdata['doculects'] = CFG['doculects'].join('|');
     }
     if (CFG['concepts']) {
-      new_url += '&concepts='+CFG['concepts'].join('|');
+      postdata['concepts'] = CFG['concepts'].join('|');
     }
     if (CFG['remote_dbase']) {
-      new_url += '&remote_dbase='+CFG['remote_dbase'];
+      postdata['remote_dbase'] = CFG['remote_dbase'];
     }
     if (CFG['template']) {
-      new_url += '&template=template';
+      postdata['template'] = template;
     }
       
     CFG['storable'] = true;
@@ -255,11 +257,14 @@ function handleAjax (event, url) {
   STORE = '';
   $.ajax({
         async: false,
-        type: "GET",
+        type: "POST",
         contentType: "application/text; charset=utf-8",
+	data: postdata,
         url: new_url,
         dataType: "text",
         success: function(data) {
+	  console.log('posting', postdata);
+	  console.log(data);
           STORE = data;
         },
         error: function() {
@@ -282,7 +287,6 @@ function handleAjax (event, url) {
   /* add the filename to the filename-button */
   var fn = document.getElementById('filename');
   fn.innerHTML = '&lt;'+CFG['filename']+'&gt;';
-  console.log('filename',fn.innerHTML);
 
   /* toggle display if the wordlist is not hidden */
   var fd = document.getElementById('filedisplay');
@@ -324,7 +328,8 @@ function getDataBases() {
   $.ajax({
         async: false,
         type: "GET",
-        url: 'triples/triples.py?tables=tables',
+        url: 'triples/triples.py',
+	data: {tables: 'tables'},
 	contentType : 'application/text; charset=utf-8',
         dataType : "text",
         success: function(data) {

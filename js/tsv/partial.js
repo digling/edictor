@@ -590,14 +590,15 @@ PART.get_new_cogid = function () {
   }
   else {
     var cogid = false;
-    var url = 'triples/triples.py?' +
-      'remote_dbase='+CFG['remote_dbase'] +
-      '&file='+CFG['filename'] +
-      '&new_id='+CFG['root_formatter']
-      ;
+    var postdata = {};
+    var url = 'triples/triples.py';
+    postdata['remote_dbase'] = CFG['remote_dbase'];
+    postdata['file'] = CFG['filename'];
+    postdata['new_id'] = CFG['root_formatter'];
     $.ajax({
       async: false,
-      type: "GET",
+      type: "POST",
+      data : postdata,
       contentType: "application/text; charset=utf-8",
       url: url,
       dataType: "text",
@@ -605,7 +606,7 @@ PART.get_new_cogid = function () {
 	cogid=parseInt(data);
       },
       error: function(){
-	fakeAlert("problem retrieving a new cognate ID fromt he dbase");
+	fakeAlert("problem retrieving a new cognate ID from the dbase");
       }
     });
     return cogid;

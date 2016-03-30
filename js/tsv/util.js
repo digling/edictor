@@ -57,9 +57,10 @@ UTIL.resizeframe = function (iframe) {
 UTIL.settings = {
   'remote_databases' : ['germanic', 'huber1992', 'burmish', 'sinotibetan', 'tukano'],
   'triple_path' : 'triples/triples.py',
-      'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 
-      'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ETYMONID', 'CHINESE', 'CONCEPTLIST',
-      'ORTHOGRAPHY','WORD','TRANSCRIPTION','SEGMENTS', 'PARTIALIDS'],
+  'summary_path' : 'triples/summary.py',
+  'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 
+  'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ETYMONID', 'CHINESE', 'CONCEPTLIST',
+  'ORTHOGRAPHY','WORD','TRANSCRIPTION','SEGMENTS', 'PARTIALIDS'],
   'preview': 10,
   'noid': false, 
   'sorting': false, 
@@ -91,14 +92,15 @@ UTIL.settings = {
   'navbar' : true,
   'gap_marker' : '-',
   'missing_marker' : 'Ø',
-  'morpheme_separator' : '◦'
+  'morpheme_separator' : '◦',
+  'check_remote_intervall' : 10
 }
 
 UTIL.open_remote_dbase = function(dbase, frame) {
   var idx = document.getElementById(dbase);
   for (var i=0,option; option=idx.options[i]; i++) {
     if (option.selected) {
-      var url = UTIL.settings.triple_path +"?file="+option.value+'&remote_dbase='+option.value+'&summary=summary';
+      var url = UTIL.settings.summary_path +"?file="+option.value+'&remote_dbase='+option.value+'&summary=summary';
       document.getElementById(frame).src = url;
       console.log(url);
       break;

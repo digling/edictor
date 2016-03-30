@@ -510,7 +510,6 @@ function showWLS(start)
   if (!CFG['parsed']) {
     if (CFG['storable']) {
       CFG['last_time'] = new Date();
-      //->console.log(CFG.last_time);
     }
     csvToArrays(STORE, '\t', '#', '@');
   }
@@ -521,25 +520,49 @@ function showWLS(start)
      * differs */
     if (CFG['storable']) {
       var now = new Date();
-      var passed_time = (now - CFG['last_time']) / 60000;
+      var passed_time = (now - CFG['last_time']) / 6000;
       
-      if (passed_time >= 1000) { /* reset TIME to other minutes later */
-
+      if (passed_time > CFG['check_remote_intervall']) {
         /* create the url */
-        var url = 'triples/triples.py?remote_dbase='+CFG['remote_dbase']+'&file=' + CFG['filename'] + 
-          '&date=' + CFG['last_time'].getTime();
-
+        var url = 'triples/triples.py';
+	var postdata = {
+	  'remote_dbase': CFG['remote_dbase'],
+	  'file': CFG['filename'],
+          'date': parseInt(CFG['last_time'].getTime() / 1000)
+	};
         var txt = '';
-
         /* make the ajax call */ 
         $.ajax({
           async: true,
-          type: "GET",
+          type: "POST",
+	  data: postdata,
           contentType: "application/text; charset=utf-8",
           url: url,
           dataType: "text",
           success: function(data) {
             txt = data;
+	    console.log('checking for modified data');
+	    console.log('postdata', postdata);
+	    /* iterate over all lines and check for updates */
+            var lines = txt.split('\n');
+            for (var i=0,line; line=lines[i]; i++){
+              var cells = line.split('\t');
+              var idx = parseInt(cells[0]);
+              var col = cells[1].replace(/_/g,'');
+              var col_idx = WLS.header.indexOf(col);
+              /* check if column actually exists (it may just have been created
+               * and will thus not appear in the current application, which is 
+               * also not needed for now */
+              if (col_idx != -1) {
+                var val = cells[2];
+		console.log(col_idx, val, col);
+                if (WLS[idx][col_idx] != val) {
+                  WLS[idx][col_idx] = val;
+		  console.log('found data which needs to be changed');
+                }
+              }
+            }
+            CFG['last_time'] = now;
           },
           error: function() {
             CFG['storable'] = false;
@@ -547,27 +570,6 @@ function showWLS(start)
           }    
         });
 
-        /* iterate over all lines and check for updates */
-        var lines = txt.split('\n');
-        for (var i=0,line; line=lines[i]; i++)
-        {
-          var cells = line.split('\t');
-          var idx = parseInt(cells[0]);
-          var col = cells[1].replace(/_/g,'');
-          var col_idx = WLS.header.indexOf(col);
-          /* check if column actually exists (it may just have been created
-           * and will thus not appear in the current application, which is 
-           * also not needed for now */
-          if (col_idx != -1) {
-            var val = cells[2];
-            if (WLS[idx][col_idx] != val) {
-              WLS[idx][col_idx] = val;
-            }
-          }
-        }
-        //->console.log("ShowWls, check updates:",txt);
-        /* set up new time frame */
-        CFG['passed_time'] = now;
       }
     }
   }
@@ -1783,15 +1785,18 @@ function addLine(rowidx) {
   }
   else {
     /* create url first */
-    var new_url = 'triples/triples.py?' +
-      'file='+CFG['filename'] +
-      '&remote_dbase='+CFG['remote_dbase'] + 
-      '&new_id=true';
+    var new_url = 'triples/triples.py';
+    var postdata = {
+      'file' : CFG['filename'],
+      'remote_dbase': CFG['remote_dbase'], 
+      'new_id' : true
+    };
     var newIdx = 0;
     
     $.ajax({
       async: false,
-      type: "GET",
+      type: "POST",
+      data: postdata,
       contentType: "application/text; charset=utf-8",
       url: new_url,
       dataType: "text",
