@@ -537,7 +537,8 @@ function makeMyTemplate() {
   var lngs = document.getElementById('template_languages');
   var conc = document.getElementById('template_concepts');
   var syns = document.getElementById('template_synonyms');
-  
+  var glcs = document.getElementById('template_glottocode'); 
+
   var concept_lists = [];
   for(var i=0,option;option=conc.options[i];i++) {
     if (option.selected) {
@@ -550,7 +551,7 @@ function makeMyTemplate() {
   $.ajax( {
       async:false,
       type: "GET",
-      url: 'data/conceptlists/'+concept_lists[0],
+      url: 'data/conceptlists/'+concept_lists[0]+'.tsv',
       dataType: "text",
       success: function(data)  {
         tmp = data;
@@ -560,8 +561,8 @@ function makeMyTemplate() {
   var glosses = {};
   var rows = tmp.split(/\n/);
   var header = rows[0].split('\t');
-  var owIdx = header.indexOf('OMEGAWIKI');
-  var glIdx = header.indexOf('GLOSS');
+  var owIdx = header.indexOf('CONCEPTICON_ID');
+  var glIdx = header.indexOf('ENGLISH');
   var nrIdx = header.indexOf('NUMBER');
   for(var i=1,row;row=rows[i];i++) {
     var cells = row.split('\t');
@@ -570,10 +571,16 @@ function makeMyTemplate() {
 
   /* now we start creating the text */
   var doculects = lngs.value.split(',');
+  var glottos = glcs.value.split(',');
   var columns = cols.value.split(',');
+  
+  if (columns.length == 0 || doculects.length == 0) {
+    fakeAlert("You must specify values for both the COLUMNS and the DOCULECT option.");
+    return;
+  }
 
   var text = 'ID\t'+columns.join('\t')+'\n';
-  text = text.replace('CONCEPT','CONCEPT\tOMEGAWIKI');
+  text = text.replace('CONCEPT','CONCEPT\tCONCEPTICON_ID');
   text += '#\n';
 
   var counter = 1;
@@ -590,6 +597,12 @@ function makeMyTemplate() {
           else if (itm == 'CONCEPT') {
             text += '\t'+ glosses[gloss][1]+'\t'+gloss;
           }
+	  else if (itm == 'GLOTTOLOG') {
+	    if (typeof glottos[i] != 'undefined') {
+	      text += '\t'+glottos[i];
+	    }
+	    else {fakeAlert("You did not specify enough glottocodes for all your languages."); return;}
+	  }
           else {
             text += '\t-';
           }
