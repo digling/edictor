@@ -65,15 +65,9 @@
                   MENU
                 </a>
               </li>
-              <!--<li>
-                <a id="toggle_settings" onclick="toggleDisplay(event,'settings');">
-                  <span class="glyphicon glyphicon-ok" style="display:none"></span>
-                  <span class="glyphicon glyphicon-remove"></span>
-                  SETTINGS
-                </a>
-	      </li>-->
               <li>
-                <a id="toggle_settings" onclick="loadAjax(event,'sortable', 'settings', 'help col-sm-8');">
+                <a id="toggle_settings" 
+		  onclick="loadAjax(event,'sortable', 'settings', 'help col-sm-4');">
                   <span class="glyphicon glyphicon-ok" style="display:none"></span>
                   <span class="glyphicon glyphicon-remove"></span>
                   SETTINGS
@@ -270,38 +264,6 @@
 	  <div id="store" style="display:none"></div>
 	</div>
       </li>
-
-      <!-- SETTINGS +++ delete this part completely +++-->
-      <!--<li class="colx" style="display:inline;">
-	<div id="settingsx" class="settings" style="display:none">
-	  <span class="main_handle pull-left"></span>
-	  <button type="button" onclick="toggleDisplay(event,'settings');" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	  <table>
-	    <tr>
-	      <th colspan="2">
-		Settings
-	      </th>
-	    </tr>
-	    <tr>
-	      <th>Preview</th>
-	      <td>
-		<div class="btn-group">
-		  <input id="preview10"  type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] =  10; showWLS(1);" value="&nbsp;10&nbsp;" />
-		  <input id="preview20"  type="button"  class="btn mright btn-primary submit"
-		  onclick="CFG['preview'] =  20; showWLS(1);" value="&nbsp;20&nbsp;" />
-		  <input id="preview50"  type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] =  50; showWLS(1);" value="&nbsp;50&nbsp;" />
-		  <input id="preview100" type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] = 100; showWLS(1);" value="&nbsp;100&nbsp;" />
-		  <input id="preview100" type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] = 200; showWLS(1);" value="&nbsp;200&nbsp;" />
-		  <input id="preview100" type="button"  class="btn mright btn-primary submit"  onclick="CFG['preview'] = 500; showWLS(1);" value="&nbsp;500&nbsp;" />
-		</div>
-	      </td>
-	    </tr>
-	    <tr id="formatter"></tr>
-	    <tr id="columncb"></tr>
-	    <tr id="root_formatter"></tr>
-	  </table>
-	</div>
-      </li>-->
       <!-- drop zone and information handling -->
       <li class="colx" style="width:100%">
 	<div class="drop_zone_start" id="eingang">Files are loading, please wait...</div>
@@ -309,13 +271,16 @@
 	  Open the file.
 	</div>
       </li>
-      <li class="colx largebox" id="welcome" style="background:#2d6ca2;min-width:50%;max-width:800px;">
-	  <span class="main_handle pull-left"></span>
-	  <button type="button" onclick="$('#welcome').remove();" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <li class="colx" id="welcome" style="width:100%;padding-right:10px;display:block;">
 
-	<div class="colx">
-		<img style="display:table-cell;float:left;" src="img/wordlists.png" width="49%" alt="edictor" />
-	  <div style="color:white;font-size:150%;display:table-cell;float:left;width:49%;max-width:50%;" >
+	<div class="colx welcome">
+	  <span class="main_handle pull-left" style="margin-left:5px;margin-top:-15px;"></span>
+	  <button type="button" onclick="$('#welcome').remove();" class="pull-right close"
+	    style="margin-right:5px;margin-top:-15px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+		<img style="display:table-cell;float:left;max-width:300px;width:39%" src="img/wordlists.png" alt="edictor" />
+	  <div
+	    style="color:white;font-size:140%;display:table-cell;float:left;width:59%;" >
 	    <b>Welcome to the EDICTOR!</b> <br><br> The EDICTOR is an interactive tool for creating, maintaining, and publishing
 		etymological data which is stored in simple TSV format. <br><br>
 		Use the EDICTOR to 
@@ -337,9 +302,7 @@
     </ul>
   </div>
   <div id="#data_saved" style="color:white;font-size:12px">Data has not yet been saved.</div>
-  <!--<script data-main="prison/main" src="prison/lib/vendor/require.js"></script>-->
-  <script src="prison_old/main.js"></script>
-
+  <script src="digling/main.js"></script>
 <script>
 var load = PRISON.import(
     'highlight',
@@ -355,15 +318,15 @@ var load = PRISON.import(
     'js/vendor/bootstrap.min',
     'js/vendor/bootstrap-multiselect',
     'js/vendor/spin',
-    'js/tsv/util',
-    'js/tsv/alignments',
-    'js/tsv/cognates',
-    'js/tsv/phonology',
-    'js/tsv/morphology',
-    'js/tsv/partial',
-    'js/tsv/correspondences',
-    'js/tsv/wordlist',
-    'js/tsv/starter'
+    'js/util',
+    'js/alignments',
+    'js/cognates',
+    'js/phonology',
+    'js/morphology',
+    'js/partial',
+    'js/correspondences',
+    'js/wordlist',
+    'js/starter'
     );
 
 </script>
