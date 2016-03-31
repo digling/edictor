@@ -1,3 +1,11 @@
+/* Code for the display of phonetic charts in the IPA-Chart Plugin of the EDICTOR
+ *
+ * author   : Johann-Mattis List
+ * email    : mattis.list@lingulist.de
+ * created  : 2016-03-31 09:51
+ * modified : 2016-03-31 09:51
+ *
+ */
 
 var getline = window.location.href;
 var parts = getline.split('?');
