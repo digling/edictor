@@ -65,9 +65,9 @@ function showPhonology (event, doculect, sort, direction) {
   var idxs = WLS['taxa'][doculect];
 
   /* get index of tokens and concepts*/
-  var tidx = WLS.header.indexOf('TOKENS');
-  var aidx = WLS.header.indexOf('ALIGNMENT');
-  var iidx = WLS.header.indexOf('IPA');
+  var tidx = CFG['_segments']; 
+  var aidx = CFG['_alignments']; 
+  var iidx = CFG['_transcriptions'];
   var c = CFG['_cidx'];
 
   /* define symbols we do not want to trace */

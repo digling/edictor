@@ -1,0 +1,27 @@
+{
+
+  "description": "Open the EDICTOR from within Firefox.",
+  "manifest_version": 2,
+  "name": "EDICTOR",
+  "version": "0.1",
+  "homepage_url": "https://github.com/digling/edictor/",
+  "icons": {
+    "48": "edictor/img/edictor-small.png"
+  },
+
+  "applications": {
+    "gecko": {
+      "id": "edictor@mozilla.org",
+      "strict_min_version": "45.0.0"
+    }
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "browser_action": {
+    "default_icon": "edictor/img/edictor-small.png"
+  }
+
+}

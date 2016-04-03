@@ -154,7 +154,7 @@ MORPH.get_colexifications = function(indices, words, concepts) {
 };
 
 MORPH.showGraph = function(graph, fullgraph, doculect, word, concept) {
-  var url = (fullgraph) ? 'plugouts/sigma.big.html?'+graph : 'plugouts/springy.small.html?'+graph;
+  var url = (fullgraph) ? 'plugouts/sigma_big.html?'+graph : 'plugouts/springy_small.html?'+graph;
   var nid = document.createElement('div');
   nid.style.display = '';
   nid.className = 'editmode';
@@ -573,7 +573,7 @@ function showMorphology(event, doculect, filter, sort, direction) {
       td_col = (col_data.length > 0) ? '<td class="pointed" title="show colexifications in wordlist" onclick="filterOccurrences(\''+doculect+'\',\''+col_filter.join(',')+'\')">' + col_data.join(', ') +'</td>' : '<td></td>';
       var graph = (local_indices.length > 1) ? MORPH.get_morpheme_graph(local_indices, local_words, local_concepts, true) : false;
       var td_pcol = (pcol_data.length > 0) ? '<td class="pointed" title="show partial colexifications in wordlist" onclick="filterOccurrences(\''+doculect+'\',\''+pcol_filter.join(',')+'\')">' + pcol_data.join(', ') + '</td>' : '<td></td>';
-      var td_graph = (graph) ? '<td><button class="btn btn-primary okbutton" onclick="MORPH.showGraph(\''+encodeURI(JSON.stringify(graph))+'\',false,\''+doculect+'\',\''+word.join(' ')+'\',\''+concept+'\')">GRAPH</button></td>' : '<td></td>';
+      var td_graph = (graph) ? '<td><button class="btn btn-primary okbutton" onclick="MORPH.showGraph(\''+JSURL.stringify(graph).replace(/'/g,"\\'")+'\',false,\''+doculect+'\',\''+word.join(' ')+'\',\''+concept+'\')">GRAPH</button></td>' : '<td></td>';
       var td_user = (view == 'edit') 
 	? '<td title="click to edit" onclick="MORPH.editMorphemeEntry(\'morphemes\','+widx+')" id="morphemes-'+ widx+'" style="max-width:300px;">' + 
 	  user_morphemes.join('<span class="small" style="display:table-cell">+</span>') +
@@ -600,6 +600,7 @@ function showMorphology(event, doculect, filter, sort, direction) {
 	;
     }
   }
+  console.log(JSON.stringify(graph));
 
   text += '</tbody></table>';
   var mid = document.getElementById('morphology_table');
@@ -607,7 +608,7 @@ function showMorphology(event, doculect, filter, sort, direction) {
   var G = MORPH.get_morpheme_graph(indices, words, concepts);
   G['doculect'] = doculect;
   var button = document.getElementById('morphology_graph');
-  button.onclick = function () {MORPH.showGraph(encodeURI(JSON.stringify(G)), true, doculect, G['morphemes'], G['words']);}; 
+  button.onclick = function () {MORPH.showGraph(JSURL.stringify(G), true, doculect, G['morphemes'], G['words']);}; 
   mid.innerHTML = text;
   mid.style.display = 'block';
 

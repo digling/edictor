@@ -1,0 +1,130 @@
+<html>
+<html>
+<head>
+  <title>EDICTOR WORD FAMILY GRAPH</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="icon" href="img/wordlists.png" type="image/png" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" />
+<!-- START SIGMA IMPORTS -->
+<script src="sigma/sigma.core.js"></script>
+<script src="sigma/conrad.js"></script>
+<script src="sigma/utils/sigma.utils.js"></script>
+<script src="sigma/utils/sigma.polyfills.js"></script>
+<script src="sigma/sigma.settings.js"></script>
+<script src="sigma/classes/sigma.classes.dispatcher.js"></script>
+<script src="sigma/classes/sigma.classes.configurable.js"></script>
+<script src="sigma/classes/sigma.classes.graph.js"></script>
+<script src="sigma/classes/sigma.classes.camera.js"></script>
+<script src="sigma/classes/sigma.classes.quad.js"></script>
+<script src="sigma/classes/sigma.classes.edgequad.js"></script>
+<script src="sigma/captors/sigma.captors.mouse.js"></script>
+<script src="sigma/captors/sigma.captors.touch.js"></script>
+<script src="sigma/renderers/sigma.renderers.canvas.js"></script>
+<script src="sigma/renderers/sigma.renderers.webgl.js"></script>
+<script src="sigma/renderers/sigma.renderers.svg.js"></script>
+<script src="sigma/renderers/sigma.renderers.def.js"></script>
+<script src="sigma/renderers/webgl/sigma.webgl.nodes.def.js"></script>
+<script src="sigma/renderers/webgl/sigma.webgl.nodes.fast.js"></script>
+<script src="sigma/renderers/webgl/sigma.webgl.edges.def.js"></script>
+<script src="sigma/renderers/webgl/sigma.webgl.edges.fast.js"></script>
+<script src="sigma/renderers/webgl/sigma.webgl.edges.arrow.js"></script>
+<script src="sigma/renderers/canvas/sigma.canvas.labels.def.js"></script>
+<script src="sigma/renderers/canvas/sigma.canvas.hovers.def.js"></script>
+<script src="sigma/renderers/canvas/sigma.canvas.nodes.def.js"></script>
+<script src="sigma/renderers/canvas/sigma.canvas.edges.def.js"></script>
+<script src="sigma/renderers/canvas/sigma.canvas.edges.curve.js"></script>
+<script src="sigma/renderers/canvas/sigma.canvas.edges.arrow.js"></script>
+<script src="sigma/renderers/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+<script src="sigma/renderers/canvas/sigma.canvas.edgehovers.def.js"></script>
+<script src="sigma/renderers/canvas/sigma.canvas.edgehovers.curve.js"></script>
+<script src="sigma/renderers/canvas/sigma.canvas.edgehovers.arrow.js"></script>
+<script src="sigma/renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js"></script>
+<script src="sigma/renderers/canvas/sigma.canvas.extremities.def.js"></script>
+<script src="sigma/renderers/svg/sigma.svg.utils.js"></script>
+<script src="sigma/renderers/svg/sigma.svg.nodes.def.js"></script>
+<script src="sigma/renderers/svg/sigma.svg.edges.def.js"></script>
+<script src="sigma/renderers/svg/sigma.svg.edges.curve.js"></script>
+<script src="sigma/renderers/svg/sigma.svg.labels.def.js"></script>
+<script src="sigma/renderers/svg/sigma.svg.hovers.def.js"></script>
+<script src="sigma/middlewares/sigma.middlewares.rescale.js"></script>
+<script src="sigma/middlewares/sigma.middlewares.copy.js"></script>
+<script src="sigma/misc/sigma.misc.animation.js"></script>
+<script src="sigma/misc/sigma.misc.bindEvents.js"></script>
+<script src="sigma/misc/sigma.misc.bindDOMEvents.js"></script>
+<script src="sigma/misc/sigma.misc.drawHovers.js"></script>
+<script src="sigma/plugins/sigma.plugins.animate/sigma.plugins.animate.js"></script>
+<script src="sigma/plugins/sigma.layout.noverlap/sigma.layout.noverlap.js"></script>
+<script src="sigma/plugins/sigma.layout.forceAtlas2/worker.js"></script>
+<script src="sigma/plugins/sigma.layout.forceAtlas2/supervisor.js"></script>
+<script src="sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
+<!-- END SIGMA IMPORTS -->
+<style type="text/css">
+  #container {
+    //max-width: 800px;
+    height: 90%;
+    width: 90%;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+</style>
+</head>
+<body style="background-color:white;">
+  <div id="container"></div>
+<script>
+var data = window.location.href.split('?');
+var graph = JSON.parse(decodeURI(data[1]));
+var sig = {};
+sig.graph = graph;
+sig.container = 'container';
+sig.settings = {labelThreshold : 0, defaultLabelSize: 18, defaultEdgeType: 'curve', minNodeSize: 2,
+  maxNodeSize: 4,
+  defaultEdgeSize: 20, minEdgeSize: 10, maxEdgeSize: 10, labelSizeRazio: 2};
+sig = new sigma(sig);
+
+
+var noverlapListener = sig.configNoverlap({
+  nodeMargin: 10,
+  scaleNodes: 20,
+  gridSize: 75,
+  easing: 'quadraticInOut', // animation transition function
+  duration: 100   // animation duration. Long here for the purposes of this example only
+});
+// Bind the events:
+noverlapListener.bind('start stop interpolate', function(e) {
+  console.log(e.type);
+  if(e.type === 'start') {
+    console.time('noverlap');
+  }
+  if(e.type === 'interpolate') {
+    console.timeEnd('noverlap');
+  }
+});
+// Start the layout:
+sig.startForceAtlas2();
+setTimeout(function() {sig.stopForceAtlas2(); sig.startNoverlap();}, 1000);
+
+// Initialize the dragNodes plugin:
+var dragListener = sigma.plugins.dragNodes(sig, sig.renderers[0]);
+dragListener.bind('startdrag', function(event) {
+  console.log(event);
+});
+dragListener.bind('drag', function(event) {
+  console.log(event);
+});
+dragListener.bind('drop', function(event) {
+  console.log(event);
+});
+dragListener.bind('dragend', function(event) {
+  console.log(event);
+});
+
+
+</script>
+</body>
+</html>
+
+

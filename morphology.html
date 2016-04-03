@@ -13,7 +13,7 @@ Analyze and edit the morphology of doculects:
       style="width:150px" />
 
 <button type="button"
-  onclick="showMorphology(false,document.getElementById('input_morphology').value);"
+	onclick="showSpinner(function(){showMorphology(false,document.getElementById('input_morphology').value);});"
   class="btn-primary submit3 titled btn">OK</button>
 <a id="morphology_graph" target="pubWindow" class="btn btn-primary submit3">WORD FAMILY GRAPH</a>
 <button type="button" class="btn-primary titled btn submit3 pull-right"

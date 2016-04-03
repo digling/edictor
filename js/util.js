@@ -114,7 +114,7 @@ UTIL.open_remote_dbase = function(dbase, frame) {
 UTIL.load_settings = function() {
 
   var settables = ['preview', 'cognates', 'alignments', 'morphemes', 'roots', 'highlight', 'sampa',
-    'pinyin'];
+    'pinyin', 'sources'];
   var entries = {};
   for (var i=0, settable; settable=settables[i]; i++) {
     entries[settable] = document.getElementById('settings_'+settable);
@@ -161,7 +161,7 @@ UTIL.load_settings = function() {
 UTIL.refresh_settings = function() {
 
   var settables = ['preview', 'cognates', 'alignments', 'morphemes', 'roots', 'highlight', 'sampa', 
-    'pinyin'];
+    'pinyin', 'sources'];
   var entries = {};
   for (var i=0, settable; settable=settables[i]; i++) {
     entries[settable] = document.getElementById('settings_'+settable);
@@ -169,7 +169,7 @@ UTIL.refresh_settings = function() {
   
   CFG['preview'] = parseInt(entries['preview'].value);
   
-  for (var i=0,entry; entry=['cognates', 'alignments', 'morphemes', 'roots'][i]; i++) {
+  for (var i=0,entry; entry=['cognates', 'alignments', 'morphemes', 'roots', 'sources'][i]; i++) {
     if (entry == 'cognates') {
       var this_entry = '_fidx';
     }
@@ -226,6 +226,7 @@ ALIAS = {
   'roots' : ['PARTIALIDS', 'COGIDS'],
   'alignments' : ['ALIGNMENT'],
   'glottolog' : ['GLOTTOLOG'],
-  'concepticon' : ['CONCEPTICON', 'CONCEPTICONID']
+  'concepticon' : ['CONCEPTICON', 'CONCEPTICONID'],
+  'sources' : ['SOURCE', "REFERENCE", "SOURCES"]
 }
 

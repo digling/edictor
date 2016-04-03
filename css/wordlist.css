@@ -337,7 +337,7 @@ span.context {
   text-align: center;
   color: black;
   cursor: default;
-  font-size: 50%;
+  font-size: 85%;
 }
 
 td.residue{
@@ -974,8 +974,8 @@ table.alignments {
 }
 
 .uneditable {
-  opacity: 0.8;
   cursor: crosshair;
+  opacity: 0.95;
 }
 
 

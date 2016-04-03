@@ -165,12 +165,13 @@ function csvToArrays(allText, separator, comment, keyval) {
           header.push(datum);
           
           if (ALIAS['doculect'].indexOf(datum) != -1) { tIdx = j; }
-          if (ALIAS['concept'].indexOf(datum) != -1) { cIdx = j; }
-	  if (ALIAS['segments'].indexOf(datum) != -1) { sIdx = j; }
-	  if (ALIAS['alignment'].indexOf(datum) != -1) { aIdx = j; }
-	  if (ALIAS['transcription'].indexOf(datum) != -1) { iIdx = j; }
-	  if (ALIAS['morphemes'].indexOf(datum) != -1) { mIdx = j; }
-          if (CFG['basics'].indexOf(datum) != -1) { columns[datum] = j; }
+	  else if (ALIAS['concept'].indexOf(datum) != -1) { cIdx = j; }
+	  else if (ALIAS['segments'].indexOf(datum) != -1) { sIdx = j; }
+	  else if (ALIAS['alignment'].indexOf(datum) != -1) { aIdx = j; }
+	  else if (ALIAS['transcription'].indexOf(datum) != -1) { iIdx = j; }
+	  else if (ALIAS['morphemes'].indexOf(datum) != -1) { mIdx = j; }
+	  else if (ALIAS['sources'].indexOf(datum) != -1) { srcIdx = j; }
+	  if (CFG['basics'].indexOf(datum) != -1) { columns[datum] = j; }
           else { columns[datum] = -j; }
 	}
       }
@@ -223,11 +224,12 @@ function csvToArrays(allText, separator, comment, keyval) {
 
           header.push(datum);
           if (ALIAS['doculect'].indexOf(datum) != -1) { tIdx = j; }
-          if (ALIAS['concept'].indexOf(datum) != -1) { cIdx = j; }
-	  if (ALIAS['segments'].indexOf(datum) != -1) { sIdx = j; }
-	  if (ALIAS['alignment'].indexOf(datum) != -1) { aIdx = j; }
-	  if (ALIAS['transcription'].indexOf(datum) != -1) { iIdx = j; }
-	  if (ALIAS['morphemes'].indexOf(datum) != -1) { mIdx = j; }
+	  else if (ALIAS['concept'].indexOf(datum) != -1) { cIdx = j; }
+	  else if (ALIAS['segments'].indexOf(datum) != -1) { sIdx = j; }
+	  else if (ALIAS['alignment'].indexOf(datum) != -1) { aIdx = j; }
+	  else if (ALIAS['transcription'].indexOf(datum) != -1) { iIdx = j; }
+	  else if (ALIAS['morphemes'].indexOf(datum) != -1) { mIdx = j; }
+	  else if (ALIAS['sources'].indexOf(datum) != -1) { srcIdx = j; }
           if (CFG['basics'].indexOf(datum) != -1) { columns[datum] = j + 1; }
           else { columns[datum] = -(j + 1); }
 	}
@@ -332,6 +334,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   CFG['_alignments'] = (typeof aIdx != 'undefined') ? aIdx-1 : -1;
   CFG['_transcriptions'] = (typeof iIdx != 'undefined') ? iIdx-1 : -1;
   CFG['_morphemes'] = (typeof mIdx != 'undefined') ? mIdx-1: -1;
+  CFG['_sources'] = (typeof srcIdx != 'undefined') ? srcIdx-1: -1;
   CFG['parsed'] = true;
   CFG['_selected_doculects'] = Object.keys(WLS.taxa);
 
@@ -511,7 +514,14 @@ function showWLS(start)
     if (CFG['storable']) {
       CFG['last_time'] = new Date();
     }
-    csvToArrays(STORE, '\t', '#', '@');
+    if (typeof localStorage.text != 'undefined' && !CFG['load_new_file']) {
+      console.log('found text', localStorage.text);
+      CFG['filename'] = localStorage.filename;
+      csvToArrays(localStorage.text, '\t', '#', '@');
+    }
+    else {
+      csvToArrays(STORE, '\t', '#', '@');
+    }
   }
   else {
     /* if we are dealing with a storable session, we now call ajax to tell us
@@ -634,44 +644,51 @@ function showWLS(start)
 	  var head = WLS['header'][j];
 	  if (WLS['columns'][head] > 0) { var cell_display = ''; }
 	  else { var cell_display = ' style="display:none"';  }
+	  
+	  if (WLS.header[j] != CFG.formatter && WLS.header[j] != CFG.root_formatter && WLS.uneditables.indexOf(WLS.header[j]) == -1 && !CFG['publish']) {
+	    var on_click = 'onclick="editEntry(' + idx + ',' + jdx + ',0,0)" ';
+	    var on_title = 'title="Modify entry '+idx+'/'+jdx+'." ';
+	    var on_ctxt = 'oncontextmenu="copyPasteEntry(event,'+idx+','+jdx+','+j+')" ';
+	    var this_class = 'class="'+WLS['header'][j]+'" ';
+	  }
+	  else if (WLS.uneditables.indexOf(WLS.header[j]) != -1 || CFG['publish']) {
+	    var on_click = '';
+	    var on_title = '';
+	    var this_class = 'class="uneditable '+WLS['header'][j]+'" ';
+	    
+	    if (WLS.header[j] == CFG.formatter) {
+	      var on_ctxt = 'oncontextmenu="editGroup(event,\''+WLS[idx][j]+'\')" ';
+	    }
+	    else if (WLS.header[j] == CFG.root_formatter) {
+	      var on_ctxt = 'oncontextmenu="PART.partial_alignment(event,\''+idx+'\')" ';
+	    }
+	    else {
+	      var on_ctxt = '';
+	    }
+	  }
+	  else {
+	    var on_click = 'onclick="editEntry(' + idx + ',' + jdx + ',0,0)" ';
+	    var on_title = 'title="Modify entry '+idx+'/'+jdx+'." ';
+	    var this_class = 'class="'+WLS['header'][j]+'" ';
+	    if (WLS.header[j] == CFG.formatter) {
+	      var on_ctxt = 'oncontextmenu="editGroup(event,\''+WLS[idx][j]+'\')" ';
+	    }
+	    else if (WLS.header[j] == CFG.root_formatter) {
+	      var on_ctxt = 'oncontextmenu="PART.partial_alignment(event,\''+idx+'\')" ';
+	    }
+	    else {
+	      var on_ctxt = '';
+	    }
+	  }
 
-	  /* check for normal cases */
-	  if (WLS.header[j] != CFG['formatter'] && WLS.uneditables.indexOf(WLS.header[j]) == -1 && WLS.header[j]  != CFG['root_formatter']) {
-	    text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx 
-	      + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)"'
-	      + ' oncontextmenu="copyPasteEntry(event,'+idx+','+jdx+','+j+')"'
-	      + ' data-value="' + WLS[idx][j] + '" ' + cell_display + '>';
-	    text += WLS[idx][j];
-	    text += '</td>';
-	  }
-	  /* check for uneditable values */
-	  else if (WLS.header[j] != CFG['root_formatter'] && WLS.uneditables.indexOf(WLS.header[j]) != -1) {
-	    text += '<td class="uneditable '+WLS['header'][j]+'" title="ENTRY '+idx+'/'+jdx+'">';
-	    text += WLS[idx][j];
-	    text += '</td>';
-	  }
-	  /* apply the rest */
-	  else if (WLS.header[j] == CFG['formatter']){
-	    text += '<td ondblclick="editGroup(event,'+ "'"
-	      + WLS[idx][j]+"'"+')" oncontextmenu="editGroup(event,'+"'"
-		+ WLS[idx][j]+"')"+'" class="' + WLS['header'][j] 
-		+ '" title="MODIFY ENTRY ' + idx + '/' + jdx 
-		+ '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)"'
-		+ ' data-value="' 
-		+ WLS[idx][j] + '"' + cell_display + '>';
-		text += WLS[idx][j];
-		text += '</td>';
-	  }
-	  else if (WLS.header[j] == CFG['root_formatter']) {
-	    text += '<td ondblclick="PART.partial_alignment(event, '+idx+');" '+
-	      'oncontextmenu="PART.partial_alignment(event, '+idx+');" ' + 
-	      'class="'+WLS['header'][j] +'" ' +
-	      'title="MODIFY ENTRY"' + idx + '/'+ jdx +
-	      '" onclick="editEntry('+idx+','+jdx+',0,0)"' +
-	      ' data-value="'+WLS[idx][j] + '"' + cell_display + '>';
-	    text += WLS[idx][j];
-	    text += '</td>';
-	  }
+	  var data_value = 'data-value="'+WLS[idx][j]+'" ';
+	  text += '<td ' +
+	    this_class + 
+	    on_title +
+	    on_click +
+	    on_ctxt + 
+	    data_value + cell_display+'>'+WLS[idx][j] + '</td>';
+
 	}
 	text += '</tr>';
 	count += 1;
@@ -726,13 +743,11 @@ function showWLS(start)
     var prestart = start - CFG['preview'];
     var startbefore = start - 1;
     previous.value = prestart + '-' + startbefore;
-
     toggleClasses(['previous'],'hidden','unhidden');
   }
   else {
     toggleClasses(['previous'],'unhidden','hidden');
   }
-
   var next = document.getElementById('next');
   if (WLS['rows'].length > start + CFG['preview']) {
     var poststart = start + parseInt(CFG['preview']);
@@ -1581,8 +1596,8 @@ function handleFileSelect(evt)
   
   reset();
   
-  //var store = document.getElementById('store');
   CFG['filename'] = file.name;
+  CFG['load_new_file'] = true;
   localStorage.filename = file.name;
   STORE = '';
 
@@ -1609,7 +1624,6 @@ function handleFileSelect(evt)
   
   /* toggle display if the wordlist is not hidden */
   var fd = document.getElementById('filedisplay');
-  //->console.log('fdstart',fd.style.display);
   if (fd.style.display != 'none' && fd.style.display != ''){
     toggleDisplay(evt, 'filedisplay');
   }
@@ -1619,56 +1633,40 @@ function handleFileSelect(evt)
  * not refresh it but rather prepares it for writing...*/
 function refreshFile()
 {
-  //var store = document.getElementById('store');
-  var text = '# EDICTOR\n';
-  text += '@modified: ' + getDate() + '\n#\n';
-  text += 'ID';
+  var text = 'ID';
   for (var i=0,head;head=WLS['header'][i];i++) {
-    if (WLS['columns'][head] > 0) {
-      if (WLS['uneditables'].indexOf(head) != -1) {
-        text += '\t_'+WLS.column_names[head].replace(/ /g,'_');
-      }
-      else {
-        text += '\t'+WLS.column_names[head].replace(/ /g,'_');
-      }
+    if (WLS['uneditables'].indexOf(head) != -1) {
+      text += '\t_'+WLS.column_names[head].replace(/ /g,'_');
+    }
+    else {
+      text += '\t'+WLS.column_names[head].replace(/ /g,'_');
     }
   }
   text += '\n';
   for (concept in WLS['concepts']) {
-    if (CFG['noid'] == false) {
-      text += '#\n';
-    }
     for (i in WLS['concepts'][concept]) {
       var idx = WLS['concepts'][concept][i];
 
       if (!isNaN(idx)) {
-        //text += idx + '\t' + WLS[idx].join('\t') + '\n';
 	text += idx;
 	for (var j=0,head;head=WLS['header'][j];j++) {
-	  if (WLS['columns'][head] > 0) {
-	    text += '\t'+WLS[idx][j];
-	  }
+	  text += '\t'+WLS[idx][j];
 	}
 	text += '\n';
       }
     }
   }
-  //store.innerText = text;
   STORE = text;
   WLS['edited'] = true;
   localStorage.text = text;
   localStorage.filename = CFG['filename'];
-  
   toggleClasses(['undo','redo'],'unhidden','hidden');
-  
   undoManager.clear();
-  
   showWLS(getCurrent());
   
   /* change disk symbol */
   $('#refresh > span').removeClass('glyphicon-floppy-disk').addClass('glyphicon-floppy-saved');
-
-  fakeAlert("Document was saved in local storage and can now be exported. Note that only those columns which are currently displayed will be written to file. If You want to select different columns for export, check out the current settings of column display by pressing F2, alter them accordingly, and SAVE the document again."); 
+  fakeAlert("Document was saved in local storage and can now be exported by clicking on the download button."); 
 }
 
 function fakeAlert(text){
@@ -2079,7 +2077,17 @@ function highLight()
         }
       }
     }
-
+    else if (i == CFG['_sources']) {
+      var items = document.getElementsByClassName(head);
+      for (var j=0,item; item=items[j]; j++) {
+        if (item.innerHTML == item.dataset.value) {
+	  if (item.dataset.value.indexOf(':bib:') != -1) {
+	    item.innerHTML = item.dataset.value.replace(/:bib:([0-9A-Za-z\-]+)/g,'<a class="outlink" href="http://bibliography.lingpy.org?key=$1">$1</a>');
+	  item.oncontextmenu = function (){};
+	  }
+        }
+      }
+    }
     else {}
   }
 }

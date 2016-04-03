@@ -7,8 +7,6 @@
  *
  */
 
-//reload = false;
-
 /* http://www.phpied.com/sleep-in-javascript/ */
 function sleep(milliseconds) {
   var start = new Date().getTime();
@@ -20,7 +18,6 @@ function sleep(milliseconds) {
 }
 
 function startWordlist() {
-
   var pop = document.getElementById('popup_background');
   var spinner = new Spinner().spin();
   pop.appendChild(spinner.el);
@@ -41,7 +38,6 @@ function startWordlist() {
     {
       getDataBases();
     }
-
     return 1;
   }
   catch (e) {
@@ -103,11 +99,7 @@ function basickeydown (event) {
     applyFilter();
     showCurrent();
   }
-  //---+++---/* toggle settings F2 */
-  //---+++---//else if (event.keyCode == 113) {
-  //---+++---//  event.preventDefault();
-  //---+++---//  $('#settings').toggleClass("hidden unhidden");
-  //---+++---//}
+
   /* toggle filters F3*/
   else if (event.keyCode == 114) {
     event.preventDefault();
@@ -194,6 +186,49 @@ function ReDo() {
   }  
 }
 
+
+function modifyDisplayForStart() {
+  /* carry out basic modification of the display, this is currently still
+   * ugly and messy and should definitely be modified next time */
+  var modify = ['first','previous', 'next','current','filename'];
+  for (i in modify) {
+    $('#' + modify[i]).removeClass('unhidden');
+    $('#' + modify[i]).addClass('hidden');
+  }
+  $('#mainsettings').css('display','inline');
+  $('#view').css('display','block');
+  $('#qlc').html('');
+  
+  /* add the filename to the filename-button */
+  var fn = document.getElementById('filename');
+  fn.innerHTML = '&lt;'+CFG['filename']+'&gt;';
+
+  /* toggle display if the wordlist is not hidden */
+  var fd = document.getElementById('filedisplay');
+  if (fd.style.display != 'none' && fd.style.display != ''){
+    toggleDisplay('', 'filedisplay');
+  }
+
+  /* check for navbar */
+  if (!CFG['navbar']) {
+    document.getElementById('navbar').style.display = 'none';
+    document.getElementById('outerbox').style.margin = "20px";
+    document.getElementById('filedisplay').style.marginBottom = "25px";
+    document.getElementById('add_column').style.display = 'none';
+    document.getElementById('mainsettings').style.display = 'none';
+    document.getElementById('file').style.display = 'none';
+    document.getElementById('ajaxfile').style.display = 'none';
+    document.getElementById('menu_handle').style.width = '90%';
+    document.getElementById('menu').style.minHeight = "80px";
+    document.getElementById('menu').style.margin = "5px";
+    document.getElementById('undoredo').style.display = "none";
+    var brs = document.getElementsByClassName('menubr');
+    for (var i=0, br; br=brs[i]; i++) {
+      br.style.display = 'none';
+    }
+  }
+}
+
 /* function handles the cases of remotely stored tsv files
  * which are loaded if the user selects them 
  */
@@ -223,11 +258,13 @@ function handleAjax (event, url) {
   if (url.indexOf('.tsv') == url.length - 4 && url.length -4 != -1) {
     var new_url = 'data/'+url;
     CFG['storable'] = false;
+    CFG['load_new_file'] = true;
   }
   else {
     var new_url = 'triples/triples.py';
     postdata['file'] = url;
-
+    CFG['load_new_file'] = true;
+    
     /* append values for columns etc. to url */
     if (CFG['columns']) {
       postdata['columns'] = CFG['columns'].join('|');
@@ -247,8 +284,6 @@ function handleAjax (event, url) {
       
     CFG['storable'] = true;
   }
-
-  //->console.log(new_url);
 
   /* we set the filename as the same as the url */
   CFG['filename'] = url;
@@ -272,47 +307,46 @@ function handleAjax (event, url) {
         }    
   });
   
-  /* carry out basic modification of the display, this is currently still
-   * ugly and messy and should definitely be modified next time */
-  var modify = ['first','previous', 'next','current','filename'];
-  for (i in modify) {
-    $('#' + modify[i]).removeClass('unhidden');
-    $('#' + modify[i]).addClass('hidden');
-  }
-  
-  $('#mainsettings').css('display','inline');
-  $('#view').css('display','block');
-  $('#qlc').html('');
-  
-  /* add the filename to the filename-button */
-  var fn = document.getElementById('filename');
-  fn.innerHTML = '&lt;'+CFG['filename']+'&gt;';
+  modifyDisplayForStart();
+  ///* carry out basic modification of the display, this is currently still
+  // * ugly and messy and should definitely be modified next time */
+  //var modify = ['first','previous', 'next','current','filename'];
+  //for (i in modify) {
+  //  $('#' + modify[i]).removeClass('unhidden');
+  //  $('#' + modify[i]).addClass('hidden');
+  //}
+  //$('#mainsettings').css('display','inline');
+  //$('#view').css('display','block');
+  //$('#qlc').html('');
+  //
+  ///* add the filename to the filename-button */
+  //var fn = document.getElementById('filename');
+  //fn.innerHTML = '&lt;'+CFG['filename']+'&gt;';
 
-  /* toggle display if the wordlist is not hidden */
-  var fd = document.getElementById('filedisplay');
-  console.log('fdstart',fd.style.display);
-  if (fd.style.display != 'none' && fd.style.display != ''){
-    toggleDisplay('', 'filedisplay');
-  }
+  ///* toggle display if the wordlist is not hidden */
+  //var fd = document.getElementById('filedisplay');
+  //if (fd.style.display != 'none' && fd.style.display != ''){
+  //  toggleDisplay('', 'filedisplay');
+  //}
 
-  /* check for navbar */
-  if (!CFG['navbar']) {
-    document.getElementById('navbar').style.display = 'none';
-    document.getElementById('outerbox').style.margin = "20px";
-    document.getElementById('filedisplay').style.marginBottom = "25px";
-    document.getElementById('add_column').style.display = 'none';
-    document.getElementById('mainsettings').style.display = 'none';
-    document.getElementById('file').style.display = 'none';
-    document.getElementById('ajaxfile').style.display = 'none';
-    document.getElementById('menu_handle').style.width = '90%';
-    document.getElementById('menu').style.minHeight = "80px";
-    document.getElementById('menu').style.margin = "5px";
-    document.getElementById('undoredo').style.display = "none";
-    var brs = document.getElementsByClassName('menubr');
-    for (var i=0, br; br=brs[i]; i++) {
-      br.style.display = 'none';
-    }
-  }
+  ///* check for navbar */
+  //if (!CFG['navbar']) {
+  //  document.getElementById('navbar').style.display = 'none';
+  //  document.getElementById('outerbox').style.margin = "20px";
+  //  document.getElementById('filedisplay').style.marginBottom = "25px";
+  //  document.getElementById('add_column').style.display = 'none';
+  //  document.getElementById('mainsettings').style.display = 'none';
+  //  document.getElementById('file').style.display = 'none';
+  //  document.getElementById('ajaxfile').style.display = 'none';
+  //  document.getElementById('menu_handle').style.width = '90%';
+  //  document.getElementById('menu').style.minHeight = "80px";
+  //  document.getElementById('menu').style.margin = "5px";
+  //  document.getElementById('undoredo').style.display = "none";
+  //  var brs = document.getElementsByClassName('menubr');
+  //  for (var i=0, br; br=brs[i]; i++) {
+  //    br.style.display = 'none';
+  //  }
+  //}
 }
 
 /* helper function that handles the drag over event */
@@ -324,7 +358,6 @@ function handleDragOver(evt) {
 
 
 function getDataBases() {
-  //->console.log("Loading database");
   $.ajax({
         async: false,
         type: "GET",
@@ -347,8 +380,6 @@ function getDataBases() {
 if (document.URL.indexOf('=') != -1) {
   var tmp_url = document.URL.split('#');
   var query = tmp_url[0].split('?')[1];
-
-  //var query = document.URL.split('?')[1];
   var keyvals = query.split('&');
   var params = {};
   for (var i=0; i<keyvals.length; i++) {
@@ -380,7 +411,7 @@ if (document.URL.indexOf('=') != -1) {
       $('#view').css('display','block');
     }
   }
-  else if('file' in params) {
+  else if ('file' in params) {
     handleAjax("event", params['file']);
     $('#welcome').remove();
     try {
@@ -393,6 +424,14 @@ if (document.URL.indexOf('=') != -1) {
     }
   }
 }
+else if (typeof localStorage.text != 'undefined') {
+    modifyDisplayForStart();
+    toggleDisplay('','filedisplay');
+    $('#welcome').remove();
+    showWLS(1);
+    $('#textfields').show();
+}
+
 
 /* handle the different resources which are loaded using ajax */
 var tmp_file_handler = '';
@@ -583,11 +622,9 @@ function makeMyTemplate() {
     fakeAlert("You must specify values for both the COLUMNS and the DOCULECT option.");
     return;
   }
-
   var text = 'ID\t'+columns.join('\t')+'\n';
   text = text.replace('CONCEPT','CONCEPT\tCONCEPTICON_ID');
   text += '#\n';
-
   var counter = 1;
   for(gloss in glosses) {
     for(var i=0,doculect;doculect=doculects[i];i++) {
@@ -617,9 +654,7 @@ function makeMyTemplate() {
     }
     text += '#\n';
   }
-
   CFG['template'] = text;
-
   saveTemplate(); 
 }
 
@@ -691,7 +726,6 @@ $(function() {
 });
 
 $('.colx').addClass('ui-helper-clearfix');
-
 $(window).load(function(){$("#popup_background").fadeOut("fast");});
 
 }
