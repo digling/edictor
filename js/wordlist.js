@@ -1387,7 +1387,6 @@ function applyFilter()
       $('#select_doculects').multiselect('select',tlist);
     }
   }
-
   CFG['_selected_doculects'] = tlist;
 
   var trows = [];
@@ -1407,7 +1406,6 @@ function applyFilter()
   /* make sure list is not empty to avoid that nothing is selected */
   if (clist.length == 0) {
     clist = Object.keys(WLS.concepts);
-    
     
     if (CFG['tc_status'] != 'noc' && CFG['tc_status'] != 'notc') {
       $('#select_concepts').multiselect('select',clist);
@@ -1429,6 +1427,7 @@ function applyFilter()
       flist.push(option.value);
     }
   }
+
 
   /* check for empty list of columns, if this is given, we
    * select all columns in basics */
@@ -1493,9 +1492,6 @@ function applyFilter()
       arows = WLS._trows.slice();
     }
   }
-  else {
-    arows = WLS._trows.slice();
-  }
   
   /* handle filtering of columns */
   for (i in WLS['header']) {
@@ -1511,28 +1507,24 @@ function applyFilter()
   /* sort both lists */
   trows.sort(function(x, y) {return x - y});
   crows.sort(function(x, y) {return x - y});
-  arows.sort(function(x, y) {return x - y});
+  if (arows.length > 0){
+    arows.sort(function(x, y) {return x - y});}
 
   /* function taken from http://stackoverflow.com/questions/1885557/simplest-code-for-array-intersection-in-javascript */
-  function intersection_destructive(a, b)
-  {
+  function intersection_destructive(a, b){
     var result = new Array();
-    while (a.length > 0 && b.length > 0)
-    {
+    while (a.length > 0 && b.length > 0) {
        if (a[0] < b[0]) { a.shift(); }
        else if (a[0] > b[0]) { b.shift(); }
-       else /* they're equal */
-       {
+       else /* they're equal */{
          result.push(a.shift());
-         b.shift();
-       }
-    }
-
+         b.shift();}}
     return result;
   }
 
   var rows = intersection_destructive(trows, crows);
-  rows = intersection_destructive(rows, arows);
+  if (arows.length > 0){
+    rows = intersection_destructive(rows, arows);}
 
   //->console.log('applyFilter6:',rows);
 
@@ -1550,6 +1542,7 @@ function applyFilter()
     }
     WLS['rows'] = rows.sort(sort_rows);
   }
+  console.log('applied filter');
 }
 
 /* filter the columns in the data */
