@@ -314,7 +314,7 @@ function get_selected_indices() {
     }
   }
 
-  console.log('checked',checked);
+  //-> console.log('checked',checked);
 
   return checked;
 }
@@ -379,7 +379,7 @@ function combine_cogids() {
   
   var visited = [];
   for (var i=0,chk; chk=checked[i]; i++) {
-    console.log(chk, cidx, WLS[chk]);
+    // -> console.log(chk, cidx, WLS[chk]);
     var tmp_cogid = parseInt(WLS[chk][cidx]);
     if (visited.indexOf(tmp_cogid) == -1) {
       if (tmp_cogid && tmp_cogid != 0 && typeof tmp_cogid == 'number') {

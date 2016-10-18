@@ -481,21 +481,33 @@ ul.nav
 }
 
 .drop_zone_start {
-  margin-top: 10px;
-    border: 2px dotted white;
-    padding: 25px;
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    background-color: Crimson;
-    width: 50%;
-    position: relative;
-    margin-left:auto;
-    margin-right: auto;
-    display: inline;
-    border-radius: 5px;
-    display: block;
+  position: fixed;
+  background-color: rgb(255,255,255);
+  z-index: 100;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  float: left;
   }
+.drop_zone_start p {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  top:40%;
+  left:0;
+  right:0;
+  background-color: Crimson;
+  border: 2px dotted white;
+  text-align:center;
+  display: table;
+  border-radius:5px;
+  font-size: 200%;
+  color: white;
+  padding: 20px;
+}
 
 #view {
     margin-top: 10px;
@@ -793,6 +805,7 @@ table.alignments {
   max-width: 250px;
   min-width: 100px;
   text-overflow: ellipsis;
+  overflow: hidden;
   white-space: nowrap;
   text-align: left;
   color: #2D6CA2;

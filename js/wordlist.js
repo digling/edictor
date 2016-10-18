@@ -390,8 +390,8 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS.rows.sort(sort_rows);
   
   /* log basic settings */
-  console.log('WLS:',WLS);
-  console.log('CFG:',CFG);
+  //-> console.log('WLS:',WLS);
+  //-> console.log('CFG:',CFG);
 }
 
 /* create selectors for languages, concepts, and columns */
@@ -515,7 +515,7 @@ function showWLS(start)
       CFG['last_time'] = new Date();
     }
     if (typeof localStorage.text != 'undefined' && !CFG['load_new_file']) {
-      console.log('found text', localStorage.text);
+      //-> console.log('found text', localStorage.text);
       CFG['filename'] = localStorage.filename;
       csvToArrays(localStorage.text, '\t', '#', '@');
     }
@@ -551,8 +551,8 @@ function showWLS(start)
           dataType: "text",
           success: function(data) {
             txt = data;
-	    console.log('checking for modified data');
-	    console.log('postdata', postdata);
+	    //-> console.log('checking for modified data');
+	    //-> console.log('postdata', postdata);
 	    /* iterate over all lines and check for updates */
             var lines = txt.split('\n');
             for (var i=0,line; line=lines[i]; i++){
@@ -565,10 +565,10 @@ function showWLS(start)
                * also not needed for now */
               if (col_idx != -1) {
                 var val = cells[2];
-		console.log(col_idx, val, col);
+		//-> console.log(col_idx, val, col);
                 if (WLS[idx][col_idx] != val) {
                   WLS[idx][col_idx] = val;
-		  console.log('found data which needs to be changed');
+		  //-> console.log('found data which needs to be changed');
                 }
               }
             }
@@ -1074,7 +1074,7 @@ function autoModifyEntry(idx, jdx, value, current) {
   var tcurrent = parseInt(getCurrent());
   current = parseInt(current);
   
-  console.log(current,tcurrent);
+  //-> console.log(current,tcurrent);
 
   if (tcurrent != current && !isNaN(current)) {
     var tmp = showWLS(current);
@@ -1187,7 +1187,7 @@ function modifyEntry(event, idx, jdx, xvalue) {
   else if (CFG['highlight'].indexOf(entry.className) != -1) {
     if (xvalue.length > 1 && xvalue.indexOf(' ') == -1) {
       var nxvalue = ipa2tokens(xvalue);
-      console.log('transforming',xvalue,nxvalue);
+      //-> console.log('transforming',xvalue,nxvalue);
       if (nxvalue != xvalue) {
 	xvalue = nxvalue;
       }

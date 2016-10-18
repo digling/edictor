@@ -151,7 +151,7 @@ PART.handle_partial_selection = function () {
 };
 
 PART.display_partial = function (concept, sortby) {
-  console.log('sortby',sortby);
+  //-> console.log('sortby',sortby);
   sortby = (typeof sortby == 'undefined') ? 0 : sortby;
   
   /* if concept is not passed, check for selection */
@@ -350,7 +350,7 @@ PART.remove_rootid = function (idx, rootid) {
   var ridx = rootids.indexOf(rootid);
   rootids[ridx] = 0;
   WLS[idx][CFG['_roots']] = rootids.join(' ');
-  console.log(rootids, ridx, rootid, WLS[idx][CFG['_roots']]);
+  //-> console.log(rootids, ridx, rootid, WLS[idx][CFG['_roots']]);
   resetRootFormat(CFG['root_formatter']);
   if (CFG['_partial_multiselect']) {
     this.display_partial();
@@ -586,7 +586,7 @@ PART.storeAlignment = function() {
 
 PART.get_new_cogid = function () {
   if (!CFG['storable']) {
-    cogid = partialCognateIdentifier(cogids);
+    cogid = partialCognateIdentifier("?");
   }
   else {
     var cogid = false;
@@ -609,6 +609,6 @@ PART.get_new_cogid = function () {
 	fakeAlert("problem retrieving a new cognate ID from the dbase");
       }
     });
-    return cogid;
   }
+ return cogid;
 };

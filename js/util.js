@@ -13,7 +13,7 @@ UTIL.log = {};
 UTIL.show_help = function(topic, table, container) {
   container = (typeof container == "undefined") ? topic : container;
   table = (typeof table == 'undefined') ? topic+'_table' : table;
-  console.log(UTIL.log);
+  //-> console.log(UTIL.log);
   if (topic in UTIL.log && UTIL.log[topic]) {
     document.getElementById(table).style.display = '';
     document.getElementById(topic+'_help').style.display = 'none';
@@ -103,7 +103,7 @@ UTIL.open_remote_dbase = function(dbase, frame) {
       _fr = option.value.split('.');
       file = _fr[1];
       remote = _fr[0];
-      console.log(file, remote, _fr, option.value);
+      //-> console.log(file, remote, _fr, option.value);
       var url = UTIL.settings.summary_path +"?file="+file+'&remote_dbase='+remote+'&summary=summary';
       document.getElementById(frame).src = url;
       break;
@@ -211,7 +211,7 @@ UTIL.refresh_settings = function() {
     entries[entry].value = new_vals.join(',');
   }
   showWLS(getCurrent());
-  console.log(CFG['_fidx'])
+  //-> console.log(CFG['_fidx'])
 };
 
 

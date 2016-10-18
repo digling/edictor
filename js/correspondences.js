@@ -416,7 +416,7 @@ CORRS.parse_alignments = function (idxA, idxB, context) {
       prosB = prosB.split(' ');
     }
 
-    console.log(prosA,prosB);
+    //-> console.log(prosA,prosB);
   }
 
   /* attach information to the alignments, using a dot symbol for distinction */

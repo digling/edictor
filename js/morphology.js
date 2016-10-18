@@ -535,7 +535,7 @@ function showMorphology(event, doculect, filter, sort, direction) {
 	    user_morphemes.push(mstring);
 	  }
 	}
-	console.log(style, mode, view, morpheme, morphemes);
+	//-> console.log(style, mode, view, morpheme, morphemes);
         for (var k=0; k < morphemes[morpheme].length; k++) {
           var this_idx = morphemes[morpheme][k][0];
           var this_jdx = morphemes[morpheme][k][1];
@@ -600,7 +600,7 @@ function showMorphology(event, doculect, filter, sort, direction) {
 	;
     }
   }
-  console.log(JSON.stringify(graph));
+  //-> console.log(JSON.stringify(graph));
 
   text += '</tbody></table>';
   var mid = document.getElementById('morphology_table');
@@ -620,9 +620,9 @@ if (typeof process != 'undefined' && typeof process.argv != 'undefined') {
   if (process.argv[2] == 'test') {
     /* test get morphemes */
     var test_morph = MORPH.get_morphemes('hant+shu');
-    console.log(test_morph);
+    //-> console.log(test_morph);
     var test_morph = MORPH.get_morphemes(['h', 'a', 'o', '⁵⁵', 'm', 'a', '²¹']);
-    console.log(test_morph);
+    //-> console.log(test_morph);
 
     /* test get_all_morphemes */
     var indices = [1,2,3,4,5,6,7];
@@ -632,18 +632,18 @@ if (typeof process != 'undefined' && typeof process.argv != 'undefined') {
     var M = MORPH.get_all_morphemes(indices, words, concepts);
     for (m in M) {
       M[m].forEach( function(elm) {
-	console.log(m,'\t', elm[0], elm[1], elm[2])}
+	//-> console.log(m,'\t', elm[0], elm[1], elm[2])}
 	);
     }
-    console.log(M);
+    //-> console.log(M);
 
     var C = MORPH.get_colexifications(indices, words, concepts);
     for (m in C) {
       C[m].forEach( function(elm) {
-	console.log(m,'\t', elm[0], elm[1])}
+	//-> console.log(m,'\t', elm[0], elm[1])}
 	);
     }
-    console.log(C);
+    //-> console.log(C);
 
   }
 }

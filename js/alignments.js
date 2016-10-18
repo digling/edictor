@@ -584,7 +584,7 @@ ALIGN.lock_sequences = function(i,event) {
   if (check == ALIGN.LOCKS.length && check != 0) {
     new_lock = [];
   }
-  console.log(check, new_lock, ALIGN.LOCKS);
+  //->console.log(check, new_lock, ALIGN.LOCKS);
   
   ALIGN.LOCKS = new_lock;
   ALIGN.refresh();

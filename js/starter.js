@@ -298,8 +298,8 @@ function handleAjax (event, url) {
         url: new_url,
         dataType: "text",
         success: function(data) {
-	  console.log('posting', postdata);
-	  console.log(data);
+	  //->console.log('posting', postdata);
+	  //->console.log(data);
           STORE = data;
         },
         error: function() {
@@ -599,17 +599,15 @@ function makeMyTemplate() {
       dataType: "text",
       success: function(data)  {
         tmp = data;
-      }
-    });
-
   var glosses = {};
-  var rows = tmp.split(/\n/);
-  var header = rows[0].split('\t');
+  var rows = tmp.split(/\r\n|\n/);
+  var header = rows[0].split(/\s*\t\s*/);
+  //-> console.log(header);
   var owIdx = header.indexOf('CONCEPTICON_ID');
   var glIdx = header.indexOf('ENGLISH');
   var nrIdx = header.indexOf('NUMBER');
   for(var i=1,row;row=rows[i];i++) {
-    var cells = row.split('\t');
+    var cells = row.split(/\s*\t\s*/);
     glosses[cells[owIdx]] = [cells[nrIdx],cells[glIdx]];
   }
 
@@ -624,7 +622,6 @@ function makeMyTemplate() {
   }
   var text = 'ID\t'+columns.join('\t')+'\n';
   text = text.replace('CONCEPT','CONCEPT\tCONCEPTICON_ID');
-  text += '#\n';
   var counter = 1;
   for(gloss in glosses) {
     for(var i=0,doculect;doculect=doculects[i];i++) {
@@ -652,10 +649,13 @@ function makeMyTemplate() {
         text += '\n';
       }
     }
-    text += '#\n';
   }
   CFG['template'] = text;
   saveTemplate(); 
+
+      }
+    });
+
 }
 
 function showSpinner(code) {
@@ -730,5 +730,5 @@ $(window).load(function(){$("#popup_background").fadeOut("fast");});
 
 }
 
-console.log('starter loaded now');
+//-> console.log('starter loaded now');
 startEverything();
