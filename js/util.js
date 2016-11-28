@@ -88,7 +88,7 @@ UTIL.settings = {
   'align_all_words' : true,
   'async' : false,
   'tone_marks' : '⁰¹²³⁴⁵⁶₀₁₂₃₄₅₆',
-  'morpheme_marks' : '+_◦',
+  'morpheme_marks' : '+_◦←→',
   'navbar' : true,
   'gap_marker' : '-',
   'missing_marker' : 'Ø',

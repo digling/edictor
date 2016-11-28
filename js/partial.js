@@ -311,6 +311,10 @@ PART.display_partial = function (concept, sortby) {
 
   var tab = document.getElementById('partial_table');
   tab.innerHTML = thead + tbody_text+'</table>';
+  /* reset wordlist selection to the range of selected concepts */
+  if (selected_concepts.length != 0) {
+    filterOccurrences(false, selected_concepts);
+  }
 };
 
 PART.modifyJudgment = function (rootid) {
