@@ -632,7 +632,8 @@ if (typeof process != 'undefined' && typeof process.argv != 'undefined') {
     var M = MORPH.get_all_morphemes(indices, words, concepts);
     for (m in M) {
       M[m].forEach( function(elm) {
-	//-> console.log(m,'\t', elm[0], elm[1], elm[2])}
+	//-> console.log(m,'\t', elm[0], elm[1], elm[2])
+	}
 	);
     }
     //-> console.log(M);
@@ -640,7 +641,8 @@ if (typeof process != 'undefined' && typeof process.argv != 'undefined') {
     var C = MORPH.get_colexifications(indices, words, concepts);
     for (m in C) {
       C[m].forEach( function(elm) {
-	//-> console.log(m,'\t', elm[0], elm[1])}
+	//-> console.log(m,'\t', elm[0], elm[1])
+	}
 	);
     }
     //-> console.log(C);
