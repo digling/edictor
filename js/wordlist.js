@@ -2342,7 +2342,7 @@ function storeAlignment() {
   CFG['_alignment'] = blobtxt;
 
   resetFormat(CFG['formatter']);
-  createSelectors();
+  //createSelectors(); TODO: refine this by checking the bug!
   applyFilter();
 }
 
