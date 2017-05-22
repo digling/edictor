@@ -1084,3 +1084,17 @@ tr.up_fill > td {
 .niceblue {
 	background-color:#2D6CA2;
 }
+
+.comment {
+  color: #2D6CA2;
+  font-size: 75%;
+}
+
+.comment-text {
+  color: black!important;
+  background-color: LightYellow;
+  min-width: 200px;
+  max-width: 500px;
+  text-align: justify;
+  font-weight: normal!important;
+}

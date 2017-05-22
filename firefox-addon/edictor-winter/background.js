@@ -9,9 +9,5 @@ function openMyPage() {
    });
 }
 
-
-/*
-Add openMyPage() as a listener to clicks on the browser action.
-*/
 chrome.browserAction.onClicked.addListener(openMyPage);
- 
+

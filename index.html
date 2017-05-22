@@ -266,7 +266,7 @@
       </li>
       <!-- drop zone and information handling -->
       <li class="colx" style="width:100%">
-	<div class="drop_zone_start" id="eingang">Files are loading, please wait...</div>
+	<div class="drop_zone_start" id="eingang"><p>Files are loading, please wait...</p></div>
 	<div id="view" onclick="$('#welcome').remove();showWLS(1);toggleDisplay(event,'filedisplay');$('#textfields').show();" class="view" style="display:none" value="&nbsp;VIEW&nbsp;">
 	  Open the file.
 	</div>
@@ -326,6 +326,7 @@ var load = PRISON.import(
     'js/morphology',
     'js/partial',
     'js/correspondences',
+    'js/comments',
     'js/wordlist',
     'js/starter'
     );

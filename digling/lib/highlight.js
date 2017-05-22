@@ -285,7 +285,9 @@ var DOLGO = {
   "Ɂ": "H",
   "∼" : "NAS",
   "◦" : "PLUS",
-  "." : "PLUS"
+  "." : "PLUS",
+  "→" : "PLUS",
+  "←" : "PLUS"
 };
 
 /* assign tone chars and diacritics for convenience */

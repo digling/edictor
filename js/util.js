@@ -59,8 +59,8 @@ UTIL.settings = {
   'triple_path' : 'triples/triples.py',
   'summary_path' : 'triples/summary.py',
   'basics' : ['DOCULECT', 'GLOSS', 'CONCEPT', 'IPA', 'TOKENS', 'COGID', 
-  'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ETYMONID', 'CHINESE', 'CONCEPTLIST',
-  'ORTHOGRAPHY','WORD','TRANSCRIPTION','SEGMENTS', 'PARTIALIDS'],
+    'TAXON', 'TAXA', 'PROTO', 'PROTO_TOKENS', 'ETYMONID', 'CHINESE', 'CONCEPTLIST',
+    'ORTHOGRAPHY','WORD','TRANSCRIPTION','SEGMENTS', 'PARTIALIDS', 'NOTE'],
   'preview': 10,
   'noid': false, 
   'sorting': false, 
@@ -215,7 +215,7 @@ UTIL.refresh_settings = function() {
 };
 
 
-ALIAS = {
+var ALIAS = {
   'doculect': ['TAXON', 'LANGUAGE', 'DOCULECT', 'DOCULECTS', 'TAXA', 'LANGUAGES', 'CONCEPTLIST'],
   'concept': ['CONCEPT', 'GLOSS'],
   'segments' : ['SEGMENTS', 'TOKENS'],
@@ -225,8 +225,48 @@ ALIAS = {
   'cognates' : ['COGID'],
   'roots' : ['PARTIALIDS', 'COGIDS'],
   'alignments' : ['ALIGNMENT'],
-  'glottolog' : ['GLOTTOLOG'],
+  'glottolog' : ['GLOTTOLOG', 'GLOTTOCODE'],
   'concepticon' : ['CONCEPTICON', 'CONCEPTICONID'],
-  'sources' : ['SOURCE', "REFERENCE", "SOURCES"]
+  'sources' : ['SOURCE', "REFERENCE", "SOURCES"],
+  'note' : ['NOTE', 'COMMENT', 'NOTES', 'COMMENTS']
 }
 
+/* text object stores text-related functions */
+var TEXT = {};
+
+/* make sure that no bad characters are mistakenly displayed when rendering
+ * html or other markup */
+TEXT.encodeComments = function(text) {
+  var subs = {
+    '&': '&amp;',
+    '"': '&quot;',
+    "'": '&#039;',
+    '<': '&lt;',
+    '>': '&gt;'
+  };
+  
+  var out = '';
+  for (var i=0,c; c=text[i]; i++) {
+    if (c in subs) {
+      out += subs[c];
+    }
+    else {
+      out += c;
+    }
+  }
+  return out;
+};
+
+/* function replaces quotes in text by the Finnish ones, to avoid problems here */
+TEXT.escapeValue = function(text) {
+  var out = '';
+  for (var i=0,c; c=text[i]; i++) {
+    if (c == '"') {
+      out += '”';
+    }
+    else {
+      out += c;
+    }
+  }
+  return out;
+};

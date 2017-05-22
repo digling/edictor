@@ -206,9 +206,9 @@ function csvToArrays(allText, separator, comment, keyval) {
       for (j = 0; j < data.length; j++) {
         var datum = data[j].toUpperCase();
 
-	if (!CFG['columns'] || CFG['columns'].indexOf(datum) != -1) {
-        
-	  /* check for prohibited columns */
+	      if (!CFG['columns'] || CFG['columns'].indexOf(datum) != -1) {
+              
+	        /* check for prohibited columns */
           if (datum.slice(0,1) == '_') {
             datum = datum.slice(1,datum.length);
             var tmp = datum.replace(/_/g,' ');
@@ -221,18 +221,17 @@ function csvToArrays(allText, separator, comment, keyval) {
             datum = datum.replace(/_/g,'');
             column_names[datum] = tmp;
           }
-
           header.push(datum);
           if (ALIAS['doculect'].indexOf(datum) != -1) { tIdx = j; }
-	  else if (ALIAS['concept'].indexOf(datum) != -1) { cIdx = j; }
-	  else if (ALIAS['segments'].indexOf(datum) != -1) { sIdx = j; }
-	  else if (ALIAS['alignment'].indexOf(datum) != -1) { aIdx = j; }
-	  else if (ALIAS['transcription'].indexOf(datum) != -1) { iIdx = j; }
-	  else if (ALIAS['morphemes'].indexOf(datum) != -1) { mIdx = j; }
-	  else if (ALIAS['sources'].indexOf(datum) != -1) { srcIdx = j; }
+	        else if (ALIAS['concept'].indexOf(datum) != -1) { cIdx = j; }
+	        else if (ALIAS['segments'].indexOf(datum) != -1) { sIdx = j; }
+	        else if (ALIAS['alignment'].indexOf(datum) != -1) { aIdx = j; }
+	        else if (ALIAS['transcription'].indexOf(datum) != -1) { iIdx = j; }
+	        else if (ALIAS['morphemes'].indexOf(datum) != -1) { mIdx = j; }
+	        else if (ALIAS['sources'].indexOf(datum) != -1) { srcIdx = j; }
           if (CFG['basics'].indexOf(datum) != -1) { columns[datum] = j + 1; }
           else { columns[datum] = -(j + 1); }
-	}
+        }
       }
 
       /* apply check for tidx and cidx */
@@ -339,11 +338,23 @@ function csvToArrays(allText, separator, comment, keyval) {
   CFG['_selected_doculects'] = Object.keys(WLS.taxa);
 
   /* check for glottolog and concepticon in header */
-  for (var i=0,head; head=WLS.header[i]; i++) {
+  for (var i=0, head; head=WLS.header[i]; i++) {
+    console.log(head, CFG._note);
     if (ALIAS['glottolog'].indexOf(head) != -1) {CFG['_glottolog'] = i;}
-    else {CFG['_glottolog'] == -1;}
     if (ALIAS['concepticon'].indexOf(head) != -1) {CFG['_concepticon'] = i;}
-    else {CFG['_concepticon'] == -1;}
+    if (ALIAS['note'].indexOf(head) != -1) {
+      CFG['_note'] = i;
+      CFG['note_formatter'] = head;
+    }
+  }
+  if (typeof CFG._glottolog == 'undefined') {
+    CFG._glottolog = -1;
+  }
+  if (typeof CFG._concepticon == 'undefined') {
+    CFG._concepticon = -1;
+  }
+  if (typeof CFG._note == 'undefined') {
+    CFG._note = -1;
   }
 
   /* first get all id headers into an array */
@@ -369,7 +380,6 @@ function csvToArrays(allText, separator, comment, keyval) {
     resetFormat(CFG['formatter']);
   }
   /* handle root formatter */
-  var tmp_text = '<th>Partial Cognate IDs</th><td>';
   var root_formattable_keys = [];
   for (key in WLS['columns']) { if (key.indexOf('IDS') == key.length -3) { root_formattable_keys.push(key); } }
   if (CFG['root_formatter']) {}
@@ -390,8 +400,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS.rows.sort(sort_rows);
   
   /* log basic settings */
-  //-> console.log('WLS:',WLS);
-  //-> console.log('CFG:',CFG);
+  console.log('CFG:',CFG);
 }
 
 /* create selectors for languages, concepts, and columns */
@@ -594,9 +603,9 @@ function showWLS(start)
     if (WLS['columns'][head] > 0) {
       text += '<col id="' + head + '" />';
       thtext += '<th class="titled" title="Double-click for sorting along this column."' 
-	+ 'id="HEAD_'+head+'" '
-	+ 'ondblclick="sortTable(event,'+"'"+head+"'"+')">' + 
-	WLS.column_names[head] + '</th>';
+	      + 'id="HEAD_'+head+'" '
+	      + 'ondblclick="sortTable(event,'+"'"+head+"'"+')">' + 
+	    WLS.column_names[head] + '</th>';
     }
     else {
       text += '<col id="' + head + '" style="visibility:hidden;" />';
@@ -645,7 +654,7 @@ function showWLS(start)
 	  if (WLS['columns'][head] > 0) { var cell_display = ''; }
 	  else { var cell_display = ' style="display:none"';  }
 	  
-	  if (WLS.header[j] != CFG.formatter && WLS.header[j] != CFG.root_formatter && WLS.uneditables.indexOf(WLS.header[j]) == -1 && !CFG['publish']) {
+	  if (WLS.header[j] != CFG.note_formatter && WLS.header[j] != CFG.formatter && WLS.header[j] != CFG.root_formatter && WLS.uneditables.indexOf(WLS.header[j]) == -1 && !CFG['publish']) {
 	    var on_click = 'onclick="editEntry(' + idx + ',' + jdx + ',0,0)" ';
 	    var on_title = 'title="Modify entry '+idx+'/'+jdx+'." ';
 	    var on_ctxt = 'oncontextmenu="copyPasteEntry(event,'+idx+','+jdx+','+j+')" ';
@@ -662,6 +671,9 @@ function showWLS(start)
 	    else if (WLS.header[j] == CFG.root_formatter) {
 	      var on_ctxt = 'oncontextmenu="PART.partial_alignment(event,\''+idx+'\')" ';
 	    }
+      else if (WLS.header[j] == CFG.note_formatter) {
+        var on_ctxt = 'oncontextmenu="COMMENTS.edit_comment(event,\''+idx+'\')" ';
+      }
 	    else {
 	      var on_ctxt = '';
 	    }
@@ -676,18 +688,21 @@ function showWLS(start)
 	    else if (WLS.header[j] == CFG.root_formatter) {
 	      var on_ctxt = 'oncontextmenu="PART.partial_alignment(event,\''+idx+'\')" ';
 	    }
+      else if (WLS.header[j] == CFG.note_formatter) {
+        var on_ctxt = 'oncontextmenu="COMMENTS.edit_comment(event,\''+idx+'\')" ';
+      }
 	    else {
 	      var on_ctxt = '';
 	    }
 	  }
-
-	  var data_value = 'data-value="'+WLS[idx][j]+'" ';
+    /* need to escape text-values otherwise messes up HTML */
+	  var data_value = 'data-value="'+TEXT.escapeValue(WLS[idx][j])+'" ';
 	  text += '<td ' +
 	    this_class + 
 	    on_title +
 	    on_click +
 	    on_ctxt + 
-	    data_value + cell_display+'>'+WLS[idx][j] + '</td>';
+	    data_value + cell_display+'>'+TEXT.escapeValue(WLS[idx][j]) + '</td>';
 
 	}
 	text += '</tr>';
@@ -1095,7 +1110,8 @@ function autoModifyEntry(idx, jdx, value, current) {
   highLight();
 }
 
-/* function modifies a given entry */
+/* function modifies a given entry, at the same time, various checks are carried out
+ * e.g., that cogid should be integer, that comments should not have real quotes, etc. */
 function modifyEntry(event, idx, jdx, xvalue) {
   
   CFG['entry_is_currently_modifying'] = true;
@@ -2057,7 +2073,7 @@ function highLight()
       for (var j=0,item; item=items[j]; j++) {
         if (item.innerHTML == item.dataset.value) {
           item.innerHTML = '<a class="outlink" href="http://glottolog.org/resource/languoid/id/'+item.dataset.value+'" target="_blank">'+item.dataset.value+'</a>';
-	  item.oncontextmenu = function (){};
+	        item.oncontextmenu = function (){};
         }
       }
     }
@@ -2074,10 +2090,19 @@ function highLight()
       var items = document.getElementsByClassName(head);
       for (var j=0,item; item=items[j]; j++) {
         if (item.innerHTML == item.dataset.value) {
-	  if (item.dataset.value.indexOf(':bib:') != -1) {
-	    item.innerHTML = item.dataset.value.replace(/:bib:([0-9A-Za-z\-]+)/g,'<a class="outlink" href="http://bibliography.lingpy.org?key=$1">$1</a>');
-	  item.oncontextmenu = function (){};
-	  }
+	        if (item.dataset.value.indexOf(':bib:') != -1) {
+	          item.innerHTML = item.dataset.value.replace(/:bib:([0-9A-Za-z\-]+)/g,'<a class="outlink" href="http://bibliography.lingpy.org?key=$1">$1</a>');
+	          item.oncontextmenu = function (){};
+          }
+        }
+      }
+    }
+    else if (i == CFG['_note']) {
+      var items = document.getElementsByClassName(head);
+      for (var j=0,item; item=items[j]; j++) {
+        if (item.innerHTML == item.dataset.value) {
+          item.innerHTML = '<span class="comment">'+COMMENTS.markdown(TEXT.encodeComments(
+            item.dataset.value))+'</span>';
         }
       }
     }
