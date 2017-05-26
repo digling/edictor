@@ -42,10 +42,36 @@ COMMENTS.edit_comment = function(event, widx) {
   }
 };
 
+/* time stamp formatting follows mediawiki conventions */
+COMMENTS.timestamp = function(text) {
+  /* get datetime string for time stamp */
+  var d = new Date();
+  var timestamp = d.toLocaleString();
+  if (typeof CFG['user'] == 'undefined') {
+     var user = '@Unknown';
+  }
+  else {
+    var user = '@' + CFG['user'];
+  }
+  
+  if (text.indexOf('~~~~~') != -1) {
+    text = text.replace('~~~~~', timestamp);
+  }
+  else if (text.indexOf('~~~~') != -1) {
+    text = text.replace('~~~~', user+' '+timestamp);
+  }
+  else if (text.indexOf('~~~') != -1) {
+    text = text.replace('~~~', user);
+  }
+  return text;
+}
+
 /* edit the entry */
 COMMENTS.storeEntry = function(event, idx) {
   var value = COMMENTS.escape_text(document.getElementById('comment-value').value);
+  value = COMMENTS.timestamp(value);
   WLS[idx][CFG['_note']] = value;
+
   $('#editnote-overview').remove();
   basickeydown(event);
   applyFilter();
@@ -59,20 +85,39 @@ COMMENTS.markdown = function(text) {
   var out = '';
   var italics = new RegExp(/\*([^\s]+)\*/, 'g');
   var bold = new RegExp(/\*\*([^\s]+)\*\*/, 'g');
-  var ipa = new RegExp(/\/([^\/]+)\//, 'g');
+  var ipa = new RegExp(/\/\/([^\/]+)\/\//, 'g');
   var ipar = function (match, p1) {
-    return sampa2ipa(p1);
+    return sampa2ipa('/'+p1+'/');
   };
-  var segments = new RegExp(/\|([^\|]+)\|/, 'g');
+  var segments = new RegExp(/\|\|([^\|]+)\|\|/, 'g');
   var segmentsr = function (match, p1) { 
     return plotWord(sampa2ipa(p1), 'span');
-  }
+  };
+  
+  var url = new RegExp(/\[([^\]]+)\]\(([^\)]+)\)/, 'g');
+  var urlr = function (match, p1, p2) {
+    return '<a class="outlink" href="'+p2+'" target="_blank">'+p1+'</a>';
+  };
+
+  var bib = new RegExp(/:cite([pt]*):([A-Za-z\-]+)([0-9a-z]+)/, 'g');
+  var bibr = function (match, p1, p2, p3) {
+    if (p1 == 'p' || p1 == '') {
+      return '<a class="outlink" target="_blank" href="http://bibliography.lingpy.org?key='+
+        p2 + p3 + '">(' + p2 + ' ' + p3 + ')</a>';
+    }
+    else if (p1 == 't') {
+      return '<a class="outlink" target="_blank" href="http://bibliography.lingpy.org?key='+
+        p2 + p3 + '">' + p2 + ' (' + p3 + ')</a>';
+    }
+  };
 
   for (var i=0, block; block=blocks[i]; i++) {
     block = block.replace(bold, '<strong>$1</strong>');
     block = block.replace(italics, '<i>$1</i>');
     block = block.replace(ipa, ipar);
     block = block.replace(segments, segmentsr);
+    block = block.replace(url, urlr);
+    block = block.replace(bib, bibr);
     out += block +'<br>';
   }
   return out;
