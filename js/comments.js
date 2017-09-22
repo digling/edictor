@@ -6,7 +6,7 @@ COMMENTS.edit_comment = function(event, widx) {
   console.log('entry', entry, CFG._note);
   var doculect = WLS[widx][CFG._tidx];
   var concept = WLS[widx][CFG._cidx];
-  var text = '<div class="edit_links niceblue" id="partial-overview" data-value="'+widx+'">' + 
+  var text = '<div class="edit_links niceblue" id="comment-popup" data-value="'+widx+'">' + 
     '<span class="main_handle pull-left" style="margin-left:5px;margin-top:2px;" ></span>' +
     '<p>Comment on '+doculect+' «'+concept+'» (ROW: '+widx+'):</p>';
   console.log('text', text);
@@ -21,20 +21,14 @@ COMMENTS.edit_comment = function(event, widx) {
     '<input id="edit-comment-btn" class="btn btn-primary submit" type="button" onclick="COMMENTS.show_edit_display();" value="EDIT" /> ' +
     '<input id="submit-comment-btn" class="btn btn-primary submit" style="display:none;" type="button" onclick="COMMENTS.storeEntry(event,'+widx+');basickeydown(event);" value="SUBMIT" /> ' +
     '<input id="refresh-comment-btn" class="btn btn-primary submit" style="display:none;" type="button" onclick="COMMENTS.refresh();" value="REFRESH" /> '+
-    '<input class="btn btn-primary submit" type="button" onclick="$(\'#editnote-overview\').remove();basickeydown(event);" value="CLOSE" />' + 
+    '<input class="btn btn-primary submit" type="button" onclick="$(\'#editmode-overview\').remove();basickeydown(event);" value="CLOSE" />' + 
     '</div><br><br></div>';
   var editnote = document.createElement('div');
-  editnote.id = 'editnote-overview';
+  editnote.id = 'editmode-overview';
   editnote.className = 'editmode';
   document.body.appendChild(editnote);
   editnote.innerHTML = text;
-  document.onkeydown = function(event) {
-    $('#editmode').remove(); 
-    document.onkeydown = function(event) {
-      basickeydown(event);
-    };
-  };  
-  $('#editnote-overview').draggable({handle:'.main_handle'}).resizable();
+  $('#comment-popup').draggable({handle:'.main_handle'}).resizable();
 
   /* if the comment field is empty, show the editing display */
   if (!(entry.replace(/\s/g))) {
@@ -72,7 +66,7 @@ COMMENTS.storeEntry = function(event, idx) {
   value = COMMENTS.timestamp(value);
   WLS[idx][CFG['_note']] = value;
 
-  $('#editnote-overview').remove();
+  $('#editmode-overview').remove();
   basickeydown(event);
   applyFilter();
   showWLS(parseInt(getCurrent()));

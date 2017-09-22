@@ -93,7 +93,9 @@ UTIL.settings = {
   'gap_marker' : '-',
   'missing_marker' : 'Ø',
   'morpheme_separator' : '◦',
-  'check_remote_intervall' : 10
+  'check_remote_intervall' : 10,
+  '_proto' : false,
+  '_note' : 'NOTE'
 }
 
 UTIL.open_remote_dbase = function(dbase, frame) {
@@ -114,7 +116,7 @@ UTIL.open_remote_dbase = function(dbase, frame) {
 UTIL.load_settings = function() {
 
   var settables = ['preview', 'cognates', 'alignments', 'morphemes', 'roots', 'highlight', 'sampa',
-    'pinyin', 'sources'];
+    'pinyin', 'sources', 'note', 'proto'];
   var entries = {};
   for (var i=0, settable; settable=settables[i]; i++) {
     entries[settable] = document.getElementById('settings_'+settable);
@@ -124,10 +126,12 @@ UTIL.load_settings = function() {
   entries['preview'].value = CFG['preview'];
 
   /* now add cognates for fun */
-  entries['cognates'].value = (CFG['_fidx'] != -1) 
-    ? WLS['header'][CFG['_fidx']]
-    : ''
-    ;
+  if (typeof CFG._fidx != 'undefined') {
+    entries['cognates'].value = (CFG['_fidx'] != -1) 
+      ? WLS['header'][CFG['_fidx']]
+      : ''
+      ;
+  }
   entries['roots'].value = (CFG['_roots'] != -1) 
     ? WLS['header'][CFG['_roots']]
     : ''
@@ -140,6 +144,7 @@ UTIL.load_settings = function() {
     ? WLS['header'][CFG['_morphemes']]
     : ''
     ;
+
   for (var i=0,val; val=['highlight', 'sampa', 'pinyin'][i]; i++) {
     var defaults = CFG[val];
     var outs = [];
@@ -151,17 +156,19 @@ UTIL.load_settings = function() {
     entries[val].value = outs.join(',');
   }
       
-  for (var i=0,entry; entry=['cognates', 'alignments', 'morphemes', 'roots'][i]; i++) {
+  for (var i=0,entry; entry=['cognates', 'alignments', 'morphemes', 'roots', 'note'][i]; i++) {
+    console.log(entries[entry]);
     $(entries[entry]).autocomplete({
         source: WLS.header });
   }
+  $(entries['proto']).autocomplete({source: Object.keys(WLS.taxa)});
 
 };
 
 UTIL.refresh_settings = function() {
 
   var settables = ['preview', 'cognates', 'alignments', 'morphemes', 'roots', 'highlight', 'sampa', 
-    'pinyin', 'sources'];
+    'pinyin', 'sources', 'note', 'proto' ];
   var entries = {};
   for (var i=0, settable; settable=settables[i]; i++) {
     entries[settable] = document.getElementById('settings_'+settable);
@@ -169,7 +176,7 @@ UTIL.refresh_settings = function() {
   
   CFG['preview'] = parseInt(entries['preview'].value);
   
-  for (var i=0,entry; entry=['cognates', 'alignments', 'morphemes', 'roots', 'sources'][i]; i++) {
+  for (var i=0,entry; entry=['cognates', 'alignments', 'morphemes', 'roots', 'sources', 'note'][i]; i++) {
     if (entry == 'cognates') {
       var this_entry = '_fidx';
     }
@@ -186,6 +193,9 @@ UTIL.refresh_settings = function() {
       }
       if (entry == 'roots' && CFG[this_entry] != -1) {
 	resetRootFormat(entries[entry].value);
+      }
+      if (entry == 'note' && CFG[this_entry] != -1) {
+	CFG['note_formatter'] = WLS.header[CFG['_note']];
       }
     }
     else {

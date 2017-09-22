@@ -42,7 +42,8 @@ function handle_cognate_selection() {
       });
 
   display_cognates(CFG['_current_concept']);
-  document.getElementById('cognates_current_concept').innerHTML = CFG['_current_concept'];
+  document.getElementById('cognates_current_concept').innerHTML = CFG['_current_concept'] + 
+    ' ('+WLS['c2i'][CFG['_current_concept']]+'/'+CFG['_concept_number']+')';
 }
 
 /* function displays all cognates in a table and makes them ready for editing */
@@ -83,7 +84,8 @@ function display_cognates(concept, sortby) {
 	document.getElementById('cognates_current_concept').innerHTML = all_concepts[0]+', ...';
       }
       else {
-	document.getElementById('cognates_current_concept').innerHTML = all_concepts[0];
+	document.getElementById('cognates_current_concept').innerHTML = all_concepts[0] + 
+	  ' ('+WLS['c2i'][all_concepts[0]]+'/'+CFG['_concepts']+')';
       }
       /* mark the current concept */
       CFG['_current_concept'] = all_concepts[0];
@@ -267,7 +269,8 @@ function display_previous_cognate() {
   var acon = Object.keys(WLS.concepts);
   var pcon = acon[(acon.indexOf(ccon)-1)];
   display_cognates(pcon);
-  document.getElementById('cognates_current_concept').innerHTML = pcon;
+  document.getElementById('cognates_current_concept').innerHTML = pcon + ' (' +
+      WLS['c2i'][pcon]+'/'+CFG['_concept_number']+')';
   CFG['_current_concept'] = pcon;
 }
 
@@ -278,7 +281,9 @@ function display_next_cognate() {
   var ncon = acon[(acon.indexOf(ccon)+1)];
   display_cognates(ncon);
 
-  document.getElementById('cognates_current_concept').innerHTML = ncon;
+  document.getElementById('cognates_current_concept').innerHTML = ncon + ' (' +
+      WLS['c2i'][ncon]+'/'+CFG['_concept_number']+')';
+
   CFG['_current_concept'] = ncon;
 }
 

@@ -111,6 +111,17 @@ function resetRootFormat(value) {
 	}
       }
     }
+    /* ordertaxa */
+    if (CFG.doculects) {
+      for (key in format_selection) {
+	format_selection[key].sort(function (x, y) {
+	  X = WLS[x[0]][CFG._tidx];
+	  Y = WLS[y[0]][CFG._tidx];
+	  console.log(X, Y, CFG.doculects.indexOf(X));
+	  return CFG.doculects.indexOf(X) - CFG.doculects.indexOf(Y);
+	});
+      }
+    }
     WLS['roots'] = format_selection;
     CFG['_roots'] = WLS.header.indexOf(CFG['root_formatter']);
   }
@@ -328,6 +339,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   CFG['_tidx'] = tIdx-1; // index of taxa
   CFG['_cidx'] = cIdx-1; // index of concepts
   CFG['_concepts'] = cIdx-1;
+  CFG['_concept_number'] = Object.keys(concepts).length;
   CFG['_taxa'] = tIdx-1;
   CFG['_segments'] = (typeof sIdx != 'undefined') ? sIdx-1 : -1;
   CFG['_alignments'] = (typeof aIdx != 'undefined') ? aIdx-1 : -1;
@@ -336,10 +348,16 @@ function csvToArrays(allText, separator, comment, keyval) {
   CFG['_sources'] = (typeof srcIdx != 'undefined') ? srcIdx-1: -1;
   CFG['parsed'] = true;
   CFG['_selected_doculects'] = Object.keys(WLS.taxa);
+  /* sort selected doculects */
+  CFG['_selected_doculects'].sort(function(x, y) {
+    if (CFG.doculects) {
+      return CFG.doculects.indexOf(x) - CFG.doculects.indexOf(y);
+    }
+    return (x < y) ? -1 : (x > y) ? 1 : 0;
+  });
 
   /* check for glottolog and concepticon in header */
   for (var i=0, head; head=WLS.header[i]; i++) {
-    console.log(head, CFG._note);
     if (ALIAS['glottolog'].indexOf(head) != -1) {CFG['_glottolog'] = i;}
     if (ALIAS['concepticon'].indexOf(head) != -1) {CFG['_concepticon'] = i;}
     if (ALIAS['note'].indexOf(head) != -1) {
@@ -419,7 +437,7 @@ function createSelectors() {
     $('#select_columns').multiselect('destroy');
   }
   
-  /* fro taxa and concepts, we should check whether they are actually 
+  /* for taxa and concepts, we should check whether they are actually 
    * in the data passed to the app. If they are missing, we shouldn't bother 
    * displaying the stuff */
   if (CFG['tc_status'] != 'not' && CFG['tc_status'] != 'notc') {
@@ -618,7 +636,7 @@ function showWLS(start)
   text += thtext;
   var count = 1;
   //console.log('wls.rows',WLS.rows);
-  if (CFG['formatter']) {
+  if (CFG['formatter'] || CFG['root_formatter']) {
     var previous_format = '';
     var tmp_class = 'd0';
     //->console.log(WLS['rows']);
@@ -2170,6 +2188,7 @@ function sortTable(event,head)
 
 function editGroup(event, idx) {
   /* functin handles the display of alignments */
+  /*TODO ordertaxa*/
 
   event.preventDefault();
   
@@ -2181,6 +2200,17 @@ function editGroup(event, idx) {
 
   /* check for proper values to be displayed for alignment analysis */
   var rows = WLS['etyma'][idx];
+
+  /* sort the rows */
+  rows.sort(function (x, y) {
+    var X = WLS[x][CFG._tidx];
+    var Y = WLS[x][CFG._tidx];
+    if (CFG.doculects) {
+      return CFG.doculects.indexOf(X) - CFG.doculects.indexOf(Y);
+    }
+    return (X < Y) ? -1 : (X < Y) ? 1 : 0;
+  });
+  console.log(rows, CFG.doculects);
 
   /* check for proper alignments first */
   if (CFG['_alignments'] != -1) {
