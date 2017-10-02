@@ -1,3 +1,13 @@
+<!--
+
+<++>
+
+author   : Johann-Mattis List
+email    : mattis.list@lingulist.de
+created  : 2017-09-29 15:19
+modified : 2017-09-29 15:19
+
+-->
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -131,6 +141,13 @@
                   CORRESPONDENCES
                 </a>
               </li>
+              <li>
+                <a id="toggle_cognatesets" onclick="loadAjax(event, 'sortable', 'cognatesets', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  COGNATE SETS
+                </a>
+              </li>
             </ul>
           </li>
           <li class="dropdown">
@@ -187,6 +204,7 @@
 	  <br class="menubr">
 	  <input type="file" id="file" name="file" class="btn btn-primary pull-left submit3" style="margin-left:0px;margin-right:3px;padding:7px;" />
 	  <input type="text" class="form-control pull-left mright textfield" style="width:140px;display:inline" onkeyup="showSpinner(function(){handleAjax(event,'url')});" id="ajaxfile" placeholder="select remote file" />
+	  <div id="wordlist-statistics" class="infobox hidden pull-left mright">no data has been loaded</div>
 	  <input type="text" class="form-control pull-left mright textfield" style="width:140px;display:inline;" onkeyup="showSpinner(function(){handleAjax(event,'db')});" id="database" placeholder="select database" />
 	  <input id="last" type="button" onclick="showWLS(1);$('#last').removeClass('unhidden');$('#last').addClass('hidden');" class="submit hidden" value="&nbsp;LAST&nbsp;" />
 

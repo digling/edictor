@@ -147,7 +147,8 @@ PART.handle_partial_selection = function () {
       });
 
   PART.display_partial(CFG['_current_partial']);
-  document.getElementById('partial_current_concept').innerHTML = CFG['_current_partial'];
+  document.getElementById('partial_current_concept').innerHTML = CFG['_current_partial'] + 
+    ' ('+WLS['c2i'][CFG['_current_partial']]+'/'+WLS.height+')';
 };
 
 PART.display_partial = function (concept, sortby) {
@@ -183,7 +184,8 @@ PART.display_partial = function (concept, sortby) {
 	document.getElementById('partial_current_concept').innerHTML = all_concepts[0]+', ...';
       }
       else {
-	document.getElementById('partial_current_concept').innerHTML = all_concepts[0];
+	document.getElementById('partial_current_concept').innerHTML = all_concepts[0] +
+	  ' ('+WLS['c2i'][all_concepts[0]]+'/'+WLS.height+')';
       }
       /* mark the current concept */
       CFG['_current_partial'] = all_concepts[0];
@@ -390,7 +392,9 @@ PART.display_previous_partial = function() {
   var acon = Object.keys(WLS.concepts);
   var pcon = acon[(acon.indexOf(ccon)-1)];
   PART.display_partial(pcon);
-  document.getElementById('partial_current_concept').innerHTML = pcon;
+  document.getElementById('partial_current_concept').innerHTML = pcon + 
+    ' ('+WLS['c2i'][pcon]+'/'+WLS.height+')';
+
   CFG['_current_partial'] = pcon;
 }; 
 
@@ -401,7 +405,8 @@ PART.display_next_partial = function() {
   var ncon = acon[(acon.indexOf(ccon)+1)];
   PART.display_partial(ncon);
 
-  document.getElementById('partial_current_concept').innerHTML = ncon;
+  document.getElementById('partial_current_concept').innerHTML = ncon + 
+    ' ('+WLS['c2i'][ncon]+'/'+WLS.height+')';
   CFG['_current_partial'] = ncon;
 };
 

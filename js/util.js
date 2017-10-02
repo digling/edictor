@@ -224,6 +224,9 @@ UTIL.refresh_settings = function() {
   //-> console.log(CFG['_fidx'])
 };
 
+UTIL.check_wls = function(wls) {
+  
+}
 
 var ALIAS = {
   'doculect': ['TAXON', 'LANGUAGE', 'DOCULECT', 'DOCULECTS', 'TAXA', 'LANGUAGES', 'CONCEPTLIST'],
@@ -270,6 +273,9 @@ TEXT.encodeComments = function(text) {
 /* function replaces quotes in text by the Finnish ones, to avoid problems here */
 TEXT.escapeValue = function(text) {
   var out = '';
+  if (typeof text != 'string') {
+    text = ''+text;
+  }
   for (var i=0,c; c=text[i]; i++) {
     if (c == '"') {
       out += '”';

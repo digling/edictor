@@ -432,6 +432,15 @@ td.pre-align {
 	display: table-cell;
 	padding: 1px;
 }
+.morpheme-small {
+	border: 1px solid #2d6ca2;
+	border-radius: 5px;
+	color: #2D6CA2;
+	display: table-cell;
+	padding: 1px;
+  opacity: 0.7;
+  font-size: 70%;
+}
 .morpheme-error {
 	border: 1px solid Crimson;
 	border-radius: 5px;
@@ -1097,4 +1106,15 @@ tr.up_fill > td {
   max-width: 500px;
   text-align: justify;
   font-weight: normal!important;
+}
+
+.infobox{
+  color:white;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-right: 5px;
+  padding-left: 5px;
+  background-color: #2D6CA2;
+  font-weight: bold;
+  margin-left: 2px;
 }

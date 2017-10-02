@@ -43,7 +43,7 @@ function handle_cognate_selection() {
 
   display_cognates(CFG['_current_concept']);
   document.getElementById('cognates_current_concept').innerHTML = CFG['_current_concept'] + 
-    ' ('+WLS['c2i'][CFG['_current_concept']]+'/'+CFG['_concept_number']+')';
+    ' ('+WLS['c2i'][CFG['_current_concept']]+'/'+WLS.height+')';
 }
 
 /* function displays all cognates in a table and makes them ready for editing */
@@ -270,7 +270,7 @@ function display_previous_cognate() {
   var pcon = acon[(acon.indexOf(ccon)-1)];
   display_cognates(pcon);
   document.getElementById('cognates_current_concept').innerHTML = pcon + ' (' +
-      WLS['c2i'][pcon]+'/'+CFG['_concept_number']+')';
+      WLS['c2i'][pcon]+'/'+WLS.height+')';
   CFG['_current_concept'] = pcon;
 }
 
@@ -282,7 +282,7 @@ function display_next_cognate() {
   display_cognates(ncon);
 
   document.getElementById('cognates_current_concept').innerHTML = ncon + ' (' +
-      WLS['c2i'][ncon]+'/'+CFG['_concept_number']+')';
+      WLS['c2i'][ncon]+'/'+WLS.height+')';
 
   CFG['_current_concept'] = ncon;
 }

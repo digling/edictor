@@ -211,9 +211,9 @@ MORPH.unmodifyMorphemeEntry = function(what, idx) {
     }
     else if (what == 'morphemes') {
       var morpheme = (typeof _morphemes[i] != 'undefined' &&_morphemes[i] && _morphemes[i][0] != '?')
-	? '<span class="morpheme">'+_morphemes[i]+'</span>'
-	: '<span class="morpheme-error">?</span>'
-	;
+	      ? '<span class="morpheme">'+_morphemes[i]+'</span>'
+	      : '<span class="morpheme-error">?</span>'
+	    ;
       out.push(morpheme);
     }
   }

@@ -273,7 +273,7 @@ function csvToArrays(allText, separator, comment, keyval) {
 	 ) {
 
 	/* check for the index */
-	if (!noid) {var idx = parseInt(data[0]);}
+	if (!noid) {var idx = parseInt(data[0]); count += 1;}
 	else {var idx = count; count += 1;}
 
 	/* the following lines append taxonomic values */
@@ -316,11 +316,11 @@ function csvToArrays(allText, separator, comment, keyval) {
   
   /* create a concept - id converter and vice versa for various purposes */
   var c2i = {};
-  var count = 1;
+  var ccount = 1;
   for(c in concepts) {
-    c2i[count] = c;
-    c2i[c] = count;
-    count += 1;
+    c2i[ccount] = c;
+    c2i[c] = ccount;
+    ccount += 1;
   }
   
   WLS = qlc;
@@ -334,12 +334,14 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS['uneditables'] = uneditables;
   WLS['column_names'] = column_names;
   WLS['c2i'] = c2i;
+  WLS['height'] = Object.keys(concepts).length;
+  WLS['width'] = Object.keys(taxa).length;
+  WLS['length'] = count;
 
   /* ! attention here, this may change if no ids are submitted! */
   CFG['_tidx'] = tIdx-1; // index of taxa
   CFG['_cidx'] = cIdx-1; // index of concepts
   CFG['_concepts'] = cIdx-1;
-  CFG['_concept_number'] = Object.keys(concepts).length;
   CFG['_taxa'] = tIdx-1;
   CFG['_segments'] = (typeof sIdx != 'undefined') ? sIdx-1 : -1;
   CFG['_alignments'] = (typeof aIdx != 'undefined') ? aIdx-1 : -1;
@@ -416,6 +418,12 @@ function csvToArrays(allText, separator, comment, keyval) {
   }
   WLS._trows.sort(sort_rows);
   WLS.rows.sort(sort_rows);
+
+  /* add statistic information */
+  $('#wordlist-statistics').removeClass('hidden').html(
+      '&lt;'+CFG['filename'] +
+      '&gt; ('+WLS.length+' rows, '+WLS.height+' concepts, '+WLS.width+' doculects)');
+
   
   /* log basic settings */
   console.log('CFG:',CFG);
@@ -664,7 +672,8 @@ function showWLS(start)
 	}
 
 	text += '<tr class="'+tmp_class+'" id="L_' + idx + '">';
-	text += '<td title="Click to add a new line or to remove the current line." onclick="editLine(event,'+idx+');" class="ID pointed" title="LINE ' + rowidx + '">' + idx + '</td>';
+	text += '<td title="Click to add a new line or to remove the current line." onclick="editLine(event,'+
+	  idx+');" class="ID pointed" title="LINE ' + rowidx + '">' + idx + '</td>';
 	for (j in WLS[idx]) {
 	  var jdx = parseInt(j) + 1;
 
@@ -689,10 +698,10 @@ function showWLS(start)
 	    else if (WLS.header[j] == CFG.root_formatter) {
 	      var on_ctxt = 'oncontextmenu="PART.partial_alignment(event,\''+idx+'\')" ';
 	    }
-      else if (WLS.header[j] == CFG.note_formatter) {
-        var on_ctxt = 'oncontextmenu="COMMENTS.edit_comment(event,\''+idx+'\')" ';
-      }
-	    else {
+	  else if (WLS.header[j] == CFG.note_formatter) {
+      	    var on_ctxt = 'oncontextmenu="COMMENTS.edit_comment(event,\''+idx+'\')" ';
+      	  }
+	  else {
 	      var on_ctxt = '';
 	    }
 	  }
@@ -706,22 +715,22 @@ function showWLS(start)
 	    else if (WLS.header[j] == CFG.root_formatter) {
 	      var on_ctxt = 'oncontextmenu="PART.partial_alignment(event,\''+idx+'\')" ';
 	    }
-      else if (WLS.header[j] == CFG.note_formatter) {
-        var on_ctxt = 'oncontextmenu="COMMENTS.edit_comment(event,\''+idx+'\')" ';
-      }
+	    else if (WLS.header[j] == CFG.note_formatter) {
+      	      var on_ctxt = 'oncontextmenu="COMMENTS.edit_comment(event,\''+idx+'\')" ';
+      	    }
 	    else {
 	      var on_ctxt = '';
 	    }
 	  }
-    /* need to escape text-values otherwise messes up HTML */
-	  var data_value = 'data-value="'+TEXT.escapeValue(WLS[idx][j])+'" ';
+	  /* need to escape text-values otherwise messes up HTML */
+	  var escaped_value = TEXT.escapeValue(WLS[idx][j]);
+	  var data_value = 'data-value="'+escaped_value+'" ';
 	  text += '<td ' +
 	    this_class + 
 	    on_title +
 	    on_click +
 	    on_ctxt + 
-	    data_value + cell_display+'>'+TEXT.escapeValue(WLS[idx][j]) + '</td>';
-
+	    data_value + cell_display+'>'+escaped_value+'</td>';
 	}
 	text += '</tr>';
 	count += 1;
@@ -749,7 +758,7 @@ function showWLS(start)
           else {
             var cell_display = ' style="display:none"'; // ff vs. chrome problem
           }
-          text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '"' + cell_display + '>';
+          text += '<td class="' + WLS['header'][j] + '" title="MODIFY ENTRY ' + idx + '/' + jdx + '" onclick="editEntry(' + idx + ',' + jdx + ',0,0)" data-value="' + WLS[idx][j] + '" ' + cell_display + '>';
           text += WLS[idx][j];
           text += '</td>';
         }
@@ -2077,7 +2086,7 @@ function highLight()
 	  var textout = [];
 	  for (var k=0;k<parts.length; k++) {
 	    var morph = (parts[k] && parts[k][0] != '?') 
-	      ? '<span class="morpheme">'+parts[k]+'</span>'
+	      ? ((parts[k][0] != '_') ? '<span class="morpheme">'+parts[k]+'</span>' : '<span class="morpheme-small">'+parts[k].replace(/^_/, '')+'</span>')
 	      : '<span class="morpheme-error">'+parts[k]+'</span>'
 	      ;
 	    textout.push(morph);
