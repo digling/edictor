@@ -147,9 +147,16 @@ function csvToArrays(allText, separator, comment, keyval) {
   var firstLineFound = false;
   var noid = false;
   for (var i = 0; i < allTextLines.length; i++) {
-    var data = allTextLines[i].split(separator);
-    if (data[0].charAt(0) == comment || data[0].replace(/\s*/g,'') == '' || data[0].charAt(0) == keyval){}
-    else if (data[0] == 'ID') {
+      line = allTextLines[i].trim();
+      if (line.charAt(0) == comment || line.replace(/\s*/g,'') == '' || line.charAt(0) == keyval) {
+          continue;
+      }
+      var data = line.split(separator);
+      if (data.length == 1) {
+          fakeAlert("Data row "+i + " ["+ line + "] contained only one column, did you use the right separator ('"+separator+"')?");
+          throw "Invalid format";
+      }
+    if (data[0] == 'ID') {
       firstLineFound = true;
 
       /* get the header */
@@ -542,7 +549,7 @@ function createSelectors() {
 }
 
 /* major function for displaying the Wordlist panel of the Edictor */
-function showWLS(start)
+function showWLS(start, separator="\t")
 {
 
   if (!CFG['parsed']) {
@@ -552,10 +559,10 @@ function showWLS(start)
     if (typeof localStorage.text != 'undefined' && !CFG['load_new_file']) {
       //-> console.log('found text', localStorage.text);
       CFG['filename'] = localStorage.filename;
-      csvToArrays(localStorage.text, '\t', '#', '@');
+      csvToArrays(localStorage.text, separator, '#', '@');
     }
     else {
-      csvToArrays(STORE, '\t', '#', '@');
+      csvToArrays(STORE, separator, '#', '@');
     }
   }
   else {
