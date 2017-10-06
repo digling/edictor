@@ -549,7 +549,7 @@ function createSelectors() {
 }
 
 /* major function for displaying the Wordlist panel of the Edictor */
-function showWLS(start)
+function showWLS(start, separator="\t")
 {
 
   if (!CFG['parsed']) {
@@ -559,10 +559,10 @@ function showWLS(start)
     if (typeof localStorage.text != 'undefined' && !CFG['load_new_file']) {
       //-> console.log('found text', localStorage.text);
       CFG['filename'] = localStorage.filename;
-      csvToArrays(localStorage.text, '\t', '#', '@');
+      csvToArrays(localStorage.text, separator, '#', '@');
     }
     else {
-      csvToArrays(STORE, '\t', '#', '@');
+      csvToArrays(STORE, separator, '#', '@');
     }
   }
   else {
