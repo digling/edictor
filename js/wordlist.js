@@ -147,9 +147,16 @@ function csvToArrays(allText, separator, comment, keyval) {
   var firstLineFound = false;
   var noid = false;
   for (var i = 0; i < allTextLines.length; i++) {
-    var data = allTextLines[i].split(separator);
-    if (data[0].charAt(0) == comment || data[0].replace(/\s*/g,'') == '' || data[0].charAt(0) == keyval){}
-    else if (data[0] == 'ID') {
+      line = allTextLines[i].trim();
+      if (line.charAt(0) == comment || line.replace(/\s*/g,'') == '' || line.charAt(0) == keyval) {
+          continue;
+      }
+      var data = line.split(separator);
+      if (data.length == 1) {
+          fakeAlert("Data row "+i + " ["+ line + "] contained only one column, did you use the right separator ('"+separator+"')?");
+          throw "Invalid format";
+      }
+    if (data[0] == 'ID') {
       firstLineFound = true;
 
       /* get the header */
