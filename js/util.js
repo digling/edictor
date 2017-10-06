@@ -95,7 +95,8 @@ UTIL.settings = {
   'morpheme_separator' : '◦',
   'check_remote_intervall' : 10,
   '_proto' : false,
-  '_note' : 'NOTE'
+  '_note' : 'NOTE',
+  'separator': "\t"
 }
 
 UTIL.open_remote_dbase = function(dbase, frame) {

@@ -147,42 +147,38 @@ function csvToArrays(allText, separator, comment, keyval) {
   var firstLineFound = false;
   var noid = false;
   for (var i = 0; i < allTextLines.length; i++) {
-      line = allTextLines[i].trim();
-      if (line.charAt(0) == comment || line.replace(/\s*/g,'') == '' || line.charAt(0) == keyval) {
-          continue;
-      }
-      var data = line.split(separator);
-      if (data.length == 1) {
-          fakeAlert("Data row "+i + " ["+ line + "] contained only one column, did you use the right separator ('"+separator+"')?");
-          throw "Invalid format";
-      }
+    line = allTextLines[i];
+    if (line.charAt(0) == comment || line.replace(/\s*/g,'') == '' || line.charAt(0) == keyval) {
+      continue;
+    }
+    var data = line.split(separator);
     if (data[0] == 'ID') {
       firstLineFound = true;
 
       /* get the header */
       var header = [];
       for (j = 1; j < data.length; j++) {
-        var datum = data[j].toUpperCase();
-        
-	if (!CFG['columns'] || CFG['columns'].indexOf(datum) != -1) {
-          /* check for prohibited columns */
-          if (datum.slice(0,1) == '_') {
-            datum = datum.slice(1,datum.length);
-            var tmp = datum.replace(/_/g,' ');
-            datum = datum.replace(/_/g,'');
-            column_names[datum] = tmp;
-            uneditables.push(datum);
-            //->console.log(datum,column_names,uneditables,tmp);
-          }
-          else {
-            var tmp = datum.replace(/_/g,' ');
-            datum = datum.replace(/_/g,'');
-            column_names[datum] = tmp;
-          }
+	var datum = data[j].toUpperCase();
 
-          header.push(datum);
-          
-          if (ALIAS['doculect'].indexOf(datum) != -1) { tIdx = j; }
+	if (!CFG['columns'] || CFG['columns'].indexOf(datum) != -1) {
+	  /* check for prohibited columns */
+	  if (datum.slice(0,1) == '_') {
+	    datum = datum.slice(1,datum.length);
+	    var tmp = datum.replace(/_/g,' ');
+	    datum = datum.replace(/_/g,'');
+	    column_names[datum] = tmp;
+	    uneditables.push(datum);
+	    //->console.log(datum,column_names,uneditables,tmp);
+	  }
+	  else {
+	    var tmp = datum.replace(/_/g,' ');
+	    datum = datum.replace(/_/g,'');
+	    column_names[datum] = tmp;
+	  }
+
+	  header.push(datum);
+
+	  if (ALIAS['doculect'].indexOf(datum) != -1) { tIdx = j; }
 	  else if (ALIAS['concept'].indexOf(datum) != -1) { cIdx = j; }
 	  else if (ALIAS['segments'].indexOf(datum) != -1) { sIdx = j; }
 	  else if (ALIAS['alignment'].indexOf(datum) != -1) { aIdx = j; }
@@ -190,7 +186,7 @@ function csvToArrays(allText, separator, comment, keyval) {
 	  else if (ALIAS['morphemes'].indexOf(datum) != -1) { mIdx = j; }
 	  else if (ALIAS['sources'].indexOf(datum) != -1) { srcIdx = j; }
 	  if (CFG['basics'].indexOf(datum) != -1) { columns[datum] = j; }
-          else { columns[datum] = -j; }
+	  else { columns[datum] = -j; }
 	}
       }
       /* apply check for tidx and cidx */
@@ -200,15 +196,15 @@ function csvToArrays(allText, separator, comment, keyval) {
       else if (tIdx == -1 && cIdx > 1) {tIdx = 1; CFG['tc_status'] = 'not' }
       else if (tIdx == -1 && cIdx <= 1 && cIdx > -1) {tIdx = 2; CFG['tc_status'] = 'not'}
       else { CFG['tc_status'] = ''; }
-      
+
       /* append to basics if it is not already defined, but be careful with other stuff */
       if (CFG['tc_status'].indexOf('t') != -1) {
-        columns[header[tIdx-1]] = Math.abs(columns[header[tIdx-1]]);
-        CFG['basics'].push(header[tIdx-1]);
+	columns[header[tIdx-1]] = Math.abs(columns[header[tIdx-1]]);
+	CFG['basics'].push(header[tIdx-1]);
       }
       if (CFG['tc_status'].indexOf('c') != -1) {
-        columns[header[cIdx-1]] = Math.abs(columns[header[cIdx-1]]);
-        CFG['basics'].push(header[cIdx-1]);
+	columns[header[cIdx-1]] = Math.abs(columns[header[cIdx-1]]);
+	CFG['basics'].push(header[cIdx-1]);
       }
     }
     /* handle cases where no ID has been submitted */
@@ -222,34 +218,34 @@ function csvToArrays(allText, separator, comment, keyval) {
       /* get the header */
       var header = [];
       for (j = 0; j < data.length; j++) {
-        var datum = data[j].toUpperCase();
+	var datum = data[j].toUpperCase();
 
-	      if (!CFG['columns'] || CFG['columns'].indexOf(datum) != -1) {
-              
-	        /* check for prohibited columns */
-          if (datum.slice(0,1) == '_') {
-            datum = datum.slice(1,datum.length);
-            var tmp = datum.replace(/_/g,' ');
-            datum = datum.replace(/_/g,'');
-            column_names[datum] = tmp;
-            uneditables.push(datum);
-          }
-          else {
-            var tmp = datum.replace(/_/g,' ');
-            datum = datum.replace(/_/g,'');
-            column_names[datum] = tmp;
-          }
-          header.push(datum);
-          if (ALIAS['doculect'].indexOf(datum) != -1) { tIdx = j; }
-	        else if (ALIAS['concept'].indexOf(datum) != -1) { cIdx = j; }
-	        else if (ALIAS['segments'].indexOf(datum) != -1) { sIdx = j; }
-	        else if (ALIAS['alignment'].indexOf(datum) != -1) { aIdx = j; }
-	        else if (ALIAS['transcription'].indexOf(datum) != -1) { iIdx = j; }
-	        else if (ALIAS['morphemes'].indexOf(datum) != -1) { mIdx = j; }
-	        else if (ALIAS['sources'].indexOf(datum) != -1) { srcIdx = j; }
-          if (CFG['basics'].indexOf(datum) != -1) { columns[datum] = j + 1; }
-          else { columns[datum] = -(j + 1); }
-        }
+	if (!CFG['columns'] || CFG['columns'].indexOf(datum) != -1) {
+
+	  /* check for prohibited columns */
+	  if (datum.slice(0,1) == '_') {
+	    datum = datum.slice(1,datum.length);
+	    var tmp = datum.replace(/_/g,' ');
+	    datum = datum.replace(/_/g,'');
+	    column_names[datum] = tmp;
+	    uneditables.push(datum);
+	  }
+	  else {
+	    var tmp = datum.replace(/_/g,' ');
+	    datum = datum.replace(/_/g,'');
+	    column_names[datum] = tmp;
+	  }
+	  header.push(datum);
+	  if (ALIAS['doculect'].indexOf(datum) != -1) { tIdx = j; }
+	  else if (ALIAS['concept'].indexOf(datum) != -1) { cIdx = j; }
+	  else if (ALIAS['segments'].indexOf(datum) != -1) { sIdx = j; }
+	  else if (ALIAS['alignment'].indexOf(datum) != -1) { aIdx = j; }
+	  else if (ALIAS['transcription'].indexOf(datum) != -1) { iIdx = j; }
+	  else if (ALIAS['morphemes'].indexOf(datum) != -1) { mIdx = j; }
+	  else if (ALIAS['sources'].indexOf(datum) != -1) { srcIdx = j; }
+	  if (CFG['basics'].indexOf(datum) != -1) { columns[datum] = j + 1; }
+	  else { columns[datum] = -(j + 1); }
+	}
       }
 
       /* apply check for tidx and cidx */
@@ -267,6 +263,9 @@ function csvToArrays(allText, separator, comment, keyval) {
     }
     /* successively load the data into the wordlist object */
     else if (firstLineFound) {
+      if (data.length != header.length + 1) {
+	fakeAlert("Line "+data.join('|')+" has "+data.length+" cells, but we expect "+(1+header.length)+'!');
+      }
       /* check for header */
       var taxon = data[tIdx];
       var concept = data[cIdx];
@@ -549,9 +548,8 @@ function createSelectors() {
 }
 
 /* major function for displaying the Wordlist panel of the Edictor */
-function showWLS(start, separator="\t")
+function showWLS(start)
 {
-
   if (!CFG['parsed']) {
     if (CFG['storable']) {
       CFG['last_time'] = new Date();
@@ -559,10 +557,10 @@ function showWLS(start, separator="\t")
     if (typeof localStorage.text != 'undefined' && !CFG['load_new_file']) {
       //-> console.log('found text', localStorage.text);
       CFG['filename'] = localStorage.filename;
-      csvToArrays(localStorage.text, separator, '#', '@');
+      csvToArrays(localStorage.text, CFG['separator'], '#', '@');
     }
     else {
-      csvToArrays(STORE, separator, '#', '@');
+      csvToArrays(STORE, CFG['separator'], '#', '@');
     }
   }
   else {
