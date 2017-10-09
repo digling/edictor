@@ -308,45 +308,6 @@ function handleAjax (event, url) {
   });
   
   modifyDisplayForStart();
-  ///* carry out basic modification of the display, this is currently still
-  // * ugly and messy and should definitely be modified next time */
-  //var modify = ['first','previous', 'next','current','filename'];
-  //for (i in modify) {
-  //  $('#' + modify[i]).removeClass('unhidden');
-  //  $('#' + modify[i]).addClass('hidden');
-  //}
-  //$('#mainsettings').css('display','inline');
-  //$('#view').css('display','block');
-  //$('#qlc').html('');
-  //
-  ///* add the filename to the filename-button */
-  //var fn = document.getElementById('filename');
-  //fn.innerHTML = '&lt;'+CFG['filename']+'&gt;';
-
-  ///* toggle display if the wordlist is not hidden */
-  //var fd = document.getElementById('filedisplay');
-  //if (fd.style.display != 'none' && fd.style.display != ''){
-  //  toggleDisplay('', 'filedisplay');
-  //}
-
-  ///* check for navbar */
-  //if (!CFG['navbar']) {
-  //  document.getElementById('navbar').style.display = 'none';
-  //  document.getElementById('outerbox').style.margin = "20px";
-  //  document.getElementById('filedisplay').style.marginBottom = "25px";
-  //  document.getElementById('add_column').style.display = 'none';
-  //  document.getElementById('mainsettings').style.display = 'none';
-  //  document.getElementById('file').style.display = 'none';
-  //  document.getElementById('ajaxfile').style.display = 'none';
-  //  document.getElementById('menu_handle').style.width = '90%';
-  //  document.getElementById('menu').style.minHeight = "80px";
-  //  document.getElementById('menu').style.margin = "5px";
-  //  document.getElementById('undoredo').style.display = "none";
-  //  var brs = document.getElementsByClassName('menubr');
-  //  for (var i=0, br; br=brs[i]; i++) {
-  //    br.style.display = 'none';
-  //  }
-  //}
 }
 
 /* helper function that handles the drag over event */
@@ -537,14 +498,14 @@ function makeMyURL() {
   
   /* check out database and append to url */
   if ( dbase.checked ) {
-    base_url += 'database:show|'; 
+    base_url += 'database:show'; 
   }
   else {
-    base_url += 'database:hide|'; 
+    base_url += 'database:hide'; 
   }
   
   if (formatterX.value != '') {
-    base_url += '&formatter='+formatterX.value;
+    base_url += '&formatter='+formatterX.value.replace(/\s/g, '').toUpperCase();
   }
 
 
@@ -552,16 +513,16 @@ function makeMyURL() {
     base_url += '&preview='+previewX.value;
   }
   if (basicsX.value != '') {
-    base_url += '&basics='+basicsX.value.replace(/,/g,'|');
+    base_url += '&basics='+basicsX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
   }
   if (pinyinX.value != '') {
-    base_url += '&pinyin='+pinyinX.value.replace(/,/g,'|');
+    base_url += '&pinyin='+pinyinX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
   }
   if (sampaX.value != '') {
-    base_url += '&sampa='+sampaX.value.replace(/,/g,'|');
+    base_url += '&sampa='+sampaX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
   }
   if (highlightX.value != '') {
-    base_url += '&highlight='+highlightX.value.replace(/,/g,'|');
+    base_url += '&highlight='+highlightX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
   }
   if (file_nameX.value != '') {
     base_url += '&file='+file_nameX.value;
