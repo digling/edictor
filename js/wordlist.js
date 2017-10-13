@@ -149,6 +149,19 @@ function csvToArrays(allText, separator, comment, keyval) {
   for (var i = 0; i < allTextLines.length; i++) {
     line = allTextLines[i];
     if (line.charAt(0) == comment || line.replace(/\s*/g,'') == '' || line.charAt(0) == keyval) {
+      if (line.charAt(0) == comment) {
+        if (line.charAt(1) == '@') {
+          keyval = line.slice(2,line.length).trim().split(':');
+          if (keyval.length == 2) {
+            key = keyval[0];
+            vals = keyval[1];
+            if (['highlight', 'basics'].indexOf(key) != -1) {
+              vals = vals.split(',');
+            }
+            CFG[key] = vals;
+          }
+        }
+      }
       continue;
     }
     var data = line.split(separator);
@@ -363,11 +376,15 @@ function csvToArrays(allText, separator, comment, keyval) {
     }
     return (x < y) ? -1 : (x > y) ? 1 : 0;
   });
+  /* get the doculects and sort them */
+  CFG['sorted_taxa'] = Object.keys(WLS.taxa);
+  CFG['sorted_taxa'].sort();
 
   /* check for glottolog and concepticon in header */
   for (var i=0, head; head=WLS.header[i]; i++) {
     if (ALIAS['glottolog'].indexOf(head) != -1) {CFG['_glottolog'] = i;}
     if (ALIAS['concepticon'].indexOf(head) != -1) {CFG['_concepticon'] = i;}
+    if (ALIAS['patterns'].indexOf(head) != -1) {CFG['_patterns'] = i; CFG['pattern_formatter'] = head;}
     if (ALIAS['note'].indexOf(head) != -1) {
       CFG['_note'] = i;
       CFG['note_formatter'] = head;
@@ -457,8 +474,9 @@ function createSelectors() {
   if (CFG['tc_status'] != 'not' && CFG['tc_status'] != 'notc') {
     //->console.log('creating columns');
     var did = document.getElementById('select_doculects');
-    var doculects = Object.keys(WLS.taxa);
-    doculects.sort();
+    //var doculects = Object.keys(WLS.taxa);
+    //doculects.sort();
+    var doculects = CFG['sorted_taxa'];
     var txt = '';
     for (var i=0,doculect; doculect=doculects[i]; i++) {
       txt += '<option value="'+doculect+'" selected>'+doculect+'</option>';
@@ -686,47 +704,50 @@ function showWLS(start)
 	  if (WLS['columns'][head] > 0) { var cell_display = ''; }
 	  else { var cell_display = ' style="display:none"';  }
 	  
-	  if (WLS.header[j] != CFG.note_formatter && WLS.header[j] != CFG.formatter && WLS.header[j] != CFG.root_formatter && WLS.uneditables.indexOf(WLS.header[j]) == -1 && !CFG['publish']) {
+	  if ([CFG.note_formatter, CFG.formatter, CFG.root_formatter, CFG.pattern_formatter].indexOf(WLS.header[j]) == -1 && WLS.uneditables.indexOf(WLS.header[j]) == -1 && !CFG['publish']) {
 	    var on_click = 'onclick="editEntry(' + idx + ',' + jdx + ',0,0)" ';
 	    var on_title = 'title="Modify entry '+idx+'/'+jdx+'." ';
 	    var on_ctxt = 'oncontextmenu="copyPasteEntry(event,'+idx+','+jdx+','+j+')" ';
 	    var this_class = 'class="'+WLS['header'][j]+'" ';
 	  }
-	  else if (WLS.uneditables.indexOf(WLS.header[j]) != -1 || CFG['publish']) {
-	    var on_click = '';
-	    var on_title = '';
-	    var this_class = 'class="uneditable '+WLS['header'][j]+'" ';
-	    
-	    if (WLS.header[j] == CFG.formatter) {
-	      var on_ctxt = 'oncontextmenu="editGroup(event,\''+WLS[idx][j]+'\')" ';
-	    }
-	    else if (WLS.header[j] == CFG.root_formatter) {
-	      var on_ctxt = 'oncontextmenu="PART.partial_alignment(event,\''+idx+'\')" ';
-	    }
-	  else if (WLS.header[j] == CFG.note_formatter) {
-      	    var on_ctxt = 'oncontextmenu="COMMENTS.edit_comment(event,\''+idx+'\')" ';
-      	  }
-	  else {
-	      var on_ctxt = '';
-	    }
+    else if (WLS.uneditables.indexOf(WLS.header[j]) != -1 || CFG['publish']) {
+      var on_click = '';
+      var on_title = '';
+      var this_class = 'class="uneditable '+WLS['header'][j]+'" ';
+
+      if (WLS.header[j] == CFG.formatter) {
+        var on_ctxt = 'oncontextmenu="editGroup(event,\''+WLS[idx][j]+'\')" ';
+      }
+      else if (WLS.header[j] == CFG.root_formatter) {
+        var on_ctxt = 'oncontextmenu="PART.partial_alignment(event,\''+idx+'\')" ';
+      }
+      else if (WLS.header[j] == CFG.note_formatter) {
+        var on_ctxt = 'oncontextmenu="COMMENTS.edit_comment(event,\''+idx+'\')" ';
+      }
+      else {
+        var on_ctxt = '';
+      }
 	  }
-	  else {
-	    var on_click = 'onclick="editEntry(' + idx + ',' + jdx + ',0,0)" ';
-	    var on_title = 'title="Modify entry '+idx+'/'+jdx+'." ';
-	    var this_class = 'class="'+WLS['header'][j]+'" ';
-	    if (WLS.header[j] == CFG.formatter) {
-	      var on_ctxt = 'oncontextmenu="editGroup(event,\''+WLS[idx][j]+'\')" ';
-	    }
-	    else if (WLS.header[j] == CFG.root_formatter) {
-	      var on_ctxt = 'oncontextmenu="PART.partial_alignment(event,\''+idx+'\')" ';
-	    }
-	    else if (WLS.header[j] == CFG.note_formatter) {
-      	      var on_ctxt = 'oncontextmenu="COMMENTS.edit_comment(event,\''+idx+'\')" ';
-      	    }
-	    else {
-	      var on_ctxt = '';
-	    }
-	  }
+    else {
+      var on_click = 'onclick="editEntry(' + idx + ',' + jdx + ',0,0)" ';
+      var on_title = 'title="Modify entry '+idx+'/'+jdx+'." ';
+      var this_class = 'class="'+WLS['header'][j]+'" ';
+      if (WLS.header[j] == CFG.formatter) {
+        var on_ctxt = 'oncontextmenu="editGroup(event,\''+WLS[idx][j]+'\')" ';
+      }
+      else if (WLS.header[j] == CFG.root_formatter) {
+        var on_ctxt = 'oncontextmenu="PART.partial_alignment(event,\''+idx+'\')" ';
+      }
+      else if (WLS.header[j] == CFG.note_formatter) {
+        var on_ctxt = 'oncontextmenu="COMMENTS.edit_comment(event,\''+idx+'\')" ';
+      }
+      else if (WLS.header[j] == CFG.pattern_formatter) {
+        var on_ctxt = 'oncontextmenu="COMMENTS.show_pattern(event,\''+idx+'\')" ';
+      }
+      else {
+        var on_ctxt = '';
+      }
+    }
 	  /* need to escape text-values otherwise messes up HTML */
 	  var escaped_value = TEXT.escapeValue(WLS[idx][j]);
 	  var data_value = 'data-value="'+escaped_value+'" ';

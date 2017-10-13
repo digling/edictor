@@ -360,6 +360,8 @@ td.missing {
 }
 
 td.dolgo_ERROR{background-color: white; color:red;}
+td.dolgo_MISSING{background-color: black; color:white;}
+td.dolgo_CUSTOM{background-color: lightyellow; color:darkblue; border: 1px solid darkblue;}
 td.dolgo_V{background-color: #c86464;}
 td.dolgo_K{background-color: #c89664;} 
 td.dolgo_P{background-color: #c8c864;} 
@@ -381,7 +383,9 @@ td.dolgo_NAS{
   background: linear-gradient(left,#c86464,#64c8c8);
 }
 td.dolgo_PLUS{vertical-align:center; font-weight: bold; background-color:white; color:black; width: 10px !important}
+span.dolog_MISSING{background-color:black;color:white;}
 span.dolgo_ERROR{background-color: white; color:red;}
+span.dolgo_CUSTOM{background-color: lightyellow; color:darkblue; border:1px solid darkblue;}
 span.dolgo_V{background-color: #c86464;}
 span.dolgo_K{background-color: #c89664;} 
 span.dolgo_P{background-color: #c8c864;} 
