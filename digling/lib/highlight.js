@@ -287,7 +287,8 @@ var DOLGO = {
   "◦" : "PLUS",
   "." : "PLUS",
   "→" : "PLUS",
-  "←" : "PLUS"
+  "←" : "PLUS",
+  "Ø": "MISSING"
 };
 
 /* assign tone chars and diacritics for convenience */
@@ -324,7 +325,7 @@ function plotWord(word, tag, classes) {
     classes = ' ' + classes + ' ';
   }
   try {
-    var phones = word.split(' ');
+    var phones = word.split(/ |␣/);
   }
   catch(e) {
     alert(word);
@@ -346,8 +347,23 @@ function plotWord(word, tag, classes) {
     else {
       /* now try to find the column */
       var dolgo = "dolgo_ERROR";
-      
+      var addon = '';
+      if (phon.indexOf('/') != -1) {
+        phons = phon.split('/');
+        if (phons.length == 2) {
+          phon = phons[1];
+          if (!phon) {
+            phon = '?'+phons[0];
+            addon = '';
+          }
+          else {
+            addon = '<sup style="background-color:white;color:black;">'+phons[0]+'</sup>';
+          }
+        }
+      }
+
       if (phon[0] == '!'){phon=phon.slice(1,phon.length)}
+      else if (phon[0] == '?'){phon=phon.slice(1,phon.length), dolgo='dolgo_CUSTOM';}
       else if (phon in DOLGO){dolgo = "dolgo_"+DOLGO[phon]}
       else if (phon.slice(0,2) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(0,2)];}
       else if (phon.slice(0,1) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(0,1)];}
@@ -361,18 +377,18 @@ function plotWord(word, tag, classes) {
     else if (phon == ')') {}
     else if (phon != '-') {
       if (!ignore) {
-        text += '<'+tag+' class="residue'+classes+dolgo+'">'+phon+' </'+tag+'>';
+        text += '<'+tag+' class="residue'+classes+dolgo+'">'+addon+phon+' </'+tag+'>';
       }
       else {
-        text += '<'+tag+' class="residue'+classes+dolgo+' dolgo_IGNORE">'+phon+' </'+tag+'>';
+        text += '<'+tag+' class="residue'+classes+dolgo+' dolgo_IGNORE">'+addon+phon+' </'+tag+'>';
       }
     }
     else  {
       if (!ignore) {
-        text += '<'+tag+' class="residue '+classes+dolgo+'">'+phon+' </'+tag+'>';
+        text += '<'+tag+' class="residue '+classes+dolgo+'">'+addon+phon+' </'+tag+'>';
       }
       else {
-        text += '<'+tag+' class="residue'+classes+dolgo+' dolgo_IGNORE">'+phon+' </'+tag+'>';
+        text += '<'+tag+' class="residue'+classes+dolgo+' dolgo_IGNORE">'+addon+phon+' </'+tag+'>';
       }
     }
   }

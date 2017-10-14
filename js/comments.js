@@ -3,7 +3,6 @@ var COMMENTS = {};
 COMMENTS.edit_comment = function(event, widx) {
   event.preventDefault();
   var entry = WLS[widx][CFG._note];
-  console.log('entry', entry, CFG._note);
   var doculect = WLS[widx][CFG._tidx];
   var concept = WLS[widx][CFG._cidx];
   var text = '<div class="edit_links niceblue" id="comment-popup" data-value="'+widx+'">' + 
@@ -34,6 +33,43 @@ COMMENTS.edit_comment = function(event, widx) {
   if (!(entry.replace(/\s/g))) {
     COMMENTS.show_edit_display();
   }
+};
+
+/* display patterns, consider putting this into a customized patterns.js later */
+COMMENTS.show_pattern = function(event, widx) {
+  event.preventDefault();
+  var entry = WLS[widx][CFG._patterns];
+  var doculect = WLS[widx][CFG._tidx];
+  var concept = WLS[widx][CFG._cidx];
+  var table = '<div class="edit_links niceblue" id="pattern-popup" data-value="'+widx+'">' + 
+    '<span class="main_handle pull-left" style="margin-left:5px;margin-top:2px;" ></span>' +
+    '<p>Patterns for '+doculect+' «'+concept+'» (ROW: '+widx+'):</p>';
+  var morphemes = entry.split(' + ');
+  var taxon_string = [];
+  for (var i=0,taxon; taxon=CFG['sorted_taxa'][i]; i++) {
+    if (taxon.indexOf('Proto') == -1) {
+      taxon_string.push('<th class="pchead" title="'+taxon+'">'+taxon.slice(0,1)+'</th>');
+    }
+  }
+  taxon_string = '<tr>' + taxon_string.join('')+'</tr>';
+  table += '<table><tr>';
+  for (var i=0,morpheme; morpheme=morphemes[i]; i++) {
+    var patterns = morpheme.split(' ');
+    table += '<td><table class="alignments">';
+    table += taxon_string;
+    for (var j=0,pattern; pattern=patterns[j]; j++) {
+      console.log(pattern);
+      table += '<tr>' + plotWord(pattern, 'td') + '</tr>';
+    }
+    table += '</table></td>';
+  }
+  table += '</tr></table><div><input class="btn btn-primary submit" type="button" onclick="$(\'#show_pattern\').remove();basickeydown(event);" value="CLOSE" /></div><br><br></div>';
+  var showpattern = document.createElement('div');
+  showpattern.id = 'show_pattern';
+  showpattern.className = 'editmode';
+  document.body.appendChild(showpattern);
+  showpattern.innerHTML = table;
+  $('pattern-popup').draggable({handle:'.main_handle'}).resizable();
 };
 
 /* time stamp formatting follows mediawiki conventions */

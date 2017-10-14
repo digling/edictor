@@ -67,6 +67,7 @@ UTIL.settings = {
   'formatter': false, 
   'root_formatter'    : false,
   '_alignment':false,
+  '_patterns':-1, /* patterns of sound correspondences */
   'highlight': ['TOKENS','ALIGNMENT', 'SEGMENTS'],
   'sampa' : ['IPA','TOKENS', 'SEGMENTS', 'TRANSCRIPTION'],
   'pinyin' : ['CHINESE'],
@@ -96,8 +97,37 @@ UTIL.settings = {
   'check_remote_intervall' : 10,
   '_proto' : false,
   '_note' : 'NOTE',
-  'separator': "\t"
+  'separator': "\t",
+  'comment': '#'
 }
+
+UTIL.settable = {
+  "lists" : [
+    "highlight", 
+    "sampa",
+    "pinyin",
+    "css",
+    "basics",
+    "_selected_doculects",
+    "_selected_concepts"
+  ],
+  "items" : [
+    "missing_marker",
+    "separator",
+    "gap_marker",
+    "formatter",
+    "root_formatter",
+    "preview",
+    "note_formatter",
+    "pattern_formatter",
+    "publish",
+    "_almcol",
+    "filename",
+    "navbar"
+  ],
+  "dicts" : [
+  ]
+};
 
 UTIL.open_remote_dbase = function(dbase, frame) {
   var idx = document.getElementById(dbase);
@@ -242,7 +272,8 @@ var ALIAS = {
   'glottolog' : ['GLOTTOLOG', 'GLOTTOCODE'],
   'concepticon' : ['CONCEPTICON', 'CONCEPTICONID'],
   'sources' : ['SOURCE', "REFERENCE", "SOURCES"],
-  'note' : ['NOTE', 'COMMENT', 'NOTES', 'COMMENTS']
+  'note' : ['NOTE', 'COMMENT', 'NOTES', 'COMMENTS'],
+  'patterns' : ['PATTERNS']
 }
 
 /* text object stores text-related functions */

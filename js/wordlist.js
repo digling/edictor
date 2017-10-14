@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2015-09-15 11:52
+ * modified : 2017-10-14 14:01
  *
  */
 
@@ -146,19 +146,31 @@ function csvToArrays(allText, separator, comment, keyval) {
 
   var firstLineFound = false;
   var noid = false;
+  var apply_filters = false; /* make sure to apply filters after showing wordlist */
   for (var i = 0; i < allTextLines.length; i++) {
     line = allTextLines[i];
     if (line.charAt(0) == comment || line.replace(/\s*/g,'') == '' || line.charAt(0) == keyval) {
       if (line.charAt(0) == comment) {
         if (line.charAt(1) == '@') {
-          keyval = line.slice(2,line.length).trim().split(':');
+	  apply_filters = true;
+          keyval = line.slice(2,line.length).trim().split('=');
           if (keyval.length == 2) {
             key = keyval[0];
-            vals = keyval[1];
-            if (['highlight', 'basics'].indexOf(key) != -1) {
-              vals = vals.split(',');
+            vals = keyval.slice(1,keyval.length).join('=');
+            if (UTIL.settable.lists.indexOf(key) != -1) {
+              vals = vals.split('|');
             }
-            CFG[key] = vals;
+	    else if (UTIL.settable.dicts.indexOf(key) != -1) {
+	      var vals_ = vals.split('|');
+	      vals = {};
+	      for (var k=0,val; val=vals_[k]; k++) {
+		var keyval = val.split(':');
+		vals[keyval[0]] = keyval[1];
+	      }
+	    }
+	    if (vals != 'undefined') {
+	      CFG[key] = vals;
+	    }
           }
         }
       }
@@ -353,9 +365,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS['uneditables'] = uneditables;
   WLS['column_names'] = column_names;
   WLS['c2i'] = c2i;
-  WLS['height'] = Object.keys(concepts).length;
-  WLS['width'] = Object.keys(taxa).length;
-  WLS['length'] = count;
+
 
   /* ! attention here, this may change if no ids are submitted! */
   CFG['_tidx'] = tIdx-1; // index of taxa
@@ -368,17 +378,32 @@ function csvToArrays(allText, separator, comment, keyval) {
   CFG['_morphemes'] = (typeof mIdx != 'undefined') ? mIdx-1: -1;
   CFG['_sources'] = (typeof srcIdx != 'undefined') ? srcIdx-1: -1;
   CFG['parsed'] = true;
-  CFG['_selected_doculects'] = Object.keys(WLS.taxa);
+  CFG['sorted_taxa'] = Object.keys(WLS.taxa);
+  if (!('_selected_doculects' in CFG)){
+    CFG['_selected_doculects'] = CFG['sorted_taxa'];
+  }
+  
+  /* create array in cfg for concepts in sorted form */
+  concept_keys = Object.keys(WLS.c2i);
+  CFG['sorted_concepts'] = [];
+  for (var i=0; i<concept_keys.length; i++) {
+    CFG['sorted_concepts'].push(WLS.c2i[i+1]);
+  }
+  if (!('_selected_concepts' in CFG)){
+    CFG['_selected_concepts'] = CFG['sorted_concepts'];
+  }
+
+  WLS['height'] = CFG['sorted_concepts'].length;
+  WLS['width'] = CFG['sorted_taxa'].length;
+  WLS['length'] = count;
+
   /* sort selected doculects */
-  CFG['_selected_doculects'].sort(function(x, y) {
+  CFG['sorted_taxa'].sort(function(x, y) {
     if (CFG.doculects) {
       return CFG.doculects.indexOf(x) - CFG.doculects.indexOf(y);
     }
     return (x < y) ? -1 : (x > y) ? 1 : 0;
   });
-  /* get the doculects and sort them */
-  CFG['sorted_taxa'] = Object.keys(WLS.taxa);
-  CFG['sorted_taxa'].sort();
 
   /* check for glottolog and concepticon in header */
   for (var i=0, head; head=WLS.header[i]; i++) {
@@ -430,6 +455,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   else if (root_formattable_keys.indexOf('PARTIALIDS') != -1) {CFG['root_formatter'] = 'PARTIALIDS';}
   else {CFG['root_formatter'] = false;}
   CFG['_roots'] = (CFG['root_formatter']) ? WLS.columns[CFG['root_formatter']] : -1;
+  
   if (CFG['_roots'] != -1) {resetRootFormat(CFG['root_formatter']);} 
   /* create selectors */
   createSelectors();
@@ -441,15 +467,14 @@ function csvToArrays(allText, separator, comment, keyval) {
   }
   WLS._trows.sort(sort_rows);
   WLS.rows.sort(sort_rows);
+  if (apply_filters) {
+    applyFilter();
+  }
 
   /* add statistic information */
   $('#wordlist-statistics').removeClass('hidden').html(
       '&lt;'+CFG['filename'] +
       '&gt; ('+WLS.length+' rows, '+WLS.height+' concepts, '+WLS.width+' doculects)');
-
-  
-  /* log basic settings */
-  console.log('CFG:',CFG);
 }
 
 /* create selectors for languages, concepts, and columns */
@@ -474,12 +499,14 @@ function createSelectors() {
   if (CFG['tc_status'] != 'not' && CFG['tc_status'] != 'notc') {
     //->console.log('creating columns');
     var did = document.getElementById('select_doculects');
-    //var doculects = Object.keys(WLS.taxa);
-    //doculects.sort();
     var doculects = CFG['sorted_taxa'];
     var txt = '';
     for (var i=0,doculect; doculect=doculects[i]; i++) {
-      txt += '<option value="'+doculect+'" selected>'+doculect+'</option>';
+      var sel = '" selected>';
+      if (CFG['_selected_doculects'].indexOf(doculect) == -1) {
+	sel = '">';
+      }
+      txt += '<option value="'+doculect+sel+doculect+'</option>';
     }
     did.innerHTML = txt;
   }
@@ -489,7 +516,11 @@ function createSelectors() {
     concepts.sort();
     txt = ''
     for (var i=0,concept; concept=concepts[i]; i++) {
-      txt += '<option value="'+concept+'" selected>'+concept+'</option>';
+      var sel = '" selected>';
+      if (CFG['_selected_concepts'].indexOf(concept) == -1) {
+	sel = '">';
+      }
+      txt += '<option value="'+concept+sel+concept+'</option>';
     }
     cid.innerHTML = txt;
   }
@@ -1450,7 +1481,7 @@ function applyFilter()
   /* check for empty selection, we need to guarantee that at least
    * one taxon has been selected */
   if (tlist.length == 0) {
-    tlist = Object.keys(WLS['taxa']);
+    tlist = CFG['sorted_taxa'];
     
     if (CFG['tc_status'] != 'not' && CFG['tc_status'] != 'notc') {
       $('#select_doculects').multiselect('select',tlist);
@@ -1496,7 +1527,7 @@ function applyFilter()
       flist.push(option.value);
     }
   }
-
+  CFG['basics'] = flist; /* reassign basics to make sure it is stored */
 
   /* check for empty list of columns, if this is given, we
    * select all columns in basics */
@@ -1717,6 +1748,21 @@ function refreshFile()
 	text += '\n';
       }
     }
+  }
+  for (var i=0,key; key=UTIL.settable.lists[i]; i++) {
+    console.log(key, CFG[key]);
+    text += '#@'+key+'='+CFG[key].join('|')+'\n';
+  }
+  for (var i=0,key; key=UTIL.settable.items[i]; i++) {
+    text += '#@'+key+'='+CFG[key]+'\n';
+  }
+  for (var i=0,key; key=UTIL.settable.dicts[i]; i++) {
+    text += '#@'+key+'=';
+    var tmp = [];
+    for (val in CFG[key]) {
+      tmp.push(key+':'+CFG[val]);
+    }
+    text += tmp.join('|')+'\n';
   }
   STORE = text;
   WLS['edited'] = true;
