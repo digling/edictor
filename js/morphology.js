@@ -17,20 +17,25 @@ MORPH.get_morphemes = function(word, return_morpheme_marks) {
   var mm = [];
   var split = false;
   for (var i=0,segment; segment=word[i]; i++) {
+    /* correct for badly encoded items */
+    var addon = '';
+    if (segment[0] == '!' && segment.length > 1) {addon='!'; segment = segment.slice(1, segment.length);}
+
     if (split && CFG['morpheme_marks'].indexOf(segment) == -1 && segment != CFG['gap_marker']) {
       out.push([]);
       split = false;
     }
+    
     if (CFG['tone_marks'].indexOf(segment[0]) != -1) {
       split = true;
-      out[out.length-1].push(segment);
+      out[out.length-1].push(addon+segment);
     }
     else if (CFG['morpheme_marks'].indexOf(segment) != -1) {
       split = true;
       mm.push(segment);
     }
     else {
-      out[out.length-1].push(segment);
+      out[out.length-1].push(addon+segment);
     }
   }
   if (typeof return_morpheme_marks == 'undefined' || !return_morpheme_marks) {

@@ -15,4 +15,3 @@ STATS.cognates = function() {
     }
 };
 
-

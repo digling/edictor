@@ -133,8 +133,22 @@ ALIGN.normalize = function(alms) {
   return alms
 };
 
- 
-ALIGN.style = function (idx,alm) {
+
+ALIGN.irregular = function(idx, jdx, event) {
+  event.preventDefault();
+  console.log(idx, jdx, this.ALMS);
+  var segment = this.ALMS[idx-1][jdx];
+  if (segment[0] == '!') {
+    segment = segment.slice(1, segment.length);
+  }
+  else {
+    segment = '!' + segment;
+  }
+  this.ALMS[idx-1][jdx] = segment;
+  this.refresh();
+};
+
+ALIGN.style = function (idx, alm) {
   /* function styles an alignment for easy output */
 
   /* create identifier */
@@ -143,6 +157,8 @@ ALIGN.style = function (idx,alm) {
   for (var i=0, seg; seg=alm[i]; i++) {
     var idf = 'alm_'+idx+'_'+i;
     var sound_class = getSoundClass(seg);
+    /* check for sounds annotated to be bad */
+    if (seg[0] == '!' && seg.length > 1) {seg = seg.slice(1, seg.length)}
     
     if (this.UDX.indexOf(i) != -1) {
       if (sound_class != '-') {
@@ -155,7 +171,9 @@ ALIGN.style = function (idx,alm) {
     else {
       if (sound_class != '-') {
         txt += '<td class="residue pointed dolgo_'+sound_class+'" id="'+idf+
-          '" onclick="ALIGN.addGap('+idx+','+i+')">'+seg+'</td>';
+          '" onclick="ALIGN.addGap('+idx+','+i+')" '+
+	  'oncontextmenu="ALIGN.irregular('+idx+','+i+',event)"'+
+	  '>'+seg+'</td>';
       }
       else {
         txt += '<td class="residue dolgo_GAP pointed" id="'+idf+'" '+
