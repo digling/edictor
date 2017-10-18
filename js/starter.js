@@ -515,15 +515,9 @@ function makeMyURL() {
   if (basicsX.value != '') {
     base_url += '&basics='+basicsX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
   }
-  if (pinyinX.value != '') {
-    base_url += '&pinyin='+pinyinX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
-  }
-  if (sampaX.value != '') {
-    base_url += '&sampa='+sampaX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
-  }
-  if (highlightX.value != '') {
-    base_url += '&highlight='+highlightX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
-  }
+  base_url += '&pinyin='+pinyinX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
+  base_url += '&sampa='+sampaX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
+  base_url += '&highlight='+highlightX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
   if (file_nameX.value != '') {
     base_url += '&file='+file_nameX.value;
   }
