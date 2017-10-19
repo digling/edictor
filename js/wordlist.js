@@ -384,7 +384,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   }
   
   /* create array in cfg for concepts in sorted form */
-  concept_keys = Object.keys(WLS.c2i);
+  concept_keys = Object.keys(WLS.concepts);
   CFG['sorted_concepts'] = [];
   for (var i=0; i<concept_keys.length; i++) {
     CFG['sorted_concepts'].push(WLS.c2i[i+1]);
@@ -597,8 +597,7 @@ function createSelectors() {
 }
 
 /* major function for displaying the Wordlist panel of the Edictor */
-function showWLS(start)
-{
+function showWLS(start){
   if (!CFG['parsed']) {
     if (CFG['storable']) {
       CFG['last_time'] = new Date();
@@ -870,9 +869,7 @@ function showWLS(start)
     following = WLS['rows'].length;
   }
   current.innerHTML = 'Showing ' + start + ' - ' + following + ' of ' + parseInt(WLS['rows'].length) + ' entries';
-
   toggleClasses(['first','filename','current'],'hidden','unhidden');
-
   document.getElementById('view').style.display = 'none';
   if (CFG['navbar']) {
     document.getElementById('mainsettings').style.display = 'inline';
@@ -887,6 +884,15 @@ function showWLS(start)
     var tmp = CFG['sorted'].split('_');
     document.getElementById('HEAD_'+tmp.slice(1,tmp.length-1).join('_')).style.backgroundColor = 'Crimson';
     //document.getElementById('HEAD_'+CFG['sorted'].split('_').[1]).style.backgroundColor = 'Crimson';
+  }
+  if (CFG._selected_concepts.length > 1) {
+    document.getElementById('wordlist_current_concept').innerHTML = ''+
+      CFG._selected_concepts[0]+', ...';
+    CFG._current_concept = CFG._selected_concepts[0];
+  }
+  else {
+    document.getElementById('wordlist_current_concept').innerHTML = CFG._selected_concepts[0] + ' (' +
+      WLS['c2i'][CFG._selected_concepts[0]]+'/'+WLS.height+')';
   }
    
   //document.location.hash = 'qlc';
@@ -1467,8 +1473,7 @@ function filterColumnValue(event) {
   showWLS(getCurrent());
 }
 
-function applyFilter()
-{
+function applyFilter(){
   /* get filters for taxa */
   var tid = document.getElementById('select_doculects');
   var tlist = [];

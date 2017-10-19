@@ -277,8 +277,7 @@ function display_previous_cognate() {
 function display_next_cognate() {
 
   var ccon = CFG['_current_concept'];
-  var acon = Object.keys(WLS.concepts);
-  var ncon = acon[(acon.indexOf(ccon)+1)];
+  var ncon = CFG.sorted_concepts[(CFG.sorted_concepts.indexOf(ccon)+1)];
   display_cognates(ncon);
 
   document.getElementById('cognates_current_concept').innerHTML = ncon + ' (' +

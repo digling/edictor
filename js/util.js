@@ -257,7 +257,41 @@ UTIL.refresh_settings = function() {
 
 UTIL.check_wls = function(wls) {
   
-}
+};
+
+UTIL.filter_by_concept = function(concept) {
+  $('#select_concepts').multiselect('deselectAll', false);
+  $('#select_concepts').multiselect('select', concept);
+  applyFilter();
+  showWLS(getCurrent());
+};
+
+UTIL.display_next_concept = function() {
+  if (typeof CFG._current_concept == 'undefined') {
+    CFG._current_concept = WLS.c2i[1];
+  }
+  var ccon = CFG._current_concept;
+  var ncon = CFG.sorted_concepts[(CFG.sorted_concepts.indexOf(ccon)+1)];
+  if (typeof ncon == 'undefined') {
+    ncon = CFG.sorted_concepts[0];
+  }
+  this.filter_by_concept(ncon);
+  CFG['_current_concept'] = ncon;
+};
+
+UTIL.display_previous_concept = function() {
+  if (typeof CFG._current_concept == 'undefined') {
+    CFG._current_concept = WLS.c2i[1];
+  }
+  var ccon = CFG._current_concept;
+  var ncon = CFG.sorted_concepts[(CFG.sorted_concepts.indexOf(ccon)-1)];
+  if (typeof ncon == 'undefined') {
+    ncon = CFG.sorted_concepts[(CFG.sorted_concepts.length-1)];
+  }
+  this.filter_by_concept(ncon);
+  CFG['_current_concept'] = ncon;
+};
+
 
 var ALIAS = {
   'doculect': ['TAXON', 'LANGUAGE', 'DOCULECT', 'DOCULECTS', 'TAXA', 'LANGUAGES', 'CONCEPTLIST'],
