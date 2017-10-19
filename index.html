@@ -5,7 +5,7 @@
 author   : Johann-Mattis List
 email    : mattis.list@lingulist.de
 created  : 2017-09-29 15:19
-modified : 2017-09-29 15:19
+modified : 2017-10-19 02:51
 
 -->
 <html>
@@ -268,6 +268,9 @@ modified : 2017-09-29 15:19
 	    <input id="previous" type="button" class="btn btn-primary mright submit3 hidden" value="0-0"/>
 	    <input id="first" type="button"    class="btn btn-primary mright submit3 unhidden" value="START " onclick="showWLS(1)" />
 	    <input id="next" type="button"     class="btn btn-primary mright submit3 hidden" value="1-1" />
+	    <button class="btn btn-primary mright submit3" onclick="UTIL.display_previous_concept()">←</button>
+	    <button id="wordlist_current_concept" class="btn btn-primary mright submit3"></button>
+	    <button class="btn btn-primary mright submit3" onclick="UTIL.display_next_concept()">→</button>
 	  </div>
 	  <button type="button" class="btn-primary titled btn submit3 pull-right"
 	    title="show help"
@@ -341,6 +344,8 @@ var load = PRISON.import(
     'js/vendor/bootstrap.min',
     'js/vendor/bootstrap-multiselect',
     'js/vendor/spin',
+    'js/datatable',
+    'js/statistics',
     'js/util',
     'js/alignments',
     'js/cognates',

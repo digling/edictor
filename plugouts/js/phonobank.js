@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2016-03-31 09:51
- * modified : 2016-03-31 09:51
+ * modified : 2017-10-19 11:57
  *
  */
 
@@ -22,7 +22,6 @@ var sound_list = settings['sound_list'].split(',');
 var visited_sounds = [];
 
 var secondary_articulations = ['ʰ','ʲ','ʱ','ː','ⁿ', 'ʷ', '˞', '\u0331', '\u0306'];
-console.log(secondary_articulations, sound_list);
 
 
 var idxs = ['ipa_chart_1', 'ipa_chart_2', 'ipa_chart_3', 

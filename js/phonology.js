@@ -192,11 +192,11 @@ function showPhonology (event, doculect, sort, direction) {
     '<th ondblclick="showPhonology(false,\''+doculect+'\',\'type\','  +f_dir+')" title="double click to sort" class="features '+((sort == 'type') ? 'sorted' :  'unsorted')+'" >TYPE</th>' + 
     '<th ondblclick="showPhonology(false,\''+doculect+'\',\'manner\','+f_dir+')" title="double click to sort" class="features '+((sort == 'manner') ? 'sorted' :'unsorted')+'" >MANNER (HEIGHT)</th>' +
     '<th ondblclick="showPhonology(false,\''+doculect+'\',\'place\',' +f_dir+')" title="double click to sort" class="features '+((sort == 'place') ? 'sorted' : 'unsorted')+'" >PLACE (COLOR)</th>' +
-    '<th ondblclick="showPhonology(false,\''+doculect+'\',\'misc1\',' +f_dir+')" title="double click to sort" class="features '+((sort == 'misc1') ? 'sorted' : 'unsorted')+'" >VOICE (NASAL)</th>' +
-    '<th ondblclick="showPhonology(false,\''+doculect+'\',\'misc2\',' +f_dir+')" title="double click to sort" class="features '+((sort == 'misc2') ? 'sorted' : 'unsorted')+'" >SECONDARY</th>' +
+   '<th ondblclick="showPhonology(false,\''+doculect+'\',\'misc1\',' +f_dir+')" title="double click to sort" class="features '+((sort == 'misc1') ? 'sorted' : 'unsorted')+'" >SECONDARY</th>' +
     '<th>Concepts</th>' + 
     '</tr>';
-
+    //'<th ondblclick="showPhonology(false,\''+doculect+'\',\'misc1\',' +f_dir+')" title="double click to sort" class="features '+((sort == 'misc1') ? 'sorted' : 'unsorted')+'" >VOICE (NASAL)</th>' +
+ 
   var normalized_sounds = [];
   for (var i=0,phoneme; phoneme=phonemes[i]; i++) {
     var noc = occs[phoneme].length;
@@ -236,8 +236,15 @@ function showPhonology (event, doculect, sort, direction) {
   text += '</table>';
 
   /* make url for link */
-  var link = 'phonobank.html?doculect='+encodeURIComponent(doculect)+'&sound_list='+encodeURIComponent(normalized_sounds.join(','));
-  var url = 'doculect='+encodeURIComponent(doculect)+'&sound_list='+encodeURIComponent(normalized_sounds.join(','));
+  var sound_list = normalized_sounds.join(',');
+  var st = {'¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁰': '0'};
+  for (var r in st) {
+    var rg = new RegExp(r, 'g') 
+    sound_list = sound_list.replace(rg, st[r]);
+  }
+  sound_list = 'doculect='+encodeURIComponent(doculect)+'&sound_list='+encodeURIComponent(sound_list);
+  var link = 'phonobank.html?'+sound_list;
+  var url = sound_list; 
   var ipa_chars = document.getElementById('ipa_charts');
   ipa_charts.style.display="inline";
   ipa_charts.onclick = function() {PHON.showChart(url, doculect)};
