@@ -24,6 +24,7 @@ function getDTAB(name, header, table, columns, titles, preview){
     }
     DTAB.columns[head] = content;
   }
+
   DTAB.preview = preview;
   DTAB.idxs = [];
   for (var i=0,col; col=table[i]; i++) {
@@ -32,26 +33,40 @@ function getDTAB(name, header, table, columns, titles, preview){
   DTAB.select = function(from) {
     this.selected = [];
     var preview = from + this.preview;
-    console.log('DTABxxx', preview, this.preview, from, this.table.length);
-    if (this.preview > DTAB.table.length) {
-      preview = this.table.length;
+    if (preview >= DTAB.table.length-1) {
+      preview = this.table.length-1;
     }
     for (var i=from; i < preview; i++) {
       this.selected.push(i);
     }
   };
-  DTAB.render = function(from) {
+  DTAB.render = function(from, alternate) {
+    if (typeof alternate == 'undefined') {
+      alternate = this.table[0].length-1;
+    }
     DTAB.select(from);
     text = '';
     text += '<table class="data_table2" id="'+this.name+'_table">';
     text += '<tr id="'+this.name+'_header">';
     for (var i=0,head; head=header[i]; i++) {
-      text += '<th title="'+DTAB.titles[i]+'">'+head+'</th>';
+      text += '<th title="'+DTAB.titles[i]+'" id="'+this.name+'_'+DTAB.titles[i]+'">'+head+'</th>';
     }
     text += '</tr>';
+    var current_item = '';
+    var current_class = 'd0';
     for (var i=0; i < this.selected.length; i++) {
       idx = this.selected[i];
-      text += '<tr id="'+this.name+'_row_'+idx+'">';
+      if (current_item != this.table[idx][alternate].join(',')){
+	if (current_class == 'd0') {
+	  current_class = 'd1';
+	}
+	else if (current_class == 'd1') {
+	  current_class = 'd0';
+	}
+	current_item = this.table[idx][alternate].join(',');
+      }
+
+      text += '<tr id="'+this.name+'_row_'+idx+'" class="'+current_class+'">';
       if (typeof this.table[idx] == 'undefined') {
 	DTAB.current = 0;
       }
@@ -63,7 +78,6 @@ function getDTAB(name, header, table, columns, titles, preview){
       text += '</tr>';
     }
     text += '</table>';
-    console.log(DTAB.preview, from, DTAB.selected, 'DTAB');
     return text;
   };
   return DTAB;
