@@ -8,11 +8,12 @@
  */
 
 /* create a datatable */
-function getDTAB(name, header, table, columns, preview){
+function getDTAB(name, header, table, columns, titles, preview){
   var DTAB = new Object();
   DTAB.name = name;
   DTAB.table = table;
   DTAB.header = header;
+  DTAB.titles = titles;
   DTAB.columns = {};
   for (var i=0; i<columns.length; i++) {
     col = columns[i];
@@ -42,8 +43,12 @@ function getDTAB(name, header, table, columns, preview){
   DTAB.render = function(from) {
     DTAB.select(from);
     text = '';
-    text += '<table class="data_table" id="'+this.name+'_table">';
-    text += '<tr id="'+this.name+'_header"><th>'+this.header.join('</th><th>')+'</th></tr>';
+    text += '<table class="data_table2" id="'+this.name+'_table">';
+    text += '<tr id="'+this.name+'_header">';
+    for (var i=0,head; head=header[i]; i++) {
+      text += '<th title="'+DTAB.titles[i]+'">'+head+'</th>';
+    }
+    text += '</tr>';
     for (var i=0; i < this.selected.length; i++) {
       idx = this.selected[i];
       text += '<tr id="'+this.name+'_row_'+idx+'">';

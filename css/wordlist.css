@@ -936,9 +936,9 @@ table.alignments {
 .largebox {
   display: inline;
   float: left;
-  max-width: 90%;
+  max-width: 100%;
   z-index: 100;
-  overflow: hidden;
+  overflow-x: scroll;
   background-color: #fefefe;
   padding-top: 10px;
   padding-left: 25px;
