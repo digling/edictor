@@ -236,7 +236,7 @@ UTIL.refresh_settings = function() {
   
   for (var i=0,entry; entry=['cognates', 'alignments', 'morphemes', 'roots', 'sources', 'note'][i]; i++) {
     if (entry == 'cognates') {
-      var this_entry = '_fidx';A
+      var this_entry = '_fidx';
     }
     else {
       var this_entry = '_'+entry;
