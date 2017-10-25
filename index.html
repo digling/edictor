@@ -1,6 +1,6 @@
 <!--
 
-<++>
+EDICTOR main menu
 
 author   : Johann-Mattis List
 email    : mattis.list@lingulist.de
@@ -146,6 +146,13 @@ modified : 2017-10-19 02:51
                   <span class="glyphicon glyphicon-remove"></span>
                   <span class="glyphicon glyphicon-ok" style="display: none"></span>
                   COGNATE SETS
+                </a>
+              </li>
+              <li>
+                <a id="toggle_patterns" onclick="loadAjax(event, 'sortable', 'patterns', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  CORRESPONDENCE PATTERNS
                 </a>
               </li>
             </ul>
@@ -348,6 +355,7 @@ var load = PRISON.import(
     'js/statistics',
     'js/util',
     'js/alignments',
+    'js/patterns',
     'js/cognates',
     'js/phonology',
     'js/morphology',

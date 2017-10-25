@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2017-10-14 14:01
+ * modified : 2017-10-25 13:28
  *
  */
 
@@ -157,9 +157,18 @@ function csvToArrays(allText, separator, comment, keyval) {
           if (keyval.length == 2) {
             key = keyval[0];
             vals = keyval.slice(1,keyval.length).join('=');
-            if (UTIL.settable.lists.indexOf(key) != -1) {
+	    if (vals == 'true') {
+	      vals = true;
+	    }
+	    else if (vals == 'false') {
+	      vals = false;
+	    }
+	    else if (UTIL.settable.lists.indexOf(key) != -1) {
               vals = vals.split('|');
             }
+	    else if (UTIL.settable.integers.indexOf(key) != -1) {
+	      vals = parseInt(vals);
+	    }
 	    else if (UTIL.settable.dicts.indexOf(key) != -1) {
 	      var vals_ = vals.split('|');
 	      vals = {};
@@ -170,6 +179,7 @@ function csvToArrays(allText, separator, comment, keyval) {
 	    }
 	    if (vals != 'undefined') {
 	      CFG[key] = vals;
+	      console.log(key, vals);
 	    }
           }
         }
@@ -378,16 +388,21 @@ function csvToArrays(allText, separator, comment, keyval) {
   CFG['_morphemes'] = (typeof mIdx != 'undefined') ? mIdx-1: -1;
   CFG['_sources'] = (typeof srcIdx != 'undefined') ? srcIdx-1: -1;
   CFG['parsed'] = true;
-  CFG['sorted_taxa'] = Object.keys(WLS.taxa);
+  if (typeof CFG['sorted_taxa'] == 'undefined'){
+    console.log(CFG.sorted_taxa, 'sorted taxa');
+    CFG['sorted_taxa'] = Object.keys(WLS.taxa);
+  }
   if (!('_selected_doculects' in CFG)){
     CFG['_selected_doculects'] = CFG['sorted_taxa'];
   }
   
   /* create array in cfg for concepts in sorted form */
   concept_keys = Object.keys(WLS.concepts);
-  CFG['sorted_concepts'] = [];
-  for (var i=0; i<concept_keys.length; i++) {
-    CFG['sorted_concepts'].push(WLS.c2i[i+1]);
+  if (typeof CFG.sorted_concepts == 'undefined') {
+    CFG['sorted_concepts'] = [];
+    for (var i=0; i<concept_keys.length; i++) {
+      CFG['sorted_concepts'].push(WLS.c2i[i+1]);
+    }
   }
   if (!('_selected_concepts' in CFG)){
     CFG['_selected_concepts'] = CFG['sorted_concepts'];
@@ -396,14 +411,6 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS['height'] = CFG['sorted_concepts'].length;
   WLS['width'] = CFG['sorted_taxa'].length;
   WLS['length'] = count;
-
-  /* sort selected doculects */
-  CFG['sorted_taxa'].sort(function(x, y) {
-    if (CFG.doculects) {
-      return CFG.doculects.indexOf(x) - CFG.doculects.indexOf(y);
-    }
-    return (x < y) ? -1 : (x > y) ? 1 : 0;
-  });
 
   /* check for glottolog and concepticon in header */
   for (var i=0, head; head=WLS.header[i]; i++) {
@@ -1492,6 +1499,20 @@ function applyFilter(){
       $('#select_doculects').multiselect('select',tlist);
     }
   }
+  /* sort, following predefined order */
+  tlist.sort(function (x, y) {
+    idxA = CFG.sorted_taxa.indexOf(x);
+    idxB = CFG.sorted_taxa.indexOf(y);
+    if (idxA == idxB) {
+      return 0;
+    }
+    else if (idxA > idxB) {
+      return 1;
+    }
+    else {
+      return -1;
+    }
+  });
   CFG['_selected_doculects'] = tlist;
 
   var trows = [];
@@ -1510,8 +1531,7 @@ function applyFilter(){
   
   /* make sure list is not empty to avoid that nothing is selected */
   if (clist.length == 0) {
-    clist = Object.keys(WLS.concepts);
-    
+    clist = CFG.sorted_concepts;
     if (CFG['tc_status'] != 'noc' && CFG['tc_status'] != 'notc') {
       $('#select_concepts').multiselect('select',clist);
     }
@@ -1611,6 +1631,7 @@ function applyFilter(){
 
   /* sort both lists */
   trows.sort(function(x, y) {return x - y});
+  console.log(trows);
   crows.sort(function(x, y) {return x - y});
   if (arows.length > 0){
     arows.sort(function(x, y) {return x - y});}
@@ -1769,6 +1790,8 @@ function refreshFile()
     }
     text += tmp.join('|')+'\n';
   }
+
+
   STORE = text;
   WLS['edited'] = true;
   localStorage.text = text;
@@ -2290,13 +2313,12 @@ function editGroup(event, idx) {
   /* sort the rows */
   rows.sort(function (x, y) {
     var X = WLS[x][CFG._tidx];
-    var Y = WLS[x][CFG._tidx];
-    if (CFG.doculects) {
-      return CFG.doculects.indexOf(X) - CFG.doculects.indexOf(Y);
+    var Y = WLS[y][CFG._tidx];
+    if (CFG.sorted_taxa) {
+      return CFG.sorted_taxa.indexOf(X) - CFG.sorted_taxa.indexOf(Y);
     }
     return (X < Y) ? -1 : (X < Y) ? 1 : 0;
   });
-  console.log(rows, CFG.doculects);
 
   /* check for proper alignments first */
   if (CFG['_alignments'] != -1) {

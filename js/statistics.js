@@ -131,7 +131,7 @@ SETS.previous_preview = function(){
 
 
 SETS.simple_refresh = function(){
-  document.getElementById('sets_table').innerHTML = SETS.DTAB.render(SETS.current);
+  document.getElementById('sets_table').innerHTML = SETS.DTAB.render(SETS.current, SETS.matrix[0].length-1, function(x){return x.join(',');});
   document.getElementById('SETS_current').innerHTML = (SETS.current+1) + '-'+(SETS.current+SETS.preview)+' of '+Object.keys(SETS.matrix).length+' Sets';
   SETS.getSorters();
 
@@ -147,7 +147,7 @@ SETS.refresh = function() {
     }
   }
   SETS.preview=parseInt(document.getElementById('SETS_preview').value);
-  document.getElementById('sets_table').innerHTML = SETS.render_matrix(clist).render(SETS.current);
+  document.getElementById('sets_table').innerHTML = SETS.render_matrix(clist).render(SETS.current, SETS.matrix[0].length-1, function(x){return x.join(',')});
   document.getElementById('SETS_current').innerHTML = (SETS.current+1) + '-'+(SETS.current+SETS.preview)+' of '+Object.keys(SETS.matrix).length+' Sets';
   SETS.getSorters();
 };
@@ -213,9 +213,7 @@ SETS.render_cognates = function() {
   menu += '<button class="btn btn-primary mright submit3 pull-right;" style="padding:8px;" onclick="SETS.render_cognates()"><span class="glyphicon glyphicon-refresh" title="refresh cognates"></span></button>';
   document.getElementById('SETS_menu').innerHTML = menu;
 
-
-
-  document.getElementById('sets_table').innerHTML = dtab.render(0);
+  document.getElementById('sets_table').innerHTML = dtab.render(0, SETS.matrix[0].length-1, function(x){x.join(',');});
   $('#sets_select_cognates').multiselect({
     disableIfEmtpy: true,
     includeSelectAllOption : true,

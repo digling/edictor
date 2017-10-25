@@ -185,12 +185,28 @@ function display_cognates(concept, sortby) {
   txt += '<th onclick="display_cognates(\''+cstring+'\',3)" class="pointed alm_head alm_bdl" colspan="3">EDIT</th></tr>';
 
   /* sort data according to concept and cognate id and taxon */
-  data.sort(
-      function(x,y) {
-	var _x = [x[3], x[sortby], x[2],x[1]].join(' ');
-	var _y = [y[3], y[sortby], y[2],y[1]].join(' ');
-	return _x.localeCompare(_y);
-      });
+  if (sortby == 1) {
+    data.sort(
+        function(x, y) {
+	  if (x[3] == y[3]) {
+	    return CFG.sorted_taxa.indexOf(x[1]) - CFG.sorted_taxa.indexOf(y[1]);
+	  }
+	  else if(x[3] > y[3]) {
+	    return 1;
+	  }
+	  else {
+	    return -1;
+	  }
+        });
+  }
+  else {
+    data.sort(
+        function(x,y) {
+          var _x = [x[3], x[sortby], CFG.sorted_taxa.indexOf(x[2]), x[1]].join(' ');
+          var _y = [y[3], y[sortby], CFG.sorted_taxa.indexOf(y[2]), y[1]].join(' ');
+          return _x.localeCompare(_y);
+        });
+  }
 
   /* determine length of cognate sets */
   var csets = {};

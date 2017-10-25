@@ -40,9 +40,12 @@ function getDTAB(name, header, table, columns, titles, preview){
       this.selected.push(i);
     }
   };
-  DTAB.render = function(from, alternate) {
+  DTAB.render = function(from, alternate, alternate_function) {
     if (typeof alternate == 'undefined') {
       alternate = this.table[0].length-1;
+    }
+    if (typeof alternate_function == 'undefined') {
+      alternate_function = function (x) { return x;};
     }
     DTAB.select(from);
     text = '';
@@ -52,20 +55,20 @@ function getDTAB(name, header, table, columns, titles, preview){
       text += '<th title="'+DTAB.titles[i]+'" id="'+this.name+'_'+DTAB.titles[i]+'">'+head+'</th>';
     }
     text += '</tr>';
-    var current_item = '';
+    var current_item = '???';
     var current_class = 'd0';
     for (var i=0; i < this.selected.length; i++) {
       idx = this.selected[i];
-      if (current_item != this.table[idx][alternate].join(',')){
+      if (current_item != alternate_function(this.table[idx][alternate])){
 	if (current_class == 'd0') {
 	  current_class = 'd1';
 	}
 	else if (current_class == 'd1') {
 	  current_class = 'd0';
 	}
-	current_item = this.table[idx][alternate].join(',');
+	current_item = alternate_function(this.table[idx][alternate]);
+	text += '<tr style=""><td style="margin:0px;padding:5px;background-color:white;border:0px solid white;" colspan="'+DTAB.table[0].length+'"><hr style="color:black;height:5px;padding:0px;margin:0px;"></td></tr>';
       }
-
       text += '<tr id="'+this.name+'_row_'+idx+'" class="'+current_class+'">';
       if (typeof this.table[idx] == 'undefined') {
 	DTAB.current = 0;

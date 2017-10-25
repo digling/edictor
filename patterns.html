@@ -1,0 +1,33 @@
+<!--
+
+Patterns panel of the EDICTOR
+
+author   : Johann-Mattis List
+email    : mattis.list@lingulist.de
+created  : 2017-10-24 17:47
+modified : 2017-10-24 17:47
+
+-->
+
+<span class="main_handle pull-left"></span>
+<button type="button" onclick="$('#toggle_patterns > span').toggle(); $('#patterns').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+<div class="sets-message">
+  <h3>Investigate correspondence patterns in the data</h3>
+  <div style="display:block">
+    <div class="btn-group pull-left" id="PATS_menu"><button class="btn btn-primary mright submit3"
+							      onclick="PATS.render_patterns();this.style.display='none';">OK</button>
+      <span style="background-color: #2d6ca2; color:white; border-radius:5px; border:2px solid #2d6ca2;padding:5px;margin-right:10px;">
+      <b title="Select between full and partial colexification in the display.">MODE:</b>
+      <input name="morphology_mode" checked = "" onchange="CFG['_morphology_mode'] = 'full';" type="radio"> FULL 
+      <input name="morphology_mode" onchange="CFG['_morphology_mode'] = 'partial';" type="radio"> PARTIAL</span>  
+    </div>
+     <div class="btn-group pull-right">
+       <button type="button" class="btn-primary titled btn submit3 pull-right" title="show help"
+	 onclick="UTIL.show_help('patterns');" style="margin-left:5px;"><span class="glyphicon glyphicon-question-sign"></span></button>
+   
+     </div>
+  </div>
+  <br><br>
+
+  <div style="display:block"><div id="patterns_table"></div>
+ 

@@ -32,10 +32,23 @@ instructions which will appear.
       <input  id="settings_roots" class="col-sm-3 form-control textfield titled" style="width:250px"
       placeholder="partial cognate ID column" value="" type="text">
     </td></tr>
+  <tr title="Change or set your preferred column to store and deal with sound sequences.">
+    <th>Tokens</th><td >
+      <input  id="settings_tokens" class="col-sm-3 form-control textfield titled" style="width:250px"
+      placeholder="tokens column" value="" type="text">
+    </td>
+  </tr>
   <tr title="Change or set your preferred column to store and deal with alignments.">
     <th>Alignments</th><td >
       <input  id="settings_alignments" class="col-sm-3 form-control textfield titled" style="width:250px"
       placeholder="alignment column" value="" type="text">
+    </td>
+  </tr>
+  <tr title="Select your preferred settings for colexifications.">
+    <th> Morphology and Colexification Mode</th>
+    <td>
+      <input name="morphology_mode" checked = "" onchange="CFG['_morphology_mode'] = 'full';" type="radio"> FULL 
+      <input name="morphology_mode" onchange="CFG['_morphology_mode'] = 'partial';" type="radio"> PARTIAL     
     </td>
   </tr>
   <tr title="Change or set your preferred column to store and deal with morpheme data.">
@@ -66,6 +79,13 @@ instructions which will appear.
     <th>Pīnyīn</th><td>
       <input  id="settings_pinyin" class="col-sm-3 form-control textfield titled" style="width:250px"
       placeholder="pinyin, chinese, etc." value="" type="text">
+    </td>
+  </tr>
+  <tr title="Determine the basic order of your doculects">
+    <th>Doculect Order</th>
+    <td>
+      <input  id="settings_doculectorder" class="col-sm-3 form-control textfield titled" style="width:250px"
+      placeholder="languageA, languageB, etc." value="" type="text">
     </td>
   </tr>
   <tr title="Decide in which column you want to store your sources.">

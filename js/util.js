@@ -98,7 +98,8 @@ UTIL.settings = {
   '_proto' : false,
   '_note' : 'NOTE',
   'separator': "\t",
-  'comment': '#'
+  'comment': '#',
+  'proto' : -1
 }
 
 UTIL.settable = {
@@ -109,7 +110,9 @@ UTIL.settable = {
     "css",
     "basics",
     "_selected_doculects",
-    "_selected_concepts"
+    "_selected_concepts",
+    "sorted_taxa",
+    "sorted_concepts"
   ],
   "items" : [
     "missing_marker",
@@ -117,12 +120,18 @@ UTIL.settable = {
     "gap_marker",
     "formatter",
     "root_formatter",
-    "preview",
     "note_formatter",
     "pattern_formatter",
     "publish",
     "_almcol",
     "filename",
+    "navbar"
+  ],
+  "integers" : [
+    "preview"
+  ],
+  "bools" : [
+    "publish",
     "navbar"
   ],
   "dicts" : [
@@ -147,7 +156,7 @@ UTIL.open_remote_dbase = function(dbase, frame) {
 UTIL.load_settings = function() {
 
   var settables = ['preview', 'cognates', 'alignments', 'morphemes', 'roots', 'highlight', 'sampa',
-    'pinyin', 'sources', 'note', 'proto'];
+    'pinyin', 'sources', 'note', 'proto', 'doculectorder'];
   var entries = {};
   for (var i=0, settable; settable=settables[i]; i++) {
     entries[settable] = document.getElementById('settings_'+settable);
@@ -192,24 +201,42 @@ UTIL.load_settings = function() {
     $(entries[entry]).autocomplete({
         source: WLS.header });
   }
-  $(entries['proto']).autocomplete({source: Object.keys(WLS.taxa)});
-
+  $(entries['proto']).autocomplete({source: CFG.sorted_taxa});
+  $(entries['doculectorder']).autocomplete({source: CFG.sorted_taxa});
+  entries['doculectorder'].value = CFG.sorted_taxa.join(',');
 };
 
 UTIL.refresh_settings = function() {
 
   var settables = ['preview', 'cognates', 'alignments', 'morphemes', 'roots', 'highlight', 'sampa', 
-    'pinyin', 'sources', 'note', 'proto' ];
+    'pinyin', 'sources', 'note', 'proto', 'doculectorder'];
   var entries = {};
   for (var i=0, settable; settable=settables[i]; i++) {
     entries[settable] = document.getElementById('settings_'+settable);
   }
   
   CFG['preview'] = parseInt(entries['preview'].value);
+  CFG['proto'] = (entries['proto'].value != '') ? entries['proto'].value : -1;
+  if (CFG['sorted_taxa'].value != '') {
+    var stax = [];
+    var names = entries['doculectorder'].value.split(',');
+    for (var i=0; i<names.length; i++) {
+      if (LIST.has(CFG.sorted_taxa, names[i])) {
+	stax.push(names[i]);
+      }  
+    }
+    if (stax.length == CFG.sorted_taxa.length) {
+      CFG.sorted_taxa = stax;
+    }
+    else {
+      fakeAlert('The doculects you selected do not match with the names in your data!');
+      entries['doculectorder'].value = CFG.sorted_taxa.join(',');
+    }
+  }
   
   for (var i=0,entry; entry=['cognates', 'alignments', 'morphemes', 'roots', 'sources', 'note'][i]; i++) {
     if (entry == 'cognates') {
-      var this_entry = '_fidx';
+      var this_entry = '_fidx';A
     }
     else {
       var this_entry = '_'+entry;
@@ -252,7 +279,6 @@ UTIL.refresh_settings = function() {
     entries[entry].value = new_vals.join(',');
   }
   showWLS(getCurrent());
-  //-> console.log(CFG['_fidx'])
 };
 
 UTIL.check_wls = function(wls) {
@@ -351,4 +377,25 @@ TEXT.escapeValue = function(text) {
     }
   }
   return out;
+};
+
+
+var LIST = {};
+LIST.count = function(x, y){
+  var count = 0;
+  for(var i = 0; i < x.length; ++i){
+      if(x[i] == y)
+          count++;
+  }
+  return count;
+};
+LIST.has = function(x, y){
+  if (x.indexOf(y) != -1){
+    return true;
+  }
+  return false;
+};
+LIST.sum = function(x) {
+  /* https://stackoverflow.com/questions/3762589/fastest-javascript-summation */
+  return x.reduce(function(pv, cv) { return pv + cv; }, 0);
 };
