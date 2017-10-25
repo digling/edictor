@@ -84,7 +84,8 @@ PATS.get_patterns = function(lengths){
           var tokens = WLS[idx][CFG._alignments].split(' ');
           var concept = WLS[idx][CFG._cidx];
           var tidx = PATS.selected_doculects.indexOf(taxon)+3;
-          for (var j=0, segment; segment=tokens[j]; j++) {
+          for (var j=0; j<tokens.length; j++) {
+	    var segment = tokens[j];
             rows[j][tidx] = [idx, j, segment];
             if (rows[j][2].indexOf(concept) == -1) {
               rows[j][2].push(concept);

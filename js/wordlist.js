@@ -1977,11 +1977,11 @@ function addLine(rowidx) {
 
   $('#addline_taxon').autocomplete({
     delay: 0,
-    source: Object.keys(WLS['taxa'])
+    source: CFG.ordered_taxa
   });
   $('#addline_concept').autocomplete({
     delay: 0,
-    source: Object.keys(WLS['concepts'])
+    source: CFG.ordered_concepts
   });
 }
 

@@ -486,13 +486,13 @@ PART.editGroup = function (event, idx) {
     }
   }
   if (alms.length == 1) {
-    fakeAlert(CFG['formatter']+' &quot;'+idx+'&quot; links only one entry.');
+    fakeAlert('Cognate set &quot;'+idx+'&quot; links only one entry.');
     return;
   }
   var text = '<div class="edit_links" id="editlinks">';
   text += '<p>';
   text += '<span class="main_handle pull-left" style="margin-left:-7px;margin-top:2px;" ></span>';
-  text += CFG['formatter'] + ' &quot;'+idx+'&quot; links the following '+alms.length+' entries:</p>';
+  text += 'Cognate set &quot;'+idx+'&quot; links the following '+alms.length+' entries:</p>';
   text += '<div class="alignments" id="alignments"><table onclick="fakeAlert(\'Press on EDIT or ALIGN to edit the alignments.\');">';
   for (var i=0,alm;alm=alms[i];i++) {
     text += '<tr>'+alm+'</tr>';

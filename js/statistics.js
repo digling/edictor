@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2017-09-29 15:29
- * modified : 2017-09-29 15:29
+ * modified : 2017-10-25 17:27
  *
  */
 
@@ -14,9 +14,63 @@ SETS.preview = 20;
 SETS.matrix = [];
 SETS.concepts = {};
 
+/* retrieve concepts to annotate for missing data */
+SETS.get_concepts = function(idx, language){
+  var concept = WLS[idx][CFG._cidx];
+  if (language in SETS.concepts){
+    if (concept in SETS.concepts[language]){
+      SETS.concepts[language][concept] += 1;
+    }
+    else {
+      SETS.concepts[language][concept] = 1;
+    }
+  }
+  else {
+    SETS.concepts[language] = {};
+    SETS.concepts[language][concept] = 1;
+  }
+};
+
 /* function calculates cognates similar to etd in lingpy */
-SETS.get_etymdict = function() {
+SETS.get_partial_etymdict = function() {
   SETS.etd = {};
+  SETS.concepts = {};
+  for (var i=0,idx; idx=WLS.rows[i]; i++) {
+    var language = WLS[idx][CFG._tidx];
+    if (CFG._selected_doculects.indexOf(language) != -1) {
+      var cogids = WLS[idx][CFG._roots].split(' ');
+      for (var j=0; j<cogids.length; j++) {
+        var cogid = cogids[j];
+        if (cogid in SETS.etd && cogid != 0) {
+          if (language in SETS.etd[cogid]) {
+            SETS.etd[cogid][language].push(idx);
+          }
+          else {
+            SETS.etd[cogid][language] = [idx];
+          }
+        }
+        else if (cogid != 0) {
+          SETS.etd[cogid] = {};
+          SETS.etd[cogid][language] = [idx];
+        }
+      }
+    }
+    this.get_concepts(idx, language);
+  }
+};
+
+SETS.get_etymdict = function(){
+  if (CFG._morphology_mode == 'partial') {
+    SETS.get_partial_etymdict();
+  }
+  else {
+    SETS.get_normal_etymdict();
+  }
+}
+/* load a normal etymological dictionary (similar to lingpy data-structure) */
+SETS.get_normal_etymdict = function() {
+  SETS.etd = {};
+  SETS.concepts = {};
   for (var i=0,idx; idx=WLS.rows[i]; i++) {
     var language = WLS[idx][CFG._tidx];
     if (CFG._selected_doculects.indexOf(language) != -1) {
@@ -34,19 +88,7 @@ SETS.get_etymdict = function() {
         SETS.etd[cogid][language] = [idx];
       }
     }
-    var concept = WLS[idx][CFG._cidx];
-    if (language in SETS.concepts){
-      if (concept in SETS.concepts[language]){
-	SETS.concepts[language][concept] += 1;
-      }
-      else {
-	SETS.concepts[language][concept] = 1;
-      }
-    }
-    else {
-      SETS.concepts[language] = {};
-      SETS.concepts[language][concept] = 1;
-    }
+    this.get_concepts(idx, language);
   }
 };
 
@@ -65,7 +107,7 @@ SETS.get_matrix = function(lengths) {
       var concepts = [];
       for (var i=0; i<CFG._selected_doculects.length; i++) {
         if (CFG._selected_doculects[i] in SETS.etd[cogid]) {
-          SETS.matrix[count].push(SETS.etd[cogid][CFG._selected_doculects[i]]);
+          SETS.matrix[count].push([SETS.etd[cogid][CFG._selected_doculects[i]], cogid]);
 	  for (var j=0, idx; idx=SETS.etd[cogid][CFG._selected_doculects[i]][j]; j++){
 	    var concept = WLS.c2i[WLS[idx][CFG._cidx]];
 	    if (concepts.indexOf(concept) == -1) {
@@ -96,15 +138,35 @@ SETS.get_matrix = function(lengths) {
       }
     }
   }
+  SETS.matrix.sort(function (x, y){
+    var lastidx = SETS.matrix[0].length-1;
+    var pattX = x.slice(1, x.length).map(function (cell){if (cell.length == 0){return 0} else if (cell[0] == -1){return 0} return 1;});
+    var pattY = y.slice(1, y.length).map(function (cell){if (cell.length == 0){return 0} else if (cell[0] == -1){return 0} return 1;});
+    var conceptA = WLS.c2i[x[lastidx][0]];
+    var conceptB = WLS.c2i[y[lastidx][0]];
+    if (conceptA == conceptB) {
+      return LIST.sum(pattY) - LIST.sum(pattX);
+    }
+    return conceptA.localeCompare(conceptB);
+  });
 };
 
-SETS.show_words = function(elm, cell){
+SETS.show_words = function(elm, cell, cogid){
+
   var idx = cell[0];
+  if (CFG._morphology_mode == 'partial') {
+    var pidx = WLS[idx][CFG._roots].split(' ').indexOf(cogid);
+    var segs = MORPH.get_morphemes(WLS[idx][CFG._segments].split(' '))[pidx].join(' ');
+  }
+  else {
+    var segs = WLS[idx][CFG._segments];
+  }
+    
   if (elm.innerHTML != ''+idx) {
     elm.innerHTML = idx;
   }
   else {
-    elm.innerHTML = plotWord(WLS[idx][CFG._segments], 'span');
+    elm.innerHTML = plotWord(segs, 'span');
   }
 };
 
@@ -155,23 +217,45 @@ SETS.refresh = function() {
 
 SETS.render_matrix = function(lengths) {
   SETS.get_matrix(lengths);
+  /* get settings depending on morphology mode */
+  if (CFG._morphology_mode == 'partial') {
+    var egroup = 'PART.editGroup(event, ';
+  }
+  else {
+    var egroup = 'editGroup(event, ';
+  }
   var _columns = function(cell, idx, head) {
     if (cell.length > 0) {
       if (cell[0] == -1){
-      return '<td id="SETS_'+head+'_'+idx+'" title="missing data' + 
-	'" style="background-color:lightgray;text-align:center;border-radius:50px;padding:0px;margin:0px;border:1px solid black;">Ø</td>';
+        return '<td id="SETS_'+head+'_'+idx+'" title="missing data' + 
+          '" style="background-color:lightgray;text-align:center;border-radius:50px;padding:0px;margin:0px;border:1px solid black;">Ø</td>';
       }
-      return '<td class="pointed" id="SETS_'+head+'_'+idx+'" title="click to show segments" onclick="SETS.show_words(this, ['+cell.join(',')+']);" ' + 
-	'style="text-align:center;border-radius:10px;background-color:lightyellow;color:DarkGreen;">'+cell[0]+'</td>';
+      return '<td class="pointed" id="SETS_'+head+'_'+idx+'" title="click to show segments" onclick="SETS.show_words(this, ['+cell[0].join(',')+'],\''+cell[1]+'\');" ' + 
+        'style="text-align:center;border-radius:10px;background-color:lightyellow;color:DarkGreen;">'+cell[0][0]+'</td>';
     }
     else {
       return '<td id="SETS_'+head+'_'+idx+'" title="no cognate' + 
-	'" style="padding:0px;margin:0px;border:none;"></td>';
+        '" style="padding:0px;margin:0px;border:none;"></td>';
     }
   };
+  var _proto_columns = function(cell, idx, head){
+    if (cell.length > 0) {
+      if (cell[0] == -1){
+        return '<td id="SETS_'+head+'_'+idx+'" title="missing data' + 
+          '" style="background-color:lightgray;text-align:center;border-radius:50px;padding:0px;margin:0px;border:1px solid black;" onclick="insertProto(this)">Ø</td>';
+      }
+      return '<td class="pointed" id="SETS_'+head+'_'+idx+'" title="click to show segments" onclick="SETS.show_words(this, ['+cell.map(function(x){return x[0]}).join(',')+'],\''+cell[0][1]+'\');" ' + 
+        'style="text-align:center;border-radius:10px;background-color:lightyellow;color:DarkGreen;">'+cell[0][0]+'</td>';
+    }
+    else {
+      return '<td id="SETS_'+head+'_'+idx+'" title="no cognate' + 
+        '" style="padding:0px;margin:0px;border:none;" onclick="fakeAlert(\'insert new word here\');"></td>';
+    }
+  };
+
   var columns = [function(cell, idx, head){
-    return '<td class="pointed" id="SETS_'+head+'_'+idx+'" title="click to show alignment" onclick="editGroup(event, '+cell+');" ' + 
-	'style="text-align:center;border-radius:10px;background-color:salmon;">'+cell+'</td>';
+    return '<td class="pointed" id="SETS_'+head+'_'+idx+'" title="click to show alignment" onclick="'+egroup+cell+');" ' + 
+      'style="text-align:center;border-radius:10px;background-color:salmon;">'+cell+'</td>';
   }];
   for (var i=0; i<CFG._selected_doculects.length; i++) {
     columns.push(_columns);
@@ -182,9 +266,14 @@ SETS.render_matrix = function(lengths) {
       concepts.push(WLS.c2i[cidx]);
     }
     return '<td class="concepts pointed" id="SETS_'+head+'_'+idx+'" title="click to filter"' + 
-	' onclick="filterOccurrences(\''+CFG._selected_doculects.join(',')+'\',\''+cell.join(',')+'\');">'+concepts.join(',')+'</td>';
+      ' onclick="filterOccurrences(\''+CFG._selected_doculects.join(',')+'\',\''+cell.join(',')+'\');">'+concepts.join(',')+'</td>';
   });
-  SETS.header = [WLS.header[CFG._cognates]]
+  if (CFG._morphology_mode == 'partial') {
+    SETS.header = [WLS.header[CFG._roots]];
+  }
+  else {
+    SETS.header = [WLS.header[CFG._cognates]];
+  }
   for (var i=0,doculect; doculect=CFG._selected_doculects[i]; i++) {
     SETS.header.push(doculect.slice(0,3));
   }
@@ -213,7 +302,7 @@ SETS.render_cognates = function() {
   menu += '<button class="btn btn-primary mright submit3 pull-right;" style="padding:8px;" onclick="SETS.render_cognates()"><span class="glyphicon glyphicon-refresh" title="refresh cognates"></span></button>';
   document.getElementById('SETS_menu').innerHTML = menu;
 
-  document.getElementById('sets_table').innerHTML = dtab.render(0, SETS.matrix[0].length-1, function(x){x.join(',');});
+  document.getElementById('sets_table').innerHTML = dtab.render(0, SETS.matrix[0].length-1, function(x){return x.join(',');});
   $('#sets_select_cognates').multiselect({
     disableIfEmtpy: true,
     includeSelectAllOption : true,
@@ -230,6 +319,12 @@ SETS.render_cognates = function() {
 };
 
 SETS.getSorters = function(){
+  if (CFG._morphology_mode == 'partial') {
+    cogidx = CFG._roots;
+  }
+  else {
+    cogidx = CFG._cognates;
+  }
   /* construct sorters */
   for (var k=0,head; head=CFG._selected_doculects[k]; k++) {
     var header = document.getElementById('SETS_'+head);
@@ -237,28 +332,30 @@ SETS.getSorters = function(){
     header.ondblclick=function(){
       var idx = parseInt(this.dataset.value)+1;
       SETS.DTAB.table.sort(function (x, y){
-	var idxA = x[idx].join('');
-	var idxB = y[idx].join('');
-	if (idxA[0] == '-' && idxB[0] == '-'){
-	  return 0;
-	}
-	else if (idxA[0] == '-'){
-	  return 1;
-	}
-	else if (idxB[0] == '-'){
-	  return -1;
-	}
-	else if (x[idx].length != 0 && y[idx].length != 0) {
-	  var keysA = Object.keys(SETS.etd[WLS[x[idx][0]][CFG._cognates]]);
-	  var keysB = Object.keys(SETS.etd[WLS[y[idx][0]][CFG._cognates]]);
-	  if (keysA.length < keysB.length){return 1;}
-	  else if (keysA.length > keysB.length){return -1;}
-	  return keysA.join('').localeCompare(keysB.join(''));
-	}
-	else if (x[idx].length == 0 && y[idx].length == 0){return 0;}
-	else if (x[idx].length == 0){return 1;}
-	else if (y[idx].length == 0){return -1;}
-	return y[idx].join('').localeCompare(x[idx].join(''));
+        var idxA = (x[idx].length > 1) ? x[idx][0].join('') : '-1';
+        var idxB = (y[idx].length > 1) ? y[idx][0].join('') : '-1';
+        var widx = (x[idx].length > 1) ? x[idx][1] : '0';
+        var widy = (x[idx].length > 1) ? y[idx][1] : '0';
+        if (idxA[0] == '-' && idxB[0] == '-'){
+          return 0;
+        }
+        else if (idxA[0] == '-'){
+          return 1;
+        }
+        else if (idxB[0] == '-'){
+          return -1;
+        }
+        else if (x[idx].length != 0 && y[idx].length != 0) {
+          var keysA = Object.keys(SETS.etd[widx]);
+          var keysB = Object.keys(SETS.etd[widy]);
+          if (keysA.length < keysB.length){return 1;}
+          else if (keysA.length > keysB.length){return -1;}
+          return keysA.join('').localeCompare(keysB.join(''));
+        }
+        else if (x[idx].length == 0 && y[idx].length == 0){return 0;}
+        else if (x[idx].length == 0){return 1;}
+        else if (y[idx].length == 0){return -1;}
+        return y[idx].join('').localeCompare(x[idx].join(''));
       });
       SETS.current = 0;
       SETS.simple_refresh();

@@ -99,7 +99,8 @@ UTIL.settings = {
   '_note' : 'NOTE',
   'separator': "\t",
   'comment': '#',
-  'proto' : -1
+  'proto' : -1,
+  '_morphology_mode': 'full'
 }
 
 UTIL.settable = {
@@ -125,7 +126,8 @@ UTIL.settable = {
     "publish",
     "_almcol",
     "filename",
-    "navbar"
+    "navbar",
+    "_morphology_mode"
   ],
   "integers" : [
     "preview"
