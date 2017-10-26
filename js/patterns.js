@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2017-10-24 17:46
- * modified : 2017-10-24 17:46
+ * modified : 2017-10-26 16:36
  *
  */
 /* XXX check for alignments etc. in data */
@@ -61,6 +61,18 @@ PATS.get_patterns = function(lengths){
   if (typeof lengths == 'undefined'){
     lengths = 3;
   }
+  if (CFG._morphology_mode == 'partial'){
+    var roots = WLS.roots;
+    function get_wls(idx){return roots[idx].map(function (x){return x[0];})}
+    function get_idx(lst, idx){return lst[idx][0]}
+    function get_alm(etym){return MORPH.get_morphemes(WLS[etym[0]][CFG._alignments].split(' '))[etym[1]];}
+  }
+  else {
+    var roots = WLS.etyma;
+    function get_wls(idx){return roots[idx]}
+    function get_idx(lst, idx){return lst[idx]}
+    function get_alm(etym){return WLS[etym][CFG._alignments].split(' ');}
+  }
   /* make proto first of the selected doculects */
   if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
     PATS.selected_doculects = [CFG.proto];
@@ -73,22 +85,25 @@ PATS.get_patterns = function(lengths){
   else {
     PATS.selected_doculects = CFG._selected_doculects;
   }
+
+  /* start the loop over the etyma array */
   PATS.length = CFG._selected_doculects.length + 5;
-  for (var etymon in WLS.etyma) {
-    if (WLS.etyma[etymon].length >= lengths) {
+  for (var etymon in roots) {
+    if (roots[etymon].length >= lengths) {
       /* determine the taxa first */
       var etyma = [];
-      for (var i=0; i < WLS.etyma[etymon].length; i++) {
-	      var taxon = WLS[WLS.etyma[etymon][i]][CFG._tidx];
+      for (var i=0; i < roots[etymon].length; i++) {
+	var taxon = WLS[get_wls(etymon)[i]][CFG._tidx];
         if (PATS.selected_doculects.indexOf(taxon) != -1) {
-          etyma.push(WLS.etyma[etymon][i])
-        }
+          etyma.push(roots[etymon][i]);
+        }	  
       }
       if (etyma.length > 1) {
         /* determine size of alignment */
-        var idx = etyma[0];
+        //var idx = etyma[0];
+	var idx = get_idx(etyma, 0);
         var taxon = WLS[idx][CFG._tidx];
-        var alm = WLS[idx][CFG._alignments].split(' ');
+        var alm = get_alm(etyma[0]);
         var concept = WLS[idx][CFG._cidx];
         var tidx = PATS.selected_doculects.indexOf(taxon)+4;
         var rows = [];
@@ -99,14 +114,18 @@ PATS.get_patterns = function(lengths){
           rows[i][3] = [concept];
           rows[i][tidx] = [idx, i, alm[i]];
         }
-        for (var i=1, idx; idx=etyma[i]; i++) {
+        for (var i=1; i<etyma.length; i++) {
+	  var idx = get_idx(etyma, i);
           var taxon = WLS[idx][CFG._tidx];
-          var tokens = WLS[idx][CFG._alignments].split(' ');
+          var tokens = get_alm(etyma[i]); 
           var concept = WLS[idx][CFG._cidx];
           var tidx = PATS.selected_doculects.indexOf(taxon)+4;
-          for (var j=0; j<tokens.length; j++) {
-	          var segment = tokens[j];
-            rows[j][tidx] = [idx, j, segment];
+          for (var j=0; j<alm.length; j++) {
+	    var segment = tokens[j];
+	    if (typeof segment == 'undefined') {
+	      segment = '?';
+	    }
+            rows[j][tidx] = [idx, j, segment, etymon];
             if (rows[j][3].indexOf(concept) == -1) {
               rows[j][3].push(concept);
             }
@@ -320,13 +339,24 @@ PATS.refresh = function() {
 };
 
 PATS.show_words = function(elm) {
-  if (elm.dataset['toggle'] == '1'){
-    elm.dataset['toggle'] = "0";
-    elm.innerHTML = plotWord(WLS[elm.dataset['idx']][CFG._alignments]);
+
+  var idx = this.dataset.idx;
+  var cogid = this.dataset.cogid;
+  if (CFG._morphology_mode == 'partial') {
+    var pidx = WLS[idx][CFG._roots].split(' ').indexOf(cogid);
+    var segs = MORPH.get_morphemes(WLS[idx][CFG._segments].split(' '))[pidx].join(' ');
   }
   else {
-    elm.dataset['toggle'] = "1";
-    elm.innerHTML = plotWord(WLS[elm.dataset['idx']][CFG._alignments].split(' ')[elm.dataset['pos']]);
+    var segs = WLS[idx][CFG._segments];
+  }
+    
+  if (elm.dataset.toggle == '1') {
+    elm.dataset.toggle = '0';
+    elm.innerHTML = plotWord(segs);
+  }
+  else {
+    elm.dataset.toggle = '1';
+    elm.innerHTML = plotWord(segs, 'span');
   }
 };
 
@@ -336,6 +366,15 @@ PATS.render_matrix = function(lengths) {
   else {
     PATS.threshold = threshold.value;
   }
+
+  /* get settings depending on morphology mode */
+  if (CFG._morphology_mode == 'partial') {
+    var egroup = 'PART.editGroup(event, ';
+  }
+  else {
+    var egroup = 'editGroup(event, ';
+  }
+
   PATS.get_patterns(PATS.threshold);
   PATS.length = PATS.matrix[0].length;
   var _columns = function(cell, idx, head) {
@@ -344,11 +383,11 @@ PATS.render_matrix = function(lengths) {
       '" style="background-color:lightgray;text-align:center;padding:0px;margin:0px;">Ø</td>';
     }
     // XXX add more data-values here
-    return '<td class="pointed" data-toggle="1" data-idx="'+cell[0]+'" data-pos="'+cell[1]+'" data-segment="'+cell[2]+'" id="PATS_'+head+'_'+idx+'" title="click to show segments" onclick="PATS.show_words(this);" ' +
+    return '<td class="pointed" data-toggle="1" data-idx="'+cell[0]+'" data-cogid="'+cell[3]+'" data-pos="'+cell[1]+'" data-segment="'+cell[2]+'" id="PATS_'+head+'_'+idx+'" title="click to show segments" onclick="PATS.show_words(this);" ' +
       '>'+plotWord(cell[2])+'</td>';
   };
   var columns = [function(cell, idx, head){
-    return '<td class="pointed" id="PATS_'+head+'_'+idx+'" title="click to show alignment" onclick="editGroup(event, '+cell+');" ' + 
+    return '<td class="pointed" id="PATS_'+head+'_'+idx+'" title="click to show alignment" onclick="'+egroup+cell+');" ' + 
 	'style="text-align:center;border-radius:10px;background-color:salmon;">'+cell+'</td>';
   },
     function(cell, idx, head) {
@@ -369,7 +408,7 @@ PATS.render_matrix = function(lengths) {
   });
 
   
-  PATS.header = [WLS.header[CFG._cognates], 'INDEX', 'PATTERN', 'CONCEPTS']
+  PATS.header = ['COGNATES', 'INDEX', 'PATTERN', 'CONCEPTS']
   for (var i=0,doculect; doculect=PATS.selected_doculects[i]; i++) {
     PATS.header.push(doculect.slice(0,3));
   }
