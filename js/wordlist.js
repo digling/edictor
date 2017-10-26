@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2017-10-25 13:28
+ * modified : 2017-10-26 15:52
  *
  */
 
@@ -440,8 +440,6 @@ function csvToArrays(allText, separator, comment, keyval) {
     }
   }
 
-  /* +++ check from here, we're close to getting the crap away */
-
   /* check for cogid or glossid first */
   if (CFG['formatter']) {}
   else if (formattable_keys.indexOf('COGID') != -1) { CFG['formatter'] = 'COGID'; }
@@ -482,6 +480,17 @@ function csvToArrays(allText, separator, comment, keyval) {
   $('#wordlist-statistics').removeClass('hidden').html(
       '&lt;'+CFG['filename'] +
       '&gt; ('+WLS.length+' rows, '+WLS.height+' concepts, '+WLS.width+' doculects)');
+  /* check for other items in the display which should be loaded */
+  if ('display' in CFG) {
+    if (CFG.display.indexOf('filedisplay') == -1) {
+      document.getElementById('toggle_filedisplay').onclick({"preventDefault": function(x){return x}}, 'filedisplay');
+    }
+    for (var i=0, display; display=CFG.display[i]; i++) {
+      if (display != 'filedisplay'){
+	document.getElementById('toggle_'+display).onclick({"preventDefault": function(x){return x}}, 'sortable', display, 'colx largebox');
+      }
+    }
+  }
 }
 
 /* create selectors for languages, concepts, and columns */
@@ -1750,8 +1759,7 @@ function handleFileSelect(evt)
 
 /* this function actually writes the whole wordlist to file, so it does 
  * not refresh it but rather prepares it for writing...*/
-function refreshFile()
-{
+function refreshFile(){
   var text = 'ID';
   for (var i=0,head;head=WLS['header'][i];i++) {
     if (WLS['uneditables'].indexOf(head) != -1) {
@@ -1773,6 +1781,12 @@ function refreshFile()
 	}
 	text += '\n';
       }
+    }
+  }
+  CFG.display = [];
+  for (var i=0; i<CFG.loaded_files.length; i++) {
+    if (document.getElementById(CFG.loaded_files[i]).style.display != 'none'){
+      CFG.display.push(CFG.loaded_files[i]);
     }
   }
   for (var i=0,key; key=UTIL.settable.lists[i]; i++) {

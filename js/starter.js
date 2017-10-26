@@ -33,6 +33,7 @@ function startWordlist() {
         CFG['status'][linesplit[0]] = linesplit[1]; 
       }
     }
+
     /* check for database in which the stuff will be stored */
     if (CFG['status']['database'] == 'show')
     {
@@ -318,6 +319,8 @@ function handleDragOver(evt) {
 }
 
 
+
+
 function getDataBases() {
   $.ajax({
         async: false,
@@ -357,6 +360,11 @@ if (document.URL.indexOf('=') != -1) {
       DOLGO[vals[0]] = vals[1];
     }
   }
+
+  /* account for tables displayed */
+  if ('display' in params) {
+    PARAMS['display'] = PARAMS['display'].split('|');
+  }
   
   /* account for server-side stuff */
   if (CFG.server_side_files.indexOf(params['file']) != -1) {
@@ -391,16 +399,35 @@ else if (typeof localStorage.text != 'undefined') {
     $('#welcome').remove();
     showWLS(1);
     $('#textfields').show();
-}
+}  if ('display' in CFG) {
+    if (CFG.display.indexOf('cognates') != -1) {
+      document.getElementById('toggle_cognates').onclick({"preventDefault": function(x){return x}}, 'sortable', 'cognates', 'colx largebox');
+    }
+    if (CFG.display.indexOf('filedisplay') == -1) {
+      document.getElementById('toggle_filedisplay').onclick({"preventDefault": function(x){return x}}, 'filedisplay');
+    }
+    if (CFG.display.indexOf('morphology') != -1) {
+      document.getElementById('toggle_morphology').onclick({"preventDefault": function(x){return x}}, 'sortable', 'morphology', 'colx largebox');
+    }
+  }
 
 
 /* handle the different resources which are loaded using ajax */
 var tmp_file_handler = '';
-var loaded_files = [];
+    if ('display' in CFG) {
+      if (CFG.display.indexOf('cognates') != -1) {
+	document.getElementById('toggle_cognates').onclick({"preventDefault": function(x){return x}}, 'sortable', 'cognates', 'colx largebox');
+      }
+      if (CFG.display.indexOf('filedisplay') == -1) {
+	document.getElementById('toggle_filedisplay').onclick({"preventDefault": function(x){return x}}, 'filedisplay');
+      }
+      if (CFG.display.indexOf('morphology') != -1) {
+	document.getElementById('toggle_morphology').onclick({"preventDefault": function(x){return x}}, 'sortable', 'morphology', 'colx largebox');
+      }
+    }
 function loadAjax(event, where, what, classes) {  
   event.preventDefault();
-
-  if (loaded_files.indexOf(what) != -1) {
+  if (CFG.loaded_files.indexOf(what) != -1) {
     $('#'+what).toggle();
     if (document.getElementById(what).style.display == 'none') {
       window.location.hash = '#top';
@@ -411,7 +438,7 @@ function loadAjax(event, where, what, classes) {
     $('#toggle_'+what+' > span').toggle();
     return;
   }
-  loaded_files.push(what); 
+  CFG.loaded_files.push(what); 
   $('#'+where).append('<li id="'+what+'" class="'+classes+'"></li>');
   $.ajax( {
       async:false,
@@ -448,7 +475,7 @@ function loadAjax(event, where, what, classes) {
   }
 
   if (what == 'correspondences') {
-    var doculs = Object.keys(WLS['taxa']);
+    var doculs = CFG.sorted_taxa;
     $('#corrs_docula').autocomplete({
       delay: 0, source: doculs});
     $('#corrs_doculb').autocomplete({
@@ -464,7 +491,9 @@ function loadAjax(event, where, what, classes) {
     UTIL.load_settings();
   }
 
-  $('#toggle_'+what+' > span').toggle();
+  $('#toggle_'+what+' > span').toggle();  
+
+
 }
 
 /* helper function for URL creation */
@@ -634,54 +663,55 @@ function toggleDisplay(event,elm_id) {
 
 function startEverything () {
 
-/* handle server-side files */
-$.ajax({
-      async:false,
-      type: "GET",
-      url: 'data/filelist.csv',
-      contentType: 'application/text; charset=utf-8',
-      dataType: "text",
-      success: function(data) {
-        CFG['server_side_files'] = data.split('\n');
-        /* manage autocomplete */
-        $('#ajaxfile').autocomplete({
-          delay:0,
-          source: CFG['server_side_files']
-        });
-      },
-      error: function() {
-        fakeAlert("Could not load remote files. Usage will be restricted " + 
-            " to explicit file selection.");
-        $('#ajaxfile').hide(); 
-      }    
-});
+  /* handle server-side files */
+  $.ajax({
+    async:false,
+    type: "GET",
+    url: 'data/filelist.csv',
+    contentType: 'application/text; charset=utf-8',
+    dataType: "text",
+    success: function(data) {
+      CFG['server_side_files'] = data.split('\n');
+      /* manage autocomplete */
+      $('#ajaxfile').autocomplete({
+	delay:0,
+	source: CFG['server_side_files']
+      });
+    },
+    error: function() {
+      fakeAlert("Could not load remote files. Usage will be restricted " + 
+	  " to explicit file selection.");
+      $('#ajaxfile').hide(); 
+    }
+  });
+
+  startWordlist();
 
 
-startWordlist();
 
-/* make stuff sortable, based on 
- * http://stackoverflow.com/questions/18365768/jquery-ui-sortable-placeholder-clone-of-item-being-sorted */
-$(function() {
+  /* make stuff sortable, based on 
+   * http://stackoverflow.com/questions/18365768/jquery-ui-sortable-placeholder-clone-of-item-being-sorted */
+  $(function() {
     $("#sortable").sortable({
-        start: function( event, ui ) {
-            clone = $(ui.item[0].outerHTML).clone();
-        },
-        placeholder: {
-            element: function(clone, ui) {
-                return $('<li class="selected" style="opacity:0.2;">'+clone[0].innerHTML+'</li>');
-            },
-            update: function() {
-                return;
-            }
-        },
-        handle: '.main_handle',
+      start: function( event, ui ) {
+	clone = $(ui.item[0].outerHTML).clone();
+      },
+      placeholder: {
+	element: function(clone, ui) {
+	  return $('<li class="selected" style="opacity:0.2;">'+clone[0].innerHTML+'</li>');
+	},
+	update: function() {
+	  return;
+	}
+      },
+      handle: '.main_handle',
 
     });
 
-});
+  });
 
-$('.colx').addClass('ui-helper-clearfix');
-$(window).load(function(){$("#popup_background").fadeOut("fast");});
+  $('.colx').addClass('ui-helper-clearfix');
+  $(window).load(function(){$("#popup_background").fadeOut("fast");});
 
 }
 

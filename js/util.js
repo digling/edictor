@@ -100,7 +100,9 @@ UTIL.settings = {
   'separator': "\t",
   'comment': '#',
   'proto' : -1,
-  '_morphology_mode': 'full'
+  '_morphology_mode': 'full',
+  'display': ['filedisplay'],
+  'loaded_files': ['filedisplay']
 }
 
 UTIL.settable = {
@@ -113,7 +115,8 @@ UTIL.settable = {
     "_selected_doculects",
     "_selected_concepts",
     "sorted_taxa",
-    "sorted_concepts"
+    "sorted_concepts",
+    "display"
   ],
   "items" : [
     "missing_marker",

@@ -12,6 +12,7 @@ PATS.matrix = [];
 PATS.preview = 30;
 PATS.length = 0;
 PATS.threshold = 3;
+PATS.patterns = {};
 
 /* compatibility function for pattern sorting */
 PATS.compatible = function(x, y) {
@@ -20,7 +21,7 @@ PATS.compatible = function(x, y) {
     if (x[i] != y[i] && x[i] != UTIL.settings.missing_marker && y[i] != UTIL.settings.missing_marker && x[i][0] != '!' && y[i][0] != '!') {
       return false;
     }
-    else if (x[i] != UTIL.settings.missing_marker && y[i] != UTIL.settings.missing_marker && x[i][0] != '!' && y[i][0] != '!'){
+    else if (x[i] != UTIL.settings.missing_marker && y[i] != UTIL.settings.missing_marker && x[i][0] != '!' && y[i][0] != '!' && x[i] != CFG.gap_marker && y[i] != CFG.gap_marker){
       compatible += 1;
     }
   }
@@ -33,7 +34,26 @@ PATS.compatible = function(x, y) {
 /* consensus string for a given pattern */
 /* XXX ameliorate XXX */
 PATS.consensus = function(x) {
-  return x[2];
+  var visited = [];
+  var uniques = [];
+  var freqs = [];
+  for (var i=0; i<x.length; i++) {
+    if (x[i] == UTIL.settings.missing_marker || x[i][0] == '!'){}
+    else if (LIST.has(visited, x[i])) {}
+    else {
+      uniques.push(x[i]);
+    }
+  }
+  var best_count = 0;
+  var best_char = '';
+  for (var i=0; i<uniques.length; i++) {
+    var count = LIST.count(x, uniques[i]);
+    if (count > best_count) {
+      best_count = count;
+      best_char = uniques[i];
+    }
+  }
+  return best_char;
 };
 
 PATS.get_patterns = function(lengths){
@@ -46,20 +66,20 @@ PATS.get_patterns = function(lengths){
     PATS.selected_doculects = [CFG.proto];
     for (var i=0; i<CFG._selected_doculects.length; i++) {
       if (CFG._selected_doculects[i] != CFG.proto) {
-	PATS.selected_doculects.push(CFG._selected_doculects[i]);
+	      PATS.selected_doculects.push(CFG._selected_doculects[i]);
       }
     }
   }
   else {
     PATS.selected_doculects = CFG._selected_doculects;
   }
-  PATS.length = CFG._selected_doculects.length + 4;
+  PATS.length = CFG._selected_doculects.length + 5;
   for (var etymon in WLS.etyma) {
     if (WLS.etyma[etymon].length >= lengths) {
       /* determine the taxa first */
       var etyma = [];
       for (var i=0; i < WLS.etyma[etymon].length; i++) {
-	var taxon = WLS[WLS.etyma[etymon][i]][CFG._tidx];
+	      var taxon = WLS[WLS.etyma[etymon][i]][CFG._tidx];
         if (PATS.selected_doculects.indexOf(taxon) != -1) {
           etyma.push(WLS.etyma[etymon][i])
         }
@@ -70,30 +90,30 @@ PATS.get_patterns = function(lengths){
         var taxon = WLS[idx][CFG._tidx];
         var alm = WLS[idx][CFG._alignments].split(' ');
         var concept = WLS[idx][CFG._cidx];
-        var tidx = PATS.selected_doculects.indexOf(taxon)+3;
+        var tidx = PATS.selected_doculects.indexOf(taxon)+4;
         var rows = [];
         for (var i=0; i<alm.length; i++) {
           rows.push(Array.from('Ø'.repeat(PATS.length-1)))
           rows[i][0] = etymon;
           rows[i][1] = i+1;
-          rows[i][2] = [concept];
-          rows[i][tidx] = [idx, 0, alm[i]];
+          rows[i][3] = [concept];
+          rows[i][tidx] = [idx, i, alm[i]];
         }
         for (var i=1, idx; idx=etyma[i]; i++) {
           var taxon = WLS[idx][CFG._tidx];
           var tokens = WLS[idx][CFG._alignments].split(' ');
           var concept = WLS[idx][CFG._cidx];
-          var tidx = PATS.selected_doculects.indexOf(taxon)+3;
+          var tidx = PATS.selected_doculects.indexOf(taxon)+4;
           for (var j=0; j<tokens.length; j++) {
-	    var segment = tokens[j];
+	          var segment = tokens[j];
             rows[j][tidx] = [idx, j, segment];
-            if (rows[j][2].indexOf(concept) == -1) {
-              rows[j][2].push(concept);
+            if (rows[j][3].indexOf(concept) == -1) {
+              rows[j][3].push(concept);
             }
           }
         }
         for (var i=0; i<rows.length; i++) {
-          rows[i].push(rows[i].slice(3,rows[i].length).map(function(x){
+          rows[i].push(rows[i].slice(4,rows[i].length).map(function(x){
             if (x.length == 1) {return x}
             return x[2]}));
           PATS.matrix.push(rows[i]);
@@ -101,9 +121,10 @@ PATS.get_patterns = function(lengths){
       }
     }
   }
+  /* first sort for the greedy algo */
   PATS.matrix.sort(function (x, y){
-    var pA = x.slice(3, x.length).map(function(z){if (z.length == 1){return z} return z[2]});
-    var pB = y.slice(3, y.length).map(function(z){if (z.length == 1){return z} return z[2]});
+    var pA = x.slice(4, x.length).map(function(z){if (z.length == 1){return z} return z[2]});
+    var pB = y.slice(4, y.length).map(function(z){if (z.length == 1){return z} return z[2]});
     if (pA[0] == '!') {
       pA = UTIL.settings.missing_marker;
     }
@@ -128,7 +149,9 @@ PATS.get_patterns = function(lengths){
       return pA.join(',').localeCompare(pB.join(','));
     }
   });
+  /* first search for consensus patterns */
   PATS.find_consensus();
+  /* greedy search refinement, sort by the consensus of the words */
   PATS.matrix.sort(function (x, y) {
     var consA = x[PATS.length-1][0].join(',');
     var consB = y[PATS.length-1][0].join(',');
@@ -137,33 +160,50 @@ PATS.get_patterns = function(lengths){
     }
     return consA.localeCompare(consB);
   });
+  /* re-compute and resort consensus to refine search, compute proto-sounds
+   * (sounds occuring in fhe first language in the sample for filtering */
   PATS.find_consensus();
-  PATS.matrix.sort(function (x, y){ if (x[PATS.length-1][1] > y[PATS.length-1][1]){return -1} else if (x[PATS.length-1][1] < y[PATS.length-1][1]) {return 1} return 0});
+  PATS.assign_patterns();
+  PATS.matrix.sort(function (x, y){ if (x[PATS.matrix[0].length-1][1] > y[PATS.matrix[0].length-1][1]){return -1} else if (x[PATS.matrix[0].length-1][1] < y[PATS.matrix[0].length-1][1]) {return 1} return 0});
   PATS.proto_sounds = {};
   for (var i=0; i<PATS.matrix.length; i++) {
-    if (PATS.matrix[i][3].length == 3) {
-      var token = PATS.matrix[i][3][2]+' / '+PATS.matrix[i][1];
+    if (PATS.matrix[i][4].length == 3) {
+      var token = PATS.matrix[i][4][2]+' / '+PATS.matrix[i][1];
       if (token in PATS.proto_sounds) {
-	PATS.proto_sounds[token].push(i);
+	      PATS.proto_sounds[token].push(i);
       }
       else {
-	PATS.proto_sounds[token] = [i];
+	      PATS.proto_sounds[token] = [i];
       }
     }
   }
-  /* filter patterns */
-  if (typeof PATS.selected != 'undefined' && PATS.selected.length > 0) {
-    var matrix = [];
-    for (var i=0; i<PATS.matrix.length; i++) {
-      var row = PATS.matrix[i];
-      var sound = row[PATS.length-1][0][0]+ ' / ' +row[1];
-      if (LIST.has(PATS.selected, sound)) {
-	matrix.push(row);
+};
+
+PATS.assign_patterns = function(){
+  var pdict = {};
+  for (var i=0; i<PATS.matrix.length; i++) {
+    var row = PATS.matrix[i];
+    var consensus = row[PATS.length-1][0];
+    var consensus_char = PATS.consensus(consensus);
+    consensus = consensus.join(' ');
+    if (consensus in pdict) {
+      var pattern = pdict[consensus]+'/'+consensus_char;
+      PATS.patterns[pattern].push([row[0], row[1]]);
+    }
+    else {
+      var next_idx = 1;
+      if (consensus_char in pdict) {
+        var next_idx = pdict[consensus_char];
+        pdict[consensus_char] += 1;
       }
+      else {
+        pdict[consensus_char] = next_idx + 1;
+      }
+      var pattern = next_idx+'/'+consensus_char;
+      pdict[consensus] = next_idx;
+      PATS.patterns[pattern] = [[row[0], row[1]]];
     }
-    if (matrix.length != 0) {
-      PATS.matrix = matrix;
-    }
+    PATS.matrix[i][2] = [pattern, row[0], row[1]];
   }
 };
 
@@ -174,8 +214,8 @@ PATS.pattern_consensus = function(patterns) {
     var col = [];
     for (var j=0; j<patterns.length; j++) {
       if (patterns[j][i] != UTIL.settings.missing_marker){
-	col.push(patterns[j][i]);
-	break
+	      col.push(patterns[j][i]);
+	      break;
       }
     }
     if (col.length > 0) {
@@ -195,7 +235,7 @@ PATS.score_patterns = function(matches) {
   }
   var scores = CFG._selected_doculects.map(function(x){return 0});
   for (var i=0; i<matches.length; i++) {
-    var pattern = PATS.matrix[matches[i]].slice(3, PATS.length-1).map(function (x){if (x.length==1){return x} return x[2]});
+    var pattern = PATS.matrix[matches[i]].slice(4, PATS.length-1).map(function (x){if (x.length==1){return x} return x[2]});
     for (var j=0; j<pattern.length; j++) {
       if (pattern[j] != UTIL.settings.missing_marker && pattern[j][0] != '!') {
         scores[j] += 1;
@@ -208,10 +248,10 @@ PATS.score_patterns = function(matches) {
 
 /* function calculates greedy clusters of compatible sets of nodes */
 PATS.find_consensus = function(){
-  var previous = PATS.matrix[0].slice(3, PATS.length-1).map(function(x){if (x.length == 1){return x} return x[2]});
+  var previous = PATS.matrix[0].slice(4, PATS.length-1).map(function(x){if (x.length == 1){return x} return x[2]});
   var matches = [];
   for (var i=0, row; row=PATS.matrix[i]; i++) {
-    var next = PATS.matrix[i].slice(3, PATS.length-1).map(function(x){if (x.length == 1){return x} return x[2]});
+    var next = PATS.matrix[i].slice(4, PATS.length-1).map(function(x){if (x.length == 1){return x} return x[2]});
     if (PATS.compatible(previous, next)) {
       matches.push(i);
       previous = PATS.pattern_consensus([previous, next]);
@@ -227,7 +267,7 @@ PATS.find_consensus = function(){
   }
   var patsum = PATS.score_patterns(matches);
   for (var i=0; i<matches.length; i++) {
-    PATS.matrix[matches[i]][PATS.length-1] = [previous, patsum, matches.length];
+    PATS.matrix[matches[i]][PATS.matrix[0].length-1] = [previous, patsum, matches.length];
   }
 };
 
@@ -273,10 +313,10 @@ PATS.refresh = function() {
 
   document.getElementById('patterns_table').innerHTML = PATS.render_matrix().render(PATS.current, PATS.length-1, function (x){return x.join(',');});
   var preview = PATS.preview+PATS.current;
-  if (preview < PATS.matrix.length) {
-    preview = PATS.matrix.length;
+  if (preview > PATS.DTAB.idxs.length) {
+    preview = PATS.DTAB.idxs.length;
   }
-  document.getElementById('PATS_current').innerHTML = (PATS.current+1) + '-'+preview+' of '+PATS.matrix.length+' Sites';
+  document.getElementById('PATS_current').innerHTML = (PATS.current+1) + '-'+preview+' of '+PATS.DTAB.idxs.length+' Sites';
 };
 
 PATS.show_words = function(elm) {
@@ -297,13 +337,14 @@ PATS.render_matrix = function(lengths) {
     PATS.threshold = threshold.value;
   }
   PATS.get_patterns(PATS.threshold);
+  PATS.length = PATS.matrix[0].length;
   var _columns = function(cell, idx, head) {
     if (cell[0] == UTIL.settings.missing_marker){
     return '<td id="PATS_'+head+'_'+idx+'" title="missing data' + 
       '" style="background-color:lightgray;text-align:center;padding:0px;margin:0px;">Ø</td>';
     }
     // XXX add more data-values here
-    return '<td class="pointed" data-toggle="1" data-idx="'+cell[0]+'" data-pos="'+cell[1]+'" data-cogid="'+cell[2]+'" id="PATS_'+head+'_'+idx+'" title="click to show segments" onclick="PATS.show_words(this);" ' +
+    return '<td class="pointed" data-toggle="1" data-idx="'+cell[0]+'" data-pos="'+cell[1]+'" data-segment="'+cell[2]+'" id="PATS_'+head+'_'+idx+'" title="click to show segments" onclick="PATS.show_words(this);" ' +
       '>'+plotWord(cell[2])+'</td>';
   };
   var columns = [function(cell, idx, head){
@@ -312,6 +353,9 @@ PATS.render_matrix = function(lengths) {
   },
     function(cell, idx, head) {
       return '<td>'+cell+'</td>';
+    },
+    function(cell, idx, head) {
+      return '<td onclick="PATS.editPattern(this);" data-cogid="'+cell[1]+'" data-pos="'+cell[2]+'"><span>'+plotWord(cell[0].split('/')[1], 'span')+' / <span class="dolgo_ERROR">'+cell[0].split('/')[0]+'</span></span></td>';
     },
     function(cell, idx, head) {
       return '<td>'+cell+'</td>';
@@ -325,23 +369,53 @@ PATS.render_matrix = function(lengths) {
   });
 
   
-  PATS.header = [WLS.header[CFG._cognates], 'INDEX', 'CONCEPTS']
+  PATS.header = [WLS.header[CFG._cognates], 'INDEX', 'PATTERN', 'CONCEPTS']
   for (var i=0,doculect; doculect=PATS.selected_doculects[i]; i++) {
     PATS.header.push(doculect.slice(0,3));
   }
   PATS.header.push('SIZE');
-  var titles = ['cognate sets', 'pattern size', 'concepts'].concat(PATS.selected_doculects);
-  titles.push('sizes');
+  var titles = ['cognate sets', 'pattern position', 'pattern number', 'concepts'].concat(PATS.selected_doculects);
+  titles.push('pattern sizes');
   PATS.DTAB = getDTAB('PATS', PATS.header, PATS.matrix, columns, titles, PATS.preview);
+  
+  /* filter patterns */
+  if (typeof PATS.selected != 'undefined' && PATS.selected.length > 0) {
+    var idxs = [];
+    for (var i=0; i<PATS.matrix.length; i++) {
+      var row = PATS.matrix[i];
+      var sound = row[PATS.matrix[0].length-1][0][0]+ ' / ' +row[1];
+      if (LIST.has(PATS.selected, sound)) {
+	      idxs.push(i);
+      }
+    }
+    if (idxs.length != 0) {
+      PATS.DTAB.idxs = idxs;
+    }
+  }
   return PATS.DTAB;
 };
 
+PATS.select_proto = function(){
+  var text = '<div style="background-color:white;"><table style="width:100%;background-color:white;"><tr>';
+  var count = 0;
+  for (var sound in PATS.proto_sounds) {
+    if (count == 3) {
+      count = 0;
+      text += '</tr><tr>';
+    }
+    text += '<td><input type="checkbox" /></td>';
+    text += '<td>'+plotWord(sound.split('/')[0].replace(' ', ''), 'span')+'</td><td style="white-space:nowrap">'+sound.split('/')[1]+' ('+PATS.proto_sounds[sound].length+' × in data)</td>';
+    count += 1;
+  }
+  fakeAlert(text+'</tr></table>');
+};
 
 /* render data in table */
 PATS.render_patterns = function() {
   PATS.current = 0;
   var dtab = PATS.render_matrix();
-  var menu =  '<select id="pats_select_cognates" multiple="multiple" class="multiselect" title="Select patterns">';
+  var menu = '<button onclick="PATS.select_proto();" class="btn btn-primary mright" title="filter by proto-language">FILTER</button>';
+  menu +=  '<select id="pats_select_cognates" multiple="multiple" class="multiselect" title="Select patterns">';
   for (var sound in PATS.proto_sounds) {
     menu += '<option id="pats_'+sound+'" value="'+sound+'" selected>*'+sound+' ('+PATS.proto_sounds[sound].length+' × in data)</option>';
   }

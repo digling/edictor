@@ -14,6 +14,7 @@ function getDTAB(name, header, table, columns, titles, preview){
   DTAB.table = table;
   DTAB.header = header;
   DTAB.titles = titles;
+  DTAB.length = table[0].length;
   DTAB.columns = {};
   for (var i=0; i<columns.length; i++) {
     col = columns[i];
@@ -33,21 +34,40 @@ function getDTAB(name, header, table, columns, titles, preview){
   DTAB.select = function(from) {
     this.selected = [];
     var preview = from + this.preview;
-    if (preview >= DTAB.table.length-1) {
-      preview = this.table.length-1;
+    if (preview >= this.idxs.length-1) {
+      preview = this.idxs.length-1;
     }
     for (var i=from; i < preview; i++) {
-      this.selected.push(i);
+      this.selected.push(this.idxs[i]);
+    }
+  };
+  DTAB.filter = function(columns, conditions) {
+    var idxs = [];
+    for (var i=0; i<this.table.length; i++) {
+      var accept = true;
+      for (var j=0; j<columns.length; j++) {
+        if (conditions[j](this.table[i][columns[j]])) {}
+        else {
+          accept = false;
+          break;
+        }
+      }
+      if (accept) {
+        idxs.push(i);
+      }
+    }
+    if (idxs.length > 0) {
+      this.idxs = idxs;
     }
   };
   DTAB.render = function(from, alternate, alternate_function) {
     if (typeof alternate == 'undefined') {
-      alternate = this.table[0].length-1;
+      alternate = this.length-1;
     }
     if (typeof alternate_function == 'undefined') {
       alternate_function = function (x) { return x;};
     }
-    DTAB.select(from);
+    this.select(from);
     text = '';
     text += '<table class="data_table2" id="'+this.name+'_table">';
     text += '<tr id="'+this.name+'_header">';
@@ -60,23 +80,23 @@ function getDTAB(name, header, table, columns, titles, preview){
     for (var i=0; i < this.selected.length; i++) {
       idx = this.selected[i];
       if (current_item != alternate_function(this.table[idx][alternate])){
-	if (current_class == 'd0') {
-	  current_class = 'd1';
-	}
-	else if (current_class == 'd1') {
-	  current_class = 'd0';
-	}
-	current_item = alternate_function(this.table[idx][alternate]);
-	text += '<tr style=""><td style="margin:0px;padding:5px;background-color:white;border:0px solid white;" colspan="'+DTAB.table[0].length+'"><hr style="color:black;height:5px;padding:0px;margin:0px;"></td></tr>';
+        if (current_class == 'd0') {
+          current_class = 'd1';
+        }
+        else if (current_class == 'd1') {
+          current_class = 'd0';
+        }
+        current_item = alternate_function(this.table[idx][alternate]);
+        text += '<tr style=""><td style="margin:0px;padding:5px;background-color:white;border:0px solid white;" colspan="'+this.length+'"><hr style="color:black;height:5px;padding:0px;margin:0px;"></td></tr>';
       }
       text += '<tr id="'+this.name+'_row_'+idx+'" class="'+current_class+'">';
       if (typeof this.table[idx] == 'undefined') {
-	DTAB.current = 0;
+        this.current = 0;
       }
       else {
-	for (var j=0, cell; cell=this.table[idx][j]; j++) {
-	  text += this.columns[header[j]](cell, idx, header[j]);
-	}
+        for (var j=0, cell; cell=this.table[idx][j]; j++) {
+          text += this.columns[header[j]](cell, idx, header[j]);
+        }
       }
       text += '</tr>';
     }
