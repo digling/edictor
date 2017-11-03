@@ -191,6 +191,61 @@ SETS.previous_preview = function(){
   SETS.simple_refresh();
 };
 
+SETS.make_nexus = function(){
+  if (typeof SETS.matrix == 'undefined' || SETS.matrix.length == 0){
+    fakeAlert("Nothing to export!");
+    return;
+  }
+  var nexus = '#NEXUS\n\n';
+  nexus += "BEGIN CHARACTERS;\n";
+  var previous = 0;
+  var last_index = 0;
+  for (var i=0; i<SETS.matrix.length; i++) {
+    if (SETS.matrix[i][SETS.matrix[i].length-1][0] != previous) {
+      if (previous){
+	nexus += '   concept_'
+	  + previous
+	  + '='
+	  + (last_index)
+	  + '-'
+	  + (i)
+	  + '; ['+WLS.c2i[previous]+']\n';
+      }
+      last_index = i+1;
+      previous = SETS.matrix[i][SETS.matrix[i].length-1][0];
+    }
+  }
+  nexus += '    concept_'+previous+'='+(last_index)+'-'+(i)+'; ['+WLS.c2i[previous]+']\n';
+  nexus += "\nEND; [CHARACTERS]\n"
+    + "BEGIN DATA;\n"
+    + "DIMENSIONS NTAX="+CFG._selected_doculects.length
+    + " NCHAR="+SETS.matrix.length
+    + ";\nFORMAT DATATYPE=STANDARD SYMBOLS=\"10\" GAP=- MISSING=? INTERLEAVE=yes;\n"
+    + "MATRIX\n"
+    ;
+  for (var i=0, language; language=CFG._selected_doculects[i]; i++) {
+    var this_row = language + "                 ";
+    this_row = this_row.slice(0, 19)+" ";
+    for (var j=0; j<SETS.matrix.length; j++) {
+      var cell = SETS.matrix[j][i+1];
+      if (!cell.join('')) {
+	this_row += "0";
+      }
+      else if (cell[0] == -1){
+	this_row += "?";
+      }
+      else {
+	this_row += "1";
+      }
+    }
+    nexus += this_row + "\n";
+  }
+  nexus += ";\nEND;";
+  var blob = new Blob([nexus], {type: 'text/plain;charset=utf-8'});
+  saveAs(blob, CFG.filename+'.nex');
+  return nexus;
+};
+
 
 SETS.simple_refresh = function(){
   document.getElementById('sets_table').innerHTML = SETS.DTAB.render(SETS.current, SETS.matrix[0].length-1, function(x){return x.join(',');});
@@ -299,6 +354,8 @@ SETS.render_cognates = function() {
   menu += '<button id="SETS_current" class="btn btn-primary mright submit3">';
   menu += (SETS.current+1) + '-'+(SETS.current+SETS.preview)+' of '+Object.keys(SETS.matrix).length+' Sets</button>';
   menu += '<button class="btn btn-primary mright submit3" onclick="SETS.next_preview();" title="go to next items">→</button>';
+
+  menu += '<button class="btn btn-primary mright submit3 pull-right;" style="padding:8px;" onclick="SETS.make_nexus()"><span class="glyphicon glyphicon-download" title="download nexus"></span></button>';
   menu += '<button class="btn btn-primary mright submit3 pull-right;" style="padding:8px;" onclick="SETS.render_cognates()"><span class="glyphicon glyphicon-refresh" title="refresh cognates"></span></button>';
   document.getElementById('SETS_menu').innerHTML = menu;
 

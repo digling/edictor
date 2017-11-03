@@ -219,7 +219,7 @@ UTIL.refresh_settings = function() {
   for (var i=0, settable; settable=settables[i]; i++) {
     entries[settable] = document.getElementById('settings_'+settable);
   }
-  
+
   CFG['preview'] = parseInt(entries['preview'].value);
   CFG['proto'] = (entries['proto'].value != '') ? entries['proto'].value : -1;
   if (CFG['sorted_taxa'].value != '') {
@@ -227,7 +227,7 @@ UTIL.refresh_settings = function() {
     var names = entries['doculectorder'].value.split(',');
     for (var i=0; i<names.length; i++) {
       if (LIST.has(CFG.sorted_taxa, names[i])) {
-	stax.push(names[i]);
+        stax.push(names[i]);
       }  
     }
     if (stax.length == CFG.sorted_taxa.length) {
@@ -249,25 +249,25 @@ UTIL.refresh_settings = function() {
     if (entries[entry].value) {
       var idx = WLS.header.indexOf(entries[entry].value);
       CFG[this_entry] = (idx != -1)
-	? idx
-	: -1;
+        ? idx
+        : -1;
       if (entry == 'cognates' && CFG[this_entry] != -1) {
-	resetFormat(entries[entry].value);
+        resetFormat(entries[entry].value);
       }
       if (entry == 'roots' && CFG[this_entry] != -1) {
-	resetRootFormat(entries[entry].value);
+        resetRootFormat(entries[entry].value);
       }
       if (entry == 'note' && CFG[this_entry] != -1) {
-	CFG['note_formatter'] = WLS.header[CFG['_note']];
+        CFG['note_formatter'] = WLS.header[CFG['_note']];
       }
     }
     else {
       CFG[this_entry] = -1;
       if (entry == 'cognates') {
-	resetFormat(false);
+        resetFormat(false);
       }
       if (entry == 'roots') {
-	resetRootFormat(false);
+        resetRootFormat(false);
       }
     }
   }
@@ -277,7 +277,7 @@ UTIL.refresh_settings = function() {
     var new_vals = [];
     for (var j=0; j<vals.length; j++) {
       if (WLS.header.indexOf(vals[j]) != -1) {
-	new_vals.push(vals[j]);
+        new_vals.push(vals[j]);
       }
     }
     CFG[entry] = new_vals;
@@ -293,6 +293,16 @@ UTIL.check_wls = function(wls) {
 UTIL.filter_by_concept = function(concept) {
   $('#select_concepts').multiselect('deselectAll', false);
   $('#select_concepts').multiselect('select', concept);
+  if (document.getElementById('cognates_select_concepts') != null) {
+    $('#cognates_select_concepts').multiselect('deselectAll', false);
+    $('#cognates_select_concepts').multiselect('select', concept);
+    display_cognates(concept);
+  }
+  if (document.getElementById('partial_select_concepts') != null) {
+    $('#partial_select_concepts').multiselect('deselectAll', false);
+    $('#partial_select_concepts').multiselect('select', concept);
+    PART.display_partial(concept);
+  }
   applyFilter();
   showWLS(getCurrent());
 };
@@ -308,6 +318,7 @@ UTIL.display_next_concept = function() {
   }
   this.filter_by_concept(ncon);
   CFG['_current_concept'] = ncon;
+  /* check whether cognate panel is also active */
 };
 
 UTIL.display_previous_concept = function() {

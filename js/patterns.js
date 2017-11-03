@@ -186,7 +186,7 @@ PATS.get_patterns = function(lengths){
   PATS.matrix.sort(function (x, y){ if (x[PATS.matrix[0].length-1][1] > y[PATS.matrix[0].length-1][1]){return -1} else if (x[PATS.matrix[0].length-1][1] < y[PATS.matrix[0].length-1][1]) {return 1} return 0});
   PATS.proto_sounds = {};
   for (var i=0; i<PATS.matrix.length; i++) {
-    if (PATS.matrix[i][4].length == 3) {
+    if (PATS.matrix[i][4].length == 4) {
       var token = PATS.matrix[i][4][2]+' / '+PATS.matrix[i][1];
       if (token in PATS.proto_sounds) {
 	      PATS.proto_sounds[token].push(i);
@@ -340,8 +340,8 @@ PATS.refresh = function() {
 
 PATS.show_words = function(elm) {
 
-  var idx = this.dataset.idx;
-  var cogid = this.dataset.cogid;
+  var idx = elm.dataset.idx;
+  var cogid = elm.dataset.cogid;
   if (CFG._morphology_mode == 'partial') {
     var pidx = WLS[idx][CFG._roots].split(' ').indexOf(cogid);
     var segs = MORPH.get_morphemes(WLS[idx][CFG._segments].split(' '))[pidx].join(' ');
@@ -352,11 +352,11 @@ PATS.show_words = function(elm) {
     
   if (elm.dataset.toggle == '1') {
     elm.dataset.toggle = '0';
-    elm.innerHTML = plotWord(segs);
+    elm.innerHTML = plotWord(segs, 'span');
   }
   else {
     elm.dataset.toggle = '1';
-    elm.innerHTML = plotWord(segs, 'span');
+    elm.innerHTML = plotWord(elm.dataset.segment);
   }
 };
 
@@ -382,7 +382,6 @@ PATS.render_matrix = function(lengths) {
     return '<td id="PATS_'+head+'_'+idx+'" title="missing data' + 
       '" style="background-color:lightgray;text-align:center;padding:0px;margin:0px;">Ø</td>';
     }
-    // XXX add more data-values here
     return '<td class="pointed" data-toggle="1" data-idx="'+cell[0]+'" data-cogid="'+cell[3]+'" data-pos="'+cell[1]+'" data-segment="'+cell[2]+'" id="PATS_'+head+'_'+idx+'" title="click to show segments" onclick="PATS.show_words(this);" ' +
       '>'+plotWord(cell[2])+'</td>';
   };
@@ -450,7 +449,14 @@ PATS.select_proto = function(){
 };
 
 /* render data in table */
-PATS.render_patterns = function() {
+PATS.render_patterns = function(elm) {
+  if (CFG._alignments == -1) {
+    fakeAlert('Your data does not contain alignments.');
+    return;
+  }
+  if (typeof elm != 'undefined') {
+    elm.display = 'none';
+  }
   PATS.current = 0;
   var dtab = PATS.render_matrix();
   var menu = '<button onclick="PATS.select_proto();" class="btn btn-primary mright" title="filter by proto-language">FILTER</button>';

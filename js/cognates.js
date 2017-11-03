@@ -13,6 +13,7 @@ function handle_cognate_selection() {
 
   /* check whether formatter is true or not */
   if (!CFG['formatter']) {
+    fakeAlert("Your data does not contain cognate sets!");
     return;
   }
   
@@ -21,12 +22,17 @@ function handle_cognate_selection() {
   
   /* retrieve concepts and add them to selection */
   var txt = '';
-  for (concept in WLS['concepts']) {
-    txt += '<option id="concept_'+WLS.c2i[concept]+'" value="'+concept+'">'+concept+'</option>';
+  if (typeof CFG._current_concept == 'undefined') {
+    CFG._current_concept = CFG.sorted_concepts[0];
+  }
+  for (var i=0, concept; concept = CFG.sorted_concepts[i]; i++) {
+    var option = '';
+    if (CFG._current_concept == concept) {
+      option = ' selected=selected ';
+    }
+    txt += '<option id="concept_'+WLS.c2i[concept]+'" value="'+concept+'"'+option+'>'+concept+'</option>';
   }
   slc.innerHTML = txt;
-  slc.options[0].selected = true;
-  CFG['_current_concept'] = slc.options[0].value;
 
   $('#cognates_select_concepts').multiselect({
         disableIfEmtpy: true,
@@ -55,7 +61,7 @@ function display_cognates(concept, sortby) {
   }
   
   /* if concept is not passed, check for selection */
-  if (typeof concept == 'undefined' || ! concept) {
+  if (typeof concept == 'undefined' || !concept) {
 
     /* set up variable for integer ids of concepts to get them passed to the function that
      * handles the restricted file display of the wordlist */
@@ -74,18 +80,18 @@ function display_cognates(concept, sortby) {
         for (var j=0,idx; idx=WLS['concepts'][option.value][j]; j++) {
           idxs.push(idx);
         }
-	all_concepts.push(option.value);
-	selected_concepts.push(WLS.c2i[option.value]);
-	restriction += 1;
+        all_concepts.push(option.value);
+        selected_concepts.push(WLS.c2i[option.value]);
+        restriction += 1;
       }
     }
     if (all_concepts.length > 0) {
       if (all_concepts.length > 1) {
-	document.getElementById('cognates_current_concept').innerHTML = all_concepts[0]+', ...';
+	      document.getElementById('cognates_current_concept').innerHTML = all_concepts[0]+', ...';
       }
       else {
-	document.getElementById('cognates_current_concept').innerHTML = all_concepts[0] + 
-	  ' ('+WLS['c2i'][all_concepts[0]]+'/'+CFG['_concepts']+')';
+	      document.getElementById('cognates_current_concept').innerHTML = all_concepts[0] + 
+	        ' ('+WLS['c2i'][all_concepts[0]]+'/'+WLS.height+')';
       }
       /* mark the current concept */
       CFG['_current_concept'] = all_concepts[0];
@@ -113,10 +119,10 @@ function display_cognates(concept, sortby) {
     var slcs = document.getElementById('cognates_select_concepts');
     for (var k=0,option; option=slcs.options[k]; k++) {
       if (option.selected && option.value != concept) {
-	option.selected = false;
+        option.selected = false;
       }
       else if (option.value == concept) {
-	option.selected = true;
+        option.selected = true;
       }
     }
     /* store that there is no multiselect option chosen here */

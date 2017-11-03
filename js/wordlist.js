@@ -386,6 +386,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   CFG['_alignments'] = (typeof aIdx != 'undefined') ? aIdx-1 : -1;
   CFG['_transcriptions'] = (typeof iIdx != 'undefined') ? iIdx-1 : -1;
   CFG['_morphemes'] = (typeof mIdx != 'undefined') ? mIdx-1: -1;
+  CFG['morpheme_formatter'] = (typeof mIdx != 'undefined') ? WLS.header[(mIdx-1)] : -1;
   CFG['_sources'] = (typeof srcIdx != 'undefined') ? srcIdx-1: -1;
   CFG['parsed'] = true;
   if (typeof CFG['sorted_taxa'] == 'undefined'){
@@ -753,7 +754,7 @@ function showWLS(start){
 	  if ([CFG.note_formatter, CFG.formatter, CFG.root_formatter, CFG.pattern_formatter].indexOf(WLS.header[j]) == -1 && WLS.uneditables.indexOf(WLS.header[j]) == -1 && !CFG['publish']) {
 	    var on_click = 'onclick="editEntry(' + idx + ',' + jdx + ',0,0)" ';
 	    var on_title = 'title="Modify entry '+idx+'/'+jdx+'." ';
-	    var on_ctxt = 'oncontextmenu="copyPasteEntry(event,'+idx+','+jdx+','+j+')" ';
+	    var on_ctxt = (j != CFG._morphemes) ? 'oncontextmenu="copyPasteEntry(event,'+idx+','+jdx+','+j+')" ': '';
 	    var this_class = 'class="'+WLS['header'][j]+'" ';
 	  }
     else if (WLS.uneditables.indexOf(WLS.header[j]) != -1 || CFG['publish']) {
@@ -2200,7 +2201,7 @@ function highLight()
 	  var textout = [];
 	  for (var k=0;k<parts.length; k++) {
 	    var morph = (parts[k] && parts[k][0] != '?') 
-	      ? ((parts[k][0] != '_') ? '<span class="morpheme">'+parts[k]+'</span>' : '<span class="morpheme-small">'+parts[k].replace(/^_/, '')+'</span>')
+	      ? ((parts[k][0] != '_') ? '<span title="right-click to toggle" oncontextmenu="MORPH.toggle(event, this);" class="morpheme pointed">'+parts[k]+'</span>' : '<span title="right-click to toggle" oncontextmenu="MORPH.toggle(event, this);" class="morpheme-small pointed">'+parts[k].replace(/^_/, '')+'</span>')
 	      : '<span class="morpheme-error">'+parts[k]+'</span>'
 	      ;
 	    textout.push(morph);

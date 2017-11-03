@@ -37,7 +37,7 @@ function getDTAB(name, header, table, columns, titles, preview){
     if (preview >= this.idxs.length-1) {
       preview = this.idxs.length-1;
     }
-    for (var i=from; i < preview; i++) {
+    for (var i=from; i <= preview; i++) {
       this.selected.push(this.idxs[i]);
     }
   };

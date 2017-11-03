@@ -11,6 +11,27 @@
 var MORPH = {};
 MORPH.morphemes = {};
 
+
+MORPH.toggle = function(event, elm){
+  event.preventDefault();
+  var par = elm.parentNode.dataset.value.split(/\s+/);
+  var tidx = par.indexOf(elm.innerHTML);
+  if (tidx == -1) {
+    tidx = par.indexOf('_'+elm.innerHTML);
+  }
+  if (par[tidx][0] == '_'){
+    par[tidx] = par[tidx].slice(1, par[tidx].length);
+    elm.className = 'morpheme pointed';
+  }
+  else {
+    par[tidx] = '_'+par[tidx];
+    elm.className = 'morpheme-small pointed';
+  }
+  var idx = elm.parentNode.parentNode.id.split('_')[1];
+  WLS[idx][CFG._morphemes] = par.join(' ');
+  elm.parentNode.dataset.value = par.join(' ');
+};
+
 /* function to split a word into morphemes */
 MORPH.get_morphemes = function(word, return_morpheme_marks) {
   var out = [[]];
