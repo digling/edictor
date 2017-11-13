@@ -228,7 +228,7 @@ function showPhonology (event, doculect, sort, direction) {
       text += '<td class="features">'+description.join('</td><td class="features">')+'</td>'; // TODO no inline css!
     }
     else {
-      text += '<td></td><td></td><td></td><td></td><td></td>';
+      text += '<td></td><td></td><td></td><td></td>';
     }
     text += '<td onclick="filterOccurrences(\''+doculect+'\',\''+cids.join(',')+'\')" class="concepts pointed" title="click to filter the occurrences of this phoneme">' + concepts.join(', ') + '</td>';
     text += '</tr>';
