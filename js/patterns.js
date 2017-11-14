@@ -65,13 +65,13 @@ PATS.get_patterns = function(lengths){
     var roots = WLS.roots;
     function get_wls(idx){return roots[idx].map(function (x){return x[0];})}
     function get_idx(lst, idx){return lst[idx][0]}
-    function get_alm(etym){return MORPH.get_morphemes(WLS[etym[0]][CFG._alignments].split(' '))[etym[1]];}
+    function get_alm(etym){return ALIGN.alignable_parts(MORPH.get_morphemes(WLS[etym[0]][CFG._alignments].split(' '))[etym[1]]);}
   }
   else {
     var roots = WLS.etyma;
     function get_wls(idx){return roots[idx]}
     function get_idx(lst, idx){return lst[idx]}
-    function get_alm(etym){return WLS[etym][CFG._alignments].split(' ');}
+    function get_alm(etym){return ALIGN.alignable_parts(WLS[etym][CFG._alignments].split(' '));}
   }
   /* make proto first of the selected doculects */
   if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
@@ -93,7 +93,7 @@ PATS.get_patterns = function(lengths){
       /* determine the taxa first */
       var etyma = [];
       for (var i=0; i < roots[etymon].length; i++) {
-	var taxon = WLS[get_wls(etymon)[i]][CFG._tidx];
+        var taxon = WLS[get_wls(etymon)[i]][CFG._tidx];
         if (PATS.selected_doculects.indexOf(taxon) != -1) {
           etyma.push(roots[etymon][i]);
         }	  
@@ -101,7 +101,7 @@ PATS.get_patterns = function(lengths){
       if (etyma.length > 1) {
         /* determine size of alignment */
         //var idx = etyma[0];
-	var idx = get_idx(etyma, 0);
+        var idx = get_idx(etyma, 0);
         var taxon = WLS[idx][CFG._tidx];
         var alm = get_alm(etyma[0]);
         var concept = WLS[idx][CFG._cidx];
@@ -112,19 +112,19 @@ PATS.get_patterns = function(lengths){
           rows[i][0] = etymon;
           rows[i][1] = i+1;
           rows[i][3] = [concept];
-          rows[i][tidx] = [idx, i, alm[i]];
+          rows[i][tidx] = [idx, i, alm[i], etymon];
         }
         for (var i=1; i<etyma.length; i++) {
-	  var idx = get_idx(etyma, i);
+          var idx = get_idx(etyma, i);
           var taxon = WLS[idx][CFG._tidx];
           var tokens = get_alm(etyma[i]); 
           var concept = WLS[idx][CFG._cidx];
           var tidx = PATS.selected_doculects.indexOf(taxon)+4;
           for (var j=0; j<alm.length; j++) {
-	    var segment = tokens[j];
-	    if (typeof segment == 'undefined') {
-	      segment = '?';
-	    }
+            var segment = tokens[j];
+            if (typeof segment == 'undefined') {
+              segment = '?';
+            }
             rows[j][tidx] = [idx, j, segment, etymon];
             if (rows[j][3].indexOf(concept) == -1) {
               rows[j][3].push(concept);
@@ -187,7 +187,7 @@ PATS.get_patterns = function(lengths){
   PATS.proto_sounds = {};
   for (var i=0; i<PATS.matrix.length; i++) {
     if (PATS.matrix[i][4].length == 4) {
-      var token = PATS.matrix[i][4][2]+' / '+PATS.matrix[i][1];
+      var token = PATS.matrix[i][4][2]+' / '+PATS.matrix[i][2][0].split('/')[0];
       if (token in PATS.proto_sounds) {
 	      PATS.proto_sounds[token].push(i);
       }
@@ -421,7 +421,7 @@ PATS.render_matrix = function(lengths) {
     var idxs = [];
     for (var i=0; i<PATS.matrix.length; i++) {
       var row = PATS.matrix[i];
-      var sound = row[PATS.matrix[0].length-1][0][0]+ ' / ' +row[1];
+      var sound = row[PATS.matrix[0].length-1][0][0]+ ' / ' +row[2][0].split('/')[0];
       if (LIST.has(PATS.selected, sound)) {
 	      idxs.push(i);
       }
@@ -459,7 +459,7 @@ PATS.render_patterns = function(elm) {
   }
   PATS.current = 0;
   var dtab = PATS.render_matrix();
-  var menu = '<button onclick="PATS.select_proto();" class="btn btn-primary mright" title="filter by proto-language">FILTER</button>';
+  var menu = ''; //'<button onclick="PATS.select_proto();" class="btn btn-primary mright" title="filter by proto-language">FILTER</button>';
   menu +=  '<select id="pats_select_cognates" multiple="multiple" class="multiselect" title="Select patterns">';
   for (var sound in PATS.proto_sounds) {
     menu += '<option id="pats_'+sound+'" value="'+sound+'" selected>*'+sound+' ('+PATS.proto_sounds[sound].length+' × in data)</option>';

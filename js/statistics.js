@@ -123,18 +123,18 @@ SETS.get_matrix = function(lengths) {
       count += 1;
     }
   }
-  for (var i=1; i<SETS.matrix.length-1; i++) {
+  for (var i=0; i<SETS.matrix.length; i++) {
     for (var j=1; j<CFG._selected_doculects.length+1; j++) {
       var noconcept = true;
       var language = CFG._selected_doculects[(j-1)];
       for (var c=0; c<SETS.matrix[i][CFG._selected_doculects.length+1].length; c++) {
-	if (WLS.c2i[SETS.matrix[i][CFG._selected_doculects.length+1][c]] in SETS.concepts[language]){
-	  noconcept = false;
-	  break;
-	}
+        if (WLS.c2i[SETS.matrix[i][CFG._selected_doculects.length+1][c]] in SETS.concepts[language]){
+          noconcept = false;
+          break;
+        }
       }
       if (noconcept) {
-	SETS.matrix[i][j] = [-1];
+        SETS.matrix[i][j] = [-1];
       }
     }
   }
@@ -203,7 +203,7 @@ SETS.make_nexus = function(){
   for (var i=0; i<SETS.matrix.length; i++) {
     if (SETS.matrix[i][SETS.matrix[i].length-1][0] != previous) {
       if (previous){
-	nexus += '   concept_'
+	nexus += '    concept_'
 	  + previous
 	  + '='
 	  + (last_index)

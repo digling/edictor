@@ -15,6 +15,25 @@ ALIGN.UDX = [];
 ALIGN.SEQS = [];
 ALIGN.LOCKS = [];
 
+ALIGN.alignable_parts = function (seq) {
+  var open = false;
+  var out = [];
+  for (var i=0; i<seq.length; i++) {
+    if (seq[i] == '(') {
+      open = true;
+    }
+    else if (seq[i] == ')') {
+      open = false;
+    }
+    else {
+      if (!open) {
+	out.push(seq[i]);
+      }
+    }
+  }
+  return out;
+};
+
 ALIGN.initialize = function(seqs) {
   for (var i=0; i<seqs.length; i++) {
     ALIGN.SEQS.push(seqs[i]);
