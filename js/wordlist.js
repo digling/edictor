@@ -1317,6 +1317,32 @@ function modifyEntry(event, idx, jdx, xvalue) {
     }
   }
 
+  if (jdx-1 == CFG._segments && CFG._alignments != -1) {
+    var alm = WLS[idx][CFG._alignments].split(' ');
+    var new_alm = [];
+    var tks = xvalue.split(' ');
+    var seq_idx = 0;
+    for (var i_=0; i_<alm.length; i_++) {
+      var next_alm = alm[i_];
+      if ('(-)'.indexOf(next_alm) == -1) {
+	new_alm.push(tks[seq_idx]);
+	seq_idx += 1;
+      }
+      else {
+	  new_alm.push(next_alm);
+      }
+    }
+    if (seq_idx != tks.length) {
+      new_alm = xvalue;
+    }
+    else {
+      new_alm = new_alm.join(' ');
+    }
+    if (new_alm != WLS[idx][CFG._alignments]){
+      autoModifyEntry(idx, CFG._alignments+1, new_alm, WLS[idx][CFG._alignments]);
+    }
+  }
+
   var prevalue = entry.dataset.value;
   
   entry.dataset.value = xvalue;
