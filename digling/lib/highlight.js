@@ -321,6 +321,17 @@ function getSoundClass(sound) {
   return dolgo;
 }
 
+/* return the raw sound without ! and other things */
+function getSound(sound) {
+  if (sound[0] == '?' || sound[0] == '!') {
+    sound = sound.slice(1, sound.length);
+  }
+  if (sound.indexOf('/') != -1) {
+    sound = sound.split('/')[1];
+  }
+  return sound;
+}
+
 function plotWord(word, tag, classes) {
   if (typeof tag == 'undefined') {
     tag = 'span';

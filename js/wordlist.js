@@ -529,10 +529,8 @@ function createSelectors() {
   }
   if (CFG['tc_status'] != 'noc' && CFG['tc_status'] != 'notc') {
     var cid = document.getElementById('select_concepts');
-    var concepts = Object.keys(WLS.concepts);
-    concepts.sort();
     txt = ''
-    for (var i=0,concept; concept=concepts[i]; i++) {
+    for (var i=0,concept; concept=CFG['sorted_concepts'][i]; i++) {
       var sel = '" selected>';
       if (CFG['_selected_concepts'].indexOf(concept) == -1) {
 	sel = '">';
