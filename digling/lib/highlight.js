@@ -309,8 +309,8 @@ function getSoundClass(sound) {
   if (sound in DOLGO){
       dolgo = DOLGO[sound] 
   }
-  else if (sound[0] == '!'){dolgo='ERROR'}
-  else if (sound[0] == '?'){phon=phon.slice(1,phon.length), dolgo='dolgo_CUSTOM';}
+  else if (sound[0] == '!'){dolgo='ERROR';}
+  else if (sound[0] == '?'){dolgo='CUSTOM';}
   else if (sound.slice(0,2) in DOLGO){dolgo = DOLGO[sound.slice(0,2)];}
   else if (sound.slice(0,1) in DOLGO){dolgo = DOLGO[sound.slice(0,1)];}
   else if (sound.slice(1,3) in DOLGO){dolgo = DOLGO[sound.slice(1,3)];}

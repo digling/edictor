@@ -361,7 +361,7 @@ td.missing {
 
 td.dolgo_ERROR{background-color: white; color:red;}
 td.dolgo_MISSING{background-color: black; color:white;}
-td.dolgo_CUSTOM{background-color: lightyellow; color:darkblue; border: 1px solid darkblue;}
+td.dolgo_CUSTOM{background-color: lightyellow; color:darkblue;}
 td.dolgo_V{background-color: #c86464;}
 td.dolgo_K{background-color: #c89664;} 
 td.dolgo_P{background-color: #c8c864;} 
