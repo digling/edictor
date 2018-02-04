@@ -40,9 +40,10 @@ MORPH.get_morphemes = function(word, return_morpheme_marks) {
   for (var i=0,segment; segment=word[i]; i++) {
     /* correct for badly encoded items */
     var addon = '';
-    if (segment[0] == '!' && segment.length > 1) {addon='!'; segment = segment.slice(1, segment.length);}
-
-    if (split && CFG['morpheme_marks'].indexOf(segment) == -1 && segment != CFG['gap_marker']) {
+    if (segment[0] == '!' && segment.length > 1) {addon='!'; segment=segment.slice(1, segment.length);}
+    else if (segment[0] == '?' && segment.length > 1) {addon='?'; segment=segment.slice(1, segment.length);}
+    if (split && CFG['morpheme_marks'].indexOf(segment) == -1 && (
+      segment != CFG['gap_marker'] || split === 2)) {
       out.push([]);
       split = false;
     }
@@ -52,7 +53,7 @@ MORPH.get_morphemes = function(word, return_morpheme_marks) {
       out[out.length-1].push(addon+segment);
     }
     else if (CFG['morpheme_marks'].indexOf(segment) != -1) {
-      split = true;
+      split = 2;
       mm.push(segment);
     }
     else {

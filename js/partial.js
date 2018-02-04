@@ -13,6 +13,8 @@ PART.rootids = {};
 PART.storage = [];
 
 PART.partial_alignment = function(event, widx) {
+  var i, j, idx, jdx, word, morphemes, this_morpheme, cogids, all_words;
+
   if (event) {event.preventDefault();}
   if (CFG['_segments'] == -1) {fakeAlert('No valid segmented transcriptions found in your data.');}
   
@@ -26,22 +28,23 @@ PART.partial_alignment = function(event, widx) {
     '<span class="main_handle pull-left" style="margin-left:5px;margin-top:2px;" ></span>' +
     '<p>'+doculect+' «'+concept+'» ('+CFG['root_formatter']+': '+idxs+')'; 
   var cogids = [];
-  for (var i=0,cogid; cogid=idxs[i]; i++) {
+  for (i=0; cogid=idxs[i]; i++) {
     words[cogid] = {morphemes: [], indices: [], positions: [], taxa: []};
-    for (var j=0; j<WLS.roots[cogid].length; j++) {
-      var idx = WLS.roots[cogid][j][0];
-      var jdx = WLS.roots[cogid][j][1];
-      var word = (CFG['_alignments'] != -1 && WLS[idx][CFG['_alignments']] != '' && WLS[idx][CFG['_alignments']] != '?') 
-	? WLS[idx][CFG['_alignments']]
-	: WLS[idx][CFG['_segments']]
-	;
-      var morphemes = MORPH.get_morphemes(word.split(' '));
-      var this_morpheme = morphemes[jdx];
+    for (j=0; j<WLS.roots[cogid].length; j++) {
+      idx = WLS.roots[cogid][j][0];
+      jdx = WLS.roots[cogid][j][1];
+      word = (CFG['_alignments'] != -1 && WLS[idx][CFG['_alignments']] != '' && WLS[idx][CFG['_alignments']] != '?') 
+	      ? WLS[idx][CFG['_alignments']]
+	      : WLS[idx][CFG['_segments']+' h a h a']
+	      ;
+      morphemes = MORPH.get_morphemes(word.split(' '));
+      console.log(morphemes)
+      this_morpheme = morphemes[jdx];
       if (typeof this_morpheme != 'undefined') {
-	words[cogid]['taxa'].push(WLS[idx][CFG['_taxa']]);
-	words[cogid]['morphemes'].push(this_morpheme);
-	words[cogid]['indices'].push(idx);
-	words[cogid]['positions'].push(jdx);
+	      words[cogid]['taxa'].push(WLS[idx][CFG['_taxa']]);
+	      words[cogid]['morphemes'].push(this_morpheme);
+	      words[cogid]['indices'].push(idx);
+	      words[cogid]['positions'].push(jdx);
       }
     }
     if (words[cogid]['taxa'].length != 0) {
@@ -55,15 +58,10 @@ PART.partial_alignment = function(event, widx) {
   text += '<div class="alignments" id="alignments-overview">' + 
     '<table>' + 
     '<tr>'+'<th class="pchead">DOCULECTS</th><td style="width:3px"></td><th class="pchead">CONCEPTS</th><td style="width:3px"></td>';
-  var all_words = [];
-  for (var i=0;i<cogids.length; i++) {
-    var cogid = cogids[i];
-    if (words[cogid]['taxa'].length > 1){
-      text += '<th oncontextmenu="PART.editGroup(event, '+cogid+')" class="pchead" colspan="'+words[cogid]['alignment']['ALMS'][0].length+'">ID: '+cogid+' <button onclick="PART.editGroup(event, '+cogid+')" class="btn-primary btn mleft pull-right submit3" title="align the words"><span class="icon-bar"></span><span class="icon-bar"></span></button></th>';
-      for (var j=0, tidx; tidx=words[cogid]['indices'][j]; j++) {
-	if (all_words.indexOf(tidx) == -1) {
-	  all_words.push(tidx);
-	}
+  all_words = [];
+  for (i=0; i<cogids.length; i++) {
+    cogid = cogids[i];
+    if (words[cogid]['taxa'].length > 1){ text += '<th oncontextmenu="PART.editGroup(event, '+cogid+')" class="pchead" colspan="'+words[cogid]['alignment']['ALMS'][0].length+'">ID: '+cogid+' <button onclick="PART.editGroup(event, '+cogid+')" class="btn-primary btn mleft pull-right submit3" title="align the words"><span class="icon-bar"></span><span class="icon-bar"></span></button></th>'; for (var j=0, tidx; tidx=words[cogid]['indices'][j]; j++) { if (all_words.indexOf(tidx) == -1) { all_words.push(tidx); }
       }
       if (i <cogids.length-1) {text += '<td style="width:3px"></td>';}
     }
@@ -74,41 +72,41 @@ PART.partial_alignment = function(event, widx) {
     var taxon = WLS[all_words[i]][CFG['_taxa']];
     var this_idx = all_words[i];
     text += '<tr>' +
-      '<td class="alm_taxon">' + taxon + '</td><td style="width:3px"></td>';
-    text += '<td class="alm_taxon">' + WLS[all_words[i]][CFG['_concepts']]+'</td><td style="width:3px"></td>';
+      '<td class="alm_taxon">' + taxon + '</td><td style="width:3px"></td>' +
+      '<td class="alm_taxon">' + WLS[all_words[i]][CFG['_concepts']]+'</td><td style="width:3px"></td>';
     for (var j=0; j<cogids.length; j++) {
       var almidx = words[cogids[j]]['alignment']['TAXA'].indexOf(taxon);
       var almlen = words[cogids[j]]['alignment']['ALMS'][0].length;
+      console.log('debug', words[cogids[j]]['indices'], this_idx);
       var test = words[cogids[j]]['indices'].indexOf(this_idx);
+      console.log(test);
       if (test != -1) {
-	text += plotWord(words[cogids[j]]['alignment']['ALMS'][test].join(' '), 'td');
-	if (j != cogids.length-1){text += '<td></td>';}
+	      text += plotWord(words[cogids[j]]['alignment']['ALMS'][test].join(' '), 'td');
+	      if (j != cogids.length-1){text += '<td></td>';}
       }
       else {
-	for (var k=0;k<almlen;k++) {
-	  text += '<td class="missing">Ø</td>';
-	}
-	if (j != cogids.length-1) {text += '<td></td>';}
-      }
+	      for (var k=0;k<almlen;k++) {
+	        text += '<td class="missing">Ø</td>';
+	      }
+	      if (j != cogids.length-1) {text += '<td></td>';}
+          }
+        }
+        text += '</tr>';
     }
-    text += '</tr>';
-  }
-  text += '</table></div>';
-  text += '<div><input class="btn btn-primary submit" type="button" onclick="ALIGN.destroy_alignment();$(\'#editmode-overview\').remove();basickeydown(event);" value="CLOSE" /></div><br><br></div>';
-  var editmode = document.createElement('div');
-  editmode.id = 'editmode-overview';
-  editmode.className = 'editmode';
-  document.body.appendChild(editmode);
-  editmode.innerHTML = text;
-  document.onkeydown = function(event) {
-    $('#editmode').remove(); 
+    text += '</table></div>';
+    text += '<div><input class="btn btn-primary submit" type="button" onclick="ALIGN.destroy_alignment();$(\'#editmode-overview\').remove();basickeydown(event);" value="CLOSE" /></div><br><br></div>';
+    var editmode = document.createElement('div');
+    editmode.id = 'editmode-overview';
+    editmode.className = 'editmode';
+    document.body.appendChild(editmode);
+    editmode.innerHTML = text;
     document.onkeydown = function(event) {
-      basickeydown(event);
+      $('#editmode').remove(); 
+      document.onkeydown = function(event) {
+        basickeydown(event);
+      };
     };
-  };
-
   $('#partial-overview').draggable({handle:'.main_handle'}).resizable();
-
 };
 
 /* basic handler class that initiates the multiselect and other functionalities
@@ -305,11 +303,16 @@ PART.display_partial = function (concept, sortby) {
     '<th class="pointed alm_bdr alm_head" onclick="PART.display_partial(\''+concept+'\')">'+WLS['header'][CFG['_concepts']]+'</th>' + 
     '<th style="width:5px"></th>' +
     '<th class="pointed alm_bdl alm_head" onclick="PART.display_partial(\''+concept+'\')">'+WLS['header'][CFG['_segments']]+'</th>' + 
-    this.rootids.map(function (x) {
-      return '<th style="width:5px"></th>' + 
-	'<th oncontextmenu="event.preventDefault();PART.display_partial(\''+concept+'\',\''+x+'\')" onclick="PART.modifyJudgment('+x+')" class="pointed alm_bdr alm_head" title="click to add marked morphemes to this cognate set, right-click to sort along this column">ID-'+x+' <button onclick="PART.editGroup(event, '+x+')" class="btn-primary btn mleft pull-right submit3" title="align the words"><span class="icon-bar"></span><span class="icon-bar"></span></button></th>';
-    }).join('') +
+      this.rootids.map(function (x) {
+        return '<th style="width:5px"></th>' + 
+	        '<th oncontextmenu="event.preventDefault();PART.display_partial(\''+concept + '\',\''+x + 
+          '\')" onclick="PART.modifyJudgment(' + 
+          x + ')" class="pointed alm_bdr alm_head" title="click to add marked morphemes to this cognate set, right-click to sort along this column">ID-' + 
+          x + ' <button onclick="PART.editGroup(event, ' + x 
+          + ')" class="btn-primary btn mleft pull-right submit3" title="align the words"><span class="icon-bar"></span><span class="icon-bar"></span></button></th>';
+      }).join('') +
     '</tr>';
+  
 
   var tab = document.getElementById('partial_table');
   tab.innerHTML = thead + tbody_text+'</table>';
