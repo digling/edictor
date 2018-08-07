@@ -2255,6 +2255,14 @@ var SOUNDS = {
   "back",
   "rounded "
  ],
+ "û": [
+  "vowel",
+  "close",
+  "back",
+  "rounded "
+ ],
+
+
  "\u026f": [
   "vowel",
   "close",
@@ -2430,6 +2438,12 @@ var SOUNDS = {
   "unrounded "
  ],
  "\u00e6": [
+  "vowel",
+  "nearly-open",
+  "front",
+  "unrounded "
+ ],
+ "ǽ": [
   "vowel",
   "nearly-open",
   "front",

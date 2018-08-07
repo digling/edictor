@@ -332,6 +332,7 @@ function getSound(sound) {
   return sound;
 }
 
+/* basic function for coloring words in edictor */
 function plotWord(word, tag, classes) {
   if (typeof tag == 'undefined') {
     tag = 'span';
@@ -379,7 +380,7 @@ function plotWord(word, tag, classes) {
           }
         }
       }
-
+      phon = phon.normalize('NFD');
       if (phon[0] == '!'){phon=phon.slice(1,phon.length)}
       else if (phon[0] == '?'){phon=phon.slice(1,phon.length), dolgo='dolgo_CUSTOM';}
       else if (phon in DOLGO){dolgo = "dolgo_"+DOLGO[phon]}

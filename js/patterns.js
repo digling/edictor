@@ -57,18 +57,23 @@ PATS.consensus = function(x) {
 };
 
 PATS.get_patterns = function(lengths){
+  /* define vars here */
+  var etyma, roots, rows, alm;
+  var i, j, idx, tidx;
+  var etymon, taxon, concept, segment, token;
+
   PATS.matrix = [];
   if (typeof lengths == 'undefined'){
     lengths = 3;
   }
   if (CFG._morphology_mode == 'partial'){
-    var roots = WLS.roots;
+    roots = WLS.roots;
     function get_wls(idx){return roots[idx].map(function (x){return x[0];})}
     function get_idx(lst, idx){return lst[idx][0]}
     function get_alm(etym){return ALIGN.alignable_parts(MORPH.get_morphemes(WLS[etym[0]][CFG._alignments].split(' '))[etym[1]]);}
   }
   else {
-    var roots = WLS.etyma;
+    roots = WLS.etyma;
     function get_wls(idx){return roots[idx]}
     function get_idx(lst, idx){return lst[idx]}
     function get_alm(etym){return ALIGN.alignable_parts(WLS[etym][CFG._alignments].split(' '));}
@@ -76,7 +81,7 @@ PATS.get_patterns = function(lengths){
   /* make proto first of the selected doculects */
   if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
     PATS.selected_doculects = [CFG.proto];
-    for (var i=0; i<CFG._selected_doculects.length; i++) {
+    for (i=0; i<CFG._selected_doculects.length; i++) {
       if (CFG._selected_doculects[i] != CFG.proto) {
 	      PATS.selected_doculects.push(CFG._selected_doculects[i]);
       }
@@ -88,12 +93,12 @@ PATS.get_patterns = function(lengths){
 
   /* start the loop over the etyma array */
   PATS.length = CFG._selected_doculects.length + 5;
-  for (var etymon in roots) {
+  for (etymon in roots) {
     if (roots[etymon].length >= lengths) {
       /* determine the taxa first */
-      var etyma = [];
-      for (var i=0; i < roots[etymon].length; i++) {
-        var taxon = WLS[get_wls(etymon)[i]][CFG._tidx];
+      etyma = [];
+      for (i=0; i < roots[etymon].length; i++) {
+        taxon = WLS[get_wls(etymon)[i]][CFG._tidx];
         if (PATS.selected_doculects.indexOf(taxon) != -1) {
           etyma.push(roots[etymon][i]);
         }	  
@@ -101,27 +106,27 @@ PATS.get_patterns = function(lengths){
       if (etyma.length > 1) {
         /* determine size of alignment */
         //var idx = etyma[0];
-        var idx = get_idx(etyma, 0);
-        var taxon = WLS[idx][CFG._tidx];
-        var alm = get_alm(etyma[0]);
-        var concept = WLS[idx][CFG._cidx];
-        var tidx = PATS.selected_doculects.indexOf(taxon)+4;
-        var rows = [];
-        for (var i=0; i<alm.length; i++) {
+        idx = get_idx(etyma, 0);
+        taxon = WLS[idx][CFG._tidx];
+        alm = get_alm(etyma[0]);
+        concept = WLS[idx][CFG._cidx];
+        tidx = PATS.selected_doculects.indexOf(taxon)+4;
+        rows = [];
+        for (i=0; i<alm.length; i++) {
           rows.push(Array.from('Ø'.repeat(PATS.length-1)))
           rows[i][0] = etymon;
           rows[i][1] = i+1;
           rows[i][3] = [concept];
           rows[i][tidx] = [idx, i, alm[i], etymon];
         }
-        for (var i=1; i<etyma.length; i++) {
-          var idx = get_idx(etyma, i);
-          var taxon = WLS[idx][CFG._tidx];
-          var tokens = get_alm(etyma[i]); 
-          var concept = WLS[idx][CFG._cidx];
-          var tidx = PATS.selected_doculects.indexOf(taxon)+4;
-          for (var j=0; j<alm.length; j++) {
-            var segment = tokens[j];
+        for (i=1; i<etyma.length; i++) {
+          idx = get_idx(etyma, i);
+          taxon = WLS[idx][CFG._tidx];
+          tokens = get_alm(etyma[i]); 
+          concept = WLS[idx][CFG._cidx];
+          tidx = PATS.selected_doculects.indexOf(taxon)+4;
+          for (j=0; j<alm.length; j++) {
+            segment = tokens[j];
             if (typeof segment == 'undefined') {
               segment = '?';
             }
@@ -131,7 +136,7 @@ PATS.get_patterns = function(lengths){
             }
           }
         }
-        for (var i=0; i<rows.length; i++) {
+        for (i=0; i<rows.length; i++) {
           rows[i].push(rows[i].slice(4,rows[i].length).map(function(x){
             if (x.length == 1) {return x}
             return x[2]}));
@@ -142,17 +147,18 @@ PATS.get_patterns = function(lengths){
   }
   /* first sort for the greedy algo */
   PATS.matrix.sort(function (x, y){
-    var pA = x.slice(4, x.length).map(function(z){if (z.length == 1){return z} return z[2]});
-    var pB = y.slice(4, y.length).map(function(z){if (z.length == 1){return z} return z[2]});
+    var pA, pB, pAl, pBl, cpt;
+    pA = x.slice(4, x.length).map(function(z){if (z.length == 1){return z} return z[2]});
+    pB = y.slice(4, y.length).map(function(z){if (z.length == 1){return z} return z[2]});
     if (pA[0] == '!') {
       pA = UTIL.settings.missing_marker;
     }
     if (pB[0] == '!') {
       pB = UTIL.settings.missing_marker;
     }
-    var pAl = LIST.count(pA, UTIL.settings.missing_marker);
-    var pBl = LIST.count(pB, UTIL.settings.missing_marker);
-    var cpt = PATS.compatible(pA, pB);
+    pAl = LIST.count(pA, UTIL.settings.missing_marker);
+    pBl = LIST.count(pB, UTIL.settings.missing_marker);
+    cpt = PATS.compatible(pA, pB);
     if (cpt) {
       if (pAl == pBl) {
         return 0;
@@ -172,8 +178,9 @@ PATS.get_patterns = function(lengths){
   PATS.find_consensus();
   /* greedy search refinement, sort by the consensus of the words */
   PATS.matrix.sort(function (x, y) {
-    var consA = x[PATS.length-1][0].join(',');
-    var consB = y[PATS.length-1][0].join(',');
+    var consA, consB;
+    consA = x[PATS.length-1][0].join(',');
+    consB = y[PATS.length-1][0].join(',');
     if (consA == consB) {
       return 0;
     }
@@ -183,16 +190,69 @@ PATS.get_patterns = function(lengths){
    * (sounds occuring in fhe first language in the sample for filtering */
   PATS.find_consensus();
   PATS.assign_patterns();
-  PATS.matrix.sort(function (x, y){ if (x[PATS.matrix[0].length-1][1] > y[PATS.matrix[0].length-1][1]){return -1} else if (x[PATS.matrix[0].length-1][1] < y[PATS.matrix[0].length-1][1]) {return 1} return 0});
+  PATS.matrix.sort(function (x, y){ 
+    if (x[PATS.matrix[0].length-1][1] > y[PATS.matrix[0].length-1][1]){
+      return -1
+    } 
+    else if (x[PATS.matrix[0].length-1][1] < y[PATS.matrix[0].length-1][1]) {
+      return 1
+    } return 0
+  });
   PATS.proto_sounds = {};
-  for (var i=0; i<PATS.matrix.length; i++) {
-    if (PATS.matrix[i][4].length == 4) {
-      var token = PATS.matrix[i][4][2]+' / '+PATS.matrix[i][2][0].split('/')[0];
+  /* XXX replace later with formal construct XXX */
+  if (typeof WLS.columns['PATTERNS'] != 'undefined') {
+    var tmp_count = {};
+    for (i=0; i<PATS.matrix.length; i++) {
+      /* try to find the first entry which is not empty */
+      token = '?';
+      for (j=4; j<PATS.matrix[i].length-1; j++) {
+        if (PATS.matrix[i][j] != 'Ø') {
+          var pats = WLS[PATS.matrix[i][j][0]][(Math.abs(WLS.columns['PATTERNS'])-1)];
+          if (CFG._morphology_mode == 'partial'){
+            /* get the index */
+            for (var k=0, tup; tup=WLS.roots[PATS.matrix[i][0]][k]; k++) {
+              if (tup[0] == PATS.matrix[i][j][0]) {
+                pats = pats.split(' + ')[tup[1]];
+                break;
+              }
+            }
+          }
+          token = pats.split(' ')[PATS.matrix[i][j][1]];
+          PATS.matrix[i][2][0] = token.split('/')[0].split('-')[0]+'/'+token.split('/')[1];
+          tmp_count[PATS.matrix[i][2][0]] = parseInt(token.split('/')[0].split('-')[1]);
+          break;
+        }
+      }
       if (token in PATS.proto_sounds) {
-	      PATS.proto_sounds[token].push(i);
+        PATS.proto_sounds[token].push(i);
       }
       else {
-	      PATS.proto_sounds[token] = [i];
+        PATS.proto_sounds[token] = [i];
+      }
+    }
+    PATS.matrix.sort(function (x, y) {
+      return x[2][0].localeCompare(y[2][0]);
+    });
+    PATS.find_consensus();
+    PATS.matrix.sort(function (x, y) {
+      if (tmp_count[x[2][0]] >= tmp_count[y[2][0]]) {
+        return x[2][0].localeCompare(y[2][0]);
+      }
+      else {
+        return y[2][0].localeCompare(x[2][0]);
+      }
+    });
+  }
+  else {
+    for (i=0; i<PATS.matrix.length; i++) {
+      if (PATS.matrix[i][4].length == 4) {
+        token = PATS.matrix[i][4][2]+' / '+PATS.matrix[i][2][0].split('/')[0];
+        if (token in PATS.proto_sounds) {
+                PATS.proto_sounds[token].push(i);
+        }
+        else {
+                PATS.proto_sounds[token] = [i];
+        }
       }
     }
   }
@@ -361,7 +421,9 @@ PATS.show_words = function(elm) {
 };
 
 PATS.render_matrix = function(lengths) {
-  var threshold = document.getElementById('PATS_threshold');
+  var threshold, i, j, egroup, _columns, columns, titles, idxs, row, sound, sounds, doculect;
+
+  threshold = document.getElementById('PATS_threshold');
   if (threshold == null) {}
   else {
     PATS.threshold = threshold.value;
@@ -369,15 +431,15 @@ PATS.render_matrix = function(lengths) {
 
   /* get settings depending on morphology mode */
   if (CFG._morphology_mode == 'partial') {
-    var egroup = 'PART.editGroup(event, ';
+    egroup = 'PART.editGroup(event, ';
   }
   else {
-    var egroup = 'editGroup(event, ';
+    egroup = 'editGroup(event, ';
   }
 
   PATS.get_patterns(PATS.threshold);
   PATS.length = PATS.matrix[0].length;
-  var _columns = function(cell, idx, head) {
+  _columns = function(cell, idx, head) {
     if (cell[0] == UTIL.settings.missing_marker){
     return '<td id="PATS_'+head+'_'+idx+'" title="missing data' + 
       '" style="background-color:lightgray;text-align:center;padding:0px;margin:0px;">Ø</td>';
@@ -385,7 +447,7 @@ PATS.render_matrix = function(lengths) {
     return '<td class="pointed" data-toggle="1" data-idx="'+cell[0]+'" data-cogid="'+cell[3]+'" data-pos="'+cell[1]+'" data-segment="'+cell[2]+'" id="PATS_'+head+'_'+idx+'" title="click to show segments" onclick="PATS.show_words(this);" ' +
       '>'+plotWord(cell[2])+'</td>';
   };
-  var columns = [function(cell, idx, head){
+  columns = [function(cell, idx, head){
     return '<td class="pointed" id="PATS_'+head+'_'+idx+'" title="click to show alignment" onclick="'+egroup+cell+');" ' + 
 	'style="text-align:center;border-radius:10px;background-color:salmon;">'+cell+'</td>';
   },
@@ -399,7 +461,7 @@ PATS.render_matrix = function(lengths) {
       return '<td>'+cell+'</td>';
     },
   ];
-  for (var i=0; i<PATS.selected_doculects.length; i++) {
+  for (i=0; i<PATS.selected_doculects.length; i++) {
     columns.push(_columns);
   }
   columns.push(function(cell, idx, head){
@@ -408,22 +470,38 @@ PATS.render_matrix = function(lengths) {
 
   
   PATS.header = ['COGNATES', 'INDEX', 'PATTERN', 'CONCEPTS']
-  for (var i=0,doculect; doculect=PATS.selected_doculects[i]; i++) {
+  for (i=0; doculect=PATS.selected_doculects[i]; i++) {
     PATS.header.push(doculect.slice(0,3));
   }
   PATS.header.push('SIZE');
-  var titles = ['cognate sets', 'pattern position', 'pattern number', 'concepts'].concat(PATS.selected_doculects);
+  titles = ['cognate sets', 'pattern position', 'pattern number', 'concepts'].concat(PATS.selected_doculects);
   titles.push('pattern sizes');
   PATS.DTAB = getDTAB('PATS', PATS.header, PATS.matrix, columns, titles, PATS.preview);
   
   /* filter patterns */
   if (typeof PATS.selected != 'undefined' && PATS.selected.length > 0) {
-    var idxs = [];
-    for (var i=0; i<PATS.matrix.length; i++) {
-      var row = PATS.matrix[i];
-      var sound = row[PATS.matrix[0].length-1][0][0]+ ' / ' +row[2][0].split('/')[0];
-      if (LIST.has(PATS.selected, sound)) {
-	      idxs.push(i);
+    idxs = [];
+    /* XXX refine later */
+    if (typeof WLS.columns['PATTERNS'] != 'undefined') {
+      sounds = [];
+      for (i=0; i<PATS.selected.length; i++) {
+	sound = PATS.selected[i].split('-')[0]+'/'+PATS.selected[i].split('/')[1];
+	sounds.push(sound);
+      }
+      for (i=0; i<PATS.matrix.length; i++) {
+	sound = PATS.matrix[i][2][0];
+	if (LIST.has(sounds, sound)) {
+	  idxs.push(i);
+	}
+      }
+    }
+    else {
+      for (i=0; i<PATS.matrix.length; i++) {
+        row = PATS.matrix[i];
+        sound = row[PATS.matrix[0].length-1][0][0]+ ' / ' +row[2][0].split('/')[0];
+        if (LIST.has(PATS.selected, sound)) {
+                idxs.push(i);
+        }
       }
     }
     if (idxs.length != 0) {

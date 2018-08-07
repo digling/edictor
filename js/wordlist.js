@@ -299,7 +299,7 @@ function csvToArrays(allText, separator, comment, keyval) {
     /* successively load the data into the wordlist object */
     else if (firstLineFound) {
       if (data.length != header.length + 1) {
-	fakeAlert("Line "+data.join('|')+" has "+data.length+" cells, but we expect "+(1+header.length)+'!');
+	fakeAlert("Line «"+data.join('|')+"» has "+data.length+" cells, but we expect "+(1+header.length)+'!');
       }
       /* check for header */
       var taxon = data[tIdx];
