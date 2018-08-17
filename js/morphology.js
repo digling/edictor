@@ -48,7 +48,7 @@ MORPH.get_morphemes = function(word, return_morpheme_marks) {
       split = false;
     }
     
-    if (CFG['tone_marks'].indexOf(segment[0]) != -1) {
+    if (CFG['split_on_tones'] != 'false' && CFG['tone_marks'].indexOf(segment[0]) != -1) {
       split = true;
       out[out.length-1].push(addon+segment);
     }
