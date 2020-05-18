@@ -30,6 +30,7 @@ MORPH.toggle = function(event, elm){
   var idx = elm.parentNode.parentNode.id.split('_')[1];
   WLS[idx][CFG._morphemes] = par.join(' ');
   elm.parentNode.dataset.value = par.join(' ');
+  storeModification(parseInt(idx), CFG._morphemes, par.join(' '));
 };
 
 /* function to split a word into morphemes */

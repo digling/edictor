@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2016-03-20 10:44
- * modified : 2016-03-23 18:25
+ * modified : 2018-11-06 10:11
  *
  */
 
@@ -93,7 +93,7 @@ UTIL.settings = {
   'navbar' : true,
   'gap_marker' : '-',
   'missing_marker' : 'Ø',
-  'morpheme_separator' : '◦',
+  'morpheme_separator' : '+',
   'check_remote_intervall' : 10,
   '_proto' : false,
   '_note' : 'NOTE',
@@ -102,6 +102,7 @@ UTIL.settings = {
   'proto' : -1,
   '_morphology_mode': 'full',
   'display': ['filedisplay'],
+  'quintiles': 'QUINTILES',
   'loaded_files': ['filedisplay']
 }
 
@@ -333,6 +334,126 @@ UTIL.display_previous_concept = function() {
   this.filter_by_concept(ncon);
   CFG['_current_concept'] = ncon;
 };
+
+UTIL.show_quintuples = function(event, widx) {
+  event.preventDefault();
+  var entry = WLS[widx][WLS.header.indexOf(CFG.quintiles)];
+  var segments = entry.split(' ');
+  var i, j, quint, start, content;
+  var text = '';
+  var sdata = [];
+  var tds = {};
+  var bleft, bright;
+
+  var morphemes = MORPH.get_morphemes(segments);
+  text += '<tr>';
+  for (i=0; i<morphemes.length; i++) {
+    if (i != 0) {
+      text += '<th></th>';
+    }
+    if (CFG.root_formatter) {
+      content = CFG.root_formatter+': '+WLS[widx][CFG._roots].split(' ')[i];
+    }
+    else {
+      content = '---';
+    }
+    text += '<th style="color:white;padding:6px;border-top:5px solid black;border-left:5px solid black;border-right:5px solid black;" colspan="'+morphemes[i].length+'">'+content+'</th>';
+  }
+  text += '</tr>';
+  text += '<tr>';
+  var tokens = MORPH.get_morphemes(WLS[widx][CFG._alignments].split(' '));
+  for (i=0; i<morphemes.length; i++) {
+    if (i!=0) {
+      text += '<td></td>';
+    }
+    if (morphemes[i].length == 1) {
+      text += '<td style="border:5px solid black;">'+plotWord(tokens[i].join(' '))+'</td>';
+    }
+    else {
+      for (j=0; j<tokens[i].length; j++) {
+	text += '<td style="border:5px solid black;">'+plotWord(tokens[i][j])+'</td>';
+      }
+    }
+  }
+  text += '</tr>';
+  
+  for (j=0; j<6; j++) {
+    text += '<tr>';
+    for (i=0; i<segments.length; i++) {
+      quint = segments[i].split('|');
+      if (quint.length == 1) {
+        if (quint == CFG.morpheme_separator) {
+	        text += '<td style="border: 5px transparent white;border-right: 5px solid black;">';
+	      }
+	      else if (j == 0) {
+	        text += '<td style="border-right:5px solid black;border-left:5px solid black;">';
+	      }
+	      else if (j == 4 || j == 5) {
+	        text += '<td style="border-bottom:5px solid black;border-right:5px solid black;border-left:5px solid black;">';
+	      }
+	      else {
+	        text += '<td style="border-bottom:5px solid white;border-right:5px solid black;border-left:5px solid black;border-top:5px solid white;">';
+	      }
+      }
+      else if (j == 5) {
+	      text += '<td style="text-align:center;border-bottom:5px solid black;border-right:5px solid black;border-left:5px solid black;border-top:5px solid black;">';
+      }
+      else if (quint[j-1] != quint[j] && j > 0 && segments[i] != "+" && segments[i] != "?") {
+	      if (j != 4) {
+	        text += '<td style="border-bottom:5px transparent white;border-right:5px solid black;border-left:5px solid black;border-top:5px solid black;">';
+	      }
+	      else {
+	        text += '<td style="border-bottom:5px solid black;border-right:5px solid black;border-left:5px solid black;border-top:5px solid black;">';
+	      }
+      }
+      else if (j == 0) {
+	      text += '<td style="border-bottom:5px transparent white;border-right:5px solid black;border-left:5px solid black;border-top:5px solid black;">';
+      }
+      else if (j == 4) {
+	      text += '<td style="border-bottom:5px solid black;border-right:5px solid black;border-left:5px solid black;border-top:5px solid white;">';
+      }
+      else {
+	      text += '<td style="border-bottom:5px transparent black;border-right:5px solid black;border-left:5px solid black;border-top:5px solid white;">';
+      }
+      
+      if (j == 5 && typeof quint[j] != 'undefined') {
+	      text += '<span style="color:white;font-weight:normal;">'+quint[j]+'</span>';
+      }
+      else if (j == 5) {
+        text += ' ';
+      }
+      else if (typeof quint[j] != 'undefined' && quint != CFG.morpheme_separator && quint != "?") {
+	      text += plotWord(quint[j], span='span');
+      }
+      else if (quint == CFG.morpheme_separator) {
+        text += ' ';
+      }
+      else if (quint == '?' || typeof quint[j] == 'undefined' || quint.length == 1) {
+	      text += '<span style="color:white">Ø</span>';
+      }
+      else {
+	      text += plotWord(quint[0], span='span');
+      }
+    }
+    text += '</td></tr>';
+  }
+  //text += '<tr><td style="border-bottom:4px solid black;" colspan="'+segments.length+'"></td>';
+  text = '<div style="padding:5px;border:6px solid white;"><table style="padding:20px;">'+text+'</table></div>';
+  text = '<div class="edit_links niceblue" id="quintuple-popup" data-value="'+widx+'">'+
+    '<span class="main_handle pull-left" style="margin-left:5px;margin-top:2px;"></span>' +
+    '<p>Probability representation of «'+widx+'»:</p>' + text;
+  text += '<input class="btn btn-primary submit" type="button" onclick="$(\'#quintuple-overview\').remove();basickeydown(event);" value="CLOSE" />' + 
+    '</div><br><br></div>';
+  var popup = document.createElement('div');
+  popup.id = 'quintuple-overview';
+  popup.className = 'editmode';
+  document.body.appendChild(popup);
+  popup.innerHTML = text;
+  $('#quintuple-popup').draggable({handle:'.main_handle'}).resizable();
+}
+
+      
+  
 
 
 var ALIAS = {

@@ -35,8 +35,9 @@ PART.partial_alignment = function(event, widx) {
       jdx = WLS.roots[cogid][j][1];
       word = (CFG['_alignments'] != -1 && WLS[idx][CFG['_alignments']] != '' && WLS[idx][CFG['_alignments']] != '?') 
 	      ? WLS[idx][CFG['_alignments']]
-	      : WLS[idx][CFG['_segments']+' h a h a']
+	      : WLS[idx][CFG['_segments']]
 	      ;
+      console.log(word);
       morphemes = MORPH.get_morphemes(word.split(' '));
       console.log(morphemes)
       this_morpheme = morphemes[jdx];
@@ -406,6 +407,7 @@ PART.display_next_partial = function() {
   var ccon = CFG['_current_partial'];
   var acon = Object.keys(WLS.concepts);
   var ncon = acon[(acon.indexOf(ccon)+1)];
+  CFG._current_concept = ncon; // TODO: fix this for good
   PART.display_partial(ncon);
 
   document.getElementById('partial_current_concept').innerHTML = ncon + 

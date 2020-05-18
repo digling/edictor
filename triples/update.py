@@ -15,7 +15,7 @@ print
 
 # get the args of the url, convert nasty field storage to plain dictionary,
 # there is probably a better solution, but this works for the moment
-tmp_args = cgi.FieldStorage()
+tmp_args = cgi.FieldStorage(environ={'REQUEST_METHOD': 'POST'})
 args = {}
 for arg in tmp_args:
     args[arg] = tmp_args[arg].value

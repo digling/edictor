@@ -1,0 +1,21 @@
+{
+    "title": "EDICTOR. A web-based interactive tool for creating, inspecting, editing, and publishing etymological datasets",
+    "access_right": "open",
+    "keywords": [
+        "wordlist",
+        "linguistics",
+        "computer-assisted language comparison"
+    ],
+    "creators": [
+        {
+            "name": "Johann-Mattis List"
+        }
+    ],
+    "communities": [
+        {
+            "identifier": "lexibank"
+        }
+    ],
+    "upload_type": "dataset",
+    "description": "This software offers the most recent and mostly stable version of the EDICTOR tool, also available for direct usage from <a href=\"https://digling.org/edictor/\">digling.org/edictor/</a>."
+}

@@ -749,29 +749,31 @@ function showWLS(start){
 	  if (WLS['columns'][head] > 0) { var cell_display = ''; }
 	  else { var cell_display = ' style="display:none"';  }
 	  
-	  if ([CFG.note_formatter, CFG.formatter, CFG.root_formatter, CFG.pattern_formatter].indexOf(WLS.header[j]) == -1 && WLS.uneditables.indexOf(WLS.header[j]) == -1 && !CFG['publish']) {
+	  if ([CFG.note_formatter, CFG.formatter, CFG.root_formatter, CFG.pattern_formatter, CFG.quintiles].indexOf(WLS.header[j]) == -1 && WLS.uneditables.indexOf(WLS.header[j]) == -1 && !CFG['publish']) {
 	    var on_click = 'onclick="editEntry(' + idx + ',' + jdx + ',0,0)" ';
 	    var on_title = 'title="Modify entry '+idx+'/'+jdx+'." ';
 	    var on_ctxt = (j != CFG._morphemes) ? 'oncontextmenu="copyPasteEntry(event,'+idx+','+jdx+','+j+')" ': '';
 	    var this_class = 'class="'+WLS['header'][j]+'" ';
 	  }
-    else if (WLS.uneditables.indexOf(WLS.header[j]) != -1 || CFG['publish']) {
-      var on_click = '';
-      var on_title = '';
-      var this_class = 'class="uneditable '+WLS['header'][j]+'" ';
-
-      if (WLS.header[j] == CFG.formatter) {
-        var on_ctxt = 'oncontextmenu="editGroup(event,\''+WLS[idx][j]+'\')" ';
-      }
-      else if (WLS.header[j] == CFG.root_formatter) {
-        var on_ctxt = 'oncontextmenu="PART.partial_alignment(event,\''+idx+'\')" ';
-      }
-      else if (WLS.header[j] == CFG.note_formatter) {
-        var on_ctxt = 'oncontextmenu="COMMENTS.edit_comment(event,\''+idx+'\')" ';
-      }
-      else {
-        var on_ctxt = '';
-      }
+          else if (WLS.uneditables.indexOf(WLS.header[j]) != -1 || CFG['publish']) {
+            var on_click = '';
+            var on_title = '';
+            var this_class = 'class="uneditable '+WLS['header'][j]+'" ';
+	    if (WLS.header[j] == CFG.formatter) {
+      	      var on_ctxt = 'oncontextmenu="editGroup(event,\''+WLS[idx][j]+'\')" ';
+      	    }
+      	    else if (WLS.header[j] == CFG.root_formatter) {
+      	      var on_ctxt = 'oncontextmenu="PART.partial_alignment(event,\''+idx+'\')" ';
+      	    }
+      	    else if (WLS.header[j] == CFG.note_formatter) {
+      	      var on_ctxt = 'oncontextmenu="COMMENTS.edit_comment(event,\''+idx+'\')" ';
+      	    }
+	    else if (WLS.header[j] == CFG.quintiles) {
+	      var on_ctxt = 'oncontextmenu="UTIL.show_quintuples(event,\''+idx+'\')" ';
+	    }
+      	    else {
+      	      var on_ctxt = '';
+      	    }
 	  }
     else {
       var on_click = 'onclick="editEntry(' + idx + ',' + jdx + ',0,0)" ';
@@ -788,6 +790,9 @@ function showWLS(start){
       }
       else if (WLS.header[j] == CFG.pattern_formatter) {
         var on_ctxt = 'oncontextmenu="COMMENTS.show_pattern(event,\''+idx+'\')" ';
+      }
+      else if (WLS.header[j] == CFG.quintiles) {
+	var on_ctxt = 'oncontextmenu="UTIL.show_quintuples(event,\''+idx+'\')" ';
       }
       else {
         var on_ctxt = '';
@@ -1222,6 +1227,7 @@ function modifyEntry(event, idx, jdx, xvalue) {
   CFG['entry_is_currently_modifying'] = true;
 
   var process = false;
+  var nxvalue;
 
   /* get current index in the current view */
   var cdx = WLS['rows'].indexOf(idx);
@@ -1291,14 +1297,14 @@ function modifyEntry(event, idx, jdx, xvalue) {
   /* modify cogid to get unique id if no integer is chosen */
   var reset_format = false;
   if (CFG['formatter'] == entry.className) {
-    var nxvalue = cognateIdentifier(xvalue, idx);
+    nxvalue = cognateIdentifier(xvalue, idx);
     reset_format = true;
     if (nxvalue != xvalue) {
       xvalue = nxvalue;
     }
   }
   else if (CFG['root_formatter'] == entry.className) {
-    var nxvalue = partialCognateIdentifier(xvalue, idx);
+    nxvalue = partialCognateIdentifier(xvalue, idx);
     reset_format = true;
     if (nxvalue != xvalue) {
       xvalue = nxvalue;
@@ -1307,21 +1313,22 @@ function modifyEntry(event, idx, jdx, xvalue) {
   /* XXX tokenize entry  */ 
   else if (CFG['highlight'].indexOf(entry.className) != -1) {
     if (xvalue.length > 1 && xvalue.indexOf(' ') == -1) {
-      var nxvalue = ipa2tokens(xvalue);
+      nxvalue = ipa2tokens(xvalue);
       //-> console.log('transforming',xvalue,nxvalue);
       if (nxvalue != xvalue) {
 	xvalue = nxvalue;
       }
     }
   }
-
+  
+  var alm, new_alm, tks, seq_idx, i_, next_alm;
   if (jdx-1 == CFG._segments && CFG._alignments != -1) {
-    var alm = WLS[idx][CFG._alignments].split(' ');
-    var new_alm = [];
-    var tks = xvalue.split(' ');
-    var seq_idx = 0;
-    for (var i_=0; i_<alm.length; i_++) {
-      var next_alm = alm[i_];
+    alm = WLS[idx][CFG._alignments].split(' ');
+    new_alm = [];
+    tks = xvalue.split(' ');
+    seq_idx = 0;
+    for (i_=0; i_<alm.length; i_++) {
+      next_alm = alm[i_];
       if ('(-)'.indexOf(next_alm) == -1) {
 	new_alm.push(tks[seq_idx]);
 	seq_idx += 1;
@@ -2207,24 +2214,26 @@ function getDate(with_seconds) {
 /* highlight all IPA entries which are specified as such */
 function highLight()
 {
-  for (var i=0,head;head=WLS.header[i];i++) {
+  var items, i, tokens, word, morphemes, parts, j, textout, k, morph;
+
+  for (i=0;head=WLS.header[i];i++) {
     if (CFG['highlight'].indexOf(head) != -1 ) {
-      var tokens = document.getElementsByClassName(head);
-      for (var j = 0; j < tokens.length; j++) {
+      tokens = document.getElementsByClassName(head);
+      for (j = 0; j < tokens.length; j++) {
         if (tokens[j].innerHTML == tokens[j].dataset.value) {
-          var word = plotWord(tokens[j].dataset.value);
+          word = plotWord(tokens[j].dataset.value);
           tokens[j].innerHTML = '<div class="lock_alignment">'+word+"</div>";
         }
       }
     }
     else if (i == CFG['_morphemes']) {
-      var morphemes = document.getElementsByClassName(head);
-      for (var j=0; j < morphemes.length; j++) {
+      morphemes = document.getElementsByClassName(head);
+      for (j=0; j < morphemes.length; j++) {
 	if (morphemes[j].innerHTML == morphemes[j].dataset.value) {
-	  var parts = morphemes[j].dataset.value.split(/\s+/);
-	  var textout = [];
-	  for (var k=0;k<parts.length; k++) {
-	    var morph = (parts[k] && parts[k][0] != '?') 
+	  parts = morphemes[j].dataset.value.split(/\s+/);
+	  textout = [];
+	  for (k=0;k<parts.length; k++) {
+	    morph = (parts[k] && parts[k][0] != '?') 
 	      ? ((parts[k][0] != '_') ? '<span title="right-click to toggle" oncontextmenu="MORPH.toggle(event, this);" class="morpheme pointed">'+parts[k]+'</span>' : '<span title="right-click to toggle" oncontextmenu="MORPH.toggle(event, this);" class="morpheme-small pointed">'+parts[k].replace(/^_/, '')+'</span>')
 	      : '<span class="morpheme-error">'+parts[k]+'</span>'
 	      ;
@@ -2235,8 +2244,8 @@ function highLight()
       }
     }
     else if (i == CFG['_glottolog']) {
-      var items = document.getElementsByClassName(head);
-      for (var j=0,item; item=items[j]; j++) {
+      items = document.getElementsByClassName(head);
+      for (j=0; item=items[j]; j++) {
         if (item.innerHTML == item.dataset.value) {
           item.innerHTML = '<a class="outlink" href="http://glottolog.org/resource/languoid/id/'+item.dataset.value+'" target="_blank">'+item.dataset.value+'</a>';
 	        item.oncontextmenu = function (){};
@@ -2244,8 +2253,8 @@ function highLight()
       }
     }
     else if (i == CFG['_concepticon']) {
-      var items = document.getElementsByClassName(head);
-      for (var j=0,item; item=items[j]; j++) {
+      items = document.getElementsByClassName(head);
+      for (j=0; item=items[j]; j++) {
         if (item.innerHTML == item.dataset.value) {
           item.innerHTML = '<a class="outlink" href="http://concepticon.clld.org/parameters/'+item.dataset.value+'" target="_blank">'+item.dataset.value+'</a>';
 	  item.oncontextmenu = function (){};
@@ -2253,8 +2262,8 @@ function highLight()
       }
     }
     else if (i == CFG['_sources']) {
-      var items = document.getElementsByClassName(head);
-      for (var j=0,item; item=items[j]; j++) {
+      items = document.getElementsByClassName(head);
+      for (j=0; item=items[j]; j++) {
         if (item.innerHTML == item.dataset.value) {
 	        if (item.dataset.value.indexOf(':bib:') != -1) {
 	          item.innerHTML = item.dataset.value.replace(/:bib:([0-9A-Za-z\-]+)/g,'<a class="outlink" href="http://bibliography.lingpy.org?key=$1">$1</a>');
@@ -2264,12 +2273,30 @@ function highLight()
       }
     }
     else if (i == CFG['_note']) {
-      var items = document.getElementsByClassName(head);
-      for (var j=0,item; item=items[j]; j++) {
+      items = document.getElementsByClassName(head);
+      for (j=0; item=items[j]; j++) {
         if (item.innerHTML == item.dataset.value) {
           item.innerHTML = '<span class="comment">'+COMMENTS.markdown(TEXT.encodeComments(
             item.dataset.value))+'</span>';
         }
+      }
+    }
+    else if (i == WLS.columns[CFG.quintiles]-1) {
+      items = document.getElementsByClassName(head);
+      for (j=0; item=items[j]; j++) {
+	if (item.innerHTML == item.dataset.value) {
+	  tokens = item.dataset.value.split(' ');
+	  morphemes = [];
+	  for (k=0; k<tokens.length; k++) {
+	    if (tokens[k] == '?') {
+	      morphemes.push("??");
+	    }
+	    else {
+	      morphemes.push(tokens[k].split('|')[0]);
+	    }
+	  }
+	  item.innerHTML = plotWord(morphemes.join(' '));
+	}
       }
     }
     else {}
