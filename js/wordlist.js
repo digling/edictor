@@ -867,7 +867,7 @@ function showWLS(start){
     toggleClasses(['previous'],'unhidden','hidden');
   }
   var next = document.getElementById('next');
-  if (WLS['rows'].length > start + CFG['preview']) {
+  if (WLS['rows'].length >= start + CFG['preview']) {
     var poststart = start + parseInt(CFG['preview']);
     var postpoststart = start + 2 * parseInt(CFG['preview']) - 1;
     if (postpoststart >= WLS['rows'].length) {
@@ -885,7 +885,7 @@ function showWLS(start){
 
   var current = document.getElementById('current');
   var following = start + CFG['preview'] - 1;
-  if (following >= WLS['rows'].length - 1) {
+  if (following >= WLS['rows'].length) {
     following = WLS['rows'].length;
   }
   current.innerHTML = 'Showing ' + start + ' - ' + following + ' of ' + parseInt(WLS['rows'].length) + ' entries';

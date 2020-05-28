@@ -305,7 +305,7 @@ UTIL.filter_by_concept = function(concept) {
     PART.display_partial(concept);
   }
   applyFilter();
-  showWLS(getCurrent());
+  showWLS(1);
 };
 
 UTIL.display_next_concept = function() {
