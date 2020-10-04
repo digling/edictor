@@ -498,7 +498,7 @@ function loadAjax(event, where, what, classes) {
 
 /* helper function for URL creation */
 function makeMyURL() {
-  var base_url = "http://tsv.lingpy.org?";
+  var base_url = "https://digling.org/edictor?";
 
   var menuX = document.getElementById("showMenuX");
   var filtersX = document.getElementById("showFiltersX");
@@ -620,12 +620,12 @@ function makeMyTemplate() {
           else if (itm == 'CONCEPT') {
             text += '\t'+ glosses[gloss][1]+'\t'+gloss;
           }
-	  else if (itm == 'GLOTTOLOG') {
-	    if (typeof glottos[i] != 'undefined') {
-	      text += '\t'+glottos[i];
-	    }
-	    else {fakeAlert("You did not specify enough glottocodes for all your languages."); return;}
-	  }
+          else if (itm == 'GLOTTOLOG') {
+            if (typeof glottos[i] != 'undefined') {
+              text += '\t'+glottos[i];
+            }
+            else {fakeAlert("You did not specify enough glottocodes for all your languages."); return;}
+          }
           else {
             text += '\t-';
           }
@@ -674,13 +674,13 @@ function startEverything () {
       CFG['server_side_files'] = data.split('\n');
       /* manage autocomplete */
       $('#ajaxfile').autocomplete({
-	delay:0,
-	source: CFG['server_side_files']
+        delay:0,
+        source: CFG['server_side_files']
       });
     },
     error: function() {
       fakeAlert("Could not load remote files. Usage will be restricted " + 
-	  " to explicit file selection.");
+          " to explicit file selection.");
       $('#ajaxfile').hide(); 
     }
   });
@@ -694,15 +694,15 @@ function startEverything () {
   $(function() {
     $("#sortable").sortable({
       start: function( event, ui ) {
-	clone = $(ui.item[0].outerHTML).clone();
+        clone = $(ui.item[0].outerHTML).clone();
       },
       placeholder: {
-	element: function(clone, ui) {
-	  return $('<li class="selected" style="opacity:0.2;">'+clone[0].innerHTML+'</li>');
-	},
-	update: function() {
-	  return;
-	}
+        element: function(clone, ui) {
+          return $('<li class="selected" style="opacity:0.2;">'+clone[0].innerHTML+'</li>');
+        },
+        update: function() {
+          return;
+        }
       },
       handle: '.main_handle',
 

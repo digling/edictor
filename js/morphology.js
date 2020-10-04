@@ -69,16 +69,17 @@ MORPH.get_morphemes = function(word, return_morpheme_marks) {
 
 /* function returns all morphemes from indices, words and concepts */
 MORPH.get_all_morphemes = function (indices, words, concepts) {
+  var i, idx, word, concept, elms, elm;
   var M = {}; 
-  for (var i=0,idx, word, concept; idx=indices[i], word=words[i], concept=concepts[i]; i++) {
-    var elms = MORPH.get_morphemes(word);
+  for (i=0, idx, word, concept; idx=indices[i], word=words[i], concept=concepts[i]; i++) {
+    elms = MORPH.get_morphemes(word);
     for (var j=0; j < elms.length; j++) {
-      var elm = elms[j].join(' ');
+      elm = elms[j].join(' ');
       if (elm in M) {
-	M[elm].push([idx, j, concept]);
+	      M[elm].push([idx, j, concept]);
       }
       else {
-	M[elm] = [[idx, j, concept]];
+	      M[elm] = [[idx, j, concept]];
       }
     }
   }

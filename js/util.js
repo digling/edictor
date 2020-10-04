@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2016-03-20 10:44
- * modified : 2018-11-06 10:11
+ * modified : 2020-10-01 18:09
  *
  */
 
@@ -65,7 +65,7 @@ UTIL.settings = {
   'noid': false, 
   'sorting': false, 
   'formatter': false, 
-  'root_formatter'    : false,
+  'root_formatter' : false,
   '_alignment':false,
   '_patterns':-1, /* patterns of sound correspondences */
   'highlight': ['TOKENS','ALIGNMENT', 'SEGMENTS'],
@@ -371,7 +371,7 @@ UTIL.show_quintuples = function(event, widx) {
     }
     else {
       for (j=0; j<tokens[i].length; j++) {
-	text += '<td style="border:5px solid black;">'+plotWord(tokens[i][j])+'</td>';
+        text += '<td style="border:5px solid black;">'+plotWord(tokens[i][j])+'</td>';
       }
     }
   }
@@ -383,56 +383,56 @@ UTIL.show_quintuples = function(event, widx) {
       quint = segments[i].split('|');
       if (quint.length == 1) {
         if (quint == CFG.morpheme_separator) {
-	        text += '<td style="border: 5px transparent white;border-right: 5px solid black;">';
-	      }
-	      else if (j == 0) {
-	        text += '<td style="border-right:5px solid black;border-left:5px solid black;">';
-	      }
-	      else if (j == 4 || j == 5) {
-	        text += '<td style="border-bottom:5px solid black;border-right:5px solid black;border-left:5px solid black;">';
-	      }
-	      else {
-	        text += '<td style="border-bottom:5px solid white;border-right:5px solid black;border-left:5px solid black;border-top:5px solid white;">';
-	      }
+                text += '<td style="border: 5px transparent white;border-right: 5px solid black;">';
+              }
+              else if (j == 0) {
+                text += '<td style="border-right:5px solid black;border-left:5px solid black;">';
+              }
+              else if (j == 4 || j == 5) {
+                text += '<td style="border-bottom:5px solid black;border-right:5px solid black;border-left:5px solid black;">';
+              }
+              else {
+                text += '<td style="border-bottom:5px solid white;border-right:5px solid black;border-left:5px solid black;border-top:5px solid white;">';
+              }
       }
       else if (j == 5) {
-	      text += '<td style="text-align:center;border-bottom:5px solid black;border-right:5px solid black;border-left:5px solid black;border-top:5px solid black;">';
+              text += '<td style="text-align:center;border-bottom:5px solid black;border-right:5px solid black;border-left:5px solid black;border-top:5px solid black;">';
       }
       else if (quint[j-1] != quint[j] && j > 0 && segments[i] != "+" && segments[i] != "?") {
-	      if (j != 4) {
-	        text += '<td style="border-bottom:5px transparent white;border-right:5px solid black;border-left:5px solid black;border-top:5px solid black;">';
-	      }
-	      else {
-	        text += '<td style="border-bottom:5px solid black;border-right:5px solid black;border-left:5px solid black;border-top:5px solid black;">';
-	      }
+              if (j != 4) {
+                text += '<td style="border-bottom:5px transparent white;border-right:5px solid black;border-left:5px solid black;border-top:5px solid black;">';
+              }
+              else {
+                text += '<td style="border-bottom:5px solid black;border-right:5px solid black;border-left:5px solid black;border-top:5px solid black;">';
+              }
       }
       else if (j == 0) {
-	      text += '<td style="border-bottom:5px transparent white;border-right:5px solid black;border-left:5px solid black;border-top:5px solid black;">';
+              text += '<td style="border-bottom:5px transparent white;border-right:5px solid black;border-left:5px solid black;border-top:5px solid black;">';
       }
       else if (j == 4) {
-	      text += '<td style="border-bottom:5px solid black;border-right:5px solid black;border-left:5px solid black;border-top:5px solid white;">';
+              text += '<td style="border-bottom:5px solid black;border-right:5px solid black;border-left:5px solid black;border-top:5px solid white;">';
       }
       else {
-	      text += '<td style="border-bottom:5px transparent black;border-right:5px solid black;border-left:5px solid black;border-top:5px solid white;">';
+              text += '<td style="border-bottom:5px transparent black;border-right:5px solid black;border-left:5px solid black;border-top:5px solid white;">';
       }
       
       if (j == 5 && typeof quint[j] != 'undefined') {
-	      text += '<span style="color:white;font-weight:normal;">'+quint[j]+'</span>';
+              text += '<span style="color:white;font-weight:normal;">'+quint[j]+'</span>';
       }
       else if (j == 5) {
         text += ' ';
       }
       else if (typeof quint[j] != 'undefined' && quint != CFG.morpheme_separator && quint != "?") {
-	      text += plotWord(quint[j], span='span');
+              text += plotWord(quint[j], span='span');
       }
       else if (quint == CFG.morpheme_separator) {
         text += ' ';
       }
       else if (quint == '?' || typeof quint[j] == 'undefined' || quint.length == 1) {
-	      text += '<span style="color:white">Ø</span>';
+              text += '<span style="color:white">Ø</span>';
       }
       else {
-	      text += plotWord(quint[0], span='span');
+              text += plotWord(quint[0], span='span');
       }
     }
     text += '</td></tr>';

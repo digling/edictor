@@ -471,7 +471,7 @@ PATS.render_matrix = function(lengths) {
   
   PATS.header = ['COGNATES', 'INDEX', 'PATTERN', 'CONCEPTS']
   for (i=0; doculect=PATS.selected_doculects[i]; i++) {
-    PATS.header.push(doculect.slice(0,3));
+    PATS.header.push(doculect.slice(0, 3));
   }
   PATS.header.push('SIZE');
   titles = ['cognate sets', 'pattern position', 'pattern number', 'concepts'].concat(PATS.selected_doculects);
@@ -485,14 +485,14 @@ PATS.render_matrix = function(lengths) {
     if (typeof WLS.columns['PATTERNS'] != 'undefined') {
       sounds = [];
       for (i=0; i<PATS.selected.length; i++) {
-	sound = PATS.selected[i].split('-')[0]+'/'+PATS.selected[i].split('/')[1];
-	sounds.push(sound);
+	      sound = PATS.selected[i].split('-')[0]+'/'+PATS.selected[i].split('/')[1];
+	      sounds.push(sound);
       }
       for (i=0; i<PATS.matrix.length; i++) {
-	sound = PATS.matrix[i][2][0];
-	if (LIST.has(sounds, sound)) {
-	  idxs.push(i);
-	}
+	      sound = PATS.matrix[i][2][0];
+	      if (LIST.has(sounds, sound)) {
+	        idxs.push(i);
+	      }
       }
     }
     else {

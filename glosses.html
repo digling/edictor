@@ -1,0 +1,23 @@
+<span class="main_handle pull-left" ></span>
+<button type="button" onclick="$('#toggle_glosses > span').toggle();$('#glosses').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+<h3>
+Analyze and edit the glosses of doculects: 
+</h3>
+<input id="input_glosses" class="form-control pull-left textfield" type="text"
+      placeholder="select your doculect" onkeyup="GLOSSES.filter_gloss=this.value;" style="width:250px" />
+<input id="glosses_filter" 
+      class="form-control pull-left textfield" 			      
+      type="text"
+      placeholder="filter by morphemes" 
+      onkeyup="if (this.value[this.value.length-1] == ' ') {this.value=(CFG['sampa'].indexOf(WLS['header'][CFG['_segments']]) != -1) ?  sampa2ipa(this.value) : this.value;}" 
+      style="width:150px" />
+
+<button type="button"
+	onclick="showSpinner(function(){GLOSSES.present();});"
+  class="btn-primary submit3 titled btn">OK</button>
+
+<div style="max-height:1000px;overflow-x:scroll;overflow-y:scroll;display:none;"
+  id="glosses_table"></div>
+<div class="help-message" id="glosses_help" style="display:none;">
+  <h3>Help on Glosses</h3>
+</div>

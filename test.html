@@ -1,0 +1,99 @@
+<html>
+<link rel="stylesheet" href="css/main.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <body>
+  <script>
+Components.utils.import("resource://gre/modules/Services.jsm");
+Components.utils.import("resource://gre/modules/FileUtils.jsm");
+
+let file = FileUtils.getFile("ProfD", ["my_db_file_name.sqlite"]);
+let dbConn = Services.storage.openDatabase(file); // Will also create the file if it does not exist
+console.log('created file');
+  </script>
+
+
+<div name="wordlist" style="overflow: visible;" id="qlc"><table id="qlc_table"><colgroup><col
+      id="ID"><col id="DOCULECT"><col id="CONCEPT"><col id="CONCEPTICONID"
+							style="visibility:hidden;"><col
+       id="COUNTERPART" style="visibility:hidden;">
+							<col id="IPA" style="visibility:hidden;"><col id="TOKENS"><col id="COGID" style="visibility:hidden;"><col id="ALIGNMENT" style="visibility:hidden;"></colgroup><tbody>
+<tr><th>ID</th><th class="titled" title="Double-click for sorting along this column."
+    id="HEAD_DOCULECT" ondblclick="sortTable(event,'DOCULECT')">DOCULECT</th><th class="titled"
+    title="Double-click for sorting along this column." id="HEAD_CONCEPT"
+ondblclick="sortTable(event,'CONCEPT')">CONCEPT</th><th style="display:none">CONCEPTICON ID</th><th
+style="display:none">COUNTERPART</th><th class="titled" title="Double-click for sorting along this
+column." id="HEAD_IPA" style="display:none" ondblclick="sortTable(event,'IPA')">IPA</th><th class="titled"
+title="Double-click for sorting along this column." id="HEAD_TOKENS"
+ondblclick="sortTable(event,'TOKENS')">SEGMENTS</th><th style="display:none">COGID</th><th style="display:none">ALIGNMENT</th></tr>
+<tr class="d0" id="L_22">
+    
+    <td title="Click to add a new line or to remove the current line." onclick="editLine(event,22);" class="ID pointed">22</td>
+    <td class="DOCULECT" title="Modify entry 22/1." onclick="editEntry(22,1,0,0)" oncontextmenu="copyPasteEntry(event,22,1,0)" data-value="Chinese">Chinese</td>
+    <td class="CONCEPT" title="Modify entry 22/2." onclick="editEntry(22,2,0,0)" oncontextmenu="copyPasteEntry(event,22,2,1)" data-value="Woldemort">Woldemort</td>
+    <td class="CONCEPTICONID" title="Modify entry 22/3." onclick="editEntry(22,3,0,0)" oncontextmenu="copyPasteEntry(event,22,3,2)" data-value="646" style="display:none"><a class="outlink" href="http://concepticon.clld.org/parameters/646" target="_blank">646</a></td>
+    <td class="COUNTERPART" title="Modify entry 22/4." onclick="editEntry(22,4,0,0)" oncontextmenu="copyPasteEntry(event,22,4,3)" data-value="-" style="display:none">-</td>
+    <td class="IPA" style="display:none" title="Modify entry 22/5." onclick="editEntry(22,5,0,0)" oncontextmenu="copyPasteEntry(event,22,5,4)" data-value="fu⁵¹di⁵¹mɔ³⁵">fu⁵¹di⁵¹mɔ³⁵</td>
+    <td class="TOKENS" title="Modify entry 22/6." onclick="editEntry(22,6,0,0)" oncontextmenu="copyPasteEntry(event,22,6,5)" data-value="f u ⁵¹ d i ⁵¹ m ɔ ³⁵"><div class="lock_alignment"><span class="residue dolgo_P">f </span><span class="residue dolgo_V">u </span><span class="residue dolgo_1">⁵¹ </span><span class="residue dolgo_T">d </span><span class="residue dolgo_V">i </span><span class="residue dolgo_1">⁵¹ </span><span class="residue dolgo_M">m </span><span class="residue dolgo_V">ɔ </span><span class="residue dolgo_1">³⁵ </span></div></td>
+    <td class="COGID" title="Modify entry 22/7." onclick="editEntry(22,7,0,0)" oncontextmenu="editGroup(event,'1')" data-value="1" style="display:none">1</td>
+    <td class="ALIGNMENT" title="Modify entry 22/8." onclick="editEntry(22,8,0,0)" oncontextmenu="copyPasteEntry(event,22,8,7)" data-value="f u - - ⁵¹ d i ⁵¹ m ɔ - - ³⁵" style="display:none"><div class="lock_alignment"><span class="residue dolgo_P">f </span><span class="residue dolgo_V">u </span><span class="residue  dolgo_GAP">- </span><span class="residue  dolgo_GAP">- </span><span class="residue dolgo_1">⁵¹ </span><span class="residue dolgo_T">d </span><span class="residue dolgo_V">i </span><span class="residue dolgo_1">⁵¹ </span><span class="residue dolgo_M">m </span><span class="residue dolgo_V">ɔ </span><span class="residue  dolgo_GAP">- </span><span class="residue  dolgo_GAP">- </span><span class="residue dolgo_1">³⁵ </span></div></td></tr>
+<tr class="d0" id="L_4">
+    
+    <td title="Click to add a new line or to remove the current line." onclick="editLine(event,4);" class="ID pointed">4</td>
+    <td class="DOCULECT" title="Modify entry 4/1." onclick="editEntry(4,1,0,0)" oncontextmenu="copyPasteEntry(event,4,1,0)" data-value="English">English</td>
+    <td class="CONCEPT" title="Modify entry 4/2." onclick="editEntry(4,2,0,0)" oncontextmenu="copyPasteEntry(event,4,2,1)" data-value="Woldemort">Woldemort</td>
+    <td class="CONCEPTICONID" title="Modify entry 4/3." onclick="editEntry(4,3,0,0)" oncontextmenu="copyPasteEntry(event,4,3,2)" data-value="98" style="display:none"><a class="outlink" href="http://concepticon.clld.org/parameters/98" target="_blank">98</a></td>
+    <td class="COUNTERPART" title="Modify entry 4/4." onclick="editEntry(4,4,0,0)" oncontextmenu="copyPasteEntry(event,4,4,3)" data-value="-" style="display:none">-</td>
+    <td class="IPA" style="display:none" title="Modify entry 4/5." onclick="editEntry(4,5,0,0)" oncontextmenu="copyPasteEntry(event,4,5,4)" data-value="wɔldəmɔːrt">wɔldəmɔːrt</td>
+    
+    <td class="TOKENS" title="Modify entry 4/6." onclick="editEntry(4,6,0,0)" data-value="w ɔ l d ə m ɔː ʁ t">
+      <!--<div class="lock_alignment"><span class="residue dolgo_W">w </span><span class="residue
+	dolgo_V">ɔ </span><span class="residue dolgo_R">l </span><span class="residue dolgo_T">d
+	</span><span class="residue dolgo_V">ə </span><span class="residue dolgo_M">m </span><span
+	class="residue dolgo_V">ɔː </span><span class="residue dolgo_R">ʁ </span><span
+	class="residue dolgo_T">t </span></div>-->
+    <input type="text" class="cellinput" value="wOld@mO:Rt" />
+
+    </td>
+    
+    <td class="COGID" title="Modify entry 4/7." onclick="editEntry(4,7,0,0)" oncontextmenu="editGroup(event,'1')" data-value="1" style="display:none">1</td>
+    
+    <td class="ALIGNMENT" title="Modify entry 4/8." onclick="editEntry(4,8,0,0)" oncontextmenu="copyPasteEntry(event,4,8,7)" data-value="w ɔ l - - d ə - m ɔː r t -" style="display:none"><div class="lock_alignment"><span class="residue dolgo_W">w </span><span class="residue dolgo_V">ɔ </span><span class="residue dolgo_R">l </span><span class="residue  dolgo_GAP">- </span><span class="residue  dolgo_GAP">- </span><span class="residue dolgo_T">d </span><span class="residue dolgo_V">ə </span><span class="residue  dolgo_GAP">- </span><span class="residue dolgo_M">m </span><span class="residue dolgo_V">ɔː </span><span class="residue dolgo_R">r </span><span class="residue dolgo_T">t </span><span class="residue  dolgo_GAP">- </span></div></td></tr>
+<tr class="d0" id="L_3">
+    
+    <td title="Click to add a new line or to remove the current line." onclick="editLine(event,3);" class="ID pointed">3</td>
+    <td class="DOCULECT" title="Modify entry 3/1." onclick="editEntry(3,1,0,0)" oncontextmenu="copyPasteEntry(event,3,1,0)" data-value="German">German</td>
+    <td class="CONCEPT" title="Modify entry 3/2." onclick="editEntry(3,2,0,0)" oncontextmenu="copyPasteEntry(event,3,2,1)" data-value="Woldemort">Woldemort</td>
+    <td class="CONCEPTICONID" title="Modify entry 3/3." onclick="editEntry(3,3,0,0)" oncontextmenu="copyPasteEntry(event,3,3,2)" data-value="98" style="display:none"><a class="outlink" href="http://concepticon.clld.org/parameters/98" target="_blank">98</a></td>
+    <td class="COUNTERPART" title="Modify entry 3/4." onclick="editEntry(3,4,0,0)" oncontextmenu="copyPasteEntry(event,3,4,3)" data-value="-" style="display:none">-</td>
+    <td class="IPA" style="display:none" title="Modify entry 3/5." onclick="editEntry(3,5,0,0)" oncontextmenu="copyPasteEntry(event,3,5,4)" data-value="valtər">valtər</td>
+    <td class="TOKENS" title="Modify entry 3/6." onclick="editEntry(3,6,0,0)" oncontextmenu="copyPasteEntry(event,3,6,5)" data-value="v a l t ə r"><div class="lock_alignment"><span class="residue dolgo_W">v </span><span class="residue dolgo_V">a </span><span class="residue dolgo_R">l </span><span class="residue dolgo_T">t </span><span class="residue dolgo_V">ə </span><span class="residue dolgo_R">r </span></div></td>
+    <td class="COGID" title="Modify entry 3/7." onclick="editEntry(3,7,0,0)" oncontextmenu="editGroup(event,'1')" data-value="1" style="display:none">1</td>
+    <td class="ALIGNMENT" title="Modify entry 3/8." onclick="editEntry(3,8,0,0)" oncontextmenu="copyPasteEntry(event,3,8,7)" data-value="v a l - - t ə - - - r - -" style="display:none"><div class="lock_alignment"><span class="residue dolgo_W">v </span><span class="residue dolgo_V">a </span><span class="residue dolgo_R">l </span><span class="residue  dolgo_GAP">- </span><span class="residue  dolgo_GAP">- </span><span class="residue dolgo_T">t </span><span class="residue dolgo_V">ə </span><span class="residue  dolgo_GAP">- </span><span class="residue  dolgo_GAP">- </span><span class="residue  dolgo_GAP">- </span><span class="residue dolgo_R">r </span><span class="residue  dolgo_GAP">- </span><span class="residue  dolgo_GAP">- </span></div></td></tr>
+<tr class="d0" id="L_21">
+    
+    <td title="Click to add a new line or to remove the current line." onclick="editLine(event,21);" class="ID pointed">21</td>
+    <td class="DOCULECT" title="Modify entry 21/1." onclick="editEntry(21,1,0,0)" oncontextmenu="copyPasteEntry(event,21,1,0)" data-value="Russian">Russian</td>
+    <td class="CONCEPT" title="Modify entry 21/2." onclick="editEntry(21,2,0,0)" oncontextmenu="copyPasteEntry(event,21,2,1)" data-value="Woldemort">Woldemort</td>
+    <td class="CONCEPTICONID" title="Modify entry 21/3." onclick="editEntry(21,3,0,0)" oncontextmenu="copyPasteEntry(event,21,3,2)" data-value="646" style="display:none"><a class="outlink" href="http://concepticon.clld.org/parameters/646" target="_blank">646</a></td>
+    <td class="COUNTERPART" title="Modify entry 21/4." onclick="editEntry(21,4,0,0)" oncontextmenu="copyPasteEntry(event,21,4,3)" data-value="-" style="display:none">-</td>
+    
+    <td class="IPA" style="display:none" title="Modify entry 21/5." onclick="editEntry(21,5,0,0)"
+      oncontextmenu="copyPasteEntry(event,21,5,4)" data-value="vladimir">Владимир</td>
+    <td
+						   class="TOKENS" title="Modify entry 21/6."
+			onclick="editEntry(21,6,0,0)" oncontextmenu="copyPasteEntry(event,21,6,5)"
+				 data-value="в л а д и м и р">
+      <div class="lock_alignment">
+	<span class="residue dolgo_ERROR">В </span>
+	<span class="residue dolgo_ERROR">л </span>
+	<span class="residue dolgo_ERROR">а </span>
+	<span class="residue dolgo_ERROR">д </span>
+	<span class="residue dolgo_ERROR">и </span>
+	<span class="residue dolgo_ERROR">м </span>
+	<span class="residue dolgo_ERROR">и </span>
+	<span class="residue dolgo_ERROR">р </span>
+      </div></td>
+    <td class="COGID" title="Modify entry 21/7." onclick="editEntry(21,7,0,0)" oncontextmenu="editGroup(event,'1')" data-value="1" style="display:none">1</td>
+    <td class="ALIGNMENT" title="Modify entry 21/8." onclick="editEntry(21,8,0,0)" oncontextmenu="copyPasteEntry(event,21,8,7)" data-value="v - l a - d i - m i r - -" style="display:none"><div class="lock_alignment"><span class="residue dolgo_W">v </span><span class="residue  dolgo_GAP">- </span><span class="residue dolgo_R">l </span><span class="residue dolgo_V">a </span><span class="residue  dolgo_GAP">- </span><span class="residue dolgo_T">d </span><span class="residue dolgo_V">i </span><span class="residue  dolgo_GAP">- </span><span class="residue dolgo_M">m </span><span class="residue dolgo_V">i </span><span class="residue dolgo_R">r </span><span class="residue  dolgo_GAP">- </span><span class="residue  dolgo_GAP">- </span></div></td></tr></tbody></table></div>
+</body>
+</html>
