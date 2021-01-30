@@ -840,6 +840,11 @@ table.alignments {
   display: block;
   clear: both;
 }
+
+.gloss_cell {
+  padding-right: 5px;
+  padding-top: 2px;
+}
 .alm_taxon {
   font-weight: bold;
   display: table-cell;
@@ -1149,4 +1154,23 @@ tr.up_fill > td {
   background-color: #2D6CA2;
   font-weight: bold;
   margin-left: 2px;
+}
+
+.singleton {
+  color: Crimson;
+  background-color: AliceBlue;
+  padding: 2px;
+}
+
+.multiton {
+  background-color: AliceBlue;
+  padding: 2px;
+}
+
+.multiton > sup {
+  font-size: 50%;
+}
+
+.polysem {
+  color: DarkBlue;
 }

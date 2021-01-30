@@ -1452,17 +1452,17 @@ function storeModification(idx, jdx, value, async_) {
       vals.push(encodeURIComponent(val));
 
       if (CFG['update_mode'] == 'save') {
-	/* add two ids, very simple */
-	ids.push(idx);
-	ids.push(idx);
-
-	/* add the column names */
-	cols.push('CONCEPT');
-	cols.push('DOCULECT');
-
-	/* add the values */
-	vals.push(WLS[idx][CFG['_cidx']]);
-	vals.push(WLS[idx][CFG['_tidx']]);
+        /* add two ids, very simple */
+        ids.push(idx);
+        ids.push(idx);
+        
+        /* add the column names */
+        cols.push('CONCEPT');
+        cols.push('DOCULECT');
+        
+        /* add the values */
+        vals.push(WLS[idx][CFG['_cidx']]);
+        vals.push(WLS[idx][CFG['_tidx']]);
       }
     }
 
@@ -1489,7 +1489,7 @@ function storeModification(idx, jdx, value, async_) {
 	      }
       },
       error: function() {
-        fakeAlert('data could not be stored');
+        fakeAlert('data could not be stored'+new_url);
       }
     });
   }
@@ -1923,7 +1923,7 @@ function deleteLine(rowidx) {
       url: new_url,
       dataType: "text",
       success: function(data) {
-	dataSavedMessage('deletion', rowidx);
+	      dataSavedMessage('deletion', rowidx);
       },
       error: function() {
         fakeAlert('data could not be stored');
@@ -1981,7 +1981,8 @@ function addLine(rowidx) {
       url: new_url,
       dataType: "text",
       success: function(data) {
-	newIdx = parseInt(data);
+	      newIdx = parseInt(data);
+        console.log('newidx', newIdx, data);
       },
       error: function() {
         fakeAlert('data could not be stored');
@@ -2053,7 +2054,7 @@ function finishAddLine(new_idx) {
 
   /* add the new entry if everything is fine */
   WLS[new_idx] = [];
-  for (var i=0,headline; headline=WLS.header[i]; i++) {
+  for (var i=0, headline; headline=WLS.header[i]; i++) {
     if (headline.indexOf('ID') == headline.length -2) {
       WLS[new_idx].push(0);
     }
@@ -2097,6 +2098,7 @@ function finishAddLine(new_idx) {
       '&ID='+new_idx +
       '&COL='+ WLS.column_names[WLS.header[CFG['_cidx']]].replace(/ /g,'_') +
       '&VAL='+concept;
+    console.log(new_url1, new_url2, taxon, concept, new_idx);
 
     $.ajax({
       async: true,
@@ -2111,7 +2113,7 @@ function finishAddLine(new_idx) {
         else if(data.indexOf("INSERTION") != -1) {
           dataSavedMessage("insertion");
         }
-	else {fakeAlert(data)};
+	      else {fakeAlert(data)};
       },
       error: function() {
         fakeAlert('data could not be stored');
@@ -2214,7 +2216,7 @@ function getDate(with_seconds) {
 /* highlight all IPA entries which are specified as such */
 function highLight()
 {
-  var items, i, tokens, word, morphemes, parts, j, textout, k, morph;
+  var items, i, tokens, roots, word, m, concepts, concept, morphemes, parts, j, textout, k, morph;
 
   for (i=0;head=WLS.header[i];i++) {
     if (CFG['highlight'].indexOf(head) != -1 ) {
@@ -2226,21 +2228,68 @@ function highLight()
         }
       }
     }
+    else if (i == CFG['_roots']){
+      roots = document.getElementsByClassName(head);
+      for (j=0; j<roots.length; j++){
+        if (roots[j].innerHTML == roots[j].dataset.value){
+          parts = roots[j].dataset.value.split(/\s+/);
+          textout = [];
+          for (k=0; k<parts.length; k++) {
+            if (WLS.roots[parts[k]].length == 1){
+              textout.push('<span class="singleton">'+parts[k]+'</span>');
+            }
+            else {
+              concepts = [];
+              for (m=0; m<WLS.roots[parts[k]].length; m++) {
+                concept = WLS[WLS.roots[parts[k]][m][0]][CFG._cidx];
+                if (concepts.indexOf(concept) == -1){
+                  concepts.push(concept);
+                }
+              }
+              if (concepts.length > 1){
+                textout.push('<span class="multiton polysem">'+parts[k]+'<sup>'+WLS.roots[parts[k]].length+'</sup></span>');
+              }
+              else {
+                textout.push('<span class="multiton">'+parts[k]+'<sup>'+WLS.roots[parts[k]].length+'</sup></span>');
+              }
+            }
+          }
+          roots[j].innerHTML = textout.join(' ');
+        }
+      }
+    }
+    else if (i == CFG['_cognates']){
+      roots = document.getElementsByClassName(head);
+      for (j=0; j<roots.length; j++){
+        if (roots[j].innerHTML == roots[j].dataset.value){
+          k = roots[j].dataset.value;
+          textout = '';
+          if (WLS.etyma[k].length == 1){
+            textout = '<span class="singleton">'+k+'</span>';
+          }
+          else {
+            textout = '<span class="multiton">'+k+'<sup>'+WLS.etyma[k].length+'</sup></span>';
+          }
+          roots[j].innerHTML = textout;
+        }
+      }
+    }
+
     else if (i == CFG['_morphemes']) {
       morphemes = document.getElementsByClassName(head);
       for (j=0; j < morphemes.length; j++) {
-	if (morphemes[j].innerHTML == morphemes[j].dataset.value) {
-	  parts = morphemes[j].dataset.value.split(/\s+/);
-	  textout = [];
-	  for (k=0;k<parts.length; k++) {
-	    morph = (parts[k] && parts[k][0] != '?') 
-	      ? ((parts[k][0] != '_') ? '<span title="right-click to toggle" oncontextmenu="MORPH.toggle(event, this);" class="morpheme pointed">'+parts[k]+'</span>' : '<span title="right-click to toggle" oncontextmenu="MORPH.toggle(event, this);" class="morpheme-small pointed">'+parts[k].replace(/^_/, '')+'</span>')
-	      : '<span class="morpheme-error">'+parts[k]+'</span>'
-	      ;
-	    textout.push(morph);
-	  }
-	  morphemes[j].innerHTML = textout.join('<span class="small" style="display:table-cell">+</span>');
-	}
+        if (morphemes[j].innerHTML == morphemes[j].dataset.value) {
+          parts = morphemes[j].dataset.value.split(/\s+/);
+          textout = [];
+          for (k=0;k<parts.length; k++) {
+            morph = (parts[k] && parts[k][0] != '?') 
+              ? ((parts[k][0] != '_') ? '<span title="right-click to toggle" oncontextmenu="MORPH.toggle(event, this);" class="morpheme pointed">'+parts[k]+'</span>' : '<span title="right-click to toggle" oncontextmenu="MORPH.toggle(event, this);" class="morpheme-small pointed">'+parts[k].replace(/^_/, '')+'</span>')
+              : '<span class="morpheme-error">'+parts[k]+'</span>'
+            ;
+            textout.push(morph);
+          }
+          morphemes[j].innerHTML = textout.join('<span class="small" style="display:table-cell">+</span>');
+        }
       }
     }
     else if (i == CFG['_glottolog']) {
@@ -2284,19 +2333,19 @@ function highLight()
     else if (i == WLS.columns[CFG.quintiles]-1) {
       items = document.getElementsByClassName(head);
       for (j=0; item=items[j]; j++) {
-	if (item.innerHTML == item.dataset.value) {
-	  tokens = item.dataset.value.split(' ');
-	  morphemes = [];
-	  for (k=0; k<tokens.length; k++) {
-	    if (tokens[k] == '?') {
-	      morphemes.push("??");
-	    }
-	    else {
-	      morphemes.push(tokens[k].split('|')[0]);
-	    }
-	  }
-	  item.innerHTML = plotWord(morphemes.join(' '));
-	}
+        if (item.innerHTML == item.dataset.value) {
+          tokens = item.dataset.value.split(' ');
+          morphemes = [];
+          for (k=0; k<tokens.length; k++) {
+            if (tokens[k] == '?') {
+              morphemes.push("??");
+            }
+            else {
+              morphemes.push(tokens[k].split('|')[0]);
+            }
+          }
+          item.innerHTML = plotWord(morphemes.join(' '));
+        }
       }
     }
     else {}
