@@ -2,6 +2,7 @@ prison/
 private/
 prison_old/
 *.swp
+*.pyc
 dev/
 data/BAI-test.tsv
 data/Tujia-example.tsv
@@ -19,8 +20,8 @@ data/turkic_bayes.tsv
 data/yinku.tsv
 data/zgraggen.tsv
 alms/
-prison
-triples
 .info
 dighl/
 old/
+triples/rechte.py
+

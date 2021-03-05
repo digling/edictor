@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2017-10-26 15:52
+ * modified : 2021-01-31 13:15
  *
  */
 
@@ -2216,66 +2216,75 @@ function getDate(with_seconds) {
 /* highlight all IPA entries which are specified as such */
 function highLight()
 {
-  var items, i, tokens, roots, word, m, concepts, concept, morphemes, parts, j, textout, k, morph;
+  var items, i, tokens, roots, word, m, concepts, concept, morphemes, parts, part, j, textout, k, morph;
 
-  for (i=0;head=WLS.header[i];i++) {
+  for (i=0; head=WLS.header[i]; i++) {
     if (CFG['highlight'].indexOf(head) != -1 ) {
       tokens = document.getElementsByClassName(head);
-      for (j = 0; j < tokens.length; j++) {
+      for (j=0; j<tokens.length; j++) {
         if (tokens[j].innerHTML == tokens[j].dataset.value) {
           word = plotWord(tokens[j].dataset.value);
           tokens[j].innerHTML = '<div class="lock_alignment">'+word+"</div>";
         }
       }
     }
-    else if (i == CFG['_roots']){
+    else if (i === CFG['_roots']){
       roots = document.getElementsByClassName(head);
       for (j=0; j<roots.length; j++){
         if (roots[j].innerHTML == roots[j].dataset.value){
           parts = roots[j].dataset.value.split(/\s+/);
           textout = [];
           for (k=0; k<parts.length; k++) {
-            if (WLS.roots[parts[k]].length == 1){
-              textout.push('<span class="singleton">'+parts[k]+'</span>');
-            }
-            else {
-              concepts = [];
-              for (m=0; m<WLS.roots[parts[k]].length; m++) {
-                concept = WLS[WLS.roots[parts[k]][m][0]][CFG._cidx];
-                if (concepts.indexOf(concept) == -1){
-                  concepts.push(concept);
-                }
-              }
-              if (concepts.length > 1){
-                textout.push('<span class="multiton polysem">'+parts[k]+'<sup>'+WLS.roots[parts[k]].length+'</sup></span>');
+            part = WLS.roots[parts[k]];
+            if (typeof part != 'undefined'){
+              if (part.length == 1){
+                textout.push('<span class="cognate singleton">'+parts[k]+'</span>');
               }
               else {
-                textout.push('<span class="multiton">'+parts[k]+'<sup>'+WLS.roots[parts[k]].length+'</sup></span>');
+                concepts = [];
+                for (m=0; m<WLS.roots[parts[k]].length; m++) {
+                  concept = WLS[WLS.roots[parts[k]][m][0]][CFG._cidx];
+                  if (concepts.indexOf(concept) == -1){
+                    concepts.push(concept);
+                  }
+                }
+                if (concepts.length > 1){
+                  textout.push('<span class="cognate polysem">'+parts[k]+'<sup>'+WLS.roots[parts[k]].length+'</sup></span>');
+                }
+                else {
+                  textout.push('<span class="cognate">'+parts[k]+'<sup>'+WLS.roots[parts[k]].length+'</sup></span>');
+                }
               }
+            }
+            else {
+              textout.push('<span class="zero">'+parts[k]+'</span>');
             }
           }
           roots[j].innerHTML = textout.join(' ');
         }
       }
     }
-    else if (i == CFG['_cognates']){
+    else if (i === CFG['_cognates']){
       roots = document.getElementsByClassName(head);
       for (j=0; j<roots.length; j++){
         if (roots[j].innerHTML == roots[j].dataset.value){
           k = roots[j].dataset.value;
           textout = '';
-          if (WLS.etyma[k].length == 1){
-            textout = '<span class="singleton">'+k+'</span>';
+          if (typeof WLS.etyma[k] != 'undefined' && WLS.etyma[k].length == 1){
+            textout = '<span class="cognate singleton">'+k+'</span>';
+          }
+          else if (typeof WLS.etyma[k] != 'undefined'){
+            textout = '<span class="cognate">'+k+'<sup>'+WLS.etyma[k].length+'</sup></span>';
           }
           else {
-            textout = '<span class="multiton">'+k+'<sup>'+WLS.etyma[k].length+'</sup></span>';
+            textout = '<span class="zero">'+k+'</span>';
           }
           roots[j].innerHTML = textout;
         }
       }
     }
 
-    else if (i == CFG['_morphemes']) {
+    else if (i === CFG['_morphemes']) {
       morphemes = document.getElementsByClassName(head);
       for (j=0; j < morphemes.length; j++) {
         if (morphemes[j].innerHTML == morphemes[j].dataset.value) {
@@ -2292,7 +2301,7 @@ function highLight()
         }
       }
     }
-    else if (i == CFG['_glottolog']) {
+    else if (i === CFG['_glottolog']) {
       items = document.getElementsByClassName(head);
       for (j=0; item=items[j]; j++) {
         if (item.innerHTML == item.dataset.value) {
@@ -2301,7 +2310,7 @@ function highLight()
         }
       }
     }
-    else if (i == CFG['_concepticon']) {
+    else if (i === CFG['_concepticon']) {
       items = document.getElementsByClassName(head);
       for (j=0; item=items[j]; j++) {
         if (item.innerHTML == item.dataset.value) {
@@ -2310,7 +2319,7 @@ function highLight()
         }
       }
     }
-    else if (i == CFG['_sources']) {
+    else if (i === CFG['_sources']) {
       items = document.getElementsByClassName(head);
       for (j=0; item=items[j]; j++) {
         if (item.innerHTML == item.dataset.value) {
@@ -2321,7 +2330,7 @@ function highLight()
         }
       }
     }
-    else if (i == CFG['_note']) {
+    else if (i === CFG['_note']) {
       items = document.getElementsByClassName(head);
       for (j=0; item=items[j]; j++) {
         if (item.innerHTML == item.dataset.value) {
@@ -2330,7 +2339,7 @@ function highLight()
         }
       }
     }
-    else if (i == WLS.columns[CFG.quintiles]-1) {
+    else if (i === WLS.columns[CFG.quintiles]-1) {
       items = document.getElementsByClassName(head);
       for (j=0; item=items[j]; j++) {
         if (item.innerHTML == item.dataset.value) {

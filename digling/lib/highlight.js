@@ -19,6 +19,8 @@ var keywords = {
   "STANDARD":""
 };
 
+
+
 var params = ["view", "edit", "save", "refresh", "undo_button", "redo_button"];
 
 var privates = [
@@ -288,12 +290,14 @@ var DOLGO = {
   "\u0252": "V", 
   "\u027b": "R",
   "Ɂ": "H",
-  "∼" : "NAS",
+  "∼": "NAS",
+  "ˌ": "PLUS", 
   "◦" : "PLUS",
   "." : "PLUS",
   "→" : "PLUS",
   "←" : "PLUS",
-  "Ø": "MISSING"
+  "Ø": "MISSING",
+  "ˈ": "PLUS"
 };
 
 /* assign tone chars and diacritics for convenience */
@@ -333,7 +337,10 @@ function getSound(sound) {
 }
 
 /* basic function for coloring words in edictor */
-function plotWord(word, tag, classes) {
+function plotWord(word, tag, classes, functions) {
+  if (typeof functions == 'undefined'){
+    functions = '';
+  }
   if (typeof tag == 'undefined') {
     tag = 'span';
   }
@@ -396,18 +403,18 @@ function plotWord(word, tag, classes) {
     else if (phon == ')') {}
     else if (phon != '-') {
       if (!ignore) {
-        text += '<'+tag+' class="residue'+classes+dolgo+'">'+addon+phon+' </'+tag+'>';
+        text += '<'+tag+' class="residue'+classes+dolgo+'"'+functions+'>'+addon+phon+' </'+tag+'>';
       }
       else {
-        text += '<'+tag+' class="residue'+classes+dolgo+' dolgo_IGNORE">'+addon+phon+' </'+tag+'>';
+        text += '<'+tag+' class="residue'+classes+dolgo+' dolgo_IGNORE"'+functions+'>'+addon+phon+' </'+tag+'>';
       }
     }
     else  {
       if (!ignore) {
-        text += '<'+tag+' class="residue '+classes+dolgo+'">'+addon+phon+' </'+tag+'>';
+        text += '<'+tag+' class="residue'+classes+dolgo+'"'+functions+'>'+addon+phon+' </'+tag+'>';
       }
       else {
-        text += '<'+tag+' class="residue'+classes+dolgo+' dolgo_IGNORE">'+addon+phon+' </'+tag+'>';
+        text += '<'+tag+' class="residue'+classes+dolgo+' dolgo_IGNORE"'+functions+'>'+addon+phon+' </'+tag+'>';
       }
     }
   }

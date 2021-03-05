@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2020-10-01 10:29
- * modified : 2020-10-01 18:18
+ * modified : 2021-03-05 15:02
  *
  */
 
@@ -11,8 +11,12 @@
 var GLOSSES = {};
 GLOSSES.glosses = {};
 GLOSSES.filter_gloss = '';
+GLOSSES.filter_cognate = '';
+GLOSSES.filter_form = '';
 GLOSSES.sort_by = 'frequency';
 GLOSSES.rows = {};
+GLOSSES.joined = {};
+GLOSSES.groupby = 'form';
 
 GLOSSES.check_morphemes = function(tokens, glosses, cogids) {
   var i;
@@ -39,8 +43,9 @@ GLOSSES.check_morphemes = function(tokens, glosses, cogids) {
 };
 
 
+/* glosses assemble needs to assemble glosses by their similarity of form, ignoring our slash construct*/
 GLOSSES.assemble = function() {
-  var idx, i, j, tokens, morphemes, cogids;
+  var idx, i, j, k, tokens, morphemes, cogids, current, cleaned;
   GLOSSES.glosses = {};
   for (i=0; i<WLS.rows.length; i++) {
     idx = WLS.rows[i];
@@ -57,11 +62,26 @@ GLOSSES.assemble = function() {
       GLOSSES.glosses[doculect] = {};
     }
     for (j=0; j<tokens.length; j++) {
-      if (tokens[j] in GLOSSES.glosses[doculect]) {
-        GLOSSES.glosses[doculect][tokens[j]].push([morphemes[j], cogids[j], idx, j, concept, tokens, morphemes, cogids]);
+      [current, cleaned]= [tokens[j].split(" "), []];
+      for (k=0; k<current.length; k++) {
+        if (current[k].indexOf('/') != -1){
+          if (current[k].split('/')[1] == 'Ø'){}
+          else{
+           cleaned.push(current[k].split('/')[1]);
+          }
+        }
+        else if (current[k] == "ˈ" || current[k] == 'ˌ' || current[k] == '.'){
+        }
+        else {
+          cleaned.push(current[k]);
+        }
+      }
+      cleaned = cleaned.join(' ');
+      if (cleaned in GLOSSES.glosses[doculect]) {
+        GLOSSES.glosses[doculect][cleaned].push([morphemes[j], cogids[j], idx, j, concept, tokens, morphemes, cogids]);
       }
       else {
-        GLOSSES.glosses[doculect][tokens[j]] = [[morphemes[j], cogids[j], idx, j, concept, tokens, morphemes, cogids]];
+        GLOSSES.glosses[doculect][cleaned] = [[morphemes[j], cogids[j], idx, j, concept, tokens, morphemes, cogids]];
       }
     }
 
@@ -87,22 +107,20 @@ GLOSSES.edit_entry = function(node, type, idx, jdx) {
 
 GLOSSES.unmodify_entry = function(node, type) {
   var entry, pnode;
-  if (type == 'gloss') {
+  if (type == 'gloss' || type == 'glossup') {
     entry = this.plotGloss(node.dataset['value']);
   }
   else if (type == 'cognate') {
-    entry = node.dataset['value'];
+    entry = this.plotCognate(node.dataset['value']);
   }
   pnode = document.getElementById('GLOSSES_'+type+'-'+node.dataset['idx']+'-'+node.dataset['jdx']);
   pnode.innerHTML = '';
-
   pnode.dataset.value = node.dataset['value'];
   pnode.onclick = '';
   pnode.onclick = function(){
     GLOSSES.edit_entry(pnode, type, pnode.dataset['idx'], pnode.dataset['jdx']);
   }
   pnode.innerHTML = entry;
-
 };
 
 GLOSSES.modify_entry = function(event, node, type, idx, jdx) {
@@ -119,12 +137,12 @@ GLOSSES.modify_entry = function(event, node, type, idx, jdx) {
   }
 
   /* retrieve the original value and the index */
-  var new_value, entry, tokens, colidx, this_idx, next_idxs;
-  tokens = WLS[idx][CFG._segments].split(' + ');
-  if (type == 'gloss') {
+  var new_value, entry, tokens, colidx, nodeidx, nidx, njdx, nnode, dummy;
+
+  if (type == 'gloss' || type == 'glossup') {
     entry = WLS[idx][CFG._morphemes].split(' ');
     colidx = CFG._morphemes;
-    new_value = node.value
+    new_value = node.value;
   }
   else if (type == 'cognate') {
     entry = WLS[idx][CFG._roots].split(' ');
@@ -132,24 +150,69 @@ GLOSSES.modify_entry = function(event, node, type, idx, jdx) {
     /* TODO adjust cognacy */
     new_value = node.value;
   }
+  
+  tokens = WLS[idx][CFG._segments].split(' + ');
   [tokens, entry, _dummy] = this.check_morphemes(tokens, entry, entry);
 
   /* modify the entry */
   entry[jdx] = new_value;
   entry = entry.join(' ');
-  storeModification(idx, colidx, entry);
+  if (type == 'cognate') {
+    entry = partialCognateIdentifier(entry);
+    new_value = entry.split(' ')[jdx];
+
+  }
   WLS[idx][colidx] = entry;
-  document.getElementById('GLOSSES_word-'+idx+'-'+jdx).innerHTML = ''+
-    this.plotMorphemes(
-      WLS[idx][CFG._segments].split(' + '),
-      WLS[idx][CFG._morphemes].split(' '),
-      WLS[idx][CFG._roots].split(' ')
-    );
+  if (type == 'cognate' && new_value != node.value) {
+    resetRootFormat(CFG.root_formatter);
+  }
+  try {
+    document.getElementById('GLOSSES_word-'+idx+'-'+jdx).innerHTML = ''+
+      this.plotMorphemes(
+        WLS[idx][CFG._segments].split(' + '),
+        WLS[idx][CFG._morphemes].split(' '),
+        WLS[idx][CFG._roots].split(' ')
+      );
+  }
+  catch (e) {}
+
+  node.dataset['value'] = new_value;
+  this.unmodify_entry(node, type);
+  storeModification(idx, colidx, entry);
+  
+  /* TODO check this for general safety */
+  if (this.joined[idx+'-'+jdx]) {
+    for (nodeidx in this.joined) {
+      if (this.joined[nodeidx] && nodeidx != idx+'-'+jdx){
+        [nidx, njdx] = nodeidx.split('-');
+        tokens = WLS[nidx][CFG._segments].split(' + ');
+        entry = WLS[nidx][colidx].split(' ');
+        [tokens, entry, dummy] = this.check_morphemes(tokens, entry, entry);
+        entry[njdx] = new_value;
+        entry = entry.join(' ');
+        WLS[nidx][colidx] = entry;
+        if (type == 'cognate'){
+          nnode = document.getElementById('GLOSSES_'+type+'-'+nidx+'-'+njdx);
+          nnode.innerHTML = this.plotCognate(new_value);
+        }
+        else if (type == 'gloss') {
+          nnode = document.getElementById('GLOSSES_'+type+'-'+nidx+'-'+njdx);
+          nnode.innerHTML = this.plotGloss(new_value);
+        }
+        nnode.dataset['value'] = new_value;
+        document.getElementById('GLOSSES_word-'+nidx+'-'+njdx).innerHTML = ''+
+          this.plotMorphemes(
+              WLS[nidx][CFG._segments].split(' + '),
+              WLS[nidx][CFG._morphemes].split(' '),
+              WLS[nidx][CFG._roots].split(' ')
+              );
+        storeModification(parseInt(nidx), colidx, entry);
+      }
+    }
+  }
 
   /* keycode 38 = go up */
-  if (event.keyCode == 38) {
-    node.dataset['value'] = node.value;
-    this.unmodify_entry(node, type);
+  if (event.keyCode == 38 && type != 'glossup') {
     /* find next node */
     this_idx = this.rows[node.dataset['idx']+'-'+node.dataset['jdx']];
     if (this_idx == 0) {
@@ -167,9 +230,7 @@ GLOSSES.modify_entry = function(event, node, type, idx, jdx) {
     return;
   }
   /* keycode 40 = go down */
-  else if (event.keyCode == 40) {
-    node.dataset['value'] = node.value;
-    this.unmodify_entry(node, type);
+  else if (event.keyCode == 40 && type != 'glossup') {
     /* find next node */
     this_idx = this.rows[node.dataset['idx']+'-'+node.dataset['jdx']];
     if (this_idx == this.DTAB.table.length-1) {
@@ -187,12 +248,10 @@ GLOSSES.modify_entry = function(event, node, type, idx, jdx) {
     return;
   }
   /* left */
-  else if ((event.keyCode == 37 || event.keyCode == 39) && event.ctrlKey) {
+  else if ((event.keyCode == 37 || event.keyCode == 39) && event.ctrlKey && type != 'glossup') {
     this_idx = this.rows[node.dataset['idx']+'-'+node.dataset['jdx']];
-    node.dataset['value'] = node.value;
     /* bis hier */
     if (type == 'cognate') {
-      this.unmodify_entry(node, type);
       this.edit_entry(
         document.getElementById('GLOSSES_'+'gloss-'+node.dataset['idx']+'-'+node.dataset['jdx']),
         'gloss',
@@ -209,32 +268,48 @@ GLOSSES.modify_entry = function(event, node, type, idx, jdx) {
       );
     } 
   }
-  node.dataset['value'] = node.value;
-  /* retrieve tokens node */
-  
-  this.unmodify_entry(node, type);
+  if (type == 'glossup') {
+    try {
+      nnode = document.getElementById('GLOSSES_gloss-'+node.dataset['idx']+'-'+node.dataset['jdx']);
+      nnode.innerHTML = this.plotGloss(node.dataset['value']);
+      nnode.dataset['value'] = node.dataset['value'];
+    }
+    catch (e) {}
+  }
   return;
 };
 
 GLOSSES.make_table = function() {
-  var i, doculect, form;
-  var add_it = true; 
+  var i, doculect, form, cmp;
+  var add_it; 
   var table = [];
   for (doculect in this.glosses) {
     for (form in this.glosses[doculect]) {
       for (i=0; i<this.glosses[doculect][form].length; i++) {
+        add_it = true;
         if (this.filter_gloss) {
           if (('^'+this.glosses[doculect][form][i][0]+'$').toLowerCase().indexOf(this.filter_gloss.toLowerCase()) == -1) {
             add_it = false;
           }
-          else {
-            add_it = true;
+        }
+        if (this.filter_cognate) {
+          if (this.glosses[doculect][form][i][1] != this.filter_cognate) {
+            add_it = false;
+          }
+        }
+        if (this.filter_form) {
+          if (('^'+form+'$').indexOf(this.filter_form) == -1) {
+            add_it = false;
           }
         }
         if (add_it) {
           table.push([
             [
-              form,
+              this.glosses[doculect][form][i][2],
+              this.glosses[doculect][form][i][3]
+            ],
+            [
+              this.glosses[doculect][form][i][5][this.glosses[doculect][form][i][3]],
               this.glosses[doculect][form][i][2],
               this.glosses[doculect][form][i][3]
             ],
@@ -257,7 +332,7 @@ GLOSSES.make_table = function() {
               this.glosses[doculect][form][i][2],
               this.glosses[doculect][form][i][3]
             ],
-            this.glosses[doculect][form].length
+            this.glosses[doculect][form].length,
           ]);
         }
       }
@@ -267,38 +342,46 @@ GLOSSES.make_table = function() {
     if (GLOSSES.sort_by == 'frequency') {
       table.sort(
         function(x, y){
-          if (x[6] < y[6]) {
+          if (x[7] < y[7]) {
             return 1;
           }
-          else if (x[6] > y[6]) {
+          else if (x[7] > y[7]) {
             return -1;
           }
           else {
-            return x[0][0].localeCompare(y[0][0]);
+            return (x[1][0]+x[3][0]).localeCompare((y[1][0]+y[3][0]));
           }
         }
       );
     }
   };
-
+  
+  /* group the glosses */
   /* iterate over table to set the index */
   this.rows = {};
   for (i=0; i<table.length; i++) {
-    this.rows[table[i][0][1]+'-'+table[i][0][2]] = i;
-    this.rows['r-'+i] = [table[i][0][1], table[i][0][2]];
+    this.rows[table[i][0][0]+'-'+table[i][0][1]] = i;
+    this.rows['r-'+i] = [table[i][0][0], table[i][0][1]];
   };
 
   if (table.length > 0) {
     this.DTAB = getDTAB(
       'GLOSSES',
-      ['FORM', 'GLOSS', 'COGNATE', 'DOCULECT', 'CONCEPT', 'WORD', 'FREQUENCY'],
+      ['ID', 'FORM', 'GLOSS', 'COG', 'DOCULECT', 'CONCEPT', 'WORD', 'FREQ'],
       table,
       [
-        function(x, y, z){return '<td id="GLOSSES_form-'+x[1]+'-'+x[2]+'" data-idx="'+x[1]+'" data-jdx="'+x[2]+'">'+plotWord(x[0])+'</td>'},
-        function(x, y, z){return '<td id="GLOSSES_gloss-'+x[1]+'-'+x[2]+'" data-idx="'+x[1]+'" data-jdx="'+x[2]+'" data-value="'+x[0]+'" '+
-            ' onclick="GLOSSES.edit_entry(this, \'gloss\','+x[1]+', '+x[2]+')" '+
-            '>'+GLOSSES.plotGloss(x[0])+'</td>'},
+        function(x, y, z){return '<td id="GLOSSES_idx-'+x[0]+'-'+x[1]+'"'+
+            ' data-idx="'+x[0]+'-'+x[1]+'"'+
+            ' oncontextmenu="GLOSSES.markIDs(event, this)"'+
+            ' data-marked="0" class="pointed" onclick="GLOSSES.markID(this)" '+
+            '>'+x[0]+'<sup>'+x[1]+'</sup></td>'},
+        function(x, y, z){return '<td id="GLOSSES_form-'+x[1]+'-'+x[2]+'" data-idx="'+x[1]+'" data-jdx="'+x[2]+'">'+SEG.plotWord(x[0].split(" "), x[1], x[2], 'GLOSSES.refreshLine('+x[1]+','+x[2]+')')+'</td>'},
+        function(x, y, z){return '<td id="GLOSSES_gloss-'+x[1]+'-'+x[2]+'" data-idx="'+x[1]+'" data-jdx="'+x[2]+'" data-value="'+x[0]+'"'+
+          ' oncontextmenu="GLOSSES.toggleGloss(event, this)"'+
+          ' onclick="GLOSSES.edit_entry(this, \'gloss\','+x[1]+', '+x[2]+')" '+
+          ' >'+GLOSSES.plotGloss(x[0])+'</td>'},
         function(x, y, z){return '<td id="GLOSSES_cognate-'+x[1]+'-'+x[2]+'" data-idx="'+x[1]+'" data-jdx="'+x[2]+'" data-value="'+x[0]+'" '+
+            ' oncontextmenu="GLOSSES.editGroup(event, this.dataset[\'value\']);"'+
             ' onclick="GLOSSES.edit_entry(this, \'cognate\','+x[1]+', '+x[2]+')" '+
             '>'+GLOSSES.plotCognate(x[0])+'</td>'},
         function(x, y, z){return '<td>'+x+'</td>'},
@@ -306,12 +389,111 @@ GLOSSES.make_table = function() {
         function(x, y, z){return '<td id="GLOSSES_word-'+x[3]+'-'+x[4]+'">'+GLOSSES.plotMorphemes(x[0], x[1], x[2])+'</td>'},
         function(x, y, z){return '<td>'+x+'</td>'},
       ],
-      ['form', 'gloss', 'cognate', 'doculect', 'concept', 'word', 'frequency'],
+      ['idx', 'form', 'gloss', 'cognate', 'doculect', 'concept', 'word', 'frequency'],
       table.length
     );
   }
 };
 
+
+GLOSSES.refreshLine = function(idx, jdx){
+  var node;
+  node = document.getElementById('GLOSSES_form-'+idx+'-'+jdx);
+  node.innerHTML = SEG.plotWord(
+    WLS[idx][CFG._segments].split(' + ')[jdx].split(' '), 
+    idx, jdx,
+    'GLOSSES.refreshLine('+idx+','+jdx+')'
+  );
+};
+
+GLOSSES.editGroup = function(event, cogid) {
+  event.preventDefault();
+  var i, idx, idxA, idxB, text, doculect, concept, gloss, form, jdx, cogids, node, table;
+  table = [];
+  for (i=0; i<WLS.roots[cogid].length; i++){
+    [idx, jdx] = WLS.roots[cogid][i];
+    doculect = WLS[idx][CFG._tidx];
+    if (CFG._selected_doculects.indexOf(doculect) != -1) {
+      table.push([
+          idx,
+          jdx,
+          doculect,
+          WLS[idx][CFG._cidx],
+          WLS[idx][CFG._morphemes].split(' ')[jdx],
+          WLS[idx][CFG._segments].split(' + ')[jdx], 
+          ]);
+    }
+  }
+  table.sort(function(x, y){
+    idxA = CFG.sorted_taxa.indexOf(x[2]);
+    idxB = CFG.sorted_taxa.indexOf(y[2]);
+    if (idxA > idxB) {return 1}
+    else if (idxB > idxA) {return -1}
+    return 0;
+  });
+    
+  text = '<p>';
+  text += '<span class="main_handle pull-left" style="margin-left:-7px;margin-top:2px;" ></span>';
+  text += '<b>Partial Cognates for '+cogid+'</b></p>';
+  text += '<div class="submitline">';
+  text += '<input class="btn btn-primary submit" type="button" onclick="$(\'#GLOSS-'+cogid+'\').remove();basickeydown(event);" value="CLOSE" /></div><br><br> ';
+  text += '</div><br><br>';
+  text += '<br><div class="alignments"><table>'
+
+  for (i=0; i<table.length; i++){
+    text += '<tr>'+
+      '<td class="gloss_cell">'+table[i][0]+'<sup>'+table[i][1]+'</sup></td>'+
+      '<td class="gloss_cell alm_taxon">'+table[i][2]+'</td>'+
+      '<td class="gloss_cell">'+table[i][3]+'</td>'+
+      '<td data-idx="'+table[i][0]+'" data-jdx="'+table[i][1]+'" id="GLOSSES_glossup-'+table[i][0]+'-'+table[i][1]+'" data-value="'+table[i][4]+'" onclick="GLOSSES.edit_entry(this, \'glossup\','+table[i][0]+','+table[i][1]+')" class="gloss_cell">'+this.plotGloss(table[i][4])+'</td>'+
+      '<td class="gloss_cell">'+plotWord(table[i][5], 'span')+'</td>'+
+      '</tr>';
+  }
+
+  text += '</table></div>';
+
+  node = document.createElement('div');
+  node.id = 'GLOSS-'+cogid;
+  node.className = 'edit_links';
+  node.style.position = 'fixed';
+  node.style.top = 100;
+  node.style.bottom = 0;
+  node.style.left = 0;
+  node.style.right = 0;
+  document.body.appendChild(node);
+  node.innerHTML = text;
+  $('#GLOSS-'+cogid).draggable({handle: '.main_handle'}).resizable();
+  $('#GLOSS-'+cogid).css('z-index', 200);
+};
+
+GLOSSES.markID = function(node) {
+  if (node.dataset['marked'] == "1"){
+    node.dataset['marked'] = "0";
+    node.style.backgroundColor = node.parentNode.style.backgroundColor;
+    GLOSSES.joined[node.dataset['idx']] = false;
+  }
+  else {
+    node.dataset['marked'] = "1";
+    node.style.backgroundColor = "Salmon";
+    GLOSSES.joined[node.dataset['idx']] = true;
+  }
+};
+
+GLOSSES.markIDs = function(event, node) {
+  event.preventDefault();
+  var nodeidx;
+  if (this.joined[node.dataset['idx']]){
+    for (nodeidx in this.joined) {
+      if (this.joined[nodeidx]){
+        this.markID(document.getElementById('GLOSSES_idx-'+nodeidx));
+      }
+    }
+    this.joined = {};
+  }
+  else {
+
+  }
+};
 
 GLOSSES.plotMorphemes = function(tokens, morphemes, cogids) {
   var i;
@@ -346,16 +528,31 @@ GLOSSES.plotGloss = function(gloss, sup) {
   return '<'+sup+' class="'+cls+' pointed">'+gloss+'</'+sup+'>';
 };
 
+GLOSSES.refreshWords = function(idx, jdx) {
+  document.getElementById('GLOSSES_word-'+idx+'-'+jdx).innerHTML = ''+
+  this.plotMorphemes(
+      WLS[idx][CFG._segments].split(' + '),
+      WLS[idx][CFG._morphemes].split(' '),
+      WLS[idx][CFG._roots].split(' ')
+      );
+};
 
-GLOSSES.toggleForm = function(node){
-  if (node.dataset.now == 1) {
-    node.innerHTML = plotWord(WLS[node.dataset.idx][CFG._segments])+'<span style="display:table-cell"><sup>'+node.dataset.length+'</sup></span>';
-    node.dataset.now = 0;
+GLOSSES.toggleGloss = function(event, node) {
+  event.preventDefault();
+  if (node.dataset['value'][0] == '_'){
+    node.dataset['value'] = node.dataset['value'].slice(1, node.dataset['value'].length);
+    node.innerHTML = this.plotGloss(node.dataset['value']);
   }
   else {
-    node.innerHTML = plotWord(node.dataset.form)+'<span style="display:table-cell"><sup>'+node.dataset.length+'</sup></span>';
-    node.dataset.now = 1;
+    node.dataset['value'] = '_' + node.dataset['value'];
+    node.innerHTML = this.plotGloss(node.dataset['value']);
   }
+  var entry = WLS[node.dataset['idx']][CFG._morphemes].split(' ');
+  entry[node.dataset['jdx']] = node.dataset['value'];
+  entry = entry.join(' ');
+  WLS[node.dataset['idx']][CFG._morphemes] = entry;
+  storeModification(parseInt(node.dataset['idx']), CFG._morphemes, entry);
+  this.refreshWords(node.dataset['idx'], node.dataset['jdx']);
 };
 
 GLOSSES.alternate = function(x) {
@@ -365,7 +562,8 @@ GLOSSES.alternate = function(x) {
 GLOSSES.present = function() {
   this.assemble();
   this.make_table();
-  document.getElementById('glosses_table').innerHTML = '<br>'+this.DTAB.render(0, 0, GLOSSES.alternate);
+  this.joined = {};
+  document.getElementById('glosses_table').innerHTML = '<br>'+this.DTAB.render(0, 1, GLOSSES.alternate);
   document.getElementById('glosses_table').style.display = 'table-cell';
   document.getElementById('GLOSSES_frequency').ondblclick = function(){fakeAlert('hello')};
 }

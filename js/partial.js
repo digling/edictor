@@ -1,4 +1,4 @@
-/* <++>
+/* Partial Cognate Sets 
  *
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
@@ -29,31 +29,33 @@ PART.partial_alignment = function(event, widx) {
     '<p>'+doculect+' «'+concept+'» ('+CFG['root_formatter']+': '+idxs+')'; 
   var cogids = [];
   for (i=0; cogid=idxs[i]; i++) {
-    words[cogid] = {morphemes: [], indices: [], positions: [], taxa: []};
-    for (j=0; j<WLS.roots[cogid].length; j++) {
-      idx = WLS.roots[cogid][j][0];
-      jdx = WLS.roots[cogid][j][1];
-      word = (CFG['_alignments'] != -1 && WLS[idx][CFG['_alignments']] != '' && WLS[idx][CFG['_alignments']] != '?') 
-	      ? WLS[idx][CFG['_alignments']]
-	      : WLS[idx][CFG['_segments']]
-	      ;
-      console.log(word);
-      morphemes = MORPH.get_morphemes(word.split(' '));
-      console.log(morphemes)
-      this_morpheme = morphemes[jdx];
-      if (typeof this_morpheme != 'undefined') {
-	      words[cogid]['taxa'].push(WLS[idx][CFG['_taxa']]);
-	      words[cogid]['morphemes'].push(this_morpheme);
-	      words[cogid]['indices'].push(idx);
-	      words[cogid]['positions'].push(jdx);
+    if (typeof WLS.roots[cogid] != 'undefined' && cogid != '0' && cogid != 0){
+      words[cogid] = {morphemes: [], indices: [], positions: [], taxa: []};
+      for (j=0; j<WLS.roots[cogid].length; j++) {
+        idx = WLS.roots[cogid][j][0];
+        jdx = WLS.roots[cogid][j][1];
+        word = (CFG['_alignments'] != -1 && WLS[idx][CFG['_alignments']] != '' && WLS[idx][CFG['_alignments']] != '?') 
+                ? WLS[idx][CFG['_alignments']]
+                : WLS[idx][CFG['_segments']]
+                ;
+        console.log(word);
+        morphemes = MORPH.get_morphemes(word.split(' '));
+        console.log(morphemes)
+        this_morpheme = morphemes[jdx];
+        if (typeof this_morpheme != 'undefined') {
+                words[cogid]['taxa'].push(WLS[idx][CFG['_taxa']]);
+                words[cogid]['morphemes'].push(this_morpheme);
+                words[cogid]['indices'].push(idx);
+                words[cogid]['positions'].push(jdx);
+        }
       }
-    }
-    if (words[cogid]['taxa'].length != 0) {
-      words[cogid]['alignment'] = $.extend(true, {}, ALIGN);
-      words[cogid]['alignment']['ALMS'] = words[cogid]['morphemes'];
-      words[cogid]['alignment']['TAXA'] = words[cogid]['taxa'];
-      words[cogid]['alignment'].normalize(words[cogid]['alignment']['ALMS']);
-      if (words[cogid]['taxa'].length > 1) {cogids.push(cogid);}
+      if (words[cogid]['taxa'].length != 0) {
+        words[cogid]['alignment'] = $.extend(true, {}, ALIGN);
+        words[cogid]['alignment']['ALMS'] = words[cogid]['morphemes'];
+        words[cogid]['alignment']['TAXA'] = words[cogid]['taxa'];
+        words[cogid]['alignment'].normalize(words[cogid]['alignment']['ALMS']);
+        if (words[cogid]['taxa'].length > 1) {cogids.push(cogid);}
+      }
     }
   }
   text += '<div class="alignments" id="alignments-overview">' + 
@@ -82,14 +84,14 @@ PART.partial_alignment = function(event, widx) {
       var test = words[cogids[j]]['indices'].indexOf(this_idx);
       console.log(test);
       if (test != -1) {
-	      text += plotWord(words[cogids[j]]['alignment']['ALMS'][test].join(' '), 'td');
-	      if (j != cogids.length-1){text += '<td></td>';}
+              text += plotWord(words[cogids[j]]['alignment']['ALMS'][test].join(' '), 'td');
+              if (j != cogids.length-1){text += '<td></td>';}
       }
       else {
-	      for (var k=0;k<almlen;k++) {
-	        text += '<td class="missing">Ø</td>';
-	      }
-	      if (j != cogids.length-1) {text += '<td></td>';}
+              for (var k=0;k<almlen;k++) {
+                text += '<td class="missing">Ø</td>';
+              }
+              if (j != cogids.length-1) {text += '<td></td>';}
           }
         }
         text += '</tr>';
@@ -173,18 +175,18 @@ PART.display_partial = function (concept, sortby) {
         for (var j=0,idx; idx=WLS['concepts'][option.value][j]; j++) {
           indices.push(idx);
         }
-	all_concepts.push(option.value);
-	selected_concepts.push(WLS.c2i[option.value]);
-	restriction += 1;
+        all_concepts.push(option.value);
+        selected_concepts.push(WLS.c2i[option.value]);
+        restriction += 1;
       }
     }
     if (all_concepts.length > 0) {
       if (all_concepts.length > 1) {
-	document.getElementById('partial_current_concept').innerHTML = all_concepts[0]+', ...';
+        document.getElementById('partial_current_concept').innerHTML = all_concepts[0]+', ...';
       }
       else {
-	document.getElementById('partial_current_concept').innerHTML = all_concepts[0] +
-	  ' ('+WLS['c2i'][all_concepts[0]]+'/'+WLS.height+')';
+        document.getElementById('partial_current_concept').innerHTML = all_concepts[0] +
+          ' ('+WLS['c2i'][all_concepts[0]]+'/'+WLS.height+')';
       }
       /* mark the current concept */
       CFG['_current_partial'] = all_concepts[0];
@@ -210,10 +212,10 @@ PART.display_partial = function (concept, sortby) {
     var slcs = document.getElementById('partial_select_concepts');
     for (var k=0,option; option=slcs.options[k]; k++) {
       if (option.selected && option.value != concept) {
-	option.selected = false;
+        option.selected = false;
       }
       else if (option.value == concept) {
-	option.selected = true;
+        option.selected = true;
       }
     }
     /* store that there is no multiselect option chosen here */
@@ -264,19 +266,19 @@ PART.display_partial = function (concept, sortby) {
         ;
       /* store root id for assembling current ids */
       if (rootid != 0 && this.rootids.indexOf(rootid) == -1) {
-	this.rootids.push(rootid)
+        this.rootids.push(rootid)
       };
       var tmp_color = (!rootid || rootid == 0) 
-	? 'Crimson'
-	: 'DarkGreen'
-	; 
+        ? 'Crimson'
+        : 'Black'
+        ; 
       var opacity = (!rootid || rootid==0)
-	? ''
-	: 'opacity:0.75'
-	;
+        ? ''
+        : 'opacity:0.75'
+        ;
       this.data[idx][rootid] = [taxon, concept, morpheme, j];
       morpheme_strings.push('<span style="border: 2px solid white;display:table-cell;'+opacity+'" class="pointed" id="morph-'+idx+'-'+j+'" onclick="PART.storeEntry('+idx+','+j+');">'+plotWord(morpheme.join(' '), 'span', 'pointed') +
-          '<sup style="display:table-cell;color:'+tmp_color+'">'+rootid+'</sup></span>');
+          '<sup class="cognate" style="color:'+tmp_color+'">'+rootid+'</sup></span>');
     }
     tbody.push('<tr>' + 
       '<td class="alm_taxon">'+taxon+'</td>' +
@@ -291,8 +293,8 @@ PART.display_partial = function (concept, sortby) {
     tbody_text += tbody[i];
     for (var j=0,rootid; rootid=this.rootids[j]; j++) {
       tbody_text += (rootid in this.data[idx]) 
-	? '<td></td><td class="pointed" title="remove item from current cognate set" onclick="PART.remove_rootid('+idx+','+rootid+')" id="morpheme-'+idx+'-'+this.data[idx][3]+'">'+plotWord(this.data[idx][rootid][2].join(' '))+'</td>'
-	: '<td></td><td></td>';
+        ? '<td></td><td class="pointed" title="remove item from current cognate set" onclick="PART.remove_rootid('+idx+','+rootid+')" id="morpheme-'+idx+'-'+this.data[idx][3]+'">'+plotWord(this.data[idx][rootid][2].join(' '))+'</td>'
+        : '<td></td><td></td>';
     }
     tbody_text += '</tr>';
   }
@@ -306,10 +308,10 @@ PART.display_partial = function (concept, sortby) {
     '<th class="pointed alm_bdl alm_head" onclick="PART.display_partial(\''+concept+'\')">'+WLS['header'][CFG['_segments']]+'</th>' + 
       this.rootids.map(function (x) {
         return '<th style="width:5px"></th>' + 
-	        '<th oncontextmenu="event.preventDefault();PART.display_partial(\''+concept + '\',\''+x + 
+                '<th oncontextmenu="event.preventDefault();PART.display_partial(\''+concept + '\',\''+x + 
           '\')" onclick="PART.modifyJudgment(' + 
-          x + ')" class="pointed alm_bdr alm_head" title="click to add marked morphemes to this cognate set, right-click to sort along this column">ID-' + 
-          x + ' <button onclick="PART.editGroup(event, ' + x 
+          x + ')" class="pointed alm_bdr alm_head" title="click to add marked morphemes to this cognate set, right-click to sort along this column"><span style="border: 1px solid black; border-radius:5px; padding:2px; background-color:white; color: black;">' + 
+          x + '</span> <button onclick="PART.editGroup(event, ' + x 
           + ')" class="btn-primary btn mleft pull-right submit3" title="align the words"><span class="icon-bar"></span><span class="icon-bar"></span></button></th>';
       }).join('') +
     '</tr>';
@@ -382,7 +384,7 @@ PART.storeEntry = function(idx, j) {
     var new_storage = [];
     for (var i=0,part; part=PART.storage[i]; i++) {
       if (part != idf) {
-	new_storage.push(part);
+        new_storage.push(part);
       }
     }
     PART.storage = new_storage;
@@ -557,14 +559,14 @@ PART.storeAlignment = function() {
     var alm_list = [];
     for (var j=0; j<all_alms.length; j++) {
       var tmp = (j != CFG['_current_jdx'][i]) 
-	? all_alms[j].join(' ')
-	: alm_part 
-	;
+        ? all_alms[j].join(' ')
+        : alm_part 
+        ;
       if (typeof all_mms[j] != 'undefined') {
-	tmp += ' '+all_mms[j];
+        tmp += ' '+all_mms[j];
       }
       else if (j < all_alms.length -1) {
-	tmp += ' '+CFG['morpheme_separator'];
+        tmp += ' '+CFG['morpheme_separator'];
       }
       alm_list.push(tmp);
     }
@@ -617,10 +619,10 @@ PART.get_new_cogid = function () {
       url: url,
       dataType: "text",
       success: function(data) {
-	cogid=parseInt(data);
+        cogid=parseInt(data);
       },
       error: function(){
-	fakeAlert("problem retrieving a new cognate ID from the dbase");
+        fakeAlert("problem retrieving a new cognate ID from the dbase");
       }
     });
   }
