@@ -311,7 +311,8 @@ GLOSSES.make_table = function() {
             [
               this.glosses[doculect][form][i][5][this.glosses[doculect][form][i][3]],
               this.glosses[doculect][form][i][2],
-              this.glosses[doculect][form][i][3]
+              this.glosses[doculect][form][i][3],
+              form
             ],
             [
               this.glosses[doculect][form][i][0],
@@ -349,7 +350,7 @@ GLOSSES.make_table = function() {
             return -1;
           }
           else {
-            return (x[1][0]+x[3][0]).localeCompare((y[1][0]+y[3][0]));
+            return (x[1][3]+x[3][0]).localeCompare((y[1][3]+y[3][0]));
           }
         }
       );
@@ -556,7 +557,7 @@ GLOSSES.toggleGloss = function(event, node) {
 };
 
 GLOSSES.alternate = function(x) {
-  return x[0];
+  return x[3];
 };
 
 GLOSSES.present = function() {
