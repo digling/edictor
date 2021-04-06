@@ -139,10 +139,13 @@ function csvToArrays(allText, separator, comment, keyval) {
   var cIdx = -1;
   var cogid = -1;
   var selection = [];
+  var subgroup_idx = -1;
   var columns = {};
   var count = 1;
   var uneditables = [];
   var column_names = {};
+  var subgroups = {};
+  var all_subgroups = [];
 
   var firstLineFound = false;
   var noid = false;
@@ -219,6 +222,7 @@ function csvToArrays(allText, separator, comment, keyval) {
           else if (ALIAS['alignment'].indexOf(datum) != -1) { aIdx = j; }
           else if (ALIAS['transcription'].indexOf(datum) != -1) { iIdx = j; }
           else if (ALIAS['morphemes'].indexOf(datum) != -1) { mIdx = j; }
+          else if (ALIAS['subgroup'].indexOf(datum) != -1) {subgroup_idx = j;}
           else if (ALIAS['sources'].indexOf(datum) != -1) { srcIdx = j; }
           if (CFG['basics'].indexOf(datum) != -1) { columns[datum] = j; }
           else { columns[datum] = -j; }
@@ -325,6 +329,20 @@ function csvToArrays(allText, separator, comment, keyval) {
           taxa[taxon] = [idx];
         }
 
+        /* add subgroup information */
+        if (subgroup_idx > -1 && typeof subgroups[taxon] != 'object'){
+          if (all_subgroups.indexOf(data[subgroup_idx]) == -1){
+            all_subgroups.push(data[subgroup_idx]);
+          }
+          subgroups[taxon] = data[subgroup_idx];
+        }
+        else if (typeof subgroups[taxon] != 'object'){
+          subgroups[taxon] = 'NAN'; 
+          if (all_subgroups.length != 1){
+            all_subgroups.push('NAN');
+          }
+        }
+
         /* these lines append concepts */
         /* note that we need to make the object typecheck here, since gecko-engines and firefox
          * define the watch-property for arrays, which clashes when trying to fill it (awful) */
@@ -376,11 +394,29 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS['column_names'] = column_names;
   WLS['c2i'] = c2i;
 
+  /* organize coloring of subgroups */
+  all_subgroups.sort();
+  for (taxon in subgroups) {
+    i = all_subgroups.indexOf(subgroups[taxon]);
+    if (i < 12){
+      styler = UTIL.subgroups[i];
+    }
+    else {
+      styler = '';
+    }
+    subgroups[taxon] = [subgroups[taxon], styler];
+  }
+
+  WLS['subgroups'] = subgroups;
+
+
+
 
   /* ! attention here, this may change if no ids are submitted! */
   CFG['_tidx'] = tIdx-1; // index of taxa
   CFG['_cidx'] = cIdx-1; // index of concepts
   CFG['_concepts'] = cIdx-1;
+  CFG['_subgroup'] = subgroup_idx-1;
   CFG['_taxa'] = tIdx-1;
   CFG['_segments'] = (typeof sIdx != 'undefined') ? sIdx-1 : -1;
   CFG['_alignments'] = (typeof aIdx != 'undefined') ? aIdx-1 : -1;
@@ -390,8 +426,17 @@ function csvToArrays(allText, separator, comment, keyval) {
   CFG['_sources'] = (typeof srcIdx != 'undefined') ? srcIdx-1: -1;
   CFG['parsed'] = true;
   if (typeof CFG['sorted_taxa'] == 'undefined'){
-    console.log(CFG.sorted_taxa, 'sorted taxa');
     CFG['sorted_taxa'] = Object.keys(WLS.taxa);
+    CFG['sorted_taxa'].sort(
+      function (x, y){
+        if (WLS['subgroups'][x][0] == WLS['subgroups'][y][0]) {
+          return x.localeCompare(y);
+        }
+        else {
+          return WLS['subgroups'][x][0].localeCompare(WLS['subgroups'][y][0]);
+        }
+      }
+    );
   }
   if (!('_selected_doculects' in CFG)){
     CFG['_selected_doculects'] = CFG['sorted_taxa'];
@@ -518,12 +563,16 @@ function createSelectors() {
     var did = document.getElementById('select_doculects');
     var doculects = CFG['sorted_taxa'];
     var txt = '';
+    var taxon_addon = '';
     for (var i=0,doculect; doculect=doculects[i]; i++) {
       var sel = '" selected>';
       if (CFG['_selected_doculects'].indexOf(doculect) == -1) {
 	sel = '">';
       }
-      txt += '<option value="'+doculect+sel+doculect+'</option>';
+      if (WLS['subgroups'][doculect][0] != 'NAN'){
+        taxon_addon = ' ('+WLS['subgroups'][doculect][0].slice(0, 3)+')';
+      }
+      txt += '<option value="'+doculect+sel+doculect+taxon_addon+'</option>';
     }
     did.innerHTML = txt;
   }
@@ -799,6 +848,13 @@ function showWLS(start){
               var on_ctxt = '';
             }
           }
+          /* format the languages */
+          if (j == CFG['_tidx'] && CFG['_subgroup'] > -1){
+            taxon_addon = WLS['subgroups'][WLS[idx][j]][1].replace('FFF', WLS['subgroups'][WLS[idx][j]][0].slice(0, 3));
+          }
+          else {
+            taxon_addon = '';
+          }
           /* need to escape text-values otherwise messes up HTML */
           var escaped_value = TEXT.escapeValue(WLS[idx][j]);
           var data_value = 'data-value="'+escaped_value+'" ';
@@ -807,7 +863,7 @@ function showWLS(start){
             on_title +
             on_click +
             on_ctxt + 
-            data_value + cell_display+'>'+escaped_value+'</td>';
+            data_value + cell_display+'>'+escaped_value+taxon_addon+'</td>';
         }
         text += '</tr>';
         count += 1;
@@ -1347,6 +1403,13 @@ function modifyEntry(event, idx, jdx, xvalue) {
       autoModifyEntry(idx, CFG._alignments+1, new_alm, WLS[idx][CFG._alignments]);
     }
   }
+  /* format the languages */
+  if (j == CFG['_tidx'] && CFG['_subgroup'] > -1){
+    taxon_addon = WLS['subgroups'][WLS[idx][j]][1].replace('FFF', WLS['subgroups'][WLS[idx][j]][0].slice(0, 3));
+  }
+  else {
+    taxon_addon = '';
+  }
 
   var prevalue = entry.dataset.value;
   
@@ -1508,6 +1571,10 @@ function unmodifyEntry(idx, jdx, xvalue)
   entry.onclick = function() {editEntry(idx, jdx, 0, 0)};
   var j = parseInt(jdx) - 1;
   WLS[idx][j] = value;
+  /* check for taxa */
+  if (jdx-1 == CFG['_tidx'] && CFG['_subgroup'] > -1){
+    taxon_addon = WLS['subgroups'][WLS[idx][CFG['_tidx']]][1].replace('FFF', WLS['subgroups'][WLS[idx][CFG['_tidx']]][0].slice(0, 3));
+  }
   entry.innerHTML = '';
   entry.innerHTML = value;
   highLight();
@@ -2509,6 +2576,9 @@ function editGroup(event, idx) {
 
     var alm = plotWord(current_line);
     var lang = WLS[r][CFG['_tidx']];
+    if (WLS['subgroups'][lang] != 'NAN'){
+      taxon_addon = ' ('+WLS['subgroups'][WLS[r][CFG['_tidx']]][0].slice(0, 3)+') '; 
+    }
 
     /* only take those sequences into account which are currently selected in the alignment */
     if (CFG['_selected_doculects'].indexOf(lang) != -1 || CFG['align_all_words'] != "false") {

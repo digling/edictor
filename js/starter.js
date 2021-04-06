@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-09-03 13:40
- * modified : 2015-01-27 11:35
+ * modified : 2021-04-06 18:53
  *
  */
 
@@ -291,16 +291,15 @@ function handleAjax (event, url) {
 
   /* load the file by putting all data in the STORE global variable */
   STORE = '';
+  console.log("post", postdata);
   $.ajax({
         async: false,
         type: "POST",
         contentType: "application/text; charset=utf-8",
-	data: postdata,
+	      data: postdata,
         url: new_url,
         dataType: "text",
         success: function(data) {
-	  //->console.log('posting', postdata);
-	  //->console.log(data);
           STORE = data;
         },
         error: function() {
@@ -326,8 +325,8 @@ function getDataBases() {
         async: false,
         type: "GET",
         url: 'triples/triples.py',
-	data: {tables: 'tables'},
-	contentType : 'application/text; charset=utf-8',
+	      data: {tables: 'tables'},
+	      contentType : 'application/text; charset=utf-8',
         dataType : "text",
         success: function(data) {
           CFG['server_side_bases'] = data.split('\n');

@@ -452,7 +452,21 @@ UTIL.show_quintuples = function(event, widx) {
   $('#quintuple-popup').draggable({handle:'.main_handle'}).resizable();
 }
 
-      
+
+UTIL.subgroups = [
+  '<sup class="ball" style="background-color:#a6cee3">FFF</sup>', 
+  '<sup class="ball" style="background-color:#1f78b4">FFF</sup>', 
+  '<sup class="ball" style="background-color:#b2df8a">FFF</sup>', 
+  '<sup class="ball" style="background-color:#33a02c">FFF</sup>', 
+  '<sup class="ball" style="background-color:#fb9a99">FFF</sup>', 
+  '<sup class="ball" style="background-color:#e31a1c">FFF</sup>', 
+  '<sup class="ball" style="background-color:#fdbf6f">FFF</sup>', 
+  '<sup class="ball" style="background-color:#ff7f00">FFF</sup>', 
+  '<sup class="ball" style="background-color:#cab2d6">FFF</sup>', 
+  '<sup class="ball" style="background-color:#6a3d9a">FFF</sup>', 
+  '<sup class="ball" style="background-color:#ffff99">FFF</sup>', 
+  '<sup class="ball" style="background-color:#b15928">FFF</sup>' 
+]; 
   
 
 
@@ -461,6 +475,7 @@ var ALIAS = {
   'concept': ['CONCEPT', 'GLOSS'],
   'segments' : ['SEGMENTS', 'TOKENS'],
   'alignment' : ['ALIGNMENT'],
+  "subgroup": ["SUBGROUP"],
   'morphemes' : ['MORPHEMES'],
   'transcription' : ['IPA', 'TRANSCRIPTION'],
   'cognates' : ['COGID'],

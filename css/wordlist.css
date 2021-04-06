@@ -1179,4 +1179,10 @@ tr.up_fill > td {
   margin-left: 2px;
 }
 
-
+.ball {
+  margin-left: 3px;
+  padding: 1px;
+  border-radius: 3px;
+  border: 1px solid black;
+  font-size: 60%;
+}
