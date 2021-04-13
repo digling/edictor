@@ -1,3 +1,9 @@
+.htaccess
+.htusers
+.idea
+main.js
+triples/.htaccess
+triples/.htusers
 prison/
 private/
 prison_old/
@@ -24,4 +30,5 @@ alms/
 dighl/
 old/
 triples/rechte.py
+*.zip
 
