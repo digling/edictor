@@ -43,7 +43,7 @@ SEG.splitWord = function(pos, idx, jdx){
   WLS[idx][CFG._segments] = word.join(' + ');
   WLS[idx][CFG._morphemes] = glosses.join(' ');
   WLS[idx][CFG._roots] = cognates.join(' ');
-  storeModification(idx, WLS[idx][CFG._segments]);
-  storeModification(idx, WLS[idx][CFG._glosses]);
-  storeModification(idx, WLS[idx][CFG._roots]);
+  storeModification(idx, jdx, WLS[idx][CFG._segments]);
+  storeModification(idx, jdx, WLS[idx][CFG._glosses]);
+  storeModification(idx, jdx, WLS[idx][CFG._roots]);
 };

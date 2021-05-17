@@ -33,7 +33,7 @@ GLOSSES.check_morphemes = function(tokens, glosses, cogids) {
       cogids.push('0');
     }
   }
-  if (tokens.lenght < glosses.length) {
+  if (tokens.length < glosses.length) {
     glosses = glosses.splice(0, tokens.length-1);
   }
   if (tokens.length < cogids.length) {
@@ -283,6 +283,7 @@ GLOSSES.make_table = function() {
   var i, doculect, form, cmp;
   var add_it; 
   var table = [];
+  var counter = {};
   for (doculect in this.glosses) {
     for (form in this.glosses[doculect]) {
       for (i=0; i<this.glosses[doculect][form].length; i++) {
@@ -303,6 +304,10 @@ GLOSSES.make_table = function() {
           }
         }
         if (add_it) {
+          if (!(form in counter)){
+            counter[form] = 0;
+          }
+          counter[form] += 1;
           table.push([
             [
               this.glosses[doculect][form][i][2],
@@ -343,15 +348,37 @@ GLOSSES.make_table = function() {
     if (GLOSSES.sort_by == 'frequency') {
       table.sort(
         function(x, y){
-          if (x[7] < y[7]) {
+          if (counter[x[1][3]] < counter[y[1][3]]) {
             return 1;
           }
-          else if (x[7] > y[7]) {
+          else if (counter[x[1][3]] > counter[y[1][3]]) {
             return -1;
           }
           else {
             return (x[1][3]+x[3][0]).localeCompare((y[1][3]+y[3][0]));
           }
+        }
+      );
+    }
+    else if (GLOSSES.sort_by == 'cognacy') {
+      table.sort(
+        function(x, y){
+          if (WLS.roots[x[3][0]].length < WLS.roots[y[3][0]].length){
+            return 1;
+          }
+          else if (WLS.roots[x[3][0]].length > WLS.roots[y[3][0]].length){
+            return -1;
+          }
+          else {
+            return (x[3][0]+x[1][3]+x[1][0]).localeCompare(y[3][0]+y[1][3]+y[1][0]);
+          }
+        }
+      );
+    }
+    else if (GLOSSES.sort_by == "similarity"){
+      table.sort(
+        function(x, y){
+          return (x[1][3]+x[1][0]+x[3][0]).localeCompare(y[1][3]+y[1][0]+y[3][0]);
         }
       );
     }
@@ -516,6 +543,9 @@ GLOSSES.plotCognate = function(cognate, sup) {
 
 GLOSSES.plotGloss = function(gloss, sup) {
   var cls = 'gloss';
+  if (typeof gloss == "undefined") {
+    gloss = "?";
+  }
   if (gloss[0] == '_') {
     gloss = gloss.slice(1, gloss.length);
     cls = 'gloss-weak';

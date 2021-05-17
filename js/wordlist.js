@@ -1271,7 +1271,7 @@ function autoModifyEntry(idx, jdx, value, current) {
   WLS[idx][j] = value;
   
   /* store modification in case this is possible */
-  storeModification(idx,j,value);
+  storeModification(idx, j, value);
   
   highLight();
 }
@@ -1428,7 +1428,7 @@ function modifyEntry(event, idx, jdx, xvalue) {
     WLS[idx][(jdx - 1)] = xvalue;
     
     /* trigger store modification in case this is possible for the current session */
-    storeModification(idx,(jdx-1),xvalue);
+    storeModification(idx, (jdx-1), xvalue);
   }
   
   if (process == true) {
