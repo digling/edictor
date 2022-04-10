@@ -49,6 +49,7 @@ var DOLGO = {
   "ṁ" : "N",
   "ŏ" : "V",
   "ĭ" : "V",
+  "ɺ" : "R",
   "ṵ" : "V",
   "ḭː": "V",
   "ḭ": "V",
@@ -336,8 +337,68 @@ function getSound(sound) {
   return sound;
 }
 
+/* function to plot an individual phon */
+function plotPhon(phon) {
+  var phons, dolgo, addon;
+  dolgo = "dolgo_ERROR";
+  addon = '';
+  if (phon.indexOf('/') != -1) {
+    phons = phon.split('/');
+    if (phons.length == 2) {
+      phon = phons[1];
+      if (!phon) {
+        phon = '?'+phons[0];
+        addon = '';
+      }
+      else {
+        addon = '<sup style="background-color:white;color:black;">'+phons[0]+'</sup>';
+      }
+    }
+  }
+  phon = phon.normalize('NFD');
+  if (phon[0] == '!'){phon=phon.slice(1,phon.length)}
+  else if (phon[0] == '?'){phon=phon.slice(1,phon.length), dolgo='dolgo_CUSTOM';}
+  else if (phon in DOLGO){dolgo = "dolgo_"+DOLGO[phon]}
+  else if (phon.slice(0,2) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(0,2)];}
+  else if (phon.slice(0,1) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(0,1)];}
+  else if (phon.slice(1,3) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(1,3)];}
+  else if (phon.slice(1,2) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(1,2)];}
+  else if (phon == "-"){dolgo = "dolgo_GAP";}
+  else if (phon == "(" || phon == ")"){dolgo = "dolgo_IGNORE";}
+  return [phon, dolgo, addon];
+}
+
+/* generic function which provides the span-content for multi-segment elements */
+function plotPhonGeneric(phon) {
+  var phons, i, sound, dolgo, addon;
+  var out = [];
+
+  if (phon.indexOf('.') == -1) {
+    [sound, dolgo, addon] = plotPhon(phon);
+    if (addon.length > 0 && addon.indexOf("!") != -1) {
+      return [addon+sound, "irreg "+dolgo];
+    }
+    return [addon+sound, dolgo];
+  }
+  phons = phon.split('.');
+
+  for (i=0; i<phons.length; i++) {
+    [sound, dolgo, addon] = plotPhon(phons[i]);
+    if (addon.length > 0 && addon.indexOf("!") != -1) {
+      out.push('<span class="residue irreg '+dolgo+'">'+addon+sound+'</span>');
+    }
+    else {
+      out.push('<span class="residue '+dolgo+'">'+addon+sound+'</span>');
+    }
+  }
+  return [out.join(""), "double"];
+}
+
 /* basic function for coloring words in edictor */
 function plotWord(word, tag, classes, functions) {
+  var i, phon, dolgo, addon, addonA, addonB, phonA, phonB;
+  var twophones = false;
+  var snd_string;
   if (typeof functions == 'undefined'){
     functions = '';
   }
@@ -360,10 +421,10 @@ function plotWord(word, tag, classes, functions) {
   }
   var text = '';
   var ignore = false;
-  for(var i=0;i<phones.length;i++){
-    var phon = phones[i];
+  for(i=0; i<phones.length;i++){
+    phon = phones[i];
 
-    /* check for ingorable phon */
+    /* check for ignorable phon */
     if (phon == '(') {
       ignore = true;
     }
@@ -371,55 +432,52 @@ function plotWord(word, tag, classes, functions) {
       ignore = false;
     }
     else {
-      /* now try to find the column */
-      var dolgo = "dolgo_ERROR";
-      var addon = '';
-      if (phon.indexOf('/') != -1) {
-        phons = phon.split('/');
-        if (phons.length == 2) {
-          phon = phons[1];
-          if (!phon) {
-            phon = '?'+phons[0];
-            addon = '';
-          }
-          else {
-            addon = '<sup style="background-color:white;color:black;">'+phons[0]+'</sup>';
-          }
-        }
-      }
-      phon = phon.normalize('NFD');
-      if (phon[0] == '!'){phon=phon.slice(1,phon.length)}
-      else if (phon[0] == '?'){phon=phon.slice(1,phon.length), dolgo='dolgo_CUSTOM';}
-      else if (phon in DOLGO){dolgo = "dolgo_"+DOLGO[phon]}
-      else if (phon.slice(0,2) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(0,2)];}
-      else if (phon.slice(0,1) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(0,1)];}
-      else if (phon.slice(1,3) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(1,3)];}
-      else if (phon.slice(1,2) in DOLGO){dolgo = "dolgo_"+DOLGO[phon.slice(1,2)];}
-      else if (phon == "-"){dolgo = "dolgo_GAP";}
-      else if (phon == "(" || phon == ")"){dolgo = "dolgo_IGNORE";}
+      [snd_string, dolgo] = plotPhonGeneric(phon);
     }
   
     if (phon == '(') {}
     else if (phon == ')') {}
-    else if (phon != '-') {
-      if (!ignore) {
-        text += '<'+tag+' class="residue'+classes+dolgo+'"'+functions+'>'+addon+phon+' </'+tag+'>';
-      }
-      else {
-        text += '<'+tag+' class="residue'+classes+dolgo+' dolgo_IGNORE"'+functions+'>'+addon+phon+' </'+tag+'>';
+    else if (!ignore) {
+      text += '<'+tag+' class="residue'+classes+dolgo+'"'+functions+'>'+snd_string+'</'+tag+'>';
+    }
+    else {
+      text += '<'+tag+' class="residue dolgo_IGNORE'+classes+dolgo+'"'+functions+'>'+snd_string+'</'+tag+'>';
+    }
+  }
+  return text;
+}
+
+
+/* function retains only unslashed content */
+function unslash(segment) {
+  if (segment.indexOf("/") == -1) {
+    return segment;
+  }
+  return segment.split("/")[1];
+}
+
+/* clean tokens to retain only those elements not slashed, etc. */
+function clean_tokens(tokens){
+  var i, j, phon, phonB, phones, unslashed;
+  var out = [];
+  for (i=0; phon=tokens[i]; i++) {
+    if (phon.indexOf('.')) {
+      phones = phon.split('.');
+      for (j=0; phonB=phones[j]; j++) {
+        unslashed = unslash(phonB);
+        if (unslashed != "Ø") {
+          out.push(unslashed);
+        }
       }
     }
-    else  {
-      if (!ignore) {
-        text += '<'+tag+' class="residue'+classes+dolgo+'"'+functions+'>'+addon+phon+' </'+tag+'>';
-      }
-      else {
-        text += '<'+tag+' class="residue'+classes+dolgo+' dolgo_IGNORE"'+functions+'>'+addon+phon+' </'+tag+'>';
+    else {
+      unslashed = unslash(phon);
+      if (unslashed != "Ø") {
+        out.push(unslashed);
       }
     }
   }
-
-  return text;
+  return out;
 }
 
 function plotMorphemes(word, tag, sep)

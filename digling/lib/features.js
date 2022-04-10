@@ -113,6 +113,12 @@ var SOUNDS = {
   "palatal",
   "voiceless aspiration:aspirated"
  ],
+  "ɺ": [
+  "consonant",
+  "tap",
+  "alveolar",
+  "voiced airstream:lateral"
+ ],
  "c\u02bc": [
   "consonant",
   "ejective-plosive",
