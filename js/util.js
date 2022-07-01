@@ -43,7 +43,7 @@ UTIL.show_help = function(topic, table, container) {
       }
     });
   }
-}
+};
 
 UTIL.randint = function (min, max) {
   return Math.random() * (max - min) + min;
@@ -210,6 +210,119 @@ UTIL.load_settings = function() {
   $(entries['proto']).autocomplete({source: CFG.sorted_taxa});
   $(entries['doculectorder']).autocomplete({source: CFG.sorted_taxa});
   entries['doculectorder'].value = CFG.sorted_taxa.join(',');
+};
+
+UTIL.isValidHeader = function(str) {
+  var code, i, len;
+
+  for (i = 0, len = str.length; i < len; i++) {
+    code = str.charCodeAt(i);
+    if (!(code > 47 && code < 58) && // numeric (0-9)
+        !(code > 64 && code < 91) && // upper alpha (A-Z)
+        !(code == 95))
+        //!(code > 96 && code < 123)) { // lower alpha (a-z)
+      return false;  
+  }
+  return true;
+};
+
+UTIL.upload_submit = function() {
+  var i, j, row, key, entry;
+  var text = document.getElementById("upload_text");
+  var lines = text.value.split(/\n|\r\n/);
+  var data = {};
+
+  /* get new identifier */
+  var new_url = "triples/triples.py";
+  var postdata = {"file": CFG['filename'], remote_dbase: CFG["remote_dbase"], "new_ID": true}
+  var newIdx = 0;
+  $.ajax({
+    async: false,
+    type: "POST",
+    data: postdata,
+    contentType: "application/text; charset=utf-8",
+    url: new_url,
+    dataType: "text",
+    success: function(data) {
+	    newIdx = parseInt(data);
+    },
+    error: function() {
+      fakeAlert('data could not be stored');
+    }
+  });
+  
+  if (newIdx == 0 || typeof newIdx != "number" || newIdx == NaN || ""+newIdx+"" == "NaN") {
+    var keys = [];
+    for (key in WLS) {
+      if (""+parseInt(key) != "NaN") {
+        keys.push(parseInt(key));
+      }
+    }
+    keys.sort(function(x, y){return x-y});
+    var max_key = keys[keys.length-1];
+    console.log(keys, max_key);
+    newIdx = max_key+1
+  }
+
+  if (lines.length >= 2) {
+    var header = lines[0].split(/\t|\|\|/);
+    for (i=0; i<header.length; i++) {
+      if (!(UTIL.isValidHeader(header[i]))) {
+        fakeAlert("Problem with the header «"+header[i]+"»");
+        return;
+      }
+    }
+  }
+  else {
+    fakeAlert("no data were submitted");
+    return;
+  }
+  if (header.indexOf("DOCULECT") == -1 || header.indexOf("CONCEPT") == -1) {
+    fakeAlert("Header missing information on DOCULECT or CONCEPT");
+    return;
+  }
+  for (i=1; i<lines.length; i++) {
+    row = lines[i].split(/\t|\|\|/);
+    if (row.length != header.length) {
+      fakeAlert("row "+i+" has a different length than the header");
+      return;
+    }
+    data[newIdx] = {}
+    for (j=0; j<header.length; j++) {
+      data[newIdx][header[j]] = row[j];
+    }
+    if ("NOTE" in data[newIdx]) {
+      data[newIDX]["NOTE"] = "[N] "+data["NOTE"];
+    }
+    else {
+      data[newIdx]["NOTE"] = "[N]";
+    }
+    newIdx += 1;
+  }
+  WLS.rows = [];
+  for (key in data) {
+    /* check if doculect is in taxa and concept is in concepts */
+    if (data[key]["DOCULECT"] in WLS.taxa && data[key]["CONCEPT"] in WLS.concepts) {
+      WLS[key] = [];
+      WLS.taxa[data[key]["DOCULECT"]].push(parseInt(key));
+      WLS.concepts[data[key]["CONCEPT"]].push(parseInt(key));
+      WLS._trows.push(parseInt(key));
+      WLS.rows.push(parseInt(key));
+      for (i=0; i<WLS.header.length; i++) {
+        entry = data[key][WLS.header[i]];
+        if (typeof entry == "undefined") {
+          entry = "";
+        }
+        WLS[key].push(entry);
+      }
+    }
+    else {
+      fakeAlert("doculect "+data[key]["DOCULECT"]+" or concept "+data[key]["CONCEPT"]+" undefined");
+    }
+  }
+  console.log(data);
+  text.value = "";
+  showWLS(1);
 };
 
 UTIL.refresh_settings = function() {
@@ -465,7 +578,19 @@ UTIL.subgroups = [
   '<sup class="ball" style="background-color:#cab2d6">FFF</sup>', 
   '<sup class="ball" style="background-color:#6a3d9a">FFF</sup>', 
   '<sup class="ball" style="background-color:#ffff99">FFF</sup>', 
-  '<sup class="ball" style="background-color:#b15928">FFF</sup>' 
+  '<sup class="ball" style="background-color:#b15928">FFF</sup>',
+  '<sup class="ball" style="color:#a6cee3">FFF</sup>', 
+  '<sup class="ball" style="color:#1f78b4">FFF</sup>', 
+  '<sup class="ball" style="color:#b2df8a">FFF</sup>', 
+  '<sup class="ball" style="color:#33a02c">FFF</sup>', 
+  '<sup class="ball" style="color:#fb9a99">FFF</sup>', 
+  '<sup class="ball" style="color:#e31a1c">FFF</sup>', 
+  '<sup class="ball" style="color:#fdbf6f">FFF</sup>', 
+  '<sup class="ball" style="color:#ff7f00">FFF</sup>', 
+  '<sup class="ball" style="color:#cab2d6">FFF</sup>', 
+  '<sup class="ball" style="color:#6a3d9a">FFF</sup>', 
+  '<sup class="ball" style="color:#ffff99">FFF</sup>', 
+  '<sup class="ball" style="color:#b15928">FFF</sup>' 
 ]; 
   
 

@@ -1,0 +1,30 @@
+<!--
+
+<++>
+
+author   : Johann-Mattis List
+email    : mattis.list@lingulist.de
+created  : 2022-07-01 10:21
+modified : 2022-07-01 10:21
+
+-->
+<span class="main_handle pull-left"></span>
+<button type="button" onclick="$('#toggle_upload > span').toggle(); $('#upload').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+<div class="upload-message">
+  <h3>Upload Wordlists to Your Database</h3>
+  <p>
+  Paste in a small wordlist that has a header and entries for DOCULECT and CONCEPT. This wordlist will then be added to your current selection. You may have to save the wordlist and reload later.
+  </p>
+  <div style="display:block">
+  </div>
+  <br><br>
+  <div>
+    <textarea cols="50" rows="10" id="upload_text"></textarea>
+  </div>
+  <br><br>
+  <div>
+    <input type="button" onclick="UTIL.upload_submit()" value="SUBMIT" />
+  </div>
+</div>
+
