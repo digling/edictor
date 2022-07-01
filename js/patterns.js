@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2017-10-24 17:46
- * modified : 2017-10-26 16:36
+ * modified : 2021-10-14 23:00
  *
  */
 /* XXX check for alignments etc. in data */
@@ -17,37 +17,42 @@ PATS.patterns = {};
 /* compatibility function for pattern sorting */
 PATS.compatible = function(x, y) {
   var compatible = 0;
-  for (var i=0; i<x.length; i++) {
-    if (x[i] != y[i] && x[i] != UTIL.settings.missing_marker && y[i] != UTIL.settings.missing_marker && x[i][0] != '!' && y[i][0] != '!') {
+  var i;
+  for (i=0; i<x.length; i++) {
+    if (x[i] != y[i] && x[i] != UTIL.settings.missing_marker && y[i] != UTIL.settings.missing_marker) {
       return false;
     }
-    else if (x[i] != UTIL.settings.missing_marker && y[i] != UTIL.settings.missing_marker && x[i][0] != '!' && y[i][0] != '!' && x[i] != CFG.gap_marker && y[i] != CFG.gap_marker){
+    else if (x[i] != UTIL.settings.missing_marker && y[i] != UTIL.settings.missing_marker && x[i] != CFG.gap_marker && y[i] != CFG.gap_marker){
       compatible += 1;
     }
   }
   if (compatible == 0) {
     return false;
   }
-  return true;
+  return compatible;
 };
 
 /* consensus string for a given pattern */
-/* XXX ameliorate XXX */
 PATS.consensus = function(x) {
+  /* consensus is the proto sound if the option is chosen */
+  if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
+    return x[0];
+  }
+  var count, best_count, best_char, i;
   var visited = [];
   var uniques = [];
   var freqs = [];
-  for (var i=0; i<x.length; i++) {
+  for (i=0; i<x.length; i++) {
     if (x[i] == UTIL.settings.missing_marker || x[i][0] == '!'){}
     else if (LIST.has(visited, x[i])) {}
     else {
       uniques.push(x[i]);
     }
   }
-  var best_count = 0;
-  var best_char = '';
-  for (var i=0; i<uniques.length; i++) {
-    var count = LIST.count(x, uniques[i]);
+  best_count = 0;
+  best_char = '';
+  for (i=0; i<uniques.length; i++) {
+    count = LIST.count(x, uniques[i]);
     if (count > best_count) {
       best_count = count;
       best_char = uniques[i];
@@ -137,9 +142,17 @@ PATS.get_patterns = function(lengths){
           }
         }
         for (i=0; i<rows.length; i++) {
-          rows[i].push(rows[i].slice(4,rows[i].length).map(function(x){
-            if (x.length == 1) {return x}
-            return x[2]}));
+          rows[i].push(rows[i].slice(4, rows[i].length).map(
+            function(x) {
+              if (x.length == 1) {
+                return x;
+              }
+              else if (x[2].indexOf("/") != -1) {
+                return x[2].split("/")[1];
+              }
+              return x[2]
+            }
+          ));
           PATS.matrix.push(rows[i]);
         }
       }
@@ -147,7 +160,7 @@ PATS.get_patterns = function(lengths){
   }
   /* first sort for the greedy algo */
   PATS.matrix.sort(function (x, y){
-    var pA, pB, pAl, pBl, cpt;
+    var i, j, pA, pB, pAl, pBl, cpt, pats, k, tup;
     pA = x.slice(4, x.length).map(function(z){if (z.length == 1){return z} return z[2]});
     pB = y.slice(4, y.length).map(function(z){if (z.length == 1){return z} return z[2]});
     if (pA[0] == '!') {
@@ -190,14 +203,30 @@ PATS.get_patterns = function(lengths){
    * (sounds occuring in fhe first language in the sample for filtering */
   PATS.find_consensus();
   PATS.assign_patterns();
-  PATS.matrix.sort(function (x, y){ 
-    if (x[PATS.matrix[0].length-1][1] > y[PATS.matrix[0].length-1][1]){
-      return -1
-    } 
-    else if (x[PATS.matrix[0].length-1][1] < y[PATS.matrix[0].length-1][1]) {
-      return 1
-    } return 0
-  });
+  //PATS.matrix.sort(function (x, y){ 
+  //  if (x[PATS.matrix[0].length-1][1] > y[PATS.matrix[0].length-1][1]){
+  //    return -1
+  //  } 
+  //  else if (x[PATS.matrix[0].length-1][1] < y[PATS.matrix[0].length-1][1]) {
+  //    return 1
+  //  } return 0
+  //});
+  PATS.matrix.sort(
+    function(x, y) {
+      if (x[PATS.length-1][2] > y[PATS.length-1][2]) {
+        return -1;
+      }
+      else if (x[PATS.length-1][2] < y[PATS.length-1][2]) {
+        return 1;
+      }
+      else {
+        return x[2][0].localeCompare(y[2][0]);
+      }
+    }
+  );
+
+  /* +++ sort by length of pattern, needs recomputing of length, etc. +++ */
+
   PATS.proto_sounds = {};
   /* XXX replace later with formal construct XXX */
   if (typeof WLS.columns['PATTERNS'] != 'undefined') {
@@ -206,11 +235,11 @@ PATS.get_patterns = function(lengths){
       /* try to find the first entry which is not empty */
       token = '?';
       for (j=4; j<PATS.matrix[i].length-1; j++) {
-        if (PATS.matrix[i][j] != 'Ø') {
-          var pats = WLS[PATS.matrix[i][j][0]][(Math.abs(WLS.columns['PATTERNS'])-1)];
+        if (PATS.matrix[i][j] != CFG.missing_marker) {
+          pats = WLS[PATS.matrix[i][j][0]][(Math.abs(WLS.columns['PATTERNS'])-1)];
           if (CFG._morphology_mode == 'partial'){
             /* get the index */
-            for (var k=0, tup; tup=WLS.roots[PATS.matrix[i][0]][k]; k++) {
+            for (k=0; tup=WLS.roots[PATS.matrix[i][0]][k]; k++) {
               if (tup[0] == PATS.matrix[i][j][0]) {
                 pats = pats.split(' + ')[tup[1]];
                 break;
@@ -243,10 +272,31 @@ PATS.get_patterns = function(lengths){
       }
     });
   }
+  /* if the proto form is defined, use this to assemble proto forms */
+  else if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
+    var sound, idx;
+    for (i=0; i<PATS.matrix.length; i++) {
+      [idx, sound] = PATS.matrix[i][2][0].split("/");
+      token = sound+" / "+idx;
+      if (token in PATS.proto_sounds) {
+              PATS.proto_sounds[token].push(i);
+      }
+      else {
+              PATS.proto_sounds[token] = [i];
+      }
+    }
+  }
   else {
+    
+    /* +++ TODO: add the new function to join patterns in the case that the proto-forms are defined here */
     for (i=0; i<PATS.matrix.length; i++) {
       if (PATS.matrix[i][4].length == 4) {
-        token = PATS.matrix[i][4][2]+' / '+PATS.matrix[i][2][0].split('/')[0];
+        if (PATS.matrix[i][4][2].indexOf("/") != -1) {
+          token = PATS.matrix[i][4][2].split('/')[1]+' / '+PATS.matrix[i][2][0].split('/')[0];
+        }
+        else {
+          token = PATS.matrix[i][4][2]+' / '+PATS.matrix[i][2][0].split('/')[0];
+        }
         if (token in PATS.proto_sounds) {
                 PATS.proto_sounds[token].push(i);
         }
@@ -258,40 +308,131 @@ PATS.get_patterns = function(lengths){
   }
 };
 
+/* assign the pattern ID to a given pattern after consensus has been computed */
 PATS.assign_patterns = function(){
+  var mcharsA, mcharsB, consensus_char, consensus_list, j, consensus, candidates, cmp, candidate, row, i, next_idx, pattern, consensusA, consensusB, consensusC;
   var pdict = {};
-  for (var i=0; i<PATS.matrix.length; i++) {
-    var row = PATS.matrix[i];
-    var consensus = row[PATS.length-1][0];
-    var consensus_char = PATS.consensus(consensus);
-    consensus = consensus.join(' ');
+  /* put those patterns aside which do not have a consensus yet to compare them later with the rest */
+  var aside = {};
+  var consensus_dict = {};
+  for (i=0; i<PATS.matrix.length; i++) {
+    row = PATS.matrix[i];
+    consensus_list = row[PATS.length-1][0];
+    consensus_char = PATS.consensus(consensus_list);
+    consensus = consensus_list.join(' ');
     if (consensus in pdict) {
-      var pattern = pdict[consensus]+'/'+consensus_char;
+      pattern = pdict[consensus]+'/'+consensus_char;
       PATS.patterns[pattern].push([row[0], row[1]]);
+      consensus_dict[consensus].push([row[0], row[1], i, pattern]);
     }
     else {
-      var next_idx = 1;
+      next_idx = 1;
       if (consensus_char in pdict) {
-        var next_idx = pdict[consensus_char];
+        next_idx = pdict[consensus_char];
         pdict[consensus_char] += 1;
       }
       else {
+        /* here, we need to identify whether there might be a similar pattern in our stack */
         pdict[consensus_char] = next_idx + 1;
       }
-      var pattern = next_idx+'/'+consensus_char;
+      pattern = next_idx+'/'+consensus_char;
       pdict[consensus] = next_idx;
       PATS.patterns[pattern] = [[row[0], row[1]]];
+      if (consensus_list.indexOf(CFG.missing_marker) != -1) {
+        if (consensus in aside){
+          aside[consensus].push(i);
+        }
+        else {
+          aside[consensus] = [i];
+        }
+      }
+      consensus_dict[consensus] = [[row[0], row[1], i, pattern]];
     }
     PATS.matrix[i][2] = [pattern, row[0], row[1]];
   }
+  PATS.consensus_dict = consensus_dict;
+  if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
+    /* group by proto */
+    var pregroups = {};
+    var cchar;
+    for (consensusA in aside) {
+      cchar = consensusA.split(" ")[0];
+      if (cchar in pregroups) {
+        pregroups[cchar][consensusA] = aside[consensusA];
+      }
+      else {
+        pregroups[cchar] = {consensusA: aside[consensusA]};
+      }
+    }
+    for (cchar in pregroups) {
+      for (consensus in pregroups[cchar]) {
+        candidates = [];
+        mcharsA = consensusA.split(" ").filter(x => x == CFG.missing_marker);
+        for (consensusB in consensus_dict) {
+          if (consensusB != consensusA) {
+            mcharsB = consensusB.split(" ").filter(x => x == CFG.missing_marker);
+              if (mcharsA >= mcharsB) {
+              cmp = PATS.compatible(consensusB.split(" "), consensusA.split(" "));
+              if (cmp != false && cmp > 0) {
+                consensusC = PATS.pattern_consensus([consensusA.split(" "), consensusB.split(" ")]);
+                candidates.push([
+                  cmp, 
+                  consensusB.split(" "), 
+                  consensus_dict[consensusB].length,
+                  consensus_dict[consensusB][0][2],
+                  consensus_dict[consensusB][0][3],
+                  consensus_dict[consensusB],
+                  consensusC]);
+              }
+            }
+          }
+        }
+        //console.log("candidates", consensusA, candidates);
+        if (candidates.length > 0) {
+          candidates.sort(
+            function(x, y) {
+              var k;
+              if (x[0]-y[0] == 0){
+                return y[2] - x[2];
+                //return (x[1].filter(k => k == CFG.missing_marker).length - y[1].filter(k => k == CFG.missing_marker).length);
+              }
+              return (y[0]-x[0]);
+            }  
+          );
+          candidate = candidates[0];
+          console.log(consensusA, consensusC, candidate);
+          [consensusB, consensusC] = [candidate[1], candidate[6]];
+          if (consensusB.join(" ") != consensusC.join(" ")) {
+            for (j=0; j<candidate[5].length; j++) {
+              i = candidate[5][j][2];
+              PATS.matrix[i][PATS.length-1][0] = consensusC;
+            }
+            consensus_dict[consensusC.join(" ")] = consensus_dict[consensusB.join(" ")];
+            delete consensus_dict[consensusB.join(" ")];
+          }
+
+          for (j=0; i=aside[consensusA][j]; j++) {
+            PATS.matrix[i][2][0] = candidate[4]; 
+            PATS.matrix[i][PATS.length-1][0] = consensusC;
+            PATS.patterns[candidate[4]].push([PATS.matrix[i][0], PATS.matrix[i][1]]);
+          }
+        }
+      }
+    }
+    for (i=0; row=PATS.matrix[i]; i++) {
+      PATS.matrix[i][PATS.length-1][2] = PATS.patterns[PATS.matrix[i][2][0]].length;
+      //PATS.matrix[i][PATS.length-1][1] = PATS.score_patterns(PATS.patterns[PATS.matrix[i][2][0]]);
+    }
+  }
 };
 
-/* XXX make function better, not very good iplementation */
+/* XXX make function better, not very good implementation */
 PATS.pattern_consensus = function(patterns) {
   var out = [];
-  for (var i=0; i<patterns[0].length; i++) {
-    var col = [];
-    for (var j=0; j<patterns.length; j++) {
+  var i, j, col;
+  for (i=0; i<patterns[0].length; i++) {
+    col = [];
+    for (j=0; j<patterns.length; j++) {
       if (patterns[j][i] != UTIL.settings.missing_marker){
 	      col.push(patterns[j][i]);
 	      break;
@@ -309,13 +450,14 @@ PATS.pattern_consensus = function(patterns) {
 
 /* score patterns, counting non-missing characters per column */
 PATS.score_patterns = function(matches) {
+  var i, j, pattern;
   if (matches.length == 1) {
     return 0;
   }
   var scores = CFG._selected_doculects.map(function(x){return 0});
-  for (var i=0; i<matches.length; i++) {
-    var pattern = PATS.matrix[matches[i]].slice(4, PATS.length-1).map(function (x){if (x.length==1){return x} return x[2]});
-    for (var j=0; j<pattern.length; j++) {
+  for (i=0; i<matches.length; i++) {
+    pattern = PATS.matrix[matches[i]].slice(4, PATS.length-1).map(function (x){if (x.length==1){return x} return x[2]});
+    for (j=0; j<pattern.length; j++) {
       if (pattern[j] != UTIL.settings.missing_marker && pattern[j][0] != '!') {
         scores[j] += 1;
       }
@@ -327,25 +469,43 @@ PATS.score_patterns = function(matches) {
 
 /* function calculates greedy clusters of compatible sets of nodes */
 PATS.find_consensus = function(){
-  var previous = PATS.matrix[0].slice(4, PATS.length-1).map(function(x){if (x.length == 1){return x} return x[2]});
+  var next, patsum, i, j, row, phons;
+  var previous = PATS.matrix[0].slice(4, PATS.length-1).map(
+    function(x){
+      if (x.length == 1) {
+        return x;
+      }
+      else if (x[2].indexOf("/") != -1) {
+        return x[2].split("/")[1];
+      }
+      return x[2]
+    }
+  );
   var matches = [];
-  for (var i=0, row; row=PATS.matrix[i]; i++) {
-    var next = PATS.matrix[i].slice(4, PATS.length-1).map(function(x){if (x.length == 1){return x} return x[2]});
+  for (i=0; row=PATS.matrix[i]; i++) {
+    next = PATS.matrix[i].slice(4, PATS.length-1).map(
+      function(x){
+        if (x.length == 1) {
+          return x;
+        }
+        return x[2].split('.').map(unslash).join(".");
+      }
+    );
     if (PATS.compatible(previous, next)) {
       matches.push(i);
       previous = PATS.pattern_consensus([previous, next]);
     }
     else {
-      var patsum = PATS.score_patterns(matches);
-      for (var j=0; j<matches.length; j++) {
+      patsum = PATS.score_patterns(matches);
+      for (j=0; j<matches.length; j++) {
       	PATS.matrix[matches[j]][PATS.length-1] = [previous, patsum, matches.length];
       }
       previous = next;
       matches = [i];
     }
   }
-  var patsum = PATS.score_patterns(matches);
-  for (var i=0; i<matches.length; i++) {
+  patsum = PATS.score_patterns(matches);
+  for (i=0; i<matches.length; i++) {
     PATS.matrix[matches[i]][PATS.matrix[0].length-1] = [previous, patsum, matches.length];
   }
 };
@@ -528,6 +688,7 @@ PATS.select_proto = function(){
 
 /* render data in table */
 PATS.render_patterns = function(elm) {
+  var sounds;
   if (CFG._alignments == -1) {
     fakeAlert('Your data does not contain alignments.');
     return;
@@ -539,7 +700,7 @@ PATS.render_patterns = function(elm) {
   var dtab = PATS.render_matrix();
   var menu = ''; //'<button onclick="PATS.select_proto();" class="btn btn-primary mright" title="filter by proto-language">FILTER</button>';
   menu +=  '<select id="pats_select_cognates" multiple="multiple" class="multiselect" title="Select patterns">';
-  for (var sound in PATS.proto_sounds) {
+  for (sound in PATS.proto_sounds) {
     menu += '<option id="pats_'+sound+'" value="'+sound+'" selected>*'+sound+' ('+PATS.proto_sounds[sound].length+' × in data)</option>';
   }
   menu += '</select>';
@@ -555,7 +716,7 @@ PATS.render_patterns = function(elm) {
   document.getElementById('PATS_menu').innerHTML = menu;
   document.getElementById('patterns_table').innerHTML = dtab.render(0, PATS.length-1, function (x){return x.join(',');});
   $('#pats_select_cognates').multiselect({
-    disableIfEmtpy: true,
+    disableIfEmpty: true,
     includeSelectAllOption : true,
     enableFiltering: true,
     maxHeight: window.innerHeight-100,

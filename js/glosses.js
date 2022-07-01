@@ -62,20 +62,7 @@ GLOSSES.assemble = function() {
       GLOSSES.glosses[doculect] = {};
     }
     for (j=0; j<tokens.length; j++) {
-      [current, cleaned]= [tokens[j].split(" "), []];
-      for (k=0; k<current.length; k++) {
-        if (current[k].indexOf('/') != -1){
-          if (current[k].split('/')[1] == 'Ø'){}
-          else{
-           cleaned.push(current[k].split('/')[1]);
-          }
-        }
-        else if (current[k] == "ˈ" || current[k] == 'ˌ' || current[k] == '.'){
-        }
-        else {
-          cleaned.push(current[k]);
-        }
-      }
+      [current, cleaned]= [tokens[j].split(" "), clean_tokens(tokens[j].split(" "))];
       cleaned = cleaned.join(' ');
       if (cleaned in GLOSSES.glosses[doculect]) {
         GLOSSES.glosses[doculect][cleaned].push([morphemes[j], cogids[j], idx, j, concept, tokens, morphemes, cogids]);

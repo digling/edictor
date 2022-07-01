@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2016-03-21 14:14
- * modified : 2016-03-21 14:14
+ * modified : 2021-10-04 09:59
  *
  */
 
@@ -427,10 +427,11 @@ PART.display_current_partial = function() {
   }
 };
 
-
+/* function handles the display of alignments */
 PART.editGroup = function (event, idx) {
-  /* functin handles the display of alignments */
+  
   event.preventDefault();
+  var i, r, current_line, current_entry, this_seq, alm, lang, this_idx, fall_back;
   
   /* check for various data, consider using switch statement here */
   if (idx == 0) {
@@ -442,16 +443,26 @@ PART.editGroup = function (event, idx) {
   var rows = WLS['roots'][idx];
 
   /* check for proper alignments first */
-  if (CFG['_alignments'] != -1) { var this_idx = CFG['_alignments']; var fall_back = CFG['_segments']; }
-  else if (CFG['_segments'] != -1) { var this_idx  = CFG['_segments']; var fall_back = CFG['_transcriptions']; }
+  if (CFG['_alignments'] != -1) { 
+    this_idx = CFG['_alignments']; 
+    fall_back = CFG['_segments']; 
+  }
+  else if (CFG['_segments'] != -1) { 
+    this_idx  = CFG['_segments']; 
+    fall_back = CFG['_transcriptions']; 
+  }
   else if (CFG['_transcriptions'] != -1) {
-    var this_idx = CFG['_transcriptions'];
+    this_idx = CFG['_transcriptions'];
   }
   else { fakeAlert('No phonetic entries were specified in the data.'); return; }
 
   /* check for sequence index */
-  if (CFG['_segments'] != -1) { var seq_idx = CFG['_segments']; }
-  else if (CFG['_transcriptions'] != -1) { var seq_idx = CFG['_transcriptions']; }
+  if (CFG['_segments'] != -1) {
+    seq_idx = CFG['_segments']; 
+  }
+  else if (CFG['_transcriptions'] != -1) {
+    seq_idx = CFG['_transcriptions']; 
+  }
 
   var editmode = document.createElement('div');
   editmode.id = 'editmode';
@@ -466,30 +477,32 @@ PART.editGroup = function (event, idx) {
   CFG['_current_jdx'] = rows.map(function(x) {return x[1];});
 
   /* now create an alignment object */
-  for (var i=0,r; r=rows[i]; i++) {
+  for (i=0; r=rows[i]; i++) {
     ri = r[0];
     rj = r[1];
-    var current_line = WLS[ri][this_idx];
+    current_line = WLS[ri][this_idx];
     if(!current_line || current_line == '?') {
       current_line = WLS[ri][fall_back];
     }
     /* get the current tokens */
-    var current_entry = MORPH.get_morphemes(current_line.split(' '))[rj];
+    current_entry = MORPH.get_morphemes(current_line.split(' '))[rj];
     /* add stuff to temporary container for quick alignment access */
     CFG['_current_alms'].push(current_entry);
     CFG['_current_taxa'].push(WLS[ri][CFG['_taxa']]);
 
     /* add sequence data to allow for automatic alignment */
-    var this_seq = MORPH.get_morphemes(WLS[ri][seq_idx].split(' '))[rj];
-    if (!this_seq) { var this_seq = current_entry; }
+    this_seq = MORPH.get_morphemes(WLS[ri][seq_idx].split(' '))[rj];
+    if (!this_seq) {
+      this_seq = current_entry; 
+    }
     CFG['_current_seqs'].push(this_seq);
 
-    var alm = plotWord(current_entry.join(' '));
-    var lang = WLS[ri][CFG['_taxa']];
+    alm = plotWord(current_entry.join(' '), "td");
+    lang = WLS[ri][CFG['_taxa']];
 
     /* only take those sequences into account which are currently selected in the alignment */
     if (CFG['_selected_doculects'].indexOf(lang) != -1 || CFG['align_all_words'] != "false") {
-      alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace(new RegExp('span','gi'),'td'));
+      alms.push('<td class="alm_taxon">'+lang+'</td>'+alm);
     }
   }
   if (alms.length == 1) {
@@ -501,7 +514,7 @@ PART.editGroup = function (event, idx) {
   text += '<span class="main_handle pull-left" style="margin-left:-7px;margin-top:2px;" ></span>';
   text += 'Cognate set &quot;'+idx+'&quot; links the following '+alms.length+' entries:</p>';
   text += '<div class="alignments" id="alignments"><table onclick="fakeAlert(\'Press on EDIT or ALIGN to edit the alignments.\');">';
-  for (var i=0,alm;alm=alms[i];i++) {
+  for (i=0;alm=alms[i];i++) {
     text += '<tr>'+alm+'</tr>';
   }
   text += '</table></div>';

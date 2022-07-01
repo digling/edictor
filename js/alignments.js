@@ -168,30 +168,34 @@ ALIGN.irregular = function(idx, jdx, event) {
 
 ALIGN.style = function (idx, alm) {
   /* function styles an alignment for easy output */
+  var i, seg, idf, sound_class, phon, dolgo;
 
   /* create identifier */
   txt = '';
   txt += '<td class="pre-align residue pointed" title="drag sequence to the left" onclick="ALIGN.dragToLeft('+idx+');">←</td>';
-  for (var i=0, seg; seg=alm[i]; i++) {
-    var idf = 'alm_'+idx+'_'+i;
-    var sound_class = getSoundClass(seg);
+  for (i=0; seg=alm[i]; i++) {
+    idf = 'alm_'+idx+'_'+i;
+    sound_class = getSoundClass(seg);
     /* check for sounds annotated to be bad */
-    if ((seg[0] == '!' || seg[0] == '?') && seg.length > 1) {seg = seg.slice(1, seg.length)}
+    //if ((seg[0] == '!' || seg[0] == '?') && seg.length > 1) {seg = seg.slice(1, seg.length)}
     
     if (this.UDX.indexOf(i) != -1) {
-      if (sound_class != '-') {
-        txt += '<td class="residue dolgo_IGNORE dolgo_'+sound_class+'" id="'+idf+'">'+seg+'</td>';
+      [phon, dolgo] = plotPhon(seg);
+
+      if (seg != CFG.gap_marker) {
+        txt += '<td class="residue dolgo_IGNORE '+dolgo+'" id="'+idf+'">'+phon+'</td>';
       }
       else {
         txt += '<td class="residue dolgo_IGNORE dolgo_GAP" id="'+idf+'">'+seg+'</td>';
       }
     }
     else {
-      if (sound_class != '-') {
-        txt += '<td class="residue pointed dolgo_'+sound_class+'" id="'+idf+
+      [phon, dolgo] = plotPhonGeneric(seg);
+      if (seg != CFG.gap_marker) {
+        txt += '<td class="residue pointed '+dolgo+'" id="'+idf+
           '" onclick="ALIGN.addGap('+idx+','+i+')" '+
 	  'oncontextmenu="ALIGN.irregular('+idx+','+i+',event)"'+
-	  '>'+seg+'</td>';
+	  '>'+phon+'</td>';
       }
       else {
         txt += '<td class="residue dolgo_GAP pointed" id="'+idf+'" '+
@@ -217,7 +221,7 @@ ALIGN.make_table = function (taxa, alms) {
       col = 'white';
     }
     txt += '<th style="background-color:'+col+';" id="alm_'+i+'" oncontextmenu="this.lock_sequences('+i+',event)" onclick="ALIGN.lock_sequence('+i+')" class="pointed alm_taxon">'+taxon+'</th>';
-    txt += this.style(i+1,alms[i]);
+    txt += this.style(i+1, alms[i]);
     txt += '</tr>';
   }
   txt += '<tr class="up_fill"><td></td></tr>';

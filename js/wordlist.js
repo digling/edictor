@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2021-01-31 13:15
+ * modified : 2022-04-19 09:55
  *
  */
 
@@ -117,7 +117,7 @@ function resetRootFormat(value) {
         format_selection[key].sort(function (x, y) {
           X = WLS[x[0]][CFG._tidx];
           Y = WLS[y[0]][CFG._tidx];
-          console.log(X, Y, CFG.doculects.indexOf(X));
+          //console.log(X, Y, CFG.doculects.indexOf(X));
           return CFG.doculects.indexOf(X) - CFG.doculects.indexOf(Y);
         });
       }
@@ -330,16 +330,20 @@ function csvToArrays(allText, separator, comment, keyval) {
         }
 
         /* add subgroup information */
-        if (subgroup_idx > -1 && typeof subgroups[taxon] != 'object'){
-          if (all_subgroups.indexOf(data[subgroup_idx]) == -1){
-            all_subgroups.push(data[subgroup_idx]);
+        if (typeof subgroups[taxon] != "object") {
+          if (subgroup_idx > -1){
+            if (data[subgroup_idx] != "") {
+              if (all_subgroups.indexOf(data[subgroup_idx]) == -1){
+                all_subgroups.push(data[subgroup_idx]);
+              }
+              subgroups[taxon] = data[subgroup_idx];
+            }
           }
-          subgroups[taxon] = data[subgroup_idx];
-        }
-        else if (typeof subgroups[taxon] != 'object'){
-          subgroups[taxon] = 'NAN'; 
-          if (all_subgroups.length != 1){
-            all_subgroups.push('NAN');
+          else {
+            subgroups[taxon] = 'NAN'; 
+            if (all_subgroups.length != 1){
+              all_subgroups.push('NAN');
+            }
           }
         }
 
@@ -398,7 +402,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   all_subgroups.sort();
   for (taxon in subgroups) {
     i = all_subgroups.indexOf(subgroups[taxon]);
-    if (i < 12){
+    if (i < 24){
       styler = UTIL.subgroups[i];
     }
     else {
@@ -2487,8 +2491,9 @@ function sortTable(event,head)
 }
 
 function editGroup(event, idx) {
-  /* functin handles the display of alignments */
-  /*TODO ordertaxa*/
+  /* function handles the display of alignments */
+
+  var X, Y, i, r, alm, this_idx, fall_back, seq_idx;
 
   event.preventDefault();
   
@@ -2503,8 +2508,8 @@ function editGroup(event, idx) {
 
   /* sort the rows */
   rows.sort(function (x, y) {
-    var X = WLS[x][CFG._tidx];
-    var Y = WLS[y][CFG._tidx];
+    X = WLS[x][CFG._tidx];
+    Y = WLS[y][CFG._tidx];
     if (CFG.sorted_taxa) {
       return CFG.sorted_taxa.indexOf(X) - CFG.sorted_taxa.indexOf(Y);
     }
@@ -2513,15 +2518,15 @@ function editGroup(event, idx) {
 
   /* check for proper alignments first */
   if (CFG['_alignments'] != -1) {
-    var this_idx = CFG['_alignments']; 
-    var fall_back = CFG['_segments']; 
+    this_idx = CFG['_alignments']; 
+    fall_back = CFG['_segments']; 
   }
   else if (CFG['_segments'] != -1) { 
-    var this_idx  = CFG['_segments']; 
-    var fall_back = CFG['_transcriptions'];
+    this_idx  = CFG['_segments']; 
+    fall_back = CFG['_transcriptions'];
   }
   else if (CFG['_transcriptions'] != -1) {
-    var this_idx = CFG['_transcriptions'];
+    this_idx = CFG['_transcriptions'];
   }
   else {
     fakeAlert('No phonetic entries were specified in the data.');
@@ -2530,10 +2535,10 @@ function editGroup(event, idx) {
 
   /* check for sequence index */
   if (CFG['_segments'] != -1) {
-    var seq_idx = CFG['_segments'];
+    seq_idx = CFG['_segments'];
   }
   else if (CFG['_transcriptions'] != -1) {
-    var seq_idx = CFG['_transcriptions'];
+    seq_idx = CFG['_transcriptions'];
   }
 
   var editmode = document.createElement('div');
@@ -2550,11 +2555,12 @@ function editGroup(event, idx) {
   CFG['_current_idx'] = rows;
   CFG['_current_seqs'] = [];
   
+  var current_line, this_seq, lang;
 
   /* now create an alignment object */
-  for (var i=0,r;r=rows[i];i++) {
+  for (i=0; r=rows[i]; i++) {
     
-    var current_line = WLS[r][this_idx];
+    current_line = WLS[r][this_idx];
     if(!current_line) {
       current_line = WLS[r][fall_back];
     }
@@ -2563,9 +2569,9 @@ function editGroup(event, idx) {
     CFG['_current_taxa'].push(WLS[r][CFG['_tidx']]);
 
     /* add sequence data to allow for automatic alignment */
-    var this_seq = WLS[r][seq_idx];
+    this_seq = WLS[r][seq_idx];
     if (!this_seq) {
-      var this_seq = current_line;
+      this_seq = current_line;
     }
     if (this_seq.indexOf(' ') == -1) {
       CFG['_current_seqs'].push(this_seq.split());
@@ -2574,15 +2580,17 @@ function editGroup(event, idx) {
       CFG['_current_seqs'].push(this_seq.split(' '));
     }
 
-    var alm = plotWord(current_line);
-    var lang = WLS[r][CFG['_tidx']];
+    alm = plotWord(current_line, "td");
+    console.log("alm", alm);
+    lang = WLS[r][CFG['_tidx']];
     if (WLS['subgroups'][lang] != 'NAN'){
       taxon_addon = ' ('+WLS['subgroups'][WLS[r][CFG['_tidx']]][0].slice(0, 3)+') '; 
     }
 
     /* only take those sequences into account which are currently selected in the alignment */
+    /* span +++ todo error here +++ */
     if (CFG['_selected_doculects'].indexOf(lang) != -1 || CFG['align_all_words'] != "false") {
-      alms.push('<td class="alm_taxon">'+lang+'</td>'+alm.replace(new RegExp('span','gi'),'td'));
+      alms.push('<td class="alm_taxon">'+lang+'</td>'+alm);
       blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(new RegExp(' ','gi'),'\t')+'\n';
     }
   }
@@ -2597,7 +2605,7 @@ function editGroup(event, idx) {
   text += '<span class="main_handle pull-left" style="margin-left:-7px;margin-top:2px;" ></span>';
   text += CFG['formatter'] + ' &quot;'+idx+'&quot; links the following '+alms.length+' entries:</p>';
   text += '<div class="alignments" id="alignments"><table onclick="fakeAlert(\'Press on EDIT or ALIGN to edit the alignments.\');">';
-  for (var i=0,alm;alm=alms[i];i++) {
+  for (i=0;alm=alms[i];i++) {
     text += '<tr>'+alm+'</tr>';
   }
   text += '</table></div>';
