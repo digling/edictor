@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2016-03-20 10:07
- * modified : 2016-03-20 10:07
+ * modified : 2022-07-04 10:49
  *
  */
 
@@ -37,6 +37,9 @@ function showPhonology (event, doculect, sort, direction) {
       return;
     }
   }
+  var i, j, k;
+  var tokens, _tokens;
+  var segment, segments;
   
   /* get current height of the window in order to determine maximal height of
    * the div */
@@ -74,22 +77,22 @@ function showPhonology (event, doculect, sort, direction) {
   var dontrace = ['∼','◦'];
   
   /* iterate over the data */
-  for (var i=0,idx; idx = idxs[i]; i++) {
+  for (i=0, idx; idx=idxs[i]; i++) {
     /* first check for valid alignments */
     if (WLS[idx][aidx] != 'undefined' && WLS[idx][aidx]) {
-      var _tokens = WLS[idx][aidx].split(' ');
-      var tokens = [];
-      for (var j=0; j<_tokens.length; j++) {
-	if ('()-'.indexOf(_tokens[j]) == -1) {
-	  tokens.push(_tokens[j]);
-	}
+      _tokens = WLS[idx][aidx].split(/\s|\./);
+      tokens = [];
+      for (j=0; j<_tokens.length; j++) {
+        if ('()-'.indexOf(_tokens[j]) == -1) {
+          tokens.push(_tokens[j]);
+        }
       }
     }
     else if (WLS[idx][tidx] != 'undefined' && WLS[idx][tidx]) {
-      var tokens = WLS[idx][tidx].split(' ');
+      var tokens = WLS[idx][tidx].split(/\s|\./);
     }
     else {
-      var tokens = ipa2tokens(WLS[idx][iidx]).split(' ');
+      var tokens = ipa2tokens(WLS[idx][iidx]);
     }
 
     for (var j=0,token; token=tokens[j]; j++) {
