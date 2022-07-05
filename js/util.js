@@ -159,6 +159,7 @@ UTIL.open_remote_dbase = function(dbase, frame) {
   }
 }
 
+
 UTIL.load_settings = function() {
 
   var settables = ['preview', 'cognates', 'alignments', 'morphemes', 'roots', 'highlight', 'sampa',

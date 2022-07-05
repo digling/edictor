@@ -9,6 +9,34 @@
 
 PHON = {};
 
+PHON.clean_segment = function(segment) {
+  if (segment.indexOf("/") == -1) {
+    return segment;
+  }
+  else {
+    return segment.split("/")[1];
+  }
+};
+
+/* desegmentize a sequence with grouped segments */
+PHON.desegment = function(sequence) {
+  var i, j, segment, new_segments;
+  var out = [];
+  for (i=0; i<sequence.length; i++) {
+    segment = sequence[i];
+    if (segment.indexOf(".") == -1) {
+      out.push(PHON.clean_segment(segment));
+    }
+    else {
+      new_segments = segment.split('.');
+      for (j=0; j<new_segments.length; j++) {
+        out.push(PHON.clean_segment(new_segments[j]));
+      }
+    }
+  }
+  return out;
+};
+
 PHON.showChart = function(url, doculect) {
 
   var url = 'plugouts/ipa_chart.html?'+url;
@@ -37,8 +65,8 @@ function showPhonology (event, doculect, sort, direction) {
       return;
     }
   }
-  var i, j, k;
-  var tokens, _tokens;
+  var i, j, k, idx;
+  var tokens, _tokens, token;
   var segment, segments;
   
   /* get current height of the window in order to determine maximal height of
@@ -69,39 +97,23 @@ function showPhonology (event, doculect, sort, direction) {
 
   /* get index of tokens and concepts*/
   var tidx = CFG['_segments']; 
-  var aidx = CFG['_alignments']; 
-  var iidx = CFG['_transcriptions'];
   var c = CFG['_cidx'];
 
   /* define symbols we do not want to trace */
-  var dontrace = ['∼','◦'];
+  var dontrace = ['∼', '◦', "Ø", "+"];
   
   /* iterate over the data */
-  for (i=0, idx; idx=idxs[i]; i++) {
+  for (i=0; idx=idxs[i]; i++) {
     /* first check for valid alignments */
-    if (WLS[idx][aidx] != 'undefined' && WLS[idx][aidx]) {
-      _tokens = WLS[idx][aidx].split(/\s|\./);
-      tokens = [];
-      for (j=0; j<_tokens.length; j++) {
-        if ('()-'.indexOf(_tokens[j]) == -1) {
-          tokens.push(_tokens[j]);
-        }
-      }
+    if (WLS[idx][tidx] != 'undefined' && WLS[idx][tidx]) {
+      tokens = PHON.desegment(WLS[idx][tidx].split(" "));
     }
-    else if (WLS[idx][tidx] != 'undefined' && WLS[idx][tidx]) {
-      var tokens = WLS[idx][tidx].split(/\s|\./);
-    }
-    else {
-      var tokens = ipa2tokens(WLS[idx][iidx]);
-    }
-
-    for (var j=0,token; token=tokens[j]; j++) {
+    for (j=0; token=tokens[j]; j++) {
       if (dontrace.indexOf(token) == -1) {
-	try {
+	      try {
       	  occs[token].push(idx);
       	}
-      	catch (e)
-      	{
+      	catch (e) {
       	  occs[token] = [idx];
       	  phonemes.push(token);
       	}
@@ -111,6 +123,7 @@ function showPhonology (event, doculect, sort, direction) {
 
   /* go for the sorting stuff */
   function get_sorter (sort, direction) {
+    var a, b, sorter;
     if (sort == 'alphabetic') {
       var sorter = function (x,y) {
         return x.charCodeAt(0) - y.charCodeAt(0);
@@ -120,10 +133,10 @@ function showPhonology (event, doculect, sort, direction) {
       var sorter = function (x,y) {
         var a = getSoundClass(x).charCodeAt(0);
         var b = getSoundClass(y).charCodeAt(0);
-	if (a == b) {
-	  return x.localeCompare(y);
-	}
-        return a - b;  
+	      if (a == b) {
+	        return x.localeCompare(y);
+        }
+        return a - b;
       };
     }
     else if (sort == 'occurrences') {
@@ -132,17 +145,15 @@ function showPhonology (event, doculect, sort, direction) {
       };
     }
     else if (sort == 'type' || sort == 'place' || sort == 'manner' || sort == 'misc1' || sort == 'misc2') {
-      var sorter = function(x,y) {
-	var a = getSoundDescription(x, sort, true);
-	var b = getSoundDescription(y, sort, true);
-	if (!a && !b) {return 0}
-	if (!a && b) {return -1}
-	if (!b && a) {return 1}
-
-	return a.localeCompare(b);
+      sorter = function(x,y) {
+	      a = getSoundDescription(x, sort, true);
+	      b = getSoundDescription(y, sort, true);
+	      if (!a && !b) {return 0}
+	      if (!a && b) {return -1}
+	      if (!b && a) {return 1}
+	      return a.localeCompare(b);
       };
     }
-
     if (direction == 1) {
       return function (x,y) { return sorter(x,y) };
     }
@@ -152,7 +163,7 @@ function showPhonology (event, doculect, sort, direction) {
   }
 
   /* define featueres for convenience */
-  var features = ['place','manner','type','misc1','misc2'];
+  var features = ['place', 'manner', 'type', 'misc1', 'misc2'];
 
   /* change selection for the current sorting scheme */
   if (sort == 'phoneme') {
@@ -200,17 +211,19 @@ function showPhonology (event, doculect, sort, direction) {
     '</tr>';
     //'<th ondblclick="showPhonology(false,\''+doculect+'\',\'misc1\',' +f_dir+')" title="double click to sort" class="features '+((sort == 'misc1') ? 'sorted' : 'unsorted')+'" >VOICE (NASAL)</th>' +
  
+  var r, phoneme, noc, keys, concepts, concept, cids, normalized_sound, description, sound_list, st;
+
   var normalized_sounds = [];
-  for (var i=0,phoneme; phoneme=phonemes[i]; i++) {
-    var noc = occs[phoneme].length;
-    var keys = occs[phoneme];
+  for (i=0; phoneme=phonemes[i]; i++) {
+    noc = occs[phoneme].length;
+    keys = occs[phoneme];
     
     /* create concepts */
-    var concepts = [];
-    var cids = [];
+    concepts = [];
+    cids = [];
     //->console.log('c2i',WLS.c2i);
-    for (var j=0,idx; idx=keys[j]; j++) {
-      var concept = WLS[idx][c];
+    for (j=0; idx=keys[j]; j++) {
+      concept = WLS[idx][c];
       if (concepts.indexOf(concept) == -1) {
        concepts.push(concept);
        cids.push(WLS.c2i[concept]);
@@ -222,11 +235,11 @@ function showPhonology (event, doculect, sort, direction) {
     text += '<td>' + 
       plotWord(phoneme, 'span') + '</td>';
     text += '<td>' + noc + '</td>';
-    var normalized_sound = normalize_ipa(phoneme);
+    normalized_sound = normalize_ipa(phoneme);
     if (normalized_sounds.indexOf(normalized_sound) == -1) {
       normalized_sounds.push(normalized_sound);
     }
-    var description = getSoundDescription(normalized_sound);
+    description = getSoundDescription(normalized_sound);
     if (description) {
       text += '<td class="features">'+description.join('</td><td class="features">')+'</td>'; // TODO no inline css!
     }
@@ -239,10 +252,10 @@ function showPhonology (event, doculect, sort, direction) {
   text += '</table>';
 
   /* make url for link */
-  var sound_list = normalized_sounds.join(',');
-  var st = {'¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁰': '0'};
-  for (var r in st) {
-    var rg = new RegExp(r, 'g') 
+  sound_list = normalized_sounds.join(',');
+  st = {'¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁰': '0'};
+  for (r in st) {
+    rg = new RegExp(r, 'g') 
     sound_list = sound_list.replace(rg, st[r]);
   }
   sound_list = 'doculect='+encodeURIComponent(doculect)+'&sound_list='+encodeURIComponent(sound_list);
