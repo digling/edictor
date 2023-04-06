@@ -26,6 +26,7 @@ SEG.plotWord = function(seq, idx, jdx, functions){
   return text;
 };
 
+
 SEG.splitWord = function(pos, idx, jdx){
   var i, before, after, word, glosses, cognates, form, gloss, cog;
   [word, glosses, cognates] = GLOSSES.check_morphemes(
@@ -43,7 +44,7 @@ SEG.splitWord = function(pos, idx, jdx){
   WLS[idx][CFG._segments] = word.join(' + ');
   WLS[idx][CFG._morphemes] = glosses.join(' ');
   WLS[idx][CFG._roots] = cognates.join(' ');
-  storeModification(idx, jdx, WLS[idx][CFG._segments]);
-  storeModification(idx, jdx, WLS[idx][CFG._glosses]);
-  storeModification(idx, jdx, WLS[idx][CFG._roots]);
+  storeModification(idx, CFG._segments, WLS[idx][CFG._segments]);
+  storeModification(idx, CFG._morphemes, WLS[idx][CFG._glosses]);
+  storeModification(idx, CFG._roots, WLS[idx][CFG._roots]);
 };
