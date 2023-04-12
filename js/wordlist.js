@@ -1380,29 +1380,17 @@ function modifyEntry(event, idx, jdx, xvalue) {
       }
     }
   }
-  
-  var alm, new_alm, tks, seq_idx, i_, next_alm;
+
+  /* tokens -> alignment, this function is important
+   * to make sure that all entries in tokens and alignmetns are synchronized
+   * tokens2alignment
+   */
+  var new_alm;
   if (jdx-1 == CFG._segments && CFG._alignments != -1) {
     alm = WLS[idx][CFG._alignments].split(' ');
-    new_alm = [];
-    tks = xvalue.split(' ');
-    seq_idx = 0;
-    for (i_=0; i_<alm.length; i_++) {
-      next_alm = alm[i_];
-      if ('(-)'.indexOf(next_alm) == -1) {
-	new_alm.push(tks[seq_idx]);
-	seq_idx += 1;
-      }
-      else {
-	  new_alm.push(next_alm);
-      }
-    }
-    if (seq_idx != tks.length) {
-      new_alm = xvalue;
-    }
-    else {
-      new_alm = new_alm.join(' ');
-    }
+    new_alm = UTIL.tokens2alignment(
+      WLS[idx][CFG._segments].split(" "),
+      WLS[idx][CFG._alignments].split(" "));
     if (new_alm != WLS[idx][CFG._alignments]){
       autoModifyEntry(idx, CFG._alignments+1, new_alm, WLS[idx][CFG._alignments]);
     }

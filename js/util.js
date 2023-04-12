@@ -564,7 +564,7 @@ UTIL.show_quintuples = function(event, widx) {
   document.body.appendChild(popup);
   popup.innerHTML = text;
   $('#quintuple-popup').draggable({handle:'.main_handle'}).resizable();
-}
+};
 
 
 UTIL.subgroups = [
@@ -593,6 +593,32 @@ UTIL.subgroups = [
   '<sup class="ball" style="color:#ffff99">FFF</sup>', 
   '<sup class="ball" style="color:#b15928">FFF</sup>' 
 ]; 
+
+/* Function links tokens and alignemnts with each other by making sure they have the same content
+ * apart from brackets and gaps.
+ */
+UTIL.tokens2alignment = function(tokens, alignment){
+  var i, token;
+  var new_alm = [];
+  var sidx = 0;
+  for (i=0; token=tokens[i]; i++) {
+    next_alm = alm[i];
+    if ("(-)".indexOf(next_alm) == -1) {
+      new_alm.push(tokens[sidx]);
+      sidx += 1;
+    }
+    else {
+      new_alm.push(next_alm);
+    }
+  }
+  if (sidx != tokens.length) {
+    new_alm = tokens.join(" ");
+  }
+  else {
+    new_alm = new_alm.join(" ");
+  }
+  return new_alm
+};
   
 
 
@@ -677,3 +703,5 @@ LIST.sum = function(x) {
   /* https://stackoverflow.com/questions/3762589/fastest-javascript-summation */
   return x.reduce(function(pv, cv) { return pv + cv; }, 0);
 };
+
+

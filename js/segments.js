@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2020-10-09 06:40
- * modified : 2020-10-09 06:40
+ * modified : 2023-04-12 08:41
  *
  */
 
@@ -44,6 +44,16 @@ SEG.splitWord = function(pos, idx, jdx){
   WLS[idx][CFG._segments] = word.join(' + ');
   WLS[idx][CFG._morphemes] = glosses.join(' ');
   WLS[idx][CFG._roots] = cognates.join(' ');
+
+  if (CFG._alignments != -1) {
+    alm = WLS[idx][CFG._alignments].split(' ');
+    tks = WLS[idx][CFG._segments].split(' ');
+    WLS[idx][CFG._alignments] = UTIL.tokens2alignment(
+      WLS[idx][CFG._segments].split(" "),
+      WLS[idx][CFG._alignments].split(" "))
+    storeModification(idx, CFG._alignments, WLS[idx][CFG._alignments]);
+  }
+
   storeModification(idx, CFG._segments, WLS[idx][CFG._segments]);
   storeModification(idx, CFG._morphemes, WLS[idx][CFG._glosses]);
   storeModification(idx, CFG._roots, WLS[idx][CFG._roots]);
