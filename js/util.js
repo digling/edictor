@@ -598,11 +598,11 @@ UTIL.subgroups = [
  * apart from brackets and gaps.
  */
 UTIL.tokens2alignment = function(tokens, alignment){
-  var i, token;
+  var i;
   var new_alm = [];
   var sidx = 0;
-  for (i=0; token=tokens[i]; i++) {
-    next_alm = alm[i];
+  for (i=0; i<alignment.length; i++) {
+    next_alm = alignment[i];
     if ("(-)".indexOf(next_alm) == -1) {
       new_alm.push(tokens[sidx]);
       sidx += 1;

@@ -1385,14 +1385,60 @@ function modifyEntry(event, idx, jdx, xvalue) {
    * to make sure that all entries in tokens and alignmetns are synchronized
    * tokens2alignment
    */
-  var new_alm;
   if (jdx-1 == CFG._segments && CFG._alignments != -1) {
-    alm = WLS[idx][CFG._alignments].split(' ');
-    new_alm = UTIL.tokens2alignment(
-      WLS[idx][CFG._segments].split(" "),
-      WLS[idx][CFG._alignments].split(" "));
-    if (new_alm != WLS[idx][CFG._alignments]){
-      autoModifyEntry(idx, CFG._alignments+1, new_alm, WLS[idx][CFG._alignments]);
+    var new_alm, alm_bunch, cnt, new_alms, new_segments;
+    new_segments = xvalue;
+
+    /* iterate over alignment segments */
+    if (new_segments.indexOf(" + ") != -1) {
+      alm_bunch = WLS[idx][CFG._alignments].split(" + ");
+      seg_bunch = new_segments.split(" + ");
+      if (alm_bunch.length == seg_bunch.length) {
+        new_alms = [];
+        for (cnt=0; cnt<alm_bunch.length; cnt++) {
+          new_alm = UTIL.tokens2alignment(
+            seg_bunch[cnt].split(" "),
+            alm_bunch[cnt].split(" "));
+          if (new_alm != alm_bunch[cnt]) {
+            new_alms.push(new_alm);
+          }
+          else {
+            new_alms.push(alm_bunch[cnt]);
+          }
+        }
+        new_alms = new_alms.join(" + ");
+        if (new_alms != WLS[idx][CFG._alignments]) {
+          autoModifyEntry(
+            idx,
+            CFG._alignments+1,
+            new_alms,
+            WLS[idx][CFG._alignments]);
+        }
+      }
+      /* reset if the entries don't match*/
+      else {
+        autoModifyEntry(
+          idx, 
+          CFG._alignments+1,
+          new_segments,
+          WLS[idx][CFG._alignments]);
+      }
+    }
+    else {
+      /* */
+      alm = WLS[idx][CFG._alignments].split(' ');
+      new_alm = UTIL.tokens2alignment(
+        new_segments.split(" "),
+        WLS[idx][CFG._alignments].split(" ")
+      );
+      console.log("new alm", new_alm);
+      if (new_alm != WLS[idx][CFG._alignments]){
+        autoModifyEntry(
+          idx, 
+          CFG._alignments+1, 
+          new_alm, 
+          WLS[idx][CFG._alignments]);
+      }
     }
   }
   /* format the languages */
