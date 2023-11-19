@@ -18,7 +18,36 @@ for (var i=0,comp; comp=comps[i]; i++) {
   settings[keyval[0]] = keyval[1];
 }
 
-var sound_list = settings['sound_list'].split(',');
+var sound_list_ = settings['sound_list'].split(',');
+
+var i, j, new_sound, sound_group;
+
+var sound_list = [];
+for (i=0; i<sound_list_.length; i++) {
+  sound = sound_list_[i];
+  if (sound.indexOf(".") != -1) {
+    sound_group = sound.split(".");
+    for (j=0; j<sound_group.length; j++) {
+      new_sound = sound_group[j];
+      if (new_sound.indexOf("/") != -1) {
+        new_sound = new_sound.split("/")[1];
+        sound_list.push(new_sound);
+      }
+      else {
+        sound_list.push(new_sound);
+      }
+    }
+  }
+  else if (sound.indexOf("/") != -1) {
+    sound_list.push(sound.split('/')[1]);
+  }
+  else {
+    sound_list.push(sound);
+  }
+}
+
+
+
 var visited_sounds = [];
 
 var secondary_articulations = ['ʰ','ʲ','ʱ','ː','ⁿ', 'ʷ', '˞', '\u0331', '\u0306'];
