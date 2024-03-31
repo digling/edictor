@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2016-03-20 10:07
- * modified : 2022-07-04 10:49
+ * modified : 2023-11-19 12:22
  *
  */
 
@@ -71,9 +71,9 @@ function showPhonology (event, doculect, sort, direction) {
   
   /* get current height of the window in order to determine maximal height of
    * the div */
-  var heightA = document.getElementById('filedisplay').offsetHeight - 100;
-  var heightB = window.innerHeight - 350;
-  var cheight = (heightB-heightA > 300) ? heightB : heightA;
+  var heightA = 600; //document.getElementById('filedisplay').offsetHeight - 50;
+  var heightB = window.innerHeight - 50;
+  var cheight = (heightB-heightA > 500) ? heightB : heightA;
 
   document.getElementById('phonology_table').style.maxHeight =  cheight +'px';
   document.getElementById('phonology_help').style.display = 'none';

@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2022-04-19 09:55
+ * modified : 2023-10-22 20:01
  *
  */
 
@@ -1431,7 +1431,6 @@ function modifyEntry(event, idx, jdx, xvalue) {
         new_segments.split(" "),
         WLS[idx][CFG._alignments].split(" ")
       );
-      console.log("new alm", new_alm);
       if (new_alm != WLS[idx][CFG._alignments]){
         autoModifyEntry(
           idx, 
@@ -2615,7 +2614,7 @@ function editGroup(event, idx) {
     }
 
     alm = plotWord(current_line, "td");
-    console.log("alm", alm);
+    //console.log("alm", alm);
     lang = WLS[r][CFG['_tidx']];
     if (WLS['subgroups'][lang] != 'NAN'){
       taxon_addon = ' ('+WLS['subgroups'][WLS[r][CFG['_tidx']]][0].slice(0, 3)+') '; 
@@ -2675,7 +2674,7 @@ function automaticAlignment() {
   $('#edit_alignment_button').addClass('hidden');
 }
 
-/* function creates and ALIGN object for editing alignments in text */
+/* function creates an ALIGN object for editing alignments in text */
 /* XXX go here for sorting the alignmetns when aligning the words */
 function editAlignment() {
   ALIGN.ALMS = CFG['_current_alms'];

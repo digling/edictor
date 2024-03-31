@@ -75,16 +75,20 @@ PATS.get_patterns = function(lengths){
   }
   if (CFG._morphology_mode == 'partial'){
     roots = WLS.roots;
+    PATS.roots = roots;
     function get_wls(idx){return roots[idx].map(function (x){return x[0];})}
     function get_idx(lst, idx){return lst[idx][0]}
     function get_alm(etym){return ALIGN.alignable_parts(MORPH.get_morphemes(WLS[etym[0]][CFG._alignments].split(' '))[etym[1]]);}
   }
   else {
     roots = WLS.etyma;
+    PATS.roots = roots;
     function get_wls(idx){return roots[idx]}
     function get_idx(lst, idx){return lst[idx]}
     function get_alm(etym){return ALIGN.alignable_parts(WLS[etym][CFG._alignments].split(' '));}
   }
+  PATS.get_alm = get_alm;
+  
   /* make proto first of the selected doculects */
   if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
     PATS.selected_doculects = [CFG.proto];
@@ -213,19 +217,19 @@ PATS.get_patterns = function(lengths){
   });
   /* first search for consensus patterns */
   PATS.find_consensus();
-  /* greedy search refinement, sort by the consensus of the words */
-  PATS.matrix.sort(function (x, y) {
-    var consA, consB;
-    consA = x[PATS.length-1][0].join(',');
-    consB = y[PATS.length-1][0].join(',');
-    if (consA == consB) {
-      return 0;
-    }
-    return consA.localeCompare(consB);
-  });
-  /* re-compute and resort consensus to refine search, compute proto-sounds
-   * (sounds occuring in fhe first language in the sample for filtering */
-  PATS.find_consensus();
+  // --- /* greedy search refinement, sort by the consensus of the words */
+  // --- PATS.matrix.sort(function (x, y) {
+  // ---   var consA, consB;
+  // ---   consA = x[PATS.length-1][0].join(',');
+  // ---   consB = y[PATS.length-1][0].join(',');
+  // ---   if (consA == consB) {
+  // ---     return 0;
+  // ---   }
+  // ---   return consA.localeCompare(consB);
+  // --- });
+  // --- /* re-compute and resort consensus to refine search, compute proto-sounds
+  // ---  * (sounds occuring in fhe first language in the sample for filtering */
+  // --- PATS.find_consensus();
   PATS.assign_patterns();
   PATS.matrix.sort(
     function(x, y) {
@@ -236,7 +240,8 @@ PATS.get_patterns = function(lengths){
         return 1;
       }
       else {
-        return x[2][0].localeCompare(y[2][0]);
+        /* +++ */
+        return String(x[2][0]).localeCompare(String(y[2][0]));
       }
     }
   );
@@ -290,7 +295,7 @@ PATS.get_patterns = function(lengths){
   else if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
     var sound, idx;
     for (i = 0; i < PATS.matrix.length; i += 1) {
-      [idx, sound] = PATS.matrix[i][2][0].split("/");
+      [idx, sound] = [PATS.matrix[i][2][0], PATS.matrix[i][2][3]];
       token = sound+" / "+idx;
       if (token in PATS.proto_sounds) {
               PATS.proto_sounds[token].push(i);
@@ -309,7 +314,8 @@ PATS.get_patterns = function(lengths){
           token = PATS.matrix[i][4][2].split('/')[1]+' / ' + PATS.matrix[i][2][0].split('/')[0];
         }
         else {
-          token = PATS.matrix[i][4][2]+' / '+PATS.matrix[i][2][0].split('/')[0];
+          // token = PATS.matrix[i][4][2]+' / '+PATS.matrix[i][2][0].split('/')[0];
+          token = PATS.matrix[i][4][2]+' / '+PATS.matrix[i][2][0];
         }
         if (token in PATS.proto_sounds) {
                 PATS.proto_sounds[token].push(i);
@@ -323,6 +329,10 @@ PATS.get_patterns = function(lengths){
   /* add patterns to wordlist (like alignments) in case they are not assigned */
   /* +++ PATTERNS ADDING +++ */
   /* represent the patterns by alignment internally */
+  PATS.pos2pat = {};
+  for (i = 0; row = PATS.matrix[i]; i += 1) {
+    PATS.pos2pat[row[0] + "-" + row[1]] = row[2][0];
+  }
   // === var first_patterns = {};
   // === var pid;
   // === var alignment, morpheme, token;
@@ -361,13 +371,14 @@ PATS.assign_patterns = function(){
     consensus_char = PATS.consensus(consensus_list);
     consensus = consensus_list.join(' ');
     if (consensus in pdict) {
-      pattern = pdict[consensus] + '/' + consensus_char;
+      pattern = pdict[consensus]; //pdict[consensus] + '/' + consensus_char;
       PATS.patterns[pattern].push([row[0], row[1]]);
       consensus_dict[consensus].push([row[0], row[1], i, pattern]);
     }
     else {
       // +++ next_idx = 1;
-      next_idx = new_idx; new_idx += 1;// +++ 
+      next_idx = new_idx; 
+      new_idx += 1;// +++ 
       if (consensus_char in pdict) {
         next_idx = pdict[consensus_char];
         pdict[consensus_char] += 1;
@@ -376,7 +387,7 @@ PATS.assign_patterns = function(){
         /* here, we need to identify whether there might be a similar pattern in our stack */
         pdict[consensus_char] = next_idx + 1;
       }
-      pattern = next_idx + '/' + consensus_char;
+      pattern = next_idx; // next_idx + '/' + consensus_char;
       pdict[consensus] = next_idx;
       PATS.patterns[pattern] = [[row[0], row[1]]];
       if (consensus_list.indexOf(CFG.missing_marker) != -1) {
@@ -389,7 +400,7 @@ PATS.assign_patterns = function(){
       }
       consensus_dict[consensus] = [[row[0], row[1], i, pattern]];
     }
-    PATS.matrix[i][2] = [pattern, row[0], row[1]];
+    PATS.matrix[i][2] = [pattern, row[0], row[1], consensus_list[0]];
   }
   PATS.consensus_dict = consensus_dict;
   if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
@@ -672,8 +683,8 @@ PATS.render_matrix = function(lengths) {
     function(cell, idx, head) {
       return '<td class="pointed" onclick="PATS.editPattern(event, this);" data-cogid="' + 
         cell[1] + '" data-pos="' + cell[2] + '"><span>' + 
-        plotWord(cell[0].split('/')[1], 'span') + 
-        ' / <span class="dolgo_ERROR">' + cell[0].split('/')[0] + 
+        plotWord(cell[3], 'span') + 
+        ' / <span class="dolgo_ERROR">' + cell[0] + 
         '</span></span></td>';
     },
     function(cell, idx, head) {
@@ -717,7 +728,7 @@ PATS.render_matrix = function(lengths) {
     else {
       for (i=0; i<PATS.matrix.length; i++) {
         row = PATS.matrix[i];
-        sound = row[PATS.matrix[0].length-1][0][0]+ ' / ' +row[2][0].split('/')[0];
+        sound = row[2][3] + ' / ' +row[2][0];
         if (LIST.has(PATS.selected, sound)) {
                 idxs.push(i);
         }
@@ -736,34 +747,42 @@ PATS.editPattern = function(event, node) {
 
   /* assemble cognate sets and patterns */
   var data = {};
-  var i, j, idx;
+  var i, j, idx, alm;
   var cogid = parseInt(node.dataset["cogid"]);
   var pos = parseInt(node.dataset["pos"]);
   var alms, alm, taxon, concept, morphemes, morpheme, cognates;
   if (CFG._morphology_mode == "full") {
     var ref = CFG._cognates;
+    var etymon = cogid;
   }
   else if (CFG._morphology_mode == "partial") {
     var ref = CFG._roots;
+    var etymon = [cogid, pos];
   }
   var alm_length = 0;
   for (i = 0; idx = WLS.etyma[cogid][i]; i += 1) {
     /* retrieve the alignment and the taxon */
+    if (CFG._morphology_mode == "full") {
+      alm_query = idx;
+    }
+    else {
+      alm_query = [idx, i];
+    }
     [alms, taxon, concept, morphemes, cognates] = [
       WLS[idx][CFG._alignments].split(" + "), WLS[idx][CFG._tidx],
       WLS[idx][CFG._cidx], WLS[idx][CFG._segments].split(" + "),
       WLS[idx][ref].split(" ")
     ];
-    console.log(cognates, alms, taxon, concept, morphemes);
     /* fill the data dictionary with values */
     for (j = 0; j < alms.length; j += 1) {
       if (parseInt(cognates[j]) == cogid) {
-        alm_length = alms[j].split(" ").length;
+        alm = ALIGN.alignable_parts(alms[j].split(" "));
+        alm_length = alm.length;
         if (taxon in data) {
-          data[taxon].push([concept, morphemes[j].split(" "), alms[j].split(" ")]);
+          data[taxon].push([concept, morphemes[j].split(" "), alm]);
         }
         else {
-          data[taxon] = [[concept, morphemes[j].split(" "), alms[j].split(" ")]];
+          data[taxon] = [[concept, morphemes[j].split(" "), alm]];
         }
       }
     }
@@ -807,6 +826,18 @@ PATS.editPattern = function(event, node) {
       table_text += "</tr>";
     }
   }
+  table_text += '<tr style="border-top: 2px solid black;">';
+  table_text += '<td colspan="2">PATTERNS</td>';
+  for (i = 0; i < alm_length; i += 1) {
+    if (typeof PATS.pos2pat[cogid + "-" + (i + 1)] != "undefined") {
+      table_text += '<td class="cognate" style="backgroundcolor: lightyellow">' +
+        PATS.pos2pat[cogid + "-" + (i + 1)] + "</td>";
+    }
+    else {
+      table_text += '<td style="backgroundcolor: lightgray">0</td>';
+    }
+  }
+  table_text += "</tr>";
 
   var div = document.createElement("div");
   div.id = "editpattern";
@@ -820,9 +851,18 @@ PATS.editPattern = function(event, node) {
   text += table_text;
   text += '</table></div>';
   text += "<br>";
-  text += '<input class="btn btn-primary submit"' + 
-    ' type="button" onclick="editGroup(event, ' + cogid + ');" ' +
-    'value="EDIT" /> ';
+  
+  if (CFG._morphology_mode == "full") {
+    text += '<input class="btn btn-primary submit"' + 
+      ' type="button" onclick="editGroup(event, ' + cogid + ');" ' +
+      'value="EDIT" /> ';
+  }
+  else if (CFG._morphology_mode == "partial") {
+     text += '<input class="btn btn-primary submit"' + 
+      ' type="button" onclick="PART.editGroup(event, ' + cogid + ');" ' +
+      'value="EDIT" /> ';
+  }
+  text += '<span style="color: crimson">.</span>';
   text += '<input class="btn btn-primary submit"' + 
     ' type="button" onclick="$(\'#editpattern\').remove();basickeydown(event);" ' +
     'value="CLOSE" /></div><br><br> ';

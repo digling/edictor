@@ -19,10 +19,10 @@ ALIGN.alignable_parts = function (seq) {
   var open = false;
   var out = [];
   for (var i=0; i<seq.length; i++) {
-    if (seq[i] == '(') {
+    if (seq[i] === '(') {
       open = true;
     }
-    else if (seq[i] == ')') {
+    else if (seq[i] === ')') {
       open = false;
     }
     else {
@@ -45,20 +45,23 @@ ALIGN.normalize = function(alms) {
 
   /* check for unalignable parts */
   var brackets = [];
-  if (this.UDX.length == 0) {
-    var unalignable = false;
-    var udx = [];
-    var minus = 0;
-    for (var i=0; i < alms[0].length; i++) {
-      if (alms[0][i] == '(') {
+  var udx_error = false;
+  var i, j, unalignable, udx, minus, cell, row;
+
+  if (this.UDX.length === 0) {
+    unalignable = false;
+    udx = [];
+    minus = 0;
+    for (i=0; i < alms[0].length; i++) {
+      if (alms[0][i] === '(') {
         unalignable = true;
         brackets.push(i);
         minus += 1;
       }
-      else if (unalignable && alms[0][i] != ')') {
+      else if (unalignable && alms[0][i] !== ')') {
         udx.push(i-minus);
       }
-      else if (unalignable && alms[0][i] == ')') {
+      else if (unalignable && alms[0][i] === ')') {
         brackets.push(i);
         unalignable = false;
         minus += 1;
@@ -73,10 +76,9 @@ ALIGN.normalize = function(alms) {
    * and raise indices if needed, we then delete the rest of the columns */
   
   /* first deal with brackets */
-  var udx_error = false;
-  for (var i=0; row=alms[i]; i++) {
-    var alm = [];
-    for (var j=0,cell; cell=alms[i][j]; j++) {
+  for (i=0; row=alms[i]; i++) {
+    alm = [];
+    for (j=0; cell=alms[i][j]; j++) {
       if (brackets.indexOf(j) == -1 && cell != '(' && cell != ')') {
         alm.push(cell);
       }
@@ -96,14 +98,14 @@ ALIGN.normalize = function(alms) {
 
   /* determine longest string */
   var longest_sequence = 0;
-  for (var i=0,alm; alm=alms[i]; i++) {
+  for (i=0; alm=alms[i]; i++) {
     if (alm.length > longest_sequence) {
       longest_sequence = alm.length;
     }
   }
 
   /* add gaps for missing longest seqs */
-  for (var i=0,alm; alm=alms[i]; i++) {
+  for (i=0,alm; alm=alms[i]; i++) {
     while (alm.length != longest_sequence) {
       alm.push('-');
     }
@@ -115,7 +117,7 @@ ALIGN.normalize = function(alms) {
   for (var i=0; i < alms[0].length; i++) {
     var allgap = true;
     for (var j=0; j < alms.length; j++) {
-      if (alms[j][i] != '-') {
+      if (alms[j][i] !== '-') {
         allgap = false;
       }
     }
@@ -125,9 +127,10 @@ ALIGN.normalize = function(alms) {
   }
 
   /* now deal with empty columns */
-  for (var i=0,row; row=alms[i]; i++) {
-    var alm = [];
-    for (var j=0,cell; cell=alms[i][j]; j++) {
+  var alm;
+  for (i=0; row=alms[i]; i++) {
+    alm = [];
+    for (j=0; cell=alms[i][j]; j++) {
       if (empty_columns.indexOf(j) == -1) {
         alm.push(cell);
       }
@@ -136,12 +139,12 @@ ALIGN.normalize = function(alms) {
   }
 
   /* lower UDX for everythign higher than empty cols */
-  for (var i=0; i< empty_columns.length; i++) {
+  for (i=0; i< empty_columns.length; i++) {
     var idx = empty_columns[i];
     
     /* check for higher values in UDX than idx */
     var raise_val = false;
-    for (var j=0; j < this.UDX.length; j++) {
+    for (j=0; j < this.UDX.length; j++) {
       var jdx = this.UDX[j];
       if (jdx > idx) {
         this.UDX[j] -=1;
