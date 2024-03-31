@@ -349,6 +349,10 @@ td.residue{
   color: white;
   cursor: default;
 }
+td.residue_highlight{
+  border-left: 2px solid black!important;
+  border-right: 2px solid black!important;
+}
 td.missing {
 	display: table-cell;
 	width: 30px;
@@ -388,7 +392,7 @@ td.double{background-color: bisque; border: 1px solid LightYellow;}
 span.double{background-color: bisque; border: 1px solid LightYellow;}
 td.dolgo_PLUS{vertical-align:center; font-weight: bold; background-color:white; color:black; width: 10px !important}
 span.irreg{border: 2px dotted black!important;}
-span.dolog_MISSING{background-color:black;color:white;}
+span.dolgo_MISSING{background-color:black;color:white;}
 span.dolgo_ERROR{background-color: white; color:red;}
 span.dolgo_CUSTOM{background-color: lightyellow; color:darkblue; border:1px solid darkblue;}
 span.dolgo_V{background-color: #c86464;}
@@ -460,6 +464,8 @@ td.pre-align {
 	display: table-cell;
 	padding: 1px;
 }
+
+
 
 .cognate {
   border: 1px solid black;
@@ -882,6 +888,19 @@ table.alignments {
   white-space: nowrap;
   text-align: left;
   color: #2D6CA2;
+}
+
+.alm_concept {
+  font-weight: bold;
+  display: table-cell;
+  max-width: 250px;
+  min-width: 100px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: left;
+  color: #2D6CA2;
+  background-color: lightyellow;
 }
 
 .alm_line {

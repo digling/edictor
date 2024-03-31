@@ -70,6 +70,8 @@ var DOLGO = {
   "\u0277": "V", 
   "\u0235": "N", 
   "\u03b2": "P", 
+  "tɕ": "K",
+  "tɕʰ": "K",
   "d\u035cz": "K", 
   "\u012b": "V", 
   "\u028c": "V",
@@ -529,11 +531,11 @@ function ipa2tokens(sequence) {
       merge_vowel = false;
       merge_consonant = false;
       if (!merge_tone) {
-	out.push(seg);
-	merge_tone = true;
+	      out.push(seg);
+	      merge_tone = true;
       }
       else {
-	out[out.length-1] += seg;
+	      out[out.length-1] += seg;
       }
     }
     else if (vowels.indexOf(seg) != -1) {
@@ -541,11 +543,11 @@ function ipa2tokens(sequence) {
       merge_consonant = false;
 
       if (!merge_vowel) {
-	out.push(seg);
-	merge_vowel = true;
+	      out.push(seg);
+	      merge_vowel = true;
       }
       else {
-	out[out.length-1] += seg;
+	      out[out.length-1] += seg;
       }
     }
     else if (seg == "p͡f"[1]) {
@@ -559,13 +561,13 @@ function ipa2tokens(sequence) {
       merge_vowel=false;
 
       if (!merge_consonant) {
-	out.push(seg);
-	merge_tone = false;
-	merge_vowel = false;
+	      out.push(seg);
+	      merge_tone = false;
+	      merge_vowel = false;
       }
       else {
-	out[out.length-1] += seg;
-	merge_consonant=false;
+	      out[out.length-1] += seg;
+	      merge_consonant=false;
       }
     }
   }
