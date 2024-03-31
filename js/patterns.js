@@ -61,6 +61,8 @@ PATS.consensus = function(x) {
   return best_char;
 };
 
+/* Method retrieves the patterns from the data and recalculates 
+ * the underlying matrix #MATRIX */
 PATS.get_patterns = function(lengths){
   /* define vars here */
   var etyma, roots, rows, alm;
@@ -86,51 +88,72 @@ PATS.get_patterns = function(lengths){
   /* make proto first of the selected doculects */
   if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
     PATS.selected_doculects = [CFG.proto];
-    for (i=0; i<CFG._selected_doculects.length; i++) {
-      if (CFG._selected_doculects[i] != CFG.proto) {
-	      PATS.selected_doculects.push(CFG._selected_doculects[i]);
+    for (i = 0; i < CFG.sorted_taxa.length; i += 1) {
+      if (CFG.sorted_taxa[i] != CFG.proto && CFG._selected_doculects.indexOf(
+        CFG.sorted_taxa[i]) != -1) {
+	      PATS.selected_doculects.push(CFG.sorted_taxa[i]);
       }
     }
   }
   else {
-    PATS.selected_doculects = CFG._selected_doculects;
+    PATS.selected_doculects = [];
+    for (i = 0; i < CFG.sorted_taxa.length; i += 1){
+      if (CFG._selected_doculects.indexOf(CFG.sorted_taxa[i]) != -1){
+        PATS.selected_doculects.push(CFG.sorted_taxa[i]);
+      }
+    }
   }
 
   /* start the loop over the etyma array */
+  /* fill matrix with content #MATRIX */
   PATS.length = CFG._selected_doculects.length + 5;
   for (etymon in roots) {
+    /* determine here if the patttern should be considered, otherwise exclude the etymon*/
     if (roots[etymon].length >= lengths) {
-      /* determine the taxa first */
+      /* determine the taxa first, since we count by 
+       * taxonomic units, select only one entry per 
+       * taxa in the same cognate set */
       etyma = [];
-      for (i=0; i < roots[etymon].length; i++) {
+      for (i = 0; i < roots[etymon].length; i += 1) {
         taxon = WLS[get_wls(etymon)[i]][CFG._tidx];
         if (PATS.selected_doculects.indexOf(taxon) != -1) {
           etyma.push(roots[etymon][i]);
         }	  
       }
-      if (etyma.length > 1) {
+      /* first pass, go only through the matrix entry for etyma 0
+       * that is, the first entry here, nothing more
+       * later, in the second pass, the same is done, but this time 
+       * iterating over the remaining entries
+       * */
+      if (etyma.length > lengths) {
         /* determine size of alignment */
-        //var idx = etyma[0];
         idx = get_idx(etyma, 0);
         taxon = WLS[idx][CFG._tidx];
         alm = get_alm(etyma[0]);
         concept = WLS[idx][CFG._cidx];
-        tidx = PATS.selected_doculects.indexOf(taxon)+4;
+        tidx = PATS.selected_doculects.indexOf(taxon) + 4;
         rows = [];
-        for (i=0; i<alm.length; i++) {
-          rows.push(Array.from('Ø'.repeat(PATS.length-1)))
+        for (i = 0; i < alm.length; i += 1) {
+          /* create an array with "Ø" for the matrix */
+          rows.push(Array.from('Ø'.repeat(PATS.length - 1)))
+          /* the first is the root identifier */
           rows[i][0] = etymon;
-          rows[i][1] = i+1;
+          /* the second row is the index of the word,
+           * displayed as index + 1 (not starting from 0) */
+          rows[i][1] = i + 1;
+          /* the row 3 contains all concepts */
           rows[i][3] = [concept];
+          /* each entry has four items: word id, 
+           * index in word, alignment, and the root */
           rows[i][tidx] = [idx, i, alm[i], etymon];
         }
-        for (i=1; i<etyma.length; i++) {
+        for (i = 1; i < etyma.length; i += 1) {
           idx = get_idx(etyma, i);
           taxon = WLS[idx][CFG._tidx];
           tokens = get_alm(etyma[i]); 
           concept = WLS[idx][CFG._cidx];
-          tidx = PATS.selected_doculects.indexOf(taxon)+4;
-          for (j=0; j<alm.length; j++) {
+          tidx = PATS.selected_doculects.indexOf(taxon) + 4;
+          for (j = 0; j < alm.length; j += 1) {
             segment = tokens[j];
             if (typeof segment == 'undefined') {
               segment = '?';
@@ -141,7 +164,8 @@ PATS.get_patterns = function(lengths){
             }
           }
         }
-        for (i=0; i<rows.length; i++) {
+        /* check for slashed entries */
+        for (i = 0; i < rows.length; i += 1) {
           rows[i].push(rows[i].slice(4, rows[i].length).map(
             function(x) {
               if (x.length == 1) {
@@ -203,14 +227,6 @@ PATS.get_patterns = function(lengths){
    * (sounds occuring in fhe first language in the sample for filtering */
   PATS.find_consensus();
   PATS.assign_patterns();
-  //PATS.matrix.sort(function (x, y){ 
-  //  if (x[PATS.matrix[0].length-1][1] > y[PATS.matrix[0].length-1][1]){
-  //    return -1
-  //  } 
-  //  else if (x[PATS.matrix[0].length-1][1] < y[PATS.matrix[0].length-1][1]) {
-  //    return 1
-  //  } return 0
-  //});
   PATS.matrix.sort(
     function(x, y) {
       if (x[PATS.length-1][2] > y[PATS.length-1][2]) {
@@ -224,8 +240,6 @@ PATS.get_patterns = function(lengths){
       }
     }
   );
-
-  /* +++ sort by length of pattern, needs recomputing of length, etc. +++ */
 
   PATS.proto_sounds = {};
   /* XXX replace later with formal construct XXX */
@@ -275,7 +289,7 @@ PATS.get_patterns = function(lengths){
   /* if the proto form is defined, use this to assemble proto forms */
   else if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
     var sound, idx;
-    for (i=0; i<PATS.matrix.length; i++) {
+    for (i = 0; i < PATS.matrix.length; i += 1) {
       [idx, sound] = PATS.matrix[i][2][0].split("/");
       token = sound+" / "+idx;
       if (token in PATS.proto_sounds) {
@@ -287,12 +301,12 @@ PATS.get_patterns = function(lengths){
     }
   }
   else {
-    
-    /* +++ TODO: add the new function to join patterns in the case that the proto-forms are defined here */
-    for (i=0; i<PATS.matrix.length; i++) {
+    /* +++ TODO: add the new function to join patterns in the 
+     * case that the proto-forms are defined here */
+    for (i = 0; i < PATS.matrix.length; i += 1) {
       if (PATS.matrix[i][4].length == 4) {
         if (PATS.matrix[i][4][2].indexOf("/") != -1) {
-          token = PATS.matrix[i][4][2].split('/')[1]+' / '+PATS.matrix[i][2][0].split('/')[0];
+          token = PATS.matrix[i][4][2].split('/')[1]+' / ' + PATS.matrix[i][2][0].split('/')[0];
         }
         else {
           token = PATS.matrix[i][4][2]+' / '+PATS.matrix[i][2][0].split('/')[0];
@@ -306,27 +320,54 @@ PATS.get_patterns = function(lengths){
       }
     }
   }
+  /* add patterns to wordlist (like alignments) in case they are not assigned */
+  /* +++ PATTERNS ADDING +++ */
+  /* represent the patterns by alignment internally */
+  // === var first_patterns = {};
+  // === var pid;
+  // === var alignment, morpheme, token;
+  // === for (key in WLS) {
+  // ===   if (!isNaN(key)) {
+  // ===     first_patterns[key] = {};
+  // ===     alignment = WLS[key][CFG._alignment].split(" + ");
+  // ===     for (i = 0; morpheme = alignment[i]; i += 1){
+  // ===       first_patterns[key].push([]);
+  // ===       morpheme = morpheme.split(" ");
+  // ===       for (j = 0; token = morpheme[j]; j += 1) {
+  // ===         first_patterns[key][i].push(0);
+  // ===       }
+  // ===     }
+  // ===   }
+  // === }
+  // === for (i = 0; row = matrix[i]; i += 1) {
+  // ===   pid = row[i][2][0];
+  // === }
 };
 
 /* assign the pattern ID to a given pattern after consensus has been computed */
 PATS.assign_patterns = function(){
-  var mcharsA, mcharsB, consensus_char, consensus_list, j, consensus, candidates, cmp, candidate, row, i, next_idx, pattern, consensusA, consensusB, consensusC;
+  var mcharsA, mcharsB, consensus_char, 
+    consensus_list, j, consensus, candidates, 
+    cmp, candidate, row, i, next_idx, pattern, 
+    consensusA, consensusB, consensusC;
   var pdict = {};
   /* put those patterns aside which do not have a consensus yet to compare them later with the rest */
   var aside = {};
   var consensus_dict = {};
-  for (i=0; i<PATS.matrix.length; i++) {
+  var new_idx = 1;
+  for (i = 0; i < PATS.matrix.length; i += 1) {
     row = PATS.matrix[i];
     consensus_list = row[PATS.length-1][0];
     consensus_char = PATS.consensus(consensus_list);
     consensus = consensus_list.join(' ');
     if (consensus in pdict) {
-      pattern = pdict[consensus]+'/'+consensus_char;
+      pattern = pdict[consensus] + '/' + consensus_char;
       PATS.patterns[pattern].push([row[0], row[1]]);
       consensus_dict[consensus].push([row[0], row[1], i, pattern]);
     }
     else {
-      next_idx = 1;
+      // +++ next_idx = 1;
+      next_idx = new_idx; new_idx += 1;// +++ 
       if (consensus_char in pdict) {
         next_idx = pdict[consensus_char];
         pdict[consensus_char] += 1;
@@ -335,7 +376,7 @@ PATS.assign_patterns = function(){
         /* here, we need to identify whether there might be a similar pattern in our stack */
         pdict[consensus_char] = next_idx + 1;
       }
-      pattern = next_idx+'/'+consensus_char;
+      pattern = next_idx + '/' + consensus_char;
       pdict[consensus] = next_idx;
       PATS.patterns[pattern] = [[row[0], row[1]]];
       if (consensus_list.indexOf(CFG.missing_marker) != -1) {
@@ -419,9 +460,16 @@ PATS.assign_patterns = function(){
         }
       }
     }
-    for (i=0; row=PATS.matrix[i]; i++) {
-      PATS.matrix[i][PATS.length-1][2] = PATS.patterns[PATS.matrix[i][2][0]].length;
-      //PATS.matrix[i][PATS.length-1][1] = PATS.score_patterns(PATS.patterns[PATS.matrix[i][2][0]]);
+
+    /* create patterns tracer in form of number */
+    PATS.pattern_data = {}
+    alm2pat = {}
+    var word;
+    for (i = 0; row = PATS.matrix[i]; i += 1) {
+
+    }
+    for (i = 0; row = PATS.matrix[i]; i += 1) {
+      PATS.matrix[i][PATS.length - 1][2] = PATS.patterns[PATS.matrix[i][2][0]].length;
     }
   }
 };
@@ -430,9 +478,9 @@ PATS.assign_patterns = function(){
 PATS.pattern_consensus = function(patterns) {
   var out = [];
   var i, j, col;
-  for (i=0; i<patterns[0].length; i++) {
+  for (i = 0; i < patterns[0].length; i += 1) {
     col = [];
-    for (j=0; j<patterns.length; j++) {
+    for (j = 0; j < patterns.length; j += 1) {
       if (patterns[j][i] != UTIL.settings.missing_marker){
 	      col.push(patterns[j][i]);
 	      break;
@@ -455,9 +503,9 @@ PATS.score_patterns = function(matches) {
     return 0;
   }
   var scores = CFG._selected_doculects.map(function(x){return 0});
-  for (i=0; i<matches.length; i++) {
+  for (i = 0; i < matches.length; i += 1) {
     pattern = PATS.matrix[matches[i]].slice(4, PATS.length-1).map(function (x){if (x.length==1){return x} return x[2]});
-    for (j=0; j<pattern.length; j++) {
+    for (j = 0; j < pattern.length; j += 1) {
       if (pattern[j] != UTIL.settings.missing_marker && pattern[j][0] != '!') {
         scores[j] += 1;
       }
@@ -581,7 +629,8 @@ PATS.show_words = function(elm) {
 };
 
 PATS.render_matrix = function(lengths) {
-  var threshold, i, j, egroup, _columns, columns, titles, idxs, row, sound, sounds, doculect;
+  var threshold, i, j, egroup, _columns, columns, titles, idxs, row, sound,
+    sounds, doculect;
 
   threshold = document.getElementById('PATS_threshold');
   if (threshold == null) {}
@@ -601,27 +650,37 @@ PATS.render_matrix = function(lengths) {
   PATS.length = PATS.matrix[0].length;
   _columns = function(cell, idx, head) {
     if (cell[0] == UTIL.settings.missing_marker){
-    return '<td id="PATS_'+head+'_'+idx+'" title="missing data' + 
-      '" style="background-color:lightgray;text-align:center;padding:0px;margin:0px;">Ø</td>';
+      return '<td id="PATS_'+head+'_'+idx+'" title="missing data' + 
+        '" style="background-color:lightgray;text-align:center;padding:0px;margin:0px;">Ø</td>';
     }
-    return '<td class="pointed" data-toggle="1" data-idx="'+cell[0]+'" data-cogid="'+cell[3]+'" data-pos="'+cell[1]+'" data-segment="'+cell[2]+'" id="PATS_'+head+'_'+idx+'" title="click to show segments" onclick="PATS.show_words(this);" ' +
-      '>'+plotWord(cell[2])+'</td>';
+    return '<td class="pointed" data-toggle="1" data-idx="' + 
+      cell[0] + '" data-cogid="' + cell[3]+'" data-pos="' + 
+      cell[1] + '" data-segment="' + cell[2]+'" id="PATS_' + 
+      head + '_' + idx + '" title="click to show segments" onclick="PATS.show_words(this);" ' +
+      '>' + plotWord(cell[2]) + '</td>';
   };
-  columns = [function(cell, idx, head){
-    return '<td class="pointed" id="PATS_'+head+'_'+idx+'" title="click to show alignment" onclick="'+egroup+cell+');" ' + 
-	'style="text-align:center;border-radius:10px;background-color:salmon;">'+cell+'</td>';
-  },
-    function(cell, idx, head) {
-      return '<td>'+cell+'</td>';
+  columns = [
+    function(cell, idx, head){
+      return '<td class="pointed" id="PATS_' + head + '_' + idx + 
+        '" title="click to show alignment" onclick="' + egroup + cell + ');" ' + 
+	      'style="text-align:center;border-radius:10px;background-color:salmon;">' + 
+        cell + '</td>';
     },
     function(cell, idx, head) {
-      return '<td onclick="PATS.editPattern(this);" data-cogid="'+cell[1]+'" data-pos="'+cell[2]+'"><span>'+plotWord(cell[0].split('/')[1], 'span')+' / <span class="dolgo_ERROR">'+cell[0].split('/')[0]+'</span></span></td>';
+      return '<td>' + cell + '</td>';
+    },
+    function(cell, idx, head) {
+      return '<td class="pointed" onclick="PATS.editPattern(event, this);" data-cogid="' + 
+        cell[1] + '" data-pos="' + cell[2] + '"><span>' + 
+        plotWord(cell[0].split('/')[1], 'span') + 
+        ' / <span class="dolgo_ERROR">' + cell[0].split('/')[0] + 
+        '</span></span></td>';
     },
     function(cell, idx, head) {
       return '<td>'+cell+'</td>';
     },
   ];
-  for (i=0; i<PATS.selected_doculects.length; i++) {
+  for (i = 0; i < PATS.selected_doculects.length; i += 1) {
     columns.push(_columns);
   }
   columns.push(function(cell, idx, head){
@@ -669,6 +728,116 @@ PATS.render_matrix = function(lengths) {
     }
   }
   return PATS.DTAB;
+};
+
+/* edit patterns to allow for recalculation */
+PATS.editPattern = function(event, node) {
+  event.preventDefault();
+
+  /* assemble cognate sets and patterns */
+  var data = {};
+  var i, j, idx;
+  var cogid = parseInt(node.dataset["cogid"]);
+  var pos = parseInt(node.dataset["pos"]);
+  var alms, alm, taxon, concept, morphemes, morpheme, cognates;
+  if (CFG._morphology_mode == "full") {
+    var ref = CFG._cognates;
+  }
+  else if (CFG._morphology_mode == "partial") {
+    var ref = CFG._roots;
+  }
+  var alm_length = 0;
+  for (i = 0; idx = WLS.etyma[cogid][i]; i += 1) {
+    /* retrieve the alignment and the taxon */
+    [alms, taxon, concept, morphemes, cognates] = [
+      WLS[idx][CFG._alignments].split(" + "), WLS[idx][CFG._tidx],
+      WLS[idx][CFG._cidx], WLS[idx][CFG._segments].split(" + "),
+      WLS[idx][ref].split(" ")
+    ];
+    console.log(cognates, alms, taxon, concept, morphemes);
+    /* fill the data dictionary with values */
+    for (j = 0; j < alms.length; j += 1) {
+      if (parseInt(cognates[j]) == cogid) {
+        alm_length = alms[j].split(" ").length;
+        if (taxon in data) {
+          data[taxon].push([concept, morphemes[j].split(" "), alms[j].split(" ")]);
+        }
+        else {
+          data[taxon] = [[concept, morphemes[j].split(" "), alms[j].split(" ")]];
+        }
+      }
+    }
+  }
+  var table_text = "";
+  for (i = 0; taxon = CFG.sorted_taxa[i]; i += 1) {
+    if (CFG._selected_doculects.indexOf(taxon) != -1){
+      table_text += "<tr>";
+      table_text += '<td class="alm_taxon">' + taxon + "</td>";
+      if (taxon in data) {
+        for (j = 0; j < data[taxon].length; j += 1) {
+          if (j > 0) {
+            table_text += "</tr>";
+            table_text += '<tr style="padding: 2px; background-color: lightgray;">';
+            table_text += '<td class="alm_taxon">' + taxon + "</td>";
+          }
+          [concept, morpheme, alm] = [
+            data[taxon][j][0], data[taxon][j][1], data[taxon][j][2]];
+          table_text += '<td class="alm_concept">' + concept + "</td>";
+          for (k = 0; sound = alm[k]; k += 1) {
+            if (k == pos - 1) {
+              table_text += plotWord(sound, "td");
+            }
+            else {
+              table_text += plotWord(sound, "td", "uneditable");
+            }
+          }
+        }
+      }
+      else {
+        table_text += '<td class="alm_concept"></td>';
+        for (k = 0; k < alm_length; k += 1) {
+          if (k == pos - 1){
+            table_text += plotWord("Ø", "td", "missing");
+          }
+          else {
+            table_text += plotWord("Ø", "td", "missing uneditable");
+          }
+        }
+      }
+      table_text += "</tr>";
+    }
+  }
+
+  var div = document.createElement("div");
+  div.id = "editpattern";
+  div.className = "editmode";
+  var text = '<div class="edit_links" id="patternlinks">';
+  text += "<p>";
+  text += '<span class="main_handle pull-left" style="margin-left:-7px;margin-top:2px;" ></span>';
+  text += 'Cognate Set »' + node.dataset["cogid"] + "«</p>";
+  text += '<div class="alignments" id="pattern-alignment">';
+  text += '<table style="padding: 2px; margin: 2px; border: 2px solid black;">';
+  text += table_text;
+  text += '</table></div>';
+  text += "<br>";
+  text += '<input class="btn btn-primary submit"' + 
+    ' type="button" onclick="editGroup(event, ' + cogid + ');" ' +
+    'value="EDIT" /> ';
+  text += '<input class="btn btn-primary submit"' + 
+    ' type="button" onclick="$(\'#editpattern\').remove();basickeydown(event);" ' +
+    'value="CLOSE" /></div><br><br> ';
+  text += "</div>";
+  document.body.appendChild(div);
+  div.innerHTML = text;
+  document.onkeydown = function(event) {
+    $('#editpattern').remove(); 
+    document.onkeydown = function(event) {
+      basickeydown(event);
+    };
+  };
+
+  $('#patternlinks').draggable({handle:'.main_handle'}).resizable();
+
 };
 
 PATS.select_proto = function(){
