@@ -97,6 +97,7 @@ UTIL.settings = {
   'check_remote_intervall' : 10,
   '_proto' : false,
   '_note' : 'NOTE',
+  '_recompute_patterns': true,
   'separator': "\t",
   'comment': '#',
   'proto' : -1,
@@ -163,9 +164,13 @@ UTIL.open_remote_dbase = function(dbase, frame) {
 UTIL.load_settings = function() {
 
   var settables = ['preview', 'cognates', 'alignments', 'morphemes', 'roots', 'highlight', 'sampa',
-    'pinyin', 'sources', 'note', 'proto', 'doculectorder'];
+    'sources', 'note', 'proto', 'patterns', 'doculectorder', 'tokens'];
   var entries = {};
-  for (var i=0, settable; settable=settables[i]; i++) {
+  var i, settable;
+  var val;
+  var defaults, outs, j, def, entry;
+
+  for (i = 0; settable = settables[i]; i += 1) {
     entries[settable] = document.getElementById('settings_'+settable);
   }
 
@@ -179,6 +184,11 @@ UTIL.load_settings = function() {
       : ''
       ;
   }
+  entries['tokens'].value = (CFG['_segments'] != -1) 
+    ? WLS['header'][CFG['_segments']]
+    : ''
+    ;
+
   entries['roots'].value = (CFG['_roots'] != -1) 
     ? WLS['header'][CFG['_roots']]
     : ''
@@ -192,21 +202,24 @@ UTIL.load_settings = function() {
     : ''
     ;
 
-  for (var i=0,val; val=['highlight', 'sampa', 'pinyin'][i]; i++) {
-    var defaults = CFG[val];
-    var outs = [];
-    for (var j=0,def; def=defaults[j]; j++) {
+  entries['patterns'].value = (CFG['_patterns'] != -1)
+    ? WLS['header'][CFG['_patterns']]
+    : '';
+  
+  for (i = 0; val = ['highlight', 'sampa'][i]; i += 1) {
+    defaults = CFG[val];
+    outs = [];
+    for (j = 0; def = defaults[j]; j += 1) {
       if (WLS.header.indexOf(def) != -1) {
-	outs.push(def);
+	      outs.push(def);
       }
     }
     entries[val].value = outs.join(',');
   }
       
-  for (var i=0,entry; entry=['cognates', 'alignments', 'morphemes', 'roots', 'note'][i]; i++) {
-    console.log(entries[entry]);
+  for (i = 0; entry = ['patterns', 'cognates', 'alignments', 'morphemes', 'roots', 'note'][i]; i++) {
     $(entries[entry]).autocomplete({
-        source: WLS.header });
+        source: WLS.header});
   }
   $(entries['proto']).autocomplete({source: CFG.sorted_taxa});
   $(entries['doculectorder']).autocomplete({source: CFG.sorted_taxa});
@@ -329,18 +342,23 @@ UTIL.upload_submit = function() {
 UTIL.refresh_settings = function() {
 
   var settables = ['preview', 'cognates', 'alignments', 'morphemes', 'roots', 'highlight', 'sampa', 
-    'pinyin', 'sources', 'note', 'proto', 'doculectorder'];
+    'sources', 'note', 'proto', 'doculectorder', 'tokens', 'patterns'];
   var entries = {};
-  for (var i=0, settable; settable=settables[i]; i++) {
+  var i, settable;
+  var stax, names;
+  var entry, this_entry, idx;
+  var j, vals, new_vals;
+
+  for (i = 0; settable = settables[i]; i += 1) {
     entries[settable] = document.getElementById('settings_'+settable);
   }
 
   CFG['preview'] = parseInt(entries['preview'].value);
   CFG['proto'] = (entries['proto'].value != '') ? entries['proto'].value : -1;
   if (CFG['sorted_taxa'].value != '') {
-    var stax = [];
-    var names = entries['doculectorder'].value.split(',');
-    for (var i=0; i<names.length; i++) {
+    stax = [];
+    names = entries['doculectorder'].value.split(',');
+    for (i = 0; i < names.length; i += 1) {
       if (LIST.has(CFG.sorted_taxa, names[i])) {
         stax.push(names[i]);
       }  
@@ -354,15 +372,15 @@ UTIL.refresh_settings = function() {
     }
   }
   
-  for (var i=0,entry; entry=['cognates', 'alignments', 'morphemes', 'roots', 'sources', 'note'][i]; i++) {
+  for (i = 0; entry = ['cognates', 'alignments', 'morphemes', 'roots', 'sources', 'note'][i]; i += 1) {
     if (entry == 'cognates') {
-      var this_entry = '_fidx';
+      this_entry = '_fidx';
     }
     else {
-      var this_entry = '_'+entry;
+      this_entry = '_'+entry;
     }
     if (entries[entry].value) {
-      var idx = WLS.header.indexOf(entries[entry].value);
+      idx = WLS.header.indexOf(entries[entry].value);
       CFG[this_entry] = (idx != -1)
         ? idx
         : -1;
@@ -387,10 +405,10 @@ UTIL.refresh_settings = function() {
     }
   }
 
-  for (var i=0,entry; entry=['highlight', 'sampa', 'pinyin'][i]; i++) {
-    var vals = entries[entry].value.split(',');
-    var new_vals = [];
-    for (var j=0; j<vals.length; j++) {
+  for (i = 0; entry=['highlight', 'sampa'][i]; i += 1) {
+    vals = entries[entry].value.split(',');
+    new_vals = [];
+    for (j = 0; j < vals.length; j += 1) {
       if (WLS.header.indexOf(vals[j]) != -1) {
         new_vals.push(vals[j]);
       }

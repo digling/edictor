@@ -138,7 +138,7 @@ var sortprefs = {
 };
 
 function makeURL(file, dbase) {
-  var base_url = 'http://tsv.lingpy.org?remote_dbase='+dbase
+  var base_url = 'http://digling.org/edictor?remote_dbase='+dbase
     + '&file='+file
     ;
  

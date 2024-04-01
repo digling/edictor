@@ -379,7 +379,7 @@ td.dolgo_T{background-color: #9664c8;}
 td.dolgo_W{background-color: #c864c8;} 
 td.dolgo_1{background-color: #c86496;} 
 td.dolgo_X{background-color: #bbbbbb;}
-td.dolgo_IGNORE{opacity: 0.5; color: black;}
+td.dolgo_IGNORE{opacity: 0.5;}
 td.dolgo_GAP{background-color: #bbbbbb;}
 td.dolgo_PLUS{background-color: #bbbbbb; vertical-align: super; width: 10px;}
 td.dolgo_NAS{
@@ -1031,6 +1031,10 @@ table.alignments {
 
 .pointed {
   cursor: pointer !important;
+}
+
+.padded {
+  padding: 2px;
 }
 
 .data_table {
