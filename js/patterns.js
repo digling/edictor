@@ -87,7 +87,7 @@ PATS.get_patterns = function(lengths){
     function get_idx(lst, idx){return lst[idx]}
     function get_alm(etym){return ALIGN.alignable_parts(WLS[etym][CFG._alignments].split(' '));}
   }
-  PATS.get_alm = get_alm;
+  //PATS.get_alm = get_alm;
   
   /* make proto first of the selected doculects */
   if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
@@ -317,6 +317,38 @@ PATS.get_patterns = function(lengths){
   /* +++ PATTERNS ADDING +++ */
   /* represent the patterns by alignment internally */
   PATS.get_indices();
+  var patterns, residue, pattern, cognates, cognate;
+  var patstrings;
+  PATS.idx2pattern = {};
+
+  for (i = 0; idx = WLS.rows[i]; i += 1) {
+    alms = WLS[idx][CFG._alignments].split(" + ");
+    patterns = [];
+    cognates = (CFG._morphology_mode == "full") 
+      ? [WLS[idx][CFG._cognates]]
+      : WLS[idx][CFG._roots].split(" "); 
+    for (j = 0; alm = alms[j]; j += 1) {
+      alm = ALIGN.alignable_parts(alm.split(" "));
+      patterns.push([]);
+      cognate = cognates[j];
+      for (k = 0; residue = alm[k]; k += 1) {
+        if (cognate + "-" + k in PATS.pat2mat) {
+          patterns[j].push(PATS.matrix[PATS.pat2mat[cognate + "-" + k]][0][2]);
+        }
+        else {
+          patterns[j].push(0);
+        }
+      }
+    }
+    PATS.idx2pattern[idx] = patterns;
+    if (CFG._patterns != -1 && CFG._recompute_patterns) {
+      patstrings = [];
+      for (j = 0; j < patterns.length; j += 1) {
+        patstrings.push(patterns[j].join(" "));
+      }
+      WLS[idx][CFG._patterns] = patstrings.join(" + ");
+    }
+  }
 };
 
 PATS.get_indices = function() {
