@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2017-10-24 17:46
- * modified : 2021-10-14 23:00
+ * modified : 2024-04-02 12:10
  *
  */
 /* XXX check for alignments etc. in data */
@@ -402,10 +402,24 @@ PATS.load_patterns = function(){
       }
     }
   }
-  var consensus_sound;
+  var visited = {};
+  var key;
   for (i = 0; i < PATS.matrix.length; i += 1) {
     patternid = pattern_dict[PATS.matrix[i][0][0] + "-" + PATS.matrix[i][0][1]];
     if (typeof patternid != undefined) {
+      if (!(patternid in PATS.patterns)) {
+        PATS.patterns[patternid] = [];
+      }
+      else {
+        key = PATS.matrix[i][0][0] + "-" + PATS.matrix[i][0][1];
+        if (!(key in visited)) {
+          PATS.patterns[patternid].push([PATS.matrix[i][0][0], PATS.matrix[i][0][1]]);
+          visited[key] = 1;
+        }
+        else {
+          visited[key] += 1;
+        }
+      }
       PATS.matrix[i][0][2] = patternid;
       PATS.matrix[i][2] = [
         patternid, PATS.matrix[i][0][0], PATS.matrix[i][0][1] + 1, PATS.matrix[i][5][2]];
@@ -459,8 +473,8 @@ PATS.assign_patterns = function(){
     consensus = consensus_list.join(' ');
     if (consensus in pdict) {
       pattern = pdict[consensus]; //pdict[consensus] + '/' + consensus_char;
-      PATS.patterns[pattern].push([row[0], row[1]]);
-      consensus_dict[consensus].push([row[0], row[1], i, pattern]);
+      PATS.patterns[pattern].push([row[0][0], row[1]]);
+      consensus_dict[consensus].push([row[0][0], row[1], i, pattern]);
     }
     else {
       // +++ next_idx = 1;
@@ -491,86 +505,86 @@ PATS.assign_patterns = function(){
     PATS.matrix[i][0][2] = pattern;
   }
   PATS.consensus_dict = consensus_dict;
-  if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
-    /* group by proto */
-    var pregroups = {};
-    var cchar;
-    for (consensusA in aside) {
-      cchar = consensusA.split(" ")[0];
-      if (cchar in pregroups) {
-        pregroups[cchar][consensusA] = aside[consensusA];
-      }
-      else {
-        pregroups[cchar] = {consensusA: aside[consensusA]};
-      }
-    }
-    for (cchar in pregroups) {
-      for (consensus in pregroups[cchar]) {
-        candidates = [];
-        mcharsA = consensusA.split(" ").filter(x => x == CFG.missing_marker);
-        for (consensusB in consensus_dict) {
-          if (consensusB != consensusA) {
-            mcharsB = consensusB.split(" ").filter(x => x == CFG.missing_marker);
-              if (mcharsA >= mcharsB) {
-              cmp = PATS.compatible(consensusB.split(" "), consensusA.split(" "));
-              if (cmp != false && cmp > 0) {
-                consensusC = PATS.pattern_consensus([consensusA.split(" "), consensusB.split(" ")]);
-                candidates.push([
-                  cmp, 
-                  consensusB.split(" "), 
-                  consensus_dict[consensusB].length,
-                  consensus_dict[consensusB][0][2],
-                  consensus_dict[consensusB][0][3],
-                  consensus_dict[consensusB],
-                  consensusC]);
-              }
-            }
-          }
-        }
-        //console.log("candidates", consensusA, candidates);
-        if (candidates.length > 0) {
-          candidates.sort(
-            function(x, y) {
-              var k;
-              if (x[0]-y[0] == 0){
-                return y[2] - x[2];
-                //return (x[1].filter(k => k == CFG.missing_marker).length - y[1].filter(k => k == CFG.missing_marker).length);
-              }
-              return (y[0]-x[0]);
-            }  
-          );
-          candidate = candidates[0];
-          console.log(consensusA, consensusC, candidate);
-          [consensusB, consensusC] = [candidate[1], candidate[6]];
-          if (consensusB.join(" ") != consensusC.join(" ")) {
-            for (j=0; j<candidate[5].length; j++) {
-              i = candidate[5][j][2];
-              PATS.matrix[i][PATS.length-1][0] = consensusC;
-            }
-            consensus_dict[consensusC.join(" ")] = consensus_dict[consensusB.join(" ")];
-            delete consensus_dict[consensusB.join(" ")];
-          }
+  // ??? if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
+  // ???   /* group by proto */
+  // ???   var pregroups = {};
+  // ???   var cchar;
+  // ???   for (consensusA in aside) {
+  // ???     cchar = consensusA.split(" ")[0];
+  // ???     if (cchar in pregroups) {
+  // ???       pregroups[cchar][consensusA] = aside[consensusA];
+  // ???     }
+  // ???     else {
+  // ???       pregroups[cchar] = {consensusA: aside[consensusA]};
+  // ???     }
+  // ???   }
+  // ???   for (cchar in pregroups) {
+  // ???     for (consensus in pregroups[cchar]) {
+  // ???       candidates = [];
+  // ???       mcharsA = consensusA.split(" ").filter(x => x == CFG.missing_marker);
+  // ???       for (consensusB in consensus_dict) {
+  // ???         if (consensusB != consensusA) {
+  // ???           mcharsB = consensusB.split(" ").filter(x => x == CFG.missing_marker);
+  // ???             if (mcharsA >= mcharsB) {
+  // ???             cmp = PATS.compatible(consensusB.split(" "), consensusA.split(" "));
+  // ???             if (cmp != false && cmp > 0) {
+  // ???               consensusC = PATS.pattern_consensus([consensusA.split(" "), consensusB.split(" ")]);
+  // ???               candidates.push([
+  // ???                 cmp, 
+  // ???                 consensusB.split(" "), 
+  // ???                 consensus_dict[consensusB].length,
+  // ???                 consensus_dict[consensusB][0][2],
+  // ???                 consensus_dict[consensusB][0][3],
+  // ???                 consensus_dict[consensusB],
+  // ???                 consensusC]);
+  // ???             }
+  // ???           }
+  // ???         }
+  // ???       }
+  // ???       //console.log("candidates", consensusA, candidates);
+  // ???       if (candidates.length > 0) {
+  // ???         candidates.sort(
+  // ???           function(x, y) {
+  // ???             var k;
+  // ???             if (x[0]-y[0] == 0){
+  // ???               return y[2] - x[2];
+  // ???               //return (x[1].filter(k => k == CFG.missing_marker).length - y[1].filter(k => k == CFG.missing_marker).length);
+  // ???             }
+  // ???             return (y[0]-x[0]);
+  // ???           }  
+  // ???         );
+  // ???         candidate = candidates[0];
+  // ???         console.log(consensusA, consensusC, candidate);
+  // ???         [consensusB, consensusC] = [candidate[1], candidate[6]];
+  // ???         if (consensusB.join(" ") != consensusC.join(" ")) {
+  // ???           for (j=0; j<candidate[5].length; j++) {
+  // ???             i = candidate[5][j][2];
+  // ???             PATS.matrix[i][PATS.length-1][0] = consensusC;
+  // ???           }
+  // ???           consensus_dict[consensusC.join(" ")] = consensus_dict[consensusB.join(" ")];
+  // ???           delete consensus_dict[consensusB.join(" ")];
+  // ???         }
 
-          for (j=0; i=aside[consensusA][j]; j++) {
-            PATS.matrix[i][2][0] = candidate[4]; 
-            PATS.matrix[i][PATS.length-1][0] = consensusC;
-            PATS.patterns[candidate[4]].push([PATS.matrix[i][0], PATS.matrix[i][1]]);
-          }
-        }
-      }
-    }
+  // ???         for (j=0; i=aside[consensusA][j]; j++) {
+  // ???           PATS.matrix[i][2][0] = candidate[4]; 
+  // ???           PATS.matrix[i][PATS.length-1][0] = consensusC;
+  // ???           PATS.patterns[candidate[4]].push([PATS.matrix[i][0], PATS.matrix[i][1]]);
+  // ???         }
+  // ???       }
+  // ???     }
+  // ???   }
 
-    /* create patterns tracer in form of number */
-    PATS.pattern_data = {}
-    alm2pat = {}
-    var word;
-    for (i = 0; row = PATS.matrix[i]; i += 1) {
+  // ???   /* create patterns tracer in form of number */
+  // ???   PATS.pattern_data = {}
+  // ???   alm2pat = {}
+  // ???   var word;
+  // ???   for (i = 0; row = PATS.matrix[i]; i += 1) {
 
-    }
-    for (i = 0; row = PATS.matrix[i]; i += 1) {
-      PATS.matrix[i][PATS.length - 1][2] = PATS.patterns[PATS.matrix[i][2][0]].length;
-    }
-  }
+  // ???   }
+  // ???   for (i = 0; row = PATS.matrix[i]; i += 1) {
+  // ???     PATS.matrix[i][PATS.length - 1][2] = PATS.patterns[PATS.matrix[i][2][0]].length;
+  // ???   }
+  // ??? }
 };
 
 /* XXX make function better, not very good implementation */
@@ -692,7 +706,6 @@ PATS.refresh = function() {
   var cid = document.getElementById('pats_select_cognates');
   PATS.selected = [];
   for (i = 0; option = cid.options[i]; i += 1) {
-    console.log(option);
     if (option.selected) {
       PATS.selected.push(option.value);
     }
@@ -987,6 +1000,9 @@ PATS.editPattern = function (event, node) {
     + '_' + node.dataset['pos']);
   ipt.setAttribute('value', node.dataset['patternid']);
   ipt.setAttribute('data-value', node.dataset['patternid']);
+  ipt.setAttribute('onblur', 'PATS.unsubmitPatternEdit(' +
+    node.dataset['cogid'] + ',' + node.dataset['pos'] + ',' +
+    node.dataset['patternid'] + ',this)');
   ipt.setAttribute(
     'onkeyup', 
     "PATS.submitPatternEdit(event," + 
@@ -999,45 +1015,112 @@ PATS.editPattern = function (event, node) {
   ipt.focus();
 }
 
+PATS.unsubmitPatternEdit = function(cogid, posidx, patternid, node) {
+  var par, row_idx, row;
+  par = document.getElementById("PATTERN_" + cogid + "_" + posidx);
+  row_idx = parseInt(par.parentNode.id.split("_")[2]);
+  row = PATS.matrix[row_idx];
+  par.innerHTML = "<span>" + plotWord(row[PATS.length - 1][0][0], "span", "pointed") + 
+    ' / <span class="dolgo_ERROR">' + patternid + "</span></span>";
+  par.onclick = function(){PATS.editPattern("", par)};
+};
+
+PATS.move_up_or_down = function(par, up){
+  if (typeof par == "undefined") {
+    return;
+  }
+  if (up == "up") {
+    var up1 = -1;
+    var up2 = -2;
+  }
+  else {
+    var up1 = 1;
+    var up2 = 2;
+  }
+  try {
+    var next_node = par.parentNode.parentNode.rows[par.parentNode.rowIndex + up1].childNodes[2];
+    if (typeof next_node != "undefined" && String(next_node.id).indexOf("PATTERN") != -1) {
+      PATS.editPattern("click", next_node);
+      return;
+    }
+
+    var next_2_node = par.parentNode.parentNode.rows[par.parentNode.rowIndex + up2 ].childNodes[2];
+    if (typeof next_2_node != "undefined" && String(next_2_node.id).indexOf("PATTERN") != -1) {
+      PATS.editPattern("click", next_2_node);
+      return;
+    }
+  }
+  catch (error) {
+    return;
+  }
+}
+
 PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
-  var par, row, row_idx, i, new_idx, pattern;
-  if (event.keyCode == 13 || event.keyCode == 27) {
+  var par, row, row_idx, i, new_idx, pattern, cell, idx, pos, sound;
+  var ptns, ptn, cons;
+  if (event.keyCode == 13 || event.keyCode == 27 || event.keyCode == 38 || event.keyCode == 40) {
     par = document.getElementById("PATTERN_" + cogid + "_" + posidx);
     row_idx = parseInt(par.parentNode.id.split("_")[2]);
     row = PATS.matrix[row_idx];
-    console.log(row);
     new_idx = parseInt(node.value);
-    if (event.keyCode == 13 && new_idx != patternid) {
-      if (new_idx in PATS.patterns) {
-        /* retrieve the pattern and recompute the consensus */
-        pattern = [];
-        for (i = 0; i < PATS.patterns[new_idx].length; i += 1) {
-          pattern.push([
-            PATS.patterns[new_idx][i][0][0], 
-            PATS.patterns[new_idx][i][0][1]]);
-        }
-        console.log(pattern);
-      }
-      else {
-        if (isNaN(new_idx) || new_idx < 1) {
-          for (i = 1; i < PATS.matrix.length + 1; i += 1) {
-            if (!(i in PATS.patterns)) {
-              new_idx = i;
-            }
+    if (
+      (event.keyCode == 13 || event.keyCode == 38 || event.keyCode == 40) 
+      && new_idx != patternid) {
+      /* if new index can be found in patterns, assign the new pattern to those */
+      if (isNaN(new_idx) || new_idx < 1) {
+        for (i = 1; i < PATS.matrix.length + 1; i += 1) {
+          if (!(i in PATS.patterns) || PATS.patterns[i].length == 0) {
+            new_idx = i;
+            PATS.patterns[new_idx] = [[cogid, posidx]];
+            break;
           }
-          console.log(new_idx);
-          fakeAlert(new_idx);
         }
-        else {}
       }
-      par.innerHTML = new_idx;
+      console.log(new_idx);
+      for (i = 4; i < row.length - 1; i += 1) {
+        cell = row[i];
+        if (cell != CFG.missing_marker) {
+          [idx, sound] = [cell[0], cell[2]];
+          cogidx = (CFG.morphology_mode == "full") 
+            ? 0 : WLS[idx][CFG._roots].split(" ").indexOf(String(cogid));
+          ptns = WLS[idx][CFG._patterns].split(" + ");
+          ptn = ptns[cogidx].split(" ");
+          ptn[parseInt(posidx) - 1] = new_idx;
+          ptns[cogidx] = ptn.join(" ");
+          if (CFG._patterns == -1) {
+            fakeAlert("cannot modify patterns with PATTERNS columns missing");
+            return;
+          }
+          WLS[idx][CFG._patterns] = ptns.join(" + ");
+        }
+      }
+      cons = row[PATS.length - 1][0][0];
+      par.innerHTML = "<span>" + plotWord(cons, "span") + 
+        ' / <span class="dolgo_ERROR">' + new_idx +"</span></span>";
+      par.dataset["patternid"] = new_idx;
       par.onclick = function(){PATS.editPattern("", par)};
+
+      if (event.keyCode == 38) {
+        PATS.move_up_or_down(par, "up");
+      }
+      else if (event.keyCode == 40) {
+        PATS.move_up_or_down(par, "down");
+      }
       return;
     }
-    else if (event.keyCode == 27 || (event.keyCode == 13 && new_idx == patternid)) {
+    else if (
+      event.keyCode == 27 || ((
+        event.keyCode == 13 || event.keyCode == 38 || event.keyCode == 40)
+      && new_idx == patternid || event == "click")) {
       par.innerHTML = "<span>" + plotWord(row[PATS.length - 1][0][0], "span", "pointed") + 
         ' / <span class="dolgo_ERROR">' + patternid + "</span></span>";
       par.onclick = function(){PATS.editPattern("", par)};
+      if (event.keyCode == 38) {
+        PATS.move_up_or_down(par, "up");
+      }
+      else if (event.keyCode == 40) {
+        PATS.move_up_or_down(par, "down");
+      }
       return;
     }
   }
