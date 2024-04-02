@@ -217,7 +217,12 @@ PATS.get_patterns = function(lengths){
   });
   /* first search for consensus patterns */
   PATS.find_consensus();
-  PATS.assign_patterns();
+  if (CFG._recompute_patterns) {
+    PATS.assign_patterns();
+  }
+  else {
+    PATS.load_patterns();
+  }
   PATS.matrix.sort(
     function(x, y) {
       if (x[PATS.length-1][2] > y[PATS.length-1][2]) {
@@ -235,7 +240,7 @@ PATS.get_patterns = function(lengths){
 
   PATS.proto_sounds = {};
   /* XXX replace later with formal construct XXX */
-  if (CFG._patterns != -1 && !CFG._recompute_patterns) {
+  if (CFG._patterns != -1 && !CFG._recompute_patterns & false) {
     var tmp_count = {};
     for (i=0; i<PATS.matrix.length; i++) {
       /* try to find the first entry which is not empty */
@@ -321,7 +326,7 @@ PATS.get_patterns = function(lengths){
   var patstrings;
   PATS.idx2pattern = {};
 
-  for (i = 0; idx = WLS.rows[i]; i += 1) {
+  for (i = 0; idx = WLS._trows[i]; i += 1) {
     alms = WLS[idx][CFG._alignments].split(" + ");
     patterns = [];
     cognates = (CFG._morphology_mode == "full") 
@@ -350,6 +355,80 @@ PATS.get_patterns = function(lengths){
     }
   }
 };
+
+PATS.load_patterns = function(){
+  var pattern_dict = {};
+  var i, idx, j, k, alm, patterns, cognates, cognate, residue, patternid;
+  var lookup;
+  var visited = {};
+  var novisit = false;
+  for (i = 0; idx = WLS._trows[i]; i += 1) {
+    alms = WLS[idx][CFG._alignments].split(" + ");
+    patterns = WLS[idx][CFG._patterns].split(" + ");
+    cognates = (CFG._morphology_mode == "full") 
+      ? [WLS[idx][CFG._cognates]]
+      : WLS[idx][CFG._roots].split(" "); 
+    for (j = 0; alm = alms[j]; j += 1) {
+      alm = ALIGN.alignable_parts(alm.split(" "));
+      cognate = cognates[j];
+      if (cognate in visited) {
+        visited[cognate] += 1;
+      }
+      else {
+        if (patterns[j][0] != "!") {
+          if (typeof patterns[j] == "undefined") {
+            pattern = Array.from("0".repeat(alm.length));
+            novisit = true;
+          }
+          else {
+            pattern = patterns[j].split(" ");
+            if (pattern.length == alm.length) {
+              novisit = false;
+            }
+          }
+          for (k = 0; residue = alm[k]; k += 1) {
+            patternid = pattern[k];
+            if (typeof patternid == "undefined") {
+              patternid = 0;
+            }
+            patternid = parseInt(patternid);
+            lookup = cognate + "-" + k;
+            pattern_dict[cognate + "-" + k] = patternid;
+          }
+          if (!novisit) {
+            visited[cognate] = 1;
+          }
+        }
+      }
+    }
+  }
+  var consensus_sound;
+  for (i = 0; i < PATS.matrix.length; i += 1) {
+    patternid = pattern_dict[PATS.matrix[i][0][0] + "-" + PATS.matrix[i][0][1]];
+    if (typeof patternid != undefined) {
+      PATS.matrix[i][0][2] = patternid;
+      PATS.matrix[i][2] = [
+        patternid, PATS.matrix[i][0][0], PATS.matrix[i][0][1] + 1, PATS.matrix[i][5][2]];
+    }
+  }
+  PATS.matrix.sort(
+    function(x, y) {
+      if (x[0][2] > y[0][2]) {
+        return -1;
+      }
+      else if (x[0][2] < y[0][2]) {
+        return 1;
+      }
+      else {
+        return 0;
+      }
+    }
+  );
+  PATS.find_consensus();
+  for (i = 0; i < PATS.matrix.length; i += 1) {
+    PATS.matrix[i][2][3] = PATS.matrix[i][PATS.length - 1][0][0];
+  }
+}
 
 PATS.get_indices = function() {
   var i, row;
