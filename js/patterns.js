@@ -1081,7 +1081,7 @@ PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
         cell = row[i];
         if (cell != CFG.missing_marker) {
           [idx, sound] = [cell[0], cell[2]];
-          cogidx = (CFG.morphology_mode == "full") 
+          cogidx = (CFG._morphology_mode == "full") 
             ? 0 : WLS[idx][CFG._roots].split(" ").indexOf(String(cogid));
           ptns = WLS[idx][CFG._patterns].split(" + ");
           ptn = ptns[cogidx].split(" ");
