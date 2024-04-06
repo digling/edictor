@@ -442,7 +442,7 @@ function loadAjax(event, where, what, classes) {
   $.ajax( {
       async:false,
       type: "GET",
-      url: what+'.html',
+      url: "panels/" + what + '.html',
       dataType: "text",
       success: function(data)  {
         tmp_file_handler = data;
@@ -664,7 +664,7 @@ function startEverything () {
 
   /* handle server-side files */
   $.ajax({
-    async:false,
+    async: false,
     type: "GET",
     url: 'data/filelist.csv',
     contentType: 'application/text; charset=utf-8',
@@ -673,7 +673,7 @@ function startEverything () {
       CFG['server_side_files'] = data.split('\n');
       /* manage autocomplete */
       $('#ajaxfile').autocomplete({
-        delay:0,
+        delay: 0,
         source: CFG['server_side_files']
       });
     },

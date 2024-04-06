@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2023-10-22 20:01
+ * modified : 2024-04-02 14:33
  *
  */
 
@@ -14,7 +14,7 @@ function reset() {
   var BL = ['file'];
 
   /* make array for list-type entries */
-  var list_types = ['highlight', 'sound_classes', 'sampa', 'pinyin', 'css', 'doculects', 'columns', 'basics', 'concepts'];
+  var list_types = ['highlight', 'sound_classes', 'sampa', 'css', 'doculects', 'columns', 'basics', 'concepts'];
   var eval_types = ['async', 'navbar'];
 
   for (var param in PARAMS) {
@@ -1128,8 +1128,8 @@ function addColumn(event)
   showWLS(1);
 }
 
-function editEntry(idx, jdx, from_idx, from_jdx, special_value)
-{
+function editEntry(
+  idx, jdx, from_idx, from_jdx, special_value) {
   var line = document.getElementById('L_' + idx);
 
   /* if line is undefined, check for next view */
@@ -1296,24 +1296,6 @@ function modifyEntry(event, idx, jdx, xvalue) {
   var j = parseInt(jdx) - 1;
 
   var entry = document.getElementById('L_' + idx).cells[jdx];
-
-  if (CFG['pinyin'].indexOf(WLS['header'][(jdx-1)]) != -1) {
-    var closed = false;
-    $('.cellinput').autocomplete({
-        source: function (request, response){
-        var responses = [];
-        for (var i=0,v;v=pinyin[xvalue][i];i++) {
-          responses.push(v);
-        }
-        response(responses);
-        },
-      close: function(){closed=true;}
-    });
-
-    if ((event.keyCode == 38 || event.keyCode == 40) && xvalue != entry.dataset.value) {
-      return;
-    }
-  }
 	
   /* move up and down */
   if (event.keyCode == 38) {
