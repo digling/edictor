@@ -2704,20 +2704,38 @@ function storeAlignment() {
   var cols = [];
   var vals = [];
 
-  for (var i=0,idx; idx=CFG['_current_idx'][i]; i++) {
-    var alm = ALIGN.ALMS[i].join(' ');
+  var i, idx, alm;
+  var j, segment;
+  var tokens;
+
+  for (i = 0; idx = CFG['_current_idx'][i]; i += 1) {
+    alm = ALIGN.ALMS[i].join(' ');
     WLS[idx][this_idx] = alm;
-    //storeModification(idx, this_idx, alm, false);
     
     /* add the values to the three arrays */
     ids.push(idx);
     cols.push(this_idx);
     vals.push(alm);
 
+    /* check for tokens */
+    tokens = [];
+    for (j = 0; segment = ALIGN.ALMS[i][j]; j += 1) {
+      if (segment != "-" && segment != "(" && segment != ")") {
+        tokens.push(segment);
+      }
+    }
+    tokens = tokens.join(" ");
+    if (tokens != WLS[idx][CFG._segments]) {
+      ids.push(idx);
+      cols.push(CFG._segments);
+      vals.push(tokens);
+      WLS[idx][CFG._segments] = tokens;
+    }
+
     blobtxt += idx+'\t'+ALIGN.TAXA[i]+'\t'+ALIGN.ALMS[i].join('\t')+'\n';
   }
 
-  storeModification(ids,cols,vals,false);
+  storeModification(ids, cols, vals, false);
 
   CFG['_alignment'] = blobtxt;
 

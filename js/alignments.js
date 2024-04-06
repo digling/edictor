@@ -158,14 +158,14 @@ ALIGN.normalize = function(alms) {
 
 ALIGN.irregular = function(idx, jdx, event) {
   event.preventDefault();
-  var segment = this.ALMS[idx-1][jdx];
-  if (segment[0] == '?' || segment[0] == '!') {
-    segment = segment.slice(1, segment.length);
+  var segment = this.ALMS[idx - 1][jdx];
+  if (segment[0] == "!" && segment.indexOf("/") != -1) {
+    segment = segment.slice(1, segment.length).split("/")[0];
   }
   else {
-    segment = '?' + segment;
+    segment = "!" + segment + "/" + CFG.missing_marker;
   }
-  this.ALMS[idx-1][jdx] = segment;
+  this.ALMS[idx - 1][jdx] = segment;
   this.refresh();
 };
 
