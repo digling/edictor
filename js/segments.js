@@ -9,7 +9,8 @@
 
 var SEG = {};
 SEG.groupby = "form";
-SEG.form_filter = "";
+SEG.filter_form = "";
+SEG.filter_sound = "";
 
 SEG.plotWord = function(seq, idx, jdx, functions){
   if (typeof functions == 'undefined'){
@@ -41,7 +42,8 @@ SEG.prepare_tokens = function(idx, tokens) {
           'oncontextmenu="SEG.groupSounds(event, this)" ' +
           'onclick="SEG.splitForm(this);" '));
       if (token.indexOf(".") != -1) {
-        out.push('<span class="residue pointed dolgoPLUS" ' + 
+        out.push('<span title="click to group sounds" ' + 
+          'class="residue pointed dolgo_DOT" ' + 
           'onclick="SEG.ungroupSounds(this)" ' +
           'data-idx="' + idx + '" ' +
           'data-pos="' + i + '">' +
@@ -148,6 +150,38 @@ SEG.splitWord = function(pos, idx, jdx){
   storeModification(idx, CFG._roots, WLS[idx][CFG._roots]);
 };
 
+SEG.prepare_cognates = function(idx, cognates) {
+  cognates = String(cognates).split(" ");
+  var i;
+  var cognate;
+  var out = [];
+  for (i = 0; cognate = cognates[i]; i += 1) {
+    out.push(
+      '<span class="cognate">' + cognate + "</span>");
+  }
+  return out.join("");
+};
+
+
+SEG.prepare_glosses = function(idx, glosses) {
+  glosses = glosses.split(" ");
+  var i;
+  var gloss;
+  var out = [];
+  for (i = 0; gloss = glosses[i]; i += 1) {
+    if (gloss[0] == "_") {
+      out.push(
+        '<span class="gloss-weak">' + gloss.slice(1, gloss.length) + "</span>");
+    }
+    else {
+      out.push(
+        '<span class="gloss">' + gloss + "</span>");
+    }
+  }
+  return out.join("");
+};
+
+
 SEG.make_table = function(){
   var i, row;
   var idx, morphemes, cogids, tokens, concept, doculect;
@@ -158,7 +192,7 @@ SEG.make_table = function(){
     tokens = WLS[idx][CFG._segments];
     morphemes = (CFG._morphemes != -1) 
         ? WLS[idx][CFG._morphemes] 
-        : "";
+        : "?";
     cognates = (CFG._roots != -1) 
         ? WLS[idx][CFG._roots] 
         : WLS[idx][CFG._cognates];
@@ -166,14 +200,29 @@ SEG.make_table = function(){
     doculect = WLS[idx][CFG._taxa];
     
     passit = true;
-    if (this.form_filter != "") {
-      console.log('filtering');
-      tokens_ = "^ " + tokens + " $";
-      if (tokens_.indexOf(this.form_filter) != -1) {
+    tokens_ = "^ " + tokens + " $";
+    if (this.filter_form.trim() != "") {
+      if (tokens_.indexOf(this.filter_form.trim()) != -1) {
         passit = true;
       }
       else {
         passit = false;
+      }
+    }
+    if (this.filter_sound.trim() != "" && passit) {
+      passit = false;
+      tokens_ = tokens.split(" ");
+      for (j = 0; j < tokens_.length; j += 1) {
+        if (tokens_[j].indexOf("/") != -1) {
+          if (this.filter_sound.trim().split(" ").indexOf(tokens_[j].split("/")[1]) != -1) {
+            passit = true;
+          }
+        }
+        else {
+          if (this.filter_sound.trim().split(" ").indexOf(tokens_[j]) != -1) {
+            passit = true;
+          }
+        }
       }
     }
 
@@ -187,7 +236,8 @@ SEG.make_table = function(){
   if (table.length > 0) {
     this.DTAB = getDTAB(
       "SEGMENTS",
-      ["ID", "DOCULECT", "CONCEPT", "FORM", "MORPHEMES", "COGNATES"],
+      ["ID", "DOCULECT", "CONCEPT", "FORM", "MORPHEMES", 
+      (CFG._roots != -1) ? CFG.root_formatter : CFG.formatter],
       table,
       [
         function(x, y, z) {return '<td dataset-id="' + x + '" id="form-id-' + x + '">' + x + "</td>"},
@@ -196,8 +246,15 @@ SEG.make_table = function(){
         function(x, y, z) {
           tokens = SEG.prepare_tokens(x[0], x[1].split(" "));
           return '<td dataset-id="' + x[0] + '" id="form-form-' + x[0] + '">' + tokens + "</td>"},
-        function(x, y, z) {return '<td dataset-id="' + x[0] + '" id="form-morph-' + x[0] + '">' + x[1] + "</td>"},
-        function(x, y, z) {return '<td dataset-id="' + x[0] + '" id="form-cogid-' + x[0] + '">' + x[1] + "</td>"}
+        function(x, y, z) {
+          return '<td ' +
+            'dataset-id="' + 
+            x[0] + '" id="form-morph-' + 
+            x[0] + '">' + SEG.prepare_glosses(x[0], x[1]) + "</td>"},
+        function(x, y, z) {
+          return '<td dataset-id="' + 
+            x[0] + '" id="form-cogid-' + 
+            x[0] + '">' + SEG.prepare_cognates(x[0], x[1]) + "</td>"}
       ],
       ["id", "doculect", "concept", "form", "morphemes", "cognates"],
       table.length);

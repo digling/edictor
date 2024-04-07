@@ -408,6 +408,7 @@ span.dolgo_T{background-color: #9664c8;}
 span.dolgo_W{background-color: #c864c8;} 
 span.dolgo_1{background-color: #c86496;} 
 span.dolgo_X{background-color: #bbbbbb;}
+span.dolgo_DOT{background-color: bisque!important; border: 1px solid black!important; border-radius: 5px;width: 15px!important;color:black;}
 span.dolgo_PLUS{background-color: #bbbbbb; vertical-align: super; width: 10px;}
 span.dolgo_GAP{background-color: #bbbbbb;}
 span.dolgo_IGNORE{color: black; opacity: 0.25;}

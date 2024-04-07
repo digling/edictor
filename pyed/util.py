@@ -14,6 +14,7 @@ DATA = {
         "png": "",
         "jpg": "",
         "ttf": "",
+        "woff": "",
         "json": "text/plain; charset=utf-8"
         }
 
@@ -72,7 +73,7 @@ def file_handler(s, ft, fn):
                 s.wfile.write(bytes(f.read(), "utf-8"))
         except FileNotFoundError:
             s.wfile.write(b'404 FNF')
-    elif ft in ["png", "ttf", "jpg"]:
+    elif ft in ["png", "ttf", "jpg", "woff"]:
         try:
             with open(fn[1:], 'rb') as f:
                 s.wfile.write(f.read())

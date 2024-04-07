@@ -141,6 +141,35 @@ modified : 2024-04-06 20:35
           </li>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              COMPUTE
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a id="toggle_phonology" onclick="loadAjax(event, 'sortable', 'cognatesets', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  COGNATE SETS
+                </a>
+              </li>
+              <li>
+                <a id="toggle_phonology" onclick="loadAjax(event, 'sortable', 'alignments', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  ALIGNMENTS
+                </a>
+              </li>
+              <li>
+                <a id="toggle_phonology" onclick="loadAjax(event, 'sortable', 'corpats', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  CORRESPONDENCE PATTERNS
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               ANALYZE
               <span class="caret"></span>
             </a>

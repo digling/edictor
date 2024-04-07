@@ -1038,6 +1038,7 @@ PATS.move_up_or_down = function(par, up){
 PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
   var par, row, row_idx, i, new_idx, pattern, cell, idx, pos, sound;
   var ptns, ptn, cons;
+  var idxs, cols, vals;
   if (event.keyCode == 13 || event.keyCode == 27 || event.keyCode == 38 || event.keyCode == 40) {
     par = document.getElementById("PATTERN_" + cogid + "_" + posidx);
     row_idx = parseInt(par.parentNode.id.split("_")[2]);
@@ -1071,8 +1072,12 @@ PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
             return;
           }
           WLS[idx][CFG._patterns] = ptns.join(" + ");
+          idxs.push(idx);
+          cols.push(CFG._patterns);
+          vals.push(ptns.join(" + "));
         }
       }
+      storeModification(idxs, cols, vals);
       cons = row[PATS.length - 1][0][0];
       par.innerHTML = "<span>" + plotWord(cons, "span") + 
         ' / <span class="dolgo_ERROR">' + new_idx +"</span></span>";
