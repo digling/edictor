@@ -146,6 +146,8 @@ def triples(s, query, qtype):
         args.update(parse_args(query))
     else:
         return
+
+    print(args)
     db = sqlite3.connect("sqlite/" + args["remote_dbase"] + ".sqlite3")
     cursor = db.cursor()
 
@@ -159,7 +161,7 @@ def triples(s, query, qtype):
     if not args['columns']:
         cols = get_columns(cursor, args['file'])
     else:
-        cols = args['columns'].split('|')
+        cols = args['columns'].split('%7C')
 
     text = 'ID\t' + '\t'.join(cols) + '\n'
     
@@ -173,12 +175,12 @@ def triples(s, query, qtype):
         # we evaluate the concept string
         if args['concepts']:
             cstring = 'COL = "CONCEPT" and VAL in ("' + \
-                '","'.join(args['concepts'].split('|')) + '")'
+                '","'.join(args['concepts'].split('%7C')) + '")'
         else:
             cstring = ''
         if args['doculects']:
             dstring = 'COL = "DOCULECT" and VAL in ("' + \
-                '","'.join(args['doculects'].split('|')) + '")'
+                '","'.join(args['doculects'].split('%7C')) + '")'
         else:
             dstring = ''
 
@@ -229,7 +231,6 @@ def triples(s, query, qtype):
             except:
                 txt += '\t'
         text += txt + "\n"
-    print(text)
     s.wfile.write(bytes(text, "utf-8"))
 
 

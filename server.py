@@ -1,3 +1,4 @@
+#! /usr/bin/python
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import os
 import sqlite3
@@ -6,6 +7,7 @@ from pyed.util import (
         summary, DATA, get_distinct, get_columns, 
         file_type, file_name, file_handler, triples
         )
+import webbrowser
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -42,14 +44,12 @@ class Handler(SimpleHTTPRequestHandler):
             triples(s, s.path, "GET")
 
 
- 
-
-
-
-            
 
 PORT = 9999
 
 httpd = HTTPServer(("", PORT), Handler)
+webbrowser.open("http://localhost:9999/index.html")
 print("serving at port", PORT)
 httpd.serve_forever()
+
+
