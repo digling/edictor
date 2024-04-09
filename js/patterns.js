@@ -686,6 +686,10 @@ PATS.toggle_segments = function(event, node){
   var cogid = node.dataset["cogid"];
   var pos = node.dataset["pos"];
   var segment = node.dataset["segment"];
+  if (segment.indexOf(".") != -1) {
+    fakeAlert("cannot uncomment segments in grouped sounds for now");
+    return;
+  }
   if (segment[0] != "!" && segment.indexOf("/") == -1) {
     segment = "!" + segment + "/" + CFG.missing_marker;
   }
@@ -712,11 +716,11 @@ PATS.toggle_segments = function(event, node){
   alms = alms.join(" ");
   if (WLS[idx][CFG._alignments] != alms) {
     WLS[idx][CFG._alignments] = alms;
-    storeModification(idx, CFG._alignments, alms);
+    storeModification([idx], [CFG._alignments], [alms]);
   }
   if (WLS[idx][CFG._segments] != tokens) {
     WLS[idx][CFG._segments] = tokens;
-    storeModification(idx, CFG._segments, tokens);
+    storeModification([idx], [CFG._segments], [tokens]);
   }
   node.dataset["toggle"] = 1;
   node.innerHTML = plotWord(segment);
@@ -1057,6 +1061,7 @@ PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
           }
         }
       }
+      [idxs, cols, vals] = [[], [], []];
       for (i = 4; i < row.length - 1; i += 1) {
         cell = row[i];
         if (cell != CFG.missing_marker) {

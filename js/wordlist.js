@@ -14,7 +14,7 @@ function reset() {
   var BL = ['file'];
 
   /* make array for list-type entries */
-  var list_types = ['highlight', 'sound_classes', 'sampa', 'css', 'doculects', 'columns', 'basics', 'concepts'];
+  var list_types = ['sorted_taxa', 'highlight', 'sound_classes', 'sampa', 'css', 'doculects', 'columns', 'basics', 'concepts'];
   var eval_types = ['async', 'navbar'];
 
   for (var param in PARAMS) {
