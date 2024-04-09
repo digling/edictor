@@ -686,6 +686,10 @@ PATS.toggle_segments = function(event, node){
   var cogid = node.dataset["cogid"];
   var pos = node.dataset["pos"];
   var segment = node.dataset["segment"];
+  if (segment.indexOf(".") != -1) {
+    fakeAlert("cannot uncomment segments in grouped sounds for now");
+    return;
+  }
   if (segment[0] != "!" && segment.indexOf("/") == -1) {
     segment = "!" + segment + "/" + CFG.missing_marker;
   }

@@ -350,6 +350,7 @@ if (document.URL.indexOf('=') != -1) {
     params[keyval[0]] = keyval[1];
   }
   PARAMS = params;
+  console.log(params);
   reset();
     
   /* account for display modifications */
