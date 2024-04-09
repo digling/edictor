@@ -242,7 +242,7 @@ PATS.get_patterns = function(lengths){
   for (i = 0; i < PATS.matrix.length; i += 1) {
     if (PATS.matrix[i][4].length == 4) {
       if (PATS.matrix[i][4][2].indexOf("/") != -1) {
-        token = PATS.matrix[i][4][2].split('/')[1] + ' / ' + PATS.matrix[i][4][2].split('/')[0];
+        token = PATS.matrix[i][4][2].split('/')[1] + ' / ' + PATS.matrix[i][4][0];
       }
       else {
         token = PATS.matrix[i][4][2]+' / '+PATS.matrix[i][2][0];
@@ -712,11 +712,11 @@ PATS.toggle_segments = function(event, node){
   alms = alms.join(" ");
   if (WLS[idx][CFG._alignments] != alms) {
     WLS[idx][CFG._alignments] = alms;
-    storeModification(idx, CFG._alignments, alms);
+    storeModification([idx], [CFG._alignments], [alms]);
   }
   if (WLS[idx][CFG._segments] != tokens) {
     WLS[idx][CFG._segments] = tokens;
-    storeModification(idx, CFG._segments, tokens);
+    storeModification([idx], [CFG._segments], [tokens]);
   }
   node.dataset["toggle"] = 1;
   node.innerHTML = plotWord(segment);
@@ -1057,6 +1057,7 @@ PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
           }
         }
       }
+      [idxs, cols, vals] = [[], [], []];
       for (i = 4; i < row.length - 1; i += 1) {
         cell = row[i];
         if (cell != CFG.missing_marker) {
