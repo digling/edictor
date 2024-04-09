@@ -702,7 +702,30 @@ PATS.toggle_segments = function(event, node){
     ? 0 : WLS[idx][CFG._roots].split(" ").indexOf(cogid);
   var alms = WLS[idx][CFG._alignments].split(" + ");
   alms[cogidx] = alms[cogidx].split(" ");
-  alms[cogidx][pos] = segment;
+
+  var i;
+  var inbracket = false;
+  var count = 0;
+  for (i = 0; i < alms[cogidx].length; i += 1) {
+    if (alms[cogidx][i] == "(") {
+      inbracket = true;
+    }
+    else if (alms[cogidx][i] == ")") {
+      inbracket = false;
+    }
+    else {
+      if (!inbracket) {
+        if (count == pos) {
+          break;
+        }
+        else {
+          count += 1;
+        }
+      }
+    }
+  }
+
+  alms[cogidx][i] = segment;
   alms[cogidx] = alms[cogidx].join(" ");
   alms = alms.join(" + ").split(" ");
   var tokens = [];
