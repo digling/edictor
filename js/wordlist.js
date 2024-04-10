@@ -806,7 +806,7 @@ function showWLS(start){
           if ([CFG.note_formatter, CFG.formatter, CFG.root_formatter, CFG.pattern_formatter, CFG.quintiles].indexOf(WLS.header[j]) == -1 && WLS.uneditables.indexOf(WLS.header[j]) == -1 && !CFG['publish']) {
             var on_click = 'onclick="editEntry(' + idx + ',' + jdx + ',0,0)" ';
             var on_title = 'title="Modify entry '+idx+'/'+jdx+'." ';
-            var on_ctxt = (j != CFG._morphemes) ? 'oncontextmenu="copyPasteEntry(event,'+idx+','+jdx+','+j+')" ': '';
+            var on_ctxt = ''; //(j != CFG._morphemes) ? 'oncontextmenu="copyPasteEntry(event,'+idx+','+jdx+','+j+')" ': '';
             var this_class = 'class="'+WLS['header'][j]+'" ';
           }
           else if (WLS.uneditables.indexOf(WLS.header[j]) != -1 || CFG['publish']) {
