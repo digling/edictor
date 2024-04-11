@@ -97,11 +97,11 @@ UTIL.settings = {
   'check_remote_intervall' : 10,
   '_proto' : false,
   '_note' : 'NOTE',
-  '_recompute_patterns': true,
   'separator': "\t",
   'comment': '#',
   'proto' : -1,
-  '_morphology_mode': 'full',
+  '_morphology_mode': 'partial',
+  '_recompute_patterns': false,
   'display': ['filedisplay'],
   'quintiles': 'QUINTILES',
   'loaded_files': ['filedisplay']

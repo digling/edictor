@@ -87,7 +87,6 @@ PATS.get_patterns = function(lengths){
     function get_idx(lst, idx){return lst[idx]}
     function get_alm(etym){return ALIGN.alignable_parts(WLS[etym][CFG._alignments].split(' '));}
   }
-  //PATS.get_alm = get_alm;
   
   /* make proto first of the selected doculects */
   if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
@@ -890,14 +889,30 @@ PATS.editAlignment = function(event, node) {
   var table_text = "";
   for (i = 0; taxon = CFG.sorted_taxa[i]; i += 1) {
     if (CFG._selected_doculects.indexOf(taxon) != -1){
+      /* format the languages */
+
       table_text += "<tr>";
       table_text += '<td class="alm_taxon pointed padding">' + taxon + "</td>";
+
+      if (CFG['_subgroup'] > -1){
+        table_text += '<td style="padding: 5px">' + 
+          WLS["subgroups"][taxon][1].replace(
+            "FFF", 
+            WLS['subgroups'][taxon][0].slice(0, 3)) + "</td>";
+      }
+
       if (taxon in data) {
         for (j = 0; j < data[taxon].length; j += 1) {
           if (j > 0) {
             table_text += "</tr>";
             table_text += '<tr style="margin: 2px; padding: 2px; background-color: lightgray;">';
             table_text += '<td class="alm_taxon padding">' + taxon + "</td>";
+            if (CFG['_subgroup'] > -1){
+              table_text += '<td style="padding: 5px">' + 
+                WLS["subgroups"][taxon][1].replace(
+                  "FFF", 
+                  WLS['subgroups'][taxon][0].slice(0, 3)) + "</td>";
+            }
           }
           [concept, morpheme, alm] = [
             data[taxon][j][0], data[taxon][j][1], data[taxon][j][2]];
@@ -1066,11 +1081,14 @@ PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
   var par, row, row_idx, i, new_idx, pattern, cell, idx, pos, sound;
   var ptns, ptn, cons;
   var idxs, cols, vals;
+  var pw;
+  var new_idx = node.value;
   if (event.keyCode == 13 || event.keyCode == 27 || event.keyCode == 38 || event.keyCode == 40) {
     par = document.getElementById("PATTERN_" + cogid + "_" + posidx);
     row_idx = parseInt(par.parentNode.id.split("_")[2]);
     row = PATS.matrix[row_idx];
-    new_idx = parseInt(node.value);
+    new_idx = parseInt(new_idx);
+    console.log("pid", patternid, new_idx);
     if (
       (event.keyCode == 13 || event.keyCode == 38 || event.keyCode == 40) 
       && new_idx != patternid) {
@@ -1107,32 +1125,34 @@ PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
       }
       storeModification(idxs, cols, vals);
       cons = row[PATS.length - 1][0][0];
-      par.innerHTML = "<span>" + plotWord(cons, "span") + 
-        ' / <span class="dolgo_ERROR">' + new_idx +"</span></span>";
       par.dataset["patternid"] = new_idx;
       par.onclick = function(){PATS.editPattern("", par)};
-
+      pw = "<span>" + plotWord(cons, "span") + 
+        ' / <span class="dolgo_ERROR">' + new_idx +"</span></span>";
       if (event.keyCode == 38) {
         PATS.move_up_or_down(par, "up");
       }
       else if (event.keyCode == 40) {
         PATS.move_up_or_down(par, "down");
       }
-      return;
+      par.innerHTML = pw;
     }
     else if (
       event.keyCode == 27 || ((
         event.keyCode == 13 || event.keyCode == 38 || event.keyCode == 40)
       && new_idx == patternid || event == "click")) {
-      par.innerHTML = "<span>" + plotWord(row[PATS.length - 1][0][0], "span", "pointed") + 
-        ' / <span class="dolgo_ERROR">' + patternid + "</span></span>";
       par.onclick = function(){PATS.editPattern("", par)};
+      pw = "<span>" + plotWord(row[PATS.length - 1][0][0], "span", "pointed") + 
+        ' / <span class="dolgo_ERROR">' + patternid + "</span></span>";
+      //par.innerHTML = "<span>" + plotWord(row[PATS.length - 1][0][0], "span", "pointed") + 
+      //  ' / <span class="dolgo_ERROR">' + patternid + "</span></span>";
       if (event.keyCode == 38) {
         PATS.move_up_or_down(par, "up");
       }
       else if (event.keyCode == 40) {
         PATS.move_up_or_down(par, "down");
       }
+      par.innerHTML = pw;
       return;
     }
   }

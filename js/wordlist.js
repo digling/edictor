@@ -53,8 +53,9 @@ var PARAMS = {};
 
 /* function for resetting the formatter, that is the basic column that handles
  * what is treated as a cognate or not */
+/* +++ TODO reset the format to allow for cognates with non-integers */
 function resetFormat(value) {
-
+  var tmp;
   if (!value) {
     CFG['formatter'] = false;
     WLS['etyma'] = [];
@@ -68,14 +69,17 @@ function resetFormat(value) {
     var format_idx = WLS.header.indexOf(value);
     for (key in WLS) {
       if (!isNaN(key)) {
-        var tmp = WLS[key][format_idx];
+        tmp = WLS[key][format_idx];
+        if (String(tmp)[0] == "!") {
+          tmp = tmp.slice(1, tmp.length);
+        }
         if (tmp in format_selection) {
           format_selection[tmp].push(key);
         }
         else if (tmp && parseInt(tmp) != 0) {
           format_selection[tmp] = [key];
         }
-        size++;
+        size += 1;
       }
     }
     WLS['etyma'] = format_selection;
@@ -1367,7 +1371,7 @@ function modifyEntry(event, idx, jdx, xvalue) {
    * to make sure that all entries in tokens and alignmetns are synchronized
    * tokens2alignment
    */
-  if (jdx-1 == CFG._segments && CFG._alignments != -1) {
+  if (jdx - 1 == CFG._segments && CFG._alignments != - 1) {
     var new_alm, alm_bunch, cnt, new_alms, new_segments;
     new_segments = xvalue;
 
@@ -2304,7 +2308,7 @@ function highLight()
 {
   var items, i, tokens, roots, word, m, concepts, concept, morphemes, parts, part, j, textout, k, morph;
 
-  for (i=0; head=WLS.header[i]; i++) {
+  for (i = 0; head = WLS.header[i]; i += 1) {
     if (CFG['highlight'].indexOf(head) != -1 ) {
       tokens = document.getElementsByClassName(head);
       for (j=0; j<tokens.length; j++) {
@@ -2316,11 +2320,11 @@ function highLight()
     }
     else if (i === CFG['_roots']){
       roots = document.getElementsByClassName(head);
-      for (j=0; j<roots.length; j++){
+      for (j = 0; j < roots.length; j += 1){
         if (roots[j].innerHTML == roots[j].dataset.value){
           parts = roots[j].dataset.value.split(/\s+/);
           textout = [];
-          for (k=0; k<parts.length; k++) {
+          for (k = 0; k < parts.length; k += 1) {
             part = WLS.roots[parts[k]];
             if (typeof part != 'undefined'){
               if (part.length == 1){
@@ -2601,11 +2605,14 @@ function editGroup(event, idx) {
     if (WLS['subgroups'][lang] != 'NAN'){
       taxon_addon = ' ('+WLS['subgroups'][WLS[r][CFG['_tidx']]][0].slice(0, 3)+') '; 
     }
+    else {
+      taxon_addon = "";
+    }
 
     /* only take those sequences into account which are currently selected in the alignment */
     /* span +++ todo error here +++ */
     if (CFG['_selected_doculects'].indexOf(lang) != -1 || CFG['align_all_words'] != "false") {
-      alms.push('<td class="alm_taxon">'+lang+'</td>'+alm);
+      alms.push('<td class="alm_taxon">' + lang + taxon_addon +'</td>'+alm);
       blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(new RegExp(' ','gi'),'\t')+'\n';
     }
   }
