@@ -200,7 +200,7 @@ SEG.make_table = function(){
     doculect = WLS[idx][CFG._taxa];
     
     passit = true;
-    tokens_ = "^ " + tokens + " $";
+    tokens_ = "^" + tokens + "$";
     if (this.filter_form.trim() != "") {
       if (tokens_.indexOf(this.filter_form.trim()) != -1) {
         passit = true;
