@@ -425,6 +425,8 @@ var tmp_file_handler = '';
 	document.getElementById('toggle_morphology').onclick({"preventDefault": function(x){return x}}, 'sortable', 'morphology', 'colx largebox');
       }
     }
+
+
 function loadAjax(event, where, what, classes) {  
   event.preventDefault();
   if (CFG.loaded_files.indexOf(what) != -1) {
@@ -498,7 +500,7 @@ function loadAjax(event, where, what, classes) {
 
 /* helper function for URL creation */
 function makeMyURL() {
-  var base_url = "https://digling.org/edictor?";
+  var base_url = "https://edictor.org?";
 
   var menuX = document.getElementById("showMenuX");
   var filtersX = document.getElementById("showFiltersX");

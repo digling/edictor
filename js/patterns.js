@@ -632,8 +632,6 @@ PATS.previous_preview = function(){
 PATS.simple_refresh = function(){
   document.getElementById('patterns_table').innerHTML = PATS.DTAB.render(PATS.current, PATS.length-1, function(x){return x.join(',');});
   document.getElementById('PATS_current').innerHTML = (PATS.current+1) + '-'+(PATS.current+PATS.preview)+' of '+Object.keys(PATS.matrix).length+' Sites';
-  //XXX PATS.getSorters();
-
 };
 
 PATS.refresh = function() {
@@ -1201,4 +1199,21 @@ PATS.render_patterns = function(elm) {
     }
   });
   //PATS.getSorters();
+};
+
+
+PATS.compute_patterns = function() {
+  this.get_patterns();
+  var date = new Date().toString();
+  var feedback = document.getElementById("ipatterns_table");
+  var mode = (CFG.morphology_mode == "partial") ? CFG.root_formatter : CFG.formatter;
+
+  feedback.innerHTML = '<table class="data_table2">' +
+    "<tr><th>Parameter</th><th>Setting</th></tr>" +
+    "<tr><td>Run</td><td>" + date + "</td></tr>" +
+    "<tr><td>Cognate Mode</td><td>" + CFG._morphology_mode + "</td></tr>" +
+    "<tr><td>Alignment Column</td><td>" + CFG._almcol + "</td></tr>" +
+    "<tr><td>Cognate Column</td><td>" + mode + "</td></tr>" +
+    "<tr><td>Pattern Column</td><td> " + CFG.pattern_formatter + "</td></tr>" +
+    "</table>";
 };

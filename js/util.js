@@ -372,7 +372,7 @@ UTIL.refresh_settings = function() {
     }
   }
   
-  for (i = 0; entry = ['cognates', 'alignments', 'morphemes', 'roots', 'sources', 'note'][i]; i += 1) {
+  for (i = 0; entry = ['cognates', 'alignments', 'morphemes', 'roots', 'sources', 'note', "patterns"][i]; i += 1) {
     if (entry == 'cognates') {
       this_entry = '_fidx';
     }
@@ -393,6 +393,10 @@ UTIL.refresh_settings = function() {
       if (entry == 'note' && CFG[this_entry] != -1) {
         CFG['note_formatter'] = WLS.header[CFG['_note']];
       }
+      if (entry == 'patterns' && CFG[this_entry] != -1) {
+        CFG['pattern_formatter'] = WLS.header[CFG['_patterns']];
+      }
+
     }
     else {
       CFG[this_entry] = -1;
