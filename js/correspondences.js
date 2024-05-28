@@ -306,7 +306,7 @@ CORRS.occurrences = function(docul, idxs) {
       prs = Array.from({length: ngp.length}, (_, i) => ".");
     }
     else if (context == "cv") {
-      prs = prosodic_string(ngp).join(" ").replace("c", "C").split(" ");
+      prs = prosodic_string(ngp).join(" ").replace(/c/g, "C").split(" ");
     }
     else {
       prs = WLS[idx][WLS.header.indexOf(context)];
@@ -446,8 +446,8 @@ CORRS.parse_alignments = function (idxA, idxB, context, cogid) {
     prosB = prosodic_string(nogapB);
   }
   else if (context == "cv") {
-    prosA = prosodic_string(nogapA).join(" ").replace("c", "C").split(" ");
-    prosB = prosodic_string(nogapB).join(" ").replace("c", "C").split(" ");
+    prosA = prosodic_string(nogapA).join(" ").replace(/c/g, "C").split(" ");
+    prosB = prosodic_string(nogapB).join(" ").replace(/c/g, "C").split(" ");
   }
   else if (!context) {
     [prosA, prosB] = [

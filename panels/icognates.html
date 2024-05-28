@@ -1,0 +1,15 @@
+<span class="main_handle pull-left"></span>
+<button type="button" onclick="$('#toggle_icognates > span').toggle(); $('#cognates').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+<h3>Compute cognate sets from the data:</h3>
+<div style="display:block">
+        <button type="button" class="btn btn-primary titled submit3" onclick="COGNACY.compute_cognates();">SUBMIT</button>
+<button type="button" class="btn-primary titled btn submit3 pull-right"
+	title="show help"
+	onclick="UTIL.show_help('icognates');" 
+	style="margin-left:5px;"><span class="glyphicon glyphicon-question-sign"></span>
+</div>
+<div id="icognates_table" class="pull-left" style="display:block"></div>
+<div id="icognates_help" class="help-message" style="display:none"></div>
+<br>
+<br>
+
