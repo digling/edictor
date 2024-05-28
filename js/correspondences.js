@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2015-01-24 17:27
- * modified : 2015-01-27 14:15
+ * modified : 2024-05-28 13:34
  *
  */
 
@@ -21,7 +21,7 @@ function sumValues( obj ) {
 }
 
 /* simple starter for activation */
-CORRS.show_correspondences = function(sorter,direction,symbol) {
+CORRS.show_correspondences = function(sorter, direction, symbol) {
   var d = CORRS.get_doculects();
   var d1 = d[0];
   var d2 = d[1];
@@ -29,12 +29,14 @@ CORRS.show_correspondences = function(sorter,direction,symbol) {
   if (typeof symbol == 'undefined') {symbol = false;}
 
   /* get shared cogids */
-  shared_cogs = CORRS.shared_cognates(d1,d2);
+  shared_cogs = CORRS.shared_cognates(d1, d2);
   
   /* ugly lines to get the stuff disentangled */
-  var corrs = CORRS.correspondences(d1,d2,shared_cogs);
+  var corrs = CORRS.correspondences(d1, d2, shared_cogs);
   var refs = corrs[1];
   corrs = corrs[0];
+
+  console.log(corrs);
   
   /* sort corrs.keys */
   var keys = Object.keys(corrs);
@@ -48,8 +50,8 @@ CORRS.show_correspondences = function(sorter,direction,symbol) {
   }
   
   /* compute internal and external (background) occurrences */
-  var occsA = CORRS.occurrences(doculA,idxsA);
-  var occsB = CORRS.occurrences(doculB,idxsB);
+  var occsA = CORRS.occurrences(doculA, idxsA);
+  var occsB = CORRS.occurrences(doculB, idxsB);
   var occs_bgA = CORRS.occurrences(doculA);
   var occs_bgB = CORRS.occurrences(doculB);
   
@@ -58,81 +60,82 @@ CORRS.show_correspondences = function(sorter,direction,symbol) {
   var occs_bglB = sumValues(occs_bgB);
   var corrsl = sumValues(corrs);
 
-  
   /* create array of data for sorted display */
   var data = [];
+  
+  var i, j, k, s12, tk1, tk2, s1ab, s2ab, s1, s2, freq, concepts, occA, occB, occ_bgA, occ_bgB, expectedA, expectedB, expected, attested, score, filter;
 
-  for (var i=0,k; k=keys[i]; i++) {
-    var s12 = k.split('//');
-    var tk1 = s12[0];
-    var tk2 = s12[1];
+  for (i = 0; k = keys[i]; i += 1) {
+    s12 = k.split('//');
+    tk1 = s12[0];
+    tk2 = s12[1];
 
     if (!symbol || (sorter == 'doculA' && symbol == tk1) || (sorter == 'doculB' && symbol == tk2)) { 
-      var s1ab = tk1.split('.');
-      var s2ab = tk2.split('.');
-      var s1 = plotWord(s1ab[0],'span pointed');
+      s1ab = tk1.split('.');
+      s2ab = tk2.split('.');
+      s1 = plotWord(s1ab[0],'span pointed');
       if (tk1 != '-') {s1 += '<span class="context pointed">'+s1ab[1]+'</span>';}
-      var s2 = plotWord(s2ab[0],'span pointed');
+      s2 = plotWord(s2ab[0],'span pointed');
       if (tk2 != '-') {s2 += '<span class="context pointed">'+s2ab[1]+'</span>';}
 
-      var freq = corrs[k];
-      var concepts = refs[k];
+      freq = corrs[k];
+      concepts = refs[k];
   
       /* get the occurrences */
       if (tk1 in occsA) {
-        var occA = occsA[tk1];
+        occA = occsA[tk1];
       }
       else {
-        var occA = 0;
+        occA = 0;
       }
       if (tk2 in occsB) {
-        var occB = occsB[tk2];
+        occB = occsB[tk2];
       }
       else {
-        var occB = 0;
+        occB = 0;
       }
       if (tk1 in occs_bgA) {
-        var occ_bgA = occs_bgA[tk1];
+        occ_bgA = occs_bgA[tk1];
       }
-      else {var occ_bgA = 0}
+      else {occ_bgA = 0}
       if (tk2 in occs_bgB) {
-        var occ_bgB = occs_bgB[tk2];
+        occ_bgB = occs_bgB[tk2];
       }
-      else {var occ_bgB = 0}
+      else {occ_bgB = 0}
   
       
       /* determine a score for occurrence and matches */
-      var expectedA = occ_bgA / occs_bglA;
-      var expectedB = occ_bgB / occs_bglB;
+      expectedA = occ_bgA / occs_bglA;
+      expectedB = occ_bgB / occs_bglB;
   
-      var expected = expectedA != 0 && expectedB != 0 ? (expectedA * expectedB) : 0.00005;
-      var attested = freq > 1 ? freq / corrsl : 0.00005;
+      expected = expectedA != 0 && expectedB != 0 ? (expectedA * expectedB) : 0.00005;
+      attested = freq > 1 ? freq / corrsl : 0.00005;
   
-      var score = Math.log(attested / expected).toFixed(0);
+      score = Math.log(attested / expected).toFixed(0);
       score = typeof score != 'undefined' && !(isNaN(score)) ? score : 0;
       
       /* get the index for the filtering of occurrences */
-      var filter = [];
-      for (var j=0,concept; concept = concepts[j]; j++) {
+      filter = [];
+      for (j = 0; concept = concepts[j]; j += 1) {
         filter.push(WLS.c2i[concept]);
       }
       filter = filter.join(',');
       concepts = '&quot;' + concepts.join('&quot;, &quot;') + '&quot;';
   
       data.push([
-  	s1,
-  	tk1,
-  	occA,
-  	occ_bgA,
-  	s2,
-  	tk2,
-  	occB,
-  	occ_bgB,
-  	freq,
-  	score,
-  	concepts,
-  	filter
-  	]);
+  	    s1,
+  	    tk1,
+  	    occA,
+  	    occ_bgA,
+  	    s2,
+  	    tk2,
+  	    occB,
+  	    occ_bgB,
+  	    freq,
+  	    score,
+  	    concepts,
+  	    filter
+  	    ]);
     }
   }
   /* make a translater for the sort */
@@ -223,7 +226,7 @@ CORRS.get_doculects = function() {
 };
 
 /* simple function for alignment browsing */
-CORRS.shared_cognates = function(doculA,doculB) {
+CORRS.shared_cognates = function(doculA, doculB) {
   
   /* object stores the matches */
   var matches = {};
@@ -236,20 +239,24 @@ CORRS.shared_cognates = function(doculA,doculB) {
   var cogidsA = {};
   var cogidsB = {};
   var shared_cogids = {};
+  var i, idx, cogid;
+  
+  var fidx = (CFG._morphology_mode == "partial") ? "_roots": "_cognates";
+
   /* iterate over idxsA */
-  for (var i=0,idx; idx=idxsA[i]; i++) {
-    var cogid = WLS[idx][CFG['_fidx']]; // replace by formater afterwards
+  for (i=0; idx=idxsA[i]; i++) {
+    cogid = WLS[idx][CFG[fidx]]; // replace by formater afterwards
     cogidsA[cogid] = idx;
   }
-  for (var i=0,idx; idx=idxsB[i]; i++) {
-    var cogid = WLS[idx][CFG['_fidx']]; // replace by formater afterwards
+  for (i = 0; idx = idxsB[i]; i += 1) {
+    var cogid = WLS[idx][CFG[fidx]]; // replace by formater afterwards
     cogidsB[cogid] = idx;
   }
   /* get what is in both */
   var count = 0;
   for (key in cogidsA) {
     if (key in cogidsB) {
-      shared_cogids[key] = [cogidsA[key],cogidsB[key]];
+      shared_cogids[key] = [cogidsA[key], cogidsB[key]];
       count += 1;
     }
   }
@@ -259,12 +266,16 @@ CORRS.shared_cognates = function(doculA,doculB) {
 
 /* get occurrences of each token */
 CORRS.occurrences = function(docul, idxs) {
+  var i, idx, tks, ngp, ngp_idx, j, prs;
+
   if (typeof idxs == 'undefined') {
     idxs = WLS.taxa[docul];
   }
   var context = document.getElementById('corrs_context').value;
   if (WLS.header.indexOf(context) == -1) {
+    if (["prostring", "cv"].indexOf(context) == -1) {
       context = false;
+    }
   }
   
   /* we take tokens from the alignment, for the simple reason that 
@@ -274,38 +285,45 @@ CORRS.occurrences = function(docul, idxs) {
    * "alignment" and ohter keywords for the alignment column */
   var tidx = WLS.header.indexOf('ALIGNMENT');
   var occs = {};
-  for (var i=0,idx; idx=idxs[i]; i++) {
-    var tks = WLS[idx][tidx].split(' ');
+
+  for (i = 0; idx = idxs[i]; i += 1) {
+    tks = WLS[idx][tidx].split(' ');
     
     /* get the prostrings */
-    var ngp = [];
-    var ngp_idx = [];
-    for (var j=0; j<tks.length; j++) {
+    ngp = [];
+    ngp_idx = [];
+    for (j = 0; j < tks.length; j += 1) {
       if (tks[j] != '(' && tks[j] != ')' && tks[j] != '-') {
-	ngp.push(tks[j]);
-	ngp_idx.push(j); /* store index of valid entries here */
+	      ngp.push(tks[j]);
+	      ngp_idx.push(j); /* store index of valid entries here */
       }
     }
 
-    if (!context) {
-      var prs = prosodic_string(ngp);
+    if (context == "prostring") {
+      prs = prosodic_string(ngp);
+    }
+    else if (!context) {
+      prs = Array.from({length: ngp.length}, (_, i) => ".");
+    }
+    else if (context == "cv") {
+      prs = prosodic_string(ngp).join(" ").replace("c", "C").split(" ");
     }
     else {
-      var prs = WLS[idx][WLS.header.indexOf(context)];
+      prs = WLS[idx][WLS.header.indexOf(context)];
       if (prs.indexOf(' ')) { prs = prs.split(' ');}
     }
 
     /* modify alignment */
-    for (var j=0; j<ngp_idx.length; j++) {
-      tks[ngp_idx[j]] += '.'+prs[j];
+    for (j = 0; j < ngp_idx.length; j += 1) {
+      tks[ngp_idx[j]] += '.' + prs[j];
     }
     
-    for (var j=0,tkn; tkn=tks[j]; j++) {
+    for (j = 0; tkn = tks[j]; j += 1) {
       if (!(tkn in occs)) {
-	occs[tkn] = 1;
+	      occs[tkn] = 1;
       }
       else {
-	occs[tkn] += 1;
+	      occs[tkn] += 1;
       }
     }
   }
@@ -313,10 +331,9 @@ CORRS.occurrences = function(docul, idxs) {
 };
 
 CORRS.correspondences = function(doculA, doculB, shared_cogids) {
-  
   /* get shared cognate ids */
   if (typeof shared_cogids == 'undefined') {
-    shared_cogids = CORRS.shared_cognates(doculA,doculB);
+    shared_cogids = CORRS.shared_cognates(doculA, doculB);
   }
   
   /* object for corres */
@@ -324,59 +341,70 @@ CORRS.correspondences = function(doculA, doculB, shared_cogids) {
   var refs = {}
 
   var context = document.getElementById('corrs_context').value;
-    if(WLS.header.indexOf(context) == -1) {
+  if (WLS.header.indexOf(context) == -1) {
+    if (["prostring", "cv"].indexOf(context) == -1) {
       context = false;
-    }
-
-  /* get index of alignments */
-  var aidx = WLS.header.indexOf(CFG['_almcol']);
-  for (key in shared_cogids) {
-    /* get the concept */
-    var concept = WLS[shared_cogids[key][0]][CFG['_cidx']];
-
-    /* get the alignemnts */
-    var almA = WLS[shared_cogids[key][0]][aidx].split(' ');
-    var almB = WLS[shared_cogids[key][1]][aidx].split(' ');
-
-    /* test alignment settling function */
-    var matches = CORRS.parse_alignments(
-        shared_cogids[key][0],
-        shared_cogids[key][1],
-	context
-	);
-    
-    /* check for valid alignments */
-    if (!matches) {
-      console.log('bad alignments',key,almA.join(' '),almB.join(' '));
-    }
-    else {
-      
-      for (var i=0; i<matches.length; i++) {
-	segA = matches[i][0];
-	segB = matches[i][1];
-      /* iterate over the zipped alignments, also append the concepts as a
-       * reference for later backtracking */
-	/* make sure no double gaps are encountered */
-	if (!(segA == '-' && segB == '-')) {
-	  if (segA+'//'+segB in corrs){
-	    corrs[segA+'//'+segB] += 1;
-	    refs[segA+'//'+segB].push(concept);
-	  }
-	  else {
-	    corrs[segA+'//'+segB] = 1;
-	    refs[segA+'//'+segB] = [concept];
-	  }
-	}	
-      }
     }
   }
 
-  return [corrs,refs];
+  /* get index of alignments */
+  var aidx = WLS.header.indexOf(CFG['_almcol']);
+  var context, almA, almB, matches, idxA, idxB;
+  var matches;
+
+  for (key in shared_cogids) {
+    /* get the concept */
+    concept = WLS[shared_cogids[key][0]][CFG['_cidx']];
+
+    /* get the alignemnts */
+    if (CFG._morphology_mode == "partial") {
+      idxA = WLS[shared_cogids[key][0]][CFG._roots].indexOf(key);
+      idxB = WLS[shared_cogids[key][1]][CFG._roots].indexOf(key);
+      almA = WLS[shared_cogids[key][0]][aidx].split(" + ")[idxA].split(" ");
+      almB = WLS[shared_cogids[key][1]][aidx].split(" + ")[idxB].split(" ");
+    }
+    else {
+      almA = WLS[shared_cogids[key][0]][aidx].split(' ');
+      almB = WLS[shared_cogids[key][1]][aidx].split(' ');
+    }
+    /* test alignment settling function */
+    matches = CORRS.parse_alignments(
+        shared_cogids[key][0],
+        shared_cogids[key][1],
+	      context,
+        key
+	  );
+    
+    /* check for valid alignments */
+    if (!matches) {
+      console.log('bad alignments', key, almA.join(' '), almB.join(' '));
+    }
+    else {
+      for (i = 0; i < matches.length; i += 1) {
+	      segA = matches[i][0];
+	      segB = matches[i][1];
+        /* iterate over the zipped alignments, also append the concepts as a
+         * reference for later backtracking */
+	      /* make sure no double gaps are encountered */
+	      if (!(segA == '-' && segB == '-')) {
+	        if (segA + '//' + segB in corrs){
+	          corrs[segA + '//' + segB] += 1;
+	          refs[segA + '//' + segB].push(concept);
+	        }
+	        else {
+	          corrs[segA + '//' + segB] = 1;
+	          refs[segA + '//' + segB] = [concept];
+	        }
+	      }	
+      }
+    }
+  }
+  return [corrs, refs];
 };
 
 /* parse an alignment between two strings in such a way that only
  * the essential parts are taken into account */
-CORRS.parse_alignments = function (idxA, idxB, context) {
+CORRS.parse_alignments = function (idxA, idxB, context, cogid) {
 
   /* check whether context has been passed */
   if (typeof context == 'undefined' || !context) {
@@ -384,8 +412,19 @@ CORRS.parse_alignments = function (idxA, idxB, context) {
   }
   
   /* get the alignments */
-  var almA = WLS[idxA][WLS.header.indexOf(CFG['_almcol'])].split(' ');
-  var almB = WLS[idxB][WLS.header.indexOf(CFG['_almcol'])].split(' ');
+  var i_a, i_b, almA, almB, segA, segB, prosA, prosB;
+  var i, j, k;
+
+  if (CFG._morphology_mode == "partial") {
+    i_a = WLS[idxA][CFG._roots].indexOf(cogid);
+    i_b = WLS[idxB][CFG._roots].indexOf(cogid);
+    almA = WLS[idxA][CFG._alignments].split(" + ")[i_a].split(" ");
+    almB = WLS[idxB][CFG._alignments].split(" + ")[i_b].split(" ");
+  }
+  else {
+    almA = WLS[idxA][CFG._alignments].split(' ');
+    almB = WLS[idxB][CFG._alignments].split(' ');
+  }
   
   /* return and ignore if the alignemnt is wrongly encoded */
   if (almA.length != almB.length) {return false;}
@@ -395,36 +434,50 @@ CORRS.parse_alignments = function (idxA, idxB, context) {
    * be passed via CFG-specs */
   var nogapA = [];
   var nogapB = [];
-  for (var i=0; i<almA.length; i++) {
-    var segA = almA[i];
-    var segB = almB[i];
+  for (i = 0; i < almA.length; i += 1) {
+    segA = almA[i];
+    segB = almB[i];
     if (segA != '-' && segA != ')' && segA != '(' && '◦' != segA ) {nogapA.push(segA);}
     if (segB != '-' && segB != ')' && segB != '(' && '◦' != segB ) {nogapB.push(segB);}
   }
 
-  if(!context) {
-    var prosA = prosodic_string(nogapA);
-    var prosB = prosodic_string(nogapB);
+  if(context == "prostring") {
+    prosA = prosodic_string(nogapA);
+    prosB = prosodic_string(nogapB);
+  }
+  else if (context == "cv") {
+    prosA = prosodic_string(nogapA).join(" ").replace("c", "C").split(" ");
+    prosB = prosodic_string(nogapB).join(" ").replace("c", "C").split(" ");
+  }
+  else if (!context) {
+    [prosA, prosB] = [
+      Array.from({length: nogapA.length}, (_, i) => "."),
+      Array.from({length: nogapB.length}, (_, i) => ".")];
   }
   else {
-    var prosA = WLS[idxA][WLS.header.indexOf(context)];
-    var prosB = WLS[idxB][WLS.header.indexOf(context)];
+    if (CFG._morphology_mode == "partial") {
+      prosA = WLS[idxA][WLS.header.indexOf(context)].split(" + ")[i_a];
+      prosA = WLS[idxB][WLS.header.indexOf(context)].split(" + ")[i_b];
+    }
+    else {
+      prosA = WLS[idxA][WLS.header.indexOf(context)];
+      prosB = WLS[idxB][WLS.header.indexOf(context)];
+    }
 
     /* check for mult-context nodes */
     if(prosA.indexOf(' ') != -1) {
       prosA = prosA.split(' ');
       prosB = prosB.split(' ');
     }
-
     //-> console.log(prosA,prosB);
   }
 
   /* attach information to the alignments, using a dot symbol for distinction */
   var cntA = 0;
   var cntB = 0;
-  for (var i=0; i<almA.length; i++) {
-    var segA = almA[i];
-    var segB = almB[i];
+  for (i = 0; i < almA.length; i += 1) {
+    segA = almA[i];
+    segB = almB[i];
 
     if (segA != '-' && segA != ')' && segA != '(' && segA != '◦') {
       almA[i] += '.' + prosA[cntA];
@@ -442,7 +495,7 @@ CORRS.parse_alignments = function (idxA, idxB, context) {
   var tmpB = [];
   
   var bop = false;
-  for (var i=0; i<almA.length; i++) {
+  for (i = 0; i < almA.length; i += 1) {
     sgmA = almA[i];
     sgmB = almB[i];
 
@@ -463,9 +516,12 @@ CORRS.parse_alignments = function (idxA, idxB, context) {
   var dA = {1:[]};
   var dB = {1:[]}; 
   var cnt = 1;
-  for (var i=0; i<tmpA.length; i++) {
-    var sgmA = tmpA[i];
-    var sgmB = tmpB[i];
+
+  var sgmA, sgmB;
+
+  for (i = 0; i < tmpA.length; i += 1) {
+    sgmA = tmpA[i];
+    sgmB = tmpB[i];
 
     /* check for breakers and increase the count */
     if (sgmA == '◦' || sgmB == '◦') {
@@ -488,39 +544,39 @@ CORRS.parse_alignments = function (idxA, idxB, context) {
     }
   }
   var matches = [];
-  for (var i=1; i<=cnt; i++) {
+  var morphA, morphB, matched, tmp_match;
 
+  for (i = 1; i <= cnt; i += 1) {
     if (i in dA && i in dB) {
-      
       /* need to check whether stuff is empty */
       if (dA[i].length > 0 && dB[i].length > 0) {
-      var morphA = dA[i];
-      var morphB = dB[i];
-      var matched = false;
-      var tmp_match = [];
-      for (var j=0;j<morphA.length; j++) {
-	var sgmA = morphA[j];
-	var sgmB = morphB[j];
-	/* only append non-empty matches */
-	if (sgmA != '-' || sgmB != '-') {
-	  tmp_match.push([sgmA,sgmB]);
-	}
+        morphA = dA[i];
+        morphB = dB[i];
+        matched = false;
+        tmp_match = [];
+        for (j = 0; j < morphA.length; j += 1) {
+	        sgmA = morphA[j];
+	        sgmB = morphB[j];
+	        /* only append non-empty matches */
+	        if (sgmA != '-' || sgmB != '-') {
+	          tmp_match.push([sgmA,sgmB]);
+	        }
 
-	/* check for real matches */
-	if (sgmA != '-' && sgmB != '-') {
-	  matched = true;
-	}
-      }}
+	        /* check for real matches */
+	        if (sgmA != '-' && sgmB != '-') {
+	          matched = true;
+	        }
+        }
+      }
       if (matched) {
-	for (var k=0;k< tmp_match.length; k++) {
-	  matches.push(tmp_match[k]);
-	}
+	      for (k = 0; k < tmp_match.length; k += 1) {
+	        matches.push(tmp_match[k]);
+	      }
       }
     }
   }
   if (matches.length == 0) {
     return false;
   }
-
   return matches;
 };

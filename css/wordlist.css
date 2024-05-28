@@ -1131,6 +1131,7 @@ tr.up_fill > td {
 
 .help-message {
 	background-color: aliceblue;
+  max-width: 1000px;
 	border-radius: 25px;
 	border: 2px solid #2D6CA2;
 	padding: 10px;

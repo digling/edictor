@@ -1216,4 +1216,15 @@ PATS.compute_patterns = function() {
     "<tr><td>Cognate Column</td><td>" + mode + "</td></tr>" +
     "<tr><td>Pattern Column</td><td> " + CFG.pattern_formatter + "</td></tr>" +
     "</table>";
+
+  /* check if patterns is loaded */
+  var pats = document.getElementById("patterns");
+  if (pats === null || typeof pats == "undefined" || pats.style.display == "none") {
+    var eve = {};
+      eve.preventDefault = function(){
+      return;
+    };
+    loadAjax(eve, 'sortable', "patterns", "largebox");
+  }
+  this.render_patterns();
 };
