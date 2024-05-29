@@ -4,6 +4,8 @@ Utility functions for the server.
 from collections import defaultdict
 import sqlite3
 from .template import html1, script
+import urllib
+
 
 DATA = {
         "js": "text/javascript",
@@ -38,6 +40,25 @@ def parse_post(path):
             path.split("#")[0].split("&")):
         args[k] = v
     return args
+
+
+def download(s, post):
+
+    args = parse_post(post)
+    with open(args["file"], "w") as f:
+        f.write(urllib.parse.unquote_plus(args["data"]))
+    s.send_response(200)
+    s.send_header("Content-type", "text/html")
+    s.end_headers()
+    s.wfile.write(bytes("success", "utf-8"))
+
+
+def check(s):
+    s.send_response(200)
+    s.send_header("Content-type", "text/html")
+    s.end_headers()
+    s.wfile.write(bytes("success", "utf-8"))
+
         
 
 def get_distinct(what, cursor, name):
@@ -51,8 +72,6 @@ def get_columns(cursor, name):
     out = [line[0] for line in cursor.execute(
         'select distinct col from ' + name + ';')]
     return out
-
-
 
 
 def file_type(path):

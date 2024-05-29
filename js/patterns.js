@@ -87,6 +87,10 @@ PATS.get_patterns = function(lengths){
     function get_idx(lst, idx){return lst[idx]}
     function get_alm(etym){return ALIGN.alignable_parts(WLS[etym][CFG._alignments].split(' '));}
   }
+
+  if (typeof roots == "undefined") {
+    fakeAlert("Cognate sets could not be found, please check settings.");
+  }
   
   /* make proto first of the selected doculects */
   if (CFG.proto != -1 && LIST.has(CFG._selected_doculects, CFG.proto)) {
@@ -111,6 +115,8 @@ PATS.get_patterns = function(lengths){
   /* fill matrix with content #MATRIX */
   PATS.length = CFG._selected_doculects.length + 5;
   for (etymon in roots) {
+    console.log(etymon);
+    console.log(PATS.matrix.length);
     /* determine here if the patttern should be considered, otherwise exclude the etymon*/
     if (roots[etymon].length >= lengths) {
       /* determine the taxa first, since we count by 
@@ -1203,6 +1209,7 @@ PATS.render_patterns = function(elm) {
 
 
 PATS.compute_patterns = function() {
+  console.log("starting");
   this.get_patterns();
   var date = new Date().toString();
   var feedback = document.getElementById("ipatterns_table");
@@ -1227,4 +1234,5 @@ PATS.compute_patterns = function() {
     loadAjax(eve, 'sortable', "patterns", "largebox");
   }
   this.render_patterns();
+  showWLS(getCurrent());
 };

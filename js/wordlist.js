@@ -1883,46 +1883,47 @@ function handleFileSelect(evt)
  * not refresh it but rather prepares it for writing...*/
 function refreshFile(){
   var text = 'ID';
-  for (var i=0,head;head=WLS['header'][i];i++) {
+  var i, j, idx, key, head, concept, tmp, val;
+
+  for (i = 0; head=WLS['header'][i]; i += 1) {
     if (WLS['uneditables'].indexOf(head) != -1) {
-      text += '\t_'+WLS.column_names[head].replace(/ /g,'_');
+      text += '\t_' + WLS.column_names[head].replace(/ /g,'_');
     }
     else {
-      text += '\t'+WLS.column_names[head].replace(/ /g,'_');
+      text += '\t' + WLS.column_names[head].replace(/ /g,'_');
     }
   }
   text += '\n';
   for (concept in WLS['concepts']) {
     for (i in WLS['concepts'][concept]) {
-      var idx = WLS['concepts'][concept][i];
+      idx = WLS['concepts'][concept][i];
 
       if (!isNaN(idx)) {
 	text += idx;
-	for (var j=0,head;head=WLS['header'][j];j++) {
-	  text += '\t'+WLS[idx][j];
+	for (j = 0; head=WLS['header'][j]; j += 1) {
+	  text += '\t' + WLS[idx][j];
 	}
 	text += '\n';
       }
     }
   }
   CFG.display = [];
-  for (var i=0; i<CFG.loaded_files.length; i++) {
+  for (i = 0; i < CFG.loaded_files.length; i += 1) {
     if (document.getElementById(CFG.loaded_files[i]).style.display != 'none'){
       CFG.display.push(CFG.loaded_files[i]);
     }
   }
-  for (var i=0,key; key=UTIL.settable.lists[i]; i++) {
-    console.log(key, CFG[key]);
+  for (i = 0; key = UTIL.settable.lists[i]; i += 1) {
     text += '#@'+key+'='+CFG[key].join('|')+'\n';
   }
-  for (var i=0,key; key=UTIL.settable.items[i]; i++) {
+  for (i = 0; key=UTIL.settable.items[i]; i += 1) {
     text += '#@'+key+'='+CFG[key]+'\n';
   }
-  for (var i=0,key; key=UTIL.settable.dicts[i]; i++) {
-    text += '#@'+key+'=';
-    var tmp = [];
+  for (i = 0,key; key=UTIL.settable.dicts[i]; i += 1) {
+    text += '#@' + key + '=';
+    tmp = [];
     for (val in CFG[key]) {
-      tmp.push(key+':'+CFG[val]);
+      tmp.push(key + ':' + CFG[val]);
     }
     text += tmp.join('|')+'\n';
   }
@@ -1937,8 +1938,8 @@ function refreshFile(){
   showWLS(getCurrent());
   
   /* change disk symbol */
-  $('#refresh > span').removeClass('glyphicon-floppy-disk').addClass('glyphicon-floppy-saved');
-  fakeAlert("Document was saved in local storage and can now be exported by clicking on the download button."); 
+  // $('#refresh > span').removeClass('glyphicon-floppy-disk').addClass('glyphicon-floppy-saved');
+  // fakeAlert("Document was saved in local storage and can now be exported by clicking on the download button."); 
 }
 
 function fakeAlert(text){
@@ -2234,20 +2235,38 @@ function finishAddLine(new_idx) {
 }
 
 /* save file */
-function saveFile()
-{
-  /* disallow saving when document was not edited */
-  if (!WLS['edited']) {
-    fakeAlert('You need to SAVE (press button or CTRL+S) the document before you can EXPORT it.');
-    return;
-  }
-
-  //var store = document.getElementById('store');
+function saveFile() {
+  refreshFile();
   var blob = new Blob([STORE], {type: 'text/plain;charset=utf-8'});
   saveAs(blob, CFG['filename']);
 }
 
-/* save file */
+
+/* save file for server */
+function saveFileInPython() { 
+  refreshFile();
+  $.ajax({
+    async: true,
+    type: "POST",
+    contentType: "application/text; charset=utf-8",
+    url: "download.py",
+    data: {"file": CFG["filename"], "data": STORE},
+    dataType: "text",
+    success: function(data) {
+      if(data.indexOf("success") != -1) {
+        fakeAlert("Data written to file «" + CFG["filename"] + "».");
+      }
+      else {
+        fakeAlert("failed");
+      }
+    },
+    error: function(a, b, c) {
+      console.log("error", a, b, c);
+      fakeAlert('data could not be stored' + c);
+    }
+  });
+}
+
 function saveTemplate()
 {
   /* disallow saving when document was not edited */

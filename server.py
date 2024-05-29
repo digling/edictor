@@ -5,9 +5,11 @@ import sqlite3
 from pyed.template import html1, script
 from pyed.util import (
         summary, DATA, get_distinct, get_columns, 
-        file_type, file_name, file_handler, triples
+        check,
+        file_type, file_name, file_handler, triples, download
         )
 import webbrowser
+import argparse
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -29,6 +31,10 @@ class Handler(SimpleHTTPRequestHandler):
         fn = file_name(s.path)
         if fn == "/triples/triples.py":
             triples(s, post_data_bytes, "POST")
+        if fn == "/download.py":
+            download(s, post_data_bytes)
+        if fn == "/check.py":
+            check(s)
 
     def do_GET(s):
         
@@ -44,12 +50,26 @@ class Handler(SimpleHTTPRequestHandler):
             triples(s, s.path, "GET")
 
 
+parser = argparse.ArgumentParser(
+                    prog='EDICTOR 3',
+                    description='Computer-assisted language comparison with EDICTOR 3.',
+                    epilog='Serves EDICTOR 3 (Version 3.0) via local host in your browser.')
+parser.add_argument('-p', '--port', help="Define the port on the local host.",
+                    action="store", default=9999, type=int)
+parser.add_argument('-f', '--file', help="Select file to be loaded.",
+                    action="store", default=None)
+args = parser.parse_args()
 
-PORT = 9999
 
-httpd = HTTPServer(("", PORT), Handler)
-webbrowser.open("http://localhost:9999/index.html")
-print("serving at port", PORT)
+
+httpd = HTTPServer(("", args.port), Handler)
+print("serving at port", args.port)
+url = "http://localhost:" + str(args.port) + "/index.html"
+if args.file:
+    url += "?file=" + args.file
+webbrowser.open(url)
+
 httpd.serve_forever()
+
 
 

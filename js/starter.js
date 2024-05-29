@@ -687,6 +687,23 @@ function startEverything () {
     }
   });
 
+  /* Check if this is the local version */
+  $.ajax({
+    async: false,
+    type: "POST",
+    url: 'check.py',
+    contentType: 'application/text; charset=utf-8',
+    dataType: "text",
+    success: function(data) {
+      if (data.indexOf("success") != -1) {
+        console.log("running with Python");
+      }
+    },
+    error: function() {
+      document.getElementById("save-python").style.display = "none";
+    }
+  });
+
   startWordlist();
 
 
