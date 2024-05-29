@@ -3,8 +3,12 @@ Utility functions for the server.
 """
 from collections import defaultdict
 import sqlite3
-from .template import html1, script
+from edictor.template import html1, script
 import urllib
+import os
+
+from pathlib import Path
+from datetime import datetime
 
 
 DATA = {
@@ -19,6 +23,9 @@ DATA = {
         "woff": "",
         "json": "text/plain; charset=utf-8"
         }
+
+def edictor_path(*comps):
+    return Path(__file__).parent.parent.parent.joinpath(*comps)
 
 
 def parse_args(path):
@@ -43,8 +50,18 @@ def parse_post(path):
 
 
 def download(s, post):
-
+    """
+    Download command, that writes the file to the current folder.
+    """
     args = parse_post(post)
+    if not args["file"].endswith(".tsv"):
+        return
+    date, time = str(datetime.today()).split(" ")
+    if Path(args["file"]).exists():
+        os.rename(
+                args["file"],
+                args["file"][:-4] + "-" + date + "-".join(time.split(":")[:2]) + ".tsv"
+                )
     with open(args["file"], "w") as f:
         f.write(urllib.parse.unquote_plus(args["data"]))
     s.send_response(200)
@@ -83,18 +100,32 @@ def file_name(path):
 
 
 def file_handler(s, ft, fn):
-    if ft in ["js", "html", "css", "tsv", "csv"]:
+    if ft in ["js", "html", "css", "csv"]:
         s.send_response(200)
         s.send_header("Content-type", DATA[ft])
         s.end_headers()
         try:
-            with open(fn[1:], "r") as f:
+            with open(edictor_path(fn[1:]), "r") as f:
                 s.wfile.write(bytes(f.read(), "utf-8"))
         except FileNotFoundError:
             s.wfile.write(b'404 FNF')
+    elif ft == "tsv":
+        s.send_response(200)
+        s.send_header("Content-type", DATA[ft])
+        s.end_headers()
+        print(fn, fn.startswith('/data/'), Path(fn[6:]).exists())
+        if Path(fn[6:]).exists() and fn.startswith("/data/"):
+            with open(fn[6:], "r") as f:
+                s.wfile.write(bytes(f.read(), "utf-8"))
+        else:
+            if edictor_path(fn[1:]).exists():
+                with open(edictor_path(fn[1:]), "r") as f:
+                    s.wfile.write(bytes(f.read(), "utf-8"))
+            else:
+                s.wfile.write(b'400 FNF')
     elif ft in ["png", "ttf", "jpg", "woff"]:
         try:
-            with open(fn[1:], 'rb') as f:
+            with open(edictor_path(fn[1:]), 'rb') as f:
                 s.wfile.write(f.read())
         except FileNotFoundError:
             s.wfile.write(b'404 FNF')
@@ -144,7 +175,9 @@ def summary(s):
 
 
 def triples(s, query, qtype):
-
+    """
+    Basic access to the triple storage storing data in SQLITE.
+    """
     args = dict(
             remote_dbase='', 
             file='', 
@@ -168,7 +201,8 @@ def triples(s, query, qtype):
         return
 
     print(args)
-    db = sqlite3.connect("sqlite/" + args["remote_dbase"] + ".sqlite3")
+    db = sqlite3.connect(
+            edictor_path("sqlite/" + args["remote_dbase"] + ".sqlite3"))
     cursor = db.cursor()
 
     s.send_response(200)
@@ -252,5 +286,96 @@ def triples(s, query, qtype):
                 txt += '\t'
         text += txt + "\n"
     s.wfile.write(bytes(text, "utf-8"))
+
+def update(s, post, qtype):
+
+    now = str(datetime.now()).split('.')[0]
+    user = "python"
+    args = {}
+    if qtype == "POST":
+        args.update(parse_post(post))
+    elif qtype == "GET":
+        args.update(parse_args(post))
+    else:
+        return
+
+    if not "remote_dbase" in args:
+        return
+    
+    db = sqlite3.connect(edictor_path("sqlite", args["remote_dbase"] +
+                                      ".sqlite3"))
+    cursor = db.cursor()
+
+    if "update" in args:
+        idxs = urllib.parse.unquote(args['ids']).split("|||")
+        cols = urllib.parse.unquote(args['cols']).split("|||")
+        vals = urllib.parse.unquote(args['vals']).split("|||")
+
+            # iterate over the entries
+        if len(idxs) == len(cols) == len(vals):
+            pass
+        else:
+            print('ERROR: wrong values submitted')
+            return
+        for idx, col, val in zip(idxs, cols, vals):
+            
+            # unquote the value
+            val = urllib.parse.unquote(val)
+    
+            # check for quote characters
+            if '"' in val:
+                val = val.replace('"','""')
+    
+            # get original data value
+            try:
+                orig_val = [x for x in cursor.execute(
+                    'select VAL from ' + args['file'] + ' where ID=' +\
+                            idx + ' and COL like "'+col+'";')][0][0]
+                
+                qstring = 'update '+args['file'] + ' set VAL="'+val+'" where ID='+idx+' and COL="'+col+'";'
+                cursor.execute(
+                        qstring
+                        )
+    
+                message = 'UPDATE: Modification successful replace "{0}" with "{1}" on {2}.'.format(
+                        orig_val.encode('utf-8'),
+                        val,
+                        now)
+                        
+            except IndexError:
+                orig_val = '!newvalue!'
+                
+                # create new datum if value has not been retrieved
+                cursor.execute(
+                        'insert into '+args['file'] + ' values(' +\
+                                idx + ',"' + col + '","' +\
+                                val + '");')
+                message = 'INSERTION: Successfully inserted {0} on {1}'.format(
+                        val, now)
+                
+            # modify original value with double quotes for safety
+            if '"' in orig_val:
+                orig_val = orig_val.replace('"','""')
+    
+            # insert the backup line
+            try:
+                cursor.execute(
+                    'insert into backup values(?,?,?,?,strftime("%s","now"),?);',
+                    (
+                        args['file'],
+                        idx,
+                        col,
+                        orig_val,
+                        user
+                        ))
+            except Exception as e:
+                print(e)
+                message = 'ERROR'
+    
+        db.commit()
+        s.send_response(200)
+        s.send_header("Content-type", "text/html")
+        s.end_headers()
+        s.wfile.write(bytes(message, "utf-8"))
 
 

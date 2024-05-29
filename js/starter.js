@@ -34,11 +34,11 @@ function startWordlist() {
       }
     }
 
-    /* check for database in which the stuff will be stored */
-    if (CFG['status']['database'] == 'show')
-    {
-      getDataBases();
-    }
+    // -- /* check for database in which the stuff will be stored */
+    // -- if (CFG['status']['database'] == 'show')
+    // -- {
+    // --   getDataBases();
+    // -- }
     return 1;
   }
   catch (e) {
@@ -254,10 +254,11 @@ function handleAjax (event, url) {
   reset();
   
   var postdata = {}
+  var new_url; 
 
   /* check for actual value of url */
   if (url.indexOf('.tsv') == url.length - 4 && url.length -4 != -1) {
-    var new_url = 'data/'+url;
+    new_url = 'data/' + url;
     CFG['storable'] = false;
     CFG['load_new_file'] = true;
   }
@@ -320,25 +321,25 @@ function handleDragOver(evt) {
 
 
 
-function getDataBases() {
-  $.ajax({
-        async: false,
-        type: "GET",
-        url: 'triples/triples.py',
-	      data: {tables: 'tables'},
-	      contentType : 'application/text; charset=utf-8',
-        dataType : "text",
-        success: function(data) {
-          CFG['server_side_bases'] = data.split('\n');
-          /* manage autocomplete */
-          $('#database').autocomplete({
-            delay: 0,
-            source: CFG['server_side_bases']
-          });
-        },
-        error: function() {console.log('failed to load');}
-  });
-}
+// --function getDataBases() {
+// --  $.ajax({
+// --        async: false,
+// --        type: "GET",
+// --        url: 'triples/triples.py',
+// --	      data: {tables: 'tables'},
+// --	      contentType : 'application/text; charset=utf-8',
+// --        dataType : "text",
+// --        success: function(data) {
+// --          CFG['server_side_bases'] = data.split('\n');
+// --          /* manage autocomplete */
+// --          $('#database').autocomplete({
+// --            delay: 0,
+// --            source: CFG['server_side_bases']
+// --          });
+// --        },
+// --        error: function() {console.log('failed to load');}
+// --  });
+// --}
 
 if (document.URL.indexOf('=') != -1) {
   var tmp_url = document.URL.split('#');
@@ -697,10 +698,12 @@ function startEverything () {
     success: function(data) {
       if (data.indexOf("success") != -1) {
         console.log("running with Python");
+        CFG["python"] = true;
       }
     },
     error: function() {
       document.getElementById("save-python").style.display = "none";
+      CFG["python"] = false;
     }
   });
 

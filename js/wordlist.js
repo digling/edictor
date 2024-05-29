@@ -1519,9 +1519,9 @@ function storeModification(idx, jdx, value, async_) {
     //->console.log('encountered storable stuff');
     //
 
-    var new_url = 'triples/update.py?remote_dbase='+CFG['remote_dbase'] + 
-      '&file='+CFG['filename'] +
-      '&update=true';
+    var new_url = 'triples/update.py'; //?remote_dbase='+CFG['remote_dbase'] + 
+    //  '&file='+CFG['filename'] +
+    //  '&update=true';
     
     var ids = [];
     var cols = [];
@@ -1553,16 +1553,24 @@ function storeModification(idx, jdx, value, async_) {
     }
 
     /* now add the whole big dump in one go */
-    new_url += '&ID='+ids.join("|||");
-    new_url += '&COL='+cols.join("|||");
-    new_url += '&VAL='+vals.join("|||"); // XXX change this to ensure safe adding of pipe! 
+    //new_url += '&ID='+ids.join("|||");
+    //new_url += '&COL='+cols.join("|||");
+    //new_url += '&VAL='+vals.join("|||"); // XXX change this to ensure safe adding of pipe! 
 
     $.ajax({
       async: CFG['async'],
-      type: "GET",
+      type: "POST",
       contentType: "application/text; charset=utf-8",
       url: new_url,
       dataType: "text",
+      data: {
+        "ids": ids.join("|||"), 
+        "cols": cols.join("|||"), 
+        "vals": vals.join("|||"), 
+        "remote_dbase": CFG["remote_dbase"], 
+        "file": CFG["filename"], 
+        "update": true
+      }, 
       success: function(data) {
         if(data.indexOf("UPDATE") != -1) {
           dataSavedMessage("update");
@@ -1574,8 +1582,9 @@ function storeModification(idx, jdx, value, async_) {
 	        fakeAlert("PROBLEM IN SAVING THE VALUE ENCOUNTERED! «" + new_url+'»');
 	      }
       },
-      error: function() {
-        fakeAlert('data could not be stored'+new_url);
+      error: function(a, b, c) {
+        console.log("error", a, b, c);
+        fakeAlert('data could not be stored '+new_url);
       }
     });
   }
@@ -2245,16 +2254,19 @@ function saveFile() {
 /* save file for server */
 function saveFileInPython() { 
   refreshFile();
+  var filename = (CFG["filename"].slice(CFG["filename"].length - 4, CFG["filename"].length) != ".tsv") 
+    ? CFG["filename"] + ".tsv" 
+    : CFG["filename"];
   $.ajax({
     async: true,
     type: "POST",
     contentType: "application/text; charset=utf-8",
     url: "download.py",
-    data: {"file": CFG["filename"], "data": STORE},
+    data: {"file": filename, "data": STORE},
     dataType: "text",
     success: function(data) {
       if(data.indexOf("success") != -1) {
-        fakeAlert("Data written to file «" + CFG["filename"] + "».");
+        fakeAlert("Data written to file «" + filename + "».");
       }
       else {
         fakeAlert("failed");

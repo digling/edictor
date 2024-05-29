@@ -67,7 +67,7 @@ modified : 2024-04-06 20:35
           </li>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-              DISPLAY
+              CONFIGURE
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
@@ -84,6 +84,20 @@ modified : 2024-04-06 20:35
                   <span class="glyphicon glyphicon-ok" style="display:none"></span>
                   <span class="glyphicon glyphicon-remove"></span>
                   SETTINGS
+                </a>
+              </li>
+              <li>
+                <a id="toggle_customize" onclick="loadAjax(event, 'sortable', 'customize', 'help col-sm-8');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  CUSTOMIZE
+                </a>
+              </li>
+              <li>
+                <a id="toggle_templates" onclick="loadAjax(event, 'sortable', 'templates', 'help col-sm-8');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  TEMPLATES
                 </a>
               </li>
             </ul>
@@ -211,43 +225,6 @@ modified : 2024-04-06 20:35
               </li>
             </ul>
           </li>
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-              CUSTOMIZE
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-              <li>
-                <a id="toggle_templates" onclick="loadAjax(event, 'sortable', 'templates', 'help col-sm-8');">
-                  <span class="glyphicon glyphicon-remove"></span>
-                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
-                  TEMPLATES
-                </a>
-              </li>
-              <li>
-                <a id="toggle_upload" onclick="loadAjax(event, 'sortable', 'upload', 'help col-sm-8');">
-                  <span class="glyphicon glyphicon-remove"></span>
-                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
-                  UPLOAD
-                </a>
-              </li>
-              <li>
-                <a id="toggle_customize" onclick="loadAjax(event, 'sortable', 'customize', 'help col-sm-8');">
-                  <span class="glyphicon glyphicon-remove"></span>
-                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
-                  CUSTOM SETTINGS
-                </a>
-              </li>
-              <li>
-                <a id="toggle_databases" onclick="loadAjax(event, 'sortable', 'databases', 'help col-sm-8');">
-                  <span class="glyphicon glyphicon-remove"></span>
-                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
-                  DATABASES
-                </a>
-              </li>
-            </ul>
-          </li>
-
           <li>
             <a href="" onclick="localStorage.clear();event.preventDefault();window.location.reload();">RELOAD</a>
           </li>
