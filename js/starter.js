@@ -292,7 +292,6 @@ function handleAjax (event, url) {
 
   /* load the file by putting all data in the STORE global variable */
   STORE = '';
-  console.log("post", postdata);
   $.ajax({
         async: false,
         type: "POST",
