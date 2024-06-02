@@ -100,7 +100,7 @@ UTIL.settings = {
   'separator': "\t",
   'comment': '#',
   'proto' : -1,
-  '_morphology_mode': 'partial',
+  '_morphology_mode': 'full',
   '_recompute_patterns': false,
   'display': ['filedisplay'],
   'quintiles': 'QUINTILES',

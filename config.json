@@ -2,16 +2,12 @@
   "user": "LinguList",
   "links": [
     {
-      "url": "index.html",
-      "name": "new data"
-    },
-    {
       "url": "index.html?file=germanic&remote_dbase=germanic",
-      "name": "Germanic Language Sample (SQLITE, Base)"
+      "name": "Germanic (SQLITE, Base)"
     },
     {
       "url": "index.html?file=germanic&remote_dbase=germanic&doculects=German|Dutch|English",
-      "name": "Germanic Language Sample (SQLITE, no proto-language)"
+      "name": "Germanic (SQLITE, no proto-language)"
     }
   ]
 }

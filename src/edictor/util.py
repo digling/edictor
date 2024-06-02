@@ -163,6 +163,8 @@ def serve_base(s):
         paths += [link_template.format(url="index.html?file=" + path.name,
                                        name="Open File «" + path.name + "»")]
     text = text.replace("{DATASETS}", "".join(paths))
+    text = text.replace(' id="files" style="display:none"', '')
+    text = text.replace(' id="user" style="display:none"', '')
 
     s.wfile.write(bytes(text, "utf-8"))
 

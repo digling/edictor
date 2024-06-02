@@ -634,3 +634,78 @@ ALIGN.lock_sequences = function(i,event) {
   ALIGN.LOCKS = new_lock;
   ALIGN.refresh();
 };
+
+ALIGN.automated_alignments = function (){
+  console.log("starting");
+  var date = new Date().toString();
+  var feedback = document.getElementById("ialms_table");
+  var cognates = (CFG._morphology_mode == "partial") ? CFG._roots : CFG._cognates;
+  var roots = (CFG._morphology_mode == "partial") ? WLS.roots : WLS.etyma;
+  var mode = (CFG._morphology_mode == "partial") ? CFG.root_formatter : CFG.formatter;
+
+  feedback.innerHTML = '<table class="data_table2">' +
+    "<tr><th>Parameter</th><th>Setting</th></tr>" +
+    "<tr><td>Run</td><td>" + date + "</td></tr>" +
+    "<tr><td>Cognate Mode</td><td>" + CFG._morphology_mode + "</td></tr>" +
+    "<tr><td>Alignment Column</td><td>" + CFG._almcol + "</td></tr>" +
+    "<tr><td>Cognate Column</td><td>" + mode + "</td></tr>" +
+    "</table>";
+
+  var key, idxs, idx, i, pos, tks, alms;
+  var aligned = {};
+  console.log(roots);
+  for (key in roots) {
+    segments = [];
+    idxs = roots[key];
+    for (i = 0; i < idxs.length; i += 1) {
+      if (CFG._morphology_mode == "partial") {
+        [idx, pos] = idxs[i];
+        tks = WLS[idx][CFG._segments].split(" + ")[pos];
+      }
+      else {
+        [idx, pos] = [idxs[i], 0];
+        tks = WLS[idx][CFG._segments];
+      }
+      segments.push(tks.split(" "));
+    }
+    alms = scalign(segments);
+    for (i = 0; i < idxs.length; i += 1) {
+      if (CFG._morphology_mode == "partial") {
+        idx = idxs[i][0];
+      }
+      else {
+        idx = idxs[i];
+      }
+      if (idx in aligned) {
+        aligned[idx][key] = alms[i];
+      }
+      else {
+        aligned[idx] = {};
+        aligned[idx][key] = alms[i];
+      }
+    }
+  }
+  /* add data to alignments now */
+  var cogids, alm;
+  for (idx in WLS) {
+    if (!isNaN(idx)) {
+      cogids = WLS[idx][cognates].split(" ");
+      alm = [];
+      for (i = 0; i < cogids.length; i += 1) {
+        try {
+          alm.push(aligned[idx][cogids[i]].join(" "));
+        }
+        catch (error) {
+          if (CFG._morphology_mode == "partial") {
+            alm.push(WLS[idx][CFG._segments].split(" + ")[i]);
+          }
+          else {
+            alm.push(WLS[idx][CFG._segments]);
+          }
+        }
+      }
+      WLS[idx][CFG._alignments] = alm.join(" + ");
+    }
+  }
+  showWLS(getCurrent());
+};
