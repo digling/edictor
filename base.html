@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+ <html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1">
+    <title>EDICTOR 3</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="icon" href="img/favicon.png" type="image/png"> 
+</head>
+<style>
+body {
+  background-color: #2d6ca2;
+}
+h1, h2 {
+  color: white;
+  text-align: center;
+}
+h2 {
+  opacity: 0.75;
+}
+h1.smart {
+  display: none;
+}
+
+div.menu-icon > div {
+  width: 35px;
+  height: 5px;
+  background-color: white;
+  margin: 6px 0;
+}
+.dropdown {
+  display: none;
+}
+.tabreiter {
+  width: 100%;
+  max-width: 1000px;
+  height: 100%;
+  background-color: #2d6ca2;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: absolute;
+  top: 0;
+}   
+
+.footer {
+  text-align: center;
+  color: white;
+  background-color: #2d6ca2;
+  font-size: 80%;
+  display: flex; /* or inline-flex */
+  padding: 20px;
+  width: 100%;
+  flex-direction:row;
+  flex-wrap: wrap;
+  justify-content:center;
+  align-items: bottom;
+  align-content: stretch;
+}
+
+
+.tabreiter > ul > li > label.main {
+  font-weight: bold;
+  color: #2d6ca2;
+}
+.tabreiter > ul > li > label.smart {
+  display: none;
+}
+
+.tabreiter ul,
+.tabreiter li.reiter {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tabreiter,
+.tabreiter input[type="radio"]:checked + label {
+  position: relative;
+}
+
+.tabreiter li.reiter,
+.tabreiter input[type="radio"] + label {
+  display: inline-block;
+}
+
+.tabreiter li > div,
+.tabreiter input[type="radio"] {
+  position: absolute;
+}
+
+.base {
+  background-color: white;
+  padding: 10px;
+}
+.tabreiter li > div,
+.tabreiter input[type="radio"] + label {
+}
+
+.tabreiter {
+  font-family: sans-serif;
+  font-size: 1em;
+  font-weight: 400;
+  color: #404040;
+}
+
+.tabreiter li {
+  vertical-align: top;
+}
+
+.tabreiter li:first-child {
+  margin-left: 8px;
+}
+
+
+.text p {
+  font-weight: normal;
+}
+.tabreiter li > div {
+  top: 33px;
+  left: 0;
+  width: 100%;
+  padding: 0px;
+  background: #fff;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.tabreiter input[type="radio"] + label {
+  margin: 0 2px 0 0;
+  padding: 0 18px;
+  line-height: 32px;
+  background: #f1f1f1;
+  text-align: center;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  opacity: 0.5;
+}
+
+
+.tabreiter input[type="radio"]:checked + label {
+  z-index: 1;
+  background: #fff;
+  border-bottom-color: #fff;
+  cursor: default;
+  opacity: 1;
+}
+
+.tabreiter input[type="radio"] {
+  opacity: 0;
+}
+
+.tabreiter input[type="radio"] ~ div {
+  display: none;
+}
+
+.tabreiter input[type="radio"]:checked:not(:disabled) ~ div {
+  display: block;
+}
+
+.tabreiter input[type="radio"]:disabled + label {
+  opacity: .25;
+  cursor: no-drop;
+}
+
+.content {
+  width: 250px;
+  min-height: 125px;
+  margin: auto;
+  margin-bottom: 10px;
+  border: 2px solid white;
+  background: LightBlue;
+  color: white;
+  background-color: #550000;
+  font-weight: bold;
+  text-align: center;
+  padding: auto;
+  box-shadow: 5px 5px 2px 0px #202020;
+  transition: all 0.1s ease;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.content:hover {
+  border-top-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+.content:hover .text2 a {
+  text-decoration: underline!important;
+  opacity: 1.0;
+}
+.child {
+  font-weight: bold;
+  text-align: center;
+  padding: auto;
+}
+.rotate {
+  font-size: 70%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+}
+
+@media screen and (max-width:800px) {
+  body {
+    padding: 0px;
+    margin: 0px;
+  }
+  h1.main{
+    display: none;
+  }
+  h1.smart {
+    display: block;
+  }
+  h2 {
+    display: none;
+  }
+  .tabreiter {
+    padding: 0px;
+    width: 100%;
+  }
+  .footerchild {
+    transform: scale(0.75);
+    max-width: 100px;
+  }
+  .tabreiter > ul > li > label.main {
+    display: none;
+  }
+  .dropdown {
+    display: inline-block;
+    position: absolute;
+    top: 20px;
+    right: 10px;
+  }
+  .dropdown-content {
+    display: none;
+  }
+  .dropdown:hover .dropdown-content {
+    display: table-cell;
+    background-color: #550000;
+    padding:5px;
+    position: absolute;
+    right: 0px;
+    z-index: 1;
+    font-size: 150%;
+
+  }
+  .dropdown-content > label {
+    cursor: pointer;
+    display: table-row;
+    color: white;
+    font-weight: bold;
+    opacity: 0.75;
+  }
+  .dropdown-content > label:hover {
+    opacity: 1;
+    background-color: #2d6ca2;
+  }
+  #content td{
+    float:justify;
+  }
+
+  #content p.resources {
+
+    padding-top: 10px;
+    padding-bottom: 5px;
+    margin-left: -2px;
+    text-align: right;
+  }
+
+  #content a.resource {
+    transform: scale(0.5);
+    font-size: 75%;
+    padding: 3px;
+    border: 3px ridge lightgray;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  #content a.keyword {
+    display: none;
+  }
+}
+
+.inside {
+  margin: 10px;
+  padding: 10px;
+}
+
+.dataset {
+  border-radius: 10px;
+  border: 2px solid black;
+  background-color: lightyellow;
+  color: #2d6ca2;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.datasets {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.date {
+  color: crimson;
+  font-weight: bold;  
+}
+.date::before {
+  content: "[";
+}
+.date::after {
+  content: "]";
+}
+
+.quote {
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #EFEFEF;
+  border: 2px solid black;
+}
+
+</style>
+<body>
+  <h1 class="main">EDICTOR 3</h1>
+  <h1 class="smart">ED3</h1>
+
+  <div class="dropdown">
+    <div class="menu-icon">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="dropdown-content">
+      <label for="tabreiter-0-0">Home</label>
+      <label for="tabreiter-0-1">News</label>
+      <label for="tabreiter-0-2">Examples</label>
+      <label for="tabreiter-0-3">Help</label>
+    </div>
+  </div>
+  <h2>Interactive Tool for Computer-Assisted Language Comparison</h2>
+    <div id="content" class="tabreiter">
+      <ul>
+	<li class="reiter">
+	  <input type="radio" name="tabreiter-0" checked="checked" id="tabreiter-0-0" />
+	  <label class="main" for="tabreiter-0-0">Home</label>
+	  <div>
+      <div class="inside">
+      <h3>Welcome to EDICTOR 3</h3>
+      <p>EDICTOR 3 is an interactive tool for computer-assisted language comparison. Based on multilingual wordlists stored in TSV files, the tool allows you to edit and compute cognate sets, align cognates, both manually and automatically, and to infer and annotate correspondence patterns. To get started, just click on the box below. You can also check out several examples that have been already edited (go to the tab <i>Examples</i>). To learn about the tool, check out the help (go to the tab <i>Help</i>).
+</p>
+	    
+      <div class="datasets">
+        <div class="dataset inside" onclick="window.location.href = 'index.html'">
+          <span >OPEN NEW FILE</span>
+        </div>
+      </div>
+      <p>Open files to edit.</p>
+      <div class="datasets">{DATASETS}</div>
+      <p>Open user-defined links.</p>
+      <div class="datasets">{USERDATA}</div>
+      <p>If you use EDICTOR 3 in your work, please quote it as follows.<p>
+      <p class="quote"> List, Johann-Mattis (2024): EDICTOR. A web-based interactive tool for creating and editing etymological datasets. Version 3.0.alpha. MCL Chair at the University of Passau: Passau. URL: https://edictor.org/.</p>
+	  </div>
+    </div>
+	</li>
+	<li class="reiter">
+	  <input type="radio" name="tabreiter-0" id="tabreiter-0-1" />
+	  <label class="main" for="tabreiter-0-1">News</label>
+	  <div>
+      <div class="inside">
+        <h3>News</h3>
+        <p>
+        <span class="date">2024-06-02</span> First test of the new version of Edictor 3.
+        </p>
+      </div>
+	  </div>
+	</li>
+	<li class="reiter">
+	  <input type="radio" name="tabreiter-0" id="tabreiter-0-2" />
+	  <label class="main" for="tabreiter-0-2">Examples</label>
+	  <div>
+      <div class="inside">
+        <h3>Check out Examplary Datasets</h3>
+    <p>To check out existing examples, click on the datasets below.
+    </p>
+      <div class="datasets">
+      <div 
+        class="dataset inside" 
+        onclick="window.open('index.html?GER.tsv')"
+        >
+        <span>Germanic with Cognates</span>
+      </div>
+      <div class="dataset inside" onclick="window.open('index.html?file=GER-alm.tsv')">
+        <span>Germanic with Alignments</span></div>
+      <div class="dataset inside"><span>Open 2nd new file</span></div>
+      <div class="dataset inside"><span>Open 2nd new file</span></div>
+
+      </div>
+
+      </div>
+	  </div>
+	</li>
+	<li class="reiter">
+	  <input type="radio" name="tabreiter-0" id="tabreiter-0-2" />
+	  <label class="main" for="tabreiter-0-3">Help</label>
+	  <div>{resources}
+	  </div>
+	</li>
+
+      </ul>
+    </div>
+</body>
+</html>

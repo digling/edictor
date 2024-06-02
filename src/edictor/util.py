@@ -3,9 +3,9 @@ Utility functions for the server.
 """
 from collections import defaultdict
 import sqlite3
-from edictor.template import html1, script
 import urllib
 import os
+import json
 
 from pathlib import Path
 from datetime import datetime
@@ -76,6 +76,20 @@ def check(s):
     s.end_headers()
     s.wfile.write(bytes("success", "utf-8"))
 
+
+def configuration():
+    if Path("config.json").exists():
+        with open("config.json") as f:
+            conf = json.load(f)
+    elif edictor_path("config.json").exists():
+        with open(edictor_path("config.json")) as f:
+            conf = json.load(f)
+    else:
+        conf = {
+                "user": "unknown",
+                "links": None
+                }
+    return conf
         
 
 def get_distinct(what, cursor, name):
@@ -113,7 +127,6 @@ def file_handler(s, ft, fn):
         s.send_response(200)
         s.send_header("Content-type", DATA[ft])
         s.end_headers()
-        print(fn, fn.startswith('/data/'), Path(fn[6:]).exists())
         if Path(fn[6:]).exists() and fn.startswith("/data/"):
             with open(fn[6:], "r") as f:
                 s.wfile.write(bytes(f.read(), "utf-8"))
@@ -130,48 +143,29 @@ def file_handler(s, ft, fn):
         except FileNotFoundError:
             s.wfile.write(b'404 FNF')
 
-
-def summary(s):
-    if not "?" in s.path:
-        s.send_response(200)
-        s.send_header("Content-type", DATA[ft])
-        s.end_headers()
-        s.wfile.write(b"404 FNF")
-        return
-
-    args = parse_args(s.path)
-    db = sqlite3.connect("sqlite/" + args["remote_dbase"] + ".sqlite3")
-    cursor = db.cursor()
-    taxa = get_distinct("doculect", cursor, args["file"])
-    concepts = get_distinct("concept", cursor, args["file"])
-    columns = get_columns(cursor, args['file'])
-
-    tstring = ''
-    for t in sorted(taxa):
-        tstring += '<option value="' + t + '">' + t + '</option>'
-    cstrings = []
-    for t in sorted(concepts):
-        cstrings += ['<option value="' + t + '">' + t + '</option>']
-    colstring = ''
-    for t in sorted(columns):
-        colstring += '<option value="' + t + '">'+t + '</option>'
-
-    out = html1.format(
-        DOCULECTS = tstring,
-        DBASE = args['file'].upper(),
-        DLEN = len(taxa),
-        CLEN = len(concepts),
-        COLEN = len(columns),
-        COLUMNS = colstring,
-        SCRIPT = script,
-        CONCEPTS = '\n'.join(cstrings),
-        DBASE2 = args['file'],
-        DBASE3 = args["remote_dbase"]
-        )
+def serve_base(s):
+    conf = configuration()
     s.send_response(200)
     s.send_header("Content-type", "text/html")
     s.end_headers()
-    s.wfile.write(bytes(out, "utf-8"))
+    with open(edictor_path("base.html")) as f:
+        text = f.read()
+    link_template = """<div class="dataset inside" onclick="window.open('{url}');"><span>{name}</span></div>"""
+    
+    links = []
+    for link in conf["links"]:
+        links += [link_template.format(**link)]
+    text = text.replace("{USERDATA}", "".join(links))
+
+    # add paths that are in the current folder
+    paths = []
+    for path in Path().glob("*.tsv"):
+        paths += [link_template.format(url="index.html?file=" + path.name,
+                                       name="Open File «" + path.name + "»")]
+    text = text.replace("{DATASETS}", "".join(paths))
+
+    s.wfile.write(bytes(text, "utf-8"))
+
 
 
 def triples(s, query, qtype):

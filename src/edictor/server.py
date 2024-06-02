@@ -2,24 +2,24 @@ from http.server import SimpleHTTPRequestHandler
 import sqlite3
 
 from edictor.util import (
-        summary, DATA, get_distinct, get_columns, 
+        DATA, get_distinct, get_columns, 
         check,
         file_type, file_name, file_handler, triples, download,
-        update
+        update, serve_base
         )
 
-START = """
-<html><body>
-<ul>
-<li><a href="index.html">New Project</a></li>
-<li><a href="index.html?file=GER-pat.tsv">Project GER-pat.tsv</a></li>
-</ul></body></html>"""
 
 
 class Handler(SimpleHTTPRequestHandler):
 
     def do_POST(s):
         """
+        Do a POST request.
+
+        Note:
+
+        This GIST gave me the tip on how to proceed with POST data.
+
         https://gist.github.com/scimad/ae0196afc0bade2ae39d604225084507
         """
         content_length = int(s.headers['Content-Length'])
@@ -28,14 +28,11 @@ class Handler(SimpleHTTPRequestHandler):
         ft = file_type(s.path)
         fn = file_name(s.path)
 
-        print("post data", fn)
-
         if ft in DATA:
             file_handler(s, ft, fn)
             return
 
         fn = file_name(s.path)
-        print(fn)
 
         if fn == "/triples/triples.py":
             triples(s, post_data_bytes, "POST")
@@ -44,26 +41,23 @@ class Handler(SimpleHTTPRequestHandler):
         if fn == "/check.py":
             check(s)
         if fn == "/triples/update.py":
-            print("updating")
             update(s, post_data_bytes, "POST")
 
     def do_GET(s):
+        """
+        Do a GET request.
+        """
         
         ft = file_type(s.path)
         fn = file_name(s.path)
 
         if fn == "/":
-            s.send_response(200)
-            s.send_header("Content-type", "text/html")
-            s.end_headers()
-            s.wfile.write(bytes(START, "utf-8"))
+            serve_base(s)
 
         if ft in DATA:
             file_handler(s, ft, fn)
             return
 
-        #if fn == "/triples/summary.py":
-        #    summary(s)
         if fn == "/triples/triples.py":
             triples(s, s.path, "GET")
         if fn == "/triples/update.py":

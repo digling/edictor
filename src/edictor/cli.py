@@ -11,7 +11,6 @@ from edictor.server import Handler
 
 
 
-
 parser = argparse.ArgumentParser(
                     prog='EDICTOR 3',
                     description='Computer-assisted language comparison with EDICTOR 3.',
@@ -27,7 +26,7 @@ args = parser.parse_args()
 
 httpd = HTTPServer(("", args.port), Handler)
 print("Serving EDICTOR at port {0}...".format(args.port))
-url = "http://localhost:" + str(args.port) + "/index.html"
+url = "http://localhost:" + str(args.port) + "/"
 if args.file:
     url += "?file=" + args.file
 webbrowser.get(args.browser).open(url)
