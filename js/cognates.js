@@ -507,3 +507,76 @@ function partialCognateIdentifier(cogids) {
   }
   return out.join(' ');
 }
+
+
+var COGNACY = {};
+COGNACY.compute_cognates = function() {
+  var all_cogids = {};
+  var i, idx, concept, cogid, cogids, classes, tokstring;
+  var formatter = (CFG._morphology_mode == "partial") ? CFG._roots : CFG._cognates;
+  if (formatter == -1) {
+    fakeAlert("You must specify a column to store the cognate judgments in the SETTINGS menu.");
+    return;
+  }
+  var new_cogid = 1;
+  for (idx in WLS) {
+    if (!isNaN(idx)) {
+      [concept, classes] = [
+        WLS[idx][CFG._concepts],
+        Array.from(WLS[idx][CFG._segments].split(" "), getSoundClass).join("").replace(/V/g, "")
+      ];
+      if (CFG._morphology_mode == "partial") {
+        console.log(classes);
+        classes = classes.split("+");
+        cogids = [];
+        for (i = 0; i < classes.length; i += 1) {
+          tokstring = classes[i] + "HH";
+          tokstring = tokstring.slice(0, 2) + " // " + concept;
+          if (tokstring in all_cogids) {
+            cogid = all_cogids[tokstring];
+          }
+          else {
+            cogid = new_cogid;
+            all_cogids[tokstring] = new_cogid;
+            new_cogid += 1;
+          }
+          cogids.push(cogid);
+        }
+        cogid = cogids.join(" ");
+        console.log(cogids);
+      }
+      else {
+        classes += "HH";
+        classes.slice(0, 2);
+        tokstring = classes + " // " + concept;
+        if (tokstring in all_cogids) {
+          cogid = all_cogids[tokstring];
+        }
+        else {
+          cogid = new_cogid;
+          all_cogids[tokstring] = cogid;
+          new_cogid += 1;
+        }
+      }
+      WLS[idx][formatter] = cogid;
+    }
+  }
+  if (CFG._morphology_mode == "partial") {
+    resetRootFormat(CFG.root_formatter);
+  }
+  else {
+    resetFormat(CFG.formatter);
+  }
+  showWLS(getCurrent());
+  var date = new Date().toString();
+  var feedback = document.getElementById("icognates_table");
+  var mode = (CFG._morphology_mode == "partial") ? CFG.root_formatter : CFG.formatter;
+  var cogs = (CFG._morphology_mode == "partial") ? Object.keys(WLS.roots).length : Object.keys(WLS.etyma).length;
+  feedback.innerHTML = '<table class="data_table2">' +
+    "<tr><th>Parameter</th><th>Setting</th></tr>" +
+    "<tr><td>Run</td><td>" + date + "</td></tr>" +
+    "<tr><td>Cognate Mode</td><td>" + CFG._morphology_mode + "</td></tr>" +
+    "<tr><td>Cognate Column</td><td>" + mode + "</td></tr>" +
+    "<tr><td>Cognate Sets</td><td>" + cogs + "</td></tr>"
+    "</table>";
+};

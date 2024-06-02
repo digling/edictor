@@ -28,19 +28,26 @@ PART.partial_alignment = function(event, widx) {
     '<span class="main_handle pull-left" style="margin-left:5px;margin-top:2px;" ></span>' +
     '<p>'+doculect+' «'+concept+'» ('+CFG['root_formatter']+': '+idxs+')'; 
   var cogids = [];
-  for (i=0; cogid=idxs[i]; i++) {
+  var rows = [];
+  for (i = 0; cogid = idxs[i]; i += 1) {
     if (typeof WLS.roots[cogid] != 'undefined' && cogid != '0' && cogid != 0){
       words[cogid] = {morphemes: [], indices: [], positions: [], taxa: []};
-      for (j=0; j<WLS.roots[cogid].length; j++) {
-        idx = WLS.roots[cogid][j][0];
-        jdx = WLS.roots[cogid][j][1];
+      rows = WLS.roots[cogid];
+      rows.sort(function (x, y) {
+        X = WLS[x[0]][CFG._tidx];
+        Y = WLS[y[0]][CFG._tidx];
+        if (CFG.sorted_taxa) {
+          return CFG.sorted_taxa.indexOf(X) - CFG.sorted_taxa.indexOf(Y);
+        }
+        return (X < Y) ? -1 : (X < Y) ? 1 : 0;
+      });
+      for (j = 0; j < rows.length; j += 1) {
+        [idx, jdx] = rows[j];
         word = (CFG['_alignments'] != -1 && WLS[idx][CFG['_alignments']] != '' && WLS[idx][CFG['_alignments']] != '?') 
                 ? WLS[idx][CFG['_alignments']]
                 : WLS[idx][CFG['_segments']]
                 ;
-        console.log(word);
         morphemes = MORPH.get_morphemes(word.split(' '));
-        console.log(morphemes)
         this_morpheme = morphemes[jdx];
         if (typeof this_morpheme != 'undefined') {
                 words[cogid]['taxa'].push(WLS[idx][CFG['_taxa']]);
@@ -62,15 +69,14 @@ PART.partial_alignment = function(event, widx) {
     '<table>' + 
     '<tr>'+'<th class="pchead">DOCULECTS</th><td style="width:3px"></td><th class="pchead">CONCEPTS</th><td style="width:3px"></td>';
   all_words = [];
-  for (i=0; i<cogids.length; i++) {
+  for (i = 0; i < cogids.length; i += 1) {
     cogid = cogids[i];
-    if (words[cogid]['taxa'].length > 1){ text += '<th oncontextmenu="PART.editGroup(event, '+cogid+')" class="pchead" colspan="'+words[cogid]['alignment']['ALMS'][0].length+'">ID: '+cogid+' <button onclick="PART.editGroup(event, '+cogid+')" class="btn-primary btn mleft pull-right submit3" title="align the words"><span class="icon-bar"></span><span class="icon-bar"></span></button></th>'; for (var j=0, tidx; tidx=words[cogid]['indices'][j]; j++) { if (all_words.indexOf(tidx) == -1) { all_words.push(tidx); }
+    if (words[cogid]['taxa'].length > 1){text += '<th oncontextmenu="PART.editGroup(event, '+cogid+')" class="pchead" colspan="'+words[cogid]['alignment']['ALMS'][0].length+'">ID: '+cogid+' <button onclick="PART.editGroup(event, '+cogid+')" class="btn-primary btn mleft pull-right submit3" title="align the words"><span class="icon-bar"></span><span class="icon-bar"></span></button></th>'; for (var j=0, tidx; tidx=words[cogid]['indices'][j]; j++) { if (all_words.indexOf(tidx) == -1) { all_words.push(tidx); }
       }
       if (i <cogids.length-1) {text += '<td style="width:3px"></td>';}
     }
   }
   text += '</tr>';
-  all_words.sort();
   for (var i=0; i<all_words.length; i++) {
     var taxon = WLS[all_words[i]][CFG['_taxa']];
     var this_idx = all_words[i];
@@ -80,9 +86,7 @@ PART.partial_alignment = function(event, widx) {
     for (var j=0; j<cogids.length; j++) {
       var almidx = words[cogids[j]]['alignment']['TAXA'].indexOf(taxon);
       var almlen = words[cogids[j]]['alignment']['ALMS'][0].length;
-      console.log('debug', words[cogids[j]]['indices'], this_idx);
       var test = words[cogids[j]]['indices'].indexOf(this_idx);
-      console.log(test);
       if (test != -1) {
               text += plotWord(words[cogids[j]]['alignment']['ALMS'][test].join(' '), 'td');
               if (j != cogids.length-1){text += '<td></td>';}
@@ -441,6 +445,15 @@ PART.editGroup = function (event, idx) {
 
   /* check for proper values to be displayed for alignment analysis */
   var rows = WLS['roots'][idx];
+  /* sort the rows */
+  rows.sort(function (x, y) {
+    X = WLS[x[0]][CFG._tidx];
+    Y = WLS[y[0]][CFG._tidx];
+    if (CFG.sorted_taxa) {
+      return CFG.sorted_taxa.indexOf(X) - CFG.sorted_taxa.indexOf(Y);
+    }
+    return (X < Y) ? -1 : (X < Y) ? 1 : 0;
+  });
 
   /* check for proper alignments first */
   if (CFG['_alignments'] != -1) { 
@@ -477,7 +490,7 @@ PART.editGroup = function (event, idx) {
   CFG['_current_jdx'] = rows.map(function(x) {return x[1];});
 
   /* now create an alignment object */
-  for (i=0; r=rows[i]; i++) {
+  for (i = 0; r = rows[i]; i += 1) {
     ri = r[0];
     rj = r[1];
     current_line = WLS[ri][this_idx];
@@ -514,7 +527,7 @@ PART.editGroup = function (event, idx) {
   text += '<span class="main_handle pull-left" style="margin-left:-7px;margin-top:2px;" ></span>';
   text += 'Cognate set &quot;'+idx+'&quot; links the following '+alms.length+' entries:</p>';
   text += '<div class="alignments" id="alignments"><table onclick="fakeAlert(\'Press on EDIT or ALIGN to edit the alignments.\');">';
-  for (i=0;alm=alms[i];i++) {
+  for (i = 0; alm = alms[i]; i += 1) {
     text += '<tr>'+alm+'</tr>';
   }
   text += '</table></div>';

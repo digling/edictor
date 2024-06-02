@@ -1,0 +1,36 @@
+<span class="main_handle pull-left" ></span>
+<button type="button" onclick="$('#toggle_forms > span').toggle();$('#forms').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+<h3>
+Segmenting and Grouping: 
+</h3>
+<input id="input_segments_filter-form" class="form-control pull-left textfield" type="text"
+      placeholder="filter by form" onkeyup="SEG.filter_form=this.value;" style="width:250px" />
+<input id="input_segments_filter-sound" class="form-control pull-left textfield" type="text"
+      placeholder="filter by sound" onkeyup="SEG.filter_sound=this.value;" style="width:250px" />
+  <button type="button" class="btn-primary titled btn submit3 pull-right"
+	title="show help"
+	onclick="UTIL.show_help('forms');" 
+  style="margin-left:5px;"><span class="glyphicon glyphicon-question-sign"></span></button>
+
+<button type="button"
+	onclick="showSpinner(function(){SEG.present();});"
+  class="btn-primary submit3 titled btn">OK</button>
+
+  <br><br>
+<!--<span style="margin-top:40px;margin-left:2px; background-color: #2d6ca2; color:white; border-radius:5px; border:2px solid #2d6ca2;padding:5px;margin-right:10px;">
+      <b title="Select between full and partial colexification in the display.">GROUP:</b>
+      <input name="segmentsgroup_mode" checked="" onchange="SEG.groupby='form';"
+      type="radio"> FORM 
+      <input name="segmentsgroup_mode" onchange="SEG.groupby='concept';" type="radio">
+      GLOSS
+      <input name="segmentsgroup_mode" onchange="SEG.groupby='cognate';" type="radio">
+      Cognate
+
+</span>-->
+
+
+<div style="max-height:1000px;overflow-x:scroll;overflow-y:scroll;display:none;"
+  id="forms_table"></div>
+<div class="help-message" id="forms_help" style="display:none;">
+  <h3>Help on Segmenting and Grouping</h3>
+</div>

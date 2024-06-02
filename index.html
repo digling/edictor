@@ -5,9 +5,10 @@ EDICTOR main menu
 author   : Johann-Mattis List
 email    : mattis.list@lingulist.de
 created  : 2017-09-29 15:19
-modified : 2020-10-04 15:56
+modified : 2024-04-06 20:35
 
 -->
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -66,7 +67,7 @@ modified : 2020-10-04 15:56
           </li>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-              DISPLAY
+              CONFIGURE
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
@@ -83,6 +84,20 @@ modified : 2020-10-04 15:56
                   <span class="glyphicon glyphicon-ok" style="display:none"></span>
                   <span class="glyphicon glyphicon-remove"></span>
                   SETTINGS
+                </a>
+              </li>
+              <li>
+                <a id="toggle_customize" onclick="loadAjax(event, 'sortable', 'customize', 'help col-sm-8');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  CUSTOMIZE
+                </a>
+              </li>
+              <li>
+                <a id="toggle_templates" onclick="loadAjax(event, 'sortable', 'templates', 'help col-sm-8');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  TEMPLATES
                 </a>
               </li>
             </ul>
@@ -113,6 +128,14 @@ modified : 2020-10-04 15:56
                   <span class="glyphicon glyphicon-ok" style="display:none"></span>
                   PARTIAL COGNATE SETS
                 </a>
+              </li>
+              <li>
+                <a id="toggle_forms" onclick="loadAjax(event, 'sortable', 'forms', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  SEGMENTING AND GROUPING 
+                </a>
+              </li>
               <li>
                 <a id="toggle_glosses" onclick="loadAjax(event, 'sortable', 'glosses', 'largebox');">
                   <span class="glyphicon glyphicon-remove"></span>
@@ -120,7 +143,42 @@ modified : 2020-10-04 15:56
                   MORPHEME GLOSSES
                 </a>
               </li>
-
+              <li>
+                <a id="toggle_patterns" onclick="loadAjax(event, 'sortable', 'patterns', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  CORRESPONDENCE PATTERNS
+                </a>
+              </li>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              COMPUTE
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a id="toggle_icognates" onclick="loadAjax(event, 'sortable', 'icognates', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  COGNATE SETS
+                </a>
+              </li>
+              <li>
+                <a id="toggle_ialms" onclick="loadAjax(event, 'sortable', 'ialms', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  ALIGNMENTS
+                </a>
+              </li>
+              <li>
+                <a id="toggle_ipatterns" onclick="loadAjax(event, 'sortable', 'ipatterns', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  CORRESPONDENCE PATTERNS
+                </a>
               </li>
             </ul>
           </li>
@@ -159,13 +217,6 @@ modified : 2020-10-04 15:56
                 </a>
               </li>
               <li>
-                <a id="toggle_patterns" onclick="loadAjax(event, 'sortable', 'patterns', 'largebox');">
-                  <span class="glyphicon glyphicon-remove"></span>
-                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
-                  CORRESPONDENCE PATTERNS
-                </a>
-              </li>
-              <li>
                 <a id="toggle_check" onclick="loadAjax(event, 'sortable', 'check', 'largebox');">
                   <span class="glyphicon glyphicon-remove"></span>
                   <span class="glyphicon glyphicon-ok" style="display: none"></span>
@@ -174,49 +225,12 @@ modified : 2020-10-04 15:56
               </li>
             </ul>
           </li>
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-              CUSTOMIZE
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-              <li>
-                <a id="toggle_templates" onclick="loadAjax(event, 'sortable', 'templates', 'help col-sm-8');">
-                  <span class="glyphicon glyphicon-remove"></span>
-                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
-                  TEMPLATES
-                </a>
-              </li>
-              <li>
-                <a id="toggle_upload" onclick="loadAjax(event, 'sortable', 'upload', 'help col-sm-8');">
-                  <span class="glyphicon glyphicon-remove"></span>
-                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
-                  UPLOAD
-                </a>
-              </li>
-              <li>
-                <a id="toggle_customize" onclick="loadAjax(event, 'sortable', 'customize', 'help col-sm-8');">
-                  <span class="glyphicon glyphicon-remove"></span>
-                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
-                  CUSTOM SETTINGS
-                </a>
-              </li>
-              <li>
-                <a id="toggle_databases" onclick="loadAjax(event, 'sortable', 'databases', 'help col-sm-8');">
-                  <span class="glyphicon glyphicon-remove"></span>
-                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
-                  DATABASES
-                </a>
-              </li>
-            </ul>
-          </li>
-
           <li>
             <a href="" onclick="localStorage.clear();event.preventDefault();window.location.reload();">RELOAD</a>
           </li>
         </ul>
         <ul style="float-right" class="nav navbar-nav navbar-right">
-          <li><a href="http://github.com/dighl/edictor/">GitHub</a></li>
+          <li><a href="http://github.com/digling/edictor/">GitHub</a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -245,15 +259,16 @@ modified : 2020-10-04 15:56
               <span class="glyphicon glyphicon-refresh"></span>
             </button>
             <button class="submit3 btn-primary mleft btn titled" title="Filter data (shortcut [F3])" id="textfieldsettings" onclick="$('#textfields').toggle();">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
+              <span class="glyphicon glyphicon-filter"></span>
             </button>
-            <button class="submit3 btn-primary mleft btn titled" title="Save (shortcut [CTRL+S])" id="refresh" onclick="refreshFile();">
+            <!--<button class="submit3 btn-primary mleft btn titled" title="Save (shortcut [CTRL+S])" id="refresh" onclick="refreshFile();">
               <span class="glyphicon glyphicon-floppy-disk"></span>
-            </button> 
-            <button class="submit3 btn-primary mleft btn titled" title="Download (shortcut [CTRL+E])" id="save" onclick="saveFile();">
+            </button>-->
+            <button class="submit3 btn-primary mleft btn titled" title="Download via Browser (shortcut [CTRL+E])" id="save" onclick="saveFile();">
               <span class="glyphicon glyphicon-download-alt"></span>
+            </button>
+            <button class="submit3 btn-primary mleft btn titled" title="Save file locally (shortcut [CTRL+S])" id="save-python" onclick="saveFileInPython();">
+              <span class="glyphicon glyphicon-floppy-disk"></span>
             </button>
           </div>
           <br class="menubr"><br class="menubr">
@@ -344,7 +359,7 @@ modified : 2020-10-04 15:56
                   <li>check your data, and</li>
                   <li>carry out various kinds of analyses.</li></ul>
                 In order to get started with an existing example dataset, just click 
-                <a style="color:crimson" href="http://edictor.digling.org?file=BAI.tsv">this
+                <a style="color:crimson" href="http://edictor.org?file=BAI.tsv">this
                   link</a>. Press 
                 <span class="pointed" onclick="$('#welcome').remove();loadAjax(event, 'sortable', 'about', 'help col-sm-8');" style="color:crimson">here</span> to learn more ABOUT the EDICTOR,
               or <span class="pointed" onclick="$('#welcome').remove();loadAjax(event, 'sortable', 'help', 'help col-sm-8');" 
@@ -355,50 +370,45 @@ modified : 2020-10-04 15:56
               <a style="color:crimson" target="_blank" href="http://aclweb.org/anthology/E/E17/E17-3003.pdf">here</a>.
               You can also cite the actual version of the EDICTOR as follows:
               <br>
-              <table><tr><td style="background-color:LightYellow;margin:10px;padding:10px; border-radius:15px;">
-                    List, Johann-Mattis (2023): EDICTOR. A web-based interactive tool for creating and editing etymological datasets. Version 2.1.0. MCL Chair at the University of Passau: Passau. URL: <a href="https://digling.org/edictor/"/>https://digling.org/edictor/</a>.</td></tr></table>
+              <table><tr><td style="color:black;background-color:LightYellow;margin:10px;padding:10px; border-radius:15px;">
+                    List, Johann-Mattis (2024): EDICTOR. A web-based interactive tool for creating and editing etymological datasets. Version 3.0.alpha. MCL Chair at the University of Passau: Passau. URL: <a href="https://digling.org/edictor/"/>https://edictor.org/</a>.</td></tr></table>
           </div>
         </div>
       </li>
     </ul>
   </div>
   <div id="#data_saved" style="color:white;font-size:12px">Data has not yet been saved.</div>
-  <script src="digling/main.js"></script>
-<script>
-var load = PRISON.import(
-    'highlight',
-    'sampa',
-    'edit',
-    'pinyin',
-    'multiple',
-    'features',
-    'js/vendor/jsurl',
-    'js/vendor/jquery-1.10.2',
-    'js/vendor/jquery-ui',
-    'js/vendor/FileSaver',
-    'js/vendor/undomanager',
-    'js/vendor/bootstrap.min',
-    'js/vendor/bootstrap-multiselect',
-    'js/vendor/spin',
-    'js/datatable',
-    'js/statistics',
-    'js/util',
-    'js/alignments',
-    'js/patterns',
-    'js/cognates',
-    'js/phonology',
-    'js/morphology',
-    'js/partial',
-    'js/correspondences',
-    'js/comments',
-    'js/segments',
-    'js/glosses',
-    'js/wordlist',
-    'js/starter'
-    );
-
-</script>
 
 <div id="popup_background" class="popup_background"></div>
+<script src="js/generic/highlight.js"></script>
+<script src="js/generic/sampa.js"></script>
+<script src="js/generic/edit.js"></script>
+<script src="js/generic/multiple.js"></script>
+<script src="js/generic/features.js"></script>
+<script src="js/generic/datatable.js"></script>
+<script src="js/vendor/jsurl.js"></script>
+<script src="js/vendor/jquery-1.10.2.js"></script>
+<!--<script src="js/vendor/jquery-3.7.1.js"></script>-->
+<script src="js/vendor/jquery-ui.js"></script>
+<script src="js/vendor/FileSaver.js"></script>
+<script src="js/vendor/undomanager.js"></script>
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/vendor/bootstrap-multiselect.js"></script>
+<script src="js/vendor/spin.js"></script>
+<script src="js/statistics.js"></script>
+<script src="js/util.js"></script>
+<script src="js/alignments.js"></script>
+<script src="js/patterns.js"></script>
+<script src="js/cognates.js"></script>
+<script src="js/phonology.js"></script>
+<script src="js/morphology.js"></script>
+<script src="js/partial.js"></script>
+<script src="js/correspondences.js"></script>
+<script src="js/comments.js"></script>
+<script src="js/segments.js"></script>
+<script src="js/glosses.js"></script>
+<script src="js/wordlist.js"></script>
+<script src="js/starter.js"></script>
+
 </body>
 </html>

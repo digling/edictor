@@ -34,11 +34,11 @@ function startWordlist() {
       }
     }
 
-    /* check for database in which the stuff will be stored */
-    if (CFG['status']['database'] == 'show')
-    {
-      getDataBases();
-    }
+    // -- /* check for database in which the stuff will be stored */
+    // -- if (CFG['status']['database'] == 'show')
+    // -- {
+    // --   getDataBases();
+    // -- }
     return 1;
   }
   catch (e) {
@@ -254,10 +254,11 @@ function handleAjax (event, url) {
   reset();
   
   var postdata = {}
+  var new_url; 
 
   /* check for actual value of url */
   if (url.indexOf('.tsv') == url.length - 4 && url.length -4 != -1) {
-    var new_url = 'data/'+url;
+    new_url = 'data/' + url;
     CFG['storable'] = false;
     CFG['load_new_file'] = true;
   }
@@ -291,7 +292,6 @@ function handleAjax (event, url) {
 
   /* load the file by putting all data in the STORE global variable */
   STORE = '';
-  console.log("post", postdata);
   $.ajax({
         async: false,
         type: "POST",
@@ -320,25 +320,25 @@ function handleDragOver(evt) {
 
 
 
-function getDataBases() {
-  $.ajax({
-        async: false,
-        type: "GET",
-        url: 'triples/triples.py',
-	      data: {tables: 'tables'},
-	      contentType : 'application/text; charset=utf-8',
-        dataType : "text",
-        success: function(data) {
-          CFG['server_side_bases'] = data.split('\n');
-          /* manage autocomplete */
-          $('#database').autocomplete({
-            delay: 0,
-            source: CFG['server_side_bases']
-          });
-        },
-        error: function() {console.log('failed to load');}
-  });
-}
+// --function getDataBases() {
+// --  $.ajax({
+// --        async: false,
+// --        type: "GET",
+// --        url: 'triples/triples.py',
+// --	      data: {tables: 'tables'},
+// --	      contentType : 'application/text; charset=utf-8',
+// --        dataType : "text",
+// --        success: function(data) {
+// --          CFG['server_side_bases'] = data.split('\n');
+// --          /* manage autocomplete */
+// --          $('#database').autocomplete({
+// --            delay: 0,
+// --            source: CFG['server_side_bases']
+// --          });
+// --        },
+// --        error: function() {console.log('failed to load');}
+// --  });
+// --}
 
 if (document.URL.indexOf('=') != -1) {
   var tmp_url = document.URL.split('#');
@@ -350,6 +350,7 @@ if (document.URL.indexOf('=') != -1) {
     params[keyval[0]] = keyval[1];
   }
   PARAMS = params;
+  console.log(params);
   reset();
     
   /* account for display modifications */
@@ -424,6 +425,8 @@ var tmp_file_handler = '';
 	document.getElementById('toggle_morphology').onclick({"preventDefault": function(x){return x}}, 'sortable', 'morphology', 'colx largebox');
       }
     }
+
+
 function loadAjax(event, where, what, classes) {  
   event.preventDefault();
   if (CFG.loaded_files.indexOf(what) != -1) {
@@ -442,7 +445,7 @@ function loadAjax(event, where, what, classes) {
   $.ajax( {
       async:false,
       type: "GET",
-      url: what+'.html',
+      url: "panels/" + what + '.html',
       dataType: "text",
       success: function(data)  {
         tmp_file_handler = data;
@@ -497,7 +500,7 @@ function loadAjax(event, where, what, classes) {
 
 /* helper function for URL creation */
 function makeMyURL() {
-  var base_url = "https://digling.org/edictor?";
+  var base_url = "https://edictor.org?";
 
   var menuX = document.getElementById("showMenuX");
   var filtersX = document.getElementById("showFiltersX");
@@ -664,7 +667,7 @@ function startEverything () {
 
   /* handle server-side files */
   $.ajax({
-    async:false,
+    async: false,
     type: "GET",
     url: 'data/filelist.csv',
     contentType: 'application/text; charset=utf-8',
@@ -673,7 +676,7 @@ function startEverything () {
       CFG['server_side_files'] = data.split('\n');
       /* manage autocomplete */
       $('#ajaxfile').autocomplete({
-        delay:0,
+        delay: 0,
         source: CFG['server_side_files']
       });
     },
@@ -681,6 +684,25 @@ function startEverything () {
       fakeAlert("Could not load remote files. Usage will be restricted " + 
           " to explicit file selection.");
       $('#ajaxfile').hide(); 
+    }
+  });
+
+  /* Check if this is the local version */
+  $.ajax({
+    async: false,
+    type: "POST",
+    url: 'check.py',
+    contentType: 'application/text; charset=utf-8',
+    dataType: "text",
+    success: function(data) {
+      if (data.indexOf("success") != -1) {
+        console.log("running with Python");
+        CFG["python"] = true;
+      }
+    },
+    error: function() {
+      document.getElementById("save-python").style.display = "none";
+      CFG["python"] = false;
     }
   });
 

@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2023-10-22 20:01
+ * modified : 2024-04-02 14:33
  *
  */
 
@@ -14,7 +14,7 @@ function reset() {
   var BL = ['file'];
 
   /* make array for list-type entries */
-  var list_types = ['highlight', 'sound_classes', 'sampa', 'pinyin', 'css', 'doculects', 'columns', 'basics', 'concepts'];
+  var list_types = ['sorted_taxa', 'highlight', 'sound_classes', 'sampa', 'css', 'doculects', 'columns', 'basics', 'concepts'];
   var eval_types = ['async', 'navbar'];
 
   for (var param in PARAMS) {
@@ -53,8 +53,9 @@ var PARAMS = {};
 
 /* function for resetting the formatter, that is the basic column that handles
  * what is treated as a cognate or not */
+/* +++ TODO reset the format to allow for cognates with non-integers */
 function resetFormat(value) {
-
+  var tmp;
   if (!value) {
     CFG['formatter'] = false;
     WLS['etyma'] = [];
@@ -68,14 +69,17 @@ function resetFormat(value) {
     var format_idx = WLS.header.indexOf(value);
     for (key in WLS) {
       if (!isNaN(key)) {
-        var tmp = WLS[key][format_idx];
+        tmp = WLS[key][format_idx];
+        if (String(tmp)[0] == "!") {
+          tmp = tmp.slice(1, tmp.length);
+        }
         if (tmp in format_selection) {
           format_selection[tmp].push(key);
         }
         else if (tmp && parseInt(tmp) != 0) {
           format_selection[tmp] = [key];
         }
-        size++;
+        size += 1;
       }
     }
     WLS['etyma'] = format_selection;
@@ -806,7 +810,7 @@ function showWLS(start){
           if ([CFG.note_formatter, CFG.formatter, CFG.root_formatter, CFG.pattern_formatter, CFG.quintiles].indexOf(WLS.header[j]) == -1 && WLS.uneditables.indexOf(WLS.header[j]) == -1 && !CFG['publish']) {
             var on_click = 'onclick="editEntry(' + idx + ',' + jdx + ',0,0)" ';
             var on_title = 'title="Modify entry '+idx+'/'+jdx+'." ';
-            var on_ctxt = (j != CFG._morphemes) ? 'oncontextmenu="copyPasteEntry(event,'+idx+','+jdx+','+j+')" ': '';
+            var on_ctxt = ''; //(j != CFG._morphemes) ? 'oncontextmenu="copyPasteEntry(event,'+idx+','+jdx+','+j+')" ': '';
             var this_class = 'class="'+WLS['header'][j]+'" ';
           }
           else if (WLS.uneditables.indexOf(WLS.header[j]) != -1 || CFG['publish']) {
@@ -1128,8 +1132,8 @@ function addColumn(event)
   showWLS(1);
 }
 
-function editEntry(idx, jdx, from_idx, from_jdx, special_value)
-{
+function editEntry(
+  idx, jdx, from_idx, from_jdx, special_value) {
   var line = document.getElementById('L_' + idx);
 
   /* if line is undefined, check for next view */
@@ -1296,24 +1300,6 @@ function modifyEntry(event, idx, jdx, xvalue) {
   var j = parseInt(jdx) - 1;
 
   var entry = document.getElementById('L_' + idx).cells[jdx];
-
-  if (CFG['pinyin'].indexOf(WLS['header'][(jdx-1)]) != -1) {
-    var closed = false;
-    $('.cellinput').autocomplete({
-        source: function (request, response){
-        var responses = [];
-        for (var i=0,v;v=pinyin[xvalue][i];i++) {
-          responses.push(v);
-        }
-        response(responses);
-        },
-      close: function(){closed=true;}
-    });
-
-    if ((event.keyCode == 38 || event.keyCode == 40) && xvalue != entry.dataset.value) {
-      return;
-    }
-  }
 	
   /* move up and down */
   if (event.keyCode == 38) {
@@ -1385,7 +1371,7 @@ function modifyEntry(event, idx, jdx, xvalue) {
    * to make sure that all entries in tokens and alignmetns are synchronized
    * tokens2alignment
    */
-  if (jdx-1 == CFG._segments && CFG._alignments != -1) {
+  if (jdx - 1 == CFG._segments && CFG._alignments != - 1) {
     var new_alm, alm_bunch, cnt, new_alms, new_segments;
     new_segments = xvalue;
 
@@ -1533,9 +1519,9 @@ function storeModification(idx, jdx, value, async_) {
     //->console.log('encountered storable stuff');
     //
 
-    var new_url = 'triples/update.py?remote_dbase='+CFG['remote_dbase'] + 
-      '&file='+CFG['filename'] +
-      '&update=true';
+    var new_url = 'triples/update.py'; //?remote_dbase='+CFG['remote_dbase'] + 
+    //  '&file='+CFG['filename'] +
+    //  '&update=true';
     
     var ids = [];
     var cols = [];
@@ -1567,16 +1553,24 @@ function storeModification(idx, jdx, value, async_) {
     }
 
     /* now add the whole big dump in one go */
-    new_url += '&ID='+ids.join("|||");
-    new_url += '&COL='+cols.join("|||");
-    new_url += '&VAL='+vals.join("|||"); // XXX change this to ensure safe adding of pipe! 
+    //new_url += '&ID='+ids.join("|||");
+    //new_url += '&COL='+cols.join("|||");
+    //new_url += '&VAL='+vals.join("|||"); // XXX change this to ensure safe adding of pipe! 
 
     $.ajax({
       async: CFG['async'],
-      type: "GET",
+      type: "POST",
       contentType: "application/text; charset=utf-8",
       url: new_url,
       dataType: "text",
+      data: {
+        "ids": ids.join("|||"), 
+        "cols": cols.join("|||"), 
+        "vals": vals.join("|||"), 
+        "remote_dbase": CFG["remote_dbase"], 
+        "file": CFG["filename"], 
+        "update": true
+      }, 
       success: function(data) {
         if(data.indexOf("UPDATE") != -1) {
           dataSavedMessage("update");
@@ -1588,8 +1582,9 @@ function storeModification(idx, jdx, value, async_) {
 	        fakeAlert("PROBLEM IN SAVING THE VALUE ENCOUNTERED! «" + new_url+'»');
 	      }
       },
-      error: function() {
-        fakeAlert('data could not be stored'+new_url);
+      error: function(a, b, c) {
+        console.log("error", a, b, c);
+        fakeAlert('data could not be stored '+new_url);
       }
     });
   }
@@ -1897,46 +1892,47 @@ function handleFileSelect(evt)
  * not refresh it but rather prepares it for writing...*/
 function refreshFile(){
   var text = 'ID';
-  for (var i=0,head;head=WLS['header'][i];i++) {
+  var i, j, idx, key, head, concept, tmp, val;
+
+  for (i = 0; head=WLS['header'][i]; i += 1) {
     if (WLS['uneditables'].indexOf(head) != -1) {
-      text += '\t_'+WLS.column_names[head].replace(/ /g,'_');
+      text += '\t_' + WLS.column_names[head].replace(/ /g,'_');
     }
     else {
-      text += '\t'+WLS.column_names[head].replace(/ /g,'_');
+      text += '\t' + WLS.column_names[head].replace(/ /g,'_');
     }
   }
   text += '\n';
   for (concept in WLS['concepts']) {
     for (i in WLS['concepts'][concept]) {
-      var idx = WLS['concepts'][concept][i];
+      idx = WLS['concepts'][concept][i];
 
       if (!isNaN(idx)) {
 	text += idx;
-	for (var j=0,head;head=WLS['header'][j];j++) {
-	  text += '\t'+WLS[idx][j];
+	for (j = 0; head=WLS['header'][j]; j += 1) {
+	  text += '\t' + WLS[idx][j];
 	}
 	text += '\n';
       }
     }
   }
   CFG.display = [];
-  for (var i=0; i<CFG.loaded_files.length; i++) {
+  for (i = 0; i < CFG.loaded_files.length; i += 1) {
     if (document.getElementById(CFG.loaded_files[i]).style.display != 'none'){
       CFG.display.push(CFG.loaded_files[i]);
     }
   }
-  for (var i=0,key; key=UTIL.settable.lists[i]; i++) {
-    console.log(key, CFG[key]);
+  for (i = 0; key = UTIL.settable.lists[i]; i += 1) {
     text += '#@'+key+'='+CFG[key].join('|')+'\n';
   }
-  for (var i=0,key; key=UTIL.settable.items[i]; i++) {
+  for (i = 0; key=UTIL.settable.items[i]; i += 1) {
     text += '#@'+key+'='+CFG[key]+'\n';
   }
-  for (var i=0,key; key=UTIL.settable.dicts[i]; i++) {
-    text += '#@'+key+'=';
-    var tmp = [];
+  for (i = 0,key; key=UTIL.settable.dicts[i]; i += 1) {
+    text += '#@' + key + '=';
+    tmp = [];
     for (val in CFG[key]) {
-      tmp.push(key+':'+CFG[val]);
+      tmp.push(key + ':' + CFG[val]);
     }
     text += tmp.join('|')+'\n';
   }
@@ -1951,8 +1947,8 @@ function refreshFile(){
   showWLS(getCurrent());
   
   /* change disk symbol */
-  $('#refresh > span').removeClass('glyphicon-floppy-disk').addClass('glyphicon-floppy-saved');
-  fakeAlert("Document was saved in local storage and can now be exported by clicking on the download button."); 
+  // $('#refresh > span').removeClass('glyphicon-floppy-disk').addClass('glyphicon-floppy-saved');
+  // fakeAlert("Document was saved in local storage and can now be exported by clicking on the download button."); 
 }
 
 function fakeAlert(text){
@@ -2248,20 +2244,41 @@ function finishAddLine(new_idx) {
 }
 
 /* save file */
-function saveFile()
-{
-  /* disallow saving when document was not edited */
-  if (!WLS['edited']) {
-    fakeAlert('You need to SAVE (press button or CTRL+S) the document before you can EXPORT it.');
-    return;
-  }
-
-  //var store = document.getElementById('store');
+function saveFile() {
+  refreshFile();
   var blob = new Blob([STORE], {type: 'text/plain;charset=utf-8'});
   saveAs(blob, CFG['filename']);
 }
 
-/* save file */
+
+/* save file for server */
+function saveFileInPython() { 
+  refreshFile();
+  var filename = (CFG["filename"].slice(CFG["filename"].length - 4, CFG["filename"].length) != ".tsv") 
+    ? CFG["filename"] + ".tsv" 
+    : CFG["filename"];
+  $.ajax({
+    async: true,
+    type: "POST",
+    contentType: "application/text; charset=utf-8",
+    url: "download.py",
+    data: {"file": filename, "data": STORE},
+    dataType: "text",
+    success: function(data) {
+      if(data.indexOf("success") != -1) {
+        fakeAlert("Data written to file «" + filename + "».");
+      }
+      else {
+        fakeAlert("failed");
+      }
+    },
+    error: function(a, b, c) {
+      console.log("error", a, b, c);
+      fakeAlert('data could not be stored' + c);
+    }
+  });
+}
+
 function saveTemplate()
 {
   /* disallow saving when document was not edited */
@@ -2322,7 +2339,7 @@ function highLight()
 {
   var items, i, tokens, roots, word, m, concepts, concept, morphemes, parts, part, j, textout, k, morph;
 
-  for (i=0; head=WLS.header[i]; i++) {
+  for (i = 0; head = WLS.header[i]; i += 1) {
     if (CFG['highlight'].indexOf(head) != -1 ) {
       tokens = document.getElementsByClassName(head);
       for (j=0; j<tokens.length; j++) {
@@ -2334,11 +2351,11 @@ function highLight()
     }
     else if (i === CFG['_roots']){
       roots = document.getElementsByClassName(head);
-      for (j=0; j<roots.length; j++){
+      for (j = 0; j < roots.length; j += 1){
         if (roots[j].innerHTML == roots[j].dataset.value){
           parts = roots[j].dataset.value.split(/\s+/);
           textout = [];
-          for (k=0; k<parts.length; k++) {
+          for (k = 0; k < parts.length; k += 1) {
             part = WLS.roots[parts[k]];
             if (typeof part != 'undefined'){
               if (part.length == 1){
@@ -2619,11 +2636,14 @@ function editGroup(event, idx) {
     if (WLS['subgroups'][lang] != 'NAN'){
       taxon_addon = ' ('+WLS['subgroups'][WLS[r][CFG['_tidx']]][0].slice(0, 3)+') '; 
     }
+    else {
+      taxon_addon = "";
+    }
 
     /* only take those sequences into account which are currently selected in the alignment */
     /* span +++ todo error here +++ */
     if (CFG['_selected_doculects'].indexOf(lang) != -1 || CFG['align_all_words'] != "false") {
-      alms.push('<td class="alm_taxon">'+lang+'</td>'+alm);
+      alms.push('<td class="alm_taxon">' + lang + taxon_addon +'</td>'+alm);
       blobtxt += r+'\t'+lang+'\t'+WLS[r][this_idx].replace(new RegExp(' ','gi'),'\t')+'\n';
     }
   }
@@ -2722,20 +2742,38 @@ function storeAlignment() {
   var cols = [];
   var vals = [];
 
-  for (var i=0,idx; idx=CFG['_current_idx'][i]; i++) {
-    var alm = ALIGN.ALMS[i].join(' ');
+  var i, idx, alm;
+  var j, segment;
+  var tokens;
+
+  for (i = 0; idx = CFG['_current_idx'][i]; i += 1) {
+    alm = ALIGN.ALMS[i].join(' ');
     WLS[idx][this_idx] = alm;
-    //storeModification(idx, this_idx, alm, false);
     
     /* add the values to the three arrays */
     ids.push(idx);
     cols.push(this_idx);
     vals.push(alm);
 
+    /* check for tokens */
+    tokens = [];
+    for (j = 0; segment = ALIGN.ALMS[i][j]; j += 1) {
+      if (segment != "-" && segment != "(" && segment != ")") {
+        tokens.push(segment);
+      }
+    }
+    tokens = tokens.join(" ");
+    if (tokens != WLS[idx][CFG._segments]) {
+      ids.push(idx);
+      cols.push(CFG._segments);
+      vals.push(tokens);
+      WLS[idx][CFG._segments] = tokens;
+    }
+
     blobtxt += idx+'\t'+ALIGN.TAXA[i]+'\t'+ALIGN.ALMS[i].join('\t')+'\n';
   }
 
-  storeModification(ids,cols,vals,false);
+  storeModification(ids, cols, vals, false);
 
   CFG['_alignment'] = blobtxt;
 

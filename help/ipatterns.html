@@ -1,11 +1,12 @@
 
-<h1>Correspondence Pattern Inspector</h1>
-<p>This module allows you to inspect the correspondence patterns in your data. It it quite convenient to infer striking similarities across multiple languages in your data.
+<h1>Compute Correspondence Patterns</h1>
+<p>This module allows you to infer the correspondence patterns in your data. It it quite convenient to infer striking similarities across multiple languages in your data.
 It requires that you have at least one of the following columns readily filled:</p>
 <ul>
 <li>TOKENS or SEGMENTS (segmentized IPA representation of your sounds)</li>
 <li>COGID or COGIDS (cognate sets or partial cognate sets)</li>
 <li>ALIGNMENT or ALIGNMENTS (the aligned strings)</li>
-<li>PATTERNS (the previously identified correspondence patterns, that are stored in this column)</li>
+<li>PATTERNS (the column to store the computed correspondence patterns, if it is lacking, you must create it at first and assign it in the SETTINGS menu).</li>
 </ul>
 <p>The column names can vary, but if they do so, you must specify the variation, using the SETTINGS panel. Note also, that you must make sure that you have selected the correct "morphology mode". This can also be specified in the SETTIGS menu. If your data is coded as partial cognates, select <em>partial</em> morphology or colexification mode (and make also sure to have selected a valid column for the Partial Cognates in your data. If your data is coded as full cognates, make sure to select <em>full</em> and also to provide a column that actually <em>has</em> full cognate sets (with corresponding alignments). </p>
+<p>The correspondence patterns are computed in a way that is quite straightforward and simple, using a sorting algorithm that is not guaranteed to find the best patterns. </p>

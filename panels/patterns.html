@@ -1,0 +1,31 @@
+<!--
+
+Patterns panel of the EDICTOR
+
+author   : Johann-Mattis List
+email    : mattis.list@lingulist.de
+created  : 2017-10-24 17:47
+modified : 2024-04-02 11:49
+
+-->
+
+<span class="main_handle pull-left"></span>
+<button type="button" onclick="$('#toggle_patterns > span').toggle(); $('#patterns').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+<div class="sets-message">
+  <h3>Investigate correspondence patterns in the data</h3>
+  <div style="display:block">
+    <!--<div class="btn-group pull-left" id="PATS_menu_top">-->
+
+
+     <div class="btn-group pull-right">
+       <button type="button" class="btn-primary titled btn submit3 pull-right" title="show help"
+	 onclick="UTIL.show_help('patterns');" style="margin-left:5px;"><span class="glyphicon glyphicon-question-sign"></span></button>
+     </div>
+      <button type="button" class="btn btn-primary titled pull-left submit3" onclick="CFG['_recompute_patterns'] = false; PATS.render_patterns(this);">SUBMIT</button>
+  <div class="btn-group pull-left" style="margin-left: 5px" id="PATS_menu">
+  </div>
+  </div>
+  <br><br>
+
+  <div style="display:block"><div id="patterns_table"></div>
+  <div style="display:block"><div id="patterns_help" style="display:none" class="help-message"></div>

@@ -455,7 +455,7 @@ GLOSSES.editGroup = function(event, cogid) {
   text += '</div><br><br>';
   text += '<br><div class="alignments"><table>'
 
-  for (i=0; i<table.length; i++){
+  for (i = 0; i < table.length; i += 1){
     text += '<tr>'+
       '<td class="gloss_cell">'+table[i][0]+'<sup>'+table[i][1]+'</sup></td>'+
       '<td class="gloss_cell alm_taxon">'+table[i][2]+'</td>'+
