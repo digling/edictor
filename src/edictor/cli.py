@@ -11,6 +11,7 @@ from edictor.server import Handler
 
 
 
+
 parser = argparse.ArgumentParser(
                     prog='EDICTOR 3',
                     description='Computer-assisted language comparison with EDICTOR 3.',
@@ -22,14 +23,15 @@ parser.add_argument('-f', '--file', help="Select file to be loaded.",
 parser.add_argument('-b', '--browser', default="firefox", 
                     help="select webbrowser")
 
-args = parser.parse_args()
-
-httpd = HTTPServer(("", args.port), Handler)
-print("Serving EDICTOR at port {0}...".format(args.port))
-url = "http://localhost:" + str(args.port) + "/"
-if args.file:
-    url += "?file=" + args.file
-webbrowser.get(args.browser).open(url)
-
-httpd.serve_forever()
+def main():
+    args = parser.parse_args()
+    
+    httpd = HTTPServer(("", args.port), Handler)
+    print("Serving EDICTOR at port {0}...".format(args.port))
+    url = "http://localhost:" + str(args.port) + "/"
+    if args.file:
+        url += "?file=" + args.file
+    webbrowser.get(args.browser).open(url)
+    
+    httpd.serve_forever()
 
