@@ -30,8 +30,12 @@ def main():
     print("Serving EDICTOR at port {0}...".format(args.port))
     url = "http://localhost:" + str(args.port) + "/"
     if args.file:
-        url += "?file=" + args.file
-    webbrowser.get(args.browser).open(url)
+        url += "index.html?file=" + args.file
+    try:
+        webbrowser.get(args.browser).open_new_tab(url)
+    except:
+        print("Could not open webbrowser, please open locally " 
+              "at http://localhost:" + str(args.port) + "/")
     
     httpd.serve_forever()
 
