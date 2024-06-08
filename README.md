@@ -11,13 +11,13 @@ $ pip install edictor
 This will install EDICTOR on your computer and offer the command `edictor` on your commandline that you can use to run the application locally.
 
 ```shell
-$ edictor
+$ edictor3
 ```
 
 Running the application will try to automatically open the webbrowser at the default address `http://localhost:9999`. If that causes errors, you can select another port.
 
 ```shell
-$ edictor --port=9876
+$ edictor3 --port=9876
 ```
 
 The landing page will provide further information on files and datasets that you can open and test.
@@ -28,4 +28,15 @@ If you use EDICTOR in your work, please cite the tool as follows:
 
 
 
+## Getting Started on Windows
 
+https://www.heise.de/tipps-tricks/Windows-Powershell-Skript-ausfuehren-4672163.html
+
+https://www.heise.de/tipps-tricks/Windows-Powershell-Skript-ausfuehren-4672163.html
+
+https://mothergeo-py.readthedocs.io/en/latest/development/how-to/venv-win.html
+
+$ python -m pip install edictor
+$ edictor3.exe
+
+$ git clone https://github.com/digling/edictor

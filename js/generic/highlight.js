@@ -504,6 +504,8 @@ function ipa2tokens(sequence) {
   /* return if sequence contains whitespace (=is already tokenized) */
   if (sequence.indexOf(' ') != -1) { return sequence.replace(/^ */,'').replace(/ *$/,''); }
 
+
+
   /* define dvt as basic entities */
   var diacritics = DOLGO['_diacritics']; 
   var tones = DOLGO['_tones'];
@@ -520,7 +522,8 @@ function ipa2tokens(sequence) {
   /* start the loop, main idea is to look back (not in front!), that is, 
    * store for each instance of a vowel, whether it is a vowel, or for a 
    * tone, if it is a tone */
-  for (var i=0,seg; seg=seqs[i]; i++) {
+  var i, seg;
+  for (i = 0; seg=seqs[i]; i++) {
     
     /* check for diacritics */
     if (diacritics.indexOf(seg) != -1) {
@@ -572,7 +575,7 @@ function ipa2tokens(sequence) {
     }
   }
 
-  return out.join(' ').replace(/^ */,'').replace(/ *$/,'');
+  return out.join(' ').replace(/^ */, '').replace(/ *$/, '');
 }
 
 var _ART = {

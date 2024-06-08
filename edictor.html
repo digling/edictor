@@ -1,0 +1,414 @@
+<!--
+
+EDICTOR main menu
+
+author   : Johann-Mattis List
+email    : mattis.list@lingulist.de
+created  : 2017-09-29 15:19
+modified : 2024-04-06 20:35
+
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="icon" href="img/edictor-small.png" type="image/png" />
+<link rel="stylesheet" href="css/main.css" type="text/css" />
+<!--<script>window.$ = window.jQuery = require('./js/vendor/jquery-1.10.2.js');</script>-->
+
+<title>EDICTOR</title>
+</head>
+<body>
+  <div id="copy_value" class="side_message" style="display:none"></div>
+  <div id="navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container" style="width:100%">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <img class="navbar-brand"
+        style="margin-top:2px;padding:0px;margin-right:5px;width:50px;height:50px;"
+        src="img/edictor-small.png" alt="tsv" />
+        <a class="navbar-brand" onclick="event.preventDefault();window.location.reload();">EDICTOR</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              ABOUT 
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a onclick="loadAjax(event, 'sortable', 'about', 'help col-sm-8');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  ABOUT
+                </a>
+              </li>
+              <li>
+                <a id="toggle_contact" onclick="loadAjax(event, 'sortable','contact','smallbox col-sm-5');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  CONTACT
+                </a>
+              </li>
+              <li>
+                <a id="toggle_help" onclick="loadAjax(event, 'sortable','help','help col-sm-8');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  HELP
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              CONFIGURE
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a id="toggle_menu" onclick="toggleDisplay(event,'menu');">
+                  <span class="glyphicon glyphicon-ok"></span>
+                  <span class="glyphicon glyphicon-remove" style="display: none"></span>
+                  MENU
+                </a>
+              </li>
+              <li>
+                <a id="toggle_settings" 
+                  onclick="loadAjax(event,'sortable', 'settings', 'help col-sm-4');">
+                  <span class="glyphicon glyphicon-ok" style="display:none"></span>
+                  <span class="glyphicon glyphicon-remove"></span>
+                  SETTINGS
+                </a>
+              </li>
+              <li>
+                <a id="toggle_customize" onclick="loadAjax(event, 'sortable', 'customize', 'help col-sm-8');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  CUSTOMIZE
+                </a>
+              </li>
+              <li>
+                <a id="toggle_templates" onclick="loadAjax(event, 'sortable', 'templates', 'help col-sm-8');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  TEMPLATES
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              EDIT
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a id="toggle_filedisplay" onclick="toggleDisplay(event,'filedisplay')">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  WORDLIST
+                </a>
+              </li>
+              <li>
+                <a id="toggle_cognates" onclick="loadAjax(event, 'sortable', 'cognates', 'colx largebox'); handle_cognate_selection();">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display:none"></span>
+                  COGNATE SETS
+                </a>
+              </li>
+              <li>
+                <a id="toggle_partial" onclick="loadAjax(event, 'sortable', 'partial', 'colx largebox'); PART.handle_partial_selection();">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display:none"></span>
+                  PARTIAL COGNATE SETS
+                </a>
+              </li>
+              <li>
+                <a id="toggle_forms" onclick="loadAjax(event, 'sortable', 'forms', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  SEGMENTING AND GROUPING 
+                </a>
+              </li>
+              <li>
+                <a id="toggle_glosses" onclick="loadAjax(event, 'sortable', 'glosses', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  MORPHEME GLOSSES
+                </a>
+              </li>
+              <li>
+                <a id="toggle_patterns" onclick="loadAjax(event, 'sortable', 'patterns', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  CORRESPONDENCE PATTERNS
+                </a>
+              </li>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              COMPUTE
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a id="toggle_icognates" onclick="loadAjax(event, 'sortable', 'icognates', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  COGNATE SETS
+                </a>
+              </li>
+              <li>
+                <a id="toggle_ialms" onclick="loadAjax(event, 'sortable', 'ialms', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  ALIGNMENTS
+                </a>
+              </li>
+              <li>
+                <a id="toggle_ipatterns" onclick="loadAjax(event, 'sortable', 'ipatterns', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  CORRESPONDENCE PATTERNS
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              ANALYZE
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a id="toggle_phonology" onclick="loadAjax(event, 'sortable', 'phonology', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  PHONOLOGY
+                </a>
+              </li>
+              <li>
+                <a id="toggle_morphology" onclick="loadAjax(event, 'sortable', 'morphology', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  MORPHOLOGY
+                </a>
+              </li>
+              <li>
+                <a id="toggle_correspondences" onclick="loadAjax(event, 'sortable', 'correspondences', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  CORRESPONDENCES
+                </a>
+              </li>
+              <li>
+                <a id="toggle_sets" onclick="loadAjax(event, 'sortable', 'sets', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  COGNATE SETS
+                </a>
+              </li>
+              <li>
+                <a id="toggle_check" onclick="loadAjax(event, 'sortable', 'check', 'largebox');">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="glyphicon glyphicon-ok" style="display: none"></span>
+                  CHECK DATA  
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="" onclick="localStorage.clear();event.preventDefault();window.location.reload();">RELOAD</a>
+          </li>
+        </ul>
+        <ul style="float-right" class="nav navbar-nav navbar-right">
+          <li><a href="http://github.com/digling/edictor/">GitHub</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+  <div id="outerbox" name="top">
+    <ul id="sortable">
+
+      <!-- MENU -->
+      <li id="menu_handle" class="colx" style="display:block;width:100%;">
+        <div id="menu">
+          <span class="main_handle pull-left"></span>
+          <button type="button" onclick="$('#toggle_menu > span').toggle();$('#menu').toggle();" class="pull-right close" style="margin-left:5px">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <br class="menubr">
+          <input type="file" id="file" name="file" class="btn btn-primary pull-left submit3" style="margin-left:0px;margin-right:3px;padding:7px;" />
+          <input type="text" class="form-control pull-left mright textfield" style="width:140px;display:inline" onkeyup="showSpinner(function(){handleAjax(event,'url')});" id="ajaxfile" placeholder="select remote file" />
+          <div id="wordlist-statistics" class="infobox hidden pull-left mright">no data has been loaded</div>
+          <input type="text" class="form-control pull-left mright textfield" style="width:140px;display:inline;" onkeyup="showSpinner(function(){handleAjax(event,'db')});" id="database" placeholder="select database" />
+          <input id="last" type="button" onclick="showWLS(1);$('#last').removeClass('unhidden');$('#last').addClass('hidden');" class="submit hidden" value="&nbsp;LAST&nbsp;" />
+
+          <div id="mainsettings" class="btn-group pull-right" style="display:none">
+            <button type="button" title="refresh current dataset"
+              onclick="resetFormat(CFG['formatter']);resetRootFormat(CFG['root_formatter']);createSelectors();applyFilter();showWLS(getCurrent());display_current_cognate();" class="btn-primary mleft btn submit3">
+              <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+            <button class="submit3 btn-primary mleft btn titled" title="Filter data (shortcut [F3])" id="textfieldsettings" onclick="$('#textfields').toggle();">
+              <span class="glyphicon glyphicon-filter"></span>
+            </button>
+            <!--<button class="submit3 btn-primary mleft btn titled" title="Save (shortcut [CTRL+S])" id="refresh" onclick="refreshFile();">
+              <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>-->
+            <button class="submit3 btn-primary mleft btn titled" title="Download via Browser (shortcut [CTRL+E])" id="save" onclick="saveFile();">
+              <span class="glyphicon glyphicon-download-alt"></span>
+            </button>
+            <button class="submit3 btn-primary mleft btn titled" title="Save file locally (shortcut [CTRL+S])" id="save-python" onclick="saveFileInPython();">
+              <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+          </div>
+          <br class="menubr"><br class="menubr">
+          <div id="undoredo" class="btn-group pull-right">
+            <button title="UNDO (shortcut [CTRL+Y])" id="undo" onclick="UnDo();" class="mleft btn-primary btn titled hidden submit3" style="margin:3px">
+              <span class="glyphicon glyphicon-arrow-left"></span>
+            </button>
+            <button title="REDO (shortcut [CTRL+Z])" id="redo" onclick="ReDo();" class="mleft btn-primary btn titled hidden submit3" style="margin:3px">
+              <span class="glyphicon glyphicon-arrow-right"></span>
+            </button>
+          </div>
+          <br class="menubr">
+          <!-- FILTERS -->
+          <div id="textfields" class="pull-left"
+            style="display:none;overflow: visible; clear:both;">
+            <div class="btn-group">
+              <select class="multiselect" multiple id="select_doculects" title="filter doculects"></select>
+              <select class="multiselect" multiple id="select_concepts" title="filter concepts"></select>
+              <select class="multiselect" multiple id="select_columns" title="filter columns"></select>
+              <button class="btn-primary btn mright titled submit3" onclick="applyFilter();showWLS(getCurrent());">
+                OK
+              </button>
+            </div>
+            <div class="btn-group pull-right">
+              <input type="text" class="form-control textfield mleft" style="width:25%;" onkeyup="addColumn(event);" id="add_column" placeholder="add column" />
+              <input type="text" class="form-control textfield mleft" style="width:25%;" onkeyup="filterColumnValue(event);" id="filter_all" placeholder="COLUMN = value" />
+            </div>
+          </div>
+        </div>
+      </li>
+      <!-- MAIN TABLE -->
+      <li class="colx">
+        <div id="filedisplay">
+          <span class="main_handle pull-left"></span>
+          <button type="button" onclick="$('#toggle_filedisplay > span').toggle();$('#filedisplay').toggle();" class="pull-right close" style="margin-left:5px">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <br>
+          <div class="btn-group pull-left">
+            <button class="btn-primary btn submit3 mright hidden" id="filename"></button>
+            <button class="btn-primary btn submit3 mright hidden" id="current"></button>
+            <input id="previous" type="button" class="btn btn-primary mright submit3 hidden" value="0-0"/>
+            <input id="first" type="button"    class="btn btn-primary mright submit3 unhidden" value="START " onclick="showWLS(1)" />
+            <input id="next" type="button"     class="btn btn-primary mright submit3 hidden" value="1-1" />
+            <button class="btn btn-primary mright submit3" onclick="UTIL.display_previous_concept()">←</button>
+            <button id="wordlist_current_concept" class="btn btn-primary mright submit3"></button>
+            <button class="btn btn-primary mright submit3" onclick="UTIL.display_next_concept()">→</button>
+          </div>
+          <button type="button" class="btn-primary titled btn submit3 pull-right"
+            title="show help"
+            onclick="UTIL.show_help('wordlist', 'qlc', 'filedisplay');" 
+            style="margin-left:5px;"><span class="glyphicon glyphicon-question-sign"></span>
+          </button>
+
+          <br><br>
+          <div id="db"></div>
+          <div name="wordlist" style="overflow:visible;" id="qlc" ></div>
+          <div name="wordlist_help" class="help-message" style="overflow:visible;" id="wordlist_help" ></div>
+          <div id="store" style="display:none"></div>
+        </div>
+      </li>
+      <!-- drop zone and information handling -->
+      <li class="colx" style="width:100%">
+        <div class="drop_zone_start" id="eingang"><p>Files are loading, please wait...</p></div>
+        <div id="view" onclick="$('#welcome').remove();showWLS(1);toggleDisplay(event,'filedisplay');$('#textfields').show();" class="view" style="display:none" value="&nbsp;VIEW&nbsp;">
+          Open the file.
+        </div>
+      </li>
+      <li class="colx" id="welcome" style="width:100%;padding-right:10px;display:block;">
+
+        <div class="colx welcome">
+          <span class="main_handle pull-left" style="margin-left:5px;margin-top:-15px;"></span>
+          <button type="button" onclick="$('#welcome').remove();" class="pull-right close"
+            style="margin-right:5px;margin-top:-15px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+                <img style="display:table-cell;float:left;max-width:300px;width:39%" src="img/wordlists.png" alt="edictor" />
+          <div
+            style="color:white;font-size:140%;display:table-cell;float:left;width:59%;" >
+            <b>Welcome to the EDICTOR!</b> <br><br> The EDICTOR is an interactive tool for creating, maintaining, and publishing
+                etymological data which is stored in simple TSV format. <br><br>
+                Use the EDICTOR to 
+                <ul><li>create your datasets from scratch,</li>
+                  <li>annotate your existing datasets,</li>
+                  <li>identify and annotate cognates,</li>
+                  <li>create alignments,</li>
+                  <li>annotate language-internal cognates,</li>
+                  <li>check your data, and</li>
+                  <li>carry out various kinds of analyses.</li></ul>
+                In order to get started with an existing example dataset, just click 
+                <a style="color:crimson" href="http://edictor.org?file=BAI.tsv">this
+                  link</a>. Press 
+                <span class="pointed" onclick="$('#welcome').remove();loadAjax(event, 'sortable', 'about', 'help col-sm-8');" style="color:crimson">here</span> to learn more ABOUT the EDICTOR,
+              or <span class="pointed" onclick="$('#welcome').remove();loadAjax(event, 'sortable', 'help', 'help col-sm-8');" 
+                style="color:crimson">here</span> to get further HELP.
+              If you use the EDICTOR in your work, please 
+              <a style="color:crimson" href="http://digling.org/evobib/evobib.py?key=List2017d" target="_blank">
+                cite</a> the paper by List (2017) which can be downloaded 
+              <a style="color:crimson" target="_blank" href="http://aclweb.org/anthology/E/E17/E17-3003.pdf">here</a>.
+              You can also cite the actual version of the EDICTOR as follows:
+              <br>
+              <table><tr><td style="color:black;background-color:LightYellow;margin:10px;padding:10px; border-radius:15px;">
+                    List, Johann-Mattis (2024): EDICTOR. A web-based interactive tool for creating and editing etymological datasets. Version 3.0.alpha. MCL Chair at the University of Passau: Passau. URL: <a href="https://digling.org/edictor/"/>https://edictor.org/</a>.</td></tr></table>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="#data_saved" style="color:white;font-size:12px">Data has not yet been saved.</div>
+
+<div id="popup_background" class="popup_background"></div>
+<script src="js/generic/highlight.js"></script>
+<script src="js/generic/sampa.js"></script>
+<script src="js/generic/edit.js"></script>
+<script src="js/generic/multiple.js"></script>
+<script src="js/generic/features.js"></script>
+<script src="js/generic/datatable.js"></script>
+<script src="js/vendor/jsurl.js"></script>
+<script src="js/vendor/jquery-1.10.2.js"></script>
+<!--<script src="js/vendor/jquery-3.7.1.js"></script>-->
+<script src="js/vendor/jquery-ui.js"></script>
+<script src="js/vendor/FileSaver.js"></script>
+<script src="js/vendor/undomanager.js"></script>
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/vendor/bootstrap-multiselect.js"></script>
+<script src="js/vendor/spin.js"></script>
+<script src="js/statistics.js"></script>
+<script src="js/util.js"></script>
+<script src="js/alignments.js"></script>
+<script src="js/patterns.js"></script>
+<script src="js/cognates.js"></script>
+<script src="js/phonology.js"></script>
+<script src="js/morphology.js"></script>
+<script src="js/partial.js"></script>
+<script src="js/correspondences.js"></script>
+<script src="js/comments.js"></script>
+<script src="js/segments.js"></script>
+<script src="js/glosses.js"></script>
+<script src="js/wordlist.js"></script>
+<script src="js/starter.js"></script>
+
+</body>
+</html>

@@ -6,6 +6,7 @@ import sqlite3
 import urllib
 import os
 import json
+import codecs
 
 from pathlib import Path
 from datetime import datetime
@@ -79,10 +80,10 @@ def check(s):
 
 def configuration():
     if Path("config.json").exists():
-        with open("config.json") as f:
+        with codecs.open("config.json", "r", "utf-8") as f:
             conf = json.load(f)
     elif edictor_path("config.json").exists():
-        with open(edictor_path("config.json")) as f:
+        with codecs.open(edictor_path("config.json"), "r", "utf-8") as f:
             conf = json.load(f)
     else:
         conf = {
@@ -119,7 +120,7 @@ def file_handler(s, ft, fn):
         s.send_header("Content-type", DATA[ft])
         s.end_headers()
         try:
-            with open(edictor_path(fn[1:]), "r") as f:
+            with codecs.open(edictor_path(fn[1:]), "r", "utf-8") as f:
                 s.wfile.write(bytes(f.read(), "utf-8"))
         except FileNotFoundError:
             s.wfile.write(b'404 FNF')
@@ -128,27 +129,26 @@ def file_handler(s, ft, fn):
         s.send_header("Content-type", DATA[ft])
         s.end_headers()
         if Path(fn[6:]).exists() and fn.startswith("/data/"):
-            with open(fn[6:], "r") as f:
+            with codecs.open(fn[6:], "r", "utf-8") as f:
                 s.wfile.write(bytes(f.read(), "utf-8"))
         else:
             if edictor_path(fn[1:]).exists():
-                with open(edictor_path(fn[1:]), "r") as f:
+                with codecs.open(edictor_path(fn[1:]), "r", "utf-8") as f:
                     s.wfile.write(bytes(f.read(), "utf-8"))
             else:
                 s.wfile.write(b'400 FNF')
     elif ft in ["png", "ttf", "jpg", "woff"]:
         try:
-            with open(edictor_path(fn[1:]), 'rb') as f:
+            with codecs.open(edictor_path(fn[1:]), 'rb', None) as f:
                 s.wfile.write(f.read())
         except FileNotFoundError:
             s.wfile.write(b'404 FNF')
 
-def serve_base(s):
-    conf = configuration()
+def serve_base(s, conf):
     s.send_response(200)
     s.send_header("Content-type", "text/html")
     s.end_headers()
-    with open(edictor_path("base.html")) as f:
+    with codecs.open(edictor_path("index.html"), "r", "utf-8") as f:
         text = f.read()
     link_template = """<div class="dataset inside" onclick="window.open('{url}');"><span>{name}</span></div>"""
     
@@ -160,7 +160,7 @@ def serve_base(s):
     # add paths that are in the current folder
     paths = []
     for path in Path().glob("*.tsv"):
-        paths += [link_template.format(url="index.html?file=" + path.name,
+        paths += [link_template.format(url="edictor.html?file=" + path.name,
                                        name="Open File «" + path.name + "»")]
     text = text.replace("{DATASETS}", "".join(paths))
     text = text.replace(' id="files" style="display:none"', '')
@@ -169,6 +169,78 @@ def serve_base(s):
     s.wfile.write(bytes(text, "utf-8"))
 
 
+def new_id(s, query, qtype):
+    """
+    Obtain new identifier from currently largest one.
+    """
+    args = dict(
+            remote_dbase='', 
+            file='', 
+            date = '', 
+            new_id = '', 
+            tables = '', 
+            summary = '', 
+            unique = '', 
+            columns = '', 
+            concepts = '',
+            doculects = '', 
+            template = '', 
+            history = '', 
+            limit = ''
+            )
+    if qtype == "POST":
+        args.update(parse_post(query))
+    elif qtype == "GET":
+        args.update(parse_args(query))
+    else:
+        return
+
+    db = sqlite3.connect(
+            edictor_path("sqlite/" + args["remote_dbase"] + ".sqlite3"))
+    cursor = db.cursor()
+
+    s.send_response(200)
+    s.send_header("Content-type", "text/plain; charset=utf-8")
+    s.send_header("Content-disposition", 'attachment; filename="triples.tsv"')
+    s.end_headers()
+    
+    if args['new_id'] == "true":
+        cursor.execute('select DISTINCT ID from ' + args['file'] + ';')
+        linesA = [x[0] for x in cursor.fetchall()]
+        cursor.execute(
+            'select DISTINCT ID from backup where FILE = "' + args['file'] + '";'
+            )
+        linesB = [x[0] for x in cursor.fetchall()]
+        try:
+            maxA = max(linesA)
+        except ValueError:
+            maxA = 0
+        try:
+            maxB = max(linesB)
+        except ValueError:
+            maxB = 0
+            
+        if maxA >= maxB:
+            message = str(maxA + 1)
+        else:
+            message = str(maxB + 1)
+    else:
+        lines = [x[0] for x in cursor.execute('select DISTINCT VAL from ' + args['file'] +
+                ' where COL="' + args['new_id'] + '";')]
+        # dammit but, it doesn't really seem to work without explicit
+        # type-checking
+        cogids = []
+        for l in lines:
+            try: cogids += [int(l)]
+            except: 
+                try:
+                    cogids += [int(x) for x in l.split(' ')]
+                except: 
+                    pass
+
+        message = str(max(cogids) + 1)
+
+    s.wfile.write(bytes(message, "utf-8"))
 
 def triples(s, query, qtype):
     """
@@ -196,7 +268,6 @@ def triples(s, query, qtype):
     else:
         return
 
-    print(args)
     db = sqlite3.connect(
             edictor_path("sqlite/" + args["remote_dbase"] + ".sqlite3"))
     cursor = db.cursor()
@@ -259,18 +330,6 @@ def triples(s, query, qtype):
                 D[a][b] = c
             except KeyError:
                 D[a] = {b: c}
-
-    ## check for concepts and "template"
-    #if 'concepts' in args and "template" in args and 'doculects' in args:
-    #    maxidx = get_max_id(args, cursor)
-    #    for doculect in args['doculects'].split('|'):
-    #        
-    #        conceptsIs = [D[idx]['CONCEPT'] for idx in D if 'CONCEPT' in D[idx] and 'DOCULECT' in D[idx] and D[idx]['DOCULECT'] == doculect]
-    #        conceptsMiss = [c for c in args['concepts'].split('|') if c not in conceptsIs]
-    #        for concept in conceptsMiss:
-    #            D[maxidx] = {"CONCEPT":concept, "DOCULECT":doculect, "IPA": '?'}
-    #            idxs += [maxidx]
-    #            maxidx += 1
     
     # make object
     for idx in idxs:
@@ -283,10 +342,10 @@ def triples(s, query, qtype):
         text += txt + "\n"
     s.wfile.write(bytes(text, "utf-8"))
 
-def update(s, post, qtype):
 
+def update(s, post, qtype, user):
+    
     now = str(datetime.now()).split('.')[0]
-    user = "python"
     args = {}
     if qtype == "POST":
         args.update(parse_post(post))
@@ -301,6 +360,7 @@ def update(s, post, qtype):
     db = sqlite3.connect(edictor_path("sqlite", args["remote_dbase"] +
                                       ".sqlite3"))
     cursor = db.cursor()
+    print(args)
 
     if "update" in args:
         idxs = urllib.parse.unquote(args['ids']).split("|||")
@@ -369,9 +429,24 @@ def update(s, post, qtype):
                 message = 'ERROR'
     
         db.commit()
-        s.send_response(200)
-        s.send_header("Content-type", "text/html")
-        s.end_headers()
-        s.wfile.write(bytes(message, "utf-8"))
+
+    elif "delete" in args:
+        lines = [line for line in cursor.execute(
+            'select * from '+args['file'] +' where ID='+args['ID']+';'
+            )]
+        for idx, col, val in lines:
+            cursor.execute(
+                    'insert into backup values(?,?,?,?,strftime("%s","now"),?);',
+                    (args['file'],idx, col, val, user))
+            cursor.execute(
+                    'delete from '+args['file'] + ' where ID='+args['ID']+';')
+        db.commit()
+        message = 'DELETION: Successfully deleted all entries for ID {0} on {1}.'.format(
+                args['ID'],
+                now)
+    s.send_response(200)
+    s.send_header("Content-type", "text/html")
+    s.end_headers()
+    s.wfile.write(bytes(message, "utf-8"))
 
 

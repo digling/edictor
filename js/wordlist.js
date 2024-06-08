@@ -1358,11 +1358,11 @@ function modifyEntry(event, idx, jdx, xvalue) {
   }
   /* XXX tokenize entry  */ 
   else if (CFG['highlight'].indexOf(entry.className) != -1) {
-    if (xvalue.length > 1 && xvalue.indexOf(' ') == -1) {
-      nxvalue = ipa2tokens(xvalue);
+    if (xvalue.length > 1 && xvalue[0] == " ") {
+      nxvalue = ipa2tokens(xvalue.slice(1, xvalue.length));
       //-> console.log('transforming',xvalue,nxvalue);
       if (nxvalue != xvalue) {
-	xvalue = nxvalue;
+	      xvalue = nxvalue;
       }
     }
   }
@@ -2065,11 +2065,11 @@ function addLine(rowidx) {
   }
   else {
     /* create url first */
-    var new_url = 'triples/triples.py';
+    var new_url = 'triples/new_id.py';
     var postdata = {
       'file' : CFG['filename'],
       'remote_dbase': CFG['remote_dbase'], 
-      'new_id' : true
+      'new_id' : 'true'
     };
     var newIdx = 0;
     
@@ -2082,7 +2082,6 @@ function addLine(rowidx) {
       dataType: "text",
       success: function(data) {
 	      newIdx = parseInt(data);
-        console.log('newidx', newIdx, data);
       },
       error: function() {
         fakeAlert('data could not be stored');
@@ -2188,16 +2187,16 @@ function finishAddLine(new_idx) {
       'file='+CFG['filename'] +
       '&remote_dbase='+CFG['remote_dbase'] + 
       '&update=true' + 
-      '&ID='+new_idx +
-      '&COL='+ WLS.column_names[WLS.header[CFG['_tidx']]].replace(/ /g,'_') +
-      '&VAL='+taxon;
+      '&ids='+new_idx +
+      '&cols='+ WLS.column_names[WLS.header[CFG['_tidx']]].replace(/ /g,'_') +
+      '&vals='+taxon;
     var new_url2 = 'triples/update.py?' + 
       'file='+CFG['filename'] +
       '&remote_dbase='+CFG['remote_dbase'] + 
       '&update=true' + 
-      '&ID='+new_idx +
-      '&COL='+ WLS.column_names[WLS.header[CFG['_cidx']]].replace(/ /g,'_') +
-      '&VAL='+concept;
+      '&ids='+new_idx +
+      '&cols='+ WLS.column_names[WLS.header[CFG['_cidx']]].replace(/ /g,'_') +
+      '&vals='+concept;
     console.log(new_url1, new_url2, taxon, concept, new_idx);
 
     $.ajax({
