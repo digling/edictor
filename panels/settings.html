@@ -53,6 +53,14 @@ instructions which will appear. <br><br> -->
       <input name="morphology_mode" onchange="CFG['_morphology_mode'] = 'partial';" type="radio"> PARTIAL     
     </td>
   </tr>
+  <tr id="settings_python_or_lingpy" title="Select which method to use for the computation of cognates, alignments, and correspondences.">
+    <th>Computation Mode</th>
+    <td>
+      <input name="computation_mode" checked = "" onchange="CFG.use_lingpy = false" type="radio"> EDICTOR 
+      <input name="computation_mode" onchange="CFG.use_lingpy = true;" type="radio"> LingPy / LingRex     
+    </td>
+  </tr>
+
   <tr title="Change or set your preferred column to store and deal with morpheme data.">
     <th>Morphemes</th><td>
       <input  id="settings_morphemes" class="col-sm-3 form-control textfield titled" style="width:250px"
