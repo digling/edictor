@@ -7,6 +7,7 @@ import urllib
 import os
 import json
 import codecs
+import getpass
 
 from pathlib import Path
 from datetime import datetime
@@ -90,6 +91,13 @@ def configuration():
                 "user": "unknown",
                 "links": None
                 }
+    if conf.get("remote"):
+        if not conf["remote"].get("pw"):
+            conf["remote"]["pw"] = getpass.getpass("Remote password: ")
+    # represent urls as lists
+    if conf.get("links"):
+        for link in conf["links"]:
+            link["url"] = "".join(link["url"])
     return conf
         
 
@@ -143,6 +151,7 @@ def file_handler(s, ft, fn):
                 s.wfile.write(f.read())
         except FileNotFoundError:
             s.wfile.write(b'404 FNF')
+
 
 def serve_base(s, conf):
     s.send_response(200)
@@ -241,6 +250,7 @@ def new_id(s, query, qtype):
         message = str(max(cogids) + 1)
 
     s.wfile.write(bytes(message, "utf-8"))
+
 
 def triples(s, query, qtype):
     """
@@ -343,6 +353,43 @@ def triples(s, query, qtype):
     s.wfile.write(bytes(text, "utf-8"))
 
 
+def modifications(s, post, qtype):
+    now = str(datetime.now()).split('.')[0]
+    args = {}
+    if qtype == "POST":
+        args.update(parse_post(post))
+    elif qtype == "GET":
+        args.update(parse_args(post))
+    else:
+        return
+
+    if not "remote_dbase" in args:
+        return
+    
+    db = sqlite3.connect(edictor_path("sqlite", args["remote_dbase"] +
+                                      ".sqlite3"))
+    cursor = db.cursor()
+    cursor.execute(
+            'select ID,COL from backup where FILE="'+args['file']+'"'+\
+                    ' and datetime(DATE) > datetime('+args['date']+')'+\
+                    ' group by ID,COL limit 100;')
+    lines = cursor.fetchall()
+    data = dict([((a,b),c) for a,b,c in cursor.execute(
+            'select * from '+args['file']+';'
+            )])
+    message = ""
+    for line in lines:
+        try:
+            val = data[line[0],line[1]].encode('utf-8')
+            message += '{0}\t{1}\t{2}\n'.format(line[0], line[1], val) 
+        except KeyError:
+            pass
+    s.send_response(200)
+    s.send_header("Content-type", "text/html")
+    s.end_headers()
+    s.wfile.write(bytes(message, "utf-8"))
+
+
 def update(s, post, qtype, user):
     
     now = str(datetime.now()).split('.')[0]
@@ -360,7 +407,6 @@ def update(s, post, qtype, user):
     db = sqlite3.connect(edictor_path("sqlite", args["remote_dbase"] +
                                       ".sqlite3"))
     cursor = db.cursor()
-    print(args)
 
     if "update" in args:
         idxs = urllib.parse.unquote(args['ids']).split("|||")

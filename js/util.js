@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2016-03-20 10:44
- * modified : 2023-10-22 20:02
+ * modified : 2024-06-09 07:07
  *
  */
 
@@ -70,7 +70,6 @@ UTIL.settings = {
   '_patterns':-1, /* patterns of sound correspondences */
   'highlight': ['TOKENS','ALIGNMENT', 'SEGMENTS'],
   'sampa' : ['IPA','TOKENS', 'SEGMENTS', 'TRANSCRIPTION'],
-  'pinyin' : ['CHINESE'],
   'css': ["menu:show","database:hide"],
   'status' : {},
   'server_side_files' : [],

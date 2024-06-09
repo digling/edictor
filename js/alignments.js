@@ -642,18 +642,8 @@ ALIGN.automated_alignments = function (){
   var cognates = (CFG._morphology_mode == "partial") ? CFG._roots : CFG._cognates;
   var roots = (CFG._morphology_mode == "partial") ? WLS.roots : WLS.etyma;
   var mode = (CFG._morphology_mode == "partial") ? CFG.root_formatter : CFG.formatter;
-
-  feedback.innerHTML = '<table class="data_table2">' +
-    "<tr><th>Parameter</th><th>Setting</th></tr>" +
-    "<tr><td>Run</td><td>" + date + "</td></tr>" +
-    "<tr><td>Cognate Mode</td><td>" + CFG._morphology_mode + "</td></tr>" +
-    "<tr><td>Alignment Column</td><td>" + CFG._almcol + "</td></tr>" +
-    "<tr><td>Cognate Column</td><td>" + mode + "</td></tr>" +
-    "</table>";
-
   var key, idxs, idx, i, pos, tks, alms;
   var aligned = {};
-  console.log(roots);
   for (key in roots) {
     segments = [];
     idxs = roots[key];
@@ -687,9 +677,12 @@ ALIGN.automated_alignments = function (){
   }
   /* add data to alignments now */
   var cogids, alm;
+  var idxs = [];
+  var jdxs = [];
+  var vals = [];
   for (idx in WLS) {
     if (!isNaN(idx)) {
-      cogids = WLS[idx][cognates].split(" ");
+      cogids = String(WLS[idx][cognates]).split(" ");
       alm = [];
       for (i = 0; i < cogids.length; i += 1) {
         try {
@@ -705,7 +698,25 @@ ALIGN.automated_alignments = function (){
         }
       }
       WLS[idx][CFG._alignments] = alm.join(" + ");
+      idxs.push(idx);
+      jdxs.push(CFG._alignments);
+      vals.push(alm.join(" + "));
     }
   }
   showWLS(getCurrent());
+  showSpinner(
+    function() {
+      storeModification(idxs, jdxs, vals, CFG["async"]);
+      feedback.innerHTML = '<table class="data_table2">' +
+        "<tr><th>Parameter</th><th>Setting</th></tr>" +
+        "<tr><td>Run</td><td>" + date + "</td></tr>" +
+        "<tr><td>Cognate Mode</td><td>" + CFG._morphology_mode + "</td></tr>" +
+        "<tr><td>Alignment Column</td><td>" + CFG._almcol + "</td></tr>" +
+        "<tr><td>Cognate Column</td><td>" + mode + "</td></tr>" +
+        "</table>";
+        }, 
+    1
+  );
+
+
 };

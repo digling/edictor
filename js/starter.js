@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-09-03 13:40
- * modified : 2021-04-06 18:53
+ * modified : 2024-06-09 07:02
  *
  */
 
@@ -33,12 +33,6 @@ function startWordlist() {
         CFG['status'][linesplit[0]] = linesplit[1]; 
       }
     }
-
-    // -- /* check for database in which the stuff will be stored */
-    // -- if (CFG['status']['database'] == 'show')
-    // -- {
-    // --   getDataBases();
-    // -- }
     return 1;
   }
   catch (e) {
@@ -317,28 +311,6 @@ function handleDragOver(evt) {
   evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
 }
 
-
-
-
-// --function getDataBases() {
-// --  $.ajax({
-// --        async: false,
-// --        type: "GET",
-// --        url: 'triples/triples.py',
-// --	      data: {tables: 'tables'},
-// --	      contentType : 'application/text; charset=utf-8',
-// --        dataType : "text",
-// --        success: function(data) {
-// --          CFG['server_side_bases'] = data.split('\n');
-// --          /* manage autocomplete */
-// --          $('#database').autocomplete({
-// --            delay: 0,
-// --            source: CFG['server_side_bases']
-// --          });
-// --        },
-// --        error: function() {console.log('failed to load');}
-// --  });
-// --}
 
 if (document.URL.indexOf('=') != -1) {
   var tmp_url = document.URL.split('#');
@@ -644,12 +616,15 @@ function makeMyTemplate() {
 
 }
 
-function showSpinner(code) {
+function showSpinner(code, time) {
+  if (typeof time == "undefined"){
+    time = 10;
+  }
   $('#popup_background').toggle();
   setTimeout(function(){
     code();
     $('#popup_background').toggle();
-  }, 10);
+  }, time);
 }
 
 /* a simple helper function for those cases where no ajax load will create the elements

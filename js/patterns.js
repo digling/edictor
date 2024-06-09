@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2017-10-24 17:46
- * modified : 2024-04-02 12:10
+ * modified : 2024-06-09 07:03
  *
  */
 /* XXX check for alignments etc. in data */
@@ -1209,20 +1209,36 @@ PATS.render_patterns = function(elm) {
 
 
 PATS.compute_patterns = function() {
-  console.log("starting");
   this.get_patterns();
+  var idxs = [];
+  var jdxs = [];
+  var vals = [];
+  var idx;
+  for (idx in WLS) {
+    if (!isNaN(idx)) {
+      idxs.push(idx);
+      jdxs.push(CFG._patterns);
+      vals.push(WLS[idx][CFG._patterns]);
+    }
+  }
   var date = new Date().toString();
   var feedback = document.getElementById("ipatterns_table");
   var mode = (CFG.morphology_mode == "partial") ? CFG.root_formatter : CFG.formatter;
-
-  feedback.innerHTML = '<table class="data_table2">' +
-    "<tr><th>Parameter</th><th>Setting</th></tr>" +
-    "<tr><td>Run</td><td>" + date + "</td></tr>" +
-    "<tr><td>Cognate Mode</td><td>" + CFG._morphology_mode + "</td></tr>" +
-    "<tr><td>Alignment Column</td><td>" + CFG._almcol + "</td></tr>" +
-    "<tr><td>Cognate Column</td><td>" + mode + "</td></tr>" +
-    "<tr><td>Pattern Column</td><td> " + CFG.pattern_formatter + "</td></tr>" +
-    "</table>";
+  
+  showSpinner(
+    function(){
+      storeModification(idxs, jdxs, vals, CFG["async"]);
+      feedback.innerHTML = '<table class="data_table2">' +
+        "<tr><th>Parameter</th><th>Setting</th></tr>" +
+        "<tr><td>Run</td><td>" + date + "</td></tr>" +
+        "<tr><td>Cognate Mode</td><td>" + CFG._morphology_mode + "</td></tr>" +
+        "<tr><td>Alignment Column</td><td>" + CFG._almcol + "</td></tr>" +
+        "<tr><td>Cognate Column</td><td>" + mode + "</td></tr>" +
+        "<tr><td>Pattern Column</td><td> " + CFG.pattern_formatter + "</td></tr>" +
+        "</table>";
+    },
+    1
+  );
 
   /* check if patterns is loaded */
   var pats = document.getElementById("patterns");
@@ -1235,4 +1251,5 @@ PATS.compute_patterns = function() {
   }
   this.render_patterns();
   showWLS(getCurrent());
+  CFG._recompute_patterns = false;
 };

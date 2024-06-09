@@ -5,7 +5,7 @@ from edictor.util import (
         DATA, get_distinct, get_columns, 
         check, configuration,
         file_type, file_name, file_handler, triples, download,
-        update, serve_base, new_id
+        update, serve_base, new_id, modifications
         )
 
 CONF = configuration()
@@ -41,10 +41,14 @@ class Handler(SimpleHTTPRequestHandler):
             download(s, post_data_bytes)
         if fn == "/check.py":
             check(s)
+
+        
         if fn == "/triples/update.py":
             update(s, post_data_bytes, "POST", CONF.get("user", "python"))
         if fn == "/triples/new_id.py":
             new_id(s, post_data_bytes, "POST")
+        if fn == "/triples/modifications.py":
+            modifications(s, post_data_bytes, "POST")
 
     def do_GET(s):
         """
@@ -67,6 +71,8 @@ class Handler(SimpleHTTPRequestHandler):
             update(s, s.path, "GET", CONF.get("user", "python"))
         if fn == "/triples/new_id.py":
             new_id(s, s.path, "GET")
+        if fn == "/triples/modifications.py":
+            modifications(s, s.path, "GET")
 
 
 

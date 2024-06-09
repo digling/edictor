@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-12-18 14:11
- * modified : 2015-01-27 10:35
+ * modified : 2024-06-09 07:01
  *
  */
 
@@ -519,6 +519,9 @@ COGNACY.compute_cognates = function() {
     return;
   }
   var new_cogid = 1;
+  var idxs = [];
+  var jdxs = [];
+  var vals = [];
   for (idx in WLS) {
     if (!isNaN(idx)) {
       [concept, classes] = [
@@ -558,7 +561,10 @@ COGNACY.compute_cognates = function() {
           new_cogid += 1;
         }
       }
-      WLS[idx][formatter] = cogid;
+      WLS[idx][formatter] = String(cogid);
+      idxs.push(idx);
+      jdxs.push(formatter);
+      vals.push(cogid);
     }
   }
   if (CFG._morphology_mode == "partial") {
@@ -571,12 +577,19 @@ COGNACY.compute_cognates = function() {
   var date = new Date().toString();
   var feedback = document.getElementById("icognates_table");
   var mode = (CFG._morphology_mode == "partial") ? CFG.root_formatter : CFG.formatter;
-  var cogs = (CFG._morphology_mode == "partial") ? Object.keys(WLS.roots).length : Object.keys(WLS.etyma).length;
-  feedback.innerHTML = '<table class="data_table2">' +
-    "<tr><th>Parameter</th><th>Setting</th></tr>" +
-    "<tr><td>Run</td><td>" + date + "</td></tr>" +
-    "<tr><td>Cognate Mode</td><td>" + CFG._morphology_mode + "</td></tr>" +
-    "<tr><td>Cognate Column</td><td>" + mode + "</td></tr>" +
-    "<tr><td>Cognate Sets</td><td>" + cogs + "</td></tr>"
-    "</table>";
+  showSpinner(
+    function() {
+      storeModification(idxs, jdxs, vals, CFG["async"]);
+      var cogs = (CFG._morphology_mode == "partial") ? Object.keys(WLS.roots).length : Object.keys(WLS.etyma).length;
+      feedback.innerHTML = '<table class="data_table2">' +
+        "<tr><th>Parameter</th><th>Setting</th></tr>" +
+        "<tr><td>Run</td><td>" + date + "</td></tr>" +
+        "<tr><td>Cognate Mode</td><td>" + CFG._morphology_mode + "</td></tr>" +
+        "<tr><td>Cognate Column</td><td>" + mode + "</td></tr>" +
+        "<tr><td>Cognate Sets</td><td>" + cogs + "</td></tr>"
+        "</table>";
+
+    }, 
+    1
+  );
 };

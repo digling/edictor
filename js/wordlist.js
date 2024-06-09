@@ -3,7 +3,7 @@
  * author   : Johann-Mattis List
  * email    : mattis.list@lingulist.de
  * created  : 2014-06-28 09:48
- * modified : 2024-04-02 14:33
+ * modified : 2024-06-08 22:48
  *
  */
 
@@ -691,11 +691,9 @@ function showWLS(start){
     if (CFG['storable']) {
       var now = new Date();
       var passed_time = (now - CFG['last_time']) / 6000;
-
       if (passed_time > CFG['check_remote_intervall']) {
-
         /* create the url */
-        var url = 'triples/triples.py';
+        var url = 'triples/modifications.py';
         var postdata = {
           'remote_dbase': CFG['remote_dbase'],
           'file': CFG['filename'],
@@ -712,28 +710,38 @@ function showWLS(start){
           dataType: "text",
           success: function(data) {
             txt = data;
-            //-> console.log('checking for modified data');
-            //-> console.log('postdata', postdata);
             /* iterate over all lines and check for updates */
             var lines = txt.split('\n');
-            for (var i=0,line; line=lines[i]; i++){
-              var cells = line.split('\t');
-              var idx = parseInt(cells[0]);
-              var col = cells[1].replace(/_/g,'');
-              var col_idx = WLS.header.indexOf(col);
+            var i, line, cells, idx, col, col_idx, val;
+            var count = 0;
+            for (i = 0; line = lines[i]; i += 1){
+              cells = line.split('\t');
+              idx = parseInt(cells[0]);
+              col = cells[1].replace(/_/g,'');
+              col_idx = WLS.header.indexOf(col);
               /* check if column actually exists (it may just have been created
                * and will thus not appear in the current application, which is 
                * also not needed for now */
               if (col_idx != -1) {
-                var val = cells[2];
+                val = cells[2];
                 //-> console.log(col_idx, val, col);
                 if (WLS[idx][col_idx] != val) {
                   WLS[idx][col_idx] = val;
-                  //-> console.log('found data which needs to be changed');
+                  count += 1;
                 }
               }
             }
             CFG['last_time'] = now;
+            var saved = document.getElementById("data_saved");
+            if (typeof saved != "undefined") {
+              var time = now.toLocaleDateString() + " " + now.toLocaleTimeString();
+              if (count > 0) {
+                saved.innerHTML = "Found " + count + " entries from remote server at " + time + ".";
+              }
+              else {
+                saved.innerHTML = "Checked with remotely modified data at " + time + ".";
+              }
+            }
           },
           error: function() {
             CFG['storable'] = false;
@@ -1516,22 +1524,17 @@ function storeModification(idx, jdx, value, async_) {
    * make the modifying ajax-call to ensure that the data has been edited 
    * and stored */
   if (CFG['storable']) {
-    //->console.log('encountered storable stuff');
-    //
-
-    var new_url = 'triples/update.py'; //?remote_dbase='+CFG['remote_dbase'] + 
-    //  '&file='+CFG['filename'] +
-    //  '&update=true';
-    
+    var new_url = 'triples/update.py'; //?remote_dbase='+CFG['remote_dbase'] +     
     var ids = [];
     var cols = [];
     var vals = [];
-    
-    for (var i=0; i<idxs.length; i++) {
+
+    var i, idx, jdx, val;
+    for (i = 0; i < idxs.length; i += 1) {
       /* get the three values from the arrays */
-      var idx = idxs[i];
-      var jdx = jdxs[i];
-      var val = values[i];
+      idx = idxs[i];
+      jdx = jdxs[i];
+      val = values[i];
 
       ids.push(idx);
       cols.push(WLS.column_names[WLS.header[jdx]].replace(/ /g,'_'));
@@ -1551,11 +1554,6 @@ function storeModification(idx, jdx, value, async_) {
         vals.push(WLS[idx][CFG['_tidx']]);
       }
     }
-
-    /* now add the whole big dump in one go */
-    //new_url += '&ID='+ids.join("|||");
-    //new_url += '&COL='+cols.join("|||");
-    //new_url += '&VAL='+vals.join("|||"); // XXX change this to ensure safe adding of pipe! 
 
     $.ajax({
       async: CFG['async'],
