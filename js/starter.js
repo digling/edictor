@@ -670,9 +670,16 @@ function startEverything () {
     contentType: 'application/text; charset=utf-8',
     dataType: "text",
     success: function(data) {
-      if (data.indexOf("success") != -1) {
+      if (data.indexOf("python") != -1) {
         console.log("running with Python");
         CFG["python"] = true;
+      }
+      else if (data.indexOf("lingpy") != -1) {
+        console.log("running with LingPy");
+        CFG["python"] = true;
+        CFG["lingpy"] = true;
+        CFG["with_lingpy"] = true;
+        document.getElementById("settings_with_lingpy").style.display = "table-row";
       }
     },
     error: function() {

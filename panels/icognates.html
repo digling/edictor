@@ -2,7 +2,7 @@
 <button type="button" onclick="$('#toggle_icognates > span').toggle(); $('#icognates').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 <h3>Compute Cognate Sets</h3>
 <div style="display:block">
-        <button type="button" class="btn btn-primary titled submit3" onclick="COGNACY.compute_cognates();">SUBMIT</button>
+  <button type="button" class="btn btn-primary titled submit3" onclick="if (CFG.with_lingpy) {COGNACY.lingpy_cognates();} else {COGNACY.compute_cognates();}">SUBMIT</button>
 <button type="button" class="btn-primary titled btn submit3 pull-right"
 	title="show help"
 	onclick="UTIL.show_help('icognates');" 

@@ -103,14 +103,16 @@ UTIL.settings = {
   '_recompute_patterns': false,
   'display': ['filedisplay'],
   'quintiles': 'QUINTILES',
-  'loaded_files': ['filedisplay']
+  'python': false,
+  'lingpy': false,
+  'with_lingpy': false,
+  'loaded_files': ['filedisplay', 'settings']
 }
 
 UTIL.settable = {
   "lists" : [
     "highlight", 
     "sampa",
-    "pinyin",
     "css",
     "basics",
     "_selected_doculects",
@@ -223,6 +225,7 @@ UTIL.load_settings = function() {
   $(entries['proto']).autocomplete({source: CFG.sorted_taxa});
   $(entries['doculectorder']).autocomplete({source: CFG.sorted_taxa});
   entries['doculectorder'].value = CFG.sorted_taxa.join(',');
+  /* check if lingpy is set to true */
 };
 
 UTIL.isValidHeader = function(str) {

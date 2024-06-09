@@ -2,7 +2,7 @@
 <button type="button" onclick="$('#toggle_ialms > span').toggle(); $('#ialms').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 <h3>Compute Alignments</h3>
 <div style="display:block">
-        <button type="button" class="btn btn-primary titled submit3" onclick="ALIGN.automated_alignments();">SUBMIT</button>
+  <button type="button" class="btn btn-primary titled submit3" onclick="if (CFG['with_lingpy']){ALIGN.lingpy_alignments();} else {ALIGN.automated_alignments();}">SUBMIT</button>
 <button type="button" class="btn-primary titled btn submit3 pull-right"
 	title="show help"
 	onclick="UTIL.show_help('ialms');" 

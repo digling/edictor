@@ -635,6 +635,66 @@ ALIGN.lock_sequences = function(i,event) {
   ALIGN.refresh();
 };
 
+ALIGN.lingpy_alignments = function (){
+  console.log('lingpy alignments');
+  var date = new Date().toString();
+  var feedback = document.getElementById("ialms_table");
+  var cognates = (CFG._morphology_mode == "partial") ? CFG._roots : CFG._cognates;
+  var idx;
+  var wordlist = "";
+
+  for (idx in WLS) {
+    if (!isNaN(idx)) {
+      wordlist += idx + "\t" + 
+        WLS[idx][CFG._taxa] + "\t" +
+        WLS[idx][CFG._concepts] + "\t" +
+        WLS[idx][CFG._segments] + "\t" + 
+        WLS[idx][cognates] + "\n";
+    }
+  }
+  var idxs = [];
+  var jdxs = [];
+  var vals = [];
+  $.ajax({
+    async: false,
+    type: "POST",
+    url: 'alignments.py',
+    contentType: 'application/text; charset=utf-8',
+    data: {
+      "wordlist": wordlist,
+      "mode": CFG._morphology_mode,
+      "ref": WLS.header[cognates]
+    },
+    dataType: "text",
+    success: function(data) {
+      showSpinner(function(){
+        var lines = data.split("\n");
+        var i, line;
+        for (i = 0; i < (lines.length - 1); i += 1) {
+          line = lines[i].split("\t");
+          WLS[line[0]][CFG._alignments] = line[1];
+          idxs.push(line[0]);
+          jdxs.push(CFG._alignments);
+          vals.push(line[1]);
+        }
+        storeModification(idxs, jdxs, vals, CFG["async"]);
+        feedback.innerHTML = '<table class="data_table2">' +
+          "<tr><th>Parameter</th><th>Setting</th></tr>" +
+          "<tr><td>Run</td><td>" + date + "</td></tr>" +
+          "<tr><td>Cognate Mode</td><td>" + CFG._morphology_mode + "</td></tr>" +
+          "<tr><td>Alignment Column</td><td>" + CFG._almcol + "</td></tr>" +
+          "<tr><td>Cognate Column</td><td>" + WLS.header[cognates] + "</td></tr>" +
+          "<tr><td>Algorithm</td><td>SCA (LingPy)</td></tr>" +
+          "</table>";
+      }, 1);
+    },
+    error: function() {
+      fakeAlert("Did not manage to compute alignments.");
+    }
+  });
+  showWLS(getCurrent());
+};
+
 ALIGN.automated_alignments = function (){
   console.log("starting");
   var date = new Date().toString();
@@ -713,6 +773,7 @@ ALIGN.automated_alignments = function (){
         "<tr><td>Cognate Mode</td><td>" + CFG._morphology_mode + "</td></tr>" +
         "<tr><td>Alignment Column</td><td>" + CFG._almcol + "</td></tr>" +
         "<tr><td>Cognate Column</td><td>" + mode + "</td></tr>" +
+        "<tr><td>Algorithm</td><td>Longest Sequence (EDICTOR)</td></tr>" +
         "</table>";
         }, 
     1

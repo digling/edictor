@@ -76,7 +76,13 @@ def check(s):
     s.send_response(200)
     s.send_header("Content-type", "text/html")
     s.end_headers()
-    s.wfile.write(bytes("success", "utf-8"))
+    try:
+        import lingpy
+        import lingrex
+        message = "lingpy"
+    except ImportError:
+        message = "python"
+    s.wfile.write(bytes(message, "utf-8"))
 
 
 def configuration():
@@ -250,6 +256,91 @@ def new_id(s, query, qtype):
         message = str(max(cogids) + 1)
 
     s.wfile.write(bytes(message, "utf-8"))
+
+
+def cognates(s, query, qtype):
+    args = {
+            "wordlist": "",
+            "mode": "full", 
+            "ref": "cogid",
+            "method": "lexstat"
+            }
+    if qtype == "POST":
+        args.update(parse_post(query))
+    elif qtype == "GET":
+        args.update(parse_args(query))
+    else:
+        return
+    args["wordlist"] = urllib.parse.unquote_plus(args["wordlist"])
+
+
+    # assemble the wordlist header
+    from lingpy.compare.partial import Partial
+    from lingpy import basictypes
+    tmp = {0: ["doculect", "concept", "form", "tokens"]}
+    for row in args["wordlist"].split("\n")[:-1]:
+        idx, doculect, concept, tokens = row.split('\t')
+        tmp[int(idx)] = [
+                doculect, 
+                concept, 
+                tokens, 
+                tokens.split(" ")
+                ]
+    part = Partial(tmp)
+    part.partial_cluster(method="sca", threshold=0.45, ref=args["ref"])
+    out = ""
+    for idx in part:
+        out += str(idx) + "\t" + str(basictypes.ints(part[idx, args["ref"]])) + "\n"
+
+    s.send_response(200)
+    s.send_header("Content-type", "text/plain; charset=utf-8")
+    s.send_header("Content-disposition", 'attachment; filename="triples.tsv"')
+    s.end_headers()
+    s.wfile.write(bytes(out, "utf-8"))
+
+
+
+def alignments(s, query, qtype):
+    args = {
+            "wordlist": "",
+            "mode": "full", 
+            "ref": "cogid",
+            "method": "library"
+            }
+    if qtype == "POST":
+        args.update(parse_post(query))
+    elif qtype == "GET":
+        args.update(parse_args(query))
+    else:
+        return
+    args["wordlist"] = urllib.parse.unquote_plus(args["wordlist"])
+
+
+    # assemble the wordlist header
+    import lingpy
+    tmp = {0: ["doculect", "concept", "form", "tokens", "cogid"]}
+    for row in args["wordlist"].split("\n")[:-1]:
+        print(row)
+        idx, doculect, concept, tokens, cogid = row.split('\t')
+        tmp[int(idx)] = [
+                doculect, 
+                concept, 
+                tokens, 
+                tokens.split(" "),
+                cogid]
+    alms = lingpy.Alignments(tmp, ref=args["ref"], transcription="form",
+                             fuzzy=True if args["mode"] == "partial" else False)
+    alms.align(method=args["method"])
+    out = ""
+    for idx in alms:
+        out += str(idx) + "\t" + " ".join(alms[idx, "alignment"]) + "\n"
+
+    s.send_response(200)
+    s.send_header("Content-type", "text/plain; charset=utf-8")
+    s.send_header("Content-disposition", 'attachment; filename="triples.tsv"')
+    s.end_headers()
+    s.wfile.write(bytes(out, "utf-8"))
+
 
 
 def triples(s, query, qtype):

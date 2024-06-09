@@ -733,7 +733,7 @@ function showWLS(start){
             }
             CFG['last_time'] = now;
             var saved = document.getElementById("data_saved");
-            if (typeof saved != "undefined") {
+            if (typeof saved != "undefined" && saved !== null) {
               var time = now.toLocaleDateString() + " " + now.toLocaleTimeString();
               if (count > 0) {
                 saved.innerHTML = "Found " + count + " entries from remote server at " + time + ".";
@@ -1921,7 +1921,7 @@ function refreshFile(){
     }
   }
   for (i = 0; key = UTIL.settable.lists[i]; i += 1) {
-    text += '#@'+key+'='+CFG[key].join('|')+'\n';
+    text += '#@' + key + '=' + CFG[key].join('|') + '\n';
   }
   for (i = 0; key=UTIL.settable.items[i]; i += 1) {
     text += '#@'+key+'='+CFG[key]+'\n';
