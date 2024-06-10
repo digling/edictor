@@ -30,13 +30,45 @@ If you use EDICTOR in your work, please cite the tool as follows:
 
 ## Getting Started on Windows
 
-https://www.heise.de/tipps-tricks/Windows-Powershell-Skript-ausfuehren-4672163.html
 
-https://www.heise.de/tipps-tricks/Windows-Powershell-Skript-ausfuehren-4672163.html
+In order to get the EDICTOR application working on Windows, we have successfully carried out the following steps. First, you should download [Python](https://python.org) (we used Python 3.11.9, but you can use versions starting from 3.8). We also downloaded [GIT](https://www.git-scm.com/) for Windows (Version 2.45.2.windows.1). Having installed both programs successfully, you must also install the [Windows Powershell](https://learn.microsoft.com/en-us/powershell/?view=powershell-7.4) which offers commandline facilities. This program can then be opened as any other application (but you must open the application as administrator, you find information on doing this in German [here](https://www.heise.de/tipps-tricks/Windows-Powershell-Skript-ausfuehren-4672163.html)). 
 
-https://mothergeo-py.readthedocs.io/en/latest/development/how-to/venv-win.html
+Having opened the Powersheel terminal window, you will reside in the path `C:\windows\system32`. From here, you should got to your user path with the `cd` command. In the following example, the username is `edictor3`.
 
-$ python -m pip install edictor
-$ edictor3.exe
+```shell
+PS C:\windows\system32> cd C:\Users\edictor3\Desktop\
+```
 
-$ git clone https://github.com/digling/edictor
+There, we create a directory for EDICTOR3 files and use `GIT` to clone the most recent EDICTOR version.
+
+```shell
+PS C:\Users\edictor3\Desktop> mkdir edictor3
+PS C:\Users\edictor3\Desktop> cd edictor3
+PS C:\Users\edictor3\Desktop> git clone https://github.com/digling/edictor.git
+```
+
+We now create a virtual environment with Python in order to make sure we can use the code locally and do not need to destroy anything in our Python installation with the installation of EDICTOR3. Instructions can be found [here](https://mothergeo-py.readthedocs.io/en/latest/development/how-to/venv-win.html). 
+
+```shell
+PS C:\Users\edictor3\Desktop\edictor3> python -m pip install virtualenv
+PS C:\Users\edictor3\Desktop\edictor3> virtualenv edi3
+PS C:\Users\edictor3\Desktop\edictor3> Set-ExecutionPolicy -ExecutionPolicy Unrestricted -force
+PS C:\Users\edictor3\Desktop\edictor3> .\edi3\Scripts\activate
+```
+
+With these commands, you have in this terminal a virtual environment that you can safely use to install packages in Python. We can now install the package locally and load it directly.
+
+```shell
+(edi3) PS C:\Users\edictor3\Desktop\edictor3> python -m pip install -e edictor
+(edi3) PS C:\Users\edictor3\Desktop\edictor3> edictor3
+```
+
+You must still open your webbrowser at the URL `https://localhost:9999`, since we cannot automatically trigger Windows to open the Firefox (the preferred webbrowser for the EDICTOR). But with this, you are done and can use the tool in your work.
+
+If you want to use the tool along with [LingPy](https://lingpy.org) and [LingRex](https://pypi.org/project/lingrex), you can install these packages as well. EDICTOR will recognize if they are installed and allow for more options in computing cognates, alignments, and correspondence patterns. 
+
+```shell
+(edi3) PS C:\Users\edictor3\Desktop\edictor3> python -m pip install lingpy lingrex
+```
+
+
