@@ -6,7 +6,7 @@ from edictor.util import (
         check, configuration,
         file_type, file_name, file_handler, triples, download,
         update, serve_base, new_id, modifications, alignments,
-        cognates
+        cognates, patterns
         )
 
 CONF = configuration()
@@ -54,6 +54,9 @@ class Handler(SimpleHTTPRequestHandler):
             alignments(s, post_data_bytes, "POST")
         if fn == "/cognates.py":
             cognates(s, post_data_bytes, "POST")
+        if fn == "/patterns.py":
+            patterns(s, post_data_bytes, "POST")
+
 
 
     def do_GET(s):

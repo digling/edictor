@@ -1208,7 +1208,89 @@ PATS.render_patterns = function(elm) {
 };
 
 
+PATS.lingrex_patterns = function(){
+  if (WLS.header[CFG._patterns] == -1) {
+    fakeAlert("You must assign the PATTERNS column first.")
+    return;
+  }
+  console.log('lingrex patterns');
+  var date = new Date().toString();
+  var feedback = document.getElementById("ipatterns_table");
+  var cognates = (CFG._morphology_mode == "partial") ? CFG._roots : CFG._cognates;
+  var idx;
+  var wordlist = "";
+
+  for (idx in WLS) {
+    if (!isNaN(idx)) {
+      wordlist += idx + "\t" + 
+        WLS[idx][CFG._taxa] + "\t" +
+        WLS[idx][CFG._concepts] + "\t" +
+        WLS[idx][CFG._segments] + "\t" + 
+        WLS[idx][cognates] + "\t" +
+        WLS[idx][CFG._alignments] + "\n";
+    }
+  }
+  var idxs = [];
+  var jdxs = [];
+  var vals = [];
+  $.ajax({
+    async: false,
+    type: "POST",
+    url: 'patterns.py',
+    contentType: 'application/text; charset=utf-8',
+    data: {
+      "wordlist": wordlist,
+      "mode": CFG._morphology_mode,
+      "ref": WLS.header[cognates]
+    },
+    dataType: "text",
+    success: function(data) {
+      showSpinner(function(){
+        var lines = data.split("\n");
+        var i, line;
+        for (i = 0; i < (lines.length - 1); i += 1) {
+          line = lines[i].split("\t");
+          WLS[line[0]][CFG._patterns] = line[1];
+          idxs.push(line[0]);
+          jdxs.push(CFG._patterns);
+          vals.push(line[1]);
+        }
+        storeModification(idxs, jdxs, vals, CFG["async"]);
+        feedback.innerHTML = '<table class="data_table2">' +
+          "<tr><th>Parameter</th><th>Setting</th></tr>" +
+          "<tr><td>Run</td><td>" + date + "</td></tr>" +
+          "<tr><td>Cognate Mode</td><td>" + CFG._morphology_mode + "</td></tr>" +
+          "<tr><td>Alignment Column</td><td>" + CFG._almcol + "</td></tr>" +
+          "<tr><td>Cognate Column</td><td>" + WLS.header[cognates] + "</td></tr>" +
+          "<tr><td>Pattern Column</td><td>" + WLS.header[CFG._patterns] + "</td></tr>" + 
+          "<tr><td>Algorithm</td><td>CoPaR (LingRex)</td></tr>" +
+          "</table>";
+      }, 1);
+    },
+    error: function() {
+      fakeAlert("Did not manage to compute alignments.");
+    }
+  });
+  var pats = document.getElementById("patterns");
+  if (pats === null || typeof pats == "undefined" || pats.style.display == "none") {
+    var eve = {};
+      eve.preventDefault = function(){
+      return;
+    };
+    loadAjax(eve, 'sortable', "patterns", "largebox");
+  }
+
+  this.render_patterns();
+  showWLS(getCurrent());
+  CFG._recompute_patterns = false;
+};
+
+
 PATS.compute_patterns = function() {
+  if (WLS.header[CFG._patterns] == -1) {
+    fakeAlert("You must assign the PATTERNS column first.")
+    return;
+  }
   this.get_patterns();
   var idxs = [];
   var jdxs = [];

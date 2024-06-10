@@ -51,6 +51,14 @@ def parse_post(path):
     return args
 
 
+def respond_tsv(s, text):
+    s.send_response(200)
+    s.send_header("Content-type", "text/plain; charset=utf-8")
+    s.send_header("Content-disposition", 'attachment; filename="triples.tsv"')
+    s.end_headers()
+    s.wfile.write(bytes(text, "utf-8"))   
+
+
 def download(s, post):
     """
     Download command, that writes the file to the current folder.
@@ -291,14 +299,58 @@ def cognates(s, query, qtype):
     out = ""
     for idx in part:
         out += str(idx) + "\t" + str(basictypes.ints(part[idx, args["ref"]])) + "\n"
-
-    s.send_response(200)
-    s.send_header("Content-type", "text/plain; charset=utf-8")
-    s.send_header("Content-disposition", 'attachment; filename="triples.tsv"')
-    s.end_headers()
-    s.wfile.write(bytes(out, "utf-8"))
+    
+    respond_tsv(s, out)
 
 
+def patterns(s, query, qtype):
+    """
+    Compute correspondence patterns with CoPaR (LingRex)
+    """
+    args = {
+            "wordlist": "",
+            "mode": "full", 
+            "ref": "cogid",
+            "method": "copar"
+            }
+    if qtype == "POST":
+        args.update(parse_post(query))
+    elif qtype == "GET":
+        args.update(parse_args(query))
+    else:
+        return
+    args["wordlist"] = urllib.parse.unquote_plus(args["wordlist"])
+
+    # assemble the wordlist header
+    import lingpy
+    from lingrex.copar import CoPaR
+    tmp = {0: ["doculect", "concept", "form", "tokens", "cogid", "alignment", "structure"]}
+    for row in args["wordlist"].split("\n")[:-1]:
+        idx, doculect, concept, tokens, cogid, alignment = row.split('\t')
+        tmp[int(idx)] = [
+                doculect, 
+                concept, 
+                tokens, 
+                tokens.split(" "),
+                cogid,
+                alignment.split(" "),
+                lingpy.tokens2class(tokens.split(), "cv")
+                ]
+    cop = CoPaR(tmp, ref=args["ref"].lower(), transcription="form",
+                             fuzzy=True if args["mode"] == "partial" else False)
+    print("Loaded the CoPaR object.")
+    cop.get_sites()
+    print("Loaded the Sites.")
+    cop.cluster_sites()
+    print("Clustered Sites.")
+    cop.sites_to_pattern()
+    print("Converted Sites to Patterns.")
+    cop.add_patterns()
+    out = ""
+    for idx in cop:
+        out += str(idx) + "\t" + " ".join(cop[idx, "patterns"]) + "\n"
+    respond_tsv(s, out)
+    print("Successfully computed correspondence patterns.")
 
 def alignments(s, query, qtype):
     args = {
@@ -314,7 +366,6 @@ def alignments(s, query, qtype):
     else:
         return
     args["wordlist"] = urllib.parse.unquote_plus(args["wordlist"])
-
 
     # assemble the wordlist header
     import lingpy
@@ -334,13 +385,9 @@ def alignments(s, query, qtype):
     out = ""
     for idx in alms:
         out += str(idx) + "\t" + " ".join(alms[idx, "alignment"]) + "\n"
-
-    s.send_response(200)
-    s.send_header("Content-type", "text/plain; charset=utf-8")
-    s.send_header("Content-disposition", 'attachment; filename="triples.tsv"')
-    s.end_headers()
-    s.wfile.write(bytes(out, "utf-8"))
-
+    
+    respond_tsv(s, out)
+    print("Successfully computed alignments from the data.")
 
 
 def triples(s, query, qtype):

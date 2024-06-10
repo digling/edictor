@@ -177,6 +177,7 @@ UTIL.load_settings = function() {
 
   /* start with preview */
   entries['preview'].value = CFG['preview'];
+  console.log("entries here", entries);
 
   /* now add cognates for fun */
   if (typeof CFG._fidx != 'undefined') {
