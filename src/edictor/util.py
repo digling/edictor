@@ -295,7 +295,8 @@ def cognates(s, query, qtype):
                 tokens.split(" ")
                 ]
     part = Partial(tmp)
-    part.partial_cluster(method="sca", threshold=0.45, ref=args["ref"])
+    part.partial_cluster(method="sca", threshold=0.45, ref=args["ref"],
+                         cluster_method="upgma")
     out = ""
     for idx in part:
         out += str(idx) + "\t" + str(basictypes.ints(part[idx, args["ref"]])) + "\n"
