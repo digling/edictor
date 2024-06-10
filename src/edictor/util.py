@@ -64,7 +64,7 @@ def download(s, post):
                 args["file"],
                 args["file"][:-4] + "-" + date + "-".join(time.split(":")[:2]) + ".tsv"
                 )
-    with open(args["file"], "w") as f:
+    with codecs.open(args["file"], "w", "utf-8") as f:
         f.write(urllib.parse.unquote_plus(args["data"]))
     s.send_response(200)
     s.send_header("Content-type", "text/html")
