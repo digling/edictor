@@ -37,7 +37,7 @@ class Handler(SimpleHTTPRequestHandler):
         fn = file_name(s.path)
 
         if fn == "/triples/triples.py":
-            triples(s, post_data_bytes, "POST")
+            triples(s, post_data_bytes, "POST", CONF)
         if fn == "/download.py":
             download(s, post_data_bytes)
         if fn == "/check.py":
@@ -45,7 +45,7 @@ class Handler(SimpleHTTPRequestHandler):
 
         
         if fn == "/triples/update.py":
-            update(s, post_data_bytes, "POST", CONF.get("user", "python"))
+            update(s, post_data_bytes, "POST", CONF)
         if fn == "/triples/new_id.py":
             new_id(s, post_data_bytes, "POST")
         if fn == "/triples/modifications.py":
@@ -54,6 +54,8 @@ class Handler(SimpleHTTPRequestHandler):
             alignments(s, post_data_bytes, "POST")
         if fn == "/cognates.py":
             cognates(s, post_data_bytes, "POST")
+
+
 
 
     def do_GET(s):
@@ -72,13 +74,17 @@ class Handler(SimpleHTTPRequestHandler):
             return
 
         if fn == "/triples/triples.py":
-            triples(s, s.path, "GET")
+            triples(s, s.path, "GET", CONF)
         if fn == "/triples/update.py":
             update(s, s.path, "GET", CONF.get("user", "python"))
         if fn == "/triples/new_id.py":
             new_id(s, s.path, "GET")
         if fn == "/triples/modifications.py":
             modifications(s, s.path, "GET")
+
+        #if CONF["remote"] and fn in CONF["remote"]["links"]:
+        #    remote_triples(s, CONF["remote"]["links"][fn], "GET")
+
 
 
 

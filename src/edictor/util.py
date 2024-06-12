@@ -9,6 +9,9 @@ import json
 import codecs
 import getpass
 
+from urllib.request import urlopen
+
+
 from pathlib import Path
 from datetime import datetime
 
@@ -66,23 +69,38 @@ def download(s, post):
                 )
     with open(args["file"], "w") as f:
         f.write(urllib.parse.unquote_plus(args["data"]))
-    s.send_response(200)
-    s.send_header("Content-type", "text/html")
-    s.end_headers()
-    s.wfile.write(bytes("success", "utf-8"))
 
+    send_response(s, "success")
+
+
+
+def send_response(s, content, content_type="text/html",
+                  content_disposition=None, encode=True):
+    if encode:
+        content = bytes(content, "utf-8")
+    s.send_response(200)
+    s.send_header("Content-type", content_type)
+    if content_disposition:
+        s.send_header("Content-disposition", content_disposition)
+    s.end_headers()
+    s.wfile.write(content)
+
+
+def handle_args(args, query, qtype):
+    if qtype == "POST":
+        args.update(parse_post(query))
+    elif qtype == "GET":
+        args.update(parse_args(query))
+    
 
 def check(s):
-    s.send_response(200)
-    s.send_header("Content-type", "text/html")
-    s.end_headers()
     try:
         import lingpy
         import lingrex
         message = "lingpy"
     except ImportError:
         message = "python"
-    s.wfile.write(bytes(message, "utf-8"))
+    send_response(s, message)
 
 
 def configuration():
@@ -98,12 +116,20 @@ def configuration():
                 "links": None
                 }
     if conf.get("remote"):
-        if not conf["remote"].get("pw"):
-            conf["remote"]["pw"] = getpass.getpass("Remote password: ")
+        if not conf.get("pw"):
+            conf["pw"] = getpass.getpass("Remote password: ")
+        # prepare the links now
+        for key, values in conf["remote"].items():
+            for file in values:
+                values[file]["data"] = "&".join(
+                        ["{0}={1}".format(k, v) for k, v in
+                         values[file]["data"].items()])
+            
     # represent urls as lists
     if conf.get("links"):
         for link in conf["links"]:
-            link["url"] = "".join(link["url"])
+            link["url"] = link["url"] + "?" + "&".join(
+                    ["{0}={1}".format(k, v) for k, v in link["data"].items()])
     return conf
         
 
@@ -160,9 +186,6 @@ def file_handler(s, ft, fn):
 
 
 def serve_base(s, conf):
-    s.send_response(200)
-    s.send_header("Content-type", "text/html")
-    s.end_headers()
     with codecs.open(edictor_path("index.html"), "r", "utf-8") as f:
         text = f.read()
     link_template = """<div class="dataset inside" onclick="window.open('{url}');"><span>{name}</span></div>"""
@@ -180,8 +203,8 @@ def serve_base(s, conf):
     text = text.replace("{DATASETS}", "".join(paths))
     text = text.replace(' id="files" style="display:none"', '')
     text = text.replace(' id="user" style="display:none"', '')
-
-    s.wfile.write(bytes(text, "utf-8"))
+    
+    send_response(s, text)
 
 
 def new_id(s, query, qtype):
@@ -203,6 +226,7 @@ def new_id(s, query, qtype):
             history = '', 
             limit = ''
             )
+
     if qtype == "POST":
         args.update(parse_post(query))
     elif qtype == "GET":
@@ -265,14 +289,8 @@ def cognates(s, query, qtype):
             "ref": "cogid",
             "method": "lexstat"
             }
-    if qtype == "POST":
-        args.update(parse_post(query))
-    elif qtype == "GET":
-        args.update(parse_args(query))
-    else:
-        return
+    handle_args(args, query, qtype)
     args["wordlist"] = urllib.parse.unquote_plus(args["wordlist"])
-
 
     # assemble the wordlist header
     from lingpy.compare.partial import Partial
@@ -292,11 +310,12 @@ def cognates(s, query, qtype):
     for idx in part:
         out += str(idx) + "\t" + str(basictypes.ints(part[idx, args["ref"]])) + "\n"
 
-    s.send_response(200)
-    s.send_header("Content-type", "text/plain; charset=utf-8")
-    s.send_header("Content-disposition", 'attachment; filename="triples.tsv"')
-    s.end_headers()
-    s.wfile.write(bytes(out, "utf-8"))
+    send_response(
+            s, 
+            out, 
+            content_type="text/plain; charset=utf-8",
+            content_disposition='attachment; filename="triples.tsv"'
+            )
 
 
 
@@ -307,14 +326,8 @@ def alignments(s, query, qtype):
             "ref": "cogid",
             "method": "library"
             }
-    if qtype == "POST":
-        args.update(parse_post(query))
-    elif qtype == "GET":
-        args.update(parse_args(query))
-    else:
-        return
+    handle_args(args, query, qtype)
     args["wordlist"] = urllib.parse.unquote_plus(args["wordlist"])
-
 
     # assemble the wordlist header
     import lingpy
@@ -334,33 +347,29 @@ def alignments(s, query, qtype):
     out = ""
     for idx in alms:
         out += str(idx) + "\t" + " ".join(alms[idx, "alignment"]) + "\n"
+    
+    send_response(
+            s, 
+            out, 
+            content_type="text/plain; charset=utf-8",
+            content_disposition='attachment; filename="triples.tsv"'
+            )
 
-    s.send_response(200)
-    s.send_header("Content-type", "text/plain; charset=utf-8")
-    s.send_header("Content-disposition", 'attachment; filename="triples.tsv"')
-    s.end_headers()
-    s.wfile.write(bytes(out, "utf-8"))
+
+    
 
 
 
-def triples(s, query, qtype):
+def triples(s, query, qtype, conf):
     """
     Basic access to the triple storage storing data in SQLITE.
     """
     args = dict(
             remote_dbase='', 
             file='', 
-            date = '', 
-            new_id = '', 
-            tables = '', 
-            summary = '', 
-            unique = '', 
             columns = '', 
             concepts = '',
             doculects = '', 
-            template = '', 
-            history = '', 
-            limit = ''
             )
     if qtype == "POST":
         args.update(parse_post(query))
@@ -369,16 +378,28 @@ def triples(s, query, qtype):
     else:
         return
 
+    if conf["remote"] and args["remote_dbase"] in conf["remote"]:
+        print("loading remote file")
+        info = conf["remote"][args["remote_dbase"]]["triples.py"]
+        req = urllib.request.Request(
+                info["url"], 
+                data=bytes(info["data"], "utf-8"))
+        req.add_header('Content-Type', 'application/x-www-form-urlencoded')
+        req.get_method =lambda: 'POST'
+        data = urllib.request.urlopen(req).read()
+        send_response(
+                s, 
+                data, 
+                encode=False,
+                content_type="text/plain; charset=utf-8",
+                content_disposition='attachment; filename="triples.tsv"'
+                )
+        return
+
     db = sqlite3.connect(
             edictor_path("sqlite/" + args["remote_dbase"] + ".sqlite3"))
     cursor = db.cursor()
 
-    s.send_response(200)
-    s.send_header("Content-type", "text/plain; charset=utf-8")
-    s.send_header("Content-disposition", 'attachment; filename="triples.tsv"')
-    s.end_headers()
-
-    
     # get unique columns
     if not args['columns']:
         cols = get_columns(cursor, args['file'])
@@ -386,7 +407,6 @@ def triples(s, query, qtype):
         cols = args['columns'].split('%7C')
 
     text = 'ID\t' + '\t'.join(cols) + '\n'
-    
     
     # if neither concepts or doculects are passed from the args, all ids are
     # selected from the database
@@ -441,7 +461,9 @@ def triples(s, query, qtype):
             except:
                 txt += '\t'
         text += txt + "\n"
-    s.wfile.write(bytes(text, "utf-8"))
+
+    send_response(s, text, content_type="text/plain; charset=utf-8",
+                  content_disposition='attachment; filename="triples.tsv"')
 
 
 def modifications(s, post, qtype):
@@ -475,13 +497,10 @@ def modifications(s, post, qtype):
             message += '{0}\t{1}\t{2}\n'.format(line[0], line[1], val) 
         except KeyError:
             pass
-    s.send_response(200)
-    s.send_header("Content-type", "text/html")
-    s.end_headers()
-    s.wfile.write(bytes(message, "utf-8"))
+    send_response(s, message)
 
 
-def update(s, post, qtype, user):
+def update(s, post, qtype, conf):
     
     now = str(datetime.now()).split('.')[0]
     args = {}
@@ -491,12 +510,36 @@ def update(s, post, qtype, user):
         args.update(parse_args(post))
     else:
         return
-
     if not "remote_dbase" in args:
         return
+
+    if conf["remote"] and args["remote_dbase"] in conf["remote"]:
+        print("send remote data")
+        info = conf["remote"][args["remote_dbase"]]["update.py"]
+        url = info["url"] + "?" + info["data"]
+        if "update" in args:
+            url += "&ID=" + args["ids"].replace("%7C%7C%7C", "|||")
+            url += "&COL=" + args["cols"].replace("%7C%7C%7C", "|||")
+            url += "&VAL=" + args["vals"].replace("%7C%7C%7C", "|||")
+            url += "&update=true"
+        elif "delete" in args:
+            url += "&ID=" + args["ID"] + "&delete=true"
+
+        passman = urllib.request.HTTPPasswordMgrWithDefaultRealm()
+        passman.add_password(None, url, conf["user"], conf["pw"])
+
+        authhandler = urllib.request.HTTPBasicAuthHandler(passman)
+        opener = urllib.request.build_opener(authhandler)
+        urllib.request.install_opener(opener)
+
+        res = urllib.request.urlopen(url)
+        message = res.read()
+        send_response(s, message, encode=False)
+        return
     
-    db = sqlite3.connect(edictor_path("sqlite", args["remote_dbase"] +
-                                      ".sqlite3"))
+    db = sqlite3.connect(
+            edictor_path("sqlite", args["remote_dbase"] + ".sqlite3")
+            )
     cursor = db.cursor()
 
     if "update" in args:
@@ -559,7 +602,7 @@ def update(s, post, qtype, user):
                         idx,
                         col,
                         orig_val,
-                        user
+                        conf["user"]
                         ))
             except Exception as e:
                 print(e)
@@ -574,7 +617,7 @@ def update(s, post, qtype, user):
         for idx, col, val in lines:
             cursor.execute(
                     'insert into backup values(?,?,?,?,strftime("%s","now"),?);',
-                    (args['file'],idx, col, val, user))
+                    (args['file'],idx, col, val, conf["user"]))
             cursor.execute(
                     'delete from '+args['file'] + ' where ID='+args['ID']+';')
         db.commit()

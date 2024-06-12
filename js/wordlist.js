@@ -1944,9 +1944,6 @@ function refreshFile(){
   undoManager.clear();
   showWLS(getCurrent());
   
-  /* change disk symbol */
-  // $('#refresh > span').removeClass('glyphicon-floppy-disk').addClass('glyphicon-floppy-saved');
-  // fakeAlert("Document was saved in local storage and can now be exported by clicking on the download button."); 
 }
 
 function fakeAlert(text){
