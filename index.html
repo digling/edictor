@@ -380,7 +380,7 @@ div.menu-icon > div {
           </div>
         </li>
         <li class="reiter">
-          <input type="radio" name="tabreiter-0" checked="checked" id="tabreiter-0-1" />
+          <input type="radio" name="tabreiter-0" id="tabreiter-0-1" />
           <label class="main" for="tabreiter-0-1">About</label>
           <div>
             <div class="inside">
@@ -501,11 +501,11 @@ div.menu-icon > div {
               </div>
               <h5>3.2 Opening Files in EDICTOR</h5>
               <p>EDICTOR opens two major ways to open a file and manipulate the data. You can open a file by starting from an <a href="edictor.html">empty EDICTOR instance</a>, then clicking into the BROWSE FILE field on top left, and selecting the TSV file stored in your system. This will <b>not</b> upload your data to the server, but only make it accessible to the application in the browser on your system. You can test this by downloading <a href="data/formats.tsv">this file</a> and then selecting it, when opening a fresh instance.</p>
-              <p>The alternative way to open files is by passing the filename via the URL. This works, however, only, if you use the <i>local version</i> of EDICTOR that runs with Python on a local server. If you pass filenames to the standard URL (<a href="https://edictor.org/edictor.html">https://edictor.org/edictor.html</a>), only files that have been uploaded to the server in the folder <pre>data</pre> are accessible.
-              If you use the local EDICTOR version, EDICTOR will first search for files in the current working directory. If files cannot be found, EDICTOR will search in the <pre>data</pre> directory.
-              Files are passed via the URL by adding the attribute <pre>file=filename</pre> to the URL. 
+              <p>The alternative way to open files is by passing the filename via the URL. This works, however, only, if you use the <i>local version</i> of EDICTOR that runs with Python on a local server. If you pass filenames to the standard URL (<a href="https://edictor.org/edictor.html">https://edictor.org/edictor.html</a>), only files that have been uploaded to the server in the folder <code>data</code> are accessible.
+              If you use the local EDICTOR version, EDICTOR will first search for files in the current working directory. If files cannot be found, EDICTOR will search in the <code>data</code> directory.
+              Files are passed via the URL by adding the attribute <code>file=filename</code> to the URL. 
               </p>
-              <p>If you run EDICTOR locally, you can also open SQLite databases. In order to do so, you must make sure to have created a valid SQLITE database of an existing database file (tools like <a href="https://pypi.org/project/pyedictor">PyEDICTOR</a> have options to export data to the SQLite format required by EDICTOR) and place the database into the <pre>sqlite</pre> folder where your tool is installed. You must also make sure that access to the folder does not require root rights (which can be guaranteed by installing EDICTOR with a local virtual environment). SQLite files are opened from the URL by passing the arguments <pre>file</pre> and <pre>remote_dbase</pre>. The <pre>file</pre> keyword here refers to the name of the table inside the SQLite database and the <pre>remote_dbase</pre> keyword refers to the name of the table in the SQLite database that contains the data (which is stored in triples).</p>
+              <p>If you run EDICTOR locally, you can also open SQLite databases. In order to do so, you must make sure to have created a valid SQLITE database of an existing database file (tools like <a href="https://pypi.org/project/pyedictor">PyEDICTOR</a> have options to export data to the SQLite format required by EDICTOR) and place the database into the <code>sqlite</code> folder where your tool is installed. You must also make sure that access to the folder does not require root rights (which can be guaranteed by installing EDICTOR with a local virtual environment). SQLite files are opened from the URL by passing the arguments <code>file</code> and <code>remote_dbase</code>. The <code>file</code> keyword here refers to the name of the table inside the SQLite database and the <code>remote_dbase</code> keyword refers to the name of the table in the SQLite database that contains the data (which is stored in triples).</p>
 
               <h5>3.2 Editing Data in the Wordlist Panel</h5>
               <p>The first panel you see when having successfully opened a file in EDICTOR is the <i>Wordlist</i> panel. This panel offers several possibilities to edit your data, similar in type to a simple spreadsheet editor. If you open a wordlist file, you an directly edit any field in the Wordlist panel, except from the field that shows the identifier (ID) of the row. Since EDICTOR computes internal data representations from the content of the TSV file, however, you should not edit the fields DOCULECT and CONCEPT. Editing is as simple as clicking into a field and then modifying the content. By pressing ENTER the content modification is accepted, pressing ESCAPE will restore the original value. With the arrow keys, you can navigate up and down (equivalent of pressing ENTER, modified content will be accepted), and with CTRL in combination with the left and the right arrow, you can switch between columns. If you want to delete a row or add a new row to your data, you must press on the field of the ID, a new window will open then and ask you for confirmation or provide further instructions.</p>
@@ -525,7 +525,7 @@ div.menu-icon > div {
   var footers = document.getElementsByClassName("footer");
   for (i = 0; i < footers.length; i += 1) {
     text = '<div class="footerchild"><img style="height:60px" src="https://calclab.org/img/eu-logo.png" alt="ERC Logo" /></div>' +
-      '<div class="footerchild"><table><tr><td>Last Update on +++</td></tr>' +
+      '<div class="footerchild"><table><tr><td>Last Update on 2024-06-10</td></tr>' +
       '<tr><td><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="CCBY4.0" /></td></tr>' +
       '<tr><td><a style="color:white" href="https://uni-passau.de/impressum/">IMPRESSUM</a></td></tr></table></div>' +
       '<div class="footerchild"><img style="height:40px" src="https://www.uni-passau.de/typo3conf/ext/upatheme/Resources/Public/img/logo.svg" alt="UP" />' +

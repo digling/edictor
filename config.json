@@ -1,19 +1,57 @@
 {
-  "user": "LinguList",
-  "remote": {},
+  "user": "Mattis",
+  "remote": {
+    "remotevb": {
+      "triples.py": {
+        "url":  "http://lingulist.de/edev/triples/triples.py",
+        "data": {
+          "file": "viegasbarroschaco",
+          "remote_dbase": "viegasbarroschaco",
+          "columns": "DOCULECT|CONCEPT|VALUE|FORM|TOKENS|COGID|ROOTID|ALIGNMENT|PATTERNS"
+        }
+      },
+      "update.py": {
+        "url": "http://lingulist.de/edev/triples/update.py",
+        "data": {
+          "file": "viegasbarroschaco",
+          "remote_dbase": "viegasbarroschaco"
+        }
+      },
+      "modifications.py": {
+        "url": "http://lingulist.de/edev/triples/update.py",
+        "data": {
+          "file": "viegasbarroschaco",
+          "remote_dbase": "viegasbarroschaco"
+        }
+      }
+    }
+  },
   "links": [
     {
-      "url": [
-        "edictor.html", 
-        "?", 
-        "file=germanic",
-        "&remote_dbase=germanic",
-        "&columns=DOCULECT|CONCEPT|IPA|TOKENS|ALIGNMENT|COGID|PATTERNS|NOTE"
-      ],
+      "url": "edictor.html",
+      "name": "Viegas Barros (Remote)",
+      "data": {
+        "file": "remotevb",
+        "remote_dbase": "remotevb"
+      }
+    },
+    {
+      "url": "edictor.html", 
+      "data": {
+        "file": "germanic",
+        "remote_dbase": "germanic",
+        "columns": "DOCULECT|CONCEPT|IPA|TOKENS|ALIGNMENT|COGID|PATTERNS|NOTE"
+      },
       "name": "Germanic (SQLITE, Base)"
     },
     {
-      "url": ["edictor.html?file=germanic&remote_dbase=germanic&doculects=German|Dutch|English&columns=DOCULECT|CONCEPT|IPA|TOKENS|ALIGNMENT|COGID|PATTERNS|NOTE"],
+      "url": "edictor.html",
+      "data": {
+        "file": "germanic",
+        "remote_dbase": "germanic",
+        "doculects": "German|Dutch|English",
+        "columns": "DOCULECT|CONCEPT|IPA|TOKENS|ALIGNMENT|COGID|PATTERNS|NOTE"
+      },
       "name": "Germanic (SQLITE, no proto-language)"
     }
   ]

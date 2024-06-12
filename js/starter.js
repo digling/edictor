@@ -402,6 +402,9 @@ var tmp_file_handler = '';
 function loadAjax(event, where, what, classes) {  
   event.preventDefault();
   if (CFG.loaded_files.indexOf(what) != -1) {
+    if (what == 'settings') {
+      UTIL.load_settings();
+    }
     $('#'+what).toggle();
     if (document.getElementById(what).style.display == 'none') {
       window.location.hash = '#top';
@@ -459,10 +462,6 @@ function loadAjax(event, where, what, classes) {
       delay: 0, source: Object.keys(WLS.columns),
       select: function(event,ui){CORRS.show_correspondences('doculA',1)}
     });
-  }
-
-  if (what == 'settings') {
-    UTIL.load_settings();
   }
 
   $('#toggle_'+what+' > span').toggle();  

@@ -67,7 +67,7 @@ def download(s, post):
                 args["file"],
                 args["file"][:-4] + "-" + date + "-".join(time.split(":")[:2]) + ".tsv"
                 )
-    with open(args["file"], "w") as f:
+    with codecs.open(args["file"], "w", "utf-8") as f:
         f.write(urllib.parse.unquote_plus(args["data"]))
 
     send_response(s, "success")
@@ -237,11 +237,6 @@ def new_id(s, query, qtype):
     db = sqlite3.connect(
             edictor_path("sqlite/" + args["remote_dbase"] + ".sqlite3"))
     cursor = db.cursor()
-
-    s.send_response(200)
-    s.send_header("Content-type", "text/plain; charset=utf-8")
-    s.send_header("Content-disposition", 'attachment; filename="triples.tsv"')
-    s.end_headers()
     
     if args['new_id'] == "true":
         cursor.execute('select DISTINCT ID from ' + args['file'] + ';')
@@ -278,8 +273,7 @@ def new_id(s, query, qtype):
                     pass
 
         message = str(max(cogids) + 1)
-
-    s.wfile.write(bytes(message, "utf-8"))
+    send_response(s, message)
 
 
 def cognates(s, query, qtype):
@@ -305,7 +299,8 @@ def cognates(s, query, qtype):
                 tokens.split(" ")
                 ]
     part = Partial(tmp)
-    part.partial_cluster(method="sca", threshold=0.45, ref=args["ref"])
+    part.partial_cluster(method="sca", threshold=0.45, ref=args["ref"],
+                         cluster_method="upgma")
     out = ""
     for idx in part:
         out += str(idx) + "\t" + str(basictypes.ints(part[idx, args["ref"]])) + "\n"
@@ -318,6 +313,60 @@ def cognates(s, query, qtype):
             )
 
 
+
+def patterns(s, query, qtype):
+    """
+    Compute correspondence patterns with CoPaR (LingRex)
+    """
+    args = {
+            "wordlist": "",
+            "mode": "full", 
+            "ref": "cogid",
+            "method": "copar"
+            }
+    if qtype == "POST":
+        args.update(parse_post(query))
+    elif qtype == "GET":
+        args.update(parse_args(query))
+    else:
+        return
+    args["wordlist"] = urllib.parse.unquote_plus(args["wordlist"])
+
+    # assemble the wordlist header
+    import lingpy
+    from lingrex.copar import CoPaR
+    tmp = {0: ["doculect", "concept", "form", "tokens", "cogid", "alignment", "structure"]}
+    for row in args["wordlist"].split("\n")[:-1]:
+        idx, doculect, concept, tokens, cogid, alignment = row.split('\t')
+        tmp[int(idx)] = [
+                doculect, 
+                concept, 
+                tokens, 
+                tokens.split(" "),
+                cogid,
+                alignment.split(" "),
+                lingpy.tokens2class(tokens.split(), "cv")
+                ]
+    cop = CoPaR(tmp, ref=args["ref"].lower(), transcription="form",
+                             fuzzy=True if args["mode"] == "partial" else False)
+    print("Loaded the CoPaR object.")
+    cop.get_sites()
+    print("Loaded the Sites.")
+    cop.cluster_sites()
+    print("Clustered Sites.")
+    cop.sites_to_pattern()
+    print("Converted Sites to Patterns.")
+    cop.add_patterns()
+    out = ""
+    for idx in cop:
+        out += str(idx) + "\t" + " ".join(cop[idx, "patterns"]) + "\n"
+    send_response(
+            s, 
+            out, 
+            content_type="text/plain; charset=utf-8",
+            content_disposition='attachment; filename="triples.tsv"'
+            )
+    print("Successfully computed correspondence patterns.")
 
 def alignments(s, query, qtype):
     args = {
@@ -354,10 +403,6 @@ def alignments(s, query, qtype):
             content_type="text/plain; charset=utf-8",
             content_disposition='attachment; filename="triples.tsv"'
             )
-
-
-    
-
 
 
 def triples(s, query, qtype, conf):
@@ -624,9 +669,6 @@ def update(s, post, qtype, conf):
         message = 'DELETION: Successfully deleted all entries for ID {0} on {1}.'.format(
                 args['ID'],
                 now)
-    s.send_response(200)
-    s.send_header("Content-type", "text/html")
-    s.end_headers()
-    s.wfile.write(bytes(message, "utf-8"))
+    send_response(message)
 
 

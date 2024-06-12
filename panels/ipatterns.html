@@ -5,7 +5,7 @@ Inference of correspondence patterns
 author   : Johann-Mattis List
 email    : mattis.list@lingulist.de
 created  : 2024-05-27 15:13
-modified : 2024-05-27 15:48
+modified : 2024-06-10 13:27
 
 -->
 
@@ -15,7 +15,7 @@ modified : 2024-05-27 15:48
   <h3>Compute Correspondence Patterns</h3>
   <div style="display:block">
     <!--<div class="btn-group pull-left" id="PATS_menu_top">-->
-      <button type="button" class="btn btn-primary titled submit3" onclick="CFG['_recompute_patterns'] = true; PATS.compute_patterns();">SUBMIT</button>
+    <button type="button" class="btn btn-primary titled submit3" onclick="if (CFG.with_lingpy) {CFG['_recompute_patterns'] = true; PATS.lingrex_patterns(); CFG['_recompute_patterns'] = false} else {CFG['_recompute_patterns'] = true; PATS.compute_patterns(); CFG['recompute_patterns'] = false;}">SUBMIT</button>
 
      <div class="btn-group pull-right">
        <button type="button" class="btn-primary titled btn submit3 pull-right" title="show help"
