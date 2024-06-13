@@ -47,9 +47,9 @@ class Handler(SimpleHTTPRequestHandler):
         if fn == "/triples/update.py":
             update(s, post_data_bytes, "POST", CONF)
         if fn == "/triples/new_id.py":
-            new_id(s, post_data_bytes, "POST")
+            new_id(s, post_data_bytes, "POST", CONF)
         if fn == "/triples/modifications.py":
-            modifications(s, post_data_bytes, "POST")
+            modifications(s, post_data_bytes, "POST", CONF)
         if fn == "/alignments.py":
             alignments(s, post_data_bytes, "POST")
         if fn == "/cognates.py":
@@ -79,14 +79,11 @@ class Handler(SimpleHTTPRequestHandler):
         if fn == "/triples/triples.py":
             triples(s, s.path, "GET", CONF)
         if fn == "/triples/update.py":
-            update(s, s.path, "GET", CONF.get("user", "python"))
+            update(s, s.path, "GET", CONF)
         if fn == "/triples/new_id.py":
-            new_id(s, s.path, "GET")
+            new_id(s, s.path, "GET", CONF)
         if fn == "/triples/modifications.py":
-            modifications(s, s.path, "GET")
-
-        #if CONF["remote"] and fn in CONF["remote"]["links"]:
-        #    remote_triples(s, CONF["remote"]["links"][fn], "GET")
+            modifications(s, s.path, "GET", CONF)
 
 
 

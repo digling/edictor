@@ -1,27 +1,34 @@
 {
   "user": "Mattis",
   "remote": {
-    "remotevb": {
+    "remotedpp": {
       "triples.py": {
         "url":  "http://lingulist.de/edev/triples/triples.py",
         "data": {
-          "file": "viegasbarroschaco",
-          "remote_dbase": "viegasbarroschaco",
-          "columns": "DOCULECT|CONCEPT|VALUE|FORM|TOKENS|COGID|ROOTID|ALIGNMENT|PATTERNS"
+          "file": "deepadungpalaung",
+          "remote_dbase": "deepadungpalaung",
+          "columns": "DOCULECT|CONCEPT|VALUE|FORM|TOKENS|COGIDS|COGID|ALIGNMENT|PATTERNS"
         }
       },
       "update.py": {
-        "url": "http://lingulist.de/edev/triples/update.py",
+        "url": "http://lingulist.de/edev/triples/updater.py",
         "data": {
-          "file": "viegasbarroschaco",
-          "remote_dbase": "viegasbarroschaco"
+          "file": "deepadungpalaung",
+          "remote_dbase": "deepadungpalaung"
+        }
+      },
+      "new_id.py": {
+        "url": "http://lingulist.de/edev/triples/triples.py",
+        "data": {
+          "file": "deepadungpalaung",
+          "remote_dbase": "deepadungpalaung"
         }
       },
       "modifications.py": {
-        "url": "http://lingulist.de/edev/triples/update.py",
+        "url": "http://lingulist.de/edev/triples/triples.py",
         "data": {
-          "file": "viegasbarroschaco",
-          "remote_dbase": "viegasbarroschaco"
+          "file": "deepadungpalaung",
+          "remote_dbase": "deepadungpalaung"
         }
       }
     }
@@ -29,10 +36,23 @@
   "links": [
     {
       "url": "edictor.html",
-      "name": "Viegas Barros (Remote)",
+      "name": "Deepadung's Palaung (Remote)",
       "data": {
-        "file": "remotevb",
-        "remote_dbase": "remotevb"
+        "file": "remotedpp",
+        "remote_dbase": "remotedpp",
+        "async": "true"
+      }
+    },
+    {
+      "url": "edictor.html",
+      "name": "Viegas Barros (Local)",
+      "data": {
+        "file": "viegasbarroschaco",
+        "remote_dbase": "viegasbarroschaco",
+        "columns": "DOCULECT|SUBGROUP|CONCEPT|VALUE|FORM|TOKENS|COGID|ROOTID|ALIGNMENT|PATTERNS|NOTE",
+        "async": "true",
+        "doculects": "ProtoMataguayan|ProtoGuaycuruan|Abipon|Kadiweu|Mocovi|Pilaga|Maka|Niwakle|Chorote|Toba",
+        "doculectorder": "ProtoMataguayan|ProtoGuaycuruan|Abipon|Kadiweu|Mocovi|Pilaga|Maka|Niwakle|Chorote|Toba"
       }
     },
     {

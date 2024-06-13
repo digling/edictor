@@ -207,31 +207,33 @@ def serve_base(s, conf):
     send_response(s, text)
 
 
-def new_id(s, query, qtype):
+def new_id(s, query, qtype, conf):
     """
     Obtain new identifier from currently largest one.
     """
     args = dict(
             remote_dbase='', 
             file='', 
-            date = '', 
             new_id = '', 
-            tables = '', 
-            summary = '', 
-            unique = '', 
-            columns = '', 
-            concepts = '',
-            doculects = '', 
-            template = '', 
-            history = '', 
-            limit = ''
             )
-
-    if qtype == "POST":
-        args.update(parse_post(query))
-    elif qtype == "GET":
-        args.update(parse_args(query))
-    else:
+    handle_args(args, query, qtype)
+    if conf["remote"] and args["remote_dbase"] in conf["remote"]:
+        print("requesting remote ID")
+        info = conf["remote"][args["remote_dbase"]]["new_id.py"]
+        req = urllib.request.Request(
+                info["url"], 
+                data=bytes(info["data"] + "&new_id=true", "utf-8"))
+        req.add_header('Content-Type', 'application/x-www-form-urlencoded')
+        req.get_method =lambda: 'POST'
+        data = urllib.request.urlopen(req).read()
+        print(data)
+        send_response(
+                s, 
+                data, 
+                encode=False,
+                content_type="text/plain; charset=utf-8",
+                content_disposition='attachment; filename="triples.tsv"'
+                )
         return
 
     db = sqlite3.connect(
@@ -280,7 +282,6 @@ def cognates(s, query, qtype):
     args = {
             "wordlist": "",
             "mode": "full", 
-            "ref": "cogid",
             "method": "lexstat"
             }
     handle_args(args, query, qtype)
@@ -288,6 +289,7 @@ def cognates(s, query, qtype):
 
     # assemble the wordlist header
     from lingpy.compare.partial import Partial
+    from lingpy.compare.lexstat import LexStat
     from lingpy import basictypes
     tmp = {0: ["doculect", "concept", "form", "tokens"]}
     for row in args["wordlist"].split("\n")[:-1]:
@@ -298,12 +300,21 @@ def cognates(s, query, qtype):
                 tokens, 
                 tokens.split(" ")
                 ]
-    part = Partial(tmp)
-    part.partial_cluster(method="sca", threshold=0.45, ref=args["ref"],
-                         cluster_method="upgma")
     out = ""
-    for idx in part:
-        out += str(idx) + "\t" + str(basictypes.ints(part[idx, args["ref"]])) + "\n"
+    if args["mode"] == "partial":
+        part = Partial(tmp)
+        part.partial_cluster(
+                method="sca", threshold=0.45, ref="cogid",
+                cluster_method="upgma")
+        for idx in part:
+            out += str(idx) + "\t" + str(basictypes.ints(part[idx, "cogid"])) + "\n"
+    else:
+        lex = LexStat(tmp)
+        lex.cluster(
+                method="sca", threshold=0.45, ref="cogid", 
+                cluster_method="upgma")
+        for idx in lex:
+            out += str(idx) + "\t" + str(lex[idx, "cogid"]) + "\n"
 
     send_response(
             s, 
@@ -321,21 +332,19 @@ def patterns(s, query, qtype):
     args = {
             "wordlist": "",
             "mode": "full", 
-            "ref": "cogid",
             "method": "copar"
             }
-    if qtype == "POST":
-        args.update(parse_post(query))
-    elif qtype == "GET":
-        args.update(parse_args(query))
-    else:
-        return
+    handle_args(args, query, qtype)
     args["wordlist"] = urllib.parse.unquote_plus(args["wordlist"])
 
     # assemble the wordlist header
     import lingpy
     from lingrex.copar import CoPaR
-    tmp = {0: ["doculect", "concept", "form", "tokens", "cogid", "alignment", "structure"]}
+    if args["mode"] == "partial":
+        ref = "cogids"
+    else:
+        ref = "cogid"
+    tmp = {0: ["doculect", "concept", "form", "tokens", ref, "alignment", "structure"]}
     for row in args["wordlist"].split("\n")[:-1]:
         idx, doculect, concept, tokens, cogid, alignment = row.split('\t')
         tmp[int(idx)] = [
@@ -343,11 +352,11 @@ def patterns(s, query, qtype):
                 concept, 
                 tokens, 
                 tokens.split(" "),
-                cogid,
+                lingpy.basictypes.ints(cogid) if args["mode"] == "partial" else int(cogid),
                 alignment.split(" "),
                 lingpy.tokens2class(tokens.split(), "cv")
                 ]
-    cop = CoPaR(tmp, ref=args["ref"].lower(), transcription="form",
+    cop = CoPaR(tmp, ref=ref, transcription="form",
                              fuzzy=True if args["mode"] == "partial" else False)
     print("Loaded the CoPaR object.")
     cop.get_sites()
@@ -368,21 +377,21 @@ def patterns(s, query, qtype):
             )
     print("Successfully computed correspondence patterns.")
 
+
 def alignments(s, query, qtype):
     args = {
             "wordlist": "",
             "mode": "full", 
-            "ref": "cogid",
             "method": "library"
             }
     handle_args(args, query, qtype)
     args["wordlist"] = urllib.parse.unquote_plus(args["wordlist"])
-
+    
+    print("Carrying out alignments with LingPy")
     # assemble the wordlist header
     import lingpy
     tmp = {0: ["doculect", "concept", "form", "tokens", "cogid"]}
     for row in args["wordlist"].split("\n")[:-1]:
-        print(row)
         idx, doculect, concept, tokens, cogid = row.split('\t')
         tmp[int(idx)] = [
                 doculect, 
@@ -390,7 +399,7 @@ def alignments(s, query, qtype):
                 tokens, 
                 tokens.split(" "),
                 cogid]
-    alms = lingpy.Alignments(tmp, ref=args["ref"], transcription="form",
+    alms = lingpy.Alignments(tmp, ref="cogid", transcription="form",
                              fuzzy=True if args["mode"] == "partial" else False)
     alms.align(method=args["method"])
     out = ""
@@ -416,21 +425,16 @@ def triples(s, query, qtype, conf):
             concepts = '',
             doculects = '', 
             )
-    if qtype == "POST":
-        args.update(parse_post(query))
-    elif qtype == "GET":
-        args.update(parse_args(query))
-    else:
-        return
+    handle_args(args, query, qtype)
 
     if conf["remote"] and args["remote_dbase"] in conf["remote"]:
-        print("loading remote file")
+        print("EDICTOR loading remote TSV file.")
         info = conf["remote"][args["remote_dbase"]]["triples.py"]
         req = urllib.request.Request(
                 info["url"], 
                 data=bytes(info["data"], "utf-8"))
         req.add_header('Content-Type', 'application/x-www-form-urlencoded')
-        req.get_method =lambda: 'POST'
+        req.get_method = lambda: 'POST'
         data = urllib.request.urlopen(req).read()
         send_response(
                 s, 
@@ -506,26 +510,52 @@ def triples(s, query, qtype, conf):
             except:
                 txt += '\t'
         text += txt + "\n"
-
     send_response(s, text, content_type="text/plain; charset=utf-8",
                   content_disposition='attachment; filename="triples.tsv"')
 
 
-def modifications(s, post, qtype):
+def modifications(s, post, qtype, conf):
+    """
+    Check for remote modifications in the data, done in another application.
+    
+    Note
+    ----
+    This operation is not only useful when working with many people, but also
+    when working on a local host but with multiple windows open. The call
+    checks for recently modified data in the database and inserts them into the
+    wordlist, if modifications are detected. It is triggered in certain
+    intervals, but mostly dependent on the use of the Wordlist Panel of the
+    EDICTOR.
+    """
     now = str(datetime.now()).split('.')[0]
     args = {}
-    if qtype == "POST":
-        args.update(parse_post(post))
-    elif qtype == "GET":
-        args.update(parse_args(post))
-    else:
-        return
+    handle_args(args, post, qtype)
 
     if not "remote_dbase" in args:
         return
+
+    if conf["remote"] and args["remote_dbase"] in conf["remote"]:
+        print("EDICTOR checking for modifications in remote data.")
+        info = conf["remote"][args["remote_dbase"]]["modifications.py"]
+        data = info["data"] + "&date=" + args["date"]
+        req = urllib.request.Request(
+                info["url"], 
+                data=bytes(info["data"], "utf-8"))
+        req.add_header('Content-Type', 'application/x-www-form-urlencoded')
+        req.get_method =lambda: 'POST'
+        data = urllib.request.urlopen(req).read()
+        send_response(
+                s, 
+                data, 
+                encode=False,
+                content_type="text/plain; charset=utf-8",
+                content_disposition='attachment; filename="triples.tsv"'
+                )
+        return
+
     
-    db = sqlite3.connect(edictor_path("sqlite", args["remote_dbase"] +
-                                      ".sqlite3"))
+    db = sqlite3.connect(
+            edictor_path("sqlite", args["remote_dbase"] + ".sqlite3"))
     cursor = db.cursor()
     cursor.execute(
             'select ID,COL from backup where FILE="'+args['file']+'"'+\
@@ -546,29 +576,32 @@ def modifications(s, post, qtype):
 
 
 def update(s, post, qtype, conf):
+    """
+    Update data on local or remote SQLite file.
+    
+    Note
+    ----
+    The update routine is carried out with a post-request that is sent to the
+    local host, or by sending a get request to the remote host (which must be
+    specified in the configuration file). 
+    """
     
     now = str(datetime.now()).split('.')[0]
     args = {}
-    if qtype == "POST":
-        args.update(parse_post(post))
-    elif qtype == "GET":
-        args.update(parse_args(post))
-    else:
-        return
-    if not "remote_dbase" in args:
-        return
+    handle_args(args, post, qtype)
 
     if conf["remote"] and args["remote_dbase"] in conf["remote"]:
         print("send remote data")
         info = conf["remote"][args["remote_dbase"]]["update.py"]
-        url = info["url"] + "?" + info["data"]
+        url = info["url"]
+        data = info["data"]
         if "update" in args:
-            url += "&ID=" + args["ids"].replace("%7C%7C%7C", "|||")
-            url += "&COL=" + args["cols"].replace("%7C%7C%7C", "|||")
-            url += "&VAL=" + args["vals"].replace("%7C%7C%7C", "|||")
-            url += "&update=true"
+            data += "&ID=" + args["ids"].replace("%7C%7C%7C", "|||")
+            data += "&COL=" + args["cols"].replace("%7C%7C%7C", "|||")
+            data += "&VAL=" + args["vals"].replace("%7C%7C%7C", "|||")
+            data += "&update=true"
         elif "delete" in args:
-            url += "&ID=" + args["ID"] + "&delete=true"
+            data += "&ID=" + args["ID"] + "&delete=true"
 
         passman = urllib.request.HTTPPasswordMgrWithDefaultRealm()
         passman.add_password(None, url, conf["user"], conf["pw"])
@@ -577,7 +610,12 @@ def update(s, post, qtype, conf):
         opener = urllib.request.build_opener(authhandler)
         urllib.request.install_opener(opener)
 
-        res = urllib.request.urlopen(url)
+        req = urllib.request.Request(
+                info["url"], 
+                data=bytes(data, "utf-8"))
+        req.add_header('Content-Type', 'application/x-www-form-urlencoded')
+        req.get_method = lambda: 'POST'
+        res = urllib.request.urlopen(req)
         message = res.read()
         send_response(s, message, encode=False)
         return
@@ -669,6 +707,6 @@ def update(s, post, qtype, conf):
         message = 'DELETION: Successfully deleted all entries for ID {0} on {1}.'.format(
                 args['ID'],
                 now)
-    send_response(message)
+    send_response(s, message)
 
 

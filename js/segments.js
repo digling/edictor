@@ -65,6 +65,9 @@ SEG.splitForm = function(node) {
   var idx = node.dataset["idx"];
   var pos = node.dataset["pos"];
   var tokens = WLS[idx][CFG._segments].split(" ");
+  if (pos == 0) {
+    return;
+  }
   var before = tokens.slice(0, pos);
   var after = tokens.slice(pos, tokens.length);
   tokens = before.join(" ") + " " + CFG.morpheme_separator + " " + after.join(" ");
@@ -257,14 +260,25 @@ SEG.make_table = function(){
             x[0] + '">' + SEG.prepare_cognates(x[0], x[1]) + "</td>"}
       ],
       ["id", "doculect", "concept", "form", "morphemes", "cognates"],
-      table.length);
+      table.length
+    );
+    return true;
+  }
+  else {
+    return false;
   }
 };
 
 SEG.alternate = function(x) {return x[2]};
 
 SEG.present = function() {
-  this.make_table();
-  document.getElementById('forms_table').innerHTML = '<br>'+this.DTAB.render(0, 1, SEG.alternate);
-  document.getElementById('forms_table').style.display = 'table-cell';
+  var test = this.make_table();
+  if (test) {
+    document.getElementById('forms_table').innerHTML = '<br>'+this.DTAB.render(0, 1, SEG.alternate);
+    document.getElementById('forms_table').style.display = 'table-cell';
+  }
+  else {
+    document.getElementById('forms_table').innerHTML = '<br>';
+    document.getElementById('forms_table').style.display = 'table-cell';
+  }
 }

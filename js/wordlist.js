@@ -434,17 +434,22 @@ function csvToArrays(allText, separator, comment, keyval) {
   CFG['_sources'] = (typeof srcIdx != 'undefined') ? srcIdx-1: -1;
   CFG['parsed'] = true;
   if (typeof CFG['sorted_taxa'] == 'undefined'){
-    CFG['sorted_taxa'] = Object.keys(WLS.taxa);
-    CFG['sorted_taxa'].sort(
-      function (x, y){
-        if (WLS['subgroups'][x][0] == WLS['subgroups'][y][0]) {
-          return x.localeCompare(y);
+    if (typeof CFG["doculectorder"] != "undefined") {
+      CFG["sorted_taxa"] = CFG["doculectorder"].split("|");
+    }
+    else {
+      CFG['sorted_taxa'] = Object.keys(WLS.taxa);
+      CFG['sorted_taxa'].sort(
+        function (x, y){
+          if (WLS['subgroups'][x][0] == WLS['subgroups'][y][0]) {
+            return x.localeCompare(y);
+          }
+          else {
+            return WLS['subgroups'][x][0].localeCompare(WLS['subgroups'][y][0]);
+          }
         }
-        else {
-          return WLS['subgroups'][x][0].localeCompare(WLS['subgroups'][y][0]);
-        }
-      }
-    );
+      );
+    }
   }
   if (!('_selected_doculects' in CFG)){
     CFG['_selected_doculects'] = CFG['sorted_taxa'];
