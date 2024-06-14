@@ -311,7 +311,7 @@ function handleDragOver(evt) {
   evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
 }
 
-
+/* read url parameters */
 if (document.URL.indexOf('=') != -1) {
   var tmp_url = document.URL.split('#');
   var query = tmp_url[0].split('?')[1];
@@ -322,7 +322,7 @@ if (document.URL.indexOf('=') != -1) {
     params[keyval[0]] = keyval[1];
   }
   PARAMS = params;
-  console.log(params);
+
   reset();
     
   /* account for display modifications */
@@ -517,7 +517,6 @@ function makeMyURL() {
   if (basicsX.value != '') {
     base_url += '&basics='+basicsX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
   }
-  base_url += '&pinyin='+pinyinX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
   base_url += '&sampa='+sampaX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
   base_url += '&highlight='+highlightX.value.toUpperCase().replace(/,/g, '|').replace(/\s/g, '');
   if (file_nameX.value != '') {

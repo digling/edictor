@@ -16,28 +16,34 @@ function reset() {
   /* make array for list-type entries */
   var list_types = ['sorted_taxa', 'highlight', 'sound_classes', 'sampa', 'css', 'doculects', 'columns', 'basics', 'concepts'];
   var eval_types = ['async', 'navbar'];
-
-  for (var param in PARAMS) {
-    var value = PARAMS[param];
+  
+  var param, value;
+  for (param in PARAMS) {
+    value = PARAMS[param];
+    console.log(value, param)
 
     if (BL.indexOf(param) == -1) {
-      if (!isNaN(parseInt(value))) {
-              CFG[param] = parseInt(value);
+      if (param == "morphology_mode") {
+        CFG["_morphology_mode"] = value;
+      }
+      else if (!isNaN(parseInt(value))) {
+        CFG[param] = parseInt(value);
       }
       else if (list_types.indexOf(param) != -1) {
-              CFG[param] = [];
-              var values = value.split('|');
-              for (var i=0,val;val=values[i];i++) {
-                if (val != '') {
-                  CFG[param].push(decodeURIComponent(val));
-                }
-              }
+        CFG[param] = [];
+        var values = value.split('|');
+        for (var i=0,val;val=values[i];i++) {
+          if (val != '') {
+            CFG[param].push(decodeURIComponent(val));
+          }
+        }
       }
       else if (eval_types.indexOf(param) != -1) {
-              CFG[param] = eval(value);
+        CFG[param] = eval(value);
       }
       else {
-              CFG[param] = PARAMS[param];
+        CFG[param] = PARAMS[param];
+        console.log("CFG", CFG[param], param, value);
       }
     }
   }
@@ -467,6 +473,20 @@ function csvToArrays(allText, separator, comment, keyval) {
     CFG['_selected_concepts'] = CFG['sorted_concepts'];
   }
 
+  if ("morphology_mode" in PARAMS) {
+    UTIL.settings["_morphology_mode"] = PARAMS["morphology_mode"];
+    CFG._morphology_mode = PARAMS["morphology_mode"];
+  }
+
+  if (CFG._morphology_mode == "partial") {
+    document.getElementById("mmodef").checked = false;
+    document.getElementById("mmodep").checked = true;
+  }
+  else {
+    document.getElementById("mmodef").checked = true;
+    document.getElementById("mmodep").checked = false;
+  }
+
   WLS['height'] = CFG['sorted_concepts'].length;
   WLS['width'] = CFG['sorted_taxa'].length;
   WLS['length'] = count;
@@ -786,7 +806,6 @@ function showWLS(start){
   if (CFG['formatter'] || CFG['root_formatter']) {
     var previous_format = '';
     var tmp_class = 'd0';
-    //->console.log(WLS['rows']);
     for (i in WLS['rows'])  {
       var idx = WLS['rows'][i];
       var current_format = WLS[idx][WLS['header'].indexOf(CFG['formatter'])];
@@ -2773,6 +2792,9 @@ function storeAlignment() {
   }
 
   storeModification(ids, cols, vals, false);
+  if (CFG._patterns != -1 && CFG._morphology_mode == "full") {
+    PATS.recheck([WLS[ids[0]][CFG._cognates]]);
+  }
 
   CFG['_alignment'] = blobtxt;
 

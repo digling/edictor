@@ -571,7 +571,8 @@ PART.storeAlignment = function() {
   var ids = [];
   var cols = [];
   var vals = [];
-  for (var i=0,idx; idx=CFG['_current_idx'][i]; i++) {
+  var idx;
+  for (i = 0; idx = CFG['_current_idx'][i]; i += 1) {
     var alm_part = ALIGN.ALMS[i].join(' ');
     var alm_full = WLS[idx][this_idx];
     var all_alms_with_morphemes = (alm_full != '?' && alm_full != '') 
@@ -589,7 +590,7 @@ PART.storeAlignment = function() {
         : alm_part 
         ;
       if (typeof all_mms[j] != 'undefined') {
-        tmp += ' '+all_mms[j];
+        tmp += ' ' + all_mms[j];
       }
       else if (j < all_alms.length -1) {
         tmp += ' '+CFG['morpheme_separator'];
@@ -608,6 +609,10 @@ PART.storeAlignment = function() {
   storeModification(ids, cols, vals, CFG['async']);
   resetRootFormat(CFG['root_formatter']);
   applyFilter();
+
+  if (CFG._patterns != -1 && CFG._morphology_mode == "partial") {
+    PATS.recheck([WLS[CFG._current_idx[0]][CFG._roots].split(" ")[CFG._current_jdx[0]]]);
+  }
 
   var test = document.getElementById('partial-overview');
   if (typeof test != 'undefined' && test) {

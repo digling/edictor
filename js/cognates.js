@@ -476,9 +476,10 @@ function get_new_cogid() {
 }
 /* function inserts unique ids for unassigned cognate sets */
 function cognateIdentifier(cogid) {
-  if (isNaN(parseInt(cogid)) || !cogid) {
+  if ((isNaN(cogid) || isNaN(parseInt(cogid))) || !cogid) {
+    var i;
     var etym_len = Object.keys(WLS.etyma).length;
-    for (var i=1; i < etym_len+2; i++) {
+    for (i = 1; i < etym_len + 2; i += 1) {
       if (!(i in WLS.etyma)) {
         return i;
       }
@@ -487,18 +488,19 @@ function cognateIdentifier(cogid) {
   return cogid;
 }
 function partialCognateIdentifier(cogids) {
-  var tmp = cogids.split(/\s+/);
+  var tmp = String(cogids).split(/\s+/);
   var start = 1;
   var out = [];
   var etym_len = Object.keys(WLS.roots).length + tmp.length + 1;
-  for (var i=0;i<tmp.length; i++) {
-    if (isNaN(parseInt(tmp[i]))) {
-      for (var j=start; j<etym_len; j++) {
-	if (!(j in WLS.roots)) {
-	  out.push(j);
-	  start = j+1;
-	  break;
-	}
+  var i, j;
+  for (i = 0; i < tmp.length; i += 1) {
+    if (isNaN(tmp[i] || isNaN(parseInt(tmp[i])))) {
+      for (j = start; j < etym_len; j += 1) {
+	      if (!(j in WLS.roots)) {
+	        out.push(j);
+	        start = j+1;
+	        break;
+	      }
       }
     }
     else {

@@ -378,8 +378,8 @@ modified : 2024-04-06 20:35
                   <tr title="Select your preferred settings for colexifications.">
                     <th> Morphology and Colexification Mode</th>
                     <td>
-                      <input name="morphology_mode" checked="" onchange="CFG['_morphology_mode'] = 'full';" type="radio"> FULL 
-                      <input name="morphology_mode" onchange="CFG['_morphology_mode'] = 'partial';" type="radio"> PARTIAL     
+                      <input id="mmodef" name="morphology_mode" onchange="CFG['_morphology_mode'] = 'full';" type="radio"> FULL 
+                      <input id="mmodep" name="morphology_mode" onchange="CFG['_morphology_mode'] = 'partial';" type="radio"> PARTIAL     
                     </td>
                   </tr>
                   <tr id="settings_with_lingpy" style="display:none" title="Select which method to use for the computation of cognates, alignments, and correspondences.">
