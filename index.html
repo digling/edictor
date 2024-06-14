@@ -495,7 +495,7 @@ div.menu-icon > div {
               <p>Note that EDICTOR accepts some alternative names, you also must not write them in capital letters, but we recommend strongly to adhere to these basic guidelines in order to make sure the tool works properly.</p>
               <p>A sample file with just a few lines for inspection can be downloaded <a href="data/formats.tsv" target="_blank">here</a> and opened in EDICTOR three by clicking on the box below.</p>
                <div class="datasets">
-                <div class="dataset inside" onclick="window.open('edictor.html?formats.tsv')">
+                <div class="dataset inside" onclick="window.open('edictor.html?file=example.tsv')">
                    <span>Illustration of File Formats</span>
                 </div>
               </div>
@@ -511,6 +511,7 @@ div.menu-icon > div {
               <p>The first panel you see when having successfully opened a file in EDICTOR is the <i>Wordlist</i> panel. This panel offers several possibilities to edit your data, similar in type to a simple spreadsheet editor. If you open a wordlist file, you an directly edit any field in the Wordlist panel, except from the field that shows the identifier (ID) of the row. Since EDICTOR computes internal data representations from the content of the TSV file, however, you should not edit the fields DOCULECT and CONCEPT. Editing is as simple as clicking into a field and then modifying the content. By pressing ENTER the content modification is accepted, pressing ESCAPE will restore the original value. With the arrow keys, you can navigate up and down (equivalent of pressing ENTER, modified content will be accepted), and with CTRL in combination with the left and the right arrow, you can switch between columns. If you want to delete a row or add a new row to your data, you must press on the field of the ID, a new window will open then and ask you for confirmation or provide further instructions.</p>
               <p>EDICTOR comes with a rudimentary routine that allows you to segment the data (similar to the functionality in <a href="https://lingpy.org">LingPy</a> to segment entries on phonetic transcriptions into their sounds). To trigger this functionality, you must insert an entry into the TOKENS field that is preceded by a space. Spaces to the left or to the right of entries in TOKENS are generally not accepted. Adding a space to the beginning of a phonetic transcription sequence thus informs EDICTOR to segment the data.</p>
               <h5>3.3 Assigning Words to Cognate Sets </h5>
+              There are several possibilities to assign words to cognate sets. The first and most important decision that you need to make is whether you want to annotate cognates on the level of the words in your data or on the level of morphemes. The former mode is called <i>full cognates</i> in EDICTOR and you can make sure to use this mode by opening the SETTINGS panel and checking the checkbox <i>full</i> for the <i>cognate and colexification mode</i>. The latter mode is called <i>partial cognates</i> in EDICTOR and can be checked out in the same way. You can also specify the mode from the URL, if you open the <code>edictor.html</code> file with the parameters <code>morphology_mode=partial</code> or <code>morphology_mode=full</code>. +++ 
 
 
             </div>

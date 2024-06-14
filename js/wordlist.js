@@ -1064,8 +1064,7 @@ function copyPasteEntry(event,idx,jdx,j) {
 }
 
 /* specific customized functions for adding a column to the wordlist */
-function addColumn(event)
-{
+function addColumn(event) {
   var col = document.getElementById('add_column');
 
   if (event.keyCode != 13) {
@@ -1073,72 +1072,56 @@ function addColumn(event)
   }
 
   var name = col.value.trim();
-  if (name == '') {
-    col.value = '';
-    return;
+  var modify_entry = false;
+  name = name.toUpperCase();
+  var new_name = [];
+  for (i = 0; i < name.length; i += 1){
+    if ("ABCDEFGHIJKLMNOPQRSTUVWXYZ>".indexOf(name[i]) != -1) {
+      new_name.push(name[i]);
+    }
   }
-  var base = function(i) {return '?'};
+  name = new_name.join("");
 
-  if (name.indexOf('>>') != -1) {
-    var basename = name.split('>>');
-    var basex = basename[0];
-    var bases = basex.split(/\+/);
-    var base = function(i) {
-      var new_entry = '';
-      for (k in bases) {
-        var tmp = bases[k];
-        /* if $ipa>>tokens is given, for example, this code produces a new column
-         * called "tokens" in which all entries consist of former $ipa */
-        if (tmp.charAt(0) == '$') {
-          var j = WLS['header'].indexOf(tmp.slice(1, tmp.length).toUpperCase());
-          if (j != -1) {
-            new_entry += WLS[i][j];
-          }
-          else {
-            new_entry += tmp;
-          }
-        }
-        else if (tmp.charAt(0) == '!') {
-          try
-          {
-            var str = 'var x = ' + tmp.slice(1, tmp.length) + '(' + '"' + new_entry + '"); return x;';
-            var F = new Function(str);
-            new_entry = F();
-          }
-          catch (err)
-          {
-            db = document.getElementById('db');
-            db.innerHTML = err;
-            db.style.color = 'red';
-          }
-        }
-        else if (tmp.indexOf('(') != -1 && tmp.indexOf(')') != -1) {
-            var str = 'var x = "' + new_entry + '".' + tmp + '; return x;';
-            var F = new Function(str);
-            new_entry = F();
-        }
-        else {
-          new_entry += tmp;
+  var source;
+
+  if (name.indexOf('>') != -1) {
+    [source, name] = name.split(">");
+    modify_entry = true;
+  }
+
+  var idx;
+  if (name in WLS['columns'] && modify_entry) {
+    console.log(modify_entry);
+    var sidx = WLS.header.indexOf(source);
+    var nidx = WLS.header.indexOf(name);
+    if (modify_entry) {
+      for (idx in WLS) {
+        if (!isNaN(idx)) {
+          WLS[idx][nidx] = WLS[idx][sidx];
         }
       }
-      return new_entry;
-    };
-    var name = basename[1].toUpperCase();
+      showWLS(getCurrent());
+    }
+    col.value = "";
+    return;
   }
-
-  if (name in WLS['columns']) {
-    col.value = '';
+  else if (name in WLS["columns"]) {
+    col.value = "";
     return;
   }
 
-  var mods = {};
-
   /* modify entries in wordlist */
+  var new_val;
   for (idx in WLS) {
+    var nidx = WLS.header.indexOf(source);
     if (!isNaN(idx)) {
-      var new_val = base(idx);
+      if (modify_entry) {
+        new_val = WLS[idx][nidx];
+      }
+      else {
+        new_val = "";
+      }
       WLS[idx].push(new_val);
-      mods[idx] = new_val;
     }
   }
   
@@ -1153,9 +1136,10 @@ function addColumn(event)
   }
 
   /* check for alignments */
-  for (var i=0,entry; entry=['morphemes', 'alignments', 'cognates', 'roots'][i]; i++) {
+  var i, entry;
+  for (i = 0; entry = ['morphemes', 'alignments', 'cognates', 'roots', 'patterns'][i]; i += 1) {
     if (ALIAS[entry].indexOf(new_name) != -1) {
-      CFG['_'+entry] = WLS['header'].indexOf(new_name);
+      CFG['_' + entry] = WLS['header'].indexOf(new_name);
     }
   }
 

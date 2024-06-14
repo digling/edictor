@@ -1343,7 +1343,8 @@ PATS.compute_patterns = function() {
         "<tr><td>Cognate Mode</td><td>" + CFG._morphology_mode + "</td></tr>" +
         "<tr><td>Alignment Column</td><td>" + CFG._almcol + "</td></tr>" +
         "<tr><td>Cognate Column</td><td>" + mode + "</td></tr>" +
-        "<tr><td>Pattern Column</td><td> " + CFG.pattern_formatter + "</td></tr>" +
+        "<tr><td>Pattern Column</td><td>" + CFG.pattern_formatter + "</td></tr>" +
+        "<tr><td>Algorithm</td><td>SortCluster (EDICTOR)</td</tr>" + 
         "</table>";
     },
     1
