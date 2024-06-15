@@ -2357,33 +2357,35 @@ function highLight()
         if (roots[j].innerHTML == roots[j].dataset.value){
           parts = roots[j].dataset.value.split(/\s+/);
           textout = [];
-          for (k = 0; k < parts.length; k += 1) {
-            part = WLS.roots[parts[k]];
-            if (typeof part != 'undefined'){
-              if (part.length == 1){
-                textout.push('<span class="cognate singleton">'+parts[k]+'</span>');
-              }
-              else {
-                concepts = [];
-                for (m=0; m<WLS.roots[parts[k]].length; m++) {
-                  concept = WLS[WLS.roots[parts[k]][m][0]][CFG._cidx];
-                  if (concepts.indexOf(concept) == -1){
-                    concepts.push(concept);
-                  }
-                }
-                if (concepts.length > 1){
-                  textout.push('<span class="cognate polysem">'+parts[k]+'<sup>'+WLS.roots[parts[k]].length+'</sup></span>');
+          if (parts.length > 0) {
+            for (k = 0; k < parts.length; k += 1) {
+              part = WLS.roots[parts[k]];
+              if (typeof part != 'undefined'){
+                if (part.length == 1){
+                  textout.push('<span class="cognate singleton">'+parts[k]+'</span>');
                 }
                 else {
-                  textout.push('<span class="cognate">'+parts[k]+'<sup>'+WLS.roots[parts[k]].length+'</sup></span>');
+                  concepts = [];
+                  for (m=0; m<WLS.roots[parts[k]].length; m++) {
+                    concept = WLS[WLS.roots[parts[k]][m][0]][CFG._cidx];
+                    if (concepts.indexOf(concept) == -1){
+                      concepts.push(concept);
+                    }
+                  }
+                  if (concepts.length > 1){
+                    textout.push('<span class="cognate polysem">'+parts[k]+'<sup>'+WLS.roots[parts[k]].length+'</sup></span>');
+                  }
+                  else {
+                    textout.push('<span class="cognate">'+parts[k]+'<sup>'+WLS.roots[parts[k]].length+'</sup></span>');
+                  }
                 }
               }
+              else {
+                textout.push('<span class="zero">'+parts[k]+'</span>');
+              }
             }
-            else {
-              textout.push('<span class="zero">'+parts[k]+'</span>');
-            }
+            roots[j].innerHTML = textout.join(' ');
           }
-          roots[j].innerHTML = textout.join(' ');
         }
       }
     }

@@ -275,15 +275,20 @@ PATS.get_patterns = function(lengths){
       ? [WLS[idx][CFG._cognates]]
       : WLS[idx][CFG._roots].split(" "); 
     for (j = 0; alm = alms[j]; j += 1) {
-      alm = ALIGN.alignable_parts(alm.split(" "));
-      patterns.push([]);
-      cognate = cognates[j];
-      for (k = 0; residue = alm[k]; k += 1) {
-        if (cognate + "-" + k in PATS.pat2mat) {
-          patterns[j].push(PATS.matrix[PATS.pat2mat[cognate + "-" + k]][0][2]);
-        }
-        else {
-          patterns[j].push(0);
+      if (typeof alm == "undefined") {
+        fakeAlert("Alignment for " + WLS[idx][CFG._taxa] + " / " + WLS[idx][CFG._concepts] + " is problematic.")
+      }
+      else {
+        alm = ALIGN.alignable_parts(alm.split(" "));
+        patterns.push([]);
+        cognate = cognates[j];
+        for (k = 0; residue = alm[k]; k += 1) {
+          if (cognate + "-" + k in PATS.pat2mat) {
+            patterns[j].push(PATS.matrix[PATS.pat2mat[cognate + "-" + k]][0][2]);
+          }
+          else {
+            patterns[j].push(0);
+          }
         }
       }
     }

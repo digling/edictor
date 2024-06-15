@@ -390,7 +390,8 @@ def alignments(s, query, qtype):
     print("Carrying out alignments with LingPy")
     # assemble the wordlist header
     import lingpy
-    tmp = {0: ["doculect", "concept", "form", "tokens", "cogid"]}
+    ref = "cogid" if args["mode"] == "full" else "cogids"
+    tmp = {0: ["doculect", "concept", "form", "tokens", ref]}
     for row in args["wordlist"].split("\n")[:-1]:
         idx, doculect, concept, tokens, cogid = row.split('\t')
         tmp[int(idx)] = [
@@ -398,8 +399,9 @@ def alignments(s, query, qtype):
                 concept, 
                 tokens, 
                 tokens.split(" "),
-                cogid]
-    alms = lingpy.Alignments(tmp, ref="cogid", transcription="form",
+                lingpy.basictypes.ints(cogid) if args["mode"] == "partial" else cogid
+                ]
+    alms = lingpy.Alignments(tmp, ref=ref, transcription="form",
                              fuzzy=True if args["mode"] == "partial" else False)
     alms.align(method=args["method"])
     out = ""
