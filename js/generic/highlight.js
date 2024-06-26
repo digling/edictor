@@ -462,12 +462,12 @@ function unslash(segment) {
 function clean_tokens(tokens){
   var i, j, phon, phonB, phones, unslashed;
   var out = [];
-  for (i=0; phon=tokens[i]; i++) {
+  for (i = 0; phon = tokens[i]; i += 1) {
     if (phon.indexOf('.')) {
       phones = phon.split('.');
-      for (j=0; phonB=phones[j]; j++) {
+      for (j = 0; phonB = phones[j]; j += 1) {
         unslashed = unslash(phonB);
-        if (unslashed != "Ø") {
+        if (unslashed != "Ø" && unslashed != "-") {
           out.push(unslashed);
         }
       }
