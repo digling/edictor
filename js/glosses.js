@@ -47,7 +47,7 @@ GLOSSES.check_morphemes = function(tokens, glosses, cogids) {
 GLOSSES.assemble = function() {
   var idx, i, j, k, tokens, morphemes, cogids, current, cleaned;
   GLOSSES.glosses = {};
-  for (i=0; i<WLS.rows.length; i++) {
+  for (i = 0; i < WLS.rows.length; i += 1) {
     idx = WLS.rows[i];
     [doculect, concept] = [
       WLS[idx][CFG._tidx],
@@ -61,7 +61,7 @@ GLOSSES.assemble = function() {
     if (!(doculect in GLOSSES.glosses)) {
       GLOSSES.glosses[doculect] = {};
     }
-    for (j=0; j<tokens.length; j++) {
+    for (j = 0; j < tokens.length; j += 1) {
       [current, cleaned]= [tokens[j].split(" "), clean_tokens(tokens[j].split(" "))];
       cleaned = cleaned.join(' ');
       if (cleaned in GLOSSES.glosses[doculect]) {
@@ -496,18 +496,24 @@ GLOSSES.markID = function(node) {
 
 GLOSSES.markIDs = function(event, node) {
   event.preventDefault();
-  var nodeidx;
-  if (this.joined[node.dataset['idx']]){
+  if (node.dataset["idx"] in this.joined) {
     for (nodeidx in this.joined) {
-      if (this.joined[nodeidx]){
-        this.markID(document.getElementById('GLOSSES_idx-'+nodeidx));
-      }
+      this.markID(document.getElementById('GLOSSES_idx-' + nodeidx));
     }
     this.joined = {};
+    return;
   }
-  else {
-
+  var current_node = node.parentNode;
+  this.joined = {};
+  while (current_node.nextElementSibling.id != "") {
+    current_node.childNodes[0].dataset["marked"] = "1"
+    current_node.childNodes[0].style.backgroundColor = "LightBlue";
+    GLOSSES.joined[current_node.childNodes[0].dataset["idx"]] = true;
+    current_node = current_node.nextElementSibling;
   }
+  current_node.childNodes[0].dataset["marked"] = "1"
+  current_node.childNodes[0].style.backgroundColor = "LightBlue";
+  GLOSSES.joined[current_node.childNodes[0].dataset["idx"]] = true;
 };
 
 GLOSSES.plotMorphemes = function(tokens, morphemes, cogids) {
