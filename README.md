@@ -5,10 +5,10 @@ EDICTOR is a web-based tool for computer-assisted language comparison. As of Ver
 In order to get started with the local application, you should make sure to have a recent Python installation (3.8 or higher) along with the PIP package manager. It is recommended to install the package from a virtual environment. Installing EDICTOR can then be done via the commandline by simply typing:
 
 ```shell
-$ pip install edictor
+$ pip install edictor3
 ```
 
-This will install EDICTOR on your computer and offer the command `edictor` on your commandline that you can use to run the application locally.
+This will install EDICTOR on your computer and offer the command `edictor3` on your commandline that you can use to run the application locally.
 
 ```shell
 $ edictor3
