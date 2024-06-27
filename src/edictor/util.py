@@ -332,7 +332,8 @@ def patterns(s, query, qtype):
     args = {
             "wordlist": "",
             "mode": "full", 
-            "method": "copar"
+            "method": "copar",
+            "minrefs": 2
             }
     handle_args(args, query, qtype)
     args["wordlist"] = urllib.parse.unquote_plus(args["wordlist"])
@@ -356,8 +357,13 @@ def patterns(s, query, qtype):
                 alignment.split(" "),
                 lingpy.tokens2class(tokens.split(), "cv")
                 ]
-    cop = CoPaR(tmp, ref=ref, transcription="form",
-                             fuzzy=True if args["mode"] == "partial" else False)
+    cop = CoPaR(
+            tmp, 
+            ref=ref, 
+            transcription="form",
+            fuzzy=True if args["mode"] == "partial" else False,
+            minrefs=args["minrefs"]
+            )
     print("Loaded the CoPaR object.")
     cop.get_sites()
     print("Loaded the Sites.")

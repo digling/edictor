@@ -678,6 +678,7 @@ ALIGN.lingpy_alignments = function (){
           vals.push(line[1]);
         }
         storeModification(idxs, jdxs, vals, CFG["async"]);
+        showWLS(getCurrent());
         feedback.innerHTML = '<table class="data_table2">' +
           "<tr><th>Parameter</th><th>Setting</th></tr>" +
           "<tr><td>Run</td><td>" + date + "</td></tr>" +
@@ -692,7 +693,7 @@ ALIGN.lingpy_alignments = function (){
       fakeAlert("Did not manage to compute alignments.");
     }
   });
-  showWLS(getCurrent());
+
 };
 
 ALIGN.automated_alignments = function (){

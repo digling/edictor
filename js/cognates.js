@@ -560,6 +560,13 @@ COGNACY.lingpy_cognates = function() {
           vals.push(line[1]);
         }
         storeModification(idxs, jdxs, vals, CFG["async"]);
+        if (CFG._morphology_mode == "partial") {
+          resetRootFormat(CFG.root_formatter);
+        }
+        else {
+          resetFormat(CFG.formatter);
+        }
+        showWLS(getCurrent());
         var cogs = (CFG._morphology_mode == "partial") ? Object.keys(WLS.roots).length : Object.keys(WLS.etyma).length;
         feedback.innerHTML = '<table class="data_table2">' +
           "<tr><th>Parameter</th><th>Setting</th></tr>" +
