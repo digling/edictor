@@ -57,10 +57,6 @@ class Handler(SimpleHTTPRequestHandler):
         if fn == "/patterns.py":
             patterns(s, post_data_bytes, "POST")
 
-
-
-
-
     def do_GET(s):
         """
         Do a GET request.

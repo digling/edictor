@@ -7,7 +7,6 @@ from http.server import HTTPServer
 import argparse
 from pathlib import Path
 
-from edictor.server import Handler
 from edictor.util import DATA
 
 
@@ -21,12 +20,15 @@ parser.add_argument('-p', '--port', help="Define the port on the local host.",
                     action="store", default=9999, type=int)
 parser.add_argument('-b', '--browser', default="firefox", 
                     help="select webbrowser")
-parser.add_argument('-a', '--app', 
-                    help="Use for server-based deployment on an app.",
-                    action="store_true")
+parser.add_argument('-c', '--config', help="Name of configuration file.",
+                    action="store", default="config.json")
 
 def main():
     args = parser.parse_args()
+    DATA["config"] = args.config
+
+    # load library now, after configuration has been tight to file
+    from edictor.server import Handler
     
     httpd = HTTPServer(("", args.port), Handler)
     print("Serving EDICTOR at port {0}...".format(args.port))

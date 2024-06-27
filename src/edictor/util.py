@@ -26,8 +26,20 @@ DATA = {
         "jpg": "",
         "ttf": "",
         "woff": "",
-        "json": "text/plain; charset=utf-8"
+        "json": "text/plain; charset=utf-8",
+        "config": "config.json",
         }
+
+
+def opendb(path, conf):
+    if Path(conf["sqlite"], path + ".sqlite3").exists:
+        db = sqlite3.connect(
+                Path(conf["sqlite"], path + ".sqlite3"))
+    else:
+        db = sqlite3.connect(
+                edictor_path(conf["sqlite"], path + ".sqlite3"))
+    return db, db.cursor()
+    
 
 def edictor_path(*comps):
     return Path(__file__).parent.parent.parent.joinpath(*comps)
@@ -104,17 +116,22 @@ def check(s):
 
 
 def configuration():
-    if Path("config.json").exists():
-        with codecs.open("config.json", "r", "utf-8") as f:
+    """
+    Load the Configuration Data File.
+    """
+    if Path(DATA["config"]).exists():
+        with codecs.open(DATA["config"], "r", "utf-8") as f:
             conf = json.load(f)
-    elif edictor_path("config.json").exists():
-        with codecs.open(edictor_path("config.json"), "r", "utf-8") as f:
+    elif edictor_path(DATA["config"]).exists():
+        with codecs.open(edictor_path(DATA["config"]), "r", "utf-8") as f:
             conf = json.load(f)
     else:
         conf = {
                 "user": "unknown",
-                "links": None
+                "links": None,
+                "sqlite": "sqlite",
                 }
+        
     if conf.get("remote"):
         if not conf.get("user"):
             conf["user"] = input("User name: ")
@@ -132,6 +149,7 @@ def configuration():
         for link in conf["links"]:
             link["url"] = link["url"] + "?" + "&".join(
                     ["{0}={1}".format(k, v) for k, v in link["data"].items()])
+
     return conf
         
 
@@ -228,7 +246,6 @@ def new_id(s, query, qtype, conf):
         req.add_header('Content-Type', 'application/x-www-form-urlencoded')
         req.get_method =lambda: 'POST'
         data = urllib.request.urlopen(req).read()
-        print(data)
         send_response(
                 s, 
                 data, 
@@ -237,10 +254,8 @@ def new_id(s, query, qtype, conf):
                 content_disposition='attachment; filename="triples.tsv"'
                 )
         return
-
-    db = sqlite3.connect(
-            edictor_path("sqlite/" + args["remote_dbase"] + ".sqlite3"))
-    cursor = db.cursor()
+    
+    db, cursor = opendb(args["remote_dbase"], conf)
     
     if args['new_id'] == "true":
         cursor.execute('select DISTINCT ID from ' + args['file'] + ';')
@@ -454,10 +469,8 @@ def triples(s, query, qtype, conf):
                 content_disposition='attachment; filename="triples.tsv"'
                 )
         return
-
-    db = sqlite3.connect(
-            edictor_path("sqlite/" + args["remote_dbase"] + ".sqlite3"))
-    cursor = db.cursor()
+    
+    db, cursor = opendb(args["remote_dbase"], conf)
 
     # get unique columns
     if not args['columns']:
@@ -563,10 +576,7 @@ def modifications(s, post, qtype, conf):
                 )
         return
 
-    
-    db = sqlite3.connect(
-            edictor_path("sqlite", args["remote_dbase"] + ".sqlite3"))
-    cursor = db.cursor()
+    db, cursor = opendb(args["remote_dbase"], conf)
     cursor.execute(
             'select ID,COL from backup where FILE="'+args['file']+'"'+\
                     ' and datetime(DATE) > datetime('+args['date']+')'+\
@@ -630,10 +640,7 @@ def update(s, post, qtype, conf):
         send_response(s, message, encode=False)
         return
     
-    db = sqlite3.connect(
-            edictor_path("sqlite", args["remote_dbase"] + ".sqlite3")
-            )
-    cursor = db.cursor()
+    db, cursor = opendb(args["remote_dbase"], conf)
 
     if "update" in args:
         idxs = urllib.parse.unquote(args['ids']).split("|||")
