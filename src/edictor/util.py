@@ -116,6 +116,8 @@ def configuration():
                 "links": None
                 }
     if conf.get("remote"):
+        if not conf.get("user"):
+            conf["user"] = input("User name: ")
         if not conf.get("pw"):
             conf["pw"] = getpass.getpass("Remote password: ")
         # prepare the links now
