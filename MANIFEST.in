@@ -1,0 +1,15 @@
+global-exclude *.py[c]
+graft css
+graft data
+graft example
+graft fonts
+graft help
+graft img
+graft js
+graft panels
+graft plugouts
+graft sqlite
+graft tests
+include config.json
+include edictor.html
+include index.html
