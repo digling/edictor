@@ -42,7 +42,7 @@ def opendb(path, conf):
     
 
 def edictor_path(*comps):
-    return Path(__file__).parent.parent.parent.joinpath(*comps)
+    return Path(__file__).parent.joinpath("app", *comps)
 
 
 def parse_args(path):

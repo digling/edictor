@@ -13,3 +13,4 @@ graft tests
 include config.json
 include edictor.html
 include index.html
+graft src/edictor/app
