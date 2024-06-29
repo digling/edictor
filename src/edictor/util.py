@@ -32,7 +32,7 @@ DATA = {
 
 
 def opendb(path, conf):
-    if Path(conf["sqlite"], path + ".sqlite3").exists:
+    if Path(conf["sqlite"], path + ".sqlite3").exists():
         db = sqlite3.connect(
                 Path(conf["sqlite"], path + ".sqlite3"))
     else:
@@ -150,6 +150,12 @@ def configuration():
             link["url"] = link["url"] + "?" + "&".join(
                     ["{0}={1}".format(k, v) for k, v in link["data"].items()])
 
+    if not conf.get("sqlite"):
+        conf["sqlite"] = "sqlite"
+
+    if not conf.get("user"):
+        conf["user"] = "unknown"
+
     return conf
         
 
@@ -237,7 +243,7 @@ def new_id(s, query, qtype, conf):
             new_id = '', 
             )
     handle_args(args, query, qtype)
-    if conf["remote"] and args["remote_dbase"] in conf["remote"]:
+    if conf.get("remote") and args["remote_dbase"] in conf["remote"]:
         print("requesting remote ID")
         info = conf["remote"][args["remote_dbase"]]["new_id.py"]
         req = urllib.request.Request(
@@ -452,7 +458,7 @@ def triples(s, query, qtype, conf):
             )
     handle_args(args, query, qtype)
 
-    if conf["remote"] and args["remote_dbase"] in conf["remote"]:
+    if conf.get("remote") and args["remote_dbase"] in conf["remote"]:
         print("EDICTOR loading remote TSV file.")
         info = conf["remote"][args["remote_dbase"]]["triples.py"]
         req = urllib.request.Request(
@@ -557,7 +563,7 @@ def modifications(s, post, qtype, conf):
     if not "remote_dbase" in args:
         return
 
-    if conf["remote"] and args["remote_dbase"] in conf["remote"]:
+    if conf.get("remote") and args["remote_dbase"] in conf["remote"]:
         print("EDICTOR checking for modifications in remote data.")
         info = conf["remote"][args["remote_dbase"]]["modifications.py"]
         data = info["data"] + "&date=" + args["date"]
@@ -610,7 +616,7 @@ def update(s, post, qtype, conf):
     args = {}
     handle_args(args, post, qtype)
 
-    if conf["remote"] and args["remote_dbase"] in conf["remote"]:
+    if conf.get("remote") and args["remote_dbase"] in conf["remote"]:
         print("send remote data")
         info = conf["remote"][args["remote_dbase"]]["update.py"]
         url = info["url"]
