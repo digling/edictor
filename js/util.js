@@ -426,9 +426,6 @@ UTIL.refresh_settings = function() {
   showWLS(getCurrent());
 };
 
-UTIL.check_wls = function(wls) {
-  
-};
 
 UTIL.filter_by_concept = function(concept) {
   $('#select_concepts').multiselect('deselectAll', false);

@@ -1223,6 +1223,7 @@ PATS.recheck = function(cognates){
   }
   /* assemble by cognate set */
   var values;
+  var modified_sequences = [];
   for (cnt = 0; cogid = cognates[cnt]; cnt += 1) {
     values = [];
     if (CFG._morphology_mode == "partial") {
@@ -1304,6 +1305,9 @@ PATS.recheck = function(cognates){
         }
         new_patterns = new_patterns.join(" + ");
         if (WLS[values[i][0]][CFG._patterns] != new_patterns) {
+          modified_sequences.push([
+            WLS[values[i][0]][CFG._patterns], new_patterns
+          ]);
           
           WLS[values[i][0]][CFG._patterns] = new_patterns;
           storeModification(
@@ -1314,7 +1318,7 @@ PATS.recheck = function(cognates){
       }
     }
   }
-
+  return modified_sequences;
 };
 
 
