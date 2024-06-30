@@ -111,6 +111,9 @@ def test_configuration():
                     }))
         conf = configuration()
     os.chdir(wd)
+    # next scenario that conf is missing in the current folder, so we take
+    # default conf
+    conf = configuration()
 
 
 def test_file_type():
@@ -127,22 +130,49 @@ def test_file_name():
 def test_file_handler():
 
     s = Sender()
-    file_handler(s, "js", "text.js")
+    file_handler(s, "js", "/text.js")
     assert s.wfile.written == b"404 FNF"
     
-    file_handler(s, "html", "index.html")
+    file_handler(s, "html", "/index.html")
+    file_handler(s, "png", "/edictor-small.png")
+    file_handler(s, "html", "/index-none.html")
+    file_handler(s, "png", "/edictor-none.png")
 
-
-    file_handler(s, "png", "edictor-small.png")
 
     file_handler(s, "tsv", "/data/GER.tsv")
     assert s.wfile.written[:2] == b"ID"
+    file_handler(s, "tsv", "/data/GER-none.tsv")
+    
+    wd = os.getcwd()
+    with tempfile.TemporaryDirectory() as t:
+        os.chdir(t)
+        with open("test.tsv", "w") as f:
+            f.write("test")
+        file_handler(s, "tsv", "/data/test.tsv")
+        assert s.wfile.written == b"test"
+    os.chdir(wd)
 
 
 def test_serve_base():
-    
     s = Sender()
-    serve_base(s, {"links": []})
+    wd = os.getcwd()
+    with tempfile.TemporaryDirectory() as t:
+        os.chdir(t)
+        with open("test.tsv", "w") as f:
+            f.write("abcd")
+        serve_base(s, {"links": []})
+    os.chdir(wd)
+    serve_base(
+            s, 
+            {"links": [{
+                "url": "edictor.html?file=GER.tsv", 
+                "data": {
+                 "file": "germanic",
+                 "remote_dbase": "germanic",
+                 "columns": "DOCULECT|CONCEPT|IPA|TOKENS|COGID|NOTE"
+                 },
+                "name": "Germanic (Simple File)"}]}
+            )
 
 
 def test_cognates():
@@ -188,7 +218,7 @@ def test_patterns():
 
     data = "wordlist=1\tA\tA\tm a m a\t1\tm a m a\n" + \
         "2\tB\tA\tm u m u\t1\tm u m u\n" + \
-        "3\tC\tA\tm i m i\tm i m i\t1&mode=full"
+        "3\tC\tA\tm i m i\tm i m i\t1&mode=partial"
     
     patterns(s, data, "POST")
 
@@ -214,6 +244,14 @@ def test_new_id():
         "POST", 
         {"sqlite": "sqlite", "remote_dbase": "germanic.sqlite3"}
         )
+
+    new_id(
+        s, 
+        "new_id=COGID&file=germanic&remote_dbase=germanic", 
+        "POST", 
+        {"sqlite": "sqlite", "remote_dbase": "germanic.sqlite3"}
+        )
+
 
 
 def test_triples():
@@ -260,6 +298,8 @@ def test_modifications():
             {"sqlite": "data", "remote_dbase": "germanic.sqlite3"}
              )
     assert s.wfile.written[:2] == b"10"
+
+    modifications(s, "file=germanic", "POST", {})
 
 
 def test_update():
