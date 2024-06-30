@@ -12,7 +12,9 @@ from edictor.util import (
 CONF = configuration()
 
 class Handler(SimpleHTTPRequestHandler):
-
+    """
+    Modified basic class for handling requests in our local server.
+    """
 
     def do_POST(s):
         """
