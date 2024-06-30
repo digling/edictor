@@ -1,0 +1,32 @@
+{
+  "links": [
+    {
+      "url": "edictor.html?file=GER.tsv", 
+      "data": {
+        "file": "germanic",
+        "remote_dbase": "germanic",
+        "columns": "DOCULECT|CONCEPT|IPA|TOKENS|COGID|NOTE"
+      },
+      "name": "Germanic (Simple File)"
+    },
+    {
+      "url": "edictor.html", 
+      "data": {
+        "file": "germanic",
+        "remote_dbase": "germanic",
+        "columns": "DOCULECT|CONCEPT|IPA|TOKENS|ALIGNMENT|COGID|PATTERNS|NOTE"
+      },
+      "name": "Germanic (SQLITE, Base)"
+    },
+    {
+      "url": "edictor.html",
+      "data": {
+        "file": "germanic",
+        "remote_dbase": "germanic",
+        "doculects": "German|Dutch|English",
+        "columns": "DOCULECT|CONCEPT|IPA|TOKENS|ALIGNMENT|COGID|PATTERNS|NOTE"
+      },
+      "name": "Germanic (SQLITE, no proto-language)"
+    }
+  ]
+}
