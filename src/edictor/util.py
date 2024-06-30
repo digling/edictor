@@ -47,11 +47,13 @@ def edictor_path(*comps):
 
 def parse_args(path):
     args = {}
-    for k, v in map(
-            lambda x: x.split("="),
-            path.split("?")[1].split("#")[0].split("&"),
-            ):
-        args[k] = v
+    # avoid splitting error 
+    if "?" in path and "=" in path:
+        for k, v in map(
+                lambda x: x.split("="),
+                path.split("?")[1].split("#")[0].split("&"),
+                ):
+            args[k] = v
     return args
 
 
@@ -59,10 +61,11 @@ def parse_post(path):
     args = {}
     if isinstance(path, bytes):
         path = path.decode("utf-8")
-    for k, v in map(
-            lambda x: x.split("="),
-            path.split("#")[0].split("&")):
-        args[k] = v
+    if "=" in path:
+        for k, v in map(
+                lambda x: x.split("="),
+                path.split("#")[0].split("&")):
+            args[k] = v
     return args
 
 
@@ -110,7 +113,7 @@ def check(s):
         import lingpy
         import lingrex
         message = "lingpy"
-    except ImportError:
+    except ImportError: # pragma: no cover
         message = "python"
     send_response(s, message)
 
@@ -125,14 +128,14 @@ def configuration():
     elif edictor_path(DATA["config"]).exists():
         with codecs.open(edictor_path(DATA["config"]), "r", "utf-8") as f:
             conf = json.load(f)
-    else:
+    else: # pragma: no cover
         conf = {
                 "user": "unknown",
                 "links": None,
                 "sqlite": "sqlite",
                 }
         
-    if conf.get("remote"):
+    if conf.get("remote"): # pragma: no cover
         if not conf.get("user"):
             conf["user"] = input("User name: ")
         if not conf.get("pw"):
@@ -181,34 +184,35 @@ def file_name(path):
 
 
 def file_handler(s, ft, fn):
+    """
+    Handle different file types.
+    """
     if ft in ["js", "html", "css", "csv"]:
-        s.send_response(200)
-        s.send_header("Content-type", DATA[ft])
-        s.end_headers()
         try:
             with codecs.open(edictor_path(fn[1:]), "r", "utf-8") as f:
-                s.wfile.write(bytes(f.read(), "utf-8"))
+                message = bytes(f.read(), "utf-8")
         except FileNotFoundError:
-            s.wfile.write(b'404 FNF')
+            message = b"404 FNF"
     elif ft == "tsv":
-        s.send_response(200)
-        s.send_header("Content-type", DATA[ft])
-        s.end_headers()
+        # if a file is in the same folder where the app was started, it is
+        # marked by preceding it with "/data/" by the JS application, so
+        # these files must be checked for first, as they are local files.
         if Path(fn[6:]).exists() and fn.startswith("/data/"):
             with codecs.open(fn[6:], "r", "utf-8") as f:
-                s.wfile.write(bytes(f.read(), "utf-8"))
+                message = bytes(f.read(), "utf-8")
         else:
             if edictor_path(fn[1:]).exists():
                 with codecs.open(edictor_path(fn[1:]), "r", "utf-8") as f:
-                    s.wfile.write(bytes(f.read(), "utf-8"))
+                    message = bytes(f.read(), "utf-8")
             else:
-                s.wfile.write(b'400 FNF')
+                message = b"404 FNF"
     elif ft in ["png", "ttf", "jpg", "woff"]:
         try:
             with codecs.open(edictor_path(fn[1:]), 'rb', None) as f:
-                s.wfile.write(f.read())
+                message = f.read()
         except FileNotFoundError:
-            s.wfile.write(b'404 FNF')
+            message = b"404 FNF"
+    send_response(s, message, DATA[ft], encode=False)
 
 
 def serve_base(s, conf):
@@ -243,7 +247,7 @@ def new_id(s, query, qtype, conf):
             new_id = '', 
             )
     handle_args(args, query, qtype)
-    if conf.get("remote") and args["remote_dbase"] in conf["remote"]:
+    if conf.get("remote") and args["remote_dbase"] in conf["remote"]: # pragma: no cover
         print("requesting remote ID")
         info = conf["remote"][args["remote_dbase"]]["new_id.py"]
         req = urllib.request.Request(
@@ -458,7 +462,7 @@ def triples(s, query, qtype, conf):
             )
     handle_args(args, query, qtype)
 
-    if conf.get("remote") and args["remote_dbase"] in conf["remote"]:
+    if conf.get("remote") and args["remote_dbase"] in conf["remote"]: # pragma: no cover
         print("EDICTOR loading remote TSV file.")
         info = conf["remote"][args["remote_dbase"]]["triples.py"]
         req = urllib.request.Request(
@@ -563,7 +567,7 @@ def modifications(s, post, qtype, conf):
     if not "remote_dbase" in args:
         return
 
-    if conf.get("remote") and args["remote_dbase"] in conf["remote"]:
+    if conf.get("remote") and args["remote_dbase"] in conf["remote"]: # pragma: no cover
         print("EDICTOR checking for modifications in remote data.")
         info = conf["remote"][args["remote_dbase"]]["modifications.py"]
         data = info["data"] + "&date=" + args["date"]
@@ -584,17 +588,17 @@ def modifications(s, post, qtype, conf):
 
     db, cursor = opendb(args["remote_dbase"], conf)
     cursor.execute(
-            'select ID,COL from backup where FILE="'+args['file']+'"'+\
-                    ' and datetime(DATE) > datetime('+args['date']+')'+\
+            'select ID, COL from backup where FILE="'+args['file']+'"'+\
+                    ' and DATE > ' + args['date'] +\
                     ' group by ID,COL limit 100;')
     lines = cursor.fetchall()
-    data = dict([((a,b),c) for a,b,c in cursor.execute(
+    data = dict([((a, b), c) for a, b, c in cursor.execute(
             'select * from '+args['file']+';'
             )])
     message = ""
     for line in lines:
         try:
-            val = data[line[0],line[1]].encode('utf-8')
+            val = data[line[0], line[1]].encode('utf-8')
             message += '{0}\t{1}\t{2}\n'.format(line[0], line[1], val) 
         except KeyError:
             pass
@@ -616,7 +620,7 @@ def update(s, post, qtype, conf):
     args = {}
     handle_args(args, post, qtype)
 
-    if conf.get("remote") and args["remote_dbase"] in conf["remote"]:
+    if conf.get("remote") and args["remote_dbase"] in conf["remote"]: # pragma: no cover
         print("send remote data")
         info = conf["remote"][args["remote_dbase"]]["update.py"]
         url = info["url"]

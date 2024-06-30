@@ -285,6 +285,16 @@ def test_triples():
              )
     assert s.wfile.written[:2] == b"ID"
 
+    # test with concepts
+    triples(
+            s,
+            "file=germanic&remote_dbase=germanic&concepts=*markō",
+            "POST",
+            {"sqlite": "data", "remote_dbase": "germanic.sqlite3"}
+             )
+    assert s.wfile.written[:2] == b"ID"
+
+
 
 def test_modifications():
 
