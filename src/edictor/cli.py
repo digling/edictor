@@ -245,5 +245,9 @@ def main(*args):
     """
     Computer-assisted language comparison with EDICTOR 3.
     """
-    args = get_parser().parse_args(args or None)
-    return _cmd_by_name(args.subcommand)(args)
+    parser = get_parser()
+    args = parser.parse_args(args or None)
+    if args.subcommand:
+        return _cmd_by_name(args.subcommand)(args)
+    else:
+        parser.print_help()
