@@ -6,6 +6,7 @@ import webbrowser
 from http.server import HTTPServer
 import argparse
 from pathlib import Path
+import codecs
 
 from edictor.util import DATA
 
@@ -113,6 +114,39 @@ class server(Command):
         httpd.serve_forever()
 
 
+class fetch(Command):
+    """
+    Download a wordlist from an EDICTOR application.
+    """
+    @classmethod
+    def subparser(cls, p):
+        add_option(
+                p,
+                "dataset",
+                None,
+                "Name of the remote dataset you want to access.",
+                short_opt="d"
+                )
+        add_option(
+                p,
+                "name",
+                "dummy.tsv",
+                "Name of the file where you want to store the data.",
+                short_opt="n"
+                )
+
+    def __call__(self, args):
+        """
+        Download data.
+        """
+        from edictor.wordlist import fetch_wordlist
+        data = fetch_wordlist(
+                args.dataset
+                )
+        with codecs.open(args.name, "w", "utf-8") as f:
+            f.write(data)
+            
+
 class wordlist(Command):
     """
     Convert a dataset to EDICTOR's SQLITE and TSV formats (requires LingPy).
@@ -152,11 +186,9 @@ class wordlist(Command):
         )
 
     def __call__(self, args):
-        try:
-            import lingpy
-        except:
-            args.log.info("LingPy must be available to run this command.")
-            return
+
+        from edictor.wordlist import get_wordlist
+        import importlib.util
             
         namespace = json.loads(args.namespace)
         if args.addon:
@@ -176,7 +208,7 @@ class wordlist(Command):
             custom_args = json.loads(args.custom)
         else:
             custom_args = None
-        get_lexibase(
+        get_wordlist(
             args.dataset,
             args.name,
             columns=columns,
@@ -185,6 +217,8 @@ class wordlist(Command):
             lexibase=args.sqlite,
             custom_args=custom_args,
         )
+
+
 
 
 def get_parser():
