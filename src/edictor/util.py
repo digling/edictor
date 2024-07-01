@@ -35,9 +35,11 @@ def opendb(path, conf):
     if Path(conf["sqlite"], path + ".sqlite3").exists():
         db = sqlite3.connect(
                 Path(conf["sqlite"], path + ".sqlite3"))
-    else:
+    elif edictor_path(conf["sqlite"], path + ".sqlite3").exists():
         db = sqlite3.connect(
                 edictor_path(conf["sqlite"], path + ".sqlite3"))
+    else:
+        raise ValueError("SQLITE DB could not be found.")
     return db, db.cursor()
     
 
