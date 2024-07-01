@@ -5,8 +5,19 @@ from edictor.util import (
         modifications, update, parse_args, parse_post,
         send_response, handle_args, check
         )
-from lingpy.compare.partial import Partial
-from lingpy.compare.lexstat import LexStat
+try:
+    from lingpy.compare.partial import Partial
+    from lingpy.compare.lexstat import LexStat
+    with_lingpy = True
+except ImportError:
+    with_lingpy = False
+
+try:
+    from lingrex.copar import CoPaR
+    with_lingrex = True
+except ImportError:
+    with_lingrex = False
+
 import os
 import tempfile
 import json
@@ -176,6 +187,8 @@ def test_serve_base():
 
 
 def test_cognates():
+    if not with_lingpy:
+        return
 
     s = Sender()
     data = "wordlist=1\tA\tA\tm a m a\n" + \
@@ -193,6 +206,9 @@ def test_cognates():
 
 def test_alignments():
 
+    if not with_lingpy:
+        return
+
     s = Sender()
     data = "wordlist=1\tA\tA\tm a m a\t1\n" + \
         "2\tB\tA\tm u m u\t1\n" + \
@@ -208,6 +224,9 @@ def test_alignments():
 
 
 def test_patterns():
+
+    if not with_lingrex:
+        return
 
     s = Sender()
     data = "wordlist=1\tA\tA\tm a m a\t1\tm a m a\n" + \
