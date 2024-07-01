@@ -1,13 +1,9 @@
 {
   "links": [
     {
-      "url": "edictor.html?file=GER.tsv", 
-      "data": {
-        "file": "germanic",
-        "remote_dbase": "germanic",
-        "columns": "DOCULECT|CONCEPT|IPA|TOKENS|COGID|NOTE"
-      },
-      "name": "Germanic (Simple File)"
+      "url": "edictor.html?file=Germanic.tsv", 
+      "data": {},
+      "name": "Germanic Wordlist (List 2014)"
     },
     {
       "url": "edictor.html", 

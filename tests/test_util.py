@@ -158,7 +158,7 @@ def test_file_handler():
     file_handler(s, "png", "/edictor-none.png")
 
 
-    file_handler(s, "tsv", "/data/GER.tsv")
+    file_handler(s, "tsv", "/data/Germanic.tsv")
     assert s.wfile.written[:2] == b"ID"
     file_handler(s, "tsv", "/data/GER-none.tsv")
     

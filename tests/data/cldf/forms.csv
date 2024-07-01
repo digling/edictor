@@ -1,0 +1,19 @@
+ID,Local_ID,Language_ID,Parameter_ID,Value,Form,Segments,Comment,Source,Cognacy,Loan,Graphemes,Profile
+Jianchuan-1_sky-1,,Jianchuan,1_sky,xẽ⁵⁵,xẽ⁵⁵,x ẽ ⁵⁵,,Allen2007,,,^x ẽ ⁵⁵$,default
+Eryuan-1_sky-1,,Eryuan,1_sky,xe⁵⁵,xe⁵⁵,x e ⁵⁵,,Allen2007,,,^x e ⁵⁵$,default
+Heqing-1_sky-1,,Heqing,1_sky,xʰẽ⁵⁵,xʰẽ⁵⁵,xʰ ẽ ⁵⁵,,Allen2007,,,^xʰ ẽ ⁵⁵$,default
+Lanping-1_sky-1,,Lanping,1_sky,xẽ⁵⁵kʰao³¹,xẽ⁵⁵kʰao³¹,x ẽ ⁵⁵ + kʰ ao ³¹,,Allen2007,,,^x ẽ ⁵⁵ kʰ ao ³¹$,default
+Qiliqiao-1_sky-1,,Qiliqiao,1_sky,xe⁵⁵,xe⁵⁵,x e ⁵⁵,,Allen2007,,,^x e ⁵⁵$,default
+Yunlong-1_sky-1,,Yunlong,1_sky,xe⁵⁵,xe⁵⁵,x e ⁵⁵,,Allen2007,,,^x e ⁵⁵$,default
+Xiangyun-1_sky-1,,Xiangyun,1_sky,xẽ⁵⁵,xẽ⁵⁵,x ẽ ⁵⁵,,Allen2007,,,^x ẽ ⁵⁵$,default
+Luobenzhuo-1_sky-1,,Luobenzhuo,1_sky,xẽ⁵⁵,xẽ⁵⁵,x ẽ ⁵⁵,,Allen2007,,,^x ẽ ⁵⁵$,default
+Zhoucheng-1_sky-1,,Zhoucheng,1_sky,xe⁵⁵,xe⁵⁵,x e ⁵⁵,,Allen2007,,,^x e ⁵⁵$,default
+Jianchuan-10_hail-1,,Jianchuan,10_hail,sue⁴⁴wa⁴²tsɿ³³,sue⁴⁴wa⁴²tsɿ³³,s u/w e ⁴⁴ + w a ⁴² + ts ɿ ³³,,Allen2007,,,^s ue ⁴⁴ wa ⁴² ts ɿ ³³$,default
+Eryuan-10_hail-1,,Eryuan,10_hail,tʂɔ⁴²pɔ⁴²tsɿ³³,tʂɔ⁴²pɔ⁴²tsɿ³³,ʈʂ ɔ ⁴² + p ɔ ⁴² + ts ɿ ³³,,Allen2007,,,^tʂ ɔ ⁴² p ɔ ⁴² ts ɿ ³³$,default
+Heqing-10_hail-1,,Heqing,10_hail,sʰue⁴⁴wa⁴²tsɿ³³,sʰue⁴⁴wa⁴²tsɿ³³,sʰ u/w e ⁴⁴ + w a ⁴² + ts ɿ ³³,,Allen2007,,,^sʰ ue ⁴⁴ wa ⁴² ts ɿ ³³$,default
+Lanping-10_hail-1,,Lanping,10_hail,po³³tɛ⁴⁴,po³³tɛ⁴⁴,p o ³³ + t ɛ ⁴⁴,,Allen2007,,,^p o ³³ t ɛ ⁴⁴$,default
+Qiliqiao-10_hail-1,,Qiliqiao,10_hail,ɕy⁴⁴kʰuɔ³³tsɿ³³,ɕy⁴⁴kʰuɔ³³tsɿ³³,ɕ y ⁴⁴ + kʰ u/w ɔ ³³ + ts ɿ ³³,,Allen2007,,,^ɕ y ⁴⁴ kʰ uɔ ³³ ts ɿ ³³$,default
+Yunlong-10_hail-1,,Yunlong,10_hail,tso⁴²po⁴²tsɿ³³,tso⁴²po⁴²tsɿ³³,ts o ⁴² + p o ⁴² + ts ɿ ³³,,Allen2007,,,^ts o ⁴² p o ⁴² ts ɿ ³³$,default
+Xiangyun-10_hail-1,,Xiangyun,10_hail,sua⁴⁴kʰuɔ³³tsɿ³³,sua⁴⁴kʰuɔ³³tsɿ³³,s u/w a ⁴⁴ + kʰ u/w ɔ ³³ + ts ɿ ³³,,Allen2007,,,^s ua ⁴⁴ kʰ uɔ ³³ ts ɿ ³³$,default
+Luobenzhuo-10_hail-1,,Luobenzhuo,10_hail,ɕõ³³qʰao³¹,ɕõ³³qʰao³¹,ɕ õ ³³ + qʰ ao ³¹,,Allen2007,,,^ɕ õ ³³ qʰ ao ³¹$,default
+Zhoucheng-10_hail-1,,Zhoucheng,10_hail,sue⁴⁴kʰuɔ³³tsɿ³³,sue⁴⁴kʰuɔ³³tsɿ³³,s u/w e ⁴⁴ + kʰ u/w ɔ ³³ + ts ɿ ³³,,Allen2007,,,^s ue ⁴⁴ kʰ uɔ ³³ ts ɿ ³³$,default

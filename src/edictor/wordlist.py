@@ -3,7 +3,6 @@ Handle EDICTOR wordlist data.
 """
 import urllib
 import tempfile
-import codecs
 
 
 def fetch_wordlist(
