@@ -1,3 +1,7 @@
+"""
+Test the util module of the edictor package.
+"""
+from pathlib import Path
 from edictor.util import (
         opendb, edictor_path, DATA, configuration, file_name,
         file_type, file_handler, serve_base, 
@@ -5,6 +9,10 @@ from edictor.util import (
         modifications, update, parse_args, parse_post,
         send_response, handle_args, check
         )
+import os
+import tempfile
+import json
+
 try:
     from lingpy.compare.partial import Partial
     from lingpy.compare.lexstat import LexStat
@@ -18,9 +26,6 @@ try:
 except ImportError:
     with_lingrex = False
 
-import os
-import tempfile
-import json
 
 
 class Writer:
@@ -50,8 +55,11 @@ class Sender:
 
 def test_opendb():
 
+    os.chdir(Path(__file__).parent)
+
     a, b = opendb("germanic", {"sqlite": "data"})
     a, b = opendb("test", {"sqlite": "data"})
+    
 
 
 def test_edictor_path():
@@ -221,6 +229,10 @@ def test_alignments():
         "3\tC\tA\tm i m i\t1&mode=partial"
     
     alignments(s, data, "POST")
+import os
+import tempfile
+import json
+
 
 
 def test_patterns():
