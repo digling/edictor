@@ -2,29 +2,32 @@
 
 EDICTOR is a web-based tool for computer-assisted language comparison. As of Version 3, EDICTOR is available in two forms. You can access the application via its website at [https://edictor.org](https://edictor.org) or you can install a Python application that allows you to run EDICTOR with more features locally in your webbrowser.
 
-In order to get started with the local application, you should make sure to have a recent Python installation (3.8 or higher) along with the PIP package manager. It is recommended to install the package from a virtual environment. Installing EDICTOR can then be done via the commandline by simply typing:
+In order to get started with the local application, you should make sure to have a recent Python installation (3.8 or higher) along with the PIP package manager. It is recommended to install the package from a virtual environment. Installing EDICTOR can then be done via the commandline by simply typing the following command in the terminal (the `$` symbol here indicates that the command is issued as a prompt and not written inside a script).
 
 ```shell
 $ pip install edictor
 ```
 
-This will install EDICTOR on your computer and offer the command `edictor3` on your commandline that you can use to run the application locally.
+This will install EDICTOR on your computer and offer the command `edictor` on your commandline that you can use to run the application locally. To check that this works in principle, simply type the following command.
 
 ```shell
-$ edictor3
+$ edictor --help
 ```
 
-Running the application will try to automatically open the webbrowser at the default address `http://localhost:9999`. If that causes errors, you can select another port.
+This shows you all the current options of the application. Running the application then simply requires to type the subcommand `server`, as illustrated below.
 
 ```shell
-$ edictor3 --port=9876
+$ edictor server
+```
+
+Running the application will try to automatically open the webbrowser at the default address `http://localhost:9999`. This may not work on all operation systems, partly, because command names for webbrowsers differ, and possibly also because the port is already used by another application. You can select another port when starting the application.
+
+```shell
+$ edictor server --port=9876
 ```
 
 The landing page will provide further information on files and datasets that you can open and test.
 
-If you use EDICTOR in your work, please cite the tool as follows:
-
-> List, Johann-Mattis (2024): EDICTOR 3: A Web-Based Tool for Computer-Assisted Language Comparison [Software Tool, Version 3.0.alpha.1]. MCL Chair at the University of Passau: Passau. URL: [https://edictor.org/](https://edictor.org).
 
 
 
@@ -71,4 +74,9 @@ If you want to use the tool along with [LingPy](https://lingpy.org) and [LingRex
 (edi3) PS C:\Users\edictor3\Desktop\edictor3> python -m pip install lingpy lingrex
 ```
 
+## Citing EDICTOR 3
+
+If you use EDICTOR in your work, please cite the tool as follows:
+
+> List, Johann-Mattis (2024): EDICTOR 3: A Web-Based Tool for Computer-Assisted Language Comparison [Software Tool, Version 3.0.alpha.1]. MCL Chair at the University of Passau: Passau. URL: [https://edictor.org/](https://edictor.org).
 
