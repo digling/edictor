@@ -2337,9 +2337,8 @@ function getDate(with_seconds) {
 }
 
 /* highlight all IPA entries which are specified as such */
-function highLight()
-{
-  var items, i, tokens, roots, word, m, concepts, concept, morphemes, parts, part, j, textout, k, morph; idx;
+function highLight() {
+  var items, i, tokens, roots, word, m, concepts, concept, morphemes, parts, part, j, textout, k, morph, idx;
 
   for (i = 0; head = WLS.header[i]; i += 1) {
     if (CFG['highlight'].indexOf(head) != -1 ) {
