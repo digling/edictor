@@ -533,24 +533,13 @@ GLOSSES.markID = function(event, node) {
 
 GLOSSES.markIDs = function(event, node) {
   event.preventDefault();
-  // if (node.dataset["idx"] in this.joined) {
-  //   for (nodeidx in this.joined) {
-  //     this.markID(event, document.getElementById('GLOSSES_idx-' + nodeidx));
-  //   }
-  //   this.joined = {};
-  //   return;
-  // }
-  var current_node = node.parentNode;
-  // this.joined = {};
-  while (current_node.nextElementSibling.id != "") {
-    current_node.childNodes[0].dataset["marked"] = "0"
-    current_node.childNodes[0].classList.remove("id_batch")
-    GLOSSES.joined[current_node.childNodes[0].dataset["idx"]] = false;
-    current_node = current_node.nextElementSibling;
+  if (node.dataset["idx"] in this.joined) {
+    for (nodeidx in this.joined) {
+      this.markID(event, document.getElementById('GLOSSES_idx-' + nodeidx));
+    }
+    this.joined = {};
+    return;
   }
-  current_node.childNodes[0].dataset["marked"] = "0"
-    current_node.childNodes[0].classList.remove("id_batch")
-  GLOSSES.joined[current_node.childNodes[0].dataset["idx"]] = false;
 };
 
 GLOSSES.plotMorphemes = function(tokens, morphemes, cogids) {
