@@ -90,6 +90,7 @@ GLOSSES.edit_entry = function(node, type, idx, jdx) {
   node.innerHTML = '';
   node.appendChild(ipt);
   ipt.focus();
+  ipt.select();
 };
 
 GLOSSES.unmodify_entry = function(node, type) {
@@ -500,7 +501,7 @@ GLOSSES.markID = function(event, node) {
         let row = document.getElementById("GLOSSES_row_"+i)
         let rowChild = row.firstElementChild
         rowChild.dataset['marked'] = "1";
-        rowChild.style.backgroundColor = "Salmon";
+        rowChild.classList.add('id_batch');
         GLOSSES.joined[rowChild.dataset['idx']] = true;
       }
     } else {
@@ -508,7 +509,7 @@ GLOSSES.markID = function(event, node) {
       rangeStart = parseInt(node.parentNode.id.replace("GLOSSES_row_",""))
       // mark the first item in the list
       node.dataset['marked'] = "1";
-      node.style.backgroundColor = "Salmon";
+      node.classList.add('id_batch');
       GLOSSES.joined[node.dataset['idx']] = true;
     }
     isRange = !isRange
@@ -519,12 +520,12 @@ GLOSSES.markID = function(event, node) {
     // now go as normal
     if (node.dataset['marked'] == "1"){
       node.dataset['marked'] = "0";
-      node.style.backgroundColor = node.parentNode.style.backgroundColor;
+      node.classList.remove('id_batch');
       GLOSSES.joined[node.dataset['idx']] = false;
     }
     else {
       node.dataset['marked'] = "1";
-      node.style.backgroundColor = "Salmon";
+      node.classList.add('id_batch');
       GLOSSES.joined[node.dataset['idx']] = true;
     }
   }
@@ -532,24 +533,24 @@ GLOSSES.markID = function(event, node) {
 
 GLOSSES.markIDs = function(event, node) {
   event.preventDefault();
-  if (node.dataset["idx"] in this.joined) {
-    for (nodeidx in this.joined) {
-      this.markID(event, document.getElementById('GLOSSES_idx-' + nodeidx));
-    }
-    this.joined = {};
-    return;
-  }
+  // if (node.dataset["idx"] in this.joined) {
+  //   for (nodeidx in this.joined) {
+  //     this.markID(event, document.getElementById('GLOSSES_idx-' + nodeidx));
+  //   }
+  //   this.joined = {};
+  //   return;
+  // }
   var current_node = node.parentNode;
-  this.joined = {};
+  // this.joined = {};
   while (current_node.nextElementSibling.id != "") {
-    current_node.childNodes[0].dataset["marked"] = "1"
-    current_node.childNodes[0].style.backgroundColor = "LightBlue";
-    GLOSSES.joined[current_node.childNodes[0].dataset["idx"]] = true;
+    current_node.childNodes[0].dataset["marked"] = "0"
+    current_node.childNodes[0].classList.remove("id_batch")
+    GLOSSES.joined[current_node.childNodes[0].dataset["idx"]] = false;
     current_node = current_node.nextElementSibling;
   }
-  current_node.childNodes[0].dataset["marked"] = "1"
-  current_node.childNodes[0].style.backgroundColor = "LightBlue";
-  GLOSSES.joined[current_node.childNodes[0].dataset["idx"]] = true;
+  current_node.childNodes[0].dataset["marked"] = "0"
+    current_node.childNodes[0].classList.remove("id_batch")
+  GLOSSES.joined[current_node.childNodes[0].dataset["idx"]] = false;
 };
 
 GLOSSES.plotMorphemes = function(tokens, morphemes, cogids) {
