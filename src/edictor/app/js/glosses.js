@@ -483,7 +483,8 @@ GLOSSES.editGroup = function(event, cogid) {
 
 let rangeStart, rangeEnd, isRange = false
 GLOSSES.markID = function(event, node) {
-  if (event.shiftKey == true) {
+  if (event.shiftKey == true || event.ctrlKey == true) {
+    console.log("true it is")
     // shift key is pressed, select range
     if (isRange) {
       // it's the last item in a range, so we can loop
@@ -534,7 +535,7 @@ GLOSSES.markIDs = function(event, node) {
   event.preventDefault();
   if (node.dataset["idx"] in this.joined) {
     for (nodeidx in this.joined) {
-      this.markID(document.getElementById('GLOSSES_idx-' + nodeidx));
+      this.markID(event, document.getElementById('GLOSSES_idx-' + nodeidx));
     }
     this.joined = {};
     return;
