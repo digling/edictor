@@ -2339,15 +2339,17 @@ function getDate(with_seconds) {
 /* highlight all IPA entries which are specified as such */
 function highLight()
 {
-  var items, i, tokens, roots, word, m, concepts, concept, morphemes, parts, part, j, textout, k, morph;
+  var items, i, tokens, roots, word, m, concepts, concept, morphemes, parts, part, j, textout, k, morph; idx;
 
   for (i = 0; head = WLS.header[i]; i += 1) {
     if (CFG['highlight'].indexOf(head) != -1 ) {
       tokens = document.getElementsByClassName(head);
-      for (j=0; j<tokens.length; j++) {
+      for (j = 0; j < tokens.length; j += 1) {
         if (tokens[j].innerHTML == tokens[j].dataset.value) {
-          word = plotWord(tokens[j].dataset.value);
-          tokens[j].innerHTML = '<div class="lock_alignment">'+word+"</div>";
+          /* check grouping sounds on right click etc. */
+          idx = tokens[j].parentNode.id.split("_")[1];
+          word = SEG.prepare_tokens(idx, tokens[j].dataset.value.split(" "));
+          tokens[j].innerHTML = '<div class="lock_alignment">' + word + "</div>";
         }
       }
     }
