@@ -388,7 +388,7 @@ GLOSSES.make_table = function() {
         function(x, y, z){return '<td id="GLOSSES_idx-'+x[0]+'-'+x[1]+'"'+
             ' data-idx="'+x[0]+'-'+x[1]+'"'+
             ' oncontextmenu="GLOSSES.markIDs(event, this)"'+
-            ' data-marked="0" class="pointed" onclick="GLOSSES.markID(this)" '+
+            ' data-marked="0" class="pointed" onclick="GLOSSES.markID(event, this)" '+
             '>'+x[0]+'<sup>'+x[1]+'</sup></td>'},
         function(x, y, z){return '<td id="GLOSSES_form-'+x[1]+'-'+x[2]+'" data-idx="'+x[1]+'" data-jdx="'+x[2]+'">'+SEG.plotWord(x[0].split(" "), x[1], x[2], 'GLOSSES.refreshLine('+x[1]+','+x[2]+')')+'</td>'},
         function(x, y, z){return '<td id="GLOSSES_gloss-'+x[1]+'-'+x[2]+'" data-idx="'+x[1]+'" data-jdx="'+x[2]+'" data-value="'+x[0]+'"'+
@@ -481,16 +481,52 @@ GLOSSES.editGroup = function(event, cogid) {
   $('#GLOSS-'+cogid).css('z-index', 200);
 };
 
-GLOSSES.markID = function(node) {
-  if (node.dataset['marked'] == "1"){
-    node.dataset['marked'] = "0";
-    node.style.backgroundColor = node.parentNode.style.backgroundColor;
-    GLOSSES.joined[node.dataset['idx']] = false;
-  }
-  else {
-    node.dataset['marked'] = "1";
-    node.style.backgroundColor = "Salmon";
-    GLOSSES.joined[node.dataset['idx']] = true;
+let rangeStart, rangeEnd, isRange = false
+GLOSSES.markID = function(event, node) {
+  if (event.shiftKey == true) {
+    // shift key is pressed, select range
+    if (isRange) {
+      // it's the last item in a range, so we can loop
+      let temp = parseInt(node.parentNode.id.replace("GLOSSES_row_",""))
+      // but first make sure it's in order in case they clicked bottom to top
+      if (temp < rangeStart) {
+        rangeEnd = rangeStart
+        rangeStart = temp
+      } else {
+        rangeEnd = temp
+      }
+      // now we loop through and mark the items within the range
+      for (let i = rangeStart; i <= rangeEnd; i++) {
+        let row = document.getElementById("GLOSSES_row_"+i)
+        let rowChild = row.firstElementChild
+        rowChild.dataset['marked'] = "1";
+        rowChild.style.backgroundColor = "Salmon";
+        GLOSSES.joined[rowChild.dataset['idx']] = true;
+      }
+    } else {
+      // first item in a range
+      rangeStart = parseInt(node.parentNode.id.replace("GLOSSES_row_",""))
+      // mark the first item in the list
+      node.dataset['marked'] = "1";
+      node.style.backgroundColor = "Salmon";
+      GLOSSES.joined[node.dataset['idx']] = true;
+    }
+    isRange = !isRange
+  } else {
+    // but if we're not doing a range with the shift key,
+    // first clear the variable that tracks the range
+    isRange = false
+    // now go as normal
+    if (node.dataset['marked'] == "1"){
+      node.dataset['marked'] = "0";
+      node.style.backgroundColor = node.parentNode.style.backgroundColor;
+      GLOSSES.joined[node.dataset['idx']] = false;
+    }
+    else {
+      node.dataset['marked'] = "1";
+      node.style.backgroundColor = "Salmon";
+      GLOSSES.joined[node.dataset['idx']] = true;
+    }
   }
 };
 
@@ -591,8 +627,3 @@ GLOSSES.present = function() {
   document.getElementById('glosses_table').style.display = 'table-cell';
   document.getElementById('GLOSSES_frequency').ondblclick = function(){fakeAlert('hello')};
 }
-
-
-
-
-
