@@ -694,8 +694,10 @@ PATS.render_matrix = function(lengths) {
   else {
     egroup = 'editGroup(event, ';
   }
-
-  PATS.get_patterns(PATS.threshold);
+  
+  if (CFG._recompute_patterns) {
+    PATS.get_patterns(PATS.threshold);
+  }
   PATS.length = PATS.matrix[0].length;
   _columns = function(cell, idx, head) {
     if (cell[0] == UTIL.settings.missing_marker){
