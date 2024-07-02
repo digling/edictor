@@ -484,7 +484,6 @@ GLOSSES.editGroup = function(event, cogid) {
 let rangeStart, rangeEnd, isRange = false
 GLOSSES.markID = function(event, node) {
   if (event.shiftKey == true || event.ctrlKey == true) {
-    console.log("true it is")
     // shift key is pressed, select range
     if (isRange) {
       // it's the last item in a range, so we can loop
