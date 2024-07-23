@@ -105,7 +105,7 @@ GLOSSES.modify_entry = function(event, node, type, idx, jdx) {
     this.unmodify_entry(node, type);
     return;
   }
-  else if (eevent != 'click' && [13, 37, 38, 39, 40].indexOf(event.keyCode) == -1)  {
+  else if (event != 'click' && [13, 37, 38, 39, 40].indexOf(event.keyCode) == -1)  {
     return;
   }
   else if ([37, 39].includes(event.keyCode) && !event.ctrlKey){
