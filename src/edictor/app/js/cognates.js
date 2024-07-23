@@ -323,19 +323,19 @@ function get_selected_indices() {
   /* get the word ids for the selected concepts */
   var idxs = [];
   var slc = document.getElementById('cognates_select_concepts');
-
-  for (var i=0,option; option=slc.options[i]; i++) {
+  var i, j, idx, option;
+  for (i = 0; option = slc.options[i]; i += 1) {
     if (option.selected) {
-      for (var j=0,idx; idx=WLS['concepts'][option.value][j]; j++) {
-	idxs.push(idx);
+      for (j = 0; idx = WLS['concepts'][option.value][j]; j += 1) {
+	      idxs.push(idx);
       }
     }
   }
   
   
   var checked = [];
-  for (var i=0,idx; idx=idxs[i]; i++) {
-    if (document.getElementById('cognates_idx_'+idx).checked) {
+  for (i = 0; idx = idxs[i]; i += 1) {
+    if (document.getElementById('cognates_idx_' + idx) && document.getElementById('cognates_idx_' + idx).checked) {
       checked.push(idx);
     }
   }
