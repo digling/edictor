@@ -39,12 +39,12 @@ SEG.prepare_tokens = function(idx, tokens) {
           'title="click to segment, right click to group" ' + 
           'data-idx="' + idx + '" ' + 
           'data-pos="' + i + '" ' + 
-          'oncontextmenu="SEG.groupSounds(event, this)" ' +
-          'onclick="SEG.splitForm(this);" '));
+          'oncontextmenu="SEG.groupSounds(event, this);" ' 
+        ));
       if (token.indexOf(".") != -1) {
         out.push('<span title="click to group sounds" ' + 
           'class="residue pointed dolgo_DOT" ' + 
-          'onclick="SEG.ungroupSounds(this)" ' +
+          'oncontextmenu="SEG.ungroupSounds(event, this)" ' +
           'data-idx="' + idx + '" ' +
           'data-pos="' + i + '">' +
           '·</span>');
@@ -55,7 +55,7 @@ SEG.prepare_tokens = function(idx, tokens) {
         plotWord(token, 'span', 'pointed',
           'data-idx="' + idx + '" ' + 
           'data-pos="' + i + '" ' +
-          'onclick="SEG.joinForm(this);"'));
+          'oncontextmenu="SEG.joinForm(event, this);"'));
     }
   }
   return out.join("");
@@ -72,18 +72,22 @@ SEG.splitForm = function(node) {
   var after = tokens.slice(pos, tokens.length);
   tokens = before.join(" ") + " " + CFG.morpheme_separator + " " + after.join(" ");
   
+  node.parentNode.parentNode.dataset["value"] = tokens;
   node.parentNode.innerHTML = SEG.prepare_tokens(idx, tokens.split(" "));
   WLS[idx][CFG._segments] = tokens;
   storeModification([idx], [CFG._segments], [tokens]);
+  highLight();
 };
 
-SEG.joinForm = function(node) {
+SEG.joinForm = function(event, node) {
+  event.preventDefault();
   var idx = node.dataset["idx"];
   var pos = parseInt(node.dataset["pos"]);
   var tokens = WLS[idx][CFG._segments].split(" ");
   var before = tokens.slice(0, pos);
   var after = tokens.slice(pos + 1, tokens.length);
   tokens = before.join(" ") + " " + after.join(" ");
+  node.parentNode.parentNode.dataset["value"] = tokens;
   node.parentNode.innerHTML = SEG.prepare_tokens(idx, tokens.split(" "));
   WLS[idx][CFG._segments] = tokens;
   storeModification([idx], [CFG._segments], [tokens]);
@@ -91,18 +95,25 @@ SEG.joinForm = function(node) {
 
 SEG.groupSounds = function(event, node) {
   event.preventDefault();
-  var idx = node.dataset["idx"];
-  var pos = parseInt(node.dataset["pos"]);
-  var tokens = WLS[idx][CFG._segments].split(" ");
-  var before = tokens.slice(0, pos + 1);
-  var after = tokens.slice(pos + 1, tokens.length);
-  tokens = before.join(" ") + "." + after.join(" ");
-  node.parentNode.innerHTML = SEG.prepare_tokens(idx, tokens.split(" "));
-  WLS[idx][CFG._segments] = tokens;
-  storeModification([idx], [CFG._segments], [tokens]);
+  if (event.ctrlKey == true) {
+    var idx = node.dataset["idx"];
+    var pos = parseInt(node.dataset["pos"]);
+    var tokens = WLS[idx][CFG._segments].split(" ");
+    var before = tokens.slice(0, pos + 1);
+    var after = tokens.slice(pos + 1, tokens.length);
+    tokens = before.join(" ") + "." + after.join(" ");
+    node.parentNode.parentNode.dataset["value"] = tokens;
+    node.parentNode.innerHTML = SEG.prepare_tokens(idx, tokens.split(" "));
+    WLS[idx][CFG._segments] = tokens;
+    storeModification([idx], [CFG._segments], [tokens]);
+  }
+  else {
+    SEG.splitForm(node);
+  }
 };
 
-SEG.ungroupSounds = function(node) {
+SEG.ungroupSounds = function(event, node) {
+  event.preventDefault();
   var idx = node.dataset["idx"];
   var pos = parseInt(node.dataset["pos"]);
   var tokens = WLS[idx][CFG._segments].split(" ");
@@ -116,6 +127,7 @@ SEG.ungroupSounds = function(node) {
       tokens_.push(tokens[i]);
     }
   }
+    node.parentNode.parentNode.dataset["value"] = tokens_.join(" ");
   node.parentNode.innerHTML = SEG.prepare_tokens(idx, tokens_);
   WLS[idx][CFG._segments] = tokens_.join(" ");
   storeModification([idx], [CFG._segments], [tokens_.join(" ")]);
@@ -190,7 +202,13 @@ SEG.make_table = function(){
   var idx, morphemes, cogids, tokens, concept, doculect;
   var filter, tokens_;
   var table = [];
-  for (i = 0; idx = WLS.rows[i]; i += 1) {
+  /* get current indices */
+  var tokens = document.getElementsByClassName(WLS.header[CFG._segments]);
+  var idxs = [];
+  for (i = 0; i < tokens.length; i += 1) {
+    idxs.push(tokens[i].parentNode.id.split("_")[1]);
+  }
+  for (i = 0; idx = idxs[i]; i += 1) {
     /* retrieve segment, morpheme, cognate sets */
     tokens = WLS[idx][CFG._segments];
     morphemes = (CFG._morphemes != -1) 
