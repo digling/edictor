@@ -381,15 +381,15 @@ function assign_new_cogid() {
 /* create a new combined cognate id for all cognate sets whose
  * representatative words are selected */
 function combine_cogids() {
-
+  var i, j, chk, idx, tmp_cogid;
   var checked = get_selected_indices();
   
   var cidx = WLS.header.indexOf(CFG['formatter']);
   
   /* just get the first of all cogids */
   cogid = false;
-  for (var i=0;i<checked.length; i++) {
-    var tmp_cogid = WLS[checked[i]][cidx];
+  for (i = 0; i < checked.length; i += 1) {
+    tmp_cogid = WLS[checked[i]][cidx];
     if ((!cogid || 0 < tmp_cogid < cogid || cogid == 0) && tmp_cogid && tmp_cogid != 0) {
 	cogid = tmp_cogid;
     }
@@ -404,27 +404,26 @@ function combine_cogids() {
   var vals = [];
   
   var visited = [];
-  for (var i=0,chk; chk=checked[i]; i++) {
+  for (i = 0; chk = checked[i]; i += 1) {
     // -> console.log(chk, cidx, WLS[chk]);
-    var tmp_cogid = parseInt(WLS[chk][cidx]);
-    if (visited.indexOf(tmp_cogid) == -1) {
-      if (tmp_cogid && tmp_cogid != 0 && typeof tmp_cogid == 'number') {
-	for (var j=0,idx; idx=WLS.etyma[tmp_cogid][j]; j++) {
+    tmp_cogid = parseInt(WLS[chk][cidx]);
+    if (visited.indexOf(tmp_cogid) == -1 && tmp_cogid == WLS[chk][cidx]) {
+      if (tmp_cogid) {
+	      for (j = 0; idx = WLS.etyma[tmp_cogid][j]; j += 1) {
       	  WLS[idx][cidx] = cogid;
-      	  
       	  /* store remote if possible */
       	  ids.push(idx);
-	  cols.push(cidx);
-	  vals.push(cogid);
-	  //storeModification(idx, cidx, cogid, false);
+	        cols.push(cidx);
+	        vals.push(cogid);
+	        //storeModification(idx, cidx, cogid, false);
       	}
       }
       else {
-	WLS[chk][cidx] = cogid;
-	ids.push(chk);
-	cols.push(cidx);
-	vals.push(cogid);
-	//storeModification(chk, cidx, cogid, false);
+	      WLS[chk][cidx] = cogid;
+	      ids.push(chk);
+	      cols.push(cidx);
+	      vals.push(cogid);
+	      //storeModification(chk, cidx, cogid, false);
       }
       visited.push(tmp_cogid);
     }
