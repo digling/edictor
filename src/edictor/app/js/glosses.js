@@ -18,30 +18,18 @@ GLOSSES.rows = {};
 GLOSSES.joined = {};
 GLOSSES.groupby = 'form';
 
+/* ensure length of arrays are consistent */
 GLOSSES.check_morphemes = function(tokens, glosses, cogids) {
-  var i;
-  if (tokens.length == glosses.length == cogids.length) {
-    return [tokens, glosses, cogids];
+  while (glosses.length < tokens.length) {
+    glosses.push('?');
   }
-  if (tokens.length > glosses.length){
-    for (i=glosses.length; i<tokens.length; i++) {
-      glosses.push('?');
-    }
+  while (cogids.length < tokens.length) {
+    cogids.push('0');
   }
-  if (tokens.length > cogids.length) {
-    for (i=cogids.length; i<tokens.length; i++) {
-      cogids.push('0');
-    }
-  }
-  if (tokens.length < glosses.length) {
-    glosses = glosses.splice(0, tokens.length-1);
-  }
-  if (tokens.length < cogids.length) {
-    cogids = cogids.splice(0, tokens.length-1);
-  }
+  glosses = glosses.slice(0, tokens.length);
+  cogids = cogids.slice(0, tokens.length);
   return [tokens, glosses, cogids];
 };
-
 
 /* glosses assemble needs to assemble glosses by their similarity of form, ignoring our slash construct*/
 GLOSSES.assemble = function() {
@@ -117,10 +105,10 @@ GLOSSES.modify_entry = function(event, node, type, idx, jdx) {
     this.unmodify_entry(node, type);
     return;
   }
-  else if (event.keyCode != 13 && event != 'click' && [37, 38, 39, 40].indexOf(event.keyCode) == -1)  {
+  else if (event != 'click' && [13, 37, 38, 39, 40].indexOf(event.keyCode) == -1)  {
     return;
   }
-  else if ((event.keyCode == 37 || event.keyCode == 39) && !(event.ctrlKey)){
+  else if ([37, 39].includes(event.keyCode) && !event.ctrlKey){
     return;
   }
 
@@ -236,7 +224,7 @@ GLOSSES.modify_entry = function(event, node, type, idx, jdx) {
     return;
   }
   /* left */
-  else if ((event.keyCode == 37 || event.keyCode == 39) && event.ctrlKey && type != 'glossup') {
+  else if ([37, 39].includes(event.keyCode) && event.ctrlKey && type != 'glossup') {
     this_idx = this.rows[node.dataset['idx']+'-'+node.dataset['jdx']];
     /* bis hier */
     if (type == 'cognate') {
@@ -410,7 +398,6 @@ GLOSSES.make_table = function() {
     );
   }
 };
-
 
 GLOSSES.refreshLine = function(idx, jdx){
   var node;
