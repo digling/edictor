@@ -96,6 +96,8 @@ function resetFormat(value) {
 
 /* reset the root format for partial cognates in the data */
 function resetRootFormat(value) {
+  var i, tmpkeys;
+
   if (!value) {
     CFG['root_formatter'] = false;
     WLS['roots'] = [];
@@ -108,8 +110,8 @@ function resetRootFormat(value) {
     var format_idx = WLS.header.indexOf(value);
     for (key in WLS) {
       if (!isNaN(key)) {
-        var tmpkeys = WLS[key][format_idx].split(' ');
-        for (var i=0; i<tmpkeys.length; i++) {
+        tmpkeys = WLS[key][format_idx].trim().split(/\s+/);
+        for (i = 0; i < tmpkeys.length; i += 1) {
           tmp = tmpkeys[i];
           if (tmp in format_selection) {
             format_selection[tmp].push([key,i]);
@@ -380,12 +382,14 @@ function csvToArrays(allText, separator, comment, keyval) {
           }
         }
         else {
-          qlc[idx] = data.slice(0,data.length);
+          qlc[idx] = data.slice(0, data.length);
         }
         selection.push(idx);
       }
     }
   }
+
+
   
   /* create a concept - id converter and vice versa for various purposes */
   var c2i = {};
@@ -424,16 +428,14 @@ function csvToArrays(allText, separator, comment, keyval) {
   WLS['subgroups'] = subgroups;
 
 
-
-
   /* ! attention here, this may change if no ids are submitted! */
   CFG['_tidx'] = tIdx-1; // index of taxa
   CFG['_cidx'] = cIdx-1; // index of concepts
   CFG['_concepts'] = cIdx-1;
   CFG['_subgroup'] = subgroup_idx-1;
   CFG['_taxa'] = tIdx-1;
-  CFG['_segments'] = (typeof sIdx != 'undefined') ? sIdx-1 : -1;
-  CFG['_alignments'] = (typeof aIdx != 'undefined') ? aIdx-1 : -1;
+  CFG['_segments'] = (typeof sIdx != 'undefined') ? sIdx -1 : -1;
+  CFG['_alignments'] = (typeof aIdx != 'undefined') ? aIdx -1 : -1;
   CFG['_transcriptions'] = (typeof iIdx != 'undefined') ? iIdx-1 : -1;
   CFG['_morphemes'] = (typeof mIdx != 'undefined') ? mIdx-1: -1;
   CFG['morpheme_formatter'] = (typeof mIdx != 'undefined') ? WLS.header[(mIdx-1)] : -1;
@@ -457,6 +459,7 @@ function csvToArrays(allText, separator, comment, keyval) {
       );
     }
   }
+
   if (!('_selected_doculects' in CFG)){
     CFG['_selected_doculects'] = CFG['sorted_taxa'];
   }
@@ -519,6 +522,25 @@ function csvToArrays(allText, separator, comment, keyval) {
     }
   }
 
+  /* basic sanity checks of data */
+  /* done in very rudimentary way now, we can add more checks on other items */
+  if (CFG._segments != -1) {
+    for (key in WLS) {
+      if (!isNaN(key)) {
+        WLS[key][CFG._segments] = WLS[key][CFG._segments].trim().split(/\s+/).join(" ");
+      }
+    }
+  }
+  if (CFG._alignments != -1) {
+    for (key in WLS) {
+      if (!isNaN(key)) {
+        WLS[key][CFG._alignments] = WLS[key][CFG._alignments].trim().split(/\s+/).join(" ");
+      }
+    }
+  }
+
+
+
   /* check for cogid or glossid first */
   if (CFG['formatter']) {}
   else if (formattable_keys.indexOf('COGID') != -1) { CFG['formatter'] = 'COGID'; }
@@ -554,6 +576,7 @@ function csvToArrays(allText, separator, comment, keyval) {
   if (apply_filters) {
     applyFilter();
   }
+
 
   /* add statistic information */
   $('#wordlist-statistics').removeClass('hidden').html(
@@ -1375,11 +1398,15 @@ function modifyEntry(event, idx, jdx, xvalue) {
   /* XXX tokenize entry  */ 
   else if (CFG['highlight'].indexOf(entry.className) != -1) {
     if (xvalue.length > 1 && xvalue[0] == " ") {
-      nxvalue = ipa2tokens(xvalue.slice(1, xvalue.length));
+      xvalue = xvalue.trim().split(/\s+/).join(" ");
+      nxvalue = ipa2tokens(xvalue.slice(0, xvalue.length));
       //-> console.log('transforming',xvalue,nxvalue);
       if (nxvalue != xvalue) {
 	      xvalue = nxvalue;
       }
+    }
+    else {
+      xvalue = xvalue.trim().split(/\s+/).join(" ");
     }
   }
 
@@ -1389,7 +1416,7 @@ function modifyEntry(event, idx, jdx, xvalue) {
    */
   if (jdx - 1 == CFG._segments && CFG._alignments != - 1) {
     var new_alm, alm_bunch, cnt, new_alms, new_segments;
-    new_segments = xvalue;
+    new_segments = xvalue.trim().split(/\s+/).join(" ");
 
     /* iterate over alignment segments */
     if (new_segments.indexOf(" + ") != -1) {
@@ -1397,10 +1424,10 @@ function modifyEntry(event, idx, jdx, xvalue) {
       seg_bunch = new_segments.split(" + ");
       if (alm_bunch.length == seg_bunch.length) {
         new_alms = [];
-        for (cnt=0; cnt<alm_bunch.length; cnt++) {
+        for (cnt = 0; cnt < alm_bunch.length; cnt += 1) {
           new_alm = UTIL.tokens2alignment(
-            seg_bunch[cnt].split(" "),
-            alm_bunch[cnt].split(" "));
+            seg_bunch[cnt].trim().split(/\s+/),
+            alm_bunch[cnt].trim().split(/\s+/));
           if (new_alm != alm_bunch[cnt]) {
             new_alms.push(new_alm);
           }
@@ -1412,7 +1439,7 @@ function modifyEntry(event, idx, jdx, xvalue) {
         if (new_alms != WLS[idx][CFG._alignments]) {
           autoModifyEntry(
             idx,
-            CFG._alignments+1,
+            CFG._alignments + 1,
             new_alms,
             WLS[idx][CFG._alignments]);
         }
@@ -1421,22 +1448,22 @@ function modifyEntry(event, idx, jdx, xvalue) {
       else {
         autoModifyEntry(
           idx, 
-          CFG._alignments+1,
+          CFG._alignments + 1,
           new_segments,
           WLS[idx][CFG._alignments]);
       }
     }
     else {
       /* */
-      alm = WLS[idx][CFG._alignments].split(' ');
+      alm = WLS[idx][CFG._alignments].trim().split(/\s+/);
       new_alm = UTIL.tokens2alignment(
-        new_segments.split(" "),
-        WLS[idx][CFG._alignments].split(" ")
+        new_segments.trim().split(/\s+/),
+        WLS[idx][CFG._alignments].trim().split(/\s+/)
       );
       if (new_alm != WLS[idx][CFG._alignments]){
         autoModifyEntry(
           idx, 
-          CFG._alignments+1, 
+          CFG._alignments + 1, 
           new_alm, 
           WLS[idx][CFG._alignments]);
       }
@@ -2347,7 +2374,7 @@ function highLight() {
         if (tokens[j].innerHTML == tokens[j].dataset.value) {
           /* check grouping sounds on right click etc. */
           idx = tokens[j].parentNode.id.split("_")[1];
-          word = SEG.prepare_tokens(idx, tokens[j].dataset.value.split(" "));
+          word = SEG.prepare_tokens(idx, tokens[j].dataset.value.trim().split(/\s+/));
           tokens[j].innerHTML = '<div class="lock_alignment">' + word + "</div>";
         }
       }
@@ -2469,7 +2496,7 @@ function highLight() {
       items = document.getElementsByClassName(head);
       for (j=0; item=items[j]; j++) {
         if (item.innerHTML == item.dataset.value) {
-          tokens = item.dataset.value.split(' ');
+          tokens = item.dataset.value.trim().split(/\s+/);
           morphemes = [];
           for (k=0; k<tokens.length; k++) {
             if (tokens[k] == '?') {
@@ -2620,7 +2647,7 @@ function editGroup(event, idx) {
       current_line = WLS[r][fall_back];
     }
     /* add stuff to temporary container for quick alignment access */
-    CFG['_current_alms'].push(current_line.split(' '));
+    CFG['_current_alms'].push(current_line.trim().split(/\s+/));
     CFG['_current_taxa'].push(WLS[r][CFG['_tidx']]);
 
     /* add sequence data to allow for automatic alignment */
@@ -2629,10 +2656,10 @@ function editGroup(event, idx) {
       this_seq = current_line;
     }
     if (this_seq.indexOf(' ') == -1) {
-      CFG['_current_seqs'].push(this_seq.split());
+      CFG['_current_seqs'].push(this_seq.trim().split(/\s+/));
     }
     else {
-      CFG['_current_seqs'].push(this_seq.split(' '));
+      CFG['_current_seqs'].push(this_seq.trim().split(/\s+/));
     }
 
     alm = plotWord(current_line, "td");
