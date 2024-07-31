@@ -1,3 +1,9 @@
+:root {
+  --blue: #2D6CA2;
+  --var(--crimson): #dc143c;
+}
+
+
 #qlc_table {
   border-collapse: separate;
   border-spacing: 2px;
@@ -7,9 +13,9 @@
 
 #qlc_table th {
   text-align: left;
-  background-color: #2D6CA2;
+  background-color: var(--blue);
   color: white;
-  border: solid 1px #2D6CA2;
+  border: solid 1px var(--blue);
   max-width: 250px;
   overflow: auto;
   padding: 5px;
@@ -28,9 +34,9 @@
 
 .data_table2 th {
   text-align: left;
-  background-color: #2D6CA2;
+  background-color: var(--blue);
   color: white;
-  border: solid 1px #2D6CA2;
+  border: solid 1px var(--blue);
   max-width: 250px;
   overflow: auto;
   padding: 5px;
@@ -43,7 +49,7 @@
 .data_table2 td {
   text-align: left;
   color: black;
-  border: solid 1px #2D6CA2;
+  border: solid 1px var(--blue);
   max-width: 250px;
   overflow: auto;
   padding: 5px;
@@ -56,8 +62,8 @@
   position: relative;
   width: 100%;
   clear: both;
-  border: 2px solid #2D6CA2;
-  background-color: #2D6CA2;
+  border: 2px solid var(--blue);
+  background-color: var(--blue);
   margin-top: 5px;
   margin-left: 5px;
   margin-right: 5px;
@@ -75,7 +81,7 @@
   display: block;
   position: relative;
   clear: both;
-  border: 2px solid #2D6CA2;
+  border: 2px solid var(--blue);
   margin-top: 20px;
   margin-left: 5px;
   margin-right: 5px;
@@ -91,9 +97,10 @@
 @media screen and (max-width: 600px) {
   #qlc_table th {
     text-align: left;
-    background-color: #2D6CA2;
+    background-color: var(--blue);
     color: white;
-    border: solid 1px #2D6CA2;
+    border: solid 1px var(--blue);
+    ;
     max-width: 200px;
     font-size: 50%;
     overflow: auto;
@@ -107,7 +114,8 @@
     text-align: left;
     background-color: white;
     color: black;
-    border: solid 1px #2D6CA2;
+    border: solid 1px var(--blue);
+    ;
     max-width: 200px;
     overflow: auto;
     font-size: 50%;
@@ -120,7 +128,7 @@
     display: block;
     position: relative;
     clear: both;
-    border: 2px solid #2D6CA2;
+    border: 2px solid var(--blue);
     margin-top: 20px;
     margin-left: 5px;
     margin-right: 5px;
@@ -137,9 +145,10 @@
 @media screen and (max-width: 1000px) and (min-width: 601px) {
   #qlc_table th {
     text-align: left;
-    background-color: #2D6CA2;
+    background-color: var(--blue);
     color: white;
-    border: solid 1px #2D6CA2;
+    border: solid 1px var(--blue);
+    ;
     max-width: 220px;
     font-size: 80%;
     overflow: auto;
@@ -152,7 +161,8 @@
   #qlc_table td {
     text-align: left;
     color: black;
-    border: solid 1px #2D6CA2;
+    border: solid 1px var(--blue);
+    ;
     max-width: 220px;
     overflow: auto;
     font-size: 80%;
@@ -165,7 +175,7 @@
     display: block;
     position: relative;
     clear: both;
-    border: 2px solid #2D6CA2;
+    border: 2px solid var(--blue);
     margin-top: 20px;
     margin-left: 5px;
     margin-right: 5px;
@@ -183,7 +193,8 @@
 #qlc_table td {
   text-align: left;
   color: black;
-  border: solid 1px #2D6CA2;
+  border: solid 1px var(--blue);
+  ;
   max-width: 250px;
   overflow: auto;
   padding: 5px;
@@ -215,7 +226,7 @@
   cursor: pointer;
   color: white;
   font-weight: bold;
-  background-color: #2D6CA2;
+  background-color: var(--blue);
   border: none;
 }
 
@@ -227,7 +238,7 @@
   cursor: pointer;
   color: white;
   font-weight: bold;
-  background-color: #2D6CA2;
+  background-color: var(--blue);
   border: none;
 }
 
@@ -239,7 +250,7 @@
   padding-bottom: 4px;
   padding-right: 3px;
   padding-left: 3px;
-  background-color: #2D6CA2;
+  background-color: var(--blue);
   display: inline !important;
 }
 
@@ -249,7 +260,7 @@
   padding-bottom: 5px;
   padding-right: 5px;
   padding-left: 5px;
-  background-color: #2D6CA2;
+  background-color: var(--blue);
   font-weight: bold;
   margin-left: 2px;
 }
@@ -282,7 +293,7 @@
   float: left;
   background-color: #fefefe;
   padding: 10px;
-  border: 2px solid #2D6CA2;
+  border: 2px solid var(--blue);
   border-radius: 5px;
   margin: 5px;
   padding-left: 25px;
@@ -292,17 +303,17 @@
 }
 
 .border {
-  border: 2px solid #2d6ca2;
+  border: 2px solid var(--blue);
   empty-cells: show;
   margin: 0px !important;
 }
 
 .border th {
-  border: 2px solid #2d6ca2;
+  border: 2px solid var(--blue);
 }
 
 .border td {
-  border: 2px solid #2d6ca2 !important;
+  border: 2px solid var(--blue) !important;
 }
 
 .settings th {
@@ -314,7 +325,7 @@
 }
 
 .settings td {
-  border: 0px solid #2D6CA2;
+  border: 0px solid var(--blue);
   text-align: left;
   padding: 5px;
   min-width: 250px;
@@ -606,16 +617,16 @@ span.dolgo_PLUS {
 }
 
 td.pre-align {
-  color: #2d6ca2;
+  color: var(--blue);
 }
 
 .help {
   border-radius: 5px;
   z-index: 1;
   display: block;
-  color: #2D6CA2;
+  color: var(--blue);
   background-color: white;
-  border: 2px solid #2D6CA2;
+  border: 2px solid var(--blue);
   max-width: 1000px;
   padding-top: 10px;
   padding-bottom: 25px;
@@ -626,18 +637,18 @@ td.pre-align {
 }
 
 .morpheme {
-  border: 1px solid #2d6ca2;
+  border: 1px solid var(--blue);
   border-radius: 5px;
   font-weight: bold;
-  color: #2D6CA2;
+  color: var(--blue);
   display: table-cell;
   padding: 1px;
 }
 
 .morpheme-small {
-  border: 1px solid #2d6ca2;
+  border: 1px solid var(--blue);
   border-radius: 5px;
-  color: #2D6CA2;
+  color: var(--blue);
   display: table-cell;
   padding: 1px;
   opacity: 0.7;
@@ -645,10 +656,10 @@ td.pre-align {
 }
 
 .gloss {
-  border: 1px solid #2d6ca2;
+  border: 1px solid var(--blue);
   border-radius: 1px;
   font-weight: bold;
-  color: #2D6CA2;
+  color: var(--blue);
   display: table-cell;
   padding: 1px;
 }
@@ -662,7 +673,7 @@ td.pre-align {
 }
 
 .singleton {
-  color: Crimson;
+  color: var(--crimson);
 }
 
 .polysem {
@@ -679,24 +690,24 @@ td.pre-align {
 }
 
 .warning {
-  background-color: Crimson;
+  background-color: var(--crimson);
   display: table-cell;
 }
 
 .gloss-weak {
-  border: 1px solid #2d6ca2;
+  border: 1px solid var(--blue);
   border-radius: 10px;
   font-weight: normal;
-  color: #2D6CA2;
+  color: var(--blue);
   display: table-cell;
   padding: 2px;
 }
 
 .morpheme-error {
-  border: 1px solid Crimson;
+  border: 1px solid var(--crimson);
   border-radius: 5px;
   font-weight: bold;
-  color: Crimson;
+  color: var(--crimson);
   display: table-cell;
   padding: 1px;
 }
@@ -708,13 +719,13 @@ td.pre-align {
 .cellinput {
   z-index: 1;
   color: white;
-  background-color: #2D6CA2;
+  background-color: var(--blue);
   font-size: 110%;
   width: 100%;
 }
 
 .navbar {
-  background-color: #2D6CA2;
+  background-color: var(--blue);
   color: white;
 }
 
@@ -759,7 +770,7 @@ ul.nav {
   top: 40%;
   left: 0;
   right: 0;
-  background-color: Crimson;
+  background-color: var(--crimson);
   border: 2px dotted white;
   text-align: center;
   display: table;
@@ -777,7 +788,7 @@ ul.nav {
   color: white;
   font-weight: bold;
   cursor: pointer;
-  background-color: Crimson;
+  background-color: var(--crimson);
   display: none;
   position: relative;
   margin-left: auto;
@@ -792,7 +803,7 @@ ul.nav {
   left: 0;
   cursor: default;
   color: white;
-  background-color: #2D6CA2;
+  background-color: var(--blue);
   border: 1px dotted white;
 }
 
@@ -819,9 +830,9 @@ ul.nav {
  * for simply copying of entries and to display the history of
  * edits of all edited items */
 .side_message {
-  background-color: Crimson;
+  background-color: var(--crimson);
   border-radius: 5px;
-  border: 3px solid #2D6CA2;
+  border: 3px solid var(--blue);
   max-width: 350px;
   position: fixed;
   bottom: 20;
@@ -852,10 +863,10 @@ ul.nav {
 
 .side_message table {
   background-color: white;
-  color: #2D6CA2;
+  color: var(--blue);
   font-weight: bold;
   border-radius: 10px;
-  border: 2px solid #2D6CA2;
+  border: 2px solid var(--blue);
   margin: 5px;
   border-collapse: separate;
   border-spacing: 0;
@@ -865,10 +876,10 @@ ul.nav {
 
 .side_message:hover table {
   background-color: white;
-  color: #2D6CA2;
+  color: var(--blue);
   font-weight: bold;
   border-radius: 10px;
-  border: 2px solid #2D6CA2;
+  border: 2px solid var(--blue);
   margin: 5px;
   border-collapse: separate;
   border-spacing: 0;
@@ -878,16 +889,16 @@ ul.nav {
 
 .side_message td {
   padding: 1px;
-  color: #2D6CA2;
+  color: var(--blue);
   font-weight: bold;
   min-width: 65px;
 }
 
 .side_message th {
   padding: 1px;
-  color: Crimson;
+  color: var(--crimson);
   text-align: center;
-  border-bottom: 2px solid #2D6CA2;
+  border-bottom: 2px solid var(--blue);
 }
 
 .message {
@@ -897,7 +908,7 @@ ul.nav {
   top: 30%;
   left: 0;
   right: 0;
-  background-color: Crimson;
+  background-color: var(--crimson);
   border: 2px solid white;
   text-align: center;
   min-width: 200px;
@@ -914,7 +925,7 @@ ul.nav {
   top: 30%;
   left: 0;
   right: 0;
-  background-color: Crimson;
+  background-color: var(--crimson);
   border: 2px solid white;
   text-align: center;
   min-width: 200px;
@@ -938,15 +949,15 @@ ul.nav {
   margin: 5px;
   //padding-top:10px;
   //padding-bottom: 10px;
-  border-top: 2px solid Crimson;
-  background-color: #2D6CA2;
+  border-top: 2px solid var(--crimson);
+  background-color: var(--blue);
   cursor: pointer;
 }
 
 .options {
   float: right;
   font-weight: bold;
-  background-color: #2D6CA2;
+  background-color: var(--blue);
   border: none;
   color: white;
   margin-top: 10px;
@@ -975,7 +986,7 @@ ul.nav {
 }
 
 #filedisplay {
-  border: 2px solid #2D6CA2;
+  border: 2px solid var(--blue);
   margin: 5px;
   padding-left: 25px;
   padding-right: 25px;
@@ -988,7 +999,7 @@ ul.nav {
 }
 
 #cognates {
-  border: 2px solid #2D6CA2;
+  border: 2px solid var(--blue);
   margin: 5px;
   padding-left: 25px;
   padding-right: 25px;
@@ -1033,7 +1044,7 @@ tr.d2 td {
   top: 10%;
   left: 0;
   right: 0;
-  background-color: Crimson;
+  background-color: var(--crimson);
   border: 2px solid white;
   text-align: center;
   display: table;
@@ -1049,7 +1060,7 @@ tr.d2 td {
 
 div.alignments {
   font-weight: bold;
-  border: 2px solid #2D6CA2;
+  border: 2px solid var(--blue);
   background-color: white;
   border-radius: 5px;
   margin-bottom: 5px;
@@ -1062,7 +1073,7 @@ div.alignments {
 
 table.alignments {
   font-weight: bold;
-  border: 2px solid #2D6CA2;
+  border: 2px solid var(--blue);
   background-color: white;
   border-radius: 5px;
   margin-bottom: 5px;
@@ -1092,7 +1103,7 @@ table.alignments {
   overflow: hidden;
   white-space: nowrap;
   text-align: left;
-  color: #2D6CA2;
+  color: var(--blue);
 }
 
 .alm_concept {
@@ -1104,7 +1115,7 @@ table.alignments {
   overflow: hidden;
   white-space: nowrap;
   text-align: left;
-  color: #2D6CA2;
+  color: var(--blue);
   background-color: lightyellow;
 }
 
@@ -1115,7 +1126,7 @@ table.alignments {
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: left;
-  color: #2D6CA2;
+  color: var(--blue);
   padding-left: 5px;
   padding-right: 5px;
 }
@@ -1125,7 +1136,7 @@ table.alignments {
   display: table-cell;
   padding: 5px;
   color: white;
-  background-color: #2D6CA2;
+  background-color: var(--blue);
 }
 
 .pchead {
@@ -1133,16 +1144,16 @@ table.alignments {
   display: table-cell;
   padding: 5px;
   color: white;
-  background-color: #2d6ca2;
+  background-color: var(--blue);
   border-bottom: 4px solid white;
 }
 
 .alm_bdl {
-  border-left: 2px solid #2D6CA2;
+  border-left: 2px solid var(--blue);
 }
 
 .alm_bdr {
-  border-right: 2px solid #2D6CA2;
+  border-right: 2px solid var(--blue);
 }
 
 /* class needed to prevent tables with long alignment strings from overflowing */
@@ -1177,7 +1188,7 @@ table.alignments {
 .portlet-placeholder {
   border: 1px dotted black;
   margin: 0 1em 1em 0;
-  background-color: Crimson;
+  background-color: var(--crimson);
   opacity: 0.5;
   height: 25px;
   width: 25px;
@@ -1215,8 +1226,8 @@ table.alignments {
   padding-left: 25px;
   padding-right: 25px;
   padding-bottom: 25px;
-  color: #2D6CA2;
-  border: 2px solid #2D6CA2;
+  color: var(--blue);
+  border: 2px solid var(--blue);
   border-radius: 5px;
   margin: 5px;
 }
@@ -1232,8 +1243,8 @@ table.alignments {
   padding-left: 25px;
   padding-right: 25px;
   padding-bottom: 25px;
-  color: #2D6CA2;
-  border: 2px solid #2D6CA2;
+  color: var(--blue);
+  border: 2px solid var(--blue);
   border-radius: 5px;
   margin: 5px;
 }
@@ -1259,19 +1270,19 @@ table.alignments {
 .data_table th {
   text-align: left;
   padding: 5px;
-  border: 1px solid #2D6CA2;
-  background-color: #2D6CA2;
+  border: 1px solid var(--blue);
+  background-color: var(--blue);
   color: white;
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing;
 }
 
 .data_table th.sorted {
-  background-color: Crimson;
+  background-color: var(--crimson);
 }
 
 .data_table td {
-  border: 1px solid #2D6CA2;
+  border: 1px solid var(--blue);
   text-align: left;
   padding: 5px;
 }
@@ -1323,7 +1334,7 @@ table.alignments {
 }
 
 tr#unalignable th {
-  color: Crimson;
+  color: var(--crimson);
   text-size: 80%;
   text-align: left;
 }
@@ -1334,7 +1345,7 @@ tr#unalignable {
 }
 
 tr#unalignable td {
-  border: 1px solid Crimson;
+  border: 1px solid var(--crimson);
   padding-bottom: 5px;
 }
 
@@ -1348,9 +1359,9 @@ tr.up_fill>td {
   background-color: aliceblue;
   max-width: 1000px;
   border-radius: 25px;
-  border: 2px solid #2D6CA2;
+  border: 2px solid var(--blue);
   padding: 10px;
-  color: Crimson;
+  color: var(--crimson);
   font-size: 120%;
   width: 100%;
 }
@@ -1381,30 +1392,30 @@ tr.up_fill>td {
 }
 
 .help-message table {
-  color: Crimson;
-  border: 2px solid #2D6CA2;
+  color: var(--crimson);
+  border: 2px solid var(--blue);
 }
 
 .help-message th {
-  color: Crimson;
-  border: 1px solid #2d6ca2;
+  color: var(--crimson);
+  border: 1px solid var(--blue);
 }
 
 .help-message td {
-  border: 1px solid #2d6ca2;
-  color: Crimson;
+  border: 1px solid var(--blue);
+  color: var(--crimson);
 }
 
 .outlink {
-  color: crimson !important;
+  color: var(--crimson) !important;
 }
 
 .niceblue {
-  background-color: #2D6CA2;
+  background-color: var(--blue);
 }
 
 .comment {
-  color: #2D6CA2;
+  color: var(--blue);
   font-size: 75%;
 }
 
@@ -1423,7 +1434,7 @@ tr.up_fill>td {
   padding-bottom: 6px;
   padding-right: 5px;
   padding-left: 5px;
-  background-color: #2D6CA2;
+  background-color: var(--blue);
   font-weight: bold;
   margin-left: 2px;
 }
@@ -1439,4 +1450,31 @@ tr.up_fill>td {
 tr.d1 td.id_batch {
   background: salmon;
   background-color: salmon;
+}
+
+/* refactored styling starts here */
+
+#glosses_table {
+  width: 100%;
+  overflow: scroll;
+  display: table-cell;
+}
+
+#GLOSSES_table {
+  width: 100%;
+}
+
+.input_filter {
+  width: 250px;
+}
+
+.colexification_select {
+  margin-top: 40px;
+  margin-left: 2px;
+  background-color: var(--blue);
+  color: white;
+  border-radius: 5px;
+  border: 2px solid var(--blue);
+  padding: 5px;
+  margin-right: 10px;
 }
