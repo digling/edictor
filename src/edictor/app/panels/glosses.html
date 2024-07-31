@@ -1,20 +1,21 @@
-<span class="main_handle pull-left" ></span>
-<button type="button" onclick="$('#toggle_glosses > span').toggle();$('#glosses').toggle();window.location.href='#top';" class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+<span class="main_handle pull-left"></span>
+<button type="button" onclick="$('#toggle_glosses > span').toggle();$('#glosses').toggle();window.location.href='#top';"
+      class="pull-right close" style="margin-left:5px"><span aria-hidden="true">&times;</span><span
+            class="sr-only">Close</span></button>
 <h3>
-Edit Morpheme Glosses 
+      Edit Morpheme Glosses
 </h3>
-<input id="input_glosses_filter" class="form-control pull-left textfield" type="text"
-      placeholder="filter by gloss" onkeyup="GLOSSES.filter_gloss=this.value;" style="width:250px" />
-<input id="input_cognates_filter" class="form-control pull-left textfield" type="text"
-      placeholder="filter by cognateset" onkeyup="GLOSSES.filter_cognate=this.value;" style="width:250px" />
-<input id="input_form_filter" class="form-control pull-left textfield" type="text"
-      placeholder="filter by form" onkeyup="GLOSSES.filter_form=this.value;" style="width:250px" />
+<input id="input_glosses_filter" class="form-control pull-left textfield input_filter" type="text"
+      placeholder="filter by gloss" onkeyup="GLOSSES.filter_gloss=this.value;" />
+<input id="input_cognates_filter" class="form-control pull-left textfield input_filter" type="text"
+      placeholder="filter by cognateset" onkeyup="GLOSSES.filter_cognate=this.value;" />
+<input id="input_form_filter" class="form-control pull-left textfield input_filter" type="text"
+      placeholder="filter by form" onkeyup="GLOSSES.filter_form=this.value;" />
 <br><br>
 
-<span style="margin-top:40px;margin-left:2px; background-color: #2d6ca2; color:white; border-radius:5px; border:2px solid #2d6ca2;padding:5px;margin-right:10px;">
+<span class="colexification_select">
       <b title="Select between full and partial colexification in the display.">SORT:</b>
-      <input name="glossgroup_mode" checked="" onchange="GLOSSES.sort_by='frequency';"
-      type="radio"> FREQUENCY
+      <input name="glossgroup_mode" checked="" onchange="GLOSSES.sort_by='frequency';" type="radio"> FREQUENCY
       <input name="glossgroup_mode" onchange="GLOSSES.sort_by='cognacy';" type="radio">
       COGNACY
       <input name="glossgroup_mode" onchange="GLOSSES.sort_by='similarity';" type="radio">
@@ -22,12 +23,10 @@ Edit Morpheme Glosses
 
 </span>
 
-<button type="button"
-	onclick="showSpinner(function(){GLOSSES.present();});"
-  class="btn-primary submit3 titled btn">OK</button>
+<button type="button" onclick="showSpinner(function(){GLOSSES.present();});"
+      class="btn-primary submit3 titled btn">OK</button>
 
-<div style="max-height:1000px;overflow-x:scroll;overflow-y:scroll;display:none;"
-  id="glosses_table"></div>
+<div id="glosses_table"></div>
 <div class="help-message" id="glosses_help" style="display:none;">
-  <h3>Help on Glosses</h3>
+      <h3>Help on Glosses</h3>
 </div>
