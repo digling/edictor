@@ -31,13 +31,16 @@ def test_wordlist():
     with tempfile.TemporaryDirectory() as t:
         os.chdir(t)
         os.system("git clone https://github.com/lexibank/allenbai")
-        os.system("edictor wordlist --dataset=allenbai/cldf/cldf-dataset.json")
+        os.system("edictor wordlist --dataset=allenbai/cldf/cldf-metadata.json --name=allenbai")
+        assert os.path.exists("allenbai.tsv")
         os.chdir("..")
 
 
 def test_main():
     os.system("edictor")
     os.system("edictor --help")
+
+
 
 #output = run(
 #            capsys, "server")
