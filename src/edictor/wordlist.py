@@ -6,15 +6,15 @@ import tempfile
 
 
 def fetch_wordlist(
-    dataset,
-    remote_dbase=None,
-    concepts=None,
-    languages=None,
-    columns=None,
-    to_lingpy=None,
-    transform=None,
-    base_url="http://lingulist.de/edictor",
-    ):
+        dataset,
+        remote_dbase=None,
+        concepts=None,
+        languages=None,
+        columns=None,
+        to_lingpy=None,
+        transform=None,
+        base_url="http://lingulist.de/edictor",
+):
     """
     Download wordlist from an EDICTOR application.
     """
@@ -32,7 +32,7 @@ def fetch_wordlist(
 
     data = urllib.request.urlopen(url).read()
     if to_lingpy:
-        import lingpy 
+        import lingpy
         with tempfile.NamedTemporaryFile() as tf:
             tf.write(data)
             tf.flush()
@@ -41,14 +41,14 @@ def fetch_wordlist(
 
 
 def get_wordlist(
-    path,
-    name,
-    columns=None,
-    preprocessing=None,
-    namespace=None,
-    lexibase=False,
-    custom_args=None
-    ):
+        path,
+        name,
+        columns=None,
+        preprocessing=None,
+        namespace=None,
+        lexibase=False,
+        custom_args=None
+):
     from lexibase import LexiBase
     from lingpy import Wordlist
 

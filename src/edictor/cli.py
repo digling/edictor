@@ -7,6 +7,7 @@ from http.server import HTTPServer
 import argparse
 from pathlib import Path
 import codecs
+import json
 
 from edictor.util import DATA
 
@@ -18,7 +19,7 @@ class CommandMeta(type):
 
     __instances = []
 
-    def __init__(self, name, bases, dct):
+    def __init__(self, name, bases, dct): # noqa
         super(CommandMeta, self).__init__(name, bases, dct)
         if name == name.lower():
             self.__instances.append(self)
@@ -107,7 +108,7 @@ class server(Command):
         url = "http://localhost:" + str(args.port) + "/"
         try:
             webbrowser.get(args.browser).open_new_tab(url)
-        except:
+        except: # noqa
             print("Could not open webbrowser, please open locally " 
                   "at http://localhost:" + str(args.port) + "/")
         
@@ -217,8 +218,6 @@ class wordlist(Command):
             lexibase=args.sqlite,
             custom_args=custom_args,
         )
-
-
 
 
 def get_parser():

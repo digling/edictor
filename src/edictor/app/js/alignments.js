@@ -1,10 +1,4 @@
 /* Alignment Editor in a very simplified version for the EDICTOR
- *
- * author   : Johann-Mattis List
- * email    : mattis.list@lingulist.de
- * created  : 2014-10-21 12:58
- * modified : 2015-07-07 16:12
- *
  */
 
 /* jshint esversion: 6 */

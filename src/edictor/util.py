@@ -34,10 +34,10 @@ DATA = {
 def opendb(path, conf):
     if Path(conf["sqlite"], path + ".sqlite3").exists():
         db = sqlite3.connect(
-                Path(conf["sqlite"], path + ".sqlite3"))
+            Path(conf["sqlite"], path + ".sqlite3"))
     elif edictor_path(conf["sqlite"], path + ".sqlite3").exists():
         db = sqlite3.connect(
-                edictor_path(conf["sqlite"], path + ".sqlite3"))
+            edictor_path(conf["sqlite"], path + ".sqlite3"))
     else:
         raise ValueError("SQLITE DB could not be found.")
     return db, db.cursor()
@@ -54,7 +54,7 @@ def parse_args(path):
         for k, v in map(
                 lambda x: x.split("="),
                 path.split("?")[1].split("#")[0].split("&"),
-                ):
+        ):
             args[k] = v
     return args
 
@@ -81,14 +81,13 @@ def download(s, post):
     date, time = str(datetime.today()).split(" ")
     if Path(args["file"]).exists():
         os.rename(
-                args["file"],
-                args["file"][:-4] + "-" + date + "-".join(time.split(":")[:2]) + ".tsv"
-                )
+            args["file"],
+            args["file"][:-4] + "-" + date + "-".join(time.split(":")[:2]) + ".tsv"
+        )
     with codecs.open(args["file"], "w", "utf-8") as f:
         f.write(urllib.parse.unquote_plus(args["data"]))
 
     send_response(s, "success")
-
 
 
 def send_response(s, content, content_type="text/html",
@@ -108,14 +107,14 @@ def handle_args(args, query, qtype):
         args.update(parse_post(query))
     elif qtype == "GET":
         args.update(parse_args(query))
-    
+
 
 def check(s):
     try:
         import lingpy
         import lingrex
         message = "lingpy"
-    except ImportError: # pragma: no cover
+    except ImportError:  # pragma: no cover
         message = "python"
     send_response(s, message)
 
@@ -130,14 +129,14 @@ def configuration():
     elif edictor_path(DATA["config"]).exists():
         with codecs.open(edictor_path(DATA["config"]), "r", "utf-8") as f:
             conf = json.load(f)
-    else: # pragma: no cover
+    else:  # pragma: no cover
         conf = {
-                "user": "unknown",
-                "links": None,
-                "sqlite": "sqlite",
-                }
-        
-    if conf.get("remote"): # pragma: no cover
+            "user": "unknown",
+            "links": None,
+            "sqlite": "sqlite",
+        }
+
+    if conf.get("remote"):  # pragma: no cover
         if not conf.get("user"):
             conf["user"] = input("User name: ")
         if not conf.get("pw"):
@@ -146,14 +145,14 @@ def configuration():
         for key, values in conf["remote"].items():
             for file in values:
                 values[file]["data"] = "&".join(
-                        ["{0}={1}".format(k, v) for k, v in
-                         values[file]["data"].items()])
-            
+                    ["{0}={1}".format(k, v) for k, v in
+                     values[file]["data"].items()])
+
     # represent urls as lists
     if conf.get("links"):
         for link in conf["links"]:
             link["url"] = link["url"] + "?" + "&".join(
-                    ["{0}={1}".format(k, v) for k, v in link["data"].items()])
+                ["{0}={1}".format(k, v) for k, v in link["data"].items()])
 
     if not conf.get("sqlite"):
         conf["sqlite"] = "sqlite"
@@ -162,12 +161,12 @@ def configuration():
         conf["user"] = "unknown"
 
     return conf
-        
+
 
 def get_distinct(what, cursor, name):
     out = [line[0] for line in cursor.execute(
         'select distinct val from ' + name + ' where col="' + what + '";'
-        )]
+    )]
     return out
 
 
@@ -221,7 +220,7 @@ def serve_base(s, conf):
     with codecs.open(edictor_path("index.html"), "r", "utf-8") as f:
         text = f.read()
     link_template = """<div class="dataset inside" onclick="window.open('{url}');"><span>{name}</span></div>"""
-    
+
     links = []
     for link in conf["links"]:
         links += [link_template.format(**link)]
@@ -235,7 +234,7 @@ def serve_base(s, conf):
     text = text.replace("{DATASETS}", "".join(paths))
     text = text.replace(' id="files" style="display:none"', '')
     text = text.replace(' id="user" style="display:none"', '')
-    
+
     send_response(s, text)
 
 
@@ -244,37 +243,37 @@ def new_id(s, query, qtype, conf):
     Obtain new identifier from currently largest one.
     """
     args = dict(
-            remote_dbase='', 
-            file='', 
-            new_id = '', 
-            )
+        remote_dbase='',
+        file='',
+        new_id='',
+    )
     handle_args(args, query, qtype)
-    if conf.get("remote") and args["remote_dbase"] in conf["remote"]: # pragma: no cover
+    if conf.get("remote") and args["remote_dbase"] in conf["remote"]:  # pragma: no cover
         print("requesting remote ID")
         info = conf["remote"][args["remote_dbase"]]["new_id.py"]
         req = urllib.request.Request(
-                info["url"], 
-                data=bytes(info["data"] + "&new_id=true", "utf-8"))
+            info["url"],
+            data=bytes(info["data"] + "&new_id=true", "utf-8"))
         req.add_header('Content-Type', 'application/x-www-form-urlencoded')
-        req.get_method =lambda: 'POST'
+        req.get_method = lambda: 'POST'
         data = urllib.request.urlopen(req).read()
         send_response(
-                s, 
-                data, 
-                encode=False,
-                content_type="text/plain; charset=utf-8",
-                content_disposition='attachment; filename="triples.tsv"'
-                )
+            s,
+            data,
+            encode=False,
+            content_type="text/plain; charset=utf-8",
+            content_disposition='attachment; filename="triples.tsv"'
+        )
         return
-    
+
     db, cursor = opendb(args["remote_dbase"], conf)
-    
+
     if args['new_id'] == "true":
         cursor.execute('select DISTINCT ID from ' + args['file'] + ';')
         linesA = [x[0] for x in cursor.fetchall()]
         cursor.execute(
             'select DISTINCT ID from backup where FILE = "' + args['file'] + '";'
-            )
+        )
         linesB = [x[0] for x in cursor.fetchall()]
         try:
             maxA = max(linesA)
@@ -284,23 +283,24 @@ def new_id(s, query, qtype, conf):
             maxB = max(linesB)
         except ValueError:
             maxB = 0
-            
+
         if maxA >= maxB:
             message = str(maxA + 1)
         else:
             message = str(maxB + 1)
     else:
         lines = [x[0] for x in cursor.execute('select DISTINCT VAL from ' + args['file'] +
-                ' where COL="' + args['new_id'] + '";')]
+                                              ' where COL="' + args['new_id'] + '";')]
         # dammit but, it doesn't really seem to work without explicit
         # type-checking
         cogids = []
         for l in lines:
-            try: cogids += [int(l)]
-            except: 
+            try:
+                cogids += [int(l)]
+            except:
                 try:
                     cogids += [int(x) for x in l.split(' ')]
-                except: 
+                except:
                     pass
 
         message = str(max(cogids) + 1)
@@ -309,10 +309,10 @@ def new_id(s, query, qtype, conf):
 
 def cognates(s, query, qtype):
     args = {
-            "wordlist": "",
-            "mode": "full", 
-            "method": "lexstat"
-            }
+        "wordlist": "",
+        "mode": "full",
+        "method": "lexstat"
+    }
     handle_args(args, query, qtype)
     args["wordlist"] = urllib.parse.unquote_plus(args["wordlist"])
 
@@ -324,34 +324,33 @@ def cognates(s, query, qtype):
     for row in args["wordlist"].split("\n")[:-1]:
         idx, doculect, concept, tokens = row.split('\t')
         tmp[int(idx)] = [
-                doculect, 
-                concept, 
-                tokens, 
-                tokens.split(" ")
-                ]
+            doculect,
+            concept,
+            tokens,
+            tokens.split(" ")
+        ]
     out = ""
     if args["mode"] == "partial":
         part = Partial(tmp)
         part.partial_cluster(
-                method="sca", threshold=0.45, ref="cogid",
-                cluster_method="upgma")
+            method="sca", threshold=0.45, ref="cogid",
+            cluster_method="upgma")
         for idx in part:
             out += str(idx) + "\t" + str(basictypes.ints(part[idx, "cogid"])) + "\n"
     else:
         lex = LexStat(tmp)
         lex.cluster(
-                method="sca", threshold=0.45, ref="cogid", 
-                cluster_method="upgma")
+            method="sca", threshold=0.45, ref="cogid",
+            cluster_method="upgma")
         for idx in lex:
             out += str(idx) + "\t" + str(lex[idx, "cogid"]) + "\n"
 
     send_response(
-            s, 
-            out, 
-            content_type="text/plain; charset=utf-8",
-            content_disposition='attachment; filename="triples.tsv"'
-            )
-
+        s,
+        out,
+        content_type="text/plain; charset=utf-8",
+        content_disposition='attachment; filename="triples.tsv"'
+    )
 
 
 def patterns(s, query, qtype):
@@ -359,11 +358,11 @@ def patterns(s, query, qtype):
     Compute correspondence patterns with CoPaR (LingRex)
     """
     args = {
-            "wordlist": "",
-            "mode": "full", 
-            "method": "copar",
-            "minrefs": 2
-            }
+        "wordlist": "",
+        "mode": "full",
+        "method": "copar",
+        "minrefs": 2
+    }
     handle_args(args, query, qtype)
     args["wordlist"] = urllib.parse.unquote_plus(args["wordlist"])
 
@@ -378,21 +377,21 @@ def patterns(s, query, qtype):
     for row in args["wordlist"].split("\n")[:-1]:
         idx, doculect, concept, tokens, cogid, alignment = row.split('\t')
         tmp[int(idx)] = [
-                doculect, 
-                concept, 
-                tokens, 
-                tokens.split(" "),
-                lingpy.basictypes.ints(cogid) if args["mode"] == "partial" else int(cogid),
-                alignment.split(" "),
-                lingpy.tokens2class(tokens.split(), "cv")
-                ]
+            doculect,
+            concept,
+            tokens,
+            tokens.split(" "),
+            lingpy.basictypes.ints(cogid) if args["mode"] == "partial" else int(cogid),
+            alignment.split(" "),
+            lingpy.tokens2class(tokens.split(), "cv")
+        ]
     cop = CoPaR(
-            tmp, 
-            ref=ref, 
-            transcription="form",
-            fuzzy=True if args["mode"] == "partial" else False,
-            minrefs=args["minrefs"]
-            )
+        tmp,
+        ref=ref,
+        transcription="form",
+        fuzzy=True if args["mode"] == "partial" else False,
+        minrefs=args["minrefs"]
+    )
     print("Loaded the CoPaR object.")
     cop.get_sites()
     print("Loaded the Sites.")
@@ -405,23 +404,23 @@ def patterns(s, query, qtype):
     for idx in cop:
         out += str(idx) + "\t" + " ".join(cop[idx, "patterns"]) + "\n"
     send_response(
-            s, 
-            out, 
-            content_type="text/plain; charset=utf-8",
-            content_disposition='attachment; filename="triples.tsv"'
-            )
+        s,
+        out,
+        content_type="text/plain; charset=utf-8",
+        content_disposition='attachment; filename="triples.tsv"'
+    )
     print("Successfully computed correspondence patterns.")
 
 
 def alignments(s, query, qtype):
     args = {
-            "wordlist": "",
-            "mode": "full", 
-            "method": "library"
-            }
+        "wordlist": "",
+        "mode": "full",
+        "method": "library"
+    }
     handle_args(args, query, qtype)
     args["wordlist"] = urllib.parse.unquote_plus(args["wordlist"])
-    
+
     print("Carrying out alignments with LingPy")
     # assemble the wordlist header
     import lingpy
@@ -430,25 +429,25 @@ def alignments(s, query, qtype):
     for row in args["wordlist"].split("\n")[:-1]:
         idx, doculect, concept, tokens, cogid = row.split('\t')
         tmp[int(idx)] = [
-                doculect, 
-                concept, 
-                tokens, 
-                tokens.split(" "),
-                lingpy.basictypes.ints(cogid) if args["mode"] == "partial" else cogid
-                ]
+            doculect,
+            concept,
+            tokens,
+            tokens.split(" "),
+            lingpy.basictypes.ints(cogid) if args["mode"] == "partial" else cogid
+        ]
     alms = lingpy.Alignments(tmp, ref=ref, transcription="form",
                              fuzzy=True if args["mode"] == "partial" else False)
     alms.align(method=args["method"])
     out = ""
     for idx in alms:
         out += str(idx) + "\t" + " ".join(alms[idx, "alignment"]) + "\n"
-    
+
     send_response(
-            s, 
-            out, 
-            content_type="text/plain; charset=utf-8",
-            content_disposition='attachment; filename="triples.tsv"'
-            )
+        s,
+        out,
+        content_type="text/plain; charset=utf-8",
+        content_disposition='attachment; filename="triples.tsv"'
+    )
 
 
 def triples(s, query, qtype, conf):
@@ -456,32 +455,32 @@ def triples(s, query, qtype, conf):
     Basic access to the triple storage storing data in SQLITE.
     """
     args = dict(
-            remote_dbase='', 
-            file='', 
-            columns = '', 
-            concepts = '',
-            doculects = '', 
-            )
+        remote_dbase='',
+        file='',
+        columns='',
+        concepts='',
+        doculects='',
+    )
     handle_args(args, query, qtype)
 
-    if conf.get("remote") and args["remote_dbase"] in conf["remote"]: # pragma: no cover
+    if conf.get("remote") and args["remote_dbase"] in conf["remote"]:  # pragma: no cover
         print("EDICTOR loading remote TSV file.")
         info = conf["remote"][args["remote_dbase"]]["triples.py"]
         req = urllib.request.Request(
-                info["url"], 
-                data=bytes(info["data"], "utf-8"))
+            info["url"],
+            data=bytes(info["data"], "utf-8"))
         req.add_header('Content-Type', 'application/x-www-form-urlencoded')
         req.get_method = lambda: 'POST'
         data = urllib.request.urlopen(req).read()
         send_response(
-                s, 
-                data, 
-                encode=False,
-                content_type="text/plain; charset=utf-8",
-                content_disposition='attachment; filename="triples.tsv"'
-                )
+            s,
+            data,
+            encode=False,
+            content_type="text/plain; charset=utf-8",
+            content_disposition='attachment; filename="triples.tsv"'
+        )
         return
-    
+
     db, cursor = opendb(args["remote_dbase"], conf)
 
     # get unique columns
@@ -491,7 +490,7 @@ def triples(s, query, qtype, conf):
         cols = args['columns'].split('%7C')
 
     text = 'ID\t' + '\t'.join(cols) + '\n'
-    
+
     # if neither concepts or doculects are passed from the args, all ids are
     # selected from the database
     if not args['concepts'] and not args['doculects']:
@@ -501,16 +500,15 @@ def triples(s, query, qtype, conf):
         # we evaluate the concept string
         if args['concepts']:
             cstring = 'COL = "CONCEPT" and VAL in ("' + \
-                '","'.join(args['concepts'].split('%7C')) + '")'
+                      '","'.join(args['concepts'].split('%7C')) + '")'
         else:
             cstring = ''
         if args['doculects']:
             dstring = 'COL = "DOCULECT" and VAL in ("' + \
-                '","'.join(args['doculects'].split('%7C')) + '")'
+                      '","'.join(args['doculects'].split('%7C')) + '")'
         else:
             dstring = ''
 
-        
         if cstring:
             cidxs = [line[0] for line in cursor.execute(
                 'select distinct ID from ' + args['file'] + ' where ' + cstring)]
@@ -518,7 +516,7 @@ def triples(s, query, qtype, conf):
             cidxs = []
         if dstring:
             didxs = [line[0] for line in cursor.execute(
-                'select distinct ID from ' + args['file'] + ' where ' + dstring)] 
+                'select distinct ID from ' + args['file'] + ' where ' + dstring)]
         else:
             didxs = []
 
@@ -528,14 +526,14 @@ def triples(s, query, qtype, conf):
             idxs = cidxs or didxs
 
     # make the dictionary
-    D = {} 
+    D = {}
     for a, b, c in cursor.execute('select * from ' + args['file'] + ';'):
-        if c not in ['-','']:
+        if c not in ['-', '']:
             try:
                 D[a][b] = c
             except KeyError:
                 D[a] = {b: c}
-    
+
     # make object
     for idx in idxs:
         txt = str(idx)
@@ -569,39 +567,39 @@ def modifications(s, post, qtype, conf):
     if not "remote_dbase" in args:
         return
 
-    if conf.get("remote") and args["remote_dbase"] in conf["remote"]: # pragma: no cover
+    if conf.get("remote") and args["remote_dbase"] in conf["remote"]:  # pragma: no cover
         print("EDICTOR checking for modifications in remote data.")
         info = conf["remote"][args["remote_dbase"]]["modifications.py"]
         data = info["data"] + "&date=" + args["date"]
         req = urllib.request.Request(
-                info["url"], 
-                data=bytes(info["data"], "utf-8"))
+            info["url"],
+            data=bytes(info["data"], "utf-8"))
         req.add_header('Content-Type', 'application/x-www-form-urlencoded')
-        req.get_method =lambda: 'POST'
+        req.get_method = lambda: 'POST'
         data = urllib.request.urlopen(req).read()
         send_response(
-                s, 
-                data, 
-                encode=False,
-                content_type="text/plain; charset=utf-8",
-                content_disposition='attachment; filename="triples.tsv"'
-                )
+            s,
+            data,
+            encode=False,
+            content_type="text/plain; charset=utf-8",
+            content_disposition='attachment; filename="triples.tsv"'
+        )
         return
 
     db, cursor = opendb(args["remote_dbase"], conf)
     cursor.execute(
-            'select ID, COL from backup where FILE="'+args['file']+'"'+\
-                    ' and DATE > ' + args['date'] +\
-                    ' group by ID,COL limit 100;')
+        'select ID, COL from backup where FILE="' + args['file'] + '"' + \
+        ' and DATE > ' + args['date'] + \
+        ' group by ID,COL limit 100;')
     lines = cursor.fetchall()
     data = dict([((a, b), c) for a, b, c in cursor.execute(
-            'select * from '+args['file']+';'
-            )])
+        'select * from ' + args['file'] + ';'
+    )])
     message = ""
     for line in lines:
         try:
             val = data[line[0], line[1]].encode('utf-8')
-            message += '{0}\t{1}\t{2}\n'.format(line[0], line[1], val) 
+            message += '{0}\t{1}\t{2}\n'.format(line[0], line[1], val)
         except KeyError:
             pass
     send_response(s, message)
@@ -617,12 +615,12 @@ def update(s, post, qtype, conf):
     local host, or by sending a get request to the remote host (which must be
     specified in the configuration file). 
     """
-    
+
     now = str(datetime.now()).split('.')[0]
     args = {}
     handle_args(args, post, qtype)
 
-    if conf.get("remote") and args["remote_dbase"] in conf["remote"]: # pragma: no cover
+    if conf.get("remote") and args["remote_dbase"] in conf["remote"]:  # pragma: no cover
         print("send remote data")
         info = conf["remote"][args["remote_dbase"]]["update.py"]
         url = info["url"]
@@ -643,15 +641,15 @@ def update(s, post, qtype, conf):
         urllib.request.install_opener(opener)
 
         req = urllib.request.Request(
-                info["url"], 
-                data=bytes(data, "utf-8"))
+            info["url"],
+            data=bytes(data, "utf-8"))
         req.add_header('Content-Type', 'application/x-www-form-urlencoded')
         req.get_method = lambda: 'POST'
         res = urllib.request.urlopen(req)
         message = res.read()
         send_response(s, message, encode=False)
         return
-    
+
     db, cursor = opendb(args["remote_dbase"], conf)
 
     if "update" in args:
@@ -659,52 +657,53 @@ def update(s, post, qtype, conf):
         cols = urllib.parse.unquote(args['cols']).split("|||")
         vals = urllib.parse.unquote(args['vals']).split("|||")
 
-            # iterate over the entries
+        # iterate over the entries
         if len(idxs) == len(cols) == len(vals):
             pass
         else:
             print('ERROR: wrong values submitted')
             return
         for idx, col, val in zip(idxs, cols, vals):
-            
+
             # unquote the value
             val = urllib.parse.unquote(val)
-    
+
             # check for quote characters
             if '"' in val:
-                val = val.replace('"','""')
-    
+                val = val.replace('"', '""')
+
             # get original data value
             try:
                 orig_val = [x for x in cursor.execute(
-                    'select VAL from ' + args['file'] + ' where ID=' +\
-                            idx + ' and COL like "'+col+'";')][0][0]
-                
-                qstring = 'update '+args['file'] + ' set VAL="'+val+'" where ID='+idx+' and COL="'+col+'";'
+                    'select VAL from ' + args['file'] + ' where ID=' + \
+                    idx + ' and COL like "' + col + '";')][0][0]
+
+                qstring = 'update ' + args[
+                    'file'] + ' set VAL="' + val + '" where ID=' + idx + ' and COL="' + col + '";'
                 cursor.execute(
-                        qstring
-                        )
-    
+                    qstring
+                )
+
                 message = 'UPDATE: Modification successful replace "{0}" with "{1}" on {2}.'.format(
-                        orig_val.encode('utf-8'),
-                        val,
-                        now)
-                        
+                    orig_val.encode('utf-8'),
+                    val,
+                    now)
+
             except IndexError:
                 orig_val = '!newvalue!'
-                
+
                 # create new datum if value has not been retrieved
                 cursor.execute(
-                        'insert into '+args['file'] + ' values(' +\
-                                idx + ',"' + col + '","' +\
-                                val + '");')
+                    'insert into ' + args['file'] + ' values(' + \
+                    idx + ',"' + col + '","' + \
+                    val + '");')
                 message = 'INSERTION: Successfully inserted {0} on {1}'.format(
-                        val, now)
-                
+                    val, now)
+
             # modify original value with double quotes for safety
             if '"' in orig_val:
-                orig_val = orig_val.replace('"','""')
-    
+                orig_val = orig_val.replace('"', '""')
+
             # insert the backup line
             try:
                 cursor.execute(
@@ -715,27 +714,25 @@ def update(s, post, qtype, conf):
                         col,
                         orig_val,
                         conf["user"]
-                        ))
+                    ))
             except Exception as e:
                 print(e)
                 message = 'ERROR'
-    
+
         db.commit()
 
     elif "delete" in args:
         lines = [line for line in cursor.execute(
-            'select * from '+args['file'] +' where ID='+args['ID']+';'
-            )]
+            'select * from ' + args['file'] + ' where ID=' + args['ID'] + ';'
+        )]
         for idx, col, val in lines:
             cursor.execute(
-                    'insert into backup values(?,?,?,?,strftime("%s","now"),?);',
-                    (args['file'],idx, col, val, conf["user"]))
+                'insert into backup values(?,?,?,?,strftime("%s","now"),?);',
+                (args['file'], idx, col, val, conf["user"]))
             cursor.execute(
-                    'delete from '+args['file'] + ' where ID='+args['ID']+';')
+                'delete from ' + args['file'] + ' where ID=' + args['ID'] + ';')
         db.commit()
         message = 'DELETION: Successfully deleted all entries for ID {0} on {1}.'.format(
-                args['ID'],
-                now)
+            args['ID'],
+            now)
     send_response(s, message)
-
-

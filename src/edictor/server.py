@@ -1,5 +1,4 @@
 from http.server import SimpleHTTPRequestHandler
-import sqlite3
 
 from edictor.util import (
         DATA, get_distinct, get_columns, 
@@ -10,6 +9,7 @@ from edictor.util import (
         )
 
 CONF = configuration()
+
 
 class Handler(SimpleHTTPRequestHandler):
     """
@@ -44,8 +44,6 @@ class Handler(SimpleHTTPRequestHandler):
             download(s, post_data_bytes)
         if fn == "/check.py":
             check(s)
-
-        
         if fn == "/triples/update.py":
             update(s, post_data_bytes, "POST", CONF)
         if fn == "/triples/new_id.py":
@@ -82,7 +80,3 @@ class Handler(SimpleHTTPRequestHandler):
             new_id(s, s.path, "GET", CONF)
         if fn == "/triples/modifications.py":
             modifications(s, s.path, "GET", CONF)
-
-
-
-
