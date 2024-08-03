@@ -365,7 +365,7 @@ function combine_cogids() {
   cogid = false;
   for (i = 0; i < checked.length; i += 1) {
     if (WLS[checked[i]][CFG._cognates]) {
-      tmp_cogid = WLS[checked[i]][CFG._cognates]
+      tmp_cogid = WLS[checked[i]][CFG._cognates];
     }
     else {
       tmp_cogid = get_new_cogid();
