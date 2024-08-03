@@ -1,10 +1,4 @@
 /* Wordlist main library
- *
- * author   : Johann-Mattis List
- * email    : mattis.list@lingulist.de
- * created  : 2014-06-28 09:48
- * modified : 2024-06-08 22:48
- *
  */
 
 function reset() {
@@ -1161,9 +1155,15 @@ function addColumn(event) {
   /* check for alignments */
   var i, entry;
   for (i = 0; entry = ['morphemes', 'alignments', 'cognates', 'roots', 'patterns'][i]; i += 1) {
-    if (ALIAS[entry].indexOf(new_name) != -1) {
+    if (ALIAS[entry].includes(new_name)) {
       CFG['_' + entry] = WLS['header'].indexOf(new_name);
     }
+  }
+
+  if (ALIAS["cognates"].includes(new_name)) {
+    resetFormat(new_name);
+  } else if (ALIAS["roots"].includes(new_name)) {
+    resetRootFormat(new_name);
   }
 
   col.value = '';
