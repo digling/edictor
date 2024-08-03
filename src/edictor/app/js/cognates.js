@@ -1,3 +1,5 @@
+// noinspection ES6ShorthandObjectProperty
+
 /* Cognate selection panel of the edictor
  */
 
@@ -8,13 +10,12 @@
 function handle_cognate_selection() {
   "use strict";
   /* check whether formatter is true or not */
-  if (!CFG.formatter) { /* jshint ignore:line */
+  if (!CFG.formatter) {
     fakeAlert("Your data does not contain cognate sets!");
     return;
   }
 
-  let i, concept, option;
-  /* get selector */
+    /* get selector */
   const slc = document.getElementById('cognates_select_concepts');
 
   /* retrieve concepts and add them to selection */
@@ -22,17 +23,18 @@ function handle_cognate_selection() {
   if (typeof CFG._current_concept === 'undefined') { /* jshint ignore:line */
     CFG._current_concept = CFG.sorted_concepts[0]; /* jshint ignore:line */
   }
-  for (i = 0; i < CFG.sorted_concepts.length; i += 1) { /* jshint ignore:line */
-    concept = CFG.sorted_concepts[i]; /* jshint ignore:line */
-    option = '';
+  for (let i = 0; i < CFG.sorted_concepts.length; i += 1) { /* jshint ignore:line */
+    const concept = CFG.sorted_concepts[i]; /* jshint ignore:line */
+    let option = '';
     if (CFG._current_concept === concept) { /* jshint ignore:line */
       option = ' selected=selected ';
     }
-    txt += '<option id="concept_' + WLS.c2i[concept] + '" value="' + concept + '"' + option + '>' + concept + '</option>'; /* jshint ignore:line */
+    txt += `<option id="concept_${WLS.c2i[concept]}" value="${concept}"${option}>${concept}</option>`; /* jshint ignore:line */
   }
   slc.innerHTML = txt;
 
-  $('#cognates_select_concepts').multiselect({
+  // noinspection JSUnusedLocalSymbols
+  $('#cognates_select_concepts').multiselect({ /* jshint ignore: line */
     disableIfEmtpy: true,
     includeSelectAllOption: true,
     enableFiltering: true,
@@ -40,44 +42,38 @@ function handle_cognate_selection() {
     buttonClass: 'btn btn-primary mright submit pull-left',
     enableCaseInsensitiveFiltering: true,
     buttonContainer: '<div id="cognates_select_concepts_button" class="select_button" />',
-    buttonText: function (options, select) {
-      return 'Select Concepts <b class="caret"></b>';
-    }
+    buttonText: (options, select) => 'Select Concepts <b class="caret"></b>'
   });
 
   display_cognates(CFG._current_concept); /* jshint ignore:line */
-  document.getElementById('cognates_current_concept').innerHTML = CFG._current_concept + /* jshint ignore:line */
-      ' (' + WLS.c2i[CFG._current_concept] + '/' + WLS.height + ')'; /* jshint ignore:line */
+  document.getElementById('cognates_current_concept').innerHTML = `${CFG._current_concept/* jshint ignore:line */
+  } (${WLS.c2i[CFG._current_concept]}/${WLS.height})`; /* jshint ignore:line */
 }
 
 /* function displays all cognates in a table and makes them ready for editing */
-function display_cognates(concept, sortby) {
-  "use strict";
-  /* check for emtpy sortby */
-  if (typeof sortby === 'undefined') {
-    sortby = 2;
-  }
-  let i, j, k, slcs, selected_concepts, idxs, slc, all_concepts, option, restriction, idx, row;
+function display_cognates(concept, sortby = 2) {
   /* if concept is not passed, check for selection */
+  let option;
+  let selected_concepts;
+  let idxs;
   if (typeof concept === 'undefined' || !concept) {
     /* set up variable for integer ids of concepts to get them passed to the function that
      * handles the restricted file display of the wordlist */
     selected_concepts = [];
 
     /* get the word ids for the selected concepts */
+    // noinspection JSMismatchedCollectionQueryUpdate
     idxs = [];
-    slc = document.getElementById('cognates_select_concepts');
+    const slc = document.getElementById('cognates_select_concepts');
     if (typeof slc === 'undefined' || slc === null) {
       return;
     }
-    all_concepts = [];
-
-    /* set up restriction to maximally five concepts per slot */
-    restriction = 1;
-    for (i = 0; i < slc.options.length; i += 1) {
+    const all_concepts = []; /* set up restriction to maximally five concepts per slot */
+    let restriction = 1;
+    for (let i = 0; i < slc.options.length; i += 1) {
       option = slc.options[i];
       if (option.selected && restriction <= 5) {
-        for (j = 0; j < WLS.concepts[option.value].length; j += 1) {
+        for (let j = 0; j < WLS.concepts[option.value].length; j += 1) {
           idx = WLS.concepts[option.value][j];
           idxs.push(idx);
         }
@@ -88,10 +84,9 @@ function display_cognates(concept, sortby) {
     }
     if (all_concepts.length > 0) {
       if (all_concepts.length > 1) {
-        document.getElementById('cognates_current_concept').innerHTML = all_concepts[0] + ', ...';
+        document.getElementById(`cognates_current_concept`).innerHTML = `${all_concepts[0]}, ...`;
       } else {
-        document.getElementById('cognates_current_concept').innerHTML = all_concepts[0] +
-            ' (' + WLS.c2i[all_concepts[0]] + '/' + WLS.height + ')';
+        document.getElementById('cognates_current_concept').innerHTML = `${all_concepts[0]} (${WLS.c2i[all_concepts[0]]}/${WLS.height})`;
       }
       /* mark the current concept */
       CFG._current_concept = all_concepts[0]; /* jshint ignore:line */
@@ -109,14 +104,14 @@ function display_cognates(concept, sortby) {
   else {
     idxs = WLS.concepts[concept];
 
-    selected_concepts = '' + WLS.c2i[concept];
+    selected_concepts = `${WLS.c2i[concept]}`;
 
-    $('#cognates_select_concepts').multiselect('deselectAll', false); /* jshint ignore:line */
-    $('#cognates_select_concepts').multiselect('select', concept); /* jshint ignore:line */
+    $('#cognates_select_concepts').multiselect('deselectAll', false);
+    $('#cognates_select_concepts').multiselect('select', concept);
 
     /* don't forget to also change the internal options which are not displayed here */
-    slcs = document.getElementById('cognates_select_concepts');
-    for (k = 0; k < slcs.options.length; k++) {
+    const slcs = document.getElementById('cognates_select_concepts');
+    for (let k = 0; k < slcs.options.length; k++) {
       option = slcs.options[k];
       if (option.selected && option.value !== concept) {
         option.selected = false;
@@ -125,7 +120,7 @@ function display_cognates(concept, sortby) {
       }
     }
     /* store that there is no multiselect option chosen here */
-    CFG._concept_multiselect = false; /* jshint ignore:line */
+    CFG._concept_multiselect = false;
   }
 
   /* get the selected concepts */
@@ -135,34 +130,26 @@ function display_cognates(concept, sortby) {
   let maxlen = 4;
 
   /* store in data array first */
-  let data = [];
-  let aidx = CFG._alignments;
-  let tidx = CFG._segments;
-  let cidx = CFG._fidx;
+  const data = [];
+  const aidx = CFG._alignments;
+  const tidx = CFG._segments;
+  const cidx = CFG._fidx;
 
-  let cid, tks, doc, con;
-  for (i = 0; i < idxs.length; i++) {
-    idx = idxs[i];
-    cid = WLS[idx][cidx];
-
-    tks = WLS[idx][aidx];
+  for (const idx of idxs) {
+    const cid = WLS[idx][cidx];
+    let tks = WLS[idx][aidx];
     if (!tks) {
       tks = WLS[idx][tidx];
     }
-    doc = WLS[idx][CFG._tidx];
-    con = WLS[idx][CFG._cidx];
-
-    let tkl, brackets;
+    const doc = WLS[idx][CFG._tidx];
+    const con = WLS[idx][CFG._cidx];
     if (CFG._selected_doculects.indexOf(doc) !== -1) {
       /* retrieve length of tokens, current solution is not very economic,
        * but it seems to suffice here for the time being */
-      tkl = tks.split(' ');
-
-      /* check for empty tokens */
-      //if (tkl != 0) {
-      brackets = 0;
-      for (j = 0; j < tkl.length; j++) {
-        if (tkl[j] === '(' || tkl[j] === ')') {
+      let tkl = tks.split(' '); /* check for empty tokens *///if (tkl != 0) {
+      let brackets = 0;
+      for (const item of tkl) {
+        if (item === '(' || item === ')') {
           brackets += 1;
         }
       }
@@ -195,7 +182,7 @@ function display_cognates(concept, sortby) {
   /* sort data according to concept and cognate id and taxon */
   if (sortby === 1) {
     data.sort(
-        function (x, y) {
+        (x, y) => {
           if (x[3] === y[3]) {
             return CFG.sorted_taxa.indexOf(x[1]) - CFG.sorted_taxa.indexOf(y[1]);
           } else if (x[3] > y[3]) {
@@ -206,17 +193,16 @@ function display_cognates(concept, sortby) {
         });
   } else {
     data.sort(
-        function (x, y) {
-          let _x = [x[3], x[sortby], CFG.sorted_taxa.indexOf(x[2]), x[1]].join(' ');
-          let _y = [y[3], y[sortby], CFG.sorted_taxa.indexOf(y[2]), y[1]].join(' ');
+        (x, y) => {
+          const _x = [x[3], x[sortby], CFG.sorted_taxa.indexOf(x[2]), x[1]].join(' ');
+          const _y = [y[3], y[sortby], CFG.sorted_taxa.indexOf(y[2]), y[1]].join(' ');
           return _x.localeCompare(_y);
         });
   }
 
   /* determine length of cognate sets */
-  let csets = {};
-  for (i = 0; i < data.length; i++) {
-    row = data[i];
+  const csets = {};
+  for (const row of data) {
     if (row[3] in csets) {
       csets[row[3]] += 1;
     } else {
@@ -225,14 +211,12 @@ function display_cognates(concept, sortby) {
   }
 
   /* retrieve alignments */
-  let alms = [];
   let current = 0;
   let color = 'lightgray';
-  for (i = 0; i < data.length; i++) {
-    row = data[i];
+  for (const row of data) {
     if (current !== row[3]) {
       txt += '<tr class="d0">';
-      txt += '<td colspan="' + (maxlen + 8) + '" style="height:5px;"></td></tr>';
+      txt += `<td colspan="${maxlen + 8}" style="height:5px;"></td></tr>`;
       if (color === 'white') {
         color = '#e0e6f8';
       } else {
@@ -241,35 +225,33 @@ function display_cognates(concept, sortby) {
     }
 
     if (row[4] === '-' || row[4] === '') {
-      txt += '<tr style="background-color:' + color + ';display:none;">';
+      txt += `<tr style="background-color:${color};display:none;">`;
     } else {
-      txt += '<tr style="background-color:' + color + '">';
+      txt += `<tr style="background-color:${color}">`;
     }
-    txt += '<td class="alm_line alm_bdl">' + row[1] + '</td>';
-    txt += '<td></td>';
-    txt += '<td class="alm_line alm_bdl">' + row[2] + '</td>';
-    txt += '<td class="alm_bdr"></td>';
+    txt += `<td class="alm_line alm_bdl">${row[1]}</td>`;
+    txt += `<td></td>`;
+    txt += `<td class="alm_line alm_bdl">${row[2]}</td>`;
+    txt += `<td class="alm_bdr"></td>`;
     txt += plotWord(row[4], 'td');
 
-    alms.push(row[4].split(' '));
-
     /* add missing tds for the rest of the table */
-    let clen = maxlen - row[4].split(' ').length + row[4].replace(/[^\(\)]/g, '').length;
-    for (j = 0; j < clen; j++) {
+    const clen = maxlen - row[4].split(' ').length + row[4].replace(/[^()]/g, '').length;
+    for (let j = 0; j < clen; j++) {
       txt += '<td></td>';
     }
     txt += '<td></td>';
-    txt += '<td class="alm_bdl alm_line">' + row[3] + '</td>';
-    txt += '<td class="alm_line"><input type="checkbox" id="cognates_idx_' + row[0] + '" value="' + row[0] + '"></input></td>';
+    txt += `<td class="alm_bdl alm_line">${row[3]}</td>`;
+    txt += `<td class="alm_line"><input type="checkbox" id="cognates_idx_${row[0]}" value="${row[0]}"></td>`;
 
     if (current !== row[3]) {
-      txt += '<td class="alm_line" style="width:15px;color:' + color + ';background-color:' + color + '" rowspan="' + csets[row[3]] + '">';
+      txt += `<td class="alm_line" style="width:15px;color:${color};background-color:${color}" rowspan="${csets[row[3]]}">`;
       // noinspection JSDeprecatedSymbols
-      txt += '<button title="align the words" onclick="editGroup(event,\'' + row[3] + '\')" class="btn-primary btn mleft submit3">';
-      txt += '<span class="icon-bar"></span>';
-      txt += '<span class="icon-bar"></span>';
-      txt += '</button>';
-      txt += '</td>';
+      txt += `<button title="align the words" onclick="editGroup(event,'${row[3]}')" class="btn-primary btn mleft submit3">`;
+      txt += `<span class="icon-bar"></span>`;
+      txt += `<span class="icon-bar"></span>`;
+      txt += `</button>`;
+      txt += `</td>`;
       current = row[3];
     } else {
       current = row[3];
@@ -288,23 +270,21 @@ function display_cognates(concept, sortby) {
 
 function display_previous_cognate() {
   "use strict";
-  let ccon = CFG._current_concept;
-  let acon = Object.keys(WLS.concepts);
-  let pcon = acon[(acon.indexOf(ccon) - 1)];
+  const ccon = CFG._current_concept;
+  const acon = Object.keys(WLS.concepts);
+  const pcon = acon[(acon.indexOf(ccon) - 1)];
   display_cognates(pcon);
-  document.getElementById('cognates_current_concept').innerHTML = pcon + ' (' +
-      WLS.c2i[pcon] + '/' + WLS.height + ')';
+  document.getElementById('cognates_current_concept').innerHTML = `${pcon} (${WLS.c2i[pcon]}/${WLS.height})`;
   CFG._current_concept = pcon;
 }
 
 function display_next_cognate() {
   "use strict";
-  let ccon = CFG._current_concept;
-  let ncon = CFG.sorted_concepts[(CFG.sorted_concepts.indexOf(ccon) + 1)];
+  const ccon = CFG._current_concept;
+  const ncon = CFG.sorted_concepts[(CFG.sorted_concepts.indexOf(ccon) + 1)];
   display_cognates(ncon);
 
-  document.getElementById('cognates_current_concept').innerHTML = ncon + ' (' +
-      WLS.c2i[ncon] + '/' + WLS.height + ')';
+  document.getElementById('cognates_current_concept').innerHTML = `${ncon} (${WLS.c2i[ncon]}/${WLS.height})`;
 
   CFG._current_concept = ncon;
 }
@@ -322,24 +302,21 @@ function display_current_cognate() {
 function get_selected_indices() {
   "use strict";
   /* get the word ids for the selected concepts */
-  let idxs = [];
-  let slc = document.getElementById('cognates_select_concepts');
-  let i, j, idx, option;
-  for (i = 0; i < slc.options.length; i += 1) {
-    option = slc.options[i];
+  const idxs = [];
+  const slc = document.getElementById('cognates_select_concepts');
+  for (let i = 0; i < slc.options.length; i += 1) {
+    const option = slc.options[i];
     if (option.selected) {
-      for (j = 0; j < WLS.concepts[option.value].length; j += 1) {
-        idx = WLS.concepts[option.value][j];
-        idxs.push(idx);
+      for (let j = 0; j < WLS.concepts[option.value].length; j += 1) {
+        idxs.push(WLS.concepts[option.value][j]);
       }
     }
   }
 
-  let checked = [];
-  for (i = 0; i < idxs.length; i += 1) {
-    idx = idxs[i];
-    if (document.getElementById('cognates_idx_' + idx) && document.getElementById('cognates_idx_' + idx).checked) {
-      checked.push(idx);
+  const checked = [];
+  for (let i = 0; i < idxs.length; i += 1) {
+    if (document.getElementById(`cognates_idx_${idxs[i]}`) && document.getElementById(`cognates_idx_${idxs[i]}`).checked) {
+      checked.push(idxs[i]);
     }
   }
 
@@ -349,19 +326,18 @@ function get_selected_indices() {
 /* create a new cognate id for all selected words */
 function assign_new_cogid() {
   "use strict";
-  let checked = get_selected_indices();
+  const checked = get_selected_indices();
   /* calculate new cogid */
-  let new_cogid = get_new_cogid();
-  let cidx = WLS.header.indexOf(CFG.formatter);
+  const new_cogid = get_new_cogid();
+  const cidx = WLS.header.indexOf(CFG.formatter);
 
   /* we submit all at once now to make it faster */
-  let ids = [];
-  let cols = [];
-  let vals = [];
+  const ids = [];
+  const cols = [];
+  const vals = [];
 
-  let i, chk;
-  for (i = 0; i < checked.length; i += 1) {
-    chk = checked[i];
+  for (let i = 0; i < checked.length; i += 1) {
+    const chk = checked[i];
     WLS[chk][cidx] = new_cogid;
 
     /* add to remote store arrays */
@@ -380,17 +356,22 @@ function assign_new_cogid() {
 /* create a new combined cognate id for all cognate sets whose
  * representatative words are selected */
 function combine_cogids() {
-  "use strict";
+"use strict";
+  // noinspection JSJoinVariableDeclarationAndAssignment
   let i, j, chk, idx, tmp_cogid, cogid;
-  let checked = get_selected_indices();
-
-  let cidx = WLS.header.indexOf(CFG.formatter);
-
+  const checked = get_selected_indices();
+  console.log("CHECKED", checked);
   /* just get the first of all cogids */
   cogid = false;
   for (i = 0; i < checked.length; i += 1) {
-    tmp_cogid = WLS[checked[i]][cidx];
-    if ((!cogid || 0 < tmp_cogid < cogid || cogid == 0) && tmp_cogid && tmp_cogid != 0) {
+    if (WLS[checked[i]][CFG._cognates]) {
+      tmp_cogid = WLS[checked[i]][CFG._cognates]
+    }
+    else {
+      tmp_cogid = get_new_cogid();
+    }
+    // noinspection ConstantOnLefSideOfComparisonJS
+    if ((!cogid || 0 < tmp_cogid < cogid || cogid === 0) && tmp_cogid && tmp_cogid !== 0) {
       cogid = tmp_cogid;
     }
   }
@@ -399,33 +380,38 @@ function combine_cogids() {
     cogid = get_new_cogid();
   }
 
-  let ids = [];
-  let cols = [];
-  let vals = [];
+  const ids = [];
+  const cols = [];
+  const vals = [];
 
-  let visited = [];
+  const visited = [];
   for (i = 0; i < checked.length; i += 1) {
     chk = checked[i];
-    tmp_cogid = parseInt(WLS[chk][cidx]);
-    if (visited.indexOf(tmp_cogid) === -1 && tmp_cogid === WLS[chk][cidx]) {
+    tmp_cogid = parseInt(WLS[chk][CFG._cognates]);
+    if (visited.indexOf(tmp_cogid) === -1 && tmp_cogid === WLS[chk][CFG._cognates]) {
       if (tmp_cogid) {
         for (j = 0; j < WLS.etyma[tmp_cogid].length; j += 1) {
           idx = WLS.etyma[tmp_cogid][j];
-          WLS[idx][cidx] = cogid;
+          WLS[idx][CFG._cognates] = cogid;
           /* store remote if possible */
           ids.push(idx);
-          cols.push(cidx);
+          cols.push(CFG._cognates);
           vals.push(cogid);
-          //storeModification(idx, cidx, cogid, false);
         }
       } else {
-        WLS[chk][cidx] = cogid;
+        WLS[chk][CFG._cognates] = cogid;
         ids.push(chk);
-        cols.push(cidx);
+        cols.push(CFG._cognates);
         vals.push(cogid);
         //storeModification(chk, cidx, cogid, false);
       }
       visited.push(tmp_cogid);
+    }
+    else {
+      WLS[chk][CFG._cognates] = cogid;
+      ids.push(chk);
+      cols.push(CFG._cognates);
+      vals.push(cogid);
     }
   }
 
@@ -435,25 +421,25 @@ function combine_cogids() {
   display_cognates();
 }
 
+
 /* get cognate identifier */
 function get_new_cogid() {
   "use strict";
-  let etym_len, i, cogid, url, postdata;
   if (!CFG.storable) {
-    etym_len = Object.keys(WLS.etyma).length;
-    for (i = 1; i < etym_len + 1; i++) {
+    const etym_len = Object.keys(WLS.etyma).length;
+    for (let i = 1; i < etym_len + 1; i++) {
       if (!(i in WLS.etyma)) {
         return i;
       }
     }
     return etym_len + 1;
   } else {
-    cogid = false;
-    url = 'triples/triples.py';
-    postdata = {
-      'remote_dbase': CFG['remote_dbase'],
-      'file': CFG['filename'],
-      'new_id': CFG['formatter']
+    let cogid = false;
+    const url = 'triples/triples.py';
+    const postdata = {
+      'remote_dbase': CFG.remote_dbase,
+      'file': CFG.filename,
+      'new_id': CFG.formatter
     };
     $.ajax({
       async: false,
@@ -462,12 +448,10 @@ function get_new_cogid() {
       contentType: "application/text; charset=utf-8",
       url: url,
       dataType: "text",
-      success: function (data) {
+      success: data => {
         cogid = parseInt(data);
       },
-      error: function () {
-        fakeAlert("problem retrieving a new cognate ID fromt he dbase");
-      }
+      error: () => fakeAlert("problem retrieving a new cognate ID fromt he dbase")
     });
     return cogid;
   }
@@ -477,10 +461,9 @@ function get_new_cogid() {
 /* function inserts unique ids for unassigned cognate sets */
 function cognateIdentifier(cogid) {
   "use strict";
-  if ((isNaN(cogid) || isNaN(parseInt(cogid))) || !cogid) {
-    let i;
-    let etym_len = Object.keys(WLS.etyma).length;
-    for (i = 1; i < etym_len + 2; i += 1) {
+  if (isNaN(cogid) || isNaN(parseInt(cogid)) || !cogid) {
+    const etym_len = Object.keys(WLS.etyma).length;
+    for (let i = 1; i < etym_len + 2; i += 1) {
       if (!(i in WLS.etyma)) {
         return i;
       }
@@ -492,14 +475,14 @@ function cognateIdentifier(cogid) {
 
 function partialCognateIdentifier(cogids) {
   "use strict";
-  let tmp = String(cogids).split(/\s+/);
+  const tmp = String(cogids).split(/\s+/);
   let start = 1;
-  let out = [];
-  let etym_len = Object.keys(WLS.roots).length + tmp.length + 1;
-  let i, j;
-  for (i = 0; i < tmp.length; i += 1) {
-    if (isNaN(tmp[i] || isNaN(parseInt(tmp[i])))) {
-      for (j = start; j < etym_len; j += 1) {
+  const out = [];
+  const etym_len = Object.keys(WLS.roots).length + tmp.length + 1;
+  for (let i = 0; i < tmp.length; i += 1) {
+    // noinspection JSCheckFunctionSignatures
+    if (isNaN(tmp[i])) {
+      for (let j = start; j < etym_len; j += 1) {
         if (!(j in WLS.roots)) {
           out.push(j);
           start = j + 1;
@@ -516,29 +499,29 @@ function partialCognateIdentifier(cogids) {
 
 const COGNACY = {};
 
-COGNACY.lingpy_cognates = function() {
+COGNACY.lingpy_cognates = () => {
   "use strict";
-  let date = new Date().toString();
-  let feedback = document.getElementById("icognates_table");
-  let cognates = (CFG._morphology_mode == "partial") ? CFG._roots : CFG._cognates;
-  if (cognates == -1) {
+  const date = new Date().toString();
+  const feedback = document.getElementById("icognates_table");
+  const cognates = CFG._morphology_mode === "partial" ? CFG._roots : CFG._cognates;
+  if (cognates === -1) {
     fakeAlert("You must specify a column to store the cognate judgments in the SETTINGS menu.");
     return;
   }
 
-  let idx;
   let wordlist = "";
 
-  for (idx in WLS) {
+  for (const idx in WLS) {
     if (WLS.hasOwnProperty(idx)) {
+      // noinspection JSCheckFunctionSignatures
       if (!isNaN(idx)) {
         wordlist += `${idx}\t${WLS[idx][CFG._taxa]}\t${WLS[idx][CFG._concepts]}\t${WLS[idx][CFG._segments]}\n`;
       }
     }
   }
-  let idxs = [];
-  let jdxs = [];
-  let vals = [];
+  const idxs = [];
+  const jdxs = [];
+  const vals = [];
   $.ajax({
     async: false,
     type: "POST",
@@ -550,63 +533,62 @@ COGNACY.lingpy_cognates = function() {
       "ref": WLS.header[cognates]
     },
     dataType: "text",
-    success: function(data) {
-      showSpinner(function(){
-        let lines = data.split("\n");
-        let i, line;
-        for (i = 0; i < (lines.length - 1); i += 1) {
-          line = lines[i].split("\t");
-          WLS[line[0]][cognates] = line[1];
-          idxs.push(line[0]);
-          jdxs.push(cognates);
-          vals.push(line[1]);
-        }
-        storeModification(idxs, jdxs, vals, CFG.async);
-        if (CFG._morphology_mode == "partial") {
-          resetRootFormat(CFG.root_formatter);
-        }
-        else {
-          resetFormat(CFG.formatter);
-        }
-        showWLS(getCurrent());
-        let cogs = (CFG._morphology_mode == "partial") ? Object.keys(WLS.roots).length : Object.keys(WLS.etyma).length;
-        feedback.innerHTML = `<table class="data_table2"><tr><th>Parameter</th><th>Setting</th></tr><tr><td>Run</td><td>${date}</td></tr><tr><td>Cognate Mode</td><td>${CFG._morphology_mode}</td></tr><tr><td>Cognate Column</td><td>${WLS.header[cognates]}</td></tr><tr><td>Cognate Sets</td><td>${cogs}</td></tr><tr><td>Algorithm</td><td>LexStat (LingPy)</td></tr></table>`;
-      }, 1);
-    },
-    error: function() {
-      fakeAlert("Did not manage to compute cognates.");
-    }
+    success: data =>
+        showSpinner(() => {
+          const lines = data.split("\n");
+          for (let i = 0; i < lines.length - 1; i += 1) {
+            const line = lines[i].split("\t");
+            WLS[line[0]][cognates] = line[1];
+            idxs.push(line[0]);
+            jdxs.push(cognates);
+            vals.push(line[1]);
+          }
+          storeModification(idxs, jdxs, vals, CFG.async);
+          if (CFG._morphology_mode === "partial") {
+            resetRootFormat(CFG.root_formatter);
+          } else {
+            resetFormat(CFG.formatter);
+          }
+          showWLS(getCurrent());
+          const cogs = CFG._morphology_mode === "partial" ? Object.keys(WLS.roots).length : Object.keys(WLS.etyma).length;
+          feedback.innerHTML = `<table class="data_table2"><tr><th>Parameter</th><th>Setting</th></tr><tr><td>Run</td><td>${date}</td></tr><tr><td>Cognate Mode</td><td>${CFG._morphology_mode}</td></tr><tr><td>Cognate Column</td><td>${WLS.header[cognates]}</td></tr><tr><td>Cognate Sets</td><td>${cogs}</td></tr><tr><td>Algorithm</td><td>LexStat (LingPy)</td></tr></table>`;
+        }, 1),
+    error: () => fakeAlert("Did not manage to compute cognates.")
   });
   showWLS(getCurrent());
 };
 
-COGNACY.compute_cognates = function() {
+// noinspection JSJoinVariableDeclarationAndAssignment
+COGNACY.compute_cognates = () => {
   "use strict";
-  let all_cogids = {};
-  let i, idx, concept, cogid, cogids, classes, tokstring;
-  let formatter = (CFG._morphology_mode == "partial") ? CFG._roots : CFG._cognates;
-  if (formatter == -1) {
+  const all_cogids = {};
+  const formatter = CFG._morphology_mode === "partial" ? CFG._roots : CFG._cognates;
+  if (formatter === -1) {
     fakeAlert("You must specify a column to store the cognate judgments in the SETTINGS menu.");
     return;
   }
   let new_cogid = 1;
-  let idxs = [];
-  let jdxs = [];
-  let vals = [];
-  for (idx in WLS) {
+  const idxs = [];
+  const jdxs = [];
+  const vals = [];
+  let cogid, concept, classes;
+  // noinspection JSJoinVariableDeclarationAndAssignment
+  let i;
+  let tokstring;
+  for (const idx in WLS) {
     if (WLS.hasOwnProperty(idx)) {
+      // noinspection JSCheckFunctionSignatures
       if (!isNaN(idx)) {
         [concept, classes] = [
           WLS[idx][CFG._concepts],
           Array.from(WLS[idx][CFG._segments].split(" "), getSoundClass).join("").replace(/V/g, "")
         ];
         if (CFG._morphology_mode === "partial") {
-          console.log(classes);
           classes = classes.split("+");
-          cogids = [];
+          const cogids = [];
           for (i = 0; i < classes.length; i += 1) {
-            tokstring = classes[i] + "HH";
-            tokstring = tokstring.slice(0, 2) + " // " + concept;
+            tokstring = `${classes[i]}HH`;
+            tokstring = `${tokstring.slice(0, 2)} // ${concept}`;
             if (tokstring in all_cogids) {
               cogid = all_cogids[tokstring];
             } else {
@@ -617,11 +599,10 @@ COGNACY.compute_cognates = function() {
             cogids.push(cogid);
           }
           cogid = cogids.join(" ");
-          console.log(cogids);
         } else {
           classes += "HH";
           classes.slice(0, 2);
-          tokstring = classes + " // " + concept;
+          tokstring = `${classes} // ${concept}`;
           if (tokstring in all_cogids) {
             cogid = all_cogids[tokstring];
           } else {
@@ -637,20 +618,20 @@ COGNACY.compute_cognates = function() {
       }
     }
   }
-  if (CFG._morphology_mode == "partial") {
+  if (CFG._morphology_mode === "partial") {
     resetRootFormat(CFG.root_formatter);
   }
   else {
     resetFormat(CFG.formatter);
   }
   showWLS(getCurrent());
-  let date = new Date().toString();
-  let feedback = document.getElementById("icognates_table");
-  let mode = (CFG._morphology_mode == "partial") ? CFG.root_formatter : CFG.formatter;
+  const date = new Date().toString();
+  const feedback = document.getElementById("icognates_table");
+  const mode = CFG._morphology_mode === "partial" ? CFG.root_formatter : CFG.formatter;
   showSpinner(
-    function() {
-      storeModification(idxs, jdxs, vals, CFG["async"]);
-      let cogs = (CFG._morphology_mode == "partial") ? Object.keys(WLS.roots).length : Object.keys(WLS.etyma).length;
+      () => {
+      storeModification(idxs, jdxs, vals, CFG.async);
+      const cogs = CFG._morphology_mode === "partial" ? Object.keys(WLS.roots).length : Object.keys(WLS.etyma).length;
       feedback.innerHTML = `<table class="data_table2"><tr><th>Parameter</th><th>Setting</th></tr><tr><td>Run</td><td>${date}</td></tr><tr><td>Cognate Mode</td><td>${CFG._morphology_mode}</td></tr><tr><td>Cognate Column</td><td>${mode}</td></tr><tr><td>Cognate Sets</td><td>${cogs}</td></tr><tr><td>Algorithm</td><td>Consonant Classes (EDICTOR)</td></tr></table>`;
     }, 
     1
