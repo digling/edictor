@@ -3,36 +3,32 @@
 
 /* jshint esversion: 6 */
 
-if (typeof CFG === "undefined"){
-  CFG = {};
-}
-
 /* basic handler class that initiates the multiselect and other functionalities
  * which are later needed for the cognate set panel */
 function handle_cognate_selection() {
   "use strict";
   /* check whether formatter is true or not */
-  if (!CFG.formatter) { /* noqa */
+  if (!CFG.formatter) { /* jshint ignore:line */
     fakeAlert("Your data does not contain cognate sets!");
     return;
   }
 
   let i, concept, option;
   /* get selector */
-  let slc = document.getElementById('cognates_select_concepts');
+  const slc = document.getElementById('cognates_select_concepts');
 
   /* retrieve concepts and add them to selection */
   let txt = '';
-  if (typeof CFG._current_concept === 'undefined') { /* noqa */
-    CFG._current_concept = CFG.sorted_concepts[0]; /* noqa */
+  if (typeof CFG._current_concept === 'undefined') { /* jshint ignore:line */
+    CFG._current_concept = CFG.sorted_concepts[0]; /* jshint ignore:line */
   }
-  for (i = 0; i < CFG.sorted_concepts.length; i += 1) {
-    concept = CFG.sorted_concepts[i]; /* noqa */
+  for (i = 0; i < CFG.sorted_concepts.length; i += 1) { /* jshint ignore:line */
+    concept = CFG.sorted_concepts[i]; /* jshint ignore:line */
     option = '';
-    if (CFG._current_concept === concept) { /* noqa */
+    if (CFG._current_concept === concept) { /* jshint ignore:line */
       option = ' selected=selected ';
     }
-    txt += '<option id="concept_' + WLS.c2i[concept] + '" value="' + concept + '"' + option + '>' + concept + '</option>';
+    txt += '<option id="concept_' + WLS.c2i[concept] + '" value="' + concept + '"' + option + '>' + concept + '</option>'; /* jshint ignore:line */
   }
   slc.innerHTML = txt;
 
@@ -49,9 +45,9 @@ function handle_cognate_selection() {
     }
   });
 
-  display_cognates(CFG._current_concept);
-  document.getElementById('cognates_current_concept').innerHTML = CFG._current_concept +
-      ' (' + WLS.c2i[CFG._current_concept] + '/' + WLS.height + ')';
+  display_cognates(CFG._current_concept); /* jshint ignore:line */
+  document.getElementById('cognates_current_concept').innerHTML = CFG._current_concept + /* jshint ignore:line */
+      ' (' + WLS.c2i[CFG._current_concept] + '/' + WLS.height + ')'; /* jshint ignore:line */
 }
 
 /* function displays all cognates in a table and makes them ready for editing */
@@ -98,8 +94,8 @@ function display_cognates(concept, sortby) {
             ' (' + WLS.c2i[all_concepts[0]] + '/' + WLS.height + ')';
       }
       /* mark the current concept */
-      CFG._current_concept = all_concepts[0];
-      CFG._concept_multiselect = true;
+      CFG._current_concept = all_concepts[0]; /* jshint ignore:line */
+      CFG._concept_multiselect = true; /* jshint ignore:line */
 
       /* make string from selected concepts */
       selected_concepts = selected_concepts.join(',');
@@ -115,8 +111,8 @@ function display_cognates(concept, sortby) {
 
     selected_concepts = '' + WLS.c2i[concept];
 
-    $('#cognates_select_concepts').multiselect('deselectAll', false);
-    $('#cognates_select_concepts').multiselect('select', concept);
+    $('#cognates_select_concepts').multiselect('deselectAll', false); /* jshint ignore:line */
+    $('#cognates_select_concepts').multiselect('select', concept); /* jshint ignore:line */
 
     /* don't forget to also change the internal options which are not displayed here */
     slcs = document.getElementById('cognates_select_concepts');
@@ -129,7 +125,7 @@ function display_cognates(concept, sortby) {
       }
     }
     /* store that there is no multiselect option chosen here */
-    CFG._concept_multiselect = false;
+    CFG._concept_multiselect = false; /* jshint ignore:line */
   }
 
   /* get the selected concepts */
@@ -188,13 +184,13 @@ function display_cognates(concept, sortby) {
   }
 
   txt += '<tr>';
-  txt += '<th onclick="display_cognates(\'' + cstring + '\',1)" class="pointed alm_head alm_bdl">DOCULECT</th>';
+  txt += `<th onclick="display_cognates('${cstring}',1)" class="pointed alm_head alm_bdl">DOCULECT</th>`;
   txt += '<th style="width: 5px"></th>';
-  txt += '<th onclick="display_cognates(\'' + cstring + '\',2)" class="pointed alm_head alm_bdl">CONCEPT</th>';
-  txt += '<th style="width:5px" class="alm_bdr"></th>';
-  txt += '<th onclick="display_cognates(\'' + cstring + '\',4)" class="pointed alm_head" colspan="' + maxlen + '">ALIGNMENTS</th>';
+  txt += `<th onclick="display_cognates('${cstring}',2)" class="pointed alm_head alm_bdl">CONCEPT</th>`;
+  txt += `<th style="width:5px" class="alm_bdr"></th>`;
+  txt += `<th onclick="display_cognates('${cstring}',4)" class="pointed alm_head" colspan="${maxlen}">ALIGNMENTS</th>`;
   txt += '<th style="width:5px"></th>';
-  txt += '<th onclick="display_cognates(\'' + cstring + '\',3)" class="pointed alm_head alm_bdl" colspan="3">EDIT</th></tr>';
+  txt += `<th onclick="display_cognates('${cstring}',3)" class="pointed alm_head alm_bdl" colspan="3">EDIT</th></tr>`;
 
   /* sort data according to concept and cognate id and taxon */
   if (sortby === 1) {
