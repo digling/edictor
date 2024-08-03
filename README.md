@@ -28,9 +28,6 @@ $ edictor server --port=9876
 
 The landing page will provide further information on files and datasets that you can open and test.
 
-
-
-
 ## Getting Started on Windows
 
 
@@ -73,6 +70,23 @@ If you want to use the tool along with [LingPy](https://lingpy.org) and [LingRex
 ```shell
 (edi3) PS C:\Users\edictor3\Desktop\edictor3> python -m pip install lingpy lingrex
 ```
+
+## PyEDICTOR Functionalities in EDICTOR 3
+
+EDICTOR 3 now implements functionalities originally provided in [PyEDICTOR](https://pypi.org/project/pyedictor). Since EDICTOR uses the same namespace as PyEDICTOR, 
+this means that for those who wish to use PyEDICTOR independently of the EDICTOR web application, nothing has changed, since the same commands in the same form are still offered. 
+With EDICTOR 3, we consider PyEDICTOR as obsolete, and all future development of PyEDICTOR will be provided in EDICTOR.
+
+As an example on how to use PyEDICTOR functionalities in EDICTOR, you can test the following line of code to download a CLDF dataset with the
+help of GIT and then convert the CLDF data to EDICTOR's "Wordlist" format.
+
+```shell
+$ git clone https://github.com/lexibank/allenbai.git
+$ edictor wordlist --dataset=allenbai/cldf/cldf-metadata.json --name=allenbai
+$ edictor server
+```
+
+When opening your local EDICTOR application, you can now open the tab FILES and click to open the file `allenbai.tsv` in EDICTOR there directly.
 
 ## Citing EDICTOR 3
 
