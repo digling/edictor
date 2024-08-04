@@ -11,6 +11,11 @@ import json
 
 from edictor.util import DATA
 
+try:
+    import lingpy
+except ImportError:
+    lingpy = False
+
 
 class CommandMeta(type):
     """
@@ -229,6 +234,8 @@ def get_parser():
 
     subparsers = parser.add_subparsers(dest="subcommand")
     for cmd in Command:
+        if not lingpy and cmd.__name__ == "wordlist":
+            continue
         subparser = subparsers.add_parser(
             cmd.__name__,
             help=(cmd.__doc__ or "").strip().split("\n")[0],

@@ -1,7 +1,6 @@
 """
 Utility functions for the server.
 """
-from collections import defaultdict
 import sqlite3
 import urllib
 import os
@@ -11,24 +10,22 @@ import getpass
 
 from urllib.request import urlopen
 
-
 from pathlib import Path
 from datetime import datetime
 
-
 DATA = {
-        "js": "text/javascript",
-        "css": "text/css",
-        "html": "text/html",
-        "tsv": "text/plain; charset=utf-8",
-        "csv": "text/plain; charset=utf-8",
-        "png": "",
-        "jpg": "",
-        "ttf": "",
-        "woff": "",
-        "json": "text/plain; charset=utf-8",
-        "config": "config.json",
-        }
+    "js": "text/javascript",
+    "css": "text/css",
+    "html": "text/html",
+    "tsv": "text/plain; charset=utf-8",
+    "csv": "text/plain; charset=utf-8",
+    "png": "",
+    "jpg": "",
+    "ttf": "",
+    "woff": "",
+    "json": "text/plain; charset=utf-8",
+    "config": "config.json",
+}
 
 
 def opendb(path, conf):
@@ -41,7 +38,7 @@ def opendb(path, conf):
     else:
         raise ValueError("SQLITE DB could not be found.")
     return db, db.cursor()
-    
+
 
 def edictor_path(*comps):
     return Path(__file__).parent.joinpath("app", *comps)
@@ -109,6 +106,7 @@ def handle_args(args, query, qtype):
         args.update(parse_args(query))
 
 
+# noinspection PyPackageRequirements
 def check(s):
     try:
         import lingpy
@@ -234,6 +232,7 @@ def serve_base(s, conf):
     text = text.replace("{DATASETS}", "".join(paths))
     text = text.replace(' id="files" style="display:none"', '')
     text = text.replace(' id="user" style="display:none"', '')
+    text = text.replace(' class="user" style="display:none"', '')
 
     send_response(s, text)
 
@@ -588,8 +587,8 @@ def modifications(s, post, qtype, conf):
 
     db, cursor = opendb(args["remote_dbase"], conf)
     cursor.execute(
-        'select ID, COL from backup where FILE="' + args['file'] + '"' + \
-        ' and DATE > ' + args['date'] + \
+        'select ID, COL from backup where FILE="' + args['file'] + '"' +
+        ' and DATE > ' + args['date'] +
         ' group by ID,COL limit 100;')
     lines = cursor.fetchall()
     data = dict([((a, b), c) for a, b, c in cursor.execute(
@@ -694,8 +693,8 @@ def update(s, post, qtype, conf):
 
                 # create new datum if value has not been retrieved
                 cursor.execute(
-                    'insert into ' + args['file'] + ' values(' + \
-                    idx + ',"' + col + '","' + \
+                    'insert into ' + args['file'] + ' values(' +
+                    idx + ',"' + col + '","' +
                     val + '");')
                 message = 'INSERTION: Successfully inserted {0} on {1}'.format(
                     val, now)

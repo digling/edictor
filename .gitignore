@@ -1,3 +1,11 @@
+build/
+notes.txt
+src/edictor.egg-info/
+edictor.egg-info/
+dist/
+*.tsv
+test/.coverage
+.coverage
 data/*.tsv
 triples/
 BAK/

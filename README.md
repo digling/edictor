@@ -92,5 +92,5 @@ When opening your local EDICTOR application, you can now open the tab FILES and 
 
 If you use EDICTOR in your work, please cite the tool as follows:
 
-> List, Johann-Mattis (2024): EDICTOR 3: A Web-Based Tool for Computer-Assisted Language Comparison [Software Tool, Version 3.0.alpha.1]. MCL Chair at the University of Passau: Passau. URL: [https://edictor.org/](https://edictor.org).
+> List, Johann-Mattis and Kellen Parker van Dam (2024): EDICTOR 3: A Web-Based Tool for Computer-Assisted Language Comparison [Software Tool, Version 3.0]. MCL Chair at the University of Passau: Passau. URL: [https://edictor.org/](https://edictor.org).
 
