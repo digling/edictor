@@ -92,10 +92,10 @@ def get_wordlist(
         dct[0] = wordlist.columns
 
     if not lexibase:
-        Wordlist(dct).output("tsv", filename=name, ignore="all", prettify=False)
+        lingpy.Wordlist(dct).output("tsv", filename=name, ignore="all", prettify=False)
     else:
         if not LexiBase:
             raise ValueError(
                     "Package lexibase has to be installed to use this method.")
-        lex = LexiBase(D, dbase=name + ".sqlite3")
+        lex = LexiBase(dct, dbase=name + ".sqlite3")
         lex.create(name)
