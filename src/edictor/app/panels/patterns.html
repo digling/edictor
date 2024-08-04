@@ -21,7 +21,7 @@ modified : 2024-04-02 11:49
        <button type="button" class="btn-primary titled btn submit3 pull-right" title="show help"
 	 onclick="UTIL.show_help('patterns');" style="margin-left:5px;"><span class="glyphicon glyphicon-question-sign"></span></button>
      </div>
-      <button type="button" class="btn btn-primary titled pull-left submit3" onclick="CFG['_recompute_patterns'] = false; PATS.render_patterns(this);">SUBMIT</button>
+      <button type="button" class="btn btn-primary titled pull-left submit3" onclick="CFG['_recompute_patterns'] = false; PATS.get_patterns(); PATS.render_patterns(this);">SUBMIT</button>
   <div class="btn-group pull-left" style="margin-left: 5px" id="PATS_menu">
   </div>
   </div>

@@ -1,0 +1,60 @@
+ID	DOCULECT	CONCEPT	IPA	TOKENS	COGID	SOURCE_CONCEPT	SOURCE_FORM	PARTIAL	PARTIALIDS	CLPA	CONCEPTICON_ID	GLOTTOLOG	MORPHEMES
+11	Tasha_Tujia	bark	kʰa²¹+tʰa²⁴+pʰa²¹	kʰ a ²¹ + tʰ a ²⁴ + pʰ a ²¹	4	bark	kʰa21=tʰa24-pʰa21	abc	288 236 10	c813 v130 t004 c136 v130 t008 c261 v130 t004	1204	nort2732	tree skin-tha skin-pha
+207	Tasha_Tujia	leaf	ɣɤ⁵⁵+tʰa⁵⁵	ɣ ɤ ⁵⁵ + tʰ a ⁵⁵	67	leaf	ɣɤ55=tʰa55	bc	139 140	c774 v084 t041 c136 v130 t041	628	nort2732	leaf-gie leaf=tha
+208	Duogu_Tujia	leaf	ɣɨe⁵³+tʰa⁵³	ɣ ɨ e ⁵³ + tʰ a ⁵³	67	leaf	ɣɨe53=tʰa53	bc	139 140	c774 v116 v200 t037 c136 v130 t037	628	nort2732	leaf-gie leaf
+209	Dianfang_Tujia	leaf	ɣɨe⁵⁵+tʰa⁵⁵	ɣ ɨ e ⁵⁵ + tʰ a ⁵⁵	67	leaf	ɣɨe55=tʰa55	bc	139 140	c774 v116 v200 t041 c136 v130 t041	628	nort2732	leaf-gie leaf
+210	Boluo_Tujia	leaf	a³³+ɣɨe³³	a ³³ + ɣ ɨ e ³³	68	leaf	a33=ɣɨe33	ab	141 139	v130 t013 c774 v116 v200 t013	628	sout2739	a leaf-gie
+211	Tanxi_Tujia	leaf	ʔa²¹+ɣɨe²¹	ʔ a ²¹ + ɣ ɨ e ²¹	68	leaf	ʔa21=ɣɨe21	ab	141 139	c405 v130 t004 c774 v116 v200 t004	628	sout2739	a leaf-gie
+230	Tasha_Tujia	man	ʦu̯ɔ⁵⁵+pa⁵⁵	ts w ɔ ⁵⁵ + p a ⁵⁵	75	man	cu̯ɔ55=pa55	he	153 154	c015 c457 v067 t041 c288 v130 t041	1554	nort2732	 man-pa
+231	Duogu_Tujia	man	no⁵³+pa⁴⁴+ʦe⁴⁴	n o ⁵³ + p a ⁴⁴ + ts e ⁴⁴	75	man	no53=pa44-ce44	def	155 154 156	c105 v042 t037 c288 v130 t030 c015 v200 t030	1554	nort2732	
+232	Dianfang_Tujia	man	no⁵⁵+pa⁵⁵	n o ⁵⁵ + p a ⁵⁵	75	man	no55=pa55	de	155 154	c105 v042 t041 c288 v130 t041	1554	nort2732	 man-pa
+233	Boluo_Tujia	man	a²¹+ko²¹+bie²¹	a ²¹ + k o ²¹ + b i e ²¹	76	man	a21=ko21-bie21	abc	157 158 159	v130 t004 c831 v042 t004 c254 v191 v200 t004	1554	sout2739	 man person
+234	Tanxi_Tujia	man	ʔa²¹+ko²¹+be²¹+ŋɨ²¹	ʔ a ²¹ + k o ²¹ + b e ²¹ + ŋ ɨ ²¹	76	man	ʔa21=ko21-be21-ŋɨ21	abcg	157 158 159 160	c405 v130 t004 c831 v042 t004 c254 v200 t004 c795 v116 t004	1554	sout2739	 man person person-ni
+340	Tasha_Tujia	skin	tʰa²⁴+pʰa²¹	tʰ a ²⁴ + pʰ a ²¹	113	skin	tʰa24-pʰa21	cd	236 10	c136 v130 t008 c261 v130 t004	763	nort2732	skin-tha skin-pha
+341	Duogu_Tujia	skin	tʰa⁵³+pʰa²¹	tʰ a ⁵³ + pʰ a ²¹	113	skin	tʰa53-pʰa21	cd	236 10	c136 v130 t037 c261 v130 t004	763	nort2732	skin-tha skin-pha
+342	Dianfang_Tujia	skin	tʰa⁵⁵+pʰa²¹	tʰ a ⁵⁵ + pʰ a ²¹	113	skin	tʰa55-pʰa21	cd	236 10	c136 v130 t041 c261 v130 t004	763	nort2732	skin-tha skin-pha
+343	Boluo_Tujia	skin	ko³³+lo³³	k o ³³ + l o ³³	114	skin	ko33-lo33	ab	238 239	c831 v042 t013 c548 v042 t013	763	sout2739	skin-ko skin-lo
+344	Tanxi_Tujia	skin	kɨ²¹+lo²¹	k ɨ ²¹ + l o ²¹	114	skin	kɨ21-lo21	ab	238 239	c831 v116 t004 c548 v042 t004	763	sout2739	skin-ko skin-lo
+386	Tasha_Tujia	that	aj⁵⁵	a j ⁵⁵	127	that	ay55 ~ ay55-ti55	c	272	v130 c564 t041	78	nort2732	
+387	Duogu_Tujia	that	aj⁵³+ti⁴⁴	a j ⁵³ + t i ⁴⁴	127	that	ay53-ti44	cd	272 273	v130 c564 t037 c118 v191 t030	78	nort2732	
+388	Dianfang_Tujia	that	aj⁵⁵	a j ⁵⁵	127	that	ay55 ~ aw55	c	272	v130 c564 t041	78	nort2732	
+389	Boluo_Tujia	that	ta³³+bu³³	t a ³³ + b u ³³	128	that	ta33-bu33	ab	274 275	c118 v130 t013 c254 v027 t013	78	sout2739	
+390	Tanxi_Tujia	that	ta²¹	t a ²¹	128	that	ta21	a	274	c118 v130 t004	78	sout2739	
+391	Tasha_Tujia	this	ɤŋ⁵⁵	ɤ ŋ ⁵⁵	129	this	ɤŋ55 ~ ɤŋ55-ti55	c	276	v084 c795 t041	1214	nort2732	
+392	Duogu_Tujia	this	kaj²⁴+ti⁴⁴	k a j ²⁴ + t i ⁴⁴	130	this	kay24-ti44	de	277 278	c831 v130 c564 t008 c118 v191 t030	1214	nort2732	this-2 ?
+393	Dianfang_Tujia	this	ũ⁵⁵	ũ ∼ ⁵⁵	129	this	ũ55 ~ ẽ55	c	276	v025 m002 t041	1214	nort2732	
+394	Boluo_Tujia	this	ʥia²¹+bu²¹	dʑ i a ²¹ + b u ²¹	131	this	ʓia21-bu21	ab	279 280	c195 v191 v130 t004 c254 v027 t004	1214	sout2739	this ?
+395	Tanxi_Tujia	this	ʥia²¹	dʑ i a ²¹	131	this	ʓia21	a	279	c195 v191 v130 t004	1214	sout2739	this
+396	Tasha_Tujia	this	kaj²⁴	k a j ²⁴	130	this	kay24	d	277	c831 v130 c564 t008	1214	nort2732	this-2
+397	Dianfang_Tujia	this	kaj³⁵	k a j ³⁵	130	this	kay35	d	277	c831 v130 c564 t017	1214	nort2732	
+413	Tasha_Tujia	tree	kʰa²¹+mɔŋ²¹	kʰ a ²¹ + m ɔ ŋ ²¹	135	tree	kʰa21-mɔŋ21	ab	288 289	c813 v130 t004 c239 v067 c795 t004	906	nort2732	tree tree-mong
+414	Duogu_Tujia	tree	kʰa²¹+mũ²¹	kʰ a ²¹ + m ũ ∼ ²¹	135	tree	kʰa21-mũ21	ab	288 289	c813 v130 t004 c239 v025 m002 t004	906	nort2732	tree tree-2
+415	Dianfang_Tujia	tree	kʰa²¹+mũ²¹	kʰ a ²¹ + m ũ ∼ ²¹	135	tree	kʰa21-mũ21	ab	288 289	c813 v130 t004 c239 v025 m002 t004	906	nort2732	tree tree-mong
+416	Boluo_Tujia	tree	kʰo¹³+mũ²¹	kʰ o ¹³ + m ũ ∼ ²¹	135	tree	kʰo13-mũ21	ab	288 289	c813 v042 t020 c239 v025 m002 t004	906	sout2739	tree tree-mong
+417	Tanxi_Tujia	tree	kʰo³⁵	kʰ o ³⁵	135	tree	kʰo35 ~ kʰo35-mõ21	a	288	c813 v042 t017	906	sout2739	tree
+458	Tasha_Tujia	woman	ma²¹+ma⁵⁵	m a ²¹ + m a ⁵⁵	148	woman	ma21-ma55	dd	311 311	c239 v130 t004 c239 v130 t041	962	nort2732	woman ?
+459	Duogu_Tujia	woman	ma²¹+ma²¹+ʦe⁴⁴	m a ²¹ + m a ²¹ + ts e ⁴⁴	148	woman	ma21-ma21-ce44	dde	311 311 312	c239 v130 t004 c239 v130 t004 c015 v200 t030	962	nort2732	woman woman ?
+460	Dianfang_Tujia	woman	ma²¹+ma²¹+te⁵⁵	m a ²¹ + m a ²¹ + t e ⁵⁵	148	woman	ma21-ma21-te55	dde	311 311 312	c239 v130 t004 c239 v130 t004 c118 v200 t041	962	nort2732	woman woman ?
+461	Boluo_Tujia	woman	a¹³+io⁵³+bie²¹	a ¹³ + i o ⁵³ + b i e ²¹	149	woman	a13=io53-bie21	abc	313 314 159	v130 t020 v191 v042 t037 c254 v191 v200 t004	962	sout2739	 ? person
+462	Tanxi_Tujia	woman	ʔa²¹+jio⁵⁵+be²¹+ŋɨ²¹	ʔ a ²¹ + j i o ⁵⁵ + b e ²¹ + ŋ ɨ ²¹	149	woman	ʔa21=yio55-be21-ŋɨ21	abcf	313 314 159 160	c405 v130 t004 c564 v191 v042 t041 c254 v200 t004 c795 v116 t004	962	sout2739	 ? person person-ni
+#@highlight=TOKENS|ALIGNMENT|SEGMENTS
+#@sampa=IPA|TOKENS|SEGMENTS|TRANSCRIPTION
+#@css=menu:show|database:hide
+#@basics=COGID|CONCEPT|DOCULECT|IPA|MORPHEMES|PARTIALIDS|TOKENS
+#@_selected_doculects=Boluo_Tujia|Dianfang_Tujia|Duogu_Tujia|Tanxi_Tujia|Tasha_Tujia
+#@_selected_concepts=bark|leaf|skin|tree
+#@sorted_taxa=Boluo_Tujia|Dianfang_Tujia|Duogu_Tujia|Tanxi_Tujia|Tasha_Tujia
+#@sorted_concepts=bark|leaf|man|skin|that|this|tree|woman
+#@display=filedisplay|glosses
+#@missing_marker=Ø
+#@separator=	
+#@gap_marker=-
+#@formatter=COGID
+#@root_formatter=PARTIALIDS
+#@note_formatter=undefined
+#@pattern_formatter=undefined
+#@publish=undefined
+#@_almcol=ALIGNMENT
+#@filename=morpheme-glosses.tsv
+#@navbar=true
+#@_morphology_mode=full

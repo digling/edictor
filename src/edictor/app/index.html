@@ -24,6 +24,14 @@ h1.smart {
   display: none;
 }
 
+h4 {
+  font-size: 1em!important;
+}
+
+h5 {
+  font-size: 1em!important;
+}
+
 div.menu-icon > div {
   width: 35px;
   height: 5px;
@@ -485,9 +493,9 @@ div.menu-icon > div {
               <h4>2 Tutorials</h4>
               <p>The following tutorials have been published over the last years and shared freely on preprint servers or larger repositories.</p>
               <p class="quote">
-              List, J.-M. (2017): Historical Language Comparison with LingPy and EDICTOR [Historischer Sprachvergleich mit LingPy und EDICTOR]. Department of Linguistic and Cultural Evolution: Max-Planck Institute for the Science of Human History. 
+              List, J.-M. (2017): Historical Language Comparison with LingPy and EDICTOR. Department of Linguistic and Cultural Evolution: Max-Planck Institute for the Science of Human History. URL: +++
               </p>
-              <h4>3 Overview with Examples</h4>
+              <h4>3 Getting Started with Examples</h4>
               <h5>3.1 Basic File Types</h5>
               <p>EDICTOR expects TSV files as input. The files should be separated by a tab-stop and contain a header line indicating the content of the individual columns. The first column should provide numerical identifiers of all rows in your data. Each row corresponds to one word. One of the remaining columns should be called DOCULECT and contain the name of the individual languages in your sample. Another column should be called CONCEPT and contain the concepts (or glosses) for individual words. The word form should be provided in segmented form (space being used to segment individual sounds) in a column TOKENS.</p>
               <p>Note that EDICTOR accepts some alternative names, you also must not write them in capital letters, but we recommend strongly to adhere to these basic guidelines in order to make sure the tool works properly.</p>
@@ -498,18 +506,37 @@ div.menu-icon > div {
                 </div>
               </div>
               <h5>3.2 Opening Files in EDICTOR</h5>
-              <p>EDICTOR opens two major ways to open a file and manipulate the data. You can open a file by starting from an <a href="edictor.html">empty EDICTOR instance</a>, then clicking into the BROWSE FILE field on top left, and selecting the TSV file stored in your system. This will <b>not</b> upload your data to the server, but only make it accessible to the application in the browser on your system. You can test this by downloading <a href="data/formats.tsv">this file</a> and then selecting it, when opening a fresh instance.</p>
+              <p>EDICTOR opens two major ways to open a file and manipulate the data. You can open a file by starting from an <a href="edictor.html">empty EDICTOR instance</a>, then clicking into the BROWSE FILE field on top left, and selecting the TSV file stored in your system. This will <b>not</b> upload your data to the server, but only make it accessible to the application in the browser on your system. You can test this by downloading <a href="data/examples.tsv">this file</a> and then selecting it, when opening a fresh instance.</p>
               <p>The alternative way to open files is by passing the filename via the URL. This works, however, only, if you use the <i>local version</i> of EDICTOR that runs with Python on a local server. If you pass filenames to the standard URL (<a href="https://edictor.org/edictor.html">https://edictor.org/edictor.html</a>), only files that have been uploaded to the server in the folder <code>data</code> are accessible.
               If you use the local EDICTOR version, EDICTOR will first search for files in the current working directory. If files cannot be found, EDICTOR will search in the <code>data</code> directory.
               Files are passed via the URL by adding the attribute <code>file=filename</code> to the URL. 
               </p>
-              <p>If you run EDICTOR locally, you can also open SQLite databases. In order to do so, you must make sure to have created a valid SQLITE database of an existing database file (tools like <a href="https://pypi.org/project/pyedictor">PyEDICTOR</a> have options to export data to the SQLite format required by EDICTOR) and place the database into the <code>sqlite</code> folder where your tool is installed. You must also make sure that access to the folder does not require root rights (which can be guaranteed by installing EDICTOR with a local virtual environment). SQLite files are opened from the URL by passing the arguments <code>file</code> and <code>remote_dbase</code>. The <code>file</code> keyword here refers to the name of the table inside the SQLite database and the <code>remote_dbase</code> keyword refers to the name of the table in the SQLite database that contains the data (which is stored in triples).</p>
+              <p>If you run EDICTOR locally, you can also open SQLite databases. In order to do so, you must make sure to have created a valid SQLITE database of an existing database file (the <code>wordlist</code> command in EDICTOR 3 allows you to export data to the SQLite format required by EDICTOR 3) and place the database into the <code>sqlite</code> folder where your tool is installed. You must also make sure that access to the folder does not require root rights (which can be guaranteed by installing EDICTOR with a local virtual environment). SQLite files are opened from the URL by passing the arguments <code>file</code> and <code>remote_dbase</code>. The <code>file</code> keyword here refers to the name of the table inside the SQLite database and the <code>remote_dbase</code> keyword refers to the name of the table in the SQLite database that contains the data (which is stored in triples).</p>
 
-              <h5>3.2 Editing Data in the Wordlist Panel</h5>
+              <h5>3.3 Editing Data in the Wordlist Panel</h5>
               <p>The first panel you see when having successfully opened a file in EDICTOR is the <i>Wordlist</i> panel. This panel offers several possibilities to edit your data, similar in type to a simple spreadsheet editor. If you open a wordlist file, you an directly edit any field in the Wordlist panel, except from the field that shows the identifier (ID) of the row. Since EDICTOR computes internal data representations from the content of the TSV file, however, you should not edit the fields DOCULECT and CONCEPT. Editing is as simple as clicking into a field and then modifying the content. By pressing ENTER the content modification is accepted, pressing ESCAPE will restore the original value. With the arrow keys, you can navigate up and down (equivalent of pressing ENTER, modified content will be accepted), and with CTRL in combination with the left and the right arrow, you can switch between columns. If you want to delete a row or add a new row to your data, you must press on the field of the ID, a new window will open then and ask you for confirmation or provide further instructions.</p>
               <p>EDICTOR comes with a rudimentary routine that allows you to segment the data (similar to the functionality in <a href="https://lingpy.org">LingPy</a> to segment entries on phonetic transcriptions into their sounds). To trigger this functionality, you must insert an entry into the TOKENS field that is preceded by a space. Spaces to the left or to the right of entries in TOKENS are generally not accepted. Adding a space to the beginning of a phonetic transcription sequence thus informs EDICTOR to segment the data.</p>
-              <h5>3.3 Assigning Words to Cognate Sets </h5>
-              There are several possibilities to assign words to cognate sets. The first and most important decision that you need to make is whether you want to annotate cognates on the level of the words in your data or on the level of morphemes. The former mode is called <i>full cognates</i> in EDICTOR and you can make sure to use this mode by opening the SETTINGS panel and checking the checkbox <i>full</i> for the <i>cognate and colexification mode</i>. The latter mode is called <i>partial cognates</i> in EDICTOR and can be checked out in the same way. You can also specify the mode from the URL, if you open the <code>edictor.html</code> file with the parameters <code>morphology_mode=partial</code> or <code>morphology_mode=full</code>. +++ 
+              <h5>3.4 Assigning Words to Cognate Sets </h5>
+              <p>There are several possibilities to assign words to cognate sets. The first and most important decision that you need to make is whether you want to annotate cognates on the level of the words in your data or on the level of morphemes. The former mode is called <i>full cognates</i> in EDICTOR and you can make sure to use this mode by opening the SETTINGS panel and checking the checkbox <i>full</i> for the <i>cognate and colexification mode</i>. The latter mode is called <i>partial cognates</i> in EDICTOR and can be checked out in the same way. You can also specify the mode from the URL, if you open the <code>edictor.html</code> file with the parameters <code>morphology_mode=partial</code> or <code>morphology_mode=full</code>.
+              </p>
+              <p>In order to edit full or partial cognate sets, you must first make sure that your data contains a column that can store the cognate set identifiers. Traditionally, the column storing full cognate sets is called COGID and the column storing partial cognate sets is called COGIDS. If you have no such column in your data, you can just create one, using by pasting COGID or COGIDS into the "add column" text field in the middle of the application and clicking ENTER. EDICTOR will then create the column (initializing all cells without any values) and also store in the configuration that full or partial cognates can be edited. Clicking on EDIT → COGNATE SETS or EDIT → PARTIAL COGNATE SETS will then open a new panel in which you can start editing your cognates.</p>
+              <h5>3.5 Editing Morpheme Glosses</h5>
+              <p>Morpheme glosses were introduced in order to add semantic information to the individual morphemes of a word in a study by <a href="https://lingulist.de/evobib/evobib.py?key=Hill2017a">Hill and List (2017)</a>. The idea was to supplement the information on partial cognates by individual semantic glosses -- similar to the well-known glosses used in interlinear-glossed text in linguistic typology -- that would help to provide short cuts on the semantic motivation underlying individual words in individual languages. Later, the morpheme gloss panel was added to EDICTOR in order to allow for a convenient annotation and inspection of language-internal and language-external partial cognate sets in a given dataset.</p>
+              <p>In order to get started with morpheme glosses, you must make sure to have a column for partial cognate sets (default name COGIDS) and a column for morpheme glosses (default name MORPHEMES). You can add these columns easily to your data with the help of the "add columns" textfield mentioned in the section on cognate annotation.  Once this has been done, you can open the panel by clicking EDIT → MORPHEME GLOSSES and then clicking on OK. EDICTOR 3 will now search for all partial cognate sets and all individual morphemes and group <em>identical morphemes</em> together, providing one column for the cognate set of each morpheme and one for the morpheme gloss. Having assembled data in this form, you can carry out <em>bulk editing</em> of morphemes and cognate sets in the data, by clicking on the ID field of each morpheme in order to group a given set of individual morphemes. When now editing a single morpheme or cognate set instance, EDICTOR 3 will edit all data that was previously grouped into one group at once. </p>
+              <p>The file below contains training data on Tujia taken from the <a href="https://starlingdb.org/new100/">Global Lexicostatistical Database</a> <a href="http://lingulist.de/evobib/evobib.py?key=Starostin2011">(Starostin and Krylof 2011)</a>. The dataset contains cognate sets and morpheme glosses which have been annotated already and can be used to test the annotation of morpheme glosses directly.</p>
+              <div class="datasets">
+                <div class="dataset inside" onclick="window.open('edictor.html?file=morpheme-glosses.tsv')">
+                   <span>Edit Morpheme Glosses</span>
+                </div>
+              </div>
+              <h5>Editing Correspondence Patterns</h5>
+              In order to edit correspondence patterns, you must have created cognate sets and alignemnts for your data. The typical way to start editing correspondences is by using the automatic approach provided by EDICTOR 3 to compute correspondence patterns, in order to start from there to manually refine existing patterns. Editing patterns requires some testing, but it is essentially also quite straightforward. You start by opening your data and then opening the correspondence pattern panel by clicking EDIT → CORRESPONDENCE PATTERNS. A new panel will open, displaying correspondence patterns for your data. In this panel, you can click on the individual identifiers of a given correspondence pattern and manually modify it (it can only be an integer). This allows you to merge patterns not detected by the algorithm and to separate patterns that have been falsely grouped. Below is again a data example (again from the Tujia example shown in the previous section) where you can test this.
+              <div class="datasets">
+                <div class="dataset inside" onclick="window.open('edictor.html?file=correspondence-patterns.tsv')">
+                   <span>Edit Correspondence Patterns</span>
+                </div>
+              </div>
+
 
 
             </div>
