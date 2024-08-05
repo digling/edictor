@@ -28,6 +28,16 @@ $ edictor server --port=9876
 
 The landing page will provide further information on files and datasets that you can open and test.
 
+## Installing EDICTOR 3 with LingPy Support
+
+If you want to test EDICTOR 3 with [LingPy](https://pypi.org/project/lingpy) support, you can again install the package via PIP using the following command.
+
+```shell
+$ pip install edictor[lingpy]
+```
+
+This will not only add support to all functionalities provided by LingPy (improved automatic cognate detection, improved alignments) and [LingRex](https://pypi.org/project/lingrex) (improved correspondence pattern detection), but also provide access to the `wordlist` command from the EDICTOR 3 commandline (see below for details).
+
 ## Getting Started on Windows
 
 
@@ -45,6 +55,7 @@ There, we create a directory for EDICTOR3 files and use `GIT` to clone the most 
 PS C:\Users\edictor3\Desktop> mkdir edictor3
 PS C:\Users\edictor3\Desktop> cd edictor3
 PS C:\Users\edictor3\Desktop> git clone https://github.com/digling/edictor.git
+PS C:\Users\edictor3\Desktop> git checkout v3.0.0
 ```
 
 We now create a virtual environment with Python in order to make sure we can use the code locally and do not need to destroy anything in our Python installation with the installation of EDICTOR3. Instructions can be found [here](https://mothergeo-py.readthedocs.io/en/latest/development/how-to/venv-win.html). 
