@@ -754,9 +754,7 @@ def quit(s):
     :return:
     """
     send_response(s, "Terminated the application.")
-    try:
-        os.kill(DATA["process"].native_id, signal.SIGTERM)
-    except:
-        os.kill(DATA["process"].native_id, signal.CTRL_BREAK_EVENT)
+    os.kill(os.getpid(), signal.SIGTERM)
+
 
 
