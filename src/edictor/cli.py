@@ -102,6 +102,12 @@ class server(Command):
                 "Name of the configuration file to be used.",
                 short_opt="c"
                 )
+        add_option(
+                p,
+                "no-window",
+                False,
+                "Do not open a window of the application.",
+                )
 
     def __call__(self, args):
         """
@@ -112,17 +118,16 @@ class server(Command):
         httpd = HTTPServer(("", args.port), Handler)
         print("Serving EDICTOR 3 at port {0}...".format(args.port))
         url = "http://localhost:" + str(args.port) + "/"
-        try:
-            webbrowser.get(args.browser).open_new_tab(url)
-        except: # noqa
+        if not args.no_window: # pragma: no cover
             try:
-                webbrowser.open(url)
+                webbrowser.get(args.browser).open_new_tab(url)
             except: # noqa
-                print("Could not open webbrowser, please open locally " 
+                try:
+                    webbrowser.open(url)
+                except: # noqa
+                    print("Could not open webbrowser, please open locally " 
                       "at http://localhost:" + str(args.port) + "/")
-        t1 = threading.Thread(target=httpd.serve_forever)
-        DATA["process"] = t1
-        DATA["process"].start()
+        httpd.serve_forever()
 
 
 
