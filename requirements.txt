@@ -1,0 +1,3 @@
+lingpy~=2.6.13
+lingrex~=1.4.2
+lexibase
