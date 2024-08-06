@@ -753,7 +753,6 @@ def quit(s):
     :param s: server
     :return:
     """
-    print(DATA["process"])
     send_response(s, "Terminated the application.")
-    os.kill(DATA["process"].pid, signal.SIGTERM)
+    os.kill(DATA["process"].native_id, signal.SIGTERM)
 

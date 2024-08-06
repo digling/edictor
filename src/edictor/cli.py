@@ -8,7 +8,7 @@ import argparse
 from pathlib import Path
 import codecs
 import json
-from multiprocessing import Process
+import threading
 
 from edictor.util import DATA
 
@@ -117,8 +117,8 @@ class server(Command):
         except: # noqa
             print("Could not open webbrowser, please open locally " 
                   "at http://localhost:" + str(args.port) + "/")
-        p = Process(target=httpd.serve_forever)
-        DATA["process"] = p
+        t1 = threading.Thread(target=httpd.serve_forever)
+        DATA["process"] = t1
         DATA["process"].start()
 
 
