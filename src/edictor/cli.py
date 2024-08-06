@@ -115,8 +115,11 @@ class server(Command):
         try:
             webbrowser.get(args.browser).open_new_tab(url)
         except: # noqa
-            print("Could not open webbrowser, please open locally " 
-                  "at http://localhost:" + str(args.port) + "/")
+            try:
+                webbrowser.open(url)
+            except: # noqa
+                print("Could not open webbrowser, please open locally " 
+                      "at http://localhost:" + str(args.port) + "/")
         t1 = threading.Thread(target=httpd.serve_forever)
         DATA["process"] = t1
         DATA["process"].start()
