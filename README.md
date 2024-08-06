@@ -71,7 +71,7 @@ With these commands, you have in this terminal a virtual environment that you ca
 
 ```shell
 (edi3) PS C:\Users\edictor3\Desktop\edictor3> python -m pip install -e edictor
-(edi3) PS C:\Users\edictor3\Desktop\edictor3> edictor3
+(edi3) PS C:\Users\edictor3\Desktop\edictor3> edictor server
 ```
 
 You must still open your webbrowser at the URL `https://localhost:9999`, since we cannot automatically trigger Windows to open the Firefox (the preferred webbrowser for the EDICTOR). But with this, you are done and can use the tool in your work.
