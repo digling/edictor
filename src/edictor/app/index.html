@@ -523,27 +523,40 @@ div.menu-icon > div {
               <h5>3.5 Editing Morpheme Glosses</h5>
               <p>Morpheme glosses were introduced in order to add semantic information to the individual morphemes of a word in a study by <a href="https://lingulist.de/evobib/evobib.py?key=Hill2017a">Hill and List (2017)</a>. The idea was to supplement the information on partial cognates by individual semantic glosses -- similar to the well-known glosses used in interlinear-glossed text in linguistic typology -- that would help to provide short cuts on the semantic motivation underlying individual words in individual languages. Later, the morpheme gloss panel was added to EDICTOR in order to allow for a convenient annotation and inspection of language-internal and language-external partial cognate sets in a given dataset.</p>
               <p>In order to get started with morpheme glosses, you must make sure to have a column for partial cognate sets (default name COGIDS) and a column for morpheme glosses (default name MORPHEMES). You can add these columns easily to your data with the help of the "add columns" textfield mentioned in the section on cognate annotation.  Once this has been done, you can open the panel by clicking EDIT → MORPHEME GLOSSES and then clicking on OK. EDICTOR 3 will now search for all partial cognate sets and all individual morphemes and group <em>identical morphemes</em> together, providing one column for the cognate set of each morpheme and one for the morpheme gloss. Having assembled data in this form, you can carry out <em>bulk editing</em> of morphemes and cognate sets in the data, by clicking on the ID field of each morpheme in order to group a given set of individual morphemes. When now editing a single morpheme or cognate set instance, EDICTOR 3 will edit all data that was previously grouped into one group at once. </p>
-              <p>The file below contains training data on Tujia taken from the <a href="https://starlingdb.org/new100/">Global Lexicostatistical Database</a> <a href="http://lingulist.de/evobib/evobib.py?key=Starostin2011">(Starostin and Krylof 2011)</a>. The dataset contains cognate sets and morpheme glosses which have been annotated already and can be used to test the annotation of morpheme glosses directly.</p>
+              <p>The file below contains training data on Tujia taken from the <a href="https://starlingdb.org/new100/">Global Lexicostatistical Database</a> <a href="https://lingulist.de/evobib/evobib.py?key=Starostin2011">(Starostin and Krylof 2011)</a>. The dataset contains cognate sets and morpheme glosses which have been annotated already and can be used to test the annotation of morpheme glosses directly.</p>
               <div class="datasets">
                 <div class="dataset inside" onclick="window.open('edictor.html?file=morpheme-glosses.tsv')">
                    <span>Edit Morpheme Glosses</span>
                 </div>
               </div>
-              <h5>Editing Correspondence Patterns</h5>
-              In order to edit correspondence patterns, you must have created cognate sets and alignemnts for your data. The typical way to start editing correspondences is by using the automatic approach provided by EDICTOR 3 to compute correspondence patterns, in order to start from there to manually refine existing patterns. Editing patterns requires some testing, but it is essentially also quite straightforward. You start by opening your data and then opening the correspondence pattern panel by clicking EDIT → CORRESPONDENCE PATTERNS. A new panel will open, displaying correspondence patterns for your data. In this panel, you can click on the individual identifiers of a given correspondence pattern and manually modify it (it can only be an integer). This allows you to merge patterns not detected by the algorithm and to separate patterns that have been falsely grouped. Below is again a data example (again from the Tujia example shown in the previous section) where you can test this.
+              <h5>3.6 Editing Correspondence Patterns</h5>
+              In order to edit correspondence patterns, you must have created cognate sets and alignments for your data. The typical way to start editing correspondences is by using the automatic approach provided by EDICTOR 3 to compute correspondence patterns, in order to start from there to manually refine existing patterns. Editing patterns requires some testing, but it is essentially also quite straightforward. You start by opening your data and then opening the correspondence pattern panel by clicking EDIT → CORRESPONDENCE PATTERNS. A new panel will open, displaying correspondence patterns for your data. In this panel, you can click on the individual identifiers of a given correspondence pattern and manually modify it (it can only be an integer). This allows you to merge patterns not detected by the algorithm and to separate patterns that have been falsely grouped. Below is again a data example (again from the Tujia example shown in the previous section) where you can test this.
               <div class="datasets">
                 <div class="dataset inside" onclick="window.open('edictor.html?file=correspondence-patterns.tsv')">
                    <span>Edit Correspondence Patterns</span>
                 </div>
               </div>
-              <h5>Computing Cognates, Alignments, and Correspondences</h5>
-              <p>+++</p>
+              <h5>3.7 Computing Cognates, Alignments, and Correspondences</h5>
+              <p>EDICTOR 3 allows you to compute cognate sets, alignments, and correspondence patterns from your data, both in the web application that is only based on JavaScript and in the local server version running with Python, which integrates <a href="https://pypi.org/project/lingpy">LingPy</a> and <a href="https://pypi.org/project/lingrex">LingRex</a>. No matter which version you decide to use, if you have emtpy columns for cognate sets (COGID or COGIDS), alignments (ALIGNMENT), and correspondence patterns (PATTERNS), you can carry out full-fledged computer-assisted workflows by starting from automated cognate detection (COMPUTE → COGNATE SETS), then carrying out a phonetic alignment analysis (COMPUTE → ALIGNMENTS), and finally inferring correspondence patterns (COMPUTE → CORRESPONDENCE PATTERNS). If you want to work with partial cognate sets, you must indicate so in the settings, by setting the MORPHOLOGY AND COLEXIFICATION MODE to <code>partial</code> and then pressing the REFRESH button, before you carry out any of the analyses.</p>
+              <p>You can test the computer-assisted workflow outlined before by opening the file below. You must start by adding the respective columns to the data (COGDI, ALIGNMENT, PATTERNS). Then, you can directly proceed by computing the values interactively. Depending on which version you use -- the JavaScript version or the Python version -- your results will differ slightly.</p>
+              <div class="datasets">
+                <div class="dataset inside" onclick="window.open('edictor.html?file=Germanic.tsv')">
+                   <span>Test Computer-Assisted Workflow</span>
+                </div>
+              </div>
+              <h5>3.8 Exporting Results to File</h5>
+              <p>To get your data back after having edited them, you must press on the DOWNLOAD button on the top-right of EDICTOR 3. When pressing this button, the current file will be saved in the DOWNLOAD folder (or the default location for downloaded data) on your computer. Note that EDICTOR 3 does not download the data, but that this is the only way that JavaScript can give you your file back. Data has never been updated to any server, but stays on your client system. If you use the version powered by Python, there is an additional button that allows you to save your file directly in the current working directory from which you started the EDICTOR app.</p>
+
 
 
 
             </div>
             <div class="footer"></div>
           </div>
+        </li>
+        <li class="reiter" onclick="window.location = 'quit.py';" class="user" style="display:none">
+          <input type="radio" name="tabreiter-0" id="tabreiter-0-7" />
+          <label class="main" for="tabreiter-0-7">Quit</label>
         </li>
       </ul>
     </div>

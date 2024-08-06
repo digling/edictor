@@ -3,7 +3,7 @@ Test the util module of the edictor package.
 """
 from pathlib import Path
 from edictor.util import (
-        opendb, edictor_path, DATA, configuration, file_name,
+        opendb, edictor_path, configuration, file_name,
         file_type, file_handler, serve_base, 
         download, new_id, cognates, patterns, alignments, triples,
         modifications, update, parse_args, parse_post,
@@ -25,7 +25,6 @@ try:
     with_lingrex = True
 except ImportError:
     with_lingrex = False
-
 
 
 class Writer:
@@ -59,7 +58,6 @@ def test_opendb():
 
     a, b = opendb("germanic", {"sqlite": "data"})
     a, b = opendb("test", {"sqlite": "data"})
-    
 
 
 def test_edictor_path():
@@ -109,7 +107,6 @@ def test_check():
 
 
 def test_configuration():
-    
     wd = os.getcwd()
     with tempfile.TemporaryDirectory() as t:
         os.chdir(t)
@@ -118,16 +115,16 @@ def test_configuration():
                 {
                     "links": [
                         {
-                        "url": "edictor.html", 
-                        "data": {
-                            "file": "germanic",
-                            "remote_dbase": "germanic",
-                            "columns": "DOCULECT|CONCEPT|IPA|TOKENS|ALIGNMENT|COGID|PATTERNS|NOTE"
+                            "url": "edictor.html",
+                            "data": {
+                                "file": "germanic",
+                                "remote_dbase": "germanic",
+                                "columns": "DOCULECT|CONCEPT|IPA|TOKENS|ALIGNMENT|COGID|PATTERNS|NOTE"
                             },
-                        "name": "Germanic (SQLITE, Base)"
+                            "name": "Germanic (SQLITE, Base)"
                         }
                     ]
-                    }))
+                }))
         conf = configuration()
     os.chdir(wd)
     # next scenario that conf is missing in the current folder, so we take
@@ -156,7 +153,6 @@ def test_file_handler():
     file_handler(s, "png", "/edictor-small.png")
     file_handler(s, "html", "/index-none.html")
     file_handler(s, "png", "/edictor-none.png")
-
 
     file_handler(s, "tsv", "/data/Germanic.tsv")
     assert s.wfile.written[:2] == b"ID"
@@ -229,10 +225,6 @@ def test_alignments():
         "3\tC\tA\tm i m i\t1&mode=partial"
     
     alignments(s, data, "POST")
-import os
-import tempfile
-import json
-
 
 
 def test_patterns():
@@ -252,7 +244,6 @@ def test_patterns():
         "3\tC\tA\tm i m i\tm i m i\t1&mode=partial"
     
     patterns(s, data, "POST")
-
 
 
 def test_new_id():
@@ -282,7 +273,6 @@ def test_new_id():
         "POST", 
         {"sqlite": "sqlite", "remote_dbase": "germanic.sqlite3"}
         )
-
 
 
 def test_triples():
@@ -326,7 +316,6 @@ def test_triples():
     assert s.wfile.written[:2] == b"ID"
 
 
-
 def test_modifications():
 
     s = Sender()
@@ -344,40 +333,32 @@ def test_modifications():
 
 
 def test_update():
-
     s = Sender()
     # modify entries
     update(
-            s,
-            "update=true&file=germanic&remote_dbase=germanicm&ids=42|||1694&cols=NOTE|||NOTE&vals=exc2|||exc2",
-            "POST",
-            {"sqlite": "data", "remote_dbase": "germanicm", "user": "edictor"}
-            )
+        s,
+        "update=true&file=germanic&remote_dbase=germanicm&ids=42|||1694&cols=NOTE|||NOTE&vals=exc2|||exc2",
+        "POST",
+        {"sqlite": "data", "remote_dbase": "germanicm", "user": "edictor"}
+    )
     update(
-            s,
-            "update=true&file=germanic&remote_dbase=germanicm&ids=42|||1694&cols=NOTE|||NOTE&vals=exc|||exc",
-            "POST",
-            {"sqlite": "data", "remote_dbase": "germanicm", "user": "edictor"}
-            )
+        s,
+        "update=true&file=germanic&remote_dbase=germanicm&ids=42|||1694&cols=NOTE|||NOTE&vals=exc|||exc",
+        "POST",
+        {"sqlite": "data", "remote_dbase": "germanicm", "user": "edictor"}
+    )
 
     # delete entries
     update(
-            s,
-            "delete=true&file=germanic&remote_dbase=germanicm&ID=42",
-            "POST",
-            {"sqlite": "data", "remote_dbase": "germanicm", "user": "edictor"}
-            )
+        s,
+        "delete=true&file=germanic&remote_dbase=germanicm&ID=42",
+        "POST",
+        {"sqlite": "data", "remote_dbase": "germanicm", "user": "edictor"}
+    )
     update(
-            s,
-            "update=true&file=germanic&remote_dbase=germanicm&ids=42|||42|||42&cols=DOCULECT|||CONCEPT|||NOTE&vals=German|||*markō|||exc",
-            "POST",
-            {"sqlite": "data", "remote_dbase": "germanicm", "user": "edictor"}
-            )
-
-
-
-    
-
-
-
-
+        s,
+        "update=true&file=germanic&remote_dbase=germanicm&ids=42|||42|||42&"
+        "cols=DOCULECT|||CONCEPT|||NOTE&vals=German|||*markō|||exc",
+        "POST",
+        {"sqlite": "data", "remote_dbase": "germanicm", "user": "edictor"}
+    )

@@ -7,6 +7,7 @@ import os
 import json
 import codecs
 import getpass
+import signal
 
 from urllib.request import urlopen
 
@@ -237,6 +238,7 @@ def serve_base(s, conf):
     send_response(s, text)
 
 
+# noinspection SqlDialectInspection,SqlResolve
 def new_id(s, query, qtype, conf):
     """
     Obtain new identifier from currently largest one.
@@ -270,6 +272,7 @@ def new_id(s, query, qtype, conf):
     if args['new_id'] == "true":
         cursor.execute('select DISTINCT ID from ' + args['file'] + ';')
         linesA = [x[0] for x in cursor.fetchall()]
+        # noinspection SqlNoDataSourceInspection
         cursor.execute(
             'select DISTINCT ID from backup where FILE = "' + args['file'] + '";'
         )
@@ -293,15 +296,14 @@ def new_id(s, query, qtype, conf):
         # dammit but, it doesn't really seem to work without explicit
         # type-checking
         cogids = []
-        for l in lines:
+        for line in lines:
             try:
-                cogids += [int(l)]
-            except:
+                cogids += [int(line)]
+            except ValueError:
                 try:
-                    cogids += [int(x) for x in l.split(' ')]
-                except:
+                    cogids += [int(x) for x in line.split(' ')]
+                except ValueError:
                     pass
-
         message = str(max(cogids) + 1)
     send_response(s, message)
 
@@ -539,13 +541,16 @@ def triples(s, query, qtype, conf):
         for col in cols:
             try:
                 txt += '\t' + D[idx][col]
-            except:
+            except IndexError:
                 txt += '\t'
+            except ValueError:
+                txt += "\t"
         text += txt + "\n"
     send_response(s, text, content_type="text/plain; charset=utf-8",
                   content_disposition='attachment; filename="triples.tsv"')
 
 
+# noinspection SqlDialectInspection,SqlNoDataSourceInspection,SqlResolve
 def modifications(s, post, qtype, conf):
     """
     Check for remote modifications in the data, done in another application.
@@ -604,6 +609,7 @@ def modifications(s, post, qtype, conf):
     send_response(s, message)
 
 
+# noinspection SqlResolve
 def update(s, post, qtype, conf):
     """
     Update data on local or remote SQLite file.
@@ -705,6 +711,7 @@ def update(s, post, qtype, conf):
 
             # insert the backup line
             try:
+                # noinspection SqlDialectInspection,SqlResolve
                 cursor.execute(
                     'insert into backup values(?,?,?,?,strftime("%s","now"),?);',
                     (
@@ -735,3 +742,16 @@ def update(s, post, qtype, conf):
             args['ID'],
             now)
     send_response(s, message)
+
+
+def quit(s):
+    """
+    Exit the application.
+
+    :param s: server
+    :return:
+    """
+    print(DATA["process"])
+    send_response(s, "Terminated the application.")
+    os.kill(DATA["process"].pid, signal.SIGTERM)
+

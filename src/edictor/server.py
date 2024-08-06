@@ -5,7 +5,7 @@ from edictor.util import (
         check, configuration,
         file_type, file_name, file_handler, triples, download,
         update, serve_base, new_id, modifications, alignments,
-        cognates, patterns
+        cognates, patterns, quit
         )
 
 CONF = configuration()
@@ -56,6 +56,8 @@ class Handler(SimpleHTTPRequestHandler):
             cognates(s, post_data_bytes, "POST")
         if fn == "/patterns.py":
             patterns(s, post_data_bytes, "POST")
+        if fn == "/quit.py":
+            quit(s)
 
     def do_GET(s):
         """
@@ -80,3 +82,5 @@ class Handler(SimpleHTTPRequestHandler):
             new_id(s, s.path, "GET", CONF)
         if fn == "/triples/modifications.py":
             modifications(s, s.path, "GET", CONF)
+        if fn == "/quit.py":
+            quit(s)

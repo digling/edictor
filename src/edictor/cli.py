@@ -8,6 +8,7 @@ import argparse
 from pathlib import Path
 import codecs
 import json
+from multiprocessing import Process
 
 from edictor.util import DATA
 
@@ -56,7 +57,7 @@ def add_option(parser, name_, default_, help_, short_opt=None, **kw):
     if isinstance(default_, bool):
         kw["action"] = "store_false" if default_ else "store_true"
     elif isinstance(default_, int):
-        kw["type"] = float
+        kw["type"] = int
     elif isinstance(default_, float):
         kw["type"] = float
     kw["default"] = default_
@@ -85,7 +86,7 @@ class server(Command):
                 "port", 
                 9999, 
                 "Port where the local server will serve the application.",
-                short_opt="p"
+                short_opt="p",
                 )
         add_option(
                 p,
@@ -116,8 +117,10 @@ class server(Command):
         except: # noqa
             print("Could not open webbrowser, please open locally " 
                   "at http://localhost:" + str(args.port) + "/")
-        
-        httpd.serve_forever()
+        p = Process(target=httpd.serve_forever)
+        DATA["process"] = p
+        DATA["process"].start()
+
 
 
 class fetch(Command):

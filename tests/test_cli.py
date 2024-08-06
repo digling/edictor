@@ -1,16 +1,8 @@
 from edictor.cli import main
-import shlex
 import multiprocessing
 import time
 import os
 import tempfile
-from pathlib import Path
-
-#def run(capsys, *args):
-#    if len(args) == 1:
-#        args = shlex.split(args[0])
-#    main(*args)
-#    return capsys.readouterr().out
 
 
 def test_server():
@@ -39,8 +31,3 @@ def test_wordlist():
 def test_main():
     os.system("edictor")
     os.system("edictor --help")
-
-
-
-#output = run(
-#            capsys, "server")
