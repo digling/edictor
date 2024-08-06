@@ -545,6 +545,8 @@ def triples(s, query, qtype, conf):
                 txt += '\t'
             except ValueError:
                 txt += "\t"
+            except KeyError:
+                txt += "\t"
         text += txt + "\n"
     send_response(s, text, content_type="text/plain; charset=utf-8",
                   content_disposition='attachment; filename="triples.tsv"')
