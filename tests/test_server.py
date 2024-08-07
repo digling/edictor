@@ -61,7 +61,12 @@ def test_Handler():
                         "\t".join(["3", "Germt", "concept", "s a a l"])
                     ])),
 
-                #"/patterns.py"
+                ("/patterns.py", "wordlist=" + "\n".join(
+                    [
+                        "\t".join(["1", "German", "concept", "s a g m a l", "1", "s a g m a l"]),
+                        "\t".join(["2", "Germs", "concept", "s a g d a l", "1", "s a g d a l"]),
+                        "\t".join(["3", "Germt", "concept", "s a a l", "1", "s a - - a l"])
+                        ])),
                 ]:
                 han.headers = {"Content-Length": "10"}
                 han.rfile = Rfile(path)
