@@ -1,5 +1,5 @@
 {
-    "title": "EDICTOR. A web-based interactive tool for creating, inspecting, editing, and publishing etymological datasets",
+    "title": "EDICTOR 3: Interactive Tool for Computer-Assisted Language Comparison",
     "access_right": "open",
     "keywords": [
         "wordlist",
@@ -9,11 +9,14 @@
     "creators": [
         {
             "name": "Johann-Mattis List"
+        },
+        {
+            "name": "Kellen Parker van Dam"
         }
     ],
     "communities": [
         {
-            "identifier": "lexibank"
+            "identifier": "produsemy"
         }
     ],
     "upload_type": "dataset",
