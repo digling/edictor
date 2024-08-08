@@ -105,7 +105,7 @@
     font-size: 50%;
     overflow: auto;
     text-overflow: ellipsis;
-    padding 3px;
+    padding: 3px;
     cursor: -webkit-grabbing;
     cursor: -moz-grabbing;
   }
@@ -153,7 +153,7 @@
     font-size: 80%;
     overflow: auto;
     text-overflow: ellipsis;
-    padding 3px;
+    padding: 3px;
     cursor: -webkit-grabbing;
     cursor: -moz-grabbing;
   }
@@ -292,7 +292,6 @@
   overflow: hidden;
   float: left;
   background-color: #fefefe;
-  padding: 10px;
   border: 2px solid var(--blue);
   border-radius: 5px;
   margin: 5px;
@@ -305,7 +304,7 @@
 .border {
   border: 2px solid var(--blue);
   empty-cells: show;
-  margin: 0px !important;
+  margin: 0 !important;
 }
 
 .border th {
@@ -325,7 +324,7 @@
 }
 
 .settings td {
-  border: 0px solid var(--blue);
+  border: 0 solid var(--blue);
   text-align: left;
   padding: 5px;
   min-width: 250px;
@@ -958,11 +957,10 @@ ul.nav {
   float: right;
   font-weight: bold;
   background-color: var(--blue);
-  border: none;
   color: white;
   margin-top: 10px;
   margin-right: 10px;
-  border: 0px solid black;
+  border: 0 solid black;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-right: 5px;
@@ -1448,9 +1446,17 @@ tr.up_fill>td {
 }
 
 tr.d1 td.id_batch {
-  background: salmon;
   background-color: salmon;
 }
+
+tr.d2 td.id_batch {
+  background-color: salmon;
+}
+
+tr.d0 td.id_batch {
+  background-color: salmon;
+}
+
 
 /* refactored styling starts here */
 

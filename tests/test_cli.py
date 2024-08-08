@@ -6,7 +6,7 @@ import tempfile
 
 
 def test_server():
-    p = multiprocessing.Process(target=main, args=('server', '--browser=dummy'))
+    p = multiprocessing.Process(target=main, args=('server', '--no-window'))
     p.start()
     time.sleep(1)
     p.kill()
@@ -17,6 +17,8 @@ def test_fetch():
     with tempfile.TemporaryDirectory() as t:
         os.system("edictor fetch --dataset=sumerian --name=" + t +
                   "/dummy.tsv")
+
+
 
 
 def test_wordlist():

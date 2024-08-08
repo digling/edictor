@@ -5,11 +5,11 @@ import urllib
 import tempfile
 try:
     import lingpy
-except ImportError:
+except ImportError:  # pragma: no cover
     lingpy = False
 try:
     from lexibase import LexiBase
-except ImportError:
+except ImportError:  # pragma: no cover
     LexiBase = False
 
 
@@ -41,7 +41,7 @@ def fetch_wordlist(
 
     data = urllib.request.urlopen(url).read()
     if to_lingpy:
-        if not lingpy:
+        if not lingpy:  # pragma: no cover
             raise ValueError(
                     "Package lingpy has to be installed to use this method.")
         with tempfile.NamedTemporaryFile() as tf:
@@ -63,7 +63,7 @@ def get_wordlist(
     """
     Function retrieves a wordlist from a CLDF dataset.
     """
-    if not lingpy:
+    if not lingpy:  # pragma: no cover
         raise ValueError(
                 "Package lingpy has to be installed to use this method.")
 
@@ -94,7 +94,7 @@ def get_wordlist(
     if not lexibase:
         lingpy.Wordlist(dct).output("tsv", filename=name, ignore="all", prettify=False)
     else:
-        if not LexiBase:
+        if not LexiBase:  # pragma: no cover
             raise ValueError(
                     "Package lexibase has to be installed to use this method.")
         lex = LexiBase(dct, dbase=name + ".sqlite3")

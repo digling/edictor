@@ -2,6 +2,7 @@
 Test the util module of the edictor package.
 """
 from pathlib import Path
+from pytest import raises
 from edictor.util import (
         opendb, edictor_path, configuration, file_name,
         file_type, file_handler, serve_base, 
@@ -59,6 +60,8 @@ def test_opendb():
     a, b = opendb("germanic", {"sqlite": "data"})
     a, b = opendb("test", {"sqlite": "data"})
 
+    raises(ValueError, opendb, "germanict", {"sqlite": "data"})
+
 
 def test_edictor_path():
     p = edictor_path("a.tsv")
@@ -66,7 +69,6 @@ def test_edictor_path():
 
 
 def test_parse_args():
-
     assert parse_args("bla.html?file=good&remote=not")["file"] == "good"
 
 

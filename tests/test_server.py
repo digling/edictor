@@ -45,12 +45,28 @@ def test_Handler():
                 ("/download.py", "file=germanic.tsv&data=abcdefg"),
                 ("/triples/triples.py", "file=germanic&remote_dbase=germanic"), 
                 ("/check.py", ""), 
-                #("/update.py",
-                #"/triples/new_id.py", 
-                #"/triples/modifications.py",
-                #"/alignments.py", 
-                #"/cognates.py", 
-                #"/patterns.py"
+                ("/update.py", "file=germanic&remote_dbase=germanic&ID=1922&COL=TOKENS&VAL=s p a l t a n a n"),
+                ("/triples/new_id.py", "file=germanic&remote_dbase=germanic&new_id=COGID&date=1431011182"),
+                ("/triples/modifications.py", "file=germanic&remote_dbase=germanic&date=1431011182"),
+                ("/alignments.py", "wordlist=" + "\n".join(
+                    [
+                        "\t".join(["1", "German", "concept", "s a g m a l", "1"]),
+                        "\t".join(["2", "Germs", "concept", "s a g d a l", "1"]),
+                        "\t".join(["3", "Germt", "concept", "s a a l", "1"])
+                        ])),
+                ("/cognates.py", "wordlist=" + "\n".join(
+                [
+                        "\t".join(["1", "German", "concept", "s a g m a l"]),
+                        "\t".join(["2", "Germs", "concept", "s a g d a l"]),
+                        "\t".join(["3", "Germt", "concept", "s a a l"])
+                    ])),
+
+                ("/patterns.py", "wordlist=" + "\n".join(
+                    [
+                        "\t".join(["1", "German", "concept", "s a g m a l", "1", "s a g m a l"]),
+                        "\t".join(["2", "Germs", "concept", "s a g d a l", "1", "s a g d a l"]),
+                        "\t".join(["3", "Germt", "concept", "s a a l", "1", "s a - - a l"])
+                        ])),
                 ]:
                 han.headers = {"Content-Length": "10"}
                 han.rfile = Rfile(path)
