@@ -303,6 +303,7 @@ PATS.get_patterns = function(lengths){
   }
 };
 
+
 PATS.load_patterns = function(){
   var pattern_dict = {};
   var i, idx, j, k, alm, patterns, cognates, cognate, residue, patternid;
@@ -1026,13 +1027,19 @@ PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
       /* if new index can be found in patterns, assign the new pattern to those */
       if (isNaN(new_idx) || new_idx < 1) {
         for (i = 1; i < PATS.matrix.length + 1; i += 1) {
-          if (!(i in PATS.patterns) || PATS.patterns[i].length == 0) {
-            new_idx = i;
+          if (!(i in PATS.patterns)) {// || PATS.patterns[i].length === 0) {
             PATS.patterns[new_idx] = [[cogid, posidx]];
             break;
           }
         }
+        new_idx = i;
+        PATS.patterns[i] = [];
       }
+      else {
+        PATS.patterns[new_idx] = [];
+      }
+      PATS.matrix[row_idx][0][2] = new_idx;
+      PATS.matrix[row_idx][2][0] = new_idx;
       [idxs, cols, vals] = [[], [], []];
       for (i = 4; i < row.length - 1; i += 1) {
         cell = row[i];
@@ -1049,6 +1056,7 @@ PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
             return;
           }
           WLS[idx][CFG._patterns] = ptns.join(" + ");
+          PATS.idx2pattern[idx][cogidx] = ptn;
           idxs.push(idx);
           cols.push(CFG._patterns);
           vals.push(ptns.join(" + "));
@@ -1075,8 +1083,6 @@ PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
       par.onclick = function(){PATS.editPattern("", par)};
       pw = "<span>" + plotWord(row[PATS.length - 1][0][0], "span", "pointed") + 
         ' / <span class="dolgo_ERROR">' + patternid + "</span></span>";
-      //par.innerHTML = "<span>" + plotWord(row[PATS.length - 1][0][0], "span", "pointed") + 
-      //  ' / <span class="dolgo_ERROR">' + patternid + "</span></span>";
       if (event.keyCode == 38) {
         PATS.move_up_or_down(par, "up");
       }
