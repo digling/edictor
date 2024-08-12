@@ -10,6 +10,14 @@ But from version 3.0 on, there is some hope that basic release procedures can be
 
 The basic procedure consists in running some general routines that are described in `tests/gui/` in different folders with instructions on how to start EDICTOR 3 and also what to do then. These provide already a rather solid base on what we expect from the tool. 
 
+## Testing EDICTOR with Selenium
+
+From version 3.0 on, we start adding basic tests in [Selenium](https://addons.mozilla.org/en-US/firefox/addon/selenium-ide/), currently only focusing on Firefox (where we can also run JS commands directly). New functions should from now an always be supplemented by a new test in Firefox and also in other browsers. Selenium IDE can be easily installed as a Firefox or Chrome addon and then used interactively to record and run tests on the GUI. 
+
+Before new releases and als with each pull-request, a new GUI test should be carried out to make sure the code does not break.
+
+Tests are located in the folder `tests/selenium`. 
+
 ## Basic Tests for the Python Code
 
 Tests with `pytest` seem to run fine for now. Tests should be further improved, but test coverage is already rather high for now.
