@@ -245,20 +245,16 @@ PATS.get_patterns = function(lengths){
 
   PATS.proto_sounds = {};
   for (i = 0; i < PATS.matrix.length; i += 1) {
-    if (PATS.matrix[i][4].length == 4) {
-      if (PATS.matrix[i][4][2].indexOf("/") != -1) {
-        token = PATS.matrix[i][4][2].split('/')[1] + ' / ' + PATS.matrix[i][4][0];
-      }
-      else {
-        token = PATS.matrix[i][4][2]+' / '+PATS.matrix[i][2][0];
-      }
-      if (token in PATS.proto_sounds) {
-              PATS.proto_sounds[token].push(i);
-      }
-      else {
-              PATS.proto_sounds[token] = [i];
-      }
+    // consensus string first element
+    token = PATS.matrix[i][PATS.matrix[i].length - 1][0][0] +
+      ' / ' + PATS.matrix[i][2][0];
+    if (token in PATS.proto_sounds) {
+      PATS.proto_sounds[token].push(i);
     }
+    else {
+      PATS.proto_sounds[token] = [i];
+    }
+    
   }
   /* add patterns to wordlist (like alignments) in case they are not assigned */
   /* +++ PATTERNS ADDING +++ */
@@ -1014,13 +1010,17 @@ PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
   var ptns, ptn, cons;
   var idxs, cols, vals;
   var pw;
+  var tuple;
   var new_idx = node.value;
+  if (CFG._patterns === -1) {
+      fakeAlert("cannot modify patterns with PATTERNS columns missing");
+      return;
+  }
   if (event.keyCode == 13 || event.keyCode == 27 || event.keyCode == 38 || event.keyCode == 40) {
     par = document.getElementById("PATTERN_" + cogid + "_" + posidx);
     row_idx = parseInt(par.parentNode.id.split("_")[2]);
     row = PATS.matrix[row_idx];
     new_idx = parseInt(new_idx);
-    console.log("pid", patternid, new_idx);
     if (
       (event.keyCode == 13 || event.keyCode == 38 || event.keyCode == 40) 
       && new_idx != patternid) {
@@ -1041,20 +1041,13 @@ PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
       PATS.matrix[row_idx][0][2] = new_idx;
       PATS.matrix[row_idx][2][0] = new_idx;
       [idxs, cols, vals] = [[], [], []];
-      for (i = 4; i < row.length - 1; i += 1) {
-        cell = row[i];
-        if (cell != CFG.missing_marker) {
-          [idx, sound] = [cell[0], cell[2]];
-          cogidx = (CFG._morphology_mode == "full") 
-            ? 0 : WLS[idx][CFG._roots].split(" ").indexOf(String(cogid));
+      if (CFG._morphology_mode === "partial") {
+        for (i = 0; i < WLS.roots[cogid].length; i += 1) {
+          [idx, cogidx] = WLS.roots[cogid][i];
           ptns = WLS[idx][CFG._patterns].split(" + ");
           ptn = ptns[cogidx].split(" ");
           ptn[parseInt(posidx) - 1] = new_idx;
           ptns[cogidx] = ptn.join(" ");
-          if (CFG._patterns == -1) {
-            fakeAlert("cannot modify patterns with PATTERNS columns missing");
-            return;
-          }
           WLS[idx][CFG._patterns] = ptns.join(" + ");
           PATS.idx2pattern[idx][cogidx] = ptn;
           idxs.push(idx);
@@ -1062,6 +1055,19 @@ PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
           vals.push(ptns.join(" + "));
         }
       }
+      else {
+        for (i = 0; i < WLS.etyma[cogid].length; i += 1) {
+          idx = WLS.etyma[cogid][i];
+          ptn = WLS[idx][CFG._patterns].split(" ");
+          ptn[parseInt(posidx) - 1] = new_idx;
+          ptn = ptn.join(" ");
+          WLS[idx][CFG._patterns] = ptn;
+          idxs.push(idx);
+          cols.push(CFG._patterns);
+          vals.push(ptn);
+        }
+      }
+
       storeModification(idxs, cols, vals);
       cons = row[PATS.length - 1][0][0];
       par.dataset["patternid"] = new_idx;
