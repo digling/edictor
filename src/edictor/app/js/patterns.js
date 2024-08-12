@@ -1010,7 +1010,6 @@ PATS.submitPatternEdit = function(event, cogid, posidx, patternid, node) {
   var ptns, ptn, cons;
   var idxs, cols, vals;
   var pw;
-  var tuple;
   var new_idx = node.value;
   if (CFG._patterns === -1) {
       fakeAlert("cannot modify patterns with PATTERNS columns missing");
