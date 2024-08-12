@@ -633,10 +633,23 @@
     }, {
       "id": "dd2ff794-2f42-4f9c-bc64-1ac507b0a8bb",
       "comment": "",
+<<<<<<< HEAD
       "command": "executeScript",
       "target": "PATS.submitPatternEdit({\"keyCode\": 13}, 288, 2, 1, {\"value\": 37});",
       "targets": [],
       "value": ""
+=======
+      "command": "type",
+      "target": "id=modify_pattern_288_2",
+      "targets": [
+        ["id=modify_pattern_288_2", "id"],
+        ["css=#modify_pattern_288_2", "css:finder"],
+        ["xpath=//input[@id='modify_pattern_288_2']", "xpath:attributes"],
+        ["xpath=//td[@id='PATTERN_288_2']/input", "xpath:idRelative"],
+        ["xpath=//td[3]/input", "xpath:position"]
+      ],
+      "value": "37"
+>>>>>>> 4b5f4fb51625a211bb1086edc01f639d58ce223c
     }, {
       "id": "fb5fda52-bbd8-4a41-ab0b-fdf048840109",
       "comment": "",
@@ -653,10 +666,23 @@
     }, {
       "id": "beaafd0e-f361-41e5-84e1-e328ab4742b6",
       "comment": "",
+<<<<<<< HEAD
       "command": "executeScript",
       "target": "PATS.submitPatternEdit({\"keyCode\": 13}, 10, 2, 1, {\"value\": 37});",
       "targets": [],
       "value": ""
+=======
+      "command": "type",
+      "target": "id=modify_pattern_10_2",
+      "targets": [
+        ["id=modify_pattern_10_2", "id"],
+        ["css=#modify_pattern_10_2", "css:finder"],
+        ["xpath=//input[@id='modify_pattern_10_2']", "xpath:attributes"],
+        ["xpath=//td[@id='PATTERN_10_2']/input", "xpath:idRelative"],
+        ["xpath=//td[3]/input", "xpath:position"]
+      ],
+      "value": "37"
+>>>>>>> 4b5f4fb51625a211bb1086edc01f639d58ce223c
     }, {
       "id": "61ca9bdb-612d-416a-badc-656192e22ab8",
       "comment": "",
@@ -673,10 +699,23 @@
     }, {
       "id": "aaa44977-386c-4b32-be5a-ca52e8340efd",
       "comment": "",
+<<<<<<< HEAD
       "command": "executeScript",
       "target": "PATS.submitPatternEdit({\"keyCode\": 13}, 140, 2, 1, {\"value\": 37});",
       "targets": [],
       "value": ""
+=======
+      "command": "type",
+      "target": "id=modify_pattern_140_2",
+      "targets": [
+        ["id=modify_pattern_140_2", "id"],
+        ["css=#modify_pattern_140_2", "css:finder"],
+        ["xpath=//input[@id='modify_pattern_140_2']", "xpath:attributes"],
+        ["xpath=//td[@id='PATTERN_140_2']/input", "xpath:idRelative"],
+        ["xpath=//td[3]/input", "xpath:position"]
+      ],
+      "value": "37"
+>>>>>>> 4b5f4fb51625a211bb1086edc01f639d58ce223c
     }, {
       "id": "9b3f6bb5-e8fe-48ab-8fa3-b3c67b8fb3c3",
       "comment": "",
@@ -693,10 +732,23 @@
     }, {
       "id": "de3a9b2c-12c3-42d3-90f7-dbdb4766dfed",
       "comment": "",
+<<<<<<< HEAD
       "command": "executeScript",
       "target": "PATS.submitPatternEdit({\"keyCode\": 13}, 154, 2, 1, {\"value\": 37});",
       "targets": [],
       "value": ""
+=======
+      "command": "type",
+      "target": "id=modify_pattern_154_2",
+      "targets": [
+        ["id=modify_pattern_154_2", "id"],
+        ["css=#modify_pattern_154_2", "css:finder"],
+        ["xpath=//input[@id='modify_pattern_154_2']", "xpath:attributes"],
+        ["xpath=//td[@id='PATTERN_154_2']/input", "xpath:idRelative"],
+        ["xpath=//td[3]/input", "xpath:position"]
+      ],
+      "value": "37"
+>>>>>>> 4b5f4fb51625a211bb1086edc01f639d58ce223c
     }, {
       "id": "b38c1a99-e867-461f-9991-7892d279092d",
       "comment": "",
@@ -713,10 +765,23 @@
     }, {
       "id": "a756e1c0-b8bb-4484-97b6-a807d0338507",
       "comment": "",
+<<<<<<< HEAD
       "command": "executeScript",
       "target": "CFG['_recompute_patterns'] = false; PATS.get_patterns(); PATS.render_patterns(this);",
       "targets": [],
       "value": ""
+=======
+      "command": "type",
+      "target": "id=modify_pattern_236_2",
+      "targets": [
+        ["id=modify_pattern_236_2", "id"],
+        ["css=#modify_pattern_236_2", "css:finder"],
+        ["xpath=//input[@id='modify_pattern_236_2']", "xpath:attributes"],
+        ["xpath=//td[@id='PATTERN_236_2']/input", "xpath:idRelative"],
+        ["xpath=//td[3]/input", "xpath:position"]
+      ],
+      "value": "x1"
+>>>>>>> 4b5f4fb51625a211bb1086edc01f639d58ce223c
     }, {
       "id": "58faaa69-803b-4cf3-b6f6-1d7801a8071b",
       "comment": "",
