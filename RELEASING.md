@@ -28,11 +28,6 @@ To test the current code, go to the folder `tests` and then type:
 $ pytest --cov=edictor 
 ```
 
-## Release Types
-  
-* a major release is one where the number after the dot increases (2.5 to 2.6)
-* a minor release is one where the second number increases (2.5 to 2.5.1)
-
 ## Release Procedure
 
 - Do platform test via tox:
@@ -40,7 +35,9 @@ $ pytest --cov=edictor
   tox -r
   ```
 
-- Make sure the GUI tests in `tests/gui` all work
+- Do tests with selenium (`tests/selenium/edictor-firefox.side`).
+
+- Make sure the GUI tests in `tests/gui` all work.
 
 - Update the version number, by removing the trailing `.dev0` in:
   - `setup.cfg`
