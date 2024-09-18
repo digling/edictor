@@ -21,7 +21,7 @@ def test_fetch_wordlist():
 
     data = fetch_wordlist(
         "migliazzayanomamic",
-        base_url='http://lingulist.de/pth/',
+        base_url='https://lingulist.de/pth/',
         script_url='get_data.py'
         )
     assert data[:2] == "ID"
