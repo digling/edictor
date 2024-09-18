@@ -23,11 +23,12 @@ def fetch_wordlist(
         to_lingpy=None,
         transform=None,
         base_url="http://lingulist.de/edictor",
+        script_url="/triples/get_data.py"
 ):
     """
     Download wordlist from an EDICTOR server application.
     """
-    url = base_url + "/triples/get_data.py?file=" + dataset
+    url = base_url + script_url + "?file=" + dataset
     if not remote_dbase:
         url += "&remote_dbase=" + dataset + ".sqlite3"
     else:

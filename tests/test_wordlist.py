@@ -19,6 +19,13 @@ def test_fetch_wordlist():
     data = fetch_wordlist("sumerian", to_lingpy=True)
     assert data.width == 2
 
+    data = fetch_wordlist(
+        "migliazzayanomamic",
+        base_url='http://lingulist.de/pth/',
+        script_url='get_data.py'
+        )
+    assert data[:2] == "ID"
+
 
 def test_get_wordlist():
 
