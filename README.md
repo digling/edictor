@@ -33,13 +33,12 @@ The landing page will provide further information on files and datasets that you
 If you want to test EDICTOR 3 with [LingPy](https://pypi.org/project/lingpy) support, you can again install the package via PIP using the following command.
 
 ```shell
-$ pip install edictor[lingpy]
+$ pip install "edictor[lingpy]"
 ```
 
-This will not only add support to all functionalities provided by LingPy (improved automatic cognate detection, improved alignments) and [LingRex](https://pypi.org/project/lingrex) (improved correspondence pattern detection), but also provide access to the `wordlist` command from the EDICTOR 3 commandline (see below for details).
+This will not only add support to all functionalities provided by LingPy (improved automatic cognate detection, improved alignments) and [LingRex](https://pypi.org/project/lingrex) (improved correspondence pattern detection), but also provide access to the `wordlist` command from the EDICTOR 3 commandline (see below for details). In many terminals, you can run the same command without quotation marks.
 
 ## Getting Started on Windows
-
 
 In order to get the EDICTOR application working on Windows, we have successfully carried out the following steps. First, you should download [Python](https://python.org) (we used Python 3.11.9, but you can use versions starting from 3.8). We also downloaded [GIT](https://www.git-scm.com/) for Windows (Version 2.45.2.windows.1). Having installed both programs successfully, you must also install the [Windows Powershell](https://learn.microsoft.com/en-us/powershell/?view=powershell-7.4) which offers commandline facilities. This program can then be opened as any other application (but you must open the application as administrator, you find information on doing this in German [here](https://www.heise.de/tipps-tricks/Windows-Powershell-Skript-ausfuehren-4672163.html)). 
 
