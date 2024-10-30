@@ -1542,18 +1542,24 @@ function storeModification(idx, jdx, value, async_) {
     async_ = CFG['async'];
   }
 
+  let idxs, jdxs, values;
+
   /* check whether idx, jdx, and value contain multiple entries */
   if (typeof idx == 'number' && typeof jdx == 'number') {
-    var idxs = [idx];
-    var jdxs = [jdx];
-    var values = [value];
+    idxs = [idx];
+    jdxs = [jdx];
+    values = [value];
+  }
+  else if (!isNaN(idx) && !isNaN(jdx)) {
+    idxs = [idx];
+    jdxs = [jdx];
+    values = [value];
   }
   else {
-    var idxs = idx;
-    var jdxs = jdx;
-    var values = value;
+    idxs = idx;
+    jdxs = jdx;
+    values = value;
   }
-
   
   /* if storable is set to "true" and we are working with a remote server, 
    * make the modifying ajax-call to ensure that the data has been edited 
