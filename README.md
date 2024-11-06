@@ -2,7 +2,7 @@
 
 EDICTOR is a web-based tool for computer-assisted language comparison. As of Version 3, EDICTOR is available in two forms. You can access the application via its website at [https://edictor.org](https://edictor.org) or you can install a Python application that allows you to run EDICTOR with more features locally in your webbrowser.
 
-In order to get started with the local application, you should make sure to have a recent Python installation (3.8 or higher) along with the PIP package manager. It is recommended to install the package from a virtual environment. The first step is to install the 'virtualenv' package that manages those environments, and to create and activate such an environment. You can read more about virtual environments here: [https://python.land/virtual-environments/virtualenv](https://python.land/virtual-environments/virtualenv).
+In order to get started with the local application, you should make sure to have a recent Python installation (3.9 or higher) along with the PIP package manager. It is recommended to install the package from a virtual environment. The first step is to install the 'virtualenv' package that manages those environments, and to create and activate such an environment. You can read more about virtual environments here: [https://python.land/virtual-environments/virtualenv](https://python.land/virtual-environments/virtualenv).
 
 ```shell
 python3 -m pip install virtualenv
