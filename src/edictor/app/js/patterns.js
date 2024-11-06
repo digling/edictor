@@ -1343,11 +1343,13 @@ PATS.recheck = function(cognates){
           modified_sequences.push([
             WLS[values[i][0]][CFG._patterns], new_patterns
           ]);
+
+          console.log("patterns added here", values[i][0]);
           
           WLS[values[i][0]][CFG._patterns] = new_patterns;
           storeModification(
             values[i][0],
-            WLS.header[CFG._patterns],
+            CFG._patterns,
             new_patterns);
         }
       }
