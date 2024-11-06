@@ -2,28 +2,36 @@
 
 EDICTOR is a web-based tool for computer-assisted language comparison. As of Version 3, EDICTOR is available in two forms. You can access the application via its website at [https://edictor.org](https://edictor.org) or you can install a Python application that allows you to run EDICTOR with more features locally in your webbrowser.
 
-In order to get started with the local application, you should make sure to have a recent Python installation (3.8 or higher) along with the PIP package manager. It is recommended to install the package from a virtual environment. Installing EDICTOR can then be done via the commandline by simply typing the following command in the terminal (the `$` symbol here indicates that the command is issued as a prompt and not written inside a script).
+In order to get started with the local application, you should make sure to have a recent Python installation (3.8 or higher) along with the PIP package manager. It is recommended to install the package from a virtual environment. The first step is to install the 'virtualenv' package that manages those environments, and to create and activate such an environment. You can read more about virtual environments here: [https://python.land/virtual-environments/virtualenv](https://python.land/virtual-environments/virtualenv).
 
 ```shell
-$ pip install edictor
+python3 -m pip install virtualenv
+python3 -m venv venv/edictor
+source venv/edictor/bin/activate
+```
+
+Installing EDICTOR can then be done via the commandline by simply typing the following command in the terminal (the `$` symbol here indicates that the command is issued as a prompt and not written inside a script).
+
+```shell
+pip install edictor
 ```
 
 This will install EDICTOR on your computer and offer the command `edictor` on your commandline that you can use to run the application locally. To check that this works in principle, simply type the following command.
 
 ```shell
-$ edictor --help
+edictor --help
 ```
 
 This shows you all the current options of the application. Running the application then simply requires to type the subcommand `server`, as illustrated below.
 
 ```shell
-$ edictor server
+edictor server
 ```
 
 Running the application will try to automatically open the webbrowser at the default address `http://localhost:9999`. This may not work on all operation systems, partly, because command names for webbrowsers differ, and possibly also because the port is already used by another application. You can select another port when starting the application.
 
 ```shell
-$ edictor server --port=9876
+edictor server --port=9876
 ```
 
 The landing page will provide further information on files and datasets that you can open and test.
@@ -33,7 +41,7 @@ The landing page will provide further information on files and datasets that you
 If you want to test EDICTOR 3 with [LingPy](https://pypi.org/project/lingpy) support, you can again install the package via PIP using the following command.
 
 ```shell
-$ pip install "edictor[lingpy]"
+pip install "edictor[lingpy]"
 ```
 
 This will not only add support to all functionalities provided by LingPy (improved automatic cognate detection, improved alignments) and [LingRex](https://pypi.org/project/lingrex) (improved correspondence pattern detection), but also provide access to the `wordlist` command from the EDICTOR 3 commandline (see below for details). In many terminals, you can run the same command without quotation marks.
