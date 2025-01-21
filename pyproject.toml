@@ -7,8 +7,8 @@ name = "edictor"
 version = "3.2.dev0"
 description = "Web-Based Tool for Computer-Assisted Language Comparison"
 keywords = [ "linguistics", "sequence alignment", "computational linguistics", "dialectology", "cognate detection",]
-classifiers = [ "Development Status :: 5 - Production/Stable", "Intended Audience :: Developers", "Intended Audience :: Science/Research", "Natural Language :: English", "Operating System :: OS Independent", "Programming Language :: Python :: 3", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11", "Programming Language :: Python :: 3.12", "Programming Language :: Python :: Implementation :: CPython", "Programming Language :: Python :: Implementation :: PyPy", "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"]
-requires-python = ">=3.8"
+classifiers = [ "Development Status :: 5 - Production/Stable", "Intended Audience :: Developers", "Intended Audience :: Science/Research", "Natural Language :: English", "Operating System :: OS Independent", "Programming Language :: Python :: 3", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11", "Programming Language :: Python :: 3.12", "Programming Language :: Python :: Implementation :: CPython", "Programming Language :: Python :: Implementation :: PyPy", "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"]
+requires-python = ">=3.9"
 dependencies = []
 authors = [
   {name = "Johann-Mattis List", email = "mattis.list@uni-passau.de"},
@@ -76,7 +76,7 @@ show_missing = true
 skip_covered = true
 
 [tool.tox.tox]
-envlist = "py38, py39, py310, py311, py312"
+envlist = "py39, py310, py311, py312"
 isolated_build = "true"
 skip_missing_interpreter = "true"
 
