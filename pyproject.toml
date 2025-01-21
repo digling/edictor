@@ -1,0 +1,85 @@
+[build-system]
+requires = [ "setuptools>=61.2",]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "edictor"
+version = "3.1"
+description = "Web-Based Tool for Computer-Assisted Language Comparison"
+keywords = [ "linguistics", "sequence alignment", "computational linguistics", "dialectology", "cognate detection",]
+classifiers = [ "Development Status :: 5 - Production/Stable", "Intended Audience :: Developers", "Intended Audience :: Science/Research", "Natural Language :: English", "Operating System :: OS Independent", "Programming Language :: Python :: 3", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11", "Programming Language :: Python :: 3.12", "Programming Language :: Python :: Implementation :: CPython", "Programming Language :: Python :: Implementation :: PyPy", "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"]
+requires-python = ">=3.8"
+dependencies = []
+authors = [
+  {name = "Johann-Mattis List", email = "mattis.list@uni-passau.de"},
+]
+maintainers = [
+  {name = "Frederic Blum", email = "frederic_blum@eva.mpg.de"},
+  {name = "Kellen Parker van Dam", email = "kellemparker.vandam@uni-passau.de"}
+]
+
+readme = {file = "README.md", content-type = "text/markdown"}
+
+[project.license]
+text = "MIT"
+license-files = ["LICENSE"]
+
+[project.urls]
+Homepage = "https://edictor.org"
+Repository = "https://github.com/digling/edictor.git"
+
+
+[project.optional-dependencies]
+dev = [ "build", "wheel", "twine", "tox", "lingrex==1.4.2", "lingpy==2.6.13", "lexibase",]
+test = [ "pytest", "pytest-cov", "coverage", "lingpy==2.6.13", "lingrex==1.4.2", "lexibase",]
+lingpy = [ "lingpy==2.6.13", "lingrex==1.4.2", "lexibase",]
+
+[project.scripts]
+edictor = "edictor.cli:main"
+
+[tool.setuptools]
+zip-safe = false
+include-package-data = true
+platforms = [ "any",]
+
+[tool.flake8]
+ignore = "E711,E712,D100,D101,D103,D102,D301,E731"
+max-line-length = "100"
+exclude = ".tox,cython"
+
+[tool.testenv]
+deps = ".[test]"
+commands = "pytest {posargs}"
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.setuptools.package-data]
+edictor = [ "data/*",]
+
+[tool.distutils.bdist_wheel]
+universal = 1
+
+[tool.distutils.easy_install]
+zip-ok = false
+
+[tool.pytest.ini_options]
+minversion = "5"
+testpaths = [ "tests",]
+addopts = "--cov"
+
+[tool.coverage.run]
+source = [ "edictor", "tests",]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.tox.tox]
+envlist = "py38, py39, py310, py311, py312"
+isolated_build = "true"
+skip_missing_interpreter = "true"
+
+[tool.setuptools.packages.find]
+where = [ "src",]
+namespaces = false
