@@ -337,7 +337,8 @@ ALIGN.dragToLeft = function (idx) {
   let idxs, i, j, alm, tdx, nidx, fidx;
   if (check !== -1) {
     idxs = this.LOCKS;
-  } else {
+  } 
+  else {
     idxs = [idx - 1];
   }
   /* determine index of alignment and rebuild the whole stuff with one more gap */
@@ -347,7 +348,7 @@ ALIGN.dragToLeft = function (idx) {
       if (idxs.indexOf(i) === -1) {
         alm = this.ALMS[i];
         alm.splice(0, 0, "-");
-        this.ALMS[idx] = alm;
+        this.ALMS[i] = alm;
       }
     }
     this.refresh();
