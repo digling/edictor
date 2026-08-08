@@ -19,7 +19,7 @@ PATS.compatible = function(x, y) {
   let compatible = 0;
   let i;
   for (i = 0; i < x.length; i += 1) {
-    if (x[i] != y[i] && x[i] != UTIL.settings.missing_marker && y[i] != UTIL.settings.missing_marker) {
+    if (UTIL.underlying(x[i]) != UTIL.underlying(y[i]) && x[i] != UTIL.settings.missing_marker && y[i] != UTIL.settings.missing_marker) {
       return false;
     }
     else if (x[i] != UTIL.settings.missing_marker && y[i] != UTIL.settings.missing_marker && x[i] != CFG.gap_marker && y[i] != CFG.gap_marker){
@@ -200,24 +200,25 @@ PATS.get_patterns = function(lengths){
     pA = x.slice(4, x.length).map(function(z){if (z.length == 1){return z;} return z[2];});
     pB = y.slice(4, y.length).map(function(z){if (z.length == 1){return z;} return z[2];});
     if (pA[0] == '!') {
-      pA = UTIL.settings.missing_marker;
+      pA[0] = UTIL.settings.missing_marker;
     }
     if (pB[0] == '!') {
-      pB = UTIL.settings.missing_marker;
+      pB[0] = UTIL.settings.missing_marker;
     }
     pAl = LIST.count(pA, UTIL.settings.missing_marker);
     pBl = LIST.count(pB, UTIL.settings.missing_marker);
     cpt = PATS.compatible(pA, pB);
     if (cpt) {
-      if (pAl == pBl) {
-        return 0;
-      }
-      else if (pAl < pBl) {
-        return -1;
-      }
-      else {
-        return 1;
-      }
+      return 0;
+      //if (pAl == pBl) {
+      //  return 0;
+      //}
+      //else if (pAl < pBl) {
+      //  return -1;
+      //}
+      //else {
+      //  return 1;
+      //}
     }
     else {
       return pA.join(',').localeCompare(pB.join(','));
@@ -376,15 +377,16 @@ PATS.load_patterns = function(){
   }
   PATS.matrix.sort(
     function(x, y) {
-      if (x[0][2] > y[0][2]) {
-        return -1;
-      }
-      else if (x[0][2] < y[0][2]) {
-        return 1;
-      }
-      else {
-        return 0;
-      }
+      return x[0][2] - y[0][2];
+      //if (x[0][2] > y[0][2]) {
+      //  return 1;
+      //}
+      //else if (x[0][2] < y[0][2]) {
+      //  return -1;
+      //}
+      //else {
+      //  return 0;
+      //}
     }
   );
   PATS.find_consensus();
@@ -584,6 +586,7 @@ PATS.refresh = function() {
     }
   }
   PATS.preview = parseInt(document.getElementById('PATS_preview').value);
+  PATS.get_patterns(); /* +++ new test on patterns +++ */
 
   document.getElementById('patterns_table').innerHTML = PATS.render_matrix().render(PATS.current, PATS.length-1, function (x){return x.join(',');});
   let preview = PATS.preview + PATS.current;
@@ -706,10 +709,11 @@ PATS.render_matrix = function(lengths) {
   else {
     egroup = 'editGroup(event, ';
   }
-  
-  if (CFG._recompute_patterns) {
-    PATS.get_patterns(PATS.threshold);
-  }
+  /* +++ */ 
+  PATS.get_patterns(PATS.threshold);
+  //if (CFG._recompute_patterns) {
+  //  PATS.get_patterns(PATS.threshold);
+  //}
   PATS.length = PATS.matrix[0].length;
   _columns = function(cell, idx, head) {
     if (cell[0] == UTIL.settings.missing_marker){

@@ -27,7 +27,7 @@ xargs = dict(
     )
 	
 #tmp_args = cgi.FieldStorate() 
-tmp_args = cgi.FieldStorage(environ={'REQUEST_METHOD': 'POST'})
+tmp_args = cgi.FieldStorage(environ={'REQUEST_METHOD': 'GET'})
 args = {}
 for arg in xargs:
     tmp = tmp_args.getvalue(arg)

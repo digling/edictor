@@ -641,7 +641,29 @@ UTIL.tokens2alignment = function(tokens, alignment){
   }
   return new_alm
 };
-  
+ 
+
+UTIL.underlying = function(segment) {
+  if (segment.indexOf(".") == -1) {
+    if (segment.indexOf("/") == -1) {
+      return segment;
+    }
+    else {
+      return segment.split("/")[1];
+    }
+  }
+  else {
+    let new_segments = [];
+    let segments = segment.split('.');
+    let i;
+    for (i = 0; i < segments.length; i += 1) {
+      if (UTIL.underlying(segments[i]) != "Ø") {
+        new_segments.push(UTIL.underlying(segments[i]));
+      }
+    }
+    return new_segments.join(".");
+  }
+}
 
 
 var ALIAS = {
